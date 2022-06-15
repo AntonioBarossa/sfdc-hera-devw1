@@ -35,6 +35,10 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
             {
                 Order childOrd = new Order();
                 childOrd.Id = childOrder.Id;
+                String phase = childOrder.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_VAS') && (childOrder.VasSubtype__c == null || (childOrder.VasSubtype__c != null && !childOrder.VasSubtype__c.equalsIgnoreCase('Analisi Consumi')))
+                    ? 'Comunicazione Motore VAS'
+                    : 'Comunicazione verso Heroku';
+                childOrd.Phase__c = phase;
                 //childOrd.Phase__c = 'Comunicazione verso Heroku';
                 childOrd.SignedDate__c = System.today();
                 childOrd.ConfirmCustomerContract__c = 'Web';

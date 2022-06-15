@@ -35,6 +35,7 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
     }
  
     protected override void beforeUpdate() {
+        HDT_UTL_GlobaMigrationKey.setGlobalMigrationKey(Trigger.new, Trigger.oldMap);
         checkAccountName();
         createKpiExtension();
         setIndividualsOwnerIds();
@@ -92,11 +93,17 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
             }
         }
         if(!accts.isEmpty()){
-            Datetime dt= Datetime.now().addMinutes(2);
+            /**
+             * AF. Commentato Codice di WR che schedulava un Job che veniva eseguito ricorsivamente ogni  giorno.
+             * AF. Sostituito codice con un Enqueue Job
+             */
+           /* Datetime dt= Datetime.now().addMinutes(2);
             String cron = dt.second() + ' ' + dt.minute() + ' ' + dt.hour() + ' * * ?';
 
             HDT_SCH_QueueAssignmentScheduler s = new HDT_SCH_QueueAssignmentScheduler(accts); 
-            System.schedule('PartnerQueues ' + String.valueOf(Datetime.now()), cron, s);
+            System.schedule('PartnerQueues ' + String.valueOf(Datetime.now()), cron, s);*/
+
+            Database.executeBatch(new HDT_BA_QueueAssignment(accts));
         }
     }
 

@@ -8,28 +8,25 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">[{&quot;label&quot;:&quot;Prima Attivazione Ele&quot;,&quot;value&quot;:&quot;Prima Attivazione Ele&quot;},
-{&quot;label&quot;:&quot;Prima Attivazione In delibera&quot;,&quot;value&quot;:&quot;Prima Attivazione In delibera&quot;},
-{&quot;label&quot;:&quot;Prima Attivazione Fuori delibera&quot;,&quot;value&quot;:&quot;Prima Attivazione Fuori delibera&quot;},
-{&quot;label&quot;:&quot;Prima Attivazione con modifica&quot;,&quot;value&quot;:&quot;Prima Attivazione con modifica&quot;},
+        <value xsi:type="xsd:string">[{&quot;label&quot;:&quot;Subentro&quot;,&quot;value&quot;:&quot;Subentro&quot;},
+{&quot;label&quot;:&quot;Attivazione&quot;,&quot;value&quot;:&quot;Attivazione&quot;},
+{&quot;label&quot;:&quot;Attivazione con Modifica&quot;,&quot;value&quot;:&quot;Attivazione con Modifica&quot;},
 {&quot;label&quot;:&quot;Cambio Offerta&quot;,&quot;value&quot;:&quot;Cambio Offerta&quot;},
 {&quot;label&quot;:&quot;Cambio Uso&quot;,&quot;value&quot;:&quot;Cambio Uso&quot;},
-{&quot;label&quot;:&quot;Connessione con Attivazione&quot;,&quot;value&quot;:&quot;Connessione con Attivazione&quot;},
-{&quot;label&quot;:&quot;Riattivazione non morose&quot;,&quot;value&quot;:&quot;Riattivazione non morose&quot;},
 {&quot;label&quot;:&quot;Aggiunta Sconti o Bonus VAS&quot;,&quot;value&quot;:&quot;Aggiunta Sconti o Bonus VAS&quot;},
-{&quot;label&quot;:&quot;Subentro Gas&quot;,&quot;value&quot;:&quot;Subentro Gas&quot;},
-{&quot;label&quot;:&quot;Subentro Ele&quot;,&quot;value&quot;:&quot;Subentro Ele&quot;},
-{&quot;label&quot;:&quot;Switch in con voltura tecnica&quot;,&quot;value&quot;:&quot;Switch in con voltura tecnica&quot;},
-{&quot;label&quot;:&quot;Voltura con Switch&quot;,&quot;value&quot;:&quot;Voltura con Switch&quot;},
-{&quot;label&quot;:&quot;Switch in Ripristinatorio&quot;,&quot;value&quot;:&quot;Switch in Ripristinatorio&quot;},
-{&quot;label&quot;:&quot;Switch in Reseller&quot;,&quot;value&quot;:&quot;Switch in Reseller&quot;},
-{&quot;label&quot;:&quot;Switch in Fittizio&quot;,&quot;value&quot;:&quot;Switch in Fittizio&quot;},
-{&quot;label&quot;:&quot;Switch in Winback&quot;,&quot;value&quot;:&quot;Switch in Winback&quot;},
-{&quot;label&quot;:&quot;Switch in Gas&quot;,&quot;value&quot;:&quot;Switch in Gas&quot;},
-{&quot;label&quot;:&quot;Switch in Ele&quot;,&quot;value&quot;:&quot;Switch in Ele&quot;},
+{&quot;label&quot;:&quot;Switch in&quot;,&quot;value&quot;:&quot;Switch in&quot;},
+{&quot;label&quot;:&quot;Connessione con Attivazione&quot;,&quot;value&quot;:&quot;Connessione con Attivazione&quot;},
+{&quot;label&quot;:&quot;Temporanea - Nuova Attivazione&quot;,&quot;value&quot;:&quot;Temporanea - Nuova Attivazione&quot;},
+{&quot;label&quot;:&quot;VAS&quot;,&quot;value&quot;:&quot;VAS&quot;},
 {&quot;label&quot;:&quot;Voltura&quot;,&quot;value&quot;:&quot;Voltura&quot;},
-{&quot;label&quot;:&quot;Aggiunta Sconti o Bonus VAS Ele&quot;,&quot;value&quot;:&quot;Aggiunta Sconti o Bonus VAS Ele&quot;},
-{&quot;label&quot;:&quot;Aggiunta Sconti o Bonus VAS Gas&quot;,&quot;value&quot;:&quot;Aggiunta Sconti o Bonus VAS Gas&quot;}
+{&quot;label&quot;:&quot;Voltura con Switch&quot;,&quot;value&quot;:&quot;Voltura con Switch&quot;},
+{&quot;label&quot;:&quot;Proroga Conn Temp&quot;,&quot;value&quot;:&quot;Proroga Conn Temp&quot;},
+{&quot;label&quot;:&quot;Modifica Contratti Preattivazione&quot;,&quot;value&quot;:&quot;Modifica Contratti Preattivazione&quot;},
+{&quot;label&quot;:&quot;Contratti/Bonus Commerciale&quot;,&quot;value&quot;:&quot;Contratti/Bonus Commerciale&quot;},
+{&quot;label&quot;:&quot;VOTIVE Modena/Nuovo contratto&quot;,&quot;value&quot;:&quot;VOTIVE Modena/Nuovo contratto&quot;},
+{&quot;label&quot;:&quot;VOTIVE Modena/Subentro&quot;,&quot;value&quot;:&quot;VOTIVE Modena/Subentro&quot;},
+{&quot;label&quot;:&quot;VOTIVE Modena/Intervento Riattivazione luce&quot;,&quot;value&quot;:&quot;VOTIVE Modena/Intervento Riattivazione luce&quot;},
+{&quot;label&quot;:&quot;Documentale/Copia Contratto&quot;,&quot;value&quot;:&quot;Documentale/Copia Contratto&quot;}
 ]</value>
     </values>
 </CustomMetadata>

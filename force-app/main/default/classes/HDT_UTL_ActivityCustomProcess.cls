@@ -213,13 +213,15 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         system.debug(LoggingLevel.DEBUG, 'Start creditCheckKoPrecedenteCliente --->');
 
         HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
-        Id recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_KoPrecedeteCliente', 'wrts_prcgvr__Activity__c');
+        Id recordtypeOutgoing = recQr.getRecordTypeIdByName('HDT_RT_KoPrecedeteCliente', 'wrts_prcgvr__Activity__c');
+        Id recordtypeIncoming = recQr.getRecordTypeIdByName('HDT_RT_CreditCheckKO', 'wrts_prcgvr__Activity__c');
         
         List<Id> actListToRecheck = new List<Id>();
         for(Integer i = 0; i < newActList.size(); i++){
             wrts_prcgvr__Activity__c act = newActList[i];
             wrts_prcgvr__Activity__c actOld = oldActList[i];
-            if(act.recordtypeid == recordtypeid && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && (act.Reason__c == 'Dimostrata Estraneità' || act.Reason__c == 'Saldo Pagato') && act.wrts_prcgvr__Status__c == 'KO Risolto'){                    
+            if((act.recordtypeid == recordtypeOutgoing && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && (act.Reason__c == 'Dimostrata Estraneità' || act.Reason__c == 'Saldo Pagato') && act.wrts_prcgvr__Status__c == 'KO Risolto')
+            || (act.recordTypeId == recordtypeIncoming && 'KO Risolto'.equalsIgnoreCase(act.wrts_prcgvr__Status__c) && 'Saldo debito cattivo pagatore'.equalsIgnoreCase(act.CreditCheckResolutionReason__c) && !act.CreditCheckResolutionReason__c.equalsIgnoreCase(actOld.CreditCheckResolutionReason__c))){                    
                 actListToRecheck.add(act.Id);                    
             }
         }
@@ -275,7 +277,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             
             HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail iwd = new HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail();
             if(act.Order__r.ServicePoint__c != null && act.Order__r.ServicePoint__r.AnnualConsumption__c != null){
-                iwd.annualConsumption = String.valueOf(act.Order__r.ServicePoint__r.AnnualConsumption__c.format());
+                iwd.annualConsumption = String.valueOf(act.Order__r.ServicePoint__r.AnnualConsumption__c);
             }            
             iwd.commodity = typeOfCommodity;
             

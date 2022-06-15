@@ -4,6 +4,7 @@
 * @description HDT_QR_CampaignMember – Contains queries for CampaignMember
 * @history Keltin Mesonjesi – 27/02/2020 – Created class
 */
+@SuppressWarnings('PMD.ExcessivePublicCount')
 public inherited sharing class HDT_QR_CampaignMember {
     
     /**
@@ -85,7 +86,8 @@ public inherited sharing class HDT_QR_CampaignMember {
             Campaign.Required__c,
             Campaign.ProcessType__c,
             Campaign.CaseCategory__c,
-            Campaign.CaseSubCategory__c
+            Campaign.CaseSubCategory__c,
+            Campaign.FlowType__c
             FROM
             CampaignMember
             WHERE ContactId IN :contacts
@@ -120,7 +122,8 @@ public inherited sharing class HDT_QR_CampaignMember {
             Campaign.Required__c,
             Campaign.ProcessType__c,
             Campaign.CaseCategory__c,
-            Campaign.CaseSubCategory__c
+            Campaign.CaseSubCategory__c,
+            Campaign.FlowType__c
             FROM
             CampaignMember
             WHERE ContactId IN :contacts
@@ -157,7 +160,8 @@ public inherited sharing class HDT_QR_CampaignMember {
             Campaign.Required__c,
             Campaign.ProcessType__c,
             Campaign.CaseCategory__c,
-            Campaign.CaseSubCategory__c
+            Campaign.CaseSubCategory__c,
+            Campaign.FlowType__c
             FROM
             CampaignMember
             WHERE ContactId IN :contacts
@@ -230,12 +234,14 @@ public inherited sharing class HDT_QR_CampaignMember {
         return [
             SELECT
             Id,
-            ContactId, 
             LeadId, 
             CampaignId, 
             GenericField1__c,
             Campaign.ProcessType__c,
-            Contact.AccountId
+            Campaign.Name,
+            ContactId,
+            Contact.AccountId,
+            Contact.Name
             FROM CampaignMember 
             WHERE Id = :campaignMemberId
             WITH SECURITY_ENFORCED
@@ -553,5 +559,11 @@ public inherited sharing class HDT_QR_CampaignMember {
             WHERE Id = :campaignMemberId
             WITH SECURITY_ENFORCED
         ];
+    }
+
+    public static List<CampaignMember> getCampMembByActivity(String actId){
+
+        List<CampaignMember> campMembList = [SELECT Id, Status, Campaign.PositiveOutcomeDefaultStatus__c FROM CampaignMember WHERE RelatedActivity__c = :actId WITH SECURITY_ENFORCED];
+        return campMembList;
     }
 }

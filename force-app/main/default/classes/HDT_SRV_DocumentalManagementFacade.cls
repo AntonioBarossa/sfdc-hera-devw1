@@ -9,6 +9,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         String responseCode;
         String responseStatus;
         String message;
+        String status;
         Map<String,String> resultMap = new Map<String,String>();
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
         
@@ -20,11 +21,32 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             responseCode = String.valueOf(documentalResponse.responseCode);
             responseStatus = documentalResponse.responseStatus;
             message = documentalResponse.deliverPackageResponse.message;
+            status = documentalResponse.responseStatus;
             resultMap.put('code',responseCode);
             resultMap.put('base64',baseSixtyFour);
             resultMap.put('result',result);
             resultMap.put('message',message);
-        }catch(Exception ex){
+            resultMap.put('status',status);
+            system.debug(LoggingLevel.DEBUG,'body --> '+body);
+            system.debug(LoggingLevel.DEBUG,'documentalResponse --> '+documentalResponse);
+            system.debug(LoggingLevel.DEBUG,'baseSixtyFour --> '+baseSixtyFour);
+            system.debug(LoggingLevel.DEBUG,'result --> '+result);
+            system.debug(LoggingLevel.DEBUG,'responseCode --> '+responseCode);
+            system.debug(LoggingLevel.DEBUG,'responseStatus --> '+responseStatus);
+            system.debug(LoggingLevel.DEBUG,'message --> '+message);
+            system.debug(LoggingLevel.DEBUG,'status --> '+status);
+            system.debug(LoggingLevel.DEBUG,'recordId --> '+recordId);
+            system.debug(LoggingLevel.DEBUG,'context --> '+context);
+            system.debug(LoggingLevel.DEBUG,'formParams --> '+formParams);
+            system.debug(LoggingLevel.DEBUG,'resultMap --> '+JSON.serialize(resultMap));
+        }
+        catch(LimitException limitEx)
+        {
+            resultMap.put('result','000');
+            resultMap.put('message','La dimesione del plico è superiore al limite consentito per la preview. Procedere con l\'invio dei documenti al cliente');
+            resultMap.put('status','sizeLimit');
+        }
+        catch(Exception ex){
             resultMap.put('code','500');
         }
 

@@ -49,6 +49,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                                     WHERE Order__r.ID IN: orders.keySet()
                                     WITH SECURITY_ENFORCED];
                     for(ServiceRequest__c sr : srs){
+                        Boolean isAnaConsTransition = orders.get(sr.Order__c).VasSubtype__c != null && orders.get(sr.Order__c).VasSubtype__c == 'Analisi Consumi' && orders.get(sr.Order__c).isTransition__c ? true:false;
                         sr.NextPhase__c = orders.get(sr.Order__c).Phase__c;
                         incomingProcesses.add(sr);
                     }
@@ -284,6 +285,8 @@ public inherited sharing class HDT_UTL_Dependencies {
                                 if(valueToUpdate){
                                     ordersToBeUpdated.add(orderToUpdate);
                                 }
+                                Boolean isAnalisiConsumi = (String)sr.getSobject('Order__r').get('VasSubtype__c') != null && ((String)sr.getSobject('Order__r').get('VasSubtype__c')).equalsIgnoreCase('Analisi Consumi')  && (Boolean)sr.getSobject('Order__r').get('isTransition__c') == true;
+                                sr.NextPhase__c = isAnalisiConsumi ? 'Completata' : sr.NextPhase__c;
                             }
                             sr.DependOn__c = srBlocking.ID;
                             sr.Status__c = STATUS_SEQUENZIALIZZATO;

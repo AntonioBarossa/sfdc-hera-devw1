@@ -449,6 +449,15 @@ public with sharing class HDT_LC_SaleVasTst {
             order.RecordTypeId = constants.ORDER_RECORDTYPEID_VAS;
             update order;
 
+            SBQQ__Subscription__c sub = [Select Id FROM SBQQ__Subscription__c WHERE SBQQ__Account__c = :order.AccountId LIMIT 1];
+            Asset a = [Select Id FROM Asset WHERE AccountId = :order.AccountId LIMIT 1];
+            List<SObject> sobjToUpdate = new List<Sobject>();
+            sub.VasPracticeCode__c = '091820482';
+            a.VasPracticeCode__c = '091820482';
+            sobjToUpdate.add(sub);
+            sobjToUpdate.add(a);
+            update sobjToUpdate;
+
             List<SObject> result = HDT_LC_SaleVas.getFornitura(order.AccountId, 'CONTRACTS_VAS');
  
             Test.stopTest();

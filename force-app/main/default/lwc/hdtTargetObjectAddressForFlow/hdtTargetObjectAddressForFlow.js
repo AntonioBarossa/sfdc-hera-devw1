@@ -16,7 +16,7 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
     validate() {
         let address = this.getAddress();
         let validity = this.validateAddress(address);
-        if (validity.isValid) {
+        if (validity.isValid === true) {
             this.populateCase(address);
             //lanciare evento per inviare oggetto theCase;
             //integrare coi campi del BP (non fare update diretto da apex, torna un nuovo case)
@@ -50,31 +50,31 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
                 //this.saveErrorMessage.push('E\' necessario verificare l\'indirizzo per poter procedere al salvataggio');
                 errorMessages.push('E\' necessario verificare l\'indirizzo per poter procedere al salvataggio');
             }
-        } else {
-            console.log('entra in else ind estero ');
-
-            if (address['Stato'] === undefined || address['Stato'] === '') {
-                concatAddressErrorFields = concatAddressErrorFields.concat('Stato, ');
-            }
-            if (address['Provincia'] === undefined || address['Provincia'] === '') {
-                concatAddressErrorFields = concatAddressErrorFields.concat('Provincia, ');
-            }
-            if (address['Comune'] === undefined || address['Comune'] === '') {
-                concatAddressErrorFields = concatAddressErrorFields.concat('Comune, ');
-            }
-            if (address['Via'] === undefined || address['Via'] === '') {
-                concatAddressErrorFields = concatAddressErrorFields.concat('Via, ');
-            }
-            if (address['Civico'] === undefined || address['Civico'] === '') {
-                concatAddressErrorFields = concatAddressErrorFields.concat('Civico, ');
-            }
-            if (address['CAP'] === undefined || address['CAP'] === '') {
-                concatAddressErrorFields = concatAddressErrorFields.concat('CAP, ');
-            }
-            if (concatAddressErrorFields !== '') {
-                errorMessages.push('Per poter salvare popolare i seguenti campi di indirizzo: ' + concatAddressErrorFields.slice(0, -2));
-            }
-        }        
+        } 
+        console.log('entra in else ind estero ');
+        console.log('### Address >>> ' +JSON.stringify(address));
+        if (address['Stato'] === undefined || address['Stato'] === '') {
+            concatAddressErrorFields = concatAddressErrorFields.concat('Stato, ');
+        }
+        if (address['Provincia'] === undefined || address['Provincia'] === '') {
+            concatAddressErrorFields = concatAddressErrorFields.concat('Provincia, ');
+        }
+        if (address['Comune'] === undefined || address['Comune'] === '') {
+            concatAddressErrorFields = concatAddressErrorFields.concat('Comune, ');
+        }
+        if (address['Via'] === undefined || address['Via'] === '') {
+            concatAddressErrorFields = concatAddressErrorFields.concat('Via, ');
+        }
+        if (address['Civico'] === undefined || address['Civico'] === '') {
+            concatAddressErrorFields = concatAddressErrorFields.concat('Civico, ');
+        }
+        if (address['CAP'] === undefined || address['CAP'] === '') {
+            concatAddressErrorFields = concatAddressErrorFields.concat('CAP, ');
+        }
+        if (concatAddressErrorFields !== '') {
+            errorMessages.push('Per poter salvare popolare i seguenti campi di indirizzo: ' + concatAddressErrorFields.slice(0, -2));
+        }
+               
 
         if (errorMessages.length==0) {
             return {
@@ -132,12 +132,28 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
         //targetFields.handleAddressVerification();
     }
 
+    @api
     getAddress() {
         let address = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
-        if (address['Stato']=='Italy' || address['Stato']=='Italia'){
-            address['Stato']=='ITALIA';
+        if(!address["Stato"])
+        {
+            console.log('### Adding Stato ###')
+            address['Stato']='ITALIA';
         }
+        if (address['Stato']=='Italy' || address['Stato']=='Italia'){
+            address['Stato']='ITALIA';
+        }
+        address['Flag Verificato']=true;
+        console.log('### Get Address >>> ' + JSON.stringify(address));
         return address;
+    }
+
+
+    @api
+    prepopulateAddress(wrapperAddress)
+    {
+        const targetFields = this.template.querySelector("c-hdt-target-object-address-fields");
+        targetFields.getInstanceWrapObjectBilling(wrapperAddress);
     }
 
     populateCase(address){

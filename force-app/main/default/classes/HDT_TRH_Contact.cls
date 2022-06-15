@@ -34,6 +34,8 @@
         }
         //HRDTR-00_HRAWRM-881 11/10/2021
         HDT_UTL_GestionePrivacy.setPrivacyForContact(contactToCreatePrivacy);
+        createAmministratoreCondominio(contList);
+
     }
 
     public override void beforeUpdate(){
@@ -46,7 +48,25 @@
             con.recordTypeId=recordTypeIdAfter;
         }
     }
-    
+    /**@frpanico 2022-06-03
+     * Registra Amministratore Condominio su SAP 
+     * funziona solo se viene creato un solo contatto
+     */
+    private static void createAmministratoreCondominio(List<Contact> contactList)
+    {
+        if(contactList.size() > 1)
+        {
+            return;
+        }
+        Contact con = contactList[0];
+        List<AccountContactRelation> acrList = [SELECT Id,
+            Roles
+            FROM AccountContactRelation
+            WHERE contactId = :con.Id
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
    /* public override void afterUpdate(){
         System.debug('*******TriggerContact');
         HDT_UTL_GestionePrivacy.updateContactPointFromObjectContact(trigger.new,trigger.old);

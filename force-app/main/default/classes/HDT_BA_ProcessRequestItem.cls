@@ -42,6 +42,7 @@ public inherited sharing class HDT_BA_ProcessRequestItem implements Database.Bat
         HDT_UTL_ProcessExecution cls;
         Type t = Type.forName(selectedProcess.ApexClass__c);
         cls = (HDT_UTL_ProcessExecution)t.newInstance();
+        cls.setRequestId(this.idLoaderRequest);
         cls.setProcess(process);
         cls.setMassiveLoaderRequestItemList(scope);
         
@@ -65,30 +66,44 @@ public inherited sharing class HDT_BA_ProcessRequestItem implements Database.Bat
         Set<String> apexClassesForBatch = new Set<String>();
         apexClassesForBatch.add('HDT_UTL_ProcessSales');
 
-        if(apexClassesForBatch.contains(selectedProcess.ApexClass__c)){
-            System.debug(LoggingLevel.DEBUG, '>>> continue with HDT_BA_ProcessSales...');
-            HDT_BA_ProcessSales processReq = new HDT_BA_ProcessSales(idLoaderRequest, batchSize, process);
-            Database.executeBatch(processReq, batchSize);
-        } else {
-            MassiveLoaderRequest__c oldReq = new MassiveLoaderRequest__c();
-            oldReq.Id = idLoaderRequest;
-            oldReq.Status__c = constantsUtl.MASSIVLOADER_STATUS_CHIUSO;
-            oldReq.Phase__c = 'File processato';
-            update oldReq;
-
-            // Creazione file RequestItem in Errore 
-            List<MassiveLoaderRequestItem__c> listErrorReq = [
-                SELECT Id, Name, Data__c, Status__c, StatusDescription__c
-                FROM MassiveLoaderRequestItem__c
-                WHERE Status__c IN ('Errore', 'Chiuso') AND MassiveLoaderRequest__c = :idLoaderRequest
-            ];
-
-            if (listErrorReq!=null && listErrorReq.size()>0) {
-                HDT_BA_ErrorRequestItem batch = new HDT_BA_ErrorRequestItem(idLoaderRequest);
-                Database.executebatch(batch, 1000);
+        switch on selectedProcess.ApexClass__c {
+            when 'HDT_UTL_ProcessSales' {
+                System.debug(LoggingLevel.DEBUG, '>>> continue with HDT_BA_ProcessSales...');
+                HDT_BA_ProcessSales processReq = new HDT_BA_ProcessSales(idLoaderRequest, batchSize, process);
+                Database.executeBatch(processReq, batchSize);
             }
-
+            when 'HDT_UTL_ProcessSetOrderForVas' {
+                System.debug(LoggingLevel.DEBUG, '>>> continue with HDT_BA_SetRequestItemForVasOrders...');
+                HDT_BA_SetRequestItemForVasOrders setRequestItemForVasOrders = new HDT_BA_SetRequestItemForVasOrders(idLoaderRequest, batchSize, process);
+                Database.executeBatch(setRequestItemForVasOrders, batchSize);    
+            }
+            when else {
+                MassiveLoaderRequest__c oldReq = new MassiveLoaderRequest__c();
+                oldReq.Id = idLoaderRequest;
+                oldReq.Status__c = constantsUtl.MASSIVLOADER_STATUS_CHIUSO;
+                oldReq.Phase__c = 'File processato';
+                update oldReq;
+    
+                // Creazione file RequestItem in Errore 
+                List<MassiveLoaderRequestItem__c> listErrorReq = [
+                    SELECT Id, Name, Data__c, Status__c, StatusDescription__c
+                    FROM MassiveLoaderRequestItem__c
+                    WHERE Status__c IN ('Errore', 'Chiuso') AND MassiveLoaderRequest__c = :idLoaderRequest
+                ];
+    
+                if (listErrorReq!=null && listErrorReq.size()>0) {
+                    HDT_BA_ErrorRequestItem batch = new HDT_BA_ErrorRequestItem(idLoaderRequest);
+                    Database.executebatch(batch, 1000);
+                }
+            }
         }
+
+        //if(apexClassesForBatch.contains(selectedProcess.ApexClass__c)){
+//
+        //} else {
+//
+//
+        //}
 
     }
 

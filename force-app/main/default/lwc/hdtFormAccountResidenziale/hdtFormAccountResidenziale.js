@@ -424,7 +424,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         let comNascita = this.template.querySelector('[data-id="birthPlace"]');
         this.spinner= true;
         let messageError= "Completare tutti i campi obbligatori !";
-        var mailFormat = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+        var mailFormat = /^(?:[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[A-Za-z0-9-]*[A-Za-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
         
         //CAMPI IN UPPERCASE
         let firstNameToUC = '';
@@ -470,9 +470,9 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         if(!companyOwner.reportValidity()){
             isValidated=false;
         }
-        if(!comNascita.reportValidity()){
-            isValidated=false;
-        }
+        // if(!comNascita.reportValidity()){
+        //     isValidated=false;
+        // }
         
         // if(!settlDistrict.reportValidity()){
         //     isValidated=false;
@@ -511,12 +511,6 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             }
             isValidated=false;
         }
-        if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
-            if(mobilePhone.value.length<9 || mobilePhone.value.length > 10){
-                isValidated=false;
-                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre!";
-            }
-        }
         console.log('LENGTH:'+ this.fiscalcode + '-:' + this.fiscalCode.value.length);
         if(!(this.fiscalCode.value=== undefined || this.fiscalCode.value.trim()==='')){
             if(this.fiscalCode.value.length != 16){
@@ -529,6 +523,10 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             if(mobilePhone.value.length<9 || mobilePhone.value.length > 10){
                 isValidated=false;
                 messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre!";
+            }
+            if( String(mobilePhone.value).charAt(0)!='3' ){
+                isValidated=false;
+                messageError=" Il numero di cellulare deve iniziare con il numero 3!";
             }
         }
         if(!(phoneNumber.value=== undefined || phoneNumber.value.trim()==='')){
@@ -549,18 +547,18 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         }
         
         if(isValidated){
-            this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
+            this.accountAddressRes =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
             console.log('accountAddressRes : '+ JSON.stringify(this.accountAddressRes));
-            this.getAccountAdress();
+            this.getAccountAdressRes();
             if (!this.disableCopyRes) {
-                this.accountAddressRes=this.accountAddress;    
+                this.accountAddress=this.accountAddressRes;    
               }
               else{
-                  this.accountAddressRes=[];
-                  this.accountAddressRes =this.template.querySelector("c-hdt-target-object-address-fields-res").handleAddressFields();
+                  this.accountAddress=[];
+                  this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields-res").handleAddressFields();
                   
               }
-            this.getAccountAdressRes();
+            this.getAccountAdress();
             if(this.isVerified && this.isVerifiedShipping ){
                 var isEmpty=false;
                 if(this.gender === undefined || this.gender.trim()===''){
@@ -597,6 +595,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         }
                         if(!this.birthPlace || this.birthPlace.trim()===''){
                             this.birthPlace=fiscData[keyCode].birthPlace;
+                            birthPlaceToUC = this.birthPlace.toUpperCase();
                             console.log('birthPlace : ' + this.birthPlace);
                             
                             //this.birthPlace= fiscData.birthPlace;
