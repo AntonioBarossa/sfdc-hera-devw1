@@ -435,11 +435,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>UseChangeCharge__c</field>
-            <table>wrts_prcgvr__Activity__c.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>RegionalAdditional__c</field>
             <table>wrts_prcgvr__Activity__c.Cases__r</table>
         </columns>

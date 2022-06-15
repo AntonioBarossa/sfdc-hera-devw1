@@ -67,11 +67,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>UseChangeCharge__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>RegionalAdditional__c</field>
             <table>Case</table>
         </columns>
