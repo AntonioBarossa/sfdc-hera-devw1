@@ -1817,6 +1817,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.CO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Case.CaliberAvailable__c</field>
         <readable>false</readable>
@@ -1845,6 +1850,11 @@
         <editable>true</editable>
         <field>Case.CemeteryName__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Cemetery__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -1998,6 +2008,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.DistributorServiceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Distributor__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2024,6 +2039,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.EnergyService__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2504,6 +2524,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.TotalToPay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.TraceabilityCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

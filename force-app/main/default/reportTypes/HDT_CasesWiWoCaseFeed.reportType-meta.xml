@@ -167,11 +167,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CO__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IbanCAB__c</field>
             <table>Case</table>
         </columns>
@@ -1032,11 +1027,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ModeSendPaperlessCode__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>SendPaperlessCodeMode__c</field>
             <table>Case</table>
         </columns>
@@ -1203,11 +1193,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>ExistingInstallmentsPlanNumber__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>InstallmentPlanNumber__c</field>
             <table>Case</table>
         </columns>
         <columns>
