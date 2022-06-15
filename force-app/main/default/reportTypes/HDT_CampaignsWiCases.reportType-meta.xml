@@ -515,11 +515,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CO__c</field>
-            <table>Campaign.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IbanCAB__c</field>
             <table>Campaign.Cases__r</table>
         </columns>
@@ -616,11 +611,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>DistributorFiscalCode__c</field>
-            <table>Campaign.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Cemetery__c</field>
             <table>Campaign.Cases__r</table>
         </columns>
         <columns>
@@ -741,11 +731,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>SalesCompanyCode__c</field>
-            <table>Campaign.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>TraceabilityCode__c</field>
             <table>Campaign.Cases__r</table>
         </columns>
         <columns>
@@ -1440,11 +1425,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>DistributorServiceCode__c</field>
-            <table>Campaign.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>QuotationNumber__c</field>
             <table>Campaign.Cases__r</table>
         </columns>
@@ -1691,11 +1671,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CommodityFormula__c</field>
-            <table>Campaign.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>EnergyService__c</field>
             <table>Campaign.Cases__r</table>
         </columns>
         <columns>
