@@ -715,6 +715,11 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					String pkgId = response.deliverPackageResponse.packageIds;
 					HDT_UTL_DocumentalManagement.createDocumentSendTracking(msg, recordId, pkgId, processRecord);
 					HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(response, context);
+					if(context == 'Order' && (String)processRecord.get('DocSendingMethod__c') != null && (String)processRecord.get('DocSendingMethod__c') == 'Stampa Cartacea'){
+						Date dToday = Date.today();
+						String dateStr = dToday.day() + '/' + dToday.month() + '/' + dToday.year();
+						createPublicLink(recordId, response.deliverPackageResponse.composedDocument, 'Plico Contrattuale ' +dateStr);
+					}
 				}
 			}
 		}catch(Exception ex){
