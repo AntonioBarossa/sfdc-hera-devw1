@@ -11,23 +11,16 @@ public with sharing class HDT_UTL_LandRegistry {
         HDT_QR_LandRegistry qrClass = new HDT_QR_LandRegistry();
         return qrClass.getLandRegistryByServicePointIds(servicePointIds);
     }
-
+    
     @AuraEnabled
     public static list<CadastralCategories__c> getCadastralCategories() {     
-	    list<CadastralCategories__c> cdCategories = [
-            SELECT Id, Name, Categoria__c
-	        FROM CadastralCategories__c 
-        ];
+	    list<CadastralCategories__c> cdCategories = [ SELECT Id, Category__c, Description__c FROM CadastralCategories__c ];
         return cdCategories;
     }
-
+    
     @AuraEnabled
-    public static list<Cities__c> getCities() {        
-	    list<Cities__c> cities = [
-            SELECT Id, Comune_catastale__c, Codice_comune_catastale__c, Comune_amministrativo__c, Provincia__c, TARI_Gestita__c
-	        FROM Cities__c 
-        ];
+    public static list<CityTechnicalData__c> getCities() {        
+	    list<CityTechnicalData__c> cities = [ SELECT Id, CadastralCity__c, CityCode__c, Province__c FROM CityTechnicalData__c ];
         return cities;
     }
-
 }
