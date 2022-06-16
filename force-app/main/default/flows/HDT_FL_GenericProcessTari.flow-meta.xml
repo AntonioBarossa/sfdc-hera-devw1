@@ -78,6 +78,20 @@
                 <elementReference>getAccount.LastName__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.RelatedCase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Order__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>insert_the_case</targetReference>
         </connector>
@@ -141,6 +155,20 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>getAccount.LastName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.RelatedCase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Order__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -208,6 +236,20 @@
                 <elementReference>getAccount.LastName__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.RelatedCase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Order__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>insert_the_case_formulari</targetReference>
         </connector>
@@ -264,6 +306,20 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>getAccount.LastName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.RelatedCase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Order__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
             </value>
         </assignmentItems>
         <connector>
