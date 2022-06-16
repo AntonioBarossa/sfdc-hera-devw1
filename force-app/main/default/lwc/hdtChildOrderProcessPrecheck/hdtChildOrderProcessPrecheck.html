@@ -2,7 +2,7 @@
   @description       : 
   @author            : Giacinto Florio
   @group             : 
-  @last modified on  : 13-06-2022
+  @last modified on  : 16-06-2022
   @last modified by  : Giacinto Florio
 -->
 <template>
@@ -95,7 +95,11 @@
         </lightning-layout>
 
         <lightning-layout if:true={isCheckAssessmentsVisible}>
-            <c-hdt-check-assessments></c-hdt-check-assessments>
+            <lightning-layout-item padding="horizontal-large" size="12">
+                <h1 class="slds-text-title slds-truncate slds-text-title_bold" title="Verifica Accertamenti">Verifica Accertamenti</h1>
+                <br>
+                <c-hdt-check-assessments></c-hdt-check-assessments>
+            </lightning-layout-item>
         </lightning-layout>
 
         <div class="slds-clearfix slds-p-around_small">

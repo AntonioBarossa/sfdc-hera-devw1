@@ -2,29 +2,24 @@
   @description       : 
   @author            : Giacinto Florio
   @group             : 
-  @last modified on  : 13-06-2022
+  @last modified on  : 15-06-2022
   @last modified by  : Giacinto Florio
 -->
 <template>
-    
-        <lightning-layout-item padding="horizontal-large" size="12">
-            <h1 class="slds-text-title slds-truncate slds-text-title_bold" title="Verifica Accertamenti">Verifica Accertamenti</h1>
-                
-                    <div style="width: auto;">
-                        <template if:true={data}>
-                            <lightning-datatable
-                                                key-field="id"
-                                                columns={columns}
-                                                data={data}
-                                                hide-checkbox-column
-                                                default-sort-direction={defaultSortDirection}
-                                                sorted-direction={sortDirection}
-                                                sorted-by={sortedBy}
-                                                onsort={onHandleSort}>
-                            </lightning-datatable>
-                        </template>
-                    </div>
 
-        </lightning-layout-item>
+        <div style="width: auto;">
+            <template if:true={data}>
+                <lightning-datatable
+                                    key-field="id"
+                                    columns={columns}
+                                    data={data}
+                                    hide-checkbox-column
+                                    default-sort-direction={defaultSortDirection}
+                                    sorted-direction={sortDirection}
+                                    sorted-by={sortedBy}
+                                    onsort={onHandleSort}>
+                </lightning-datatable>
+            </template>
+        </div>
 
 </template>
