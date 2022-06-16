@@ -28,6 +28,12 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
        // List<Lead> leadToCheck = new List<Lead>();
         //Map<String,String> leadDomain = new Map<String,String>();
         for(Lead l : listNew){
+            if(String.isNotBlank(l.FirstName)){
+                l.FirstName = l.FirstName.toUpperCase();
+            }
+            if(String.isNotBlank(l.LastName)){
+                l.LastName= l.LastName.toUpperCase();
+            }
             if(l.email != null){
                 String s = l.email.split('@')[1];
                 if(mapResBlacklist.get(s.toUpperCase()) != null){
@@ -42,7 +48,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         else{
                             l.company = l.firstname + ' '  + l.lastname; 
                         }
-                        }
+                    }
                 }
             }
             else{
