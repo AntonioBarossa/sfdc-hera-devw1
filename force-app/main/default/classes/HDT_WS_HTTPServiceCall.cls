@@ -14,6 +14,7 @@ public class HDT_WS_HTTPServiceCall {
         }        
         HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
         try{
+            System.debug('req: '+req);
             HTTPResponse res = h.send(req);
 
             /* if(res.getStatusCode()/100 == 2){
@@ -26,14 +27,20 @@ public class HDT_WS_HTTPServiceCall {
                 resp.errorDetails = res.getBody();
             } */
             if (res != null){
+                System.debug('res: '+res);
+                System.debug('body: '+res.getBody());
                 resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
+                System.debug('resp: '+resp);
                 resp.statusCode = res.getStatusCode();
+                System.debug('respStat: '+resp.statusCode);
+
             }else{
                 resp.exceptionMessage = 'Attenzione! Nessuna risposta dal server.';
             }
             
         }
         catch(Exception e){
+            System.debug('exp: ' +e);
             resp.exceptionMessage = e.getMessage();
         }
         return resp;  
