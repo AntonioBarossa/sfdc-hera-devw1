@@ -1,11 +1,13 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import LNDRGS_OBJ from '@salesforce/schema/LandRegistry__c';
 import retrieveLandRegistry from '@salesforce/apex/HDT_UTL_LandRegistry.retrieveLandRegistry';
 import getCadastralCategories from '@salesforce/apex/HDT_UTL_LandRegistry.getCadastralCategories';
 import getCities from '@salesforce/apex/HDT_UTL_LandRegistry.getCities';
 
-
-const columns = [
+const RT_NAME = 'HDT_RT_DatiCatastali_TARI';
+const COLUMNS = [
     { label: 'Codice assenza dati catastali',   fieldName: 'CodeMissingRegistryData__c',                type: 'text' },
     { label: 'Destinazione Uso',                fieldName: 'DestinationUsage__c',                       type: 'text' },
     { label: 'Comune catastale',                fieldName: 'RegistryCity__c',                           type: 'text' },
@@ -24,6 +26,12 @@ const columns = [
 ];
 
 export default class HdtLandRegistry extends LightningElement {
+    @wire(getObjectInfo, { objectApiName: LNDRGS_OBJ })
+    objectInfo;
+    get rtIdTari() {
+        const rtis = this.objectInfo.data.recordTypeInfos;
+        return Object.keys(rtis).find( rti => rtis[rti].name === RT_NAME );
+    }
     
     @api servicePointId = 'a281X000000DqcVQAS'; //ID MOCKATO PER TEST (da togliere)
     @api selectedLandRegistryId = 'a3j1x000000Fa14AAC'; //ID MOCKATO PER TEST (da togliere)
@@ -32,7 +40,7 @@ export default class HdtLandRegistry extends LightningElement {
 
     @track tableData = [];
     @track tableSelectedRows = [];
-    @track tableColumns=columns;
+    @track tableColumns = COLUMNS;
     @track registryCityValue;
     @track legalCityValue;
     @track registryCityCodeValue;
@@ -40,11 +48,11 @@ export default class HdtLandRegistry extends LightningElement {
     @track cadastralCategoryValue;
 
     get disableModifica(){ return !this.selectedLandRegistryId || this.selectedLandRegistryId=='' || this.readonly }
-    disableSalva=false;
-    disableForm=true;
+    disableSalva = false;
+    disableForm = true;
 
-    showSpinner=false;
-    showSalva=false;
+    showSpinner = false;
+    showSalva = false;
     // showTable=false;
     // showForm=false;
 
@@ -54,8 +62,7 @@ export default class HdtLandRegistry extends LightningElement {
     cityOptions = [];
 
     connectedCallback(){
-        console.log('### connectedCallback');
-        console.log('### selectedLandRegistryId= '+this.selectedLandRegistryId);
+        console.log('### connectedCallback selectedLandRegistryId', this.selectedLandRegistryId);
         this.call_retrieveLandRegistry();
         this.call_getCadastralCategories();
         this.call_getCities();
@@ -75,7 +82,7 @@ export default class HdtLandRegistry extends LightningElement {
                 this.tableData = result;
             })
             .catch(error => {
-                console.error("### retrieveLandRegistry Errore: "+error);
+                console.error("### retrieveLandRegistry Errore", error);
             })
             .finally(() => {
                 if(this.tableData.length > 0){
@@ -99,10 +106,9 @@ export default class HdtLandRegistry extends LightningElement {
                 for (var i = 0; i < result.length; i++) {
                     this.cadastralCategoryOptions=[...this.cadastralCategoryOptions,{label: ''+result[i].Category__c+' - '+result[i].Description__c, value: result[i].Category__c} ];
                 }
-                console.log('### cadastralCategories', this.cadastralCategoryOptions);
             })
             .catch(error => {
-                console.error("### getCadastralCategories Errore: "+error);
+                console.error("### retrieveLandRegistry Errore", error);
             })
             .finally(() => {
                 this.showSpinner = false;
@@ -119,10 +125,9 @@ export default class HdtLandRegistry extends LightningElement {
                 for (var i = 0; i < result.length; i++) {
                     this.cityOptions=[...this.cityOptions,{label: result[i].CadastralCity__c , value: result[i].CadastralCity__c} ];
                 }
-                console.log('### cityOptions', this.cityOptions);
             })
             .catch(error => {
-                console.error("### getCities Errore: "+error);
+                console.error("### retrieveLandRegistry Errore", error);
             })
             .finally(() => {
                 this.showSpinner = false;
@@ -133,6 +138,7 @@ export default class HdtLandRegistry extends LightningElement {
         console.log("### handleFieldChange", event);
         this.disableSalva=false;
         const source = event.target.name ? event.target.name : event.target.fieldName;
+        console.log("### handleFieldChange source", source);
         if(source == "RegistryCity__c"){
             let foundCity = this.cityTechnicalData.find(element => element.CadastralCity__c == event.detail.value);
             this.registryCityValue = foundCity.CadastralCity__c;
@@ -227,6 +233,7 @@ export default class HdtLandRegistry extends LightningElement {
         event.detail.fields.RegistryCity__c = this.registryCityValue;
         event.detail.fields.LegalCity__c = this.legalCityValue;
         event.detail.fields.RegistryCategory__c = this.cadastralCategoryValue;
+        event.detail.fields.RecordTypeId = this.rtIdTari();
         this.template.querySelector('lightning-record-edit-form').submit(event.detail.fields);
         this.disableSalva=true;
         this.showSpinner = true;
