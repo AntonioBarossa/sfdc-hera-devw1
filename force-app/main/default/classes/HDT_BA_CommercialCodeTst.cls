@@ -51,27 +51,19 @@ public class HDT_BA_CommercialCodeTst {
             
             
             List<CampaignMember> campMembers = HDT_UTL_DataFactoryTst.createCampaignMember(true,camps[0].id,leads,contacts);
-
-            Commercial_Code_Batch_Context__c context = new Commercial_Code_Batch_Context__c(Name = 'textContext',
-                                                                                            CampaignId__c = camps[0].id,
-                                                                                            CampaignMemberId__c = campMembers[0].Id,
-                                                                                            CommercialCodeDone__c = FALSE,
-                                                                                            BollettaDone__c = FALSE);
-            insert context;
         }
     }
     
     @isTest
     static void test(){
-        List<Commercial_Code_Batch_Context__c> context = [SELECT Id, CampaignId__c, CampaignMemberId__c FROM Commercial_Code_Batch_Context__c];
-        CampaignMember cmBefore = [SELECT id,PromoCommercialCode__c from CampaignMember where id = :context[0].CampaignMemberId__c];
+        CampaignMember cmBefore = [SELECT id,PromoCommercialCode__c from CampaignMember WHERE PromoCommercialCode__c = NULL LIMIT 1];
         
         Test.startTest();
 		HDT_BA_CommercialCode cc = new HDT_BA_CommercialCode();     
         Database.executeBatch(cc,200);
         Test.stopTest();
         
-        CampaignMember cmAfter = [SELECT id,PromoCommercialCode__c from CampaignMember where id = :context[0].CampaignMemberId__c];
+        CampaignMember cmAfter = [SELECT id,PromoCommercialCode__c from CampaignMember where id = :cmBefore.id];
         System.assertNotEquals(cmBefore.PromoCommercialCode__c,cmAfter.PromoCommercialCode__c,'CampaignMember field PromoCommercialCode__c not updated by the batch'); 
     }
 }

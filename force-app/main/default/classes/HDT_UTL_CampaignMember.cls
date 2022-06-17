@@ -132,14 +132,6 @@ public with sharing class HDT_UTL_CampaignMember {
         }
     }
 
-    public static void createCommercialCode(List<CampaignMember> newCampaignMember) {
-        List<Commercial_Code_Batch_Context__c> newContext = new List<Commercial_Code_Batch_Context__c>();
-        for (CampaignMember member : newCampaignMember){
-            newContext.add( new Commercial_Code_Batch_Context__c(Name=(''+member.CampaignId+member.Id).right(28), CampaignId__c=member.CampaignId, CampaignMemberId__c=member.Id));
-        }        
-        HDT_UTL_DatabaseService.insertSObject(newContext);
-    }
-
     public static void campaignSuspension(List<Campaign> newCampaigns, List<Campaign> oldCampaigns) {
 
         List<Campaign> campaignsToUpdate = new List<Campaign>();
