@@ -32,7 +32,8 @@
             <!-- Campi -->
             <!-- <template if:true={showForm}> -->
                 <lightning-record-edit-form object-api-name="LandRegistry__c" 
-                                            record-id={selectedLandRegistryId} 
+                                            record-id={selectedLandRegistryId}
+                                            record-type-id={rtIdTari}
                                             onsubmit={handleFormSubmit}
                                             onsuccess={handleFormSuccess}
                                             onerror={handleFormError}>

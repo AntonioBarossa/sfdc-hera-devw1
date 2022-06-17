@@ -6,7 +6,7 @@ import retrieveLandRegistry from '@salesforce/apex/HDT_UTL_LandRegistry.retrieve
 import getCadastralCategories from '@salesforce/apex/HDT_UTL_LandRegistry.getCadastralCategories';
 import getCities from '@salesforce/apex/HDT_UTL_LandRegistry.getCities';
 
-const RT_NAME = 'HDT_RT_DatiCatastali_TARI';
+const RT_NAME = 'Dati Catastali TARI';
 const COLUMNS = [
     { label: 'Codice assenza dati catastali',   fieldName: 'CodeMissingRegistryData__c',                type: 'text' },
     { label: 'Destinazione Uso',                fieldName: 'DestinationUsage__c',                       type: 'text' },
@@ -28,13 +28,9 @@ const COLUMNS = [
 export default class HdtLandRegistry extends LightningElement {
     @wire(getObjectInfo, { objectApiName: LNDRGS_OBJ })
     objectInfo;
-    get rtIdTari() {
-        const rtis = this.objectInfo.data.recordTypeInfos;
-        return Object.keys(rtis).find( rti => rtis[rti].name === RT_NAME );
-    }
     
     @api servicePointId = 'a281X000000DqcVQAS'; //ID MOCKATO PER TEST (da togliere)
-    @api selectedLandRegistryId = 'a3j1x000000Fa14AAC'; //ID MOCKATO PER TEST (da togliere)
+    @api selectedLandRegistryId = 'a3j1x000000Fa2JAAS'; //ID MOCKATO PER TEST (da togliere)
     @api required = false;
     @api readonly = false;
 
@@ -47,6 +43,15 @@ export default class HdtLandRegistry extends LightningElement {
     @track provinceValue;
     @track cadastralCategoryValue;
 
+    get rtIdTari(){
+        let rtId;
+        if(this.objectInfo.data){
+            const recordTypesMap = this.objectInfo.data.recordTypeInfos;
+            const foundRt = Object.values(recordTypesMap).find( element => element.name === RT_NAME );
+            if(foundRt) rtId = foundRt.recordTypeId;
+        }
+        return rtId;
+    }
     get disableModifica(){ return !this.selectedLandRegistryId || this.selectedLandRegistryId=='' || this.readonly }
     disableSalva = false;
     disableForm = true;
@@ -66,6 +71,7 @@ export default class HdtLandRegistry extends LightningElement {
         this.call_retrieveLandRegistry();
         this.call_getCadastralCategories();
         this.call_getCities();
+        this.required=true;
     }
 
     call_retrieveLandRegistry() {
@@ -205,11 +211,20 @@ export default class HdtLandRegistry extends LightningElement {
 
     handleSelection(rowId){
         const selectedRow = this.tableData.find(element => element.Id == rowId);
-        this.registryCityValue = selectedRow.RegistryCity__c;
-        this.registryCityCodeValue = selectedRow.RegistryCityCode__c;
-        this.legalCityValue = selectedRow.LegalCity__c;
-        this.provinceValue = selectedRow.Province__c;
-        this.cadastralCategoryValue = selectedRow.RegistryCategory__c;
+        if(selectedRow){
+            this.registryCityValue = selectedRow.RegistryCity__c;
+            this.registryCityCodeValue = selectedRow.RegistryCityCode__c;
+            this.legalCityValue = selectedRow.LegalCity__c;
+            this.provinceValue = selectedRow.Province__c;
+            this.cadastralCategoryValue = selectedRow.RegistryCategory__c;
+        }
+        else{
+            this.registryCityValue = null;
+            this.registryCityCodeValue = null;
+            this.legalCityValue = null;
+            this.provinceValue = null;
+            this.cadastralCategoryValue = null;
+        }
     }
 
     handleModificaClick(){
@@ -233,7 +248,6 @@ export default class HdtLandRegistry extends LightningElement {
         event.detail.fields.RegistryCity__c = this.registryCityValue;
         event.detail.fields.LegalCity__c = this.legalCityValue;
         event.detail.fields.RegistryCategory__c = this.cadastralCategoryValue;
-        event.detail.fields.RecordTypeId = this.rtIdTari();
         this.template.querySelector('lightning-record-edit-form').submit(event.detail.fields);
         this.disableSalva=true;
         this.showSpinner = true;
