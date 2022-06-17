@@ -66,18 +66,20 @@ public inherited sharing class HDT_UTL_SlaManagement {
             }
 
             SlaTracking__c currentTrack;
+            Set<Id> adminIds;
             for(HDT_WRP_SlaManagement.HDT_WRP_Event eventObj : wrpCaseList){
-                
+
+                adminIds = new Set<Id>();
+
                 if(trackingMap.containsKey(eventObj.recordId)){
 
                     System.debug(logginglevel.DEBUG, '>>> update tracking context');
 
                     List<SlaTracking__c> trackingList = trackingMap.get(eventObj.recordId);
-                    //Set<Id> adminIds = new Set<Id>();
 
                     for(SlaTracking__c track : trackingMap.get(eventObj.recordId)){
                         System.debug(logginglevel.DEBUG, '>>> checking trckSla: ' + track.Id);
-                        //adminIds.add(track.SlaAdministration__c);
+                        adminIds.add(track.SlaAdministration__c);
 
                         if(wrpAdminMap.containsKey(track.SlaAdministration__c) && track.Status__c.equalsIgnoreCase('Aperto')){
 
@@ -93,13 +95,14 @@ public inherited sharing class HDT_UTL_SlaManagement {
                         }
                     }
 
-                } else {
-                    System.debug(logginglevel.DEBUG, '>>> insert tracking context');
-                    // check for new tracking record to insert
+                }
+
+                // check for new tracking record to insert
+                if(wrpAdminMap.size() > 0){
                     System.debug(logginglevel.DEBUG, '>>> check for new tracking record to insert...');
                     for(Id adminRuleId : wrpAdminMap.keySet()){
 
-                        //if(!adminIds.contains(adminRuleId)){
+                        if(!adminIds.contains(adminRuleId)){
                             /// check if this rule have to create new tracking record
                             System.debug(logginglevel.DEBUG, '>>> check if this rule have to create new tracking record...');
                             currentTrack = createNewTrackingRecord(currentTrack, wrpAdminMap.get(adminRuleId), eventObj);
@@ -109,7 +112,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
                             } else {
                                 System.debug(logginglevel.DEBUG, '>>> no track to insert');
                             }
-                        //}
+                        }
                     }
                 }
 
@@ -330,8 +333,11 @@ public inherited sharing class HDT_UTL_SlaManagement {
                 return null;
             }
 
+            return currentTrack;
+
+        } else {
+            return null;
         }
-        return currentTrack;
 
     }
 
@@ -500,23 +506,23 @@ public inherited sharing class HDT_UTL_SlaManagement {
         return slaMgmt;
     }
 
-    public static void sendCustomNotification(String message){
-
-        try{
-            Id typeId = [SELECT Id FROM CUstomNotificationType WITH SECURITY_ENFORCED LIMIT 1].Id;
-            Id userId = '0051X0000055rbNQAQ';
-            Messaging.CustomNotification notification = new Messaging.CustomNotification();
-            notification.setTitle('Event notification');
-            notification.setBody(message);
-            notification.setSenderId(userId);
-            notification.setNotificationTypeId(typeId);
-            notification.setTargetId(userId);
-            notification.send(new Set<String> {userId});
-        } catch(Exception ex){
-            System.debug(logginglevel.DEBUG, '>>> somethig goes wrong with comunication: ' + ex.getMessage() + ' [' + String.valueOf(ex.getLineNumber()) + ']');
-        }
-
-    }
+    //public static void sendCustomNotification(String message){
+//
+    //    try{
+    //        Id typeId = [SELECT Id FROM CUstomNotificationType WITH SECURITY_ENFORCED LIMIT 1].Id;
+    //        Id userId = '0051X0000055rbNQAQ';
+    //        Messaging.CustomNotification notification = new Messaging.CustomNotification();
+    //        notification.setTitle('Event notification');
+    //        notification.setBody(message);
+    //        notification.setSenderId(userId);
+    //        notification.setNotificationTypeId(typeId);
+    //        notification.setTargetId(userId);
+    //        notification.send(new Set<String> {userId});
+    //    } catch(Exception ex){
+    //        System.debug(logginglevel.DEBUG, '>>> somethig goes wrong with comunication: ' + ex.getMessage() + ' [' + String.valueOf(ex.getLineNumber()) + ']');
+    //    }
+//
+    //}
 
     public static List<String> getFieldsForChangeEvent(String objApiName, String fieldSetName){
         List<String> fieldSetList = new List<String>();
