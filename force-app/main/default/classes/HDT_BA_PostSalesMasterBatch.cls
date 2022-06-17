@@ -63,10 +63,11 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                     when Case currentCase{
                         
                         //ANNULLAMENTO CASE BOZZA AUTOLETTURA OLTRE SCADENZA
-                        if(currentCase.Phase__c.equalsIgnoreCase('Bozza') && mySobj2 != null && mySobj3 != null){
-
-                            if(currentCase.Cluster__c.equalsIgnoreCase('Autolettura')){
-                                //Get data from Days to Expiration Custom Setting
+                        if(currentCase.Phase__c.equalsIgnoreCase('Bozza')){
+                            currentCase.Phase__c = 'Bozza Annullata';
+                            myCurrentCaseList.add(currentCase);
+                            /*if(currentCase.Cluster__c.equalsIgnoreCase('Autolettura')){
+                              //Get data from Days to Expiration Custom Setting
                                 CS_DaysToExpiration__c myCS1 = (CS_DaysToExpiration__c)mySobj2;
                                 Integer strNumberOfDays = integer.valueof(myCS1.NumberOfDays__c);
 
@@ -85,7 +86,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                     myCurrentCaseList.add(currentCase);
                                     continue;
                                 }
-                            }
+                            }*/
                         }
                         
                         if( currentCase.Type.equalsIgnoreCase('Piano Rateizzazione') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
