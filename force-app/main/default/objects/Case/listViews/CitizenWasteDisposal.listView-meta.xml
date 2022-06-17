@@ -4,12 +4,17 @@
     <columns>CASES.CASE_NUMBER</columns>
     <columns>Cluster__c</columns>
     <columns>CASES.TYPE</columns>
+    <columns>Phase__c</columns>
+    <columns>InvoicingStreetName__c</columns>
+    <columns>InvoicingStreetNumber__c</columns>
+    <columns>InvoicingCity__c</columns>
+    <columns>InvoicingProvince__c</columns>
     <columns>AlternativeAddress__c</columns>
     <columns>TypeOperation__c</columns>
     <columns>MaterialDescription__c</columns>
-    <columns>ClientTypology__c</columns>
     <columns>PhoneNumber__c</columns>
-    <filterScope>Mine</filterScope>
+    <columns>ClientTypology__c</columns>
+    <filterScope>Everything</filterScope>
     <filters>
         <field>CASES.TYPE</field>
         <operation>equals</operation>
@@ -24,5 +29,5 @@
         <field>ACCOUNT.NAME</field>
         <operation>equals</operation>
     </filters>
-    <label>Da cittadino Gestione rifiuti</label>
+    <label>Gestione Rifiuti - Da cittadino</label>
 </ListView>
