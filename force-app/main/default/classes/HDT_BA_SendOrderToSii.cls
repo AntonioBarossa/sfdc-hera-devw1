@@ -14,16 +14,12 @@ public with sharing class HDT_BA_SendOrderToSii implements Database.Batchable<sO
     }
 
     public void execute(Database.BatchableContext bc, List<Order> scope){
-
-        List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> orderToSendList = new List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>();
-
+        List<Order> orderToUpdate = new List<Order>();
         for(Order ord : scope){
             ord.Phase__c = 'Comunicazione verso Heroku';
-            HDT_PEV_VoltureChangeManagerUpdateSObj__e orderToSend = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
-            orderToSend.SerializedSobj__c = JSON.serialize(ord);
-            orderToSendList.add(orderToSend);
+            orderToUpdate.add(ord);
         }
-        Eventbus.publish(orderToSendList);
+        HDT_UTL_DatabaseService.updateSObject(ord);
     }
     
     public void finish(Database.BatchableContext bc){
