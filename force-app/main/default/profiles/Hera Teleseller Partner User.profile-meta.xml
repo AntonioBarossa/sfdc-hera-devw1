@@ -1875,16 +1875,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>ATO__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>ServiceTari__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Lead.isSendToReitek__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7687,6 +7677,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>City__c.IsNotTransition__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>City__c.ATO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>City__c.ServiceTari__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

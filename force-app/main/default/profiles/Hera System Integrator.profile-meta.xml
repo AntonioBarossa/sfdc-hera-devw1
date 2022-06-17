@@ -7747,6 +7747,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>City__c.ATO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>City__c.ServiceTari__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>City__c.RegionName__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32072,16 +32082,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__TransitionActivityTemplate__c.wrts_prcgvr__IsRequired__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>ATO__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>ServiceTari__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
