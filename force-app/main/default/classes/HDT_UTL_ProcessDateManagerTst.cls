@@ -252,7 +252,7 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
  
         System.runAs(u){
 
-            List<Order> orders = [SELECT Id, Phase__c,DateSentToSII__c, SignedDate__c, RecessNotice__c,EffectiveDate__c,CommodityFormula__c,MarketOrigin__c,SupplyType__c,VoltageLevel__c, ClientCategoryFormula__c, DocumentalProcessType__c, IsActivationDeferred__c, Channel__c, Market__c, CustomerCategory__c, SignatureMethod__c, DocSendingMethod__c, WizardCompletedDate__c FROM Order WHERE Name = 'childOrder0'];
+            List<Order> orders = [SELECT Id, Phase__c,DateSentToSII__c, SignedDate__c, RecessNotice__c,EffectiveDate__c,CommodityFormula__c,MarketOrigin__c,SupplyType__c,VoltageLevel__c, ClientCategoryFormula__c, DocumentalProcessType__c, IsActivationDeferred__c, Channel__c, Market__c, CustomerCategory__c, SignatureMethod__c, DocSendingMethod__c,WizardCompletedDate__c FROM Order WHERE Name = 'childOrder0'];
 
             FulfillmentDateMatrix__c matrixDate = new FulfillmentDateMatrix__c();
 			matrixDate.OriginMarket__c = orders[0].MarketOrigin__c;
@@ -290,7 +290,7 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
 
             List<Order> orders = [SELECT Id, Phase__c,DateSentToSII__c, SignedDate__c, RecessNotice__c,EffectiveDate__c,CommodityFormula__c,
                                 MarketOrigin__c,SupplyType__c,VoltageLevel__c, ClientCategoryFormula__c, DocumentalProcessType__c,
-                                IsActivationDeferred__c, Channel__c, Market__c, CustomerCategory__c, SignatureMethod__c, DocSendingMethod__c,WizardCompletedDate__c 
+                                IsActivationDeferred__c, Channel__c, Market__c, CustomerCategory__c, SignatureMethod__c, DocSendingMethod__c,WizardCompletedDate__c
                                 FROM Order WHERE Name = 'childOrder2'];
 
             FulfillmentDateMatrix__c matrixDate = new FulfillmentDateMatrix__c();

@@ -59,6 +59,10 @@
                 <behavior>Readonly</behavior>
                 <field>SiebelCatalog__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>VAT__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -101,6 +105,18 @@
                 <behavior>Edit</behavior>
                 <field>DistributorPracticeCode__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ImplantType__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ExciseEle__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ExciseGAS__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -113,10 +129,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ServicePoint__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ImplantType__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

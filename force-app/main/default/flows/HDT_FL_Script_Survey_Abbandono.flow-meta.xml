@@ -2,6 +2,78 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
     <choices>
+        <name>A2A_VENDITA</name>
+        <choiceText>A2A VENDITA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>A2A VENDITA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>A_F_ENERGIA_SRL</name>
+        <choiceText>A.F. ENERGIA SRL</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>A.F. ENERGIA SRL</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>A_S_M_VOGHERA</name>
+        <choiceText>A.S.M. VOGHERA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>A.S.M. VOGHERA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>AB_ENERGIE_S_R_L</name>
+        <choiceText>AB ENERGIE S.R.L.</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>AB ENERGIE S.R.L.</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ACAM_Gas</name>
+        <choiceText>ACAM Gas</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ACAM Gas</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ACEA_ENERGIA_SPA</name>
+        <choiceText>ACEA ENERGIA SPA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ACEA ENERGIA SPA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ACEA_VENDITE</name>
+        <choiceText>ACEA VENDITE</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ACEA VENDITE</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>AEG_ENERGIA_GAS</name>
+        <choiceText>AEG ENERGIA GAS</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>AEG ENERGIA GAS</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Altro</name>
+        <choiceText>Altro</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Altro</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>Choice_No</name>
         <choiceText>No</choiceText>
         <dataType>String</dataType>
@@ -23,6 +95,174 @@
         <dataType>String</dataType>
         <value>
             <stringValue>Si</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>COOP_ACCENDI</name>
+        <choiceText>COOP/ACCENDI</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>COOP/ACCENDI</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>COOPGAS_S_r_l_ACCENDI</name>
+        <choiceText>COOPGAS S.r.l./ACCENDI</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>COOPGAS S.r.l./ACCENDI</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>DOMESTIKA_ENERGIA</name>
+        <choiceText>DOMESTIKA ENERGIA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>DOMESTIKA ENERGIA </stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>E_2G_ENERGIA_SRL</name>
+        <choiceText>2G ENERGIA SRL</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>2G ENERGIA SRL</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>E_3VG_POWER_GAS</name>
+        <choiceText>3VG POWER e GAS</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>3VG POWER e GAS</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>E_4ENERGIA</name>
+        <choiceText>4ENERGIA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>4ENERGIA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>EDISON_ENERGIA_SPA</name>
+        <choiceText>EDISON ENERGIA SPA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>EDISON ENERGIA SPA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>EDISON_PER_VOI</name>
+        <choiceText>EDISON PER VOI</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>EDISON PER VOI </stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ENEL_ENERGIA_SPA</name>
+        <choiceText>ENEL ENERGIA SPA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ENEL ENERGIA SPA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ENGIE</name>
+        <choiceText>ENGIE</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ENGIE</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ENI_PLENITUDE</name>
+        <choiceText>ENI/PLENITUDE</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ENI/PLENITUDE</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ENIT_GAS_E_LUCE</name>
+        <choiceText>ENIT GAS E LUCE</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ENIT GAS E LUCE</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>EON_VENDITA</name>
+        <choiceText>EON VENDITA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>EON VENDITA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ESTRA_ENERGIE_SRL</name>
+        <choiceText>ESTRA ENERGIE SRL</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ESTRA ENERGIE SRL</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>FACILE_ENERGY_SRL</name>
+        <choiceText>FACILE.ENERGY SRL</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>FACILE.ENERGY SRL</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>GREEN_NETWORK_SPA</name>
+        <choiceText>GREEN NETWORK SPA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>GREEN NETWORK SPA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>GRUPPO_SINERGY</name>
+        <choiceText>GRUPPO SINERGY</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>GRUPPO SINERGY</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>IBERDROLA</name>
+        <choiceText>IBERDROLA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>IBERDROLA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ILLUMIA_SPA</name>
+        <choiceText>ILLUMIA SPA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ILLUMIA SPA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>IREN_MERCATO</name>
+        <choiceText>IREN MERCATO</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>IREN MERCATO</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>PLT_PUREGREEN_SPA</name>
+        <choiceText>PLT PUREGREEN SPA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PLT PUREGREEN SPA</stringValue>
         </value>
     </choices>
     <choices>
@@ -145,6 +385,14 @@
             <stringValue>Errori amministrativi di HERA</stringValue>
         </value>
     </choices>
+    <choices>
+        <name>SORGENIA_SPA</name>
+        <choiceText>SORGENIA SPA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>SORGENIA SPA</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>isResponseExistDecision</name>
         <label>isResponseExistDecision</label>
@@ -197,9 +445,33 @@
         <locationX>314</locationX>
         <locationY>878</locationY>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>GetCampaignMember.CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contact__c</field>
+            <value>
+                <elementReference>GetCampaignMember.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Response10__c</field>
             <value>
                 <elementReference>RB4</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Response11__c</field>
+            <value>
+                <elementReference>Rb6</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Response12__c</field>
+            <value>
+                <elementReference>Rb8</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -235,13 +507,13 @@
         <inputAssignments>
             <field>Response6__c</field>
             <value>
-                <elementReference>Energia_Elettrica</elementReference>
+                <elementReference>Energia_Elettrica_1</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Response7__c</field>
             <value>
-                <elementReference>Gas</elementReference>
+                <elementReference>Gas_1</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -336,7 +608,7 @@
             <field>Contact__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>GetCampaignMember.Id</elementReference>
+                <elementReference>GetCampaignMember.ContactId</elementReference>
             </value>
         </filters>
         <filters>
@@ -377,6 +649,18 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Response11__c</field>
+            <value>
+                <elementReference>Rb6</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Response12__c</field>
+            <value>
+                <elementReference>Rb8</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Response1__c</field>
             <value>
                 <elementReference>RB1</elementReference>
@@ -409,13 +693,13 @@
         <inputAssignments>
             <field>Response6__c</field>
             <value>
-                <elementReference>Energia_Elettrica</elementReference>
+                <elementReference>Energia_Elettrica_1</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Response7__c</field>
             <value>
-                <elementReference>Gas</elementReference>
+                <elementReference>Gas_1</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -503,7 +787,7 @@
             <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: In che modo la hanno contattata per la sottoscrizione del contratto?&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
@@ -516,6 +800,13 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -541,7 +832,7 @@
             <fieldType>RadioButtons</fieldType>
             <isRequired>false</isRequired>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
                 <conditions>
                     <leftValueReference>RB2_Consapevole</leftValueReference>
                     <operator>EqualTo</operator>
@@ -560,6 +851,13 @@
                     <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
+                        <stringValue>SI</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
                         <stringValue>Si</stringValue>
                     </rightValue>
                 </conditions>
@@ -570,7 +868,7 @@
             <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Quando le hanno telefonato, conoscevano già i dati della sua fornitura?&lt;/p&gt;&lt;p&gt;(indirizzo di fornitura, codice del contatore, il fornitore …)?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
@@ -583,6 +881,13 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -602,7 +907,7 @@
             <fieldType>RadioButtons</fieldType>
             <isRequired>false</isRequired>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
@@ -615,6 +920,13 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -701,10 +1013,32 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Energia_Elettrica</name>
+            <name>Energia_Elettrica_1</name>
+            <choiceReferences>ENEL_ENERGIA_SPA</choiceReferences>
+            <choiceReferences>ENI_PLENITUDE</choiceReferences>
+            <choiceReferences>IREN_MERCATO</choiceReferences>
+            <choiceReferences>ILLUMIA_SPA</choiceReferences>
+            <choiceReferences>ENGIE</choiceReferences>
+            <choiceReferences>EDISON_ENERGIA_SPA</choiceReferences>
+            <choiceReferences>GRUPPO_SINERGY</choiceReferences>
+            <choiceReferences>A2A_VENDITA</choiceReferences>
+            <choiceReferences>IBERDROLA</choiceReferences>
+            <choiceReferences>PLT_PUREGREEN_SPA</choiceReferences>
+            <choiceReferences>E_4ENERGIA</choiceReferences>
+            <choiceReferences>SORGENIA_SPA</choiceReferences>
+            <choiceReferences>FACILE_ENERGY_SRL</choiceReferences>
+            <choiceReferences>A_F_ENERGIA_SRL</choiceReferences>
+            <choiceReferences>ACEA_ENERGIA_SPA</choiceReferences>
+            <choiceReferences>E_3VG_POWER_GAS</choiceReferences>
+            <choiceReferences>COOP_ACCENDI</choiceReferences>
+            <choiceReferences>E_2G_ENERGIA_SRL</choiceReferences>
+            <choiceReferences>A_S_M_VOGHERA</choiceReferences>
+            <choiceReferences>GREEN_NETWORK_SPA</choiceReferences>
+            <choiceReferences>DOMESTIKA_ENERGIA</choiceReferences>
+            <choiceReferences>Altro</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Energia Elettrica</fieldText>
-            <fieldType>InputField</fieldType>
+            <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -725,10 +1059,32 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Gas</name>
+            <name>Gas_1</name>
+            <choiceReferences>ENEL_ENERGIA_SPA</choiceReferences>
+            <choiceReferences>ENI_PLENITUDE</choiceReferences>
+            <choiceReferences>IREN_MERCATO</choiceReferences>
+            <choiceReferences>A2A_VENDITA</choiceReferences>
+            <choiceReferences>EDISON_PER_VOI</choiceReferences>
+            <choiceReferences>ENGIE</choiceReferences>
+            <choiceReferences>ILLUMIA_SPA</choiceReferences>
+            <choiceReferences>GRUPPO_SINERGY</choiceReferences>
+            <choiceReferences>FACILE_ENERGY_SRL</choiceReferences>
+            <choiceReferences>IBERDROLA</choiceReferences>
+            <choiceReferences>ACEA_VENDITE</choiceReferences>
+            <choiceReferences>AB_ENERGIE_S_R_L</choiceReferences>
+            <choiceReferences>SORGENIA_SPA</choiceReferences>
+            <choiceReferences>COOPGAS_S_r_l_ACCENDI</choiceReferences>
+            <choiceReferences>ENIT_GAS_E_LUCE</choiceReferences>
+            <choiceReferences>GREEN_NETWORK_SPA</choiceReferences>
+            <choiceReferences>EON_VENDITA</choiceReferences>
+            <choiceReferences>A_S_M_VOGHERA</choiceReferences>
+            <choiceReferences>AEG_ENERGIA_GAS</choiceReferences>
+            <choiceReferences>ACAM_Gas</choiceReferences>
+            <choiceReferences>ESTRA_ENERGIE_SRL</choiceReferences>
+            <choiceReferences>Altro</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Gas</fieldText>
-            <fieldType>InputField</fieldType>
+            <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -771,16 +1127,48 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>text7</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Per caso ricorda in che modo la hanno contattata per la sottoscrizione del contratto?&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
+            <name>Rb6</name>
+            <choiceReferences>Choice_Si</choiceReferences>
+            <choiceReferences>Choice_No</choiceReferences>
+            <dataType>String</dataType>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>false</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>RB2_Consapevole</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text7</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Per caso ricorda in che modo la hanno contattata per la sottoscrizione del contratto?&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND  (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>RB1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
                         <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -806,12 +1194,19 @@
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND  (2 OR 3)</conditionLogic>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -828,12 +1223,19 @@
             <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Quando le hanno telefonato, conoscevano già i dati della sua fornitura?&lt;/p&gt;&lt;p&gt;(indirizzo di fornitura, codice del contatore, il fornitore …)?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND  (2 OR 3)</conditionLogic>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -853,12 +1255,19 @@
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND  (2 OR 3)</conditionLogic>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -890,12 +1299,12 @@
             <fieldText>&lt;p&gt;&lt;strong&gt;Cliente&lt;/strong&gt;: SOTTOSCRIZIONE&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Se è interessato, posso illustrarle le nostri migliori offerte a mercato libero?&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>2 AND  (1 OR 3)</conditionLogic>
                 <conditions>
                     <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Si</stringValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -903,6 +1312,45 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Rb8</name>
+            <choiceReferences>Choice_Si</choiceReferences>
+            <choiceReferences>Choice_No</choiceReferences>
+            <dataType>String</dataType>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>2 AND  (1 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>SI</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>RB1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>

@@ -22,7 +22,7 @@ public class HDT_BA_SelfReadingsTst {
     
         insert caseList;
         
-        HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
+        //HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
         String rtName = 'HDT_RT_Autolettura';
         String rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Autolettura').getRecordTypeId();
         
@@ -34,16 +34,16 @@ public class HDT_BA_SelfReadingsTst {
     @IsTest
     static void testBatchExecution(){
 
-        Case cs = [SELECT Id, Phase__c, LastModifiedDate, Type FROM Case LIMIT 1];
+        /* Case cs = [SELECT Id, Phase__c, LastModifiedDate, Type FROM Case LIMIT 1];
 
         System.debug('Start Case Phase: ' + cs.Phase__c);
         System.debug('Start Case Type: ' + cs.Type);
-        System.debug('Start Case LastModifiedDate: ' + cs.LastModifiedDate);
+        System.debug('Start Case LastModifiedDate: ' + cs.LastModifiedDate); */
 
         Test.startTest();
 
         HDT_BA_SelfReadings sr = new HDT_BA_SelfReadings();
-        Id batchId = Database.executeBatch(sr);
+        sr.execute(null);//Database.executeBatch(sr);
 
         Test.stopTest();
 

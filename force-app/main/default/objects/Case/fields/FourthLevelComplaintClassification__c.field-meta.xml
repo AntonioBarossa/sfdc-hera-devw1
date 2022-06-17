@@ -82,28 +82,8 @@
             <valueName>Modifiche unilaterali</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Modifiche unilaterali</controllingFieldValue>
-            <valueName>Scivoli</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Recesso</controllingFieldValue>
             <valueName>Modalità recesso</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Importi per consumi risalenti a più di due anni</controllingFieldValue>
-            <valueName>Causa Arera</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Importi per consumi risalenti a più di due anni</controllingFieldValue>
-            <valueName>Causa Cliente</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Importi per consumi risalenti a più di due anni</controllingFieldValue>
-            <valueName>Causa Distributore</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Importi per consumi risalenti a più di due anni</controllingFieldValue>
-            <valueName>Causa Venditore</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Autolettura (uso della)</controllingFieldValue>
@@ -310,10 +290,6 @@
             <valueName>Preventivi - tempistiche/modalità/costi</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
-            <valueName>Preventivi- tempistiche/modalità/costi</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Continuità</controllingFieldValue>
             <valueName>Interruzione servizio</valueName>
         </valueSettings>
@@ -343,7 +319,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Verifica e ricostruzioni</controllingFieldValue>
-            <valueName>Prelivo abusivo</valueName>
+            <valueName>Prelievo abusivo</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Verifica e ricostruzioni</controllingFieldValue>
@@ -489,7 +465,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
-            <valueName>Falso procurato</valueName>
+            <valueName>Falso procuratore</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
@@ -505,18 +481,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
-            <valueName>Proposto del. 229</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
-            <valueName>Proposto del. 230</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
-            <valueName>Proposto del. 231</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
             <valueName>Ripensamento gestito</valueName>
         </valueSettings>
         <valueSettings>
@@ -526,14 +490,6 @@
         <valueSettings>
             <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
             <valueName>Ripristino condizioni precedenti</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Doppia Fatturazione</controllingFieldValue>
-            <valueName>Doppia Fatturazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Doppia Fatturazione</controllingFieldValue>
-            <valueName>Venditore ha titolarità</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Periodicità e fattura di chiusura</controllingFieldValue>

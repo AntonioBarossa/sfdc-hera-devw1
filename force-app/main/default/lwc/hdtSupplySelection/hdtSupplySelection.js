@@ -45,7 +45,7 @@ export default class hdtSupplySelection extends LightningElement {
                 console.log('data.FornitureCliente__c  '+JSON.stringify(data.FornitureCliente__c ));
                 console.log('data.StatoContratto__c  '+JSON.stringify(data.StatoContratto__c ));
                 console.log('data.ContrattiCliente__c '+ JSON.stringify(data.ContrattiCliente__c ));
-                if(this.processType === 'Reclamo Scritto/Rich. Info'){
+                if(this.processType === 'Reclamo Scritto/Rich. Info' || this.processType === 'Comportamento Venditori HC' || this.processType === 'Comportamento Altri Venditori'){
                     this.showCreateTargetObjectButton = true;
                     this.showCreateTargetObjectMod= true;
                     //this.disabledInput=false;

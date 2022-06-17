@@ -381,6 +381,8 @@ public with sharing class HDT_UTL_VoltureChangeManager {
         Boolean isRetroactive = (Boolean) checkMap.get('isRetroactive');
         Boolean isUpdateStep = (Boolean) checkMap.get('isUpdateStep');
         Date readingDate = (Date) checkMap.get('readingDate');
+        String phase = currentOrder.Phase__c != null?currentOrder.Phase__c:'';
+        Boolean isFromEdit = phase.equalsIgnoreCase('Ammissibilità KO') || phase.equalsIgnoreCase('Caricamento Siebel KO')?true:false;
 
         order.NotRegisteredMeterCase__c = order.NotRegisteredMeterCase__c!=null?order.NotRegisteredMeterCase__c:currentOrder.NotRegisteredMeterCase__c;
         order.VoltureType__c = order.VoltureType__c!=null? order.VoltureType__c: currentOrder.VoltureType__c;
@@ -441,7 +443,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             /**@frpanico 12/11/2021
              * Update check VoltureType "Recupero" the date has been changed to 2015/08/31
              */
-            if(isUpdateStep != null && isUpdateStep == true &&  order.EffectiveDate__c != null)
+            if(isUpdateStep != null && isUpdateStep == true &&  order.EffectiveDate__c != null && !isFromEdit)
             {
                 if( order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
                 {
