@@ -914,12 +914,19 @@
         <defaultConnectorLabel>isOutbound</defaultConnectorLabel>
         <rules>
             <name>isInbound</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>getInputCanale</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Inbound</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCanale</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Telefono</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1547,7 +1554,7 @@
                 <leftValueReference>ForEachOrderProduct_3.ProductCode__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>MONOPATTINO ELETTRICO</stringValue>
+                    <stringValue>MONOP</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1572,7 +1579,7 @@
                 <leftValueReference>ForEachOrderProduct_3_0.ProductCode__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>MONOPATTINO ELETTRICO</stringValue>
+                    <stringValue>MONOP</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -5561,7 +5568,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_MONOPATTINO_ELETTRICO_Generico_1</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[Condizioni economiche e di acquisto Hera MONOPATTINO]&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che il Monopattino scelto è il {!collectionHeraMonopattinoElettrico}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto di Hera MONOPATTINO è 549 €&amp;nbsp;IVA inclusa.&lt;/p&gt;&lt;p&gt;Mi conferma che acquista {!counterMonopattinoElettrico} HERA MONOPATTINO?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale è quindi di {!totaleCostoMonopattiniElettrici} € IVA inclusa.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone} {!GetOrder.Contact__r.MobilePhone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice [POD/PDR] del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il Monopattino elettrico verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o la non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che vuole pagare con {!GetOrder.PaymentMode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[Condizioni economiche e di acquisto Hera MONOPATTINO]&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che il Monopattino scelto è il {!collectionHeraMonopattinoElettrico}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto di Hera MONOPATTINO è 549 €&amp;nbsp;IVA inclusa.&lt;/p&gt;&lt;p&gt;Mi conferma che acquista {!counterMonopattinoElettrico} HERA MONOPATTINO?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale è quindi di {!totaleCostoMonopattiniElettrici} € IVA inclusa.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}  ,   {!GetOrder.Contact__r.MobilePhone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice [POD/PDR] del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il Monopattino elettrico verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o la non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che vuole pagare con {!GetOrder.PaymentMode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
