@@ -6,7 +6,7 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {
-&quot;FieldName&quot; : &quot;AccountId &quot;,
+&quot;FieldName&quot; : &quot;AccountId&quot;,
 &quot;Required&quot; : false,
 &quot;Column&quot; : 1,
 &quot;ReadOnly&quot;:true
@@ -24,13 +24,13 @@
 &quot;ReadOnly&quot;:true
 },
 {
-&quot;FieldName&quot; : &quot;InstallmentPlanNumber__c &quot;,
+&quot;FieldName&quot; : &quot;InstallmentPlanNumber__c&quot;,
 &quot;Required&quot; : false,
 &quot;Column&quot; : 1,
 &quot;ReadOnly&quot;:true
 },
 {
-&quot;FieldName&quot; : &quot;ReasonStornoRate__c &quot;,
+&quot;FieldName&quot; : &quot;ReasonStornoRate__c&quot;,
 &quot;Required&quot; : false,
 &quot;Column&quot; : 1,
 &quot;ReadOnly&quot;:false
@@ -43,7 +43,7 @@
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">[]</value>
     </values>
     <values>
         <field>ValidateClass__c</field>
