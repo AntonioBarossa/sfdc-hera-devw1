@@ -1076,9 +1076,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             if (String.isNotBlank(boxType)) {
                 record.add(boxType);
                 // Importo indennizzo, se necessario.
-                if ((boxType == '1' || boxType == '5') && indemnityDueSendResponseDecimal > 0) {
+                if ((boxType == '1' /*|| boxType == '5'*/) && indemnityDueSendResponseDecimal > 0) {
                     record.add(indemnityDueSendResponse);
-                } else if ((boxType == '2' || boxType == '8' || boxType == '7') && indemnityDueBillingCorrectionDecimal > 0) {
+                } else if ((boxType == '3' || boxType == '5') && indemnityDueBillingCorrectionDecimal > 0) {
                     record.add(''); // campo vuoto per l'indemnityDueSendResponse, l'indemnityDueBillingCorrection deve stare in seconda posizione.
                     record.add(indemnityDueBillingCorrection);
                 } else if (boxType == '4' && indemnityDueSendResponse != null && indemnityDueSendResponseDecimal > 0 && indemnityDueBillingCorrectionDecimal > 0) {
@@ -1112,7 +1112,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         // Emissione rettifica prevista e scaduta, indennizzo per sola rettifica
         else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate) && indemnityDueSendResponse == 0) {
-            boxType = '2';
+            boxType = '3';
         }
         // Emissione rettifica prevista e scaduta, indennizzi per ritardo nella risposta e nella rettifica
         else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate) && indemnityDueSendResponse > 0) {
@@ -1132,7 +1132,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         // Emissione rettifica prevista e scaduta
         else if (complaintClassification == 'Rettifica Doppia Fatturazione' && correctionRight == 'Si' && String.isNotBlank(correctionDocumentEmissionDate) && expiredCorrection) {
-            boxType = '7';
+            boxType = '5';
         }
         // Emissione rettifica prevista ma non scaduta
         else if (complaintClassification == 'Rettifica Doppia Fatturazione' && correctionRight == 'Si' && String.isNotBlank(correctionDocumentEmissionDate) && !expiredCorrection) {
