@@ -7,4 +7,14 @@
         <target>lightning__Tab</target>
         <target>lightning__FlowScreen</target>
     </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+
+            <property name="recordId" type="String" label="caseId" description="Id del Case" role="inputOnly"/>
+            <property name="additional" type="String" label="additionalAttachment" description="Allegati aggiuntivi" role="outputOnly"/>
+            <property name="required" type="String" label="requiredAttachment" description="Allegati Obbligatori" role="outputOnly"/>
+
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

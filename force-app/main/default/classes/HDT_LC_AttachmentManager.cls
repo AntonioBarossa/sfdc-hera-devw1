@@ -1,20 +1,30 @@
 public with sharing class HDT_LC_AttachmentManager {
     
     @AuraEnabled
-    public static Map<String,String> getAttachmentInfoFromCase(Id caseId){
-        Map<String,String> mapFields = new Map<String,String>();
-        Case recordCase = [SELECT Id, AdditionalAttachments__c, AttachmentsStringTARI__c
+    public static String getAdditionalAttachmentFromCase(Id caseId){
+
+        Case recordCase = [SELECT Id, AdditionalAttachments__c
                             FROM Case
                             WHERE Id =: caseId
                             WITH SECURITY_ENFORCED];
-        mapFields.put('required' , recordCase.AttachmentsStringTARI__c);
-        mapFields.put('optional' , recordCase.AdditionalAttachments__c);
-        return mapFields;
+        return recordCase.AdditionalAttachments__c;
 
     }
 
     @AuraEnabled
-    public static String getRequiredAttachmentFromCase(Id caseId, String process, String subProcess, String personType){
+    public static Boolean updateAdditionalAttachment(Id caseId, String additional){
+        try{
+            Case recordCase = new Case(Id = caseId, AdditionalAttachments__c = additional);
+            update recordCase;
+            return true;
+        }catch(exception e){
+            system.debug(e);
+            return false;
+        }
+    }
+
+    @AuraEnabled
+    public static String getRequiredAttachmentFromCase(Id caseId){
         /*
         Object tabellaAllegati = null; // Implementare la chiamata alla tabella degli allegati obbligatori con tutti i driver necessari
         return tabellaAllegati?.requiredAttachment;
