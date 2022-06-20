@@ -15331,6 +15331,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.CategoryFamilyFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.Activity__c</field>
         <readable>true</readable>
@@ -15683,6 +15688,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.PreviousDateSwitch__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.PriceF0__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.PriceF1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.PriceF2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.PriceF3__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

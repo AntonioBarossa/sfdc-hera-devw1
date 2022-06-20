@@ -1902,7 +1902,7 @@
             <fieldText>&lt;p&gt;Bonus €/a&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus Soluzioni Sostenibili&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>4 AND (1 OR 2 OR 3 OR 5)</conditionLogic>
+                <conditionLogic>4 AND (1 OR 2 OR 3 OR 5) AND 6</conditionLogic>
                 <conditions>
                     <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
                     <operator>Contains</operator>
@@ -1936,6 +1936,13 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa Web</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>VAS</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2004,7 +2011,7 @@
             <fieldText>&lt;p&gt;Bonus €/a&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus Soluzioni Sostenibili&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>(1 OR 2 OR 3 OR 5) AND 4</conditionLogic>
+                <conditionLogic>(1 OR 2 OR 3 OR 5) AND 4 AND 6</conditionLogic>
                 <conditions>
                     <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
                     <operator>Contains</operator>
@@ -2038,6 +2045,13 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa Web Gas</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>VAS</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2111,7 +2125,7 @@
             <fieldText>&lt;p&gt;Bonus €/a&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus Soluzioni Sostenibili&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>(1 OR 2 OR 3) AND 4</conditionLogic>
+                <conditionLogic>(1 OR 2 OR 3) AND 4 AND 5</conditionLogic>
                 <conditions>
                     <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
                     <operator>Contains</operator>
@@ -2138,6 +2152,13 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Bonus Soluzioni Sostenibili</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>VAS</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2206,7 +2227,7 @@
             <fieldText>&lt;p&gt;Bonus €/a&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus Soluzioni Sostenibili&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>(1 OR 2 OR 3 OR 5) AND 4</conditionLogic>
+                <conditionLogic>(1 OR 2 OR 3 OR 5) AND 4 AND 6</conditionLogic>
                 <conditions>
                     <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
                     <operator>Contains</operator>
@@ -2240,6 +2261,13 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>VAS</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2554,7 +2582,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text2</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa l’90% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 10% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 90% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 10% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -3336,7 +3364,7 @@
         </fields>
         <fields>
             <name>newtext1_0_0</name>
-            <fieldText>&lt;p&gt;•	Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente, può ricorrere al Servizio di Conciliazione ARERA oppure alla Conciliazione Paritetica attraverso le modalità indicate sul sito www.gruppohera.it&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento per:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	la fornitura di gas in regime di tutela.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	&lt;/span&gt;la nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;•	CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.LastName__c} abbiamo terminato la registrazione, benvenuto in &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.CompanyOwner__c}.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;[***FINE REGISTRAZIONE**]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente, può ricorrere al Servizio di Conciliazione ARERA oppure alla Conciliazione Paritetica attraverso le modalità indicate sul sito www.gruppohera.it&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento per:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	la fornitura di gas in regime di tutela.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	&lt;/span&gt;la nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;•	CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.LastName__c} abbiamo terminato la registrazione, benvenuto in &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!HDT_Script_Introduzione.salesCompany}.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;[***FINE REGISTRAZIONE**]&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -3453,7 +3481,7 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text3_0_0</name>
-            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta_0.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;•	Mi conferma che  la durata del prezzo fisso è 12 mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice PDR è {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che  la durata del prezzo fisso è 12 mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -3507,7 +3535,7 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text3_0_0_0</name>
-            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta_0.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;•	Mi conferma che  la durata del prezzo fisso è 12 mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice PDR è {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che  la durata del prezzo fisso è 12 mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -3541,7 +3569,7 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text1</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta della luce sono presenti i dati anagrafici della persona cui va intestato il contratto? [nel caso siano presenti procedere; in caso contrario chiedere autorizzazione a voltura]&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta della luce sono presenti i dati anagrafici della persona cui va intestato il contratto? &lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -3686,7 +3714,7 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text1_0</name>
-            <fieldText>&lt;p&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta della luce sono presenti i dati anagrafici della persona cui va intestato il contratto? [nel caso siano presenti procedere; in caso contrario chiedere autorizzazione a voltura]&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta della luce sono presenti i dati anagrafici della persona cui va intestato il contratto? &lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -3725,7 +3753,7 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1</name>
-            <fieldText>&lt;p&gt;[Dati Tecnici Gas]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta del gas sono presenti i dati anagrafici della persona cui va intestato il contratto? [nel caso siano presenti procedere; in caso contrario chiedere autorizzazione a voltura]&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[Dati Tecnici Gas]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta del gas sono presenti i dati anagrafici della persona cui va intestato il contratto? &lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -3745,7 +3773,7 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text3</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che usa il gas per il riscaldamento? [Tipologia: {!LoopOrdiniFigliOfferta.UseCategory__c}]&lt;/p&gt;&lt;p&gt;CONFERMO [cottura e acqua calda].&lt;/p&gt;&lt;p&gt;NO [solo cottura e/o acqua calda].&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la durata del prezzo fisso scelta è 24 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che usa il gas per {!LoopOrdiniFigliOfferta.UseCategory__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice PDR è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la durata del prezzo fisso scelta è 24 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -3873,7 +3901,7 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1_0</name>
-            <fieldText>&lt;p&gt;[Dati Tecnici Gas]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta del gas sono presenti i dati anagrafici della persona cui va intestato il contratto? [nel caso siano presenti procedere; in caso contrario chiedere autorizzazione a voltura]&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[Dati Tecnici Gas]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta del gas sono presenti i dati anagrafici della persona cui va intestato il contratto? &lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -3893,7 +3921,7 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text3_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che usa il gas per il riscaldamento? [Tipologia: {!LoopOrdiniFigliOfferta.UseCategory__c}]&lt;/p&gt;&lt;p&gt;CONFERMO [cottura e acqua calda].&lt;/p&gt;&lt;p&gt;NO [solo cottura e/o acqua calda].&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la durata del prezzo fisso scelta è 24 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che usa il gas per {!LoopOrdiniFigliOfferta.UseCategory__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la durata del prezzo fisso scelta è 24 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice PDR è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -3950,7 +3978,61 @@
         </connector>
         <fields>
             <name>Bundle_Text1</name>
-            <fieldText>&lt;p&gt;[“DIARIO DEI CONSUMI E “HERA FAST CHECK UP” (HC EST e HCM)]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi “DIARIO DEI CONSUMI e Hera Fast check up . A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di abitanti della sua abitazione è {!GetAnalisiConsumi.OccupantsNumber__c} e la superficie è {!GetAnalisiConsumi.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	[facoltativa] la sua abitazione è [un appartamento/una casa indipendente]?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	[facoltativa] [è/non è] proprietario dell’abitazione?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Il report di “DIARIO DEI CONSUMI le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, i servizi, di cui riceverà il dettaglio nel plico contrattuale, non saranno più disponibili.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[“DIARIO DEI CONSUMI E “HERA FAST CHECK UP” (HC EST e HCM)]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi “DIARIO DEI CONSUMI e Hera Fast check up . A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di abitanti della sua abitazione è {!GetAnalisiConsumi.OccupantsNumber__c} e la superficie è {!GetAnalisiConsumi.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Bundle_Text6</name>
+            <fieldText>&lt;p&gt;•	La sua abitazione è {!GetAnalisiConsumi.DwellingType__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Bundle_Text3</name>
+            <fieldText>&lt;p&gt;•	Lei è il proprietario dell’abitazione?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetAnalisiConsumi.OwnerAC__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetAnalisiConsumi.OwnerAC__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Bundle_Text4</name>
+            <fieldText>&lt;p&gt;•	Lei non è proprietario dell’abitazione?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetAnalisiConsumi.OwnerAC__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetAnalisiConsumi.OwnerAC__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Bundle_Text5</name>
+            <fieldText>&lt;p&gt;Il report di “DIARIO DEI CONSUMI le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, i servizi, di cui riceverà il dettaglio nel plico contrattuale, non saranno più disponibili.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4139,6 +4221,10 @@
                 <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>salesCompanyToDisplay</name>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
         <name>HDT_Script_VAS</name>

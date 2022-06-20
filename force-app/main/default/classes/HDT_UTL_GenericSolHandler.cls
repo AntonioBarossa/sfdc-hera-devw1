@@ -128,7 +128,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.ResidentialStreetNumber__c = acc.BillingStreetNumber__c;
         childOrder.ResidentialCountry__c = acc.BillingCountry; 
         childOrder.ResidentialStreetNumberExtension__c = acc.BillingStreetNumberExtension__c;
-        childOrder.ResidentialStreetToponym__c = acc.BillingStreetToponym__c;
+        //childOrder.ResidentialStreetToponym__c = acc.BillingStreetToponym__c;
         childOrder.ResidentialState__c = acc.BillingState;
 
         childOrder.ProcessType__c = 'VAS';
@@ -148,7 +148,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.BillingCity__c = bp.InvoicingCity__c; 
         childOrder.BillingStreetNumber__c = bp.InvoicingStreetNumber__c; 
         childOrder.BillingCountry__c = bp.InvoicingCountry__c; 
-        childOrder.BillingStreetToponym__c = bp.InvoicingStreetToponym__c; 
+        //childOrder.BillingStreetToponym__c = bp.InvoicingStreetToponym__c; 
         childOrder.BillingStreetName__c = bp.InvoicingStreetName__c; 
         childOrder.BillingStreetNumberExtension__c = bp.InvoicingStreetNumberExtension__c;
         childOrder.BillingProvince__c = bp.InvoicingProvince__c;
@@ -256,7 +256,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
             Account.BillingStreetNumber__c, 
             Account.BillingCountry, 
             Account.BillingStreetNumberExtension__c, 
-            Account.BillingStreetToponym__c,  
+            //Account.BillingStreetToponym__c,  
             Account.BillingState,
             Contact.Id, 
             Roles

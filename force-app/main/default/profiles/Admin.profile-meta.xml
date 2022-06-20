@@ -746,6 +746,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.CategoryFamilyFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Order.AnnullaPrestazioneEnabled__c</field>
         <readable>true</readable>
@@ -15890,6 +15895,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.PreviousDateSwitch__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.PriceF0__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.PriceF1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.PriceF2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.PriceF3__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -38484,6 +38509,10 @@
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>SBQQ__LookupData__c</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>ScriptConfig__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -38501,6 +38530,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>VisitAssignmentRules__c</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>HDT_DocPayloadAdminTab</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>

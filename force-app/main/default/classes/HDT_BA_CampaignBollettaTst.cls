@@ -44,22 +44,19 @@ public class HDT_BA_CampaignBollettaTst {
                 i++;
             }
             insert contacts;
+
+            List<CommercialCode__c> CommCodes = HDT_UTL_DataFactoryTst.createCommCode(50, true);
             
             
             List<CampaignMember> campMembers = HDT_UTL_DataFactoryTst.createCampaignMember(false,camps[0].id,leads,contacts);
+            i = 0;
             for(CampaignMember c : campMembers){
                 c.ContractReference__c = 'testContractReference';
                 c.isWsBollettaInvoked__c = false;
+                c.PromoCommercialCode__c = CommCodes[i].Id;
+                i++;
             }
             insert campMembers;
-
-
-            Commercial_Code_Batch_Context__c context = new Commercial_Code_Batch_Context__c(Name = 'textContext',
-                                                                                            CampaignId__c = camps[0].id,
-                                                                                            CampaignMemberId__c = campMembers[0].Id,
-                                                                                            CommercialCodeDone__c = TRUE,
-                                                                                            BollettaDone__c = FALSE);
-            insert context;
 
             HDT_UTL_DataFactoryTst.createWebServiceConfiguration('campaignBolletta','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
 
@@ -68,15 +65,14 @@ public class HDT_BA_CampaignBollettaTst {
     
     @isTest
     static void test(){
-        List<Commercial_Code_Batch_Context__c> context = [SELECT Id, CampaignId__c, CampaignMemberId__c FROM Commercial_Code_Batch_Context__c];
-        CampaignMember cmBefore = [SELECT id,isWsBollettaInvoked__c from CampaignMember where id = :context[0].CampaignMemberId__c];
+        CampaignMember cmBefore = [SELECT id,isWsBollettaInvoked__c from CampaignMember WHERE isWsBollettaInvoked__c = FALSE LIMIT 1];
         
         Test.startTest();
         HDT_BA_CampaignBolletta cb = new HDT_BA_CampaignBolletta(); //Updated method signature
         Database.executeBatch(cb);
         Test.stopTest();
         
-        CampaignMember cmAfter = [SELECT id,isWsBollettaInvoked__c from CampaignMember where id = :context[0].CampaignMemberId__c];
+        CampaignMember cmAfter = [SELECT id,isWsBollettaInvoked__c from CampaignMember where id = :cmBefore.Id];
         System.assertNotEquals(cmBefore.isWsBollettaInvoked__c,cmAfter.isWsBollettaInvoked__c,'CampaignMember field isWsBollettaInvoked__c not updated by the batch'); 
     }
 }
