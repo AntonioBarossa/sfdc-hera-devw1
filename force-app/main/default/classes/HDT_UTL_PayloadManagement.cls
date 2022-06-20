@@ -1078,7 +1078,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 // Importo indennizzo, se necessario.
                 if ((boxType == '1' || boxType == '5') && indemnityDueSendResponseDecimal > 0) {
                     record.add(indemnityDueSendResponse);
-                } else if ((boxType == '2' || boxType == '8' || boxType == '7') && indemnityDueBillingCorrectionDecimal > 0) {
+                } else if ((boxType == '2' || boxType == '8') && indemnityDueBillingCorrectionDecimal > 0) {
                     record.add(''); // campo vuoto per l'indemnityDueSendResponse, l'indemnityDueBillingCorrection deve stare in seconda posizione.
                     record.add(indemnityDueBillingCorrection);
                 } else if (boxType == '4' && indemnityDueSendResponse != null && indemnityDueSendResponseDecimal > 0 && indemnityDueBillingCorrectionDecimal > 0) {
@@ -1132,7 +1132,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         // Emissione rettifica prevista e scaduta
         else if (complaintClassification == 'Rettifica Doppia Fatturazione' && correctionRight == 'Si' && String.isNotBlank(correctionDocumentEmissionDate) && expiredCorrection) {
-            boxType = '7';
+            boxType = '8';
         }
         // Emissione rettifica prevista ma non scaduta
         else if (complaintClassification == 'Rettifica Doppia Fatturazione' && correctionRight == 'Si' && String.isNotBlank(correctionDocumentEmissionDate) && !expiredCorrection) {
@@ -1141,12 +1141,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
         // Check finale se indennizzo già inviato in stesso anno
         if (!indemnityConfirmed && indemnityMotivation == 'Altro indennizzo stesso anno solare') {
-            boxType = '2';
-        }
-        // Se i due valori degli indennizzi sono nulli non va mostrato il box indennizzi
-        if(indemnityDueSendResponse == 0 && !expiredCorrection)
-        {
-            boxType = '';
+            boxType = '6';
         }
 
         System.debug(LoggingLevel.DEBUG, 'calculateIndemnityBox inputs: ' + complaintClassification + ', ' + indemnityConfirmed + ', ' + indemnityMotivation + ', ' + correctionRight + ', ' + expiredCorrection + ', ' + correctionDocumentEmissionDate + ', ' + indemnityDueSendResponse);
