@@ -19,7 +19,7 @@ public with sharing class HDT_BA_SendOrderToSii implements Database.Batchable<sO
             ord.Phase__c = 'Comunicazione verso Heroku';
             orderToUpdate.add(ord);
         }
-        HDT_UTL_DatabaseService.updateSObject(ord);
+        HDT_UTL_DatabaseService.updateSObject(scope);
     }
     
     public void finish(Database.BatchableContext bc){
