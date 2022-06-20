@@ -590,6 +590,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						HDT_UTL_DatabaseService.insertSObject(activitiesToCreate);
 					}
 					List<Order> childToUpdate = new List<Order>();
+					Map<Id,String> orderPhaseMap = new Map<Id,String>();
 					for(Sobject childOrder : orderList){
 						Order singleOrder = new Order();
 						singleOrder.Id = childOrder.Id;
@@ -601,6 +602,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						if((String.isBlank(leggeOtt) || (String.isNotBlank(leggeOtt) && leggeOtt.equalsIgnoreCase('Validato'))) && 
 						(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))){
 							singleOrder.Phase__c = 'Documentazione Validata';
+							orderPhaseMap.put(singleOrder.Id, 'Documentazione Validata');
 						}
 						childToUpdate.add(singleOrder);
 					}
@@ -612,9 +614,11 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						if(!orderList.isEmpty()){
 							Set<Id> voltOrdSet = new Set<Id>();
 							String processTypeVol = '';
+							String phase = '';
 							for (SObject voltOrder : orderList) {
 								processTypeVol = (String)voltOrder.get('DocumentalProcessType__c');
-								if(String.isNotBlank(processTypeVol) && processTypeVol.containsIgnoreCase('Voltura')){
+								phase = orderPhaseMap.get((Id)voltOrder.get('Id')) != null? orderPhaseMap.get((Id)voltOrder.get('Id')):'';
+								if(String.isNotBlank(processTypeVol) && processTypeVol.containsIgnoreCase('Voltura') && String.isNotBlank(phase) && phase.equalsIgnoreCase('Documentazione Validata')){
 									voltOrdSet.add((Id)voltOrder.get('Id'));
 								}
 							}
@@ -715,6 +719,11 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					String pkgId = response.deliverPackageResponse.packageIds;
 					HDT_UTL_DocumentalManagement.createDocumentSendTracking(msg, recordId, pkgId, processRecord);
 					HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(response, context);
+					if(context == 'Order' && (String)processRecord.get('DocSendingMethod__c') != null && (String)processRecord.get('DocSendingMethod__c') == 'Stampa Cartacea'){
+						Date dToday = Date.today();
+						String dateStr = dToday.day() + '/' + dToday.month() + '/' + dToday.year();
+						createPublicLink(recordId, response.deliverPackageResponse.composedDocument, 'Plico Contrattuale ' +dateStr);
+					}
 				}
 			}
 		}catch(Exception ex){
