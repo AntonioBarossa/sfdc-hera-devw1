@@ -1,3 +1,12 @@
 <template>
-    
+    <c-hdt-content-document-list files={files}></c-hdt-content-document-list>
+    <lightning-file-upload
+        label="Attach receipt"
+        name="fileUploader"
+        accept={acceptedFormats}
+        record-id={recordId}
+        onuploadfinished={handleUploadFinished}
+        multiple
+    >
+    </lightning-file-upload>
 </template>
