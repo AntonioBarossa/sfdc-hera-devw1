@@ -29,11 +29,13 @@ export default class HdtLandRegistry extends LightningElement {
     @wire(getObjectInfo, { objectApiName: LNDRGS_OBJ })
     objectInfo;
     
-    @api servicePointId = 'a281X000000DqcVQAS'; //ID MOCKATO PER TEST (da togliere)
-    @api selectedLandRegistryId = 'a3j1x000000Fa2JAAS'; //ID MOCKATO PER TEST (da togliere)
-    @api required = false;
-    @api readonly = false;
+    @api servicePointId;
+    @api selectedLandRegistryId;
+    @api required;
+    @api readonly;
 
+    @track _required;
+    @track _readonly;
     @track tableData = [];
     @track tableSelectedRows = [];
     @track tableColumns = COLUMNS;
@@ -52,13 +54,13 @@ export default class HdtLandRegistry extends LightningElement {
         }
         return rtId;
     }
-    get disableModifica(){ return !this.selectedLandRegistryId || this.selectedLandRegistryId=='' || this.readonly }
+    get disableModifica(){ return !this.selectedLandRegistryId || this.selectedLandRegistryId=='' || this._readonly }
     disableSalva = false;
     disableForm = true;
 
     showSpinner = false;
     showSalva = false;
-    // showTable=false;
+    showTable=false;
     // showForm=false;
 
     cadastralCategories = [];
@@ -67,17 +69,21 @@ export default class HdtLandRegistry extends LightningElement {
     cityOptions = [];
 
     connectedCallback(){
+        this.required=true;                                     //MOCKATO PER TEST (da togliere)
+        this.servicePointId = 'a281X000000DqcVQAS';             //MOCKATO PER TEST (da togliere)
+        this.selectedLandRegistryId = 'a3j1x000000Fa2JAAS';     //MOCKATO PER TEST (da togliere)
         console.log('### connectedCallback selectedLandRegistryId', this.selectedLandRegistryId);
         this.call_retrieveLandRegistry();
         this.call_getCadastralCategories();
         this.call_getCities();
-        this.required=true;
+        this._required = this.required;
+        this._readonly = this.readonly;
     }
 
     call_retrieveLandRegistry() {
         console.log('### call_retrieveLandRegistry');
         if(this.selectedLandRegistryId) this.tableSelectedRows = [this.selectedLandRegistryId];
-        // this.showTable=false;
+        this.showTable=false;
         // this.showForm=false;
         this.showSpinner = true;
         this.disableForm=true;
@@ -94,7 +100,7 @@ export default class HdtLandRegistry extends LightningElement {
                 if(this.tableData.length > 0){
                     if(this.tableSelectedRows.length == 0 ) this.tableSelectedRows = [this.tableData[0].Id];
                     this.handleSelection(this.tableSelectedRows[0]);
-                    // this.showTable=true;
+                    this.showTable=true;
                     // this.showForm=true;
                     this.throwSelectionEvent();
                 }
@@ -145,6 +151,18 @@ export default class HdtLandRegistry extends LightningElement {
         this.disableSalva=false;
         const source = event.target.name ? event.target.name : event.target.fieldName;
         console.log("### handleFieldChange source", source);
+        if(source == "CodeMissingRegistryData__c") {
+            if(event.detail.value == "") this._required = this.required;
+            else{
+                this._required = false;
+                let inputList = this.template.querySelectorAll('lightning-input-field');
+                inputList.forEach(input => {
+                    if(input.fieldName != "ServicePoint__c") input.value = null
+                });
+                inputList = this.template.querySelectorAll('lightning-combobox');
+                inputList.forEach(input => input.value = null);
+            }
+        }
         if(source == "RegistryCity__c"){
             let foundCity = this.cityTechnicalData.find(element => element.CadastralCity__c == event.detail.value);
             this.registryCityValue = foundCity.CadastralCity__c;
@@ -152,43 +170,36 @@ export default class HdtLandRegistry extends LightningElement {
             this.registryCityCodeValue = foundCity.CityCode__c;
             this.provinceValue = foundCity.Province__c;
         }
-        if(source == "Subaltern__c") {
-            const curLength = event.target.value.length;
-            if(curLength<=4) {
-                 this.disableSalva=false;
-            } else {
-                const evt = new ShowToastEvent({ variant: 'error', title: 'Attenzione!', message: 'Lunghezza massima Subalterno 4 Caratteri' });
+        if(["Sheet__c", "ParticleSheet__c", "Subaltern__c"].includes(source)) {
+            let val = event.target.value;
+            while(val.startsWith("0")) val = val.slice(1);
+            val = val.padStart(4, '0');
+            this.template.querySelector('[data-id="'+source+'"]').value = val;
+            let maxLengthReached = false;
+            let msg;
+            if(["Sheet__c", "Subaltern__c"].includes(source) && val.length > 4){
+                msg = 'Lunghezza massima '+(source == "Sheet__c" ? "Foglio" : "Subalterno")+' 4 caratteri';
+                maxLengthReached = true;
+            }
+            if("ParticleSheet__c" == source && val.length > 5){
+                msg = 'Lunghezza massima Particella 5 caratteri';
+                maxLengthReached = true;
+            }
+            if(maxLengthReached){
+                const evt = new ShowToastEvent({ variant: 'error', title: 'Attenzione!', message: msg });
                 this.dispatchEvent(evt);
                 this.disableSalva=true;
             }
+            else this.disableSalva=false;
         }
         if(source == "UrbanSection__c") {
             const curLength = event.target.value.length;
             if(curLength<=3) {
-                 this.disableSalva=false;
+                this.disableSalva=false;
             } else {
                 const evt = new ShowToastEvent({ variant: 'error', title: 'Attenzione!', message: 'Lunghezza massima Sezione Urbana 3 Caratteri' });
                 this.dispatchEvent(evt);
                 this.disableSalva=true;
-            }
-        }
-        if(source == "ParticleSheet__c") {
-            const curLength = event.target.value.length;
-            if(curLength<=5) {
-                 this.disableSalva=false;
-            } else {
-                const evt = new ShowToastEvent({ variant: 'error', title: 'Attenzione!', message: 'Lunghezza massima Particella 5 caratteri' });
-                this.dispatchEvent(evt);
-                this.disableSalva=true;
-            }
-        }
-        if(source == "Sheet__c") {
-            const curLength = event.target.value.length;
-            if(curLength<=4) {
-                 this.disableSalva=false;
-            } else {
-                const evt = new ShowToastEvent({ variant: 'error', title: 'Attenzione!', message: 'Lunghezza massima Foglio 4 caratteri' });
-                this.dispatchEvent(evt);
             }
         }
         if(source == "LegalCity__c") {

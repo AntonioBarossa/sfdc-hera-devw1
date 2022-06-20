@@ -11,7 +11,7 @@
             <div class="slds-grid slds-wrap">
             
                 <div class="slds-size_1-of-1">
-                    <!-- <template if:true={showTable}> -->
+                    <template if:true={showTable}>
                         <lightning-datatable
                             data={tableData}
                             columns={tableColumns}
@@ -20,11 +20,11 @@
                             onrowselection={handleTableSelection}
                             max-row-selection="1">
                         </lightning-datatable>
-                    <!-- </template> -->
+                    </template>
                 </div>
 
                 <div class="slds-size_1-of-1 slds-box_x-small slds-text-align_center">
-                    <lightning-button disabled={readonly} variant="brand" label="Nuovo" title="Nuovo" onclick={handleNuovoClick}></lightning-button>
+                    <lightning-button disabled={_readonly} variant="brand" label="Nuovo" title="Nuovo" onclick={handleNuovoClick}></lightning-button>
                 </div>
                 
             </div>
@@ -45,11 +45,11 @@
                         </lightning-layout-item>
 
                         <lightning-layout-item size="4" padding="around-medium">
-                            <lightning-input-field variant="label-stacked" required={required} disabled={disableForm} field-name="DestinationUsage__c" onchange={handleFieldChange}></lightning-input-field>
+                            <lightning-input-field variant="label-stacked" required={_required} disabled={disableForm} field-name="DestinationUsage__c" onchange={handleFieldChange}></lightning-input-field>
                         </lightning-layout-item>
                         
                         <lightning-layout-item size="4" padding="around-medium">
-                            <lightning-combobox required={required}
+                            <lightning-combobox required={_required}
                                                 disabled={disableForm}
                                                 name="RegistryCity__c"
                                                 label="Comune catastale"
@@ -60,11 +60,11 @@
                         </lightning-layout-item>
 
                         <lightning-layout-item size="4" padding="around-medium">
-                            <lightning-input-field variant="label-stacked" required={required} disabled value={registryCityCodeValue} field-name="RegistryCityCode__c"></lightning-input-field>
+                            <lightning-input-field variant="label-stacked" required={_required} disabled value={registryCityCodeValue} field-name="RegistryCityCode__c"></lightning-input-field>
                         </lightning-layout-item>
                         
                         <lightning-layout-item size="4" padding="around-medium">
-                            <lightning-combobox required={required}
+                            <lightning-combobox required={_required}
                                                 disabled={disableForm}
                                                 name="LegalCity__c"
                                                 label="Comune amministrativo"
@@ -75,31 +75,31 @@
                         </lightning-layout-item>
 
                         <lightning-layout-item size="4" padding="around-medium">
-                            <lightning-input-field variant="label-stacked" required={required} disabled value={provinceValue} field-name="Province__c"></lightning-input-field>
+                            <lightning-input-field variant="label-stacked" required={_required} disabled value={provinceValue} field-name="Province__c"></lightning-input-field>
                         </lightning-layout-item>
 
                         <lightning-layout-item size="4" padding="around-medium">
-                            <lightning-input-field variant="label-stacked" required={required} disabled={disableForm} field-name="UnitType__c" onchange={handleFieldChange}></lightning-input-field>
+                            <lightning-input-field variant="label-stacked" required={_required} disabled={disableForm} field-name="UnitType__c" onchange={handleFieldChange}></lightning-input-field>
                         </lightning-layout-item>
 
                         <lightning-layout-item size="4" padding="around-medium">
-                            <lightning-input-field variant="label-stacked" required={required} disabled={disableForm} field-name="UrbanSection__c" onchange={handleFieldChange}></lightning-input-field>
+                            <lightning-input-field variant="label-stacked" required={_required} disabled={disableForm} field-name="UrbanSection__c" onchange={handleFieldChange}></lightning-input-field>
                         </lightning-layout-item>
 
                         <lightning-layout-item size="4" padding="around-medium">
-                            <lightning-input-field variant="label-stacked" required={required} disabled={disableForm} field-name="Sheet__c" onchange={handleFieldChange}></lightning-input-field>
+                            <lightning-input-field data-id="Sheet__c" variant="label-stacked" required={_required} disabled={disableForm} field-name="Sheet__c" onchange={handleFieldChange}></lightning-input-field>
                         </lightning-layout-item>
 
                         <lightning-layout-item size="4" padding="around-medium">
-                            <lightning-input-field variant="label-stacked" required={required} disabled={disableForm} field-name="ParticleSheet__c" onchange={handleFieldChange}></lightning-input-field>
+                            <lightning-input-field data-id="ParticleSheet__c" variant="label-stacked" required={_required} disabled={disableForm} field-name="ParticleSheet__c" onchange={handleFieldChange}></lightning-input-field>
                         </lightning-layout-item>
 
                         <lightning-layout-item size="4" padding="around-medium">
-                            <lightning-input-field variant="label-stacked" required={required} disabled={disableForm} field-name="Subaltern__c" onchange={handleFieldChange}></lightning-input-field>
+                            <lightning-input-field data-id="Subaltern__c" variant="label-stacked" required={_required} disabled={disableForm} field-name="Subaltern__c" onchange={handleFieldChange}></lightning-input-field>
                         </lightning-layout-item>
                         
                         <lightning-layout-item size="4" padding="around-medium">
-                            <lightning-combobox required={required}
+                            <lightning-combobox required={_required}
                                                 disabled={disableForm}
                                                 name="RegistryCategory__c"
                                                 label="Categoria Catastale"
@@ -110,11 +110,11 @@
                         </lightning-layout-item>
                         
                         <lightning-layout-item size="4" padding="around-medium">
-                            <lightning-input-field variant="label-stacked" required={required} disabled={disableForm} field-name="RegistrySurface__c" onchange={handleFieldChange}></lightning-input-field>
+                            <lightning-input-field variant="label-stacked" required={_required} disabled={disableForm} field-name="RegistrySurface__c" onchange={handleFieldChange}></lightning-input-field>
                         </lightning-layout-item>
 
                         <lightning-layout-item size="4" padding="around-medium">
-                            <lightning-input-field variant="label-stacked" required={required} disabled={disableForm} field-name="Title__c" onchange={handleFieldChange}></lightning-input-field>
+                            <lightning-input-field variant="label-stacked" required={_required} disabled={disableForm} field-name="Title__c" onchange={handleFieldChange}></lightning-input-field>
                         </lightning-layout-item>
 
                         <lightning-layout-item size="4" padding="around-medium">
