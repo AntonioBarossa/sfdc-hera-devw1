@@ -1,5 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
-import getRecordsById from '@salesforce/apex/HDT_QR_ContentDocument.getRecordsById';
+import getRecordsById from '@salesforce/apex/HDT_LC_AttachmentManager.getRecordsById';
 import getAdditionalAttachmentFromCase from '@salesforce/apex/HDT_LC_AttachmentManager.getAdditionalAttachmentFromCase';
 import getRequiredAttachmentFromCase from '@salesforce/apex/HDT_LC_AttachmentManager.getRequiredAttachmentFromCase';
 import updateAttachment from '@salesforce/apex/HDT_LC_AttachmentManager.updateAttachment';
