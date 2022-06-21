@@ -262,6 +262,7 @@ export default class HdtLandRegistry extends LightningElement {
         event.detail.fields.RegistryCity__c = this.registryCityValue;
         event.detail.fields.LegalCity__c = this.legalCityValue;
         event.detail.fields.RegistryCategory__c = this.cadastralCategoryValue;
+        event.detail.fields.Status__c = "Bozza";
         this.template.querySelector('lightning-record-edit-form').submit(event.detail.fields);
         this.disableSalva=true;
         this.showSpinner = true;
