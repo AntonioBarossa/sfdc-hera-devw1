@@ -29,12 +29,12 @@ export default class HdtLandRegistry extends LightningElement {
     @wire(getObjectInfo, { objectApiName: LNDRGS_OBJ })
     objectInfo;
     
-    @api servicePointId;
-    @api preSelectedLandRegistryId;
-    @api required;
-    @api readonly;
+    @api servicePointId;                //inputOnly
+    @api preSelectedLandRegistryId;     //inputOnly
+    @api required;                      //inputOnly
+    @api readonly;                      //inputOnly
+    @api selectedLandRegistryId;        //outputOnly
 
-    @track selectedLandRegistryId;
     @track _required;
     @track _readonly;
     @track tableData = [];
