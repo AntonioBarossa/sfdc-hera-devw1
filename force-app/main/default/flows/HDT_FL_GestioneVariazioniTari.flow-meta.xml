@@ -18,10 +18,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>assignLandRegistry</name>
+        <label>assignLandRegistry</label>
+        <locationX>1975</locationX>
+        <locationY>3938</locationY>
+        <assignmentItems>
+            <assignToReference>getPreLandRegistry.LandRegistry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>componentLandRegistry.selectedLandRegistryId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updatePostLandRegistry</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>assignmentPostForm</name>
         <label>assignmentPostForm</label>
         <locationX>1909</locationX>
-        <locationY>4490</locationY>
+        <locationY>4610</locationY>
         <assignmentItems>
             <assignToReference>tryGet.FirstName__c</assignToReference>
             <operator>Assign</operator>
@@ -304,7 +320,7 @@
         <name>assignStringConcatenazione_0</name>
         <label>assignStringConcatenazione</label>
         <locationX>2500</locationX>
-        <locationY>5666</locationY>
+        <locationY>5786</locationY>
         <assignmentItems>
             <assignToReference>tryGet.Note__c</assignToReference>
             <operator>Assign</operator>
@@ -320,7 +336,7 @@
         <name>ChangePhase</name>
         <label>ChangePhase</label>
         <locationX>2511</locationX>
-        <locationY>6674</locationY>
+        <locationY>6794</locationY>
         <assignmentItems>
             <assignToReference>tryGet.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -336,7 +352,7 @@
         <name>ChangePhaseIntegrati</name>
         <label>ChangePhaseIntegrati</label>
         <locationX>3039</locationX>
-        <locationY>6794</locationY>
+        <locationY>6914</locationY>
         <assignmentItems>
             <assignToReference>tryGet.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -352,7 +368,7 @@
         <name>ChangePhaseNonIntegrati</name>
         <label>ChangePhaseNonIntegrati</label>
         <locationX>2775</locationX>
-        <locationY>6794</locationY>
+        <locationY>6914</locationY>
         <assignmentItems>
             <assignToReference>tryGet.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -368,7 +384,7 @@
         <name>SurfaceFromNullToZero</name>
         <label>SurfaceFromNullToZero</label>
         <locationX>2577</locationX>
-        <locationY>6338</locationY>
+        <locationY>6458</locationY>
         <assignmentItems>
             <assignToReference>tryGet.Surface__c</assignToReference>
             <operator>Assign</operator>
@@ -506,7 +522,7 @@
         <name>Annullamento_0_0</name>
         <label>Annullamento</label>
         <locationX>2041</locationX>
-        <locationY>4946</locationY>
+        <locationY>5066</locationY>
         <defaultConnector>
             <targetReference>GestioneAllegati_0_0</targetReference>
         </defaultConnector>
@@ -531,7 +547,7 @@
         <name>Annullamento_0_0_0_0</name>
         <label>Annullamento</label>
         <locationX>2274</locationX>
-        <locationY>5186</locationY>
+        <locationY>5306</locationY>
         <defaultConnector>
             <targetReference>Modulo_prodotto_da_contribuente_0</targetReference>
         </defaultConnector>
@@ -556,7 +572,7 @@
         <name>Annullamento_0_0_0_0_0</name>
         <label>Annullamento</label>
         <locationX>2478</locationX>
-        <locationY>6098</locationY>
+        <locationY>6218</locationY>
         <defaultConnector>
             <targetReference>IsSurfaceNull</targetReference>
         </defaultConnector>
@@ -708,7 +724,7 @@
         <locationX>1843</locationX>
         <locationY>3818</locationY>
         <defaultConnector>
-            <targetReference>updatePostLandRegistry</targetReference>
+            <targetReference>assignLandRegistry</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -781,7 +797,7 @@
         <name>ChoiceIntegration</name>
         <label>ChoiceIntegration</label>
         <locationX>2907</locationX>
-        <locationY>6674</locationY>
+        <locationY>6794</locationY>
         <defaultConnector>
             <targetReference>ChangePhaseIntegrati</targetReference>
         </defaultConnector>
@@ -827,7 +843,7 @@
         <name>ConcatenazionePreDocumentale_0</name>
         <label>ConcatenazionePreDocumentale</label>
         <locationX>2632</locationX>
-        <locationY>5426</locationY>
+        <locationY>5546</locationY>
         <defaultConnector>
             <targetReference>checkRavvedimentoOperoso</targetReference>
         </defaultConnector>
@@ -891,7 +907,7 @@
         <name>IsSurfaceNull</name>
         <label>IsSurfaceNull</label>
         <locationX>2709</locationX>
-        <locationY>6218</locationY>
+        <locationY>6338</locationY>
         <defaultConnector>
             <targetReference>IstruttoriBackOffice</targetReference>
         </defaultConnector>
@@ -916,7 +932,7 @@
         <name>IstruttoriBackOffice</name>
         <label>IstruttoriBackOffice?</label>
         <locationX>2709</locationX>
-        <locationY>6554</locationY>
+        <locationY>6674</locationY>
         <defaultConnector>
             <targetReference>ChoiceIntegration</targetReference>
         </defaultConnector>
@@ -962,7 +978,7 @@
         <name>Modulo_prodotto_da_contribuente_0</name>
         <label>Modulo prodotto da contribuente</label>
         <locationX>2478</locationX>
-        <locationY>5306</locationY>
+        <locationY>5426</locationY>
         <defaultConnector>
             <targetReference>ConcatenazionePreDocumentale_0</targetReference>
         </defaultConnector>
@@ -994,7 +1010,7 @@
         <name>QualitaSoggetto</name>
         <label>Qualità Soggetto Passivo?</label>
         <locationX>2041</locationX>
-        <locationY>4370</locationY>
+        <locationY>4490</locationY>
         <defaultConnector>
             <targetReference>SecondFormDipendenti_0</targetReference>
         </defaultConnector>
@@ -1057,6 +1073,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Dati catastali</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getPreLandRegistry.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica dati contrattuali</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1248,7 +1271,7 @@
         <name>tryGet</name>
         <label>tryGet</label>
         <locationX>2041</locationX>
-        <locationY>4250</locationY>
+        <locationY>4370</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>QualitaSoggetto</targetReference>
@@ -1269,7 +1292,7 @@
         <name>commitPostForm</name>
         <label>commitPostForm</label>
         <locationX>1909</locationX>
-        <locationY>4610</locationY>
+        <locationY>4730</locationY>
         <connector>
             <targetReference>SecondFormDipendenti_0</targetReference>
         </connector>
@@ -1306,7 +1329,7 @@
         <name>updatePostLandRegistry</name>
         <label>updatePostLandRegistry</label>
         <locationX>1975</locationX>
-        <locationY>3938</locationY>
+        <locationY>4058</locationY>
         <connector>
             <targetReference>tryGet</targetReference>
         </connector>
@@ -1326,7 +1349,7 @@
         <name>updateTryGet</name>
         <label>updateTryGet</label>
         <locationX>2709</locationX>
-        <locationY>7106</locationY>
+        <locationY>7226</locationY>
         <inputReference>tryGet</inputReference>
     </recordUpdates>
     <screens>
@@ -1396,7 +1419,7 @@
         <name>checkRavvedimentoOperoso</name>
         <label>checkRavvedimentoOperoso</label>
         <locationX>2478</locationX>
-        <locationY>5978</locationY>
+        <locationY>6098</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1459,7 +1482,7 @@
         <name>ConcatenazioneLogic_0</name>
         <label>ConcatenazioneLogic</label>
         <locationX>2500</locationX>
-        <locationY>5546</locationY>
+        <locationY>5666</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1554,7 +1577,7 @@
         <name>GestioneAllegati_0_0</name>
         <label>GestioneAllegati</label>
         <locationX>2274</locationX>
-        <locationY>5066</locationY>
+        <locationY>5186</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1582,7 +1605,7 @@
             <inputParameters>
                 <name>isCancel</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1594,7 +1617,7 @@
             <inputParameters>
                 <name>isPrevious</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1814,6 +1837,30 @@
             <name>componentLandRegistry</name>
             <extensionName>c:hdtLandRegistry</extensionName>
             <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>preSelectedLandRegistryId</name>
+                <value>
+                    <elementReference>getPreLandRegistry.LandRegistry__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>servicePointId</name>
+                <value>
+                    <elementReference>getPreLandRegistry.ServicePoint__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>readonly</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -1944,7 +1991,7 @@
         <name>SecondFormDipendenti_0</name>
         <label>SecondFormDipendenti</label>
         <locationX>2041</locationX>
-        <locationY>4826</locationY>
+        <locationY>4946</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2522,7 +2569,7 @@
         <name>flowAnnullamento</name>
         <label>flowAnnullamento</label>
         <locationX>542</locationX>
-        <locationY>8018</locationY>
+        <locationY>8138</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
