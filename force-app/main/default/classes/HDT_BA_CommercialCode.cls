@@ -10,16 +10,20 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<Ca
     }
 
     public Iterable<CampaignMember> start(Database.BatchableContext bc) {
+        System.debug('@@@@ HDT_BA_CommercialCode start');
         List<CampaignMember> context = [
             SELECT Id, FirstName, LastName, CampaignId,Campaign.MaxNumberEECodeUse__c,Campaign.MaxNumberGASCodeUse__c,Campaign.MaxNumberVASCodeUse__c , PromoCommercialCode__c, Campaign.CodeManagementModel__c, Campaign.PrefixCode__c, Campaign.CodeGenerationRule__c, PromoCommercialCode__r.FullCode__c 
             FROM CampaignMember 
             WHERE Campaign.CodeGenerationRule__c != 'Manuale'
             AND Campaign.CodeManagementModel__c IN ('Per singolo Campaign Member','Porta un amico')
             AND (PromoCommercialCode__c = null OR PromoCommercialCode__c = '')];
+        System.debug('@@@@ found '+context.size()+' CampaignMembers to update');
         return context;
     }
 
     public void execute(Database.BatchableContext bc, List<CampaignMember> context) {
+        System.debug('@@@@ HDT_BA_CommercialCode start');
+        System.debug('@@@@ working on '+context.size()+' CampaignMembers');
         List<String> campaignIds = new List<String>();
         for(CampaignMember curCm : context){
             if(!campaignIds.contains(curCm.CampaignId)) campaignIds.add(curCm.CampaignId);
