@@ -18,7 +18,7 @@ export default class HdtAttachmentManager extends LightningElement {
     }
 
     handleAdditionalChange(event){
-        this.additional = event.target.value;
+        this.additional = event.detail.value;
         /*
         console.log(event.target.value);
         this.additional = event.target.value;
