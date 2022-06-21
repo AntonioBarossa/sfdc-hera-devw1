@@ -8,8 +8,9 @@ public with sharing class HDT_BA_RecurringCampaingCreation implements Database.B
     
     public Date todayDate= Date.today();
     public List<Campaign> clonedCampaigns = new List<Campaign>();
+    public List<Campaign> clonedRelatedCampaigns = new List<Campaign>();
     public List<Campaign> campaignToUpdate = new List<Campaign>();
-    
+
     public Database.QueryLocator start(Database.BatchableContext bc) {
 
         String query = 'SELECT IsDeleted, IsActive, RecurringCampaign__c, Required__c, ExpectedRevenue, BudgetedCost, ActualCost, AmountAllOpportunities, AmountWonOpportunities, HierarchyAmountAllOpportunities, HierarchyAmountWonOpportunities, HierarchyExpectedRevenue, HierarchyBudgetedCost, HierarchyActualCost, StartDate, EndDate, LastActivityDate, DateNextGeneration__c, CodeValidityEndDate__c, CreatedDate, LastModifiedDate, SystemModstamp, LastViewedDate, LastReferencedDate, NumberSent, HierarchyNumberSent, MaxNumberEECodeUse__c, MaxNumberGASCodeUse__c, MaxNumberVASCodeUse__c, GenerationPeriod__c, Priority__c, CodeConventionQuantity__c, Id, NumberOfLeads, NumberOfConvertedLeads, NumberOfContacts, NumberOfResponses, NumberOfOpportunities, NumberOfWonOpportunities, HierarchyNumberOfLeads, HierarchyNumberOfConvertedLeads, HierarchyNumberOfContacts, HierarchyNumberOfResponses, HierarchyNumberOfOpportunities, HierarchyNumberOfWonOpportunities, Channel__c, ExpectedResponse, CampaignMemberPercentageAllocation__c, Type, Status, CompanyOwner__c, Category__c, Segment__c, AssignmentType__c, BillTypeMessage__c, CodeGenerationRule__c, CodeManagementModel__c, ReitekIntegrationTechnology__c, TargetingMode__c, Tipology__c, ProcessType__c, CaseCategory__c, CaseSubCategory__c, ParentId, CampaignImageId, OwnerId, CreatedById, LastModifiedById, CampaignMemberRecordTypeId, CampaignEasyCIM__c, OriginalCampaign__c, MacroActivityEasyCIM__c, CampaignMemberAssigment__c, SurveyCRM__c, ScriptConfig__c, Name, PrefixCode__c, IdCampaignIBMUnica__c, Target__c, StaticTextMessageBill__c, Description, TargetDescription__c, PositiveOutcomeDefaultStatus__c FROM Campaign WHERE Status != \'bozza\' AND RecurringCampaign__c=TRUE AND DateNextGeneration__c <= :todayDate and parentid = null AND enddate >: todayDate';
@@ -20,7 +21,7 @@ public with sharing class HDT_BA_RecurringCampaingCreation implements Database.B
     public void execute(Database.BatchableContext bc, List<Campaign> scope){
         System.debug(scope);
 
-        List<String> campaignIdTOQuery = new List<String>();
+        List<String> campaignIdToQuery = new List<String>();
         Map<Id, Campaign> mapCampaign = new Map<Id, Campaign>();
         for(Campaign c: scope){
             System.debug(' c.GenerationPeriod__c'+ c.GenerationPeriod__c);
@@ -41,12 +42,12 @@ public with sharing class HDT_BA_RecurringCampaingCreation implements Database.B
             }
             campaign.RecurringCampaign__c=false;
             campaign.OriginalCampaign__c=c.Id;
-            campaignIdTOQuery.add(c.id);
+            campaignIdToQuery.add(c.id);
             mapCampaign.put(c.id,c);
             clonedCampaigns.add(campaign);
             campaignToUpdate.add(c);
         }
-        List<Campaign> campaignChildToQuery = HDT_QR_Campaign.getCampaignChild(campaignIdTOQuery);
+        List<Campaign> campaignChildToQuery = HDT_QR_Campaign.getCampaignChild(campaignIdToQuery);
         for(Campaign c : campaignChildToQuery){
          
             Campaign campaign= c.clone(false,true,false,true);
@@ -71,7 +72,7 @@ public with sharing class HDT_BA_RecurringCampaingCreation implements Database.B
                 campaign.enddate=mapCampaign.get(c.ParentId).endDate;
             }
             if (mapCampaign.get(c.ParentId).endDate>campaign.StartDate) {
-                clonedCampaigns.add(campaign);
+                clonedRelatedCampaigns.add(campaign);
             }
            
         }
@@ -80,6 +81,17 @@ public with sharing class HDT_BA_RecurringCampaingCreation implements Database.B
     public void finish(Database.BatchableContext bc){
         System.debug(clonedCampaigns);
         HDT_SRV_Campaign.insertCampaigns(clonedCampaigns);
+        map <String, String> mapOriginalId=new map <String, String>();
+        for(Campaign cmp : clonedCampaigns){
+            mapOriginalId.put(cmp.OriginalCampaign__c, cmp.Id);
+        }
+
+        for (Integer i=0; i<clonedRelatedCampaigns.size(); i++){
+            if(mapOriginalId.containsKey(clonedRelatedCampaigns[i].ParentId)){
+                clonedRelatedCampaigns[i].parentId=mapOriginalId.get(clonedRelatedCampaigns[i].ParentId);
+            }
+        }
+        HDT_SRV_Campaign.insertCampaigns(clonedRelatedCampaigns);
         HDT_SRV_Campaign.updateCampaigns(campaignToUpdate);
     }
 }
