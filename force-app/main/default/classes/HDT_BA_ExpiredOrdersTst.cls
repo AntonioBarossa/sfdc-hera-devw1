@@ -26,13 +26,10 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
             o.RecordTypeId = recTypeId;
             o.Contact__c = conList[0].Id;
         }
-        
-        Order mySingleOrder = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza')[0];
-        mySingleOrder.RecordTypeId = recTypeId;
-        mySingleOrder.Contact__c = conList[0].Id;
-        
-        ordList.add(mySingleOrder);
         insert ordList;
+        /* Set parent order on first order */
+        ordList[0].ParentOrder__c = ordList[1].Id;
+        update ordList[0];
     }
     
     
@@ -43,7 +40,7 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
         
         //SETUP
         mySetup();
-        Order myOrder = [SELECT Id FROM Order LIMIT 1];
+        Order myOrder = [SELECT Id FROM Order Where ParentOrder__c = NULL LIMIT 1];
         
         //UPDATING ORDER FOR BATCH
         myOrder.DocusignExpirationDate__c = Date.today().addDays(-10);
@@ -56,6 +53,11 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
         myBatchToTest.execute(null);
         Test.stopTest();
         
+        List<Order> retrievedOrder = [SELECT Id,Phase__c,CancellationReason__c FROM Order WHERE ParentOrder__c != NULL];
+        System.assert('Annullato'.equalsIgnoreCase(retrievedOrder[0].Phase__c), 'Ordine NON è in Fase Annullato');
+        System.assert('Annullato per no conferma cliente'.equalsIgnoreCase(retrievedOrder[0].CancellationReason__c), 'Ordine risulta NON annullato.');
+
+        /*
         //RETRIEVING DATA
         Order myUpdatedOrder = [SELECT Id, Phase__c, CancellationReason__c FROM Order WHERE Id = :myOrder.Id];
         Order myRegularOrder = [SELECT Id, Phase__c, CancellationReason__c FROM Order WHERE Id != :myOrder.Id AND DocusignExpirationDate__c != Null];
@@ -70,6 +72,7 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
         
         System.assert(!'Annullato'.equalsIgnoreCase(myUnaffectedOrder.Phase__c), 'Ordine non deve essere alterato se non ha DocusignExpirationDate__c.');
         System.assert(!'Annullato per no conferma cliente'.equalsIgnoreCase(myUnaffectedOrder.CancellationReason__c), 'Ordine senza scadenza risulta annullato.');
+        */
         
     }
     

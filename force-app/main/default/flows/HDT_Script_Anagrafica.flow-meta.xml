@@ -30,7 +30,7 @@
             <name>isOutbound</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Channel</leftValueReference>
+                <leftValueReference>callType</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Outbound</stringValue>
@@ -55,7 +55,7 @@
             <name>isOutbound_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Channel</leftValueReference>
+                <leftValueReference>callType</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Outbound</stringValue>
