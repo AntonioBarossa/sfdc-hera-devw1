@@ -21,6 +21,9 @@
                             max-row-selection="1">
                         </lightning-datatable>
                     </template>
+                    <template if:false={showTable}>
+                        <div class="slds-text-heading_small">NON SONO PRESENTI RECORDS</div>
+                    </template>
                 </div>
 
                 <div class="slds-size_1-of-1 slds-box_x-small slds-text-align_center">
@@ -30,7 +33,7 @@
             </div>
 
             <!-- Campi -->
-            <!-- <template if:true={showForm}> -->
+            <template if:true={showForm}>
                 <lightning-record-edit-form object-api-name="LandRegistry__c" 
                                             record-id={selectedLandRegistryId}
                                             record-type-id={rtIdTari}
@@ -117,8 +120,12 @@
                             <lightning-input-field variant="label-stacked" required={_required} disabled={disableForm} field-name="Title__c" onchange={handleFieldChange}></lightning-input-field>
                         </lightning-layout-item>
 
-                        <lightning-layout-item size="4" padding="around-medium">
+                        <lightning-layout-item size="2" padding="around-medium">
                             <lightning-input-field variant="label-stacked" disabled value={servicePointId} field-name="ServicePoint__c"></lightning-input-field>
+                        </lightning-layout-item>
+                        
+                        <lightning-layout-item size="2" padding="around-medium">
+                            <lightning-input-field variant="label-stacked" disabled field-name="Name"></lightning-input-field>
                         </lightning-layout-item>
                         
                         <template if:false={showSalva}>
@@ -138,7 +145,7 @@
                         </template>
                     </lightning-layout>
                 </lightning-record-edit-form>
-            <!-- </template> -->
+            </template>
 
         </lightning-card>
     </div>

@@ -8,21 +8,21 @@ import getCities from '@salesforce/apex/HDT_UTL_LandRegistry.getCities';
 
 const RT_NAME = 'Dati Catastali TARI';
 const COLUMNS = [
-    { label: 'Codice assenza dati catastali',   fieldName: 'CodeMissingRegistryData__c',                type: 'text' },
-    { label: 'Destinazione Uso',                fieldName: 'DestinationUsage__c',                       type: 'text' },
+    { label: 'Nome Record',                     fieldName: 'Name',                                      type: 'text' },
+    // { label: 'Codice assenza dati catastali',   fieldName: 'CodeMissingRegistryData__c',                type: 'text' },
+    // { label: 'Destinazione Uso',                fieldName: 'DestinationUsage__c',                       type: 'text' },
     { label: 'Comune catastale',                fieldName: 'RegistryCity__c',                           type: 'text' },
-    { label: 'Codice comune catastale',         fieldName: 'RegistryCityCode__c',                       type: 'text' },
-    { label: 'Comune amministrativo',           fieldName: 'LegalCity__c',                              type: 'text' },
+    // { label: 'Codice comune catastale',         fieldName: 'RegistryCityCode__c',                       type: 'text' },
+    // { label: 'Comune amministrativo',           fieldName: 'LegalCity__c',                              type: 'text' },
     { label: 'Provincia ubicazione',            fieldName: 'Province__c',                               type: 'text' },
-    { label: 'Tipo unita',                      fieldName: 'UnitType__c',                               type: 'text' },
+    // { label: 'Tipo unita',                      fieldName: 'UnitType__c',                               type: 'text' },
     { label: 'Sezione urbana',                  fieldName: 'UrbanSection__c',                           type: 'text' },
     { label: 'Foglio',                          fieldName: 'Sheet__c',                                  type: 'text' },
     { label: 'Particella',                      fieldName: 'ParticleSheet__c',                          type: 'text' },
     { label: 'Subalterno',                      fieldName: 'Subaltern__c',                              type: 'text' },
-    { label: 'Categoria Catastale',             fieldName: 'RegistryCategory__c',                       type: 'text' },
+    // { label: 'Categoria Catastale',             fieldName: 'RegistryCategory__c',                       type: 'text' },
     { label: 'Superficie Catastale',            fieldName: 'RegistrySurface__c',                        type: 'text' },
-    { label: 'Qualifica Titolare',              fieldName: 'Title__c',                                  type: 'text' },
-    { label: 'Punto di fornitura',              fieldName: 'ServicePoint__r.ServicePointCode__c',       type: 'text' }   
+    // { label: 'Qualifica Titolare',              fieldName: 'Title__c',                                  type: 'text' }
 ];
 
 export default class HdtLandRegistry extends LightningElement {
@@ -35,17 +35,9 @@ export default class HdtLandRegistry extends LightningElement {
     @api readonly;                      //inputOnly
     @api selectedLandRegistryId;        //outputOnly
 
-    @track _required;
-    @track _readonly;
     @track tableData = [];
     @track tableSelectedRows = [];
     @track tableColumns = COLUMNS;
-    @track registryCityValue;
-    @track legalCityValue;
-    @track registryCityCodeValue;
-    @track provinceValue;
-    @track cadastralCategoryValue;
-
 
     get rtIdTari(){
         let rtId;
@@ -63,17 +55,25 @@ export default class HdtLandRegistry extends LightningElement {
     showSpinner = false;
     showSalva = false;
     showTable=false;
-    // showForm=false;
+    showForm=false;
 
     cadastralCategories = [];
     cityTechnicalData = [];
     cadastralCategoryOptions = [];
     cityOptions = [];
+    
+    registryCityValue;
+    legalCityValue;
+    registryCityCodeValue;
+    provinceValue;
+    cadastralCategoryValue;
+
+    _required;
+    _readonly;
 
     connectedCallback(){
-        //this.required=true;                                     //MOCKATO PER TEST (da togliere)
-        //this.servicePointId = 'a281X000000DqcVQAS';             //MOCKATO PER TEST (da togliere)
-        //this.preSelectedLandRegistryId = 'a3j1x000000Fa2JAAS';     //MOCKATO PER TEST (da togliere)
+        this.required=true;                                     //MOCKATO PER TEST (da togliere)
+        this.servicePointId = 'a281X000000DqcVQAS';             //MOCKATO PER TEST (da togliere)
         console.log('### connectedCallback selectedLandRegistryId', this.selectedLandRegistryId);
         this.call_retrieveLandRegistry();
         this.call_getCadastralCategories();
@@ -86,7 +86,7 @@ export default class HdtLandRegistry extends LightningElement {
     call_retrieveLandRegistry() {
         console.log('### call_retrieveLandRegistry');
         this.showTable=false;
-        // this.showForm=false;
+        this.showForm=false;
         this.showSpinner = true;
         this.disableForm=true;
         this.showSalva=false;
@@ -104,7 +104,7 @@ export default class HdtLandRegistry extends LightningElement {
                     if(this.tableSelectedRows.length == 0 ) this.tableSelectedRows = [this.tableData[0].Id];
                     this.handleSelection(this.tableSelectedRows[0]);
                     this.showTable=true;
-                    // this.showForm=true;
+                    this.showForm=true;
                     this.throwSelectionEvent();
                 }
                 this.showSpinner = false;
@@ -160,10 +160,15 @@ export default class HdtLandRegistry extends LightningElement {
                 this._required = false;
                 let inputList = this.template.querySelectorAll('lightning-input-field');
                 inputList.forEach(input => {
-                    if(input.fieldName != "ServicePoint__c") input.value = null
+                    if(!["CodeMissingRegistryData__c", "ServicePoint__c"].includes(input.fieldName)) input.value = null
                 });
                 inputList = this.template.querySelectorAll('lightning-combobox');
                 inputList.forEach(input => input.value = null);
+                this.registryCityValue = null;
+                this.legalCityValue = null;
+                this.registryCityCodeValue = null;
+                this.provinceValue = null;
+                this.cadastralCategoryValue = null;
             }
         }
         if(source == "RegistryCity__c"){
@@ -214,11 +219,11 @@ export default class HdtLandRegistry extends LightningElement {
     }
 
     handleTableSelection(event){
-        // this.showForm=false;
+        this.showForm=false;
         this.selectedLandRegistryId = event.detail.selectedRows[0].Id;
         this.showSalva=false;
         this.disableForm=true;
-        // this.showForm=true;
+        this.showForm=true;
         this.handleSelection(event.detail.selectedRows[0].Id);
         this.throwSelectionEvent();
     }
@@ -251,7 +256,7 @@ export default class HdtLandRegistry extends LightningElement {
         // this.showForm=false;
         this.selectedLandRegistryId='';
         this.disableForm=false;
-        // this.showForm=true;
+        this.showForm=true;
         this.disableSalva=false;
         this.showSalva=true;
     }
