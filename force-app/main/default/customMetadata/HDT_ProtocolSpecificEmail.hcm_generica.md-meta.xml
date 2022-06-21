@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Email__c</field>
-        <value xsi:type="xsd:string">hcm_generica@o-1ia35ziz7dlk47kpxzq18kmnlfo0n6vk2d3g81mi3t6axjaodw.3n-8mtouaa.cs128.apex.sandbox.sale</value>
+        <value xsi:type="xsd:string">hcm_generica@o-1ia35ziz7dlk47kpxzq18kmnlfo0n6vk2d3g81mi3t6axjaodw.3n-8mtouaa.cs128.apex.sandbox.salesforce.com</value>
     </values>
     <values>
         <field>Process__c</field>
