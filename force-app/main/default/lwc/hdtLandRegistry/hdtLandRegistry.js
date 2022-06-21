@@ -30,10 +30,11 @@ export default class HdtLandRegistry extends LightningElement {
     objectInfo;
     
     @api servicePointId;
-    @api selectedLandRegistryId;
+    @api preSelectedLandRegistryId;
     @api required;
     @api readonly;
 
+    @track selectedLandRegistryId;
     @track _required;
     @track _readonly;
     @track tableData = [];
@@ -45,6 +46,7 @@ export default class HdtLandRegistry extends LightningElement {
     @track provinceValue;
     @track cadastralCategoryValue;
 
+
     get rtIdTari(){
         let rtId;
         if(this.objectInfo.data){
@@ -54,7 +56,7 @@ export default class HdtLandRegistry extends LightningElement {
         }
         return rtId;
     }
-    get disableModifica(){ return !this.selectedLandRegistryId || this.selectedLandRegistryId=='' || this._readonly }
+    get disableModifica(){ return !this.selectedLandRegistryId || this.selectedLandRegistryId == '' || this._readonly }
     disableSalva = false;
     disableForm = true;
 
@@ -70,19 +72,19 @@ export default class HdtLandRegistry extends LightningElement {
 
     connectedCallback(){
         this.required=true;                                     //MOCKATO PER TEST (da togliere)
-        this.servicePointId = 'a281X000000DqcVQAS';             //MOCKATO PER TEST (da togliere)
-        this.selectedLandRegistryId = 'a3j1x000000Fa2JAAS';     //MOCKATO PER TEST (da togliere)
+        //this.servicePointId = 'a281X000000DqcVQAS';             //MOCKATO PER TEST (da togliere)
+        //this.preSelectedLandRegistryId = 'a3j1x000000Fa2JAAS';     //MOCKATO PER TEST (da togliere)
         console.log('### connectedCallback selectedLandRegistryId', this.selectedLandRegistryId);
         this.call_retrieveLandRegistry();
         this.call_getCadastralCategories();
         this.call_getCities();
         this._required = this.required;
         this._readonly = this.readonly;
+        this.selectedLandRegistryId = this.preSelectedLandRegistryId;
     }
 
     call_retrieveLandRegistry() {
         console.log('### call_retrieveLandRegistry');
-        if(this.selectedLandRegistryId) this.tableSelectedRows = [this.selectedLandRegistryId];
         this.showTable=false;
         // this.showForm=false;
         this.showSpinner = true;
@@ -98,6 +100,7 @@ export default class HdtLandRegistry extends LightningElement {
             })
             .finally(() => {
                 if(this.tableData.length > 0){
+                    if(this.selectedLandRegistryId) this.tableSelectedRows = [this.selectedLandRegistryId];
                     if(this.tableSelectedRows.length == 0 ) this.tableSelectedRows = [this.tableData[0].Id];
                     this.handleSelection(this.tableSelectedRows[0]);
                     this.showTable=true;
