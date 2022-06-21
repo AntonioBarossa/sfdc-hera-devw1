@@ -3,7 +3,7 @@ import getRecordsById from '@salesforce/apex/HDT_QR_ContentDocument.getRecordsBy
 import getAdditionalAttachmentFromCase from '@salesforce/apex/HDT_LC_AttachmentManager.getAdditionalAttachmentFromCase';
 import getRequiredAttachmentFromCase from '@salesforce/apex/HDT_LC_AttachmentManager.getRequiredAttachmentFromCase';
 import updateAdditionalAttachment from '@salesforce/apex/HDT_LC_AttachmentManager.updateAdditionalAttachment';
-import { getRecord, getFieldValue, updateRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
+import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 
 export default class HdtAttachmentManager extends LightningElement {
 
@@ -11,6 +11,7 @@ export default class HdtAttachmentManager extends LightningElement {
     @api files;
     @api additional;
     @api required;
+    @track numberOfFiles = 0;
 
     get acceptedFormats() {
         return ['.pdf', '.png'];
@@ -54,14 +55,37 @@ export default class HdtAttachmentManager extends LightningElement {
             })
             .then(result => {
                 console.log(JSON.stringify(result));
-                if(Object.keys(result).length > 0 )
+                this.numberOfFiles = Object.keys(result).length;
+                if( this.numberOfFiles > 0 )
                     this.files = result;
                 else
-                this.files = null;
+                    this.files = null;
             })
             .catch(error => {
                 this.error = error;
             }); 
+    }
+
+    @api
+    validate(){
+        if(this.required?.length > 0 && this.numberOfFiles == 0){
+            return { 
+                isValid: false, 
+                errorMessage: 'Inserisci un valore.' 
+                 }; 
+        }else if(this.additional?.length > 0 && this.numberOfFiles == 0){
+            return { 
+                isValid: false, 
+                errorMessage: 'Inserisci un valore.' 
+                 }; 
+        }else if(this.additional?.length <= 0 && this.required?.length <= 0 && this.numberOfFiles > 0){
+            return { 
+                isValid: false, 
+                errorMessage: 'Inserisci un valore.' 
+                 }; 
+        }else{
+            return { isValid: true };
+        }
     }
 
     connectedCallback(){

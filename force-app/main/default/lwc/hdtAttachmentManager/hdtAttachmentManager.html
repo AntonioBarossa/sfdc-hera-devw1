@@ -1,25 +1,29 @@
 <template>
-    <lightning-card>
-        <div class="slds-grid slds-wrap">
-            <div class="slds-col slds-size_1-of-12">
-            </div>
-            <div class="slds-col slds-size_10-of-12">
-                <lightning-input type="text" label="Allegati Obbligatori" value={required} required disabled></lightning-input>
-                <lightning-input type="text" label="Allegati Aggiuntivi" value={additional} onblur={handleAdditionalChange}></lightning-input>
-                <br></br>
-                <c-hdt-content-document-list files={files} onfiledelete={afterDelete}></c-hdt-content-document-list>
-                <lightning-file-upload
-                    label="Attach receipt"
-                    name="fileUploader"
-                    accept={acceptedFormats}
-                    record-id={recordId}
-                    onuploadfinished={handleUploadFinished}
-                    multiple
-                >
-                </lightning-file-upload>
-            </div>
-            <div class="slds-col slds-size_1-of-12">
-            </div>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-12">
         </div>
-    </lightning-card>
+        <div class="slds-col slds-size_10-of-12">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning-input type="text" label="Allegati Obbligatori" value={required} required disabled></lightning-input>
+                    <lightning-input type="text" label="Allegati Aggiuntivi" value={additional} onblur={handleAdditionalChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_6-of-12"></div>
+            </div>
+            <br></br>
+            <c-hdt-content-document-list files={files} onfiledelete={afterDelete}></c-hdt-content-document-list>
+            <lightning-file-upload
+                label="Inserimento Allegati"
+                name="fileUploader"
+                accept={acceptedFormats}
+                record-id={recordId}
+                onuploadfinished={handleUploadFinished}
+                multiple
+            >
+            </lightning-file-upload>
+        </div>
+        <div class="slds-col slds-size_1-of-12">
+        </div>
+    </div>
+
 </template>
