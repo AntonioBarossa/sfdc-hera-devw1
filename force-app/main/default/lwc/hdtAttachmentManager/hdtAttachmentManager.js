@@ -2,7 +2,7 @@ import { LightningElement, api, track } from 'lwc';
 import getRecordsById from '@salesforce/apex/HDT_QR_ContentDocument.getRecordsById';
 import getAdditionalAttachmentFromCase from '@salesforce/apex/HDT_LC_AttachmentManager.getAdditionalAttachmentFromCase';
 import getRequiredAttachmentFromCase from '@salesforce/apex/HDT_LC_AttachmentManager.getRequiredAttachmentFromCase';
-import updateAdditionalAttachment from '@salesforce/apex/HDT_LC_AttachmentManager.updateAdditionalAttachment';
+import updateAttachment from '@salesforce/apex/HDT_LC_AttachmentManager.updateAttachment';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 
 export default class HdtAttachmentManager extends LightningElement {
@@ -18,6 +18,8 @@ export default class HdtAttachmentManager extends LightningElement {
     }
 
     handleAdditionalChange(event){
+        this.additional = event.target.value;
+        /*
         console.log(event.target.value);
         this.additional = event.target.value;
         updateAdditionalAttachment({
@@ -30,10 +32,11 @@ export default class HdtAttachmentManager extends LightningElement {
             this.error = error;
         });
         getRecordNotifyChange([{recordId: this.recordId}]);
+        */
     }
 
     afterDelete(event){
-        this.getRecord();
+        this.getFiles();
     }
 
     handleUploadFinished(event) {
@@ -44,12 +47,12 @@ export default class HdtAttachmentManager extends LightningElement {
         alert('No. of files uploaded : ' + uploadedFiles.length);
         */
 
-        this.getRecord();
+        this.getFiles();
 
         getRecordNotifyChange([{recordId: this.recordId}]);
     }
 
-    getRecord(){
+    getFiles(){
         getRecordsById({
             recordId: this.recordId
             })
@@ -68,6 +71,16 @@ export default class HdtAttachmentManager extends LightningElement {
 
     @api
     validate(){
+        updateAttachment({
+            recordId: this.recordId,
+            required: this.required,
+            additional: this.additional
+            }).then(result => {
+                console.log(JSON.stringify(result));
+            })
+            .catch(error => {
+                this.error = error;
+            }); 
         if(this.required?.length > 0 && this.numberOfFiles == 0){
             return { 
                 isValid: false, 
@@ -90,7 +103,7 @@ export default class HdtAttachmentManager extends LightningElement {
 
     connectedCallback(){
 
-        this.getRecord();
+        this.getFiles();
 
         getAdditionalAttachmentFromCase({
             caseId: this.recordId

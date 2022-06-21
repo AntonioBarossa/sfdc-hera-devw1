@@ -12,9 +12,9 @@ public with sharing class HDT_LC_AttachmentManager {
     }
 
     @AuraEnabled
-    public static Boolean updateAdditionalAttachment(Id caseId, String additional){
+    public static Boolean updateAttachment(Id caseId, String required, String additional){
         try{
-            Case recordCase = new Case(Id = caseId, AdditionalAttachments__c = additional);
+            Case recordCase = new Case(Id = caseId, AttachmentsStringTARI__c = required, AdditionalAttachments__c = additional);
             update recordCase;
             return true;
         }catch(exception e){
