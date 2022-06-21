@@ -71,7 +71,7 @@ export default class HdtLandRegistry extends LightningElement {
     cityOptions = [];
 
     connectedCallback(){
-        this.required=true;                                     //MOCKATO PER TEST (da togliere)
+        //this.required=true;                                     //MOCKATO PER TEST (da togliere)
         //this.servicePointId = 'a281X000000DqcVQAS';             //MOCKATO PER TEST (da togliere)
         //this.preSelectedLandRegistryId = 'a3j1x000000Fa2JAAS';     //MOCKATO PER TEST (da togliere)
         console.log('### connectedCallback selectedLandRegistryId', this.selectedLandRegistryId);
