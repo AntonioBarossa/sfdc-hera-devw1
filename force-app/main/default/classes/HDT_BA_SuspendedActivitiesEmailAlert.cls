@@ -8,7 +8,7 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Databa
         this.activities = [SELECT Id, Name, SuspensionReason__c, SuspensionDueDate__c, wrts_prcgvr__Status__c, OwnerId, Owner.Name 
                            FROM wrts_prcgvr__Activity__c WHERE SuspensionDueDate__c = TODAY 
                            AND wrts_prcgvr__Status__c = 'Sospesa' 
-                           AND RecordType.DeveloperName != 'HDT_RT_Distributor' AND DiscardCategory__c != 'Tracciatura'
+                           AND RecordType.DeveloperName != 'HDT_RT_DistributorAppointment' AND DiscardCategory__c != 'Tracciatura'
                            WITH SECURITY_ENFORCED]; //Marco Arci
         if (this.activities.size() > 0) {
             List<String> userNames = new List<String>();
