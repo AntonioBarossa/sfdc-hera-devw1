@@ -1251,7 +1251,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         String correctionDocumentEmissionDate = null;
         Decimal indemnityDueSendResponse = 1;
         String boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
-        System.assertEquals('1', boxType, 'Indemnity Box Test OK');
+        System.assertEquals('', boxType, 'Indemnity Box Test OK');
 
         complaintClassification = 'Reclamo Scritto';
         indemnityConfirmed = True;
