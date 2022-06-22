@@ -16,11 +16,12 @@ public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
                 emailBody = email.plainTextBody;
             }
 
+            String subject = (String.isNotBlank(email.subject) && email.subject.length() > 255) ? email.subject.substring(0,254) : email.subject;
             Interaction__c interaction = new Interaction__c(
                 Type__c = 'Digital',
                 ReceptionDate__c = Date.today(),
                 BodyEmail__c = emailBody,
-                SubjectEmail__c = email.subject,
+                SubjectEmail__c = subject,
                 CompanyOwner__c = TEMPORARY_COMPANYOWNER_DEFAULT
             );
 
