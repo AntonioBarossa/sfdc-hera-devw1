@@ -44,12 +44,17 @@ public class HDT_BA_CampaignBollettaTst {
                 i++;
             }
             insert contacts;
+
+            List<CommercialCode__c> CommCodes = HDT_UTL_DataFactoryTst.createCommCode(50, true);
             
             
             List<CampaignMember> campMembers = HDT_UTL_DataFactoryTst.createCampaignMember(false,camps[0].id,leads,contacts);
+            i = 0;
             for(CampaignMember c : campMembers){
                 c.ContractReference__c = 'testContractReference';
                 c.isWsBollettaInvoked__c = false;
+                c.PromoCommercialCode__c = CommCodes[i].Id;
+                i++;
             }
             insert campMembers;
 

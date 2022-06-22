@@ -32,6 +32,12 @@ public inherited sharing class HDT_WS_InvioNumerazioni {
         return callService(macroactivity, phonenumber, null, cmId, agency);
     }
 
+    public static HDT_WS_Response callService(String macroactivity,String phonenumber, Datetime callDateTime, String cmId) {
+        // force deploy
+        return new HDT_WS_Response();
+    }
+
+
     public class HDT_WS_InvioNumerazioniRequest extends HDT_WS_Request{
         @AuraEnabled public String macroActivity;
         @AuraEnabled public String phoneNumber;
