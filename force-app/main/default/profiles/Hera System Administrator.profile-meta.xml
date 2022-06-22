@@ -4451,6 +4451,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Product2.NoSellable__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>product2.CampaignEleggibilityGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -34647,7 +34652,7 @@
         <layout>PricebookEntry-Price Book Entry Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Product2-SBQQ__CPQ Product Layout</layout>
+        <layout>Product2-CPQ Product Layout New</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ProductConsumptionSchedule-Layout Pianificazione del consumo dei prodotti</layout>
