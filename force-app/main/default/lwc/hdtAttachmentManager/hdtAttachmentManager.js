@@ -49,7 +49,7 @@ export default class HdtAttachmentManager extends LightningElement {
 
         this.getFiles();
 
-        getRecordNotifyChange([{recordId: this.recordId}]);
+        //getRecordNotifyChange([{recordId: this.recordId}]);
     }
 
     getFiles(){
@@ -72,7 +72,7 @@ export default class HdtAttachmentManager extends LightningElement {
     @api
     validate(){
         updateAttachment({
-            recordId: this.recordId,
+            caseId: this.recordId,
             required: this.required,
             additional: this.additional
             }).then(result => {
@@ -84,17 +84,17 @@ export default class HdtAttachmentManager extends LightningElement {
         if(this.required?.length > 0 && this.numberOfFiles == 0){
             return { 
                 isValid: false, 
-                errorMessage: 'Inserisci un valore.' 
+                errorMessage: 'Inserire gli allegati descritti' 
                  }; 
         }else if(this.additional?.length > 0 && this.numberOfFiles == 0){
             return { 
                 isValid: false, 
-                errorMessage: 'Inserisci un valore.' 
+                errorMessage: 'Inserire gli allegati descritti' 
                  }; 
-        }else if(this.additional?.length <= 0 && this.required?.length <= 0 && this.numberOfFiles > 0){
+        }else if(!(this.additional?.length || this.required?.length) && this.numberOfFiles > 0){
             return { 
                 isValid: false, 
-                errorMessage: 'Inserisci un valore.' 
+                errorMessage: 'Descrivere gli allegati inseriti nel campo "Allegati Aggiuntivi"' 
                  }; 
         }else{
             return { isValid: true };

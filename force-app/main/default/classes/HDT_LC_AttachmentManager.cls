@@ -39,7 +39,8 @@ public with sharing class HDT_LC_AttachmentManager {
     public static Boolean updateAttachment(Id caseId, String required, String additional){
         try{
             Case recordCase = new Case(Id = caseId, AttachmentsStringTARI__c = required, AdditionalAttachments__c = additional);
-            update recordCase;
+            system.debug('@@@@: '+recordcase);
+            upsert recordCase;
             return true;
         }catch(exception e){
             system.debug(e);
@@ -56,6 +57,7 @@ public with sharing class HDT_LC_AttachmentManager {
         return tabellaAllegati?.requiredAttachment;
         */
         return 'Patente; Modulo Variazione Superficie; Atto di Proprietà';
+        //return '';
     }
 
 
