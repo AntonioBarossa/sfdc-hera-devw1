@@ -46,8 +46,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track lastStepData = {};
     @track isNoDayAfterthought = false;
     loginChannel;
-    isActiveRepentantPressed = false;
-    missedDueDate;
+    //missedDueDate;
     get orderWithData(){
        console.log('#Order With Data >>> ' +JSON.stringify(this.sectionDataToSubmit));
        return {...this.order, ...this.sectionDataToSubmit};
@@ -589,7 +588,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             }
             }
             if(currentSectionName === 'variabiliDiProcesso'){
-                if(!this.isActiveRepentantPressed){
+                let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
+                //if(!this.isActiveRepentantPressed){
+                if(this.template.querySelector("c-hdt-active-repentant")?.validateDate(decorrenza)){
                     this.showMessage('Errore', 'Verificare il ravvedimento operoso prima di procedere', 'error');
                     return;
                 }
@@ -1147,23 +1148,27 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.template.querySelector("[data-id='AtecoCode__c']").value = event.detail;
         }
     }
-    handleCheckMissedDue(event) {
-        this.isActiveRepentantPressed = true;
+
+    handleActiveRepentantStart(event){
+        console.log("test call");
+        let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
+        this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = false;
+        this.template.querySelector("c-hdt-active-repentant").startActiveRepentant(decorrenza);
+    }
+
+    handleActiveRepentantFinish(event) {//function executed on parent context
         console.log('###Missed Due Event >>> ');
-        if(!event.detail.isEmpty){
-            this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = this.getFormattedDate(event.detail.dateX);
-            this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = this.getFormattedDate(event.detail.dateY);
-            this.missedDueDate = this.getFormattedDate(event.detail.missedDue);
-            this.template.querySelector("[data-id='MissingDueAmount__c']").required = true;
-           
-            if(this.order.Sale__r.CreatedDate < this.getFormattedDate(event.detail.dateX)){
-                this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = true;
-                this.template.querySelector("[data-id='BlockOnComputation__c']").value = 'Y';
-            }
+        this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = event.detail.dateX? this.getFormattedDate(event.detail.dateX) : null;
+        this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = event.detail.dateY? this.getFormattedDate(event.detail.dateY) : null;
+        //this.missedDueDate = this.getFormattedDate(event.detail.missedDue);
+        this.template.querySelector("[data-id='MissingDueAmount__c']").required = event.detail.missedDue? true : false;
+        if(event.detail.period=="Y"){
+            this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = true;
+            this.template.querySelector("[data-id='BlockOnComputation__c']").value = 'Y';
         }
-      }
+    }
 
     getFormattedDate(date){
-        return date.getFullYear()+'-'+date.getMonth()+'-'+date.getDay();
+        return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
     }
 }
