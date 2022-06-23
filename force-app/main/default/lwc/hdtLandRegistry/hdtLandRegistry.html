@@ -11,7 +11,7 @@
             <div class="slds-grid slds-wrap">
             
                 <div class="slds-size_1-of-1">
-                    <!-- <template if:true={showTable}> -->
+                    <template if:true={showTable}>
                         <lightning-datatable
                             data={tableData}
                             columns={tableColumns}
@@ -20,10 +20,10 @@
                             onrowselection={handleTableSelection}
                             max-row-selection="1">
                         </lightning-datatable>
-                    <!-- </template>
+                    </template>
                     <template if:false={showTable}>
                         <div class="slds-text-heading_small">NON SONO PRESENTI RECORDS</div>
-                    </template> -->
+                    </template>
                 </div>
 
                 <div class="slds-size_1-of-1 slds-box_x-small slds-text-align_center">
@@ -32,12 +32,14 @@
                 
             </div>
             
-            <c-hdt-land-registry-edit record-id={selectedLandRegistryId}
+            <c-hdt-land-registry-edit record-id={_selectedLandRegistryId}
                                         required={_required}
                                         readonly={_readonly}
                                         onformsuccess={handleEditSave}
                                         ondeletion={handleEditDeletion}
-                                        service-point-id={servicePointId}></c-hdt-land-registry-edit>
+                                        service-point-id={servicePointId}
+                                        show-edit
+                                        show-delete></c-hdt-land-registry-edit>
             
         </lightning-card>
     </div>

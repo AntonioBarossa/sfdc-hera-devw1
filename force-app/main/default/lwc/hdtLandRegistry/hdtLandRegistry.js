@@ -1,4 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
+import { CloseActionScreenEvent } from 'lightning/actions';
 import retrieveLandRegistryTable from '@salesforce/apex/HDT_UTL_LandRegistry.retrieveLandRegistryTable';
 
 const COLUMNS = [
@@ -36,20 +37,22 @@ export default class HdtLandRegistry extends LightningElement {
 
     _required;
     _readonly;
+    @track _selectedLandRegistryId;
 
     connectedCallback(){
         this.required=true;                                     //MOCKATO PER TEST (da togliere)
         this.servicePointId = 'a281X000000DqcVQAS';             //MOCKATO PER TEST (da togliere)
-        console.log('### connectedCallback selectedLandRegistryId', this.selectedLandRegistryId);
+        console.log('### connectedCallback preSelectedLandRegistryId', this.preSelectedLandRegistryId);
         this.call_retrieveLandRegistryTable();
         this._required = this.required;
         this._readonly = this.readonly;
+        this._selectedLandRegistryId = this.preSelectedLandRegistryId;
         this.selectedLandRegistryId = this.preSelectedLandRegistryId;
     }
 
     call_retrieveLandRegistryTable() {
         console.log('### call_retrieveLandRegistryTable');
-        // this.showTable=false;
+        this.showTable=false;
         this.showSpinner = true;
         retrieveLandRegistryTable({ servicePointIds : this.servicePointId })
             .then(result => {
@@ -61,9 +64,12 @@ export default class HdtLandRegistry extends LightningElement {
             })
             .finally(() => {
                 if(this.tableData.length > 0){
-                    if(this.selectedLandRegistryId) this.tableSelectedRows = [this.selectedLandRegistryId];
-                    if(this.tableSelectedRows.length == 0 ) this.tableSelectedRows = [this.tableData[0].Id];
-                    // this.showTable=true;
+                    if(!this._selectedLandRegistryId){
+                        this.selectedLandRegistryId = this.tableData[0].Id;
+                        this._selectedLandRegistryId = this.tableData[0].Id;
+                    }
+                    this.tableSelectedRows = [this._selectedLandRegistryId];
+                    this.showTable=true;
                     this.throwSelectionEvent();
                 }
                 this.showSpinner = false;
@@ -72,27 +78,34 @@ export default class HdtLandRegistry extends LightningElement {
 
     handleTableSelection(event){
         this.selectedLandRegistryId = event.detail.selectedRows[0].Id;
+        this._selectedLandRegistryId = event.detail.selectedRows[0].Id;
         this.throwSelectionEvent();
     }
 
     handleNuovoClick(){
-        let cmp = this.template.querySelector('c-hdt-land-registry-edit')
-        if(cmp) cmp.createNewRecord();
+        this.selectedLandRegistryId = null;
+        this._selectedLandRegistryId = null;
+        this.tableSelectedRows = [];
     }
 
     handleEditSave(event){
         this.selectedLandRegistryId = event.detail.rowId;
+        this._selectedLandRegistryId = event.detail.rowId;
         this.call_retrieveLandRegistryTable();
     }
     
     handleEditDeletion(){
         this.selectedLandRegistryId = null;
+        this._selectedLandRegistryId = null;
         this.call_retrieveLandRegistryTable();
     }
 
     throwSelectionEvent(){
-        const evt = new CustomEvent("selection", { detail:  {rowId: this.selectedLandRegistryId} });
+        const evt = new CustomEvent("selection", { detail:  {rowId: this._selectedLandRegistryId} });
         this.dispatchEvent(evt);
     }
     
+    closeAction(){
+        this.dispatchEvent(new CloseActionScreenEvent());
+    }
 }

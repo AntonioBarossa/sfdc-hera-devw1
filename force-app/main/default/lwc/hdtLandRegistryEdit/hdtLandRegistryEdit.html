@@ -10,7 +10,7 @@
         <lightning-record-edit-form object-api-name="LandRegistry__c"
                                     record-id={_recordId}
                                     record-type-id={rtIdTari}
-                                    onload={handleFormLoaded}
+                                    onload={handleFormLoad}
                                     onsubmit={handleFormSubmit}
                                     onsuccess={handleFormSuccess}
                                     onerror={handleFormError}>
@@ -101,46 +101,31 @@
                     <lightning-input-field variant="label-stacked" disabled value={servicePointId} field-name="ServicePoint__c"></lightning-input-field>
                 </lightning-layout-item>
 
-            </lightning-layout>
-            
-            <template if:true={_showButtons}>
-                <lightning-layout horizontal-align="center">
-
-                    <template if:true={showSalva}>
-                        <lightning-layout-item size="2" padding="around-medium">
+                <lightning-layout-item size="12" padding="around-medium">
+                    <lightning-layout horizontal-align="end">
+                        <lightning-layout-item padding="horizontal-small">
                             <!-- <div class="slds-text-align_center"> -->
                                 <lightning-button variant="success" icon-name="utility:success" disabled={disableSalva} label="Salva" title="Salva" type="submit"></lightning-button>
                             <!-- </div> -->
                         </lightning-layout-item>
-                    </template>
-
-                    <template if:false={showSalva}>
-                        <lightning-layout-item size="2" padding="around-medium">
-                            <!-- <div class="slds-text-align_center"> -->
-                                <lightning-button variant="brand-outline" icon-name="utility:edit" disabled={disableModifica} label="Modifica" title="Modifica" onclick={handleModificaClick}></lightning-button>
-                            <!-- </div> -->
-                        </lightning-layout-item>
-                    </template>
-
-                    <lightning-layout-item size="2" padding="around-medium">
-                        <!-- <div class="slds-text-align_center"> -->
-                            <lightning-button variant="destructive" icon-name="utility:delete" disabled={_readonly} label="Elimina" title="Elimina" onclick={handleEliminaClick}></lightning-button>
-                        <!-- </div> -->
-                    </lightning-layout-item>
-
-                </lightning-layout>
-            </template>
-
-            <div class="slds-hidden">
-                <lightning-layout>
-                    <lightning-layout-item><lightning-input-field field-name="RegistryCity__c"></lightning-input-field></lightning-layout-item>
-                    <lightning-layout-item><lightning-input-field field-name="RegistryCityCode__c"></lightning-input-field></lightning-layout-item>
-                    <lightning-layout-item><lightning-input-field field-name="LegalCity__c"></lightning-input-field></lightning-layout-item>
-                    <lightning-layout-item><lightning-input-field field-name="Province__c"></lightning-input-field></lightning-layout-item>
-                    <lightning-layout-item><lightning-input-field field-name="RegistryCategory__c"></lightning-input-field></lightning-layout-item>
-                    <lightning-layout-item><lightning-input-field field-name="Name"></lightning-input-field></lightning-layout-item>
-                </lightning-layout>
-            </div>
+                        <template if:true={_showEdit}>
+                            <lightning-layout-item padding="horizontal-small">
+                                <!-- <div class="slds-text-align_center"> -->
+                                    <lightning-button variant="brand-outline" icon-name="utility:edit" disabled={disableModifica} label="Modifica" title="Modifica" onclick={handleModificaClick}></lightning-button>
+                                <!-- </div> -->
+                            </lightning-layout-item>
+                        </template>
+                        <template if:true={_showDelete}>
+                            <lightning-layout-item padding="horizontal-small">
+                                <!-- <div class="slds-text-align_center"> -->
+                                    <lightning-button variant="destructive" icon-name="utility:delete" disabled={_readonly} label="Elimina" title="Elimina" onclick={handleEliminaClick}></lightning-button>
+                                <!-- </div> -->
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                </lightning-layout-item>
+            </lightning-layout>            
+            
         </lightning-record-edit-form>
     <!-- </template> -->
 
