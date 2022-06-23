@@ -1237,6 +1237,11 @@
                 <label>HCM_CON_Fatturazione</label>
             </value>
             <value>
+                <fullName>HCM_CON_Protocollo</fullName>
+                <default>false</default>
+                <label>HCM_CON_Protocollo</label>
+            </value>
+            <value>
                 <fullName>HCM_DISCO_ Appuntamenti</fullName>
                 <default>false</default>
                 <label>HCM_DISCO_ Appuntamenti</label>
