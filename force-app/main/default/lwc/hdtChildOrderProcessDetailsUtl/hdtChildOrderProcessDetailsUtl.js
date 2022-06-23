@@ -30,6 +30,7 @@
                 recordId: this.order.Id,
                 hasCodiceRonchiButton: this.order.Account.RecordTypeName__c == 'Business',
                 hasVerificaAccertamento: true,
+                hasAllegatiObbligatori: true,
                 diffObjApi: 'Sale',
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente',
                 data:[

@@ -1,4 +1,4 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import handleSearch from '@salesforce/apex/HDT_LC_CheckAssessments.handleSearch';
 
 const columns = [ { label: 'Nr. Atto', fieldName: 'NrAtto',  sortable: "true"}, //OK
@@ -17,6 +17,7 @@ const columns = [ { label: 'Nr. Atto', fieldName: 'NrAtto',  sortable: "true"}, 
                   { label: 'Categoria Accertata', fieldName: 'CategoriaAccertata'}];
 
 export default class HdtCheckAssessments extends LightningElement {
+    @api order;
     @track data;
     columns = columns;
     defaultSortDirection = 'asc';
@@ -52,8 +53,12 @@ export default class HdtCheckAssessments extends LightningElement {
 
     connectedCallback(){
         console.log('CallBack start');
-            
-        handleSearch({}).then(result =>{
+        
+        handleSearch({
+            cfPiva : this.order.Account.FiscalCode__c,
+            comuneFornitura : this.order.SupplyCity__c,
+            tipoPersona : this.order.Account.CustomerMarking__c,
+        }).then(result =>{
             if (!result){
                 console.log('result ->' + this.result);
             }else{
