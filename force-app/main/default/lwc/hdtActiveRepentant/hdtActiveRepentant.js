@@ -3,6 +3,16 @@ import getPeriods from "@salesforce/apex/HDT_LC_ActiveRepentant.getPeriods";
 import getTerms from "@salesforce/apex/HDT_LC_ActiveRepentant.getTerms";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
+class outputData{
+    constructor(dateX, dateY, missedDue, declineSupport, bloccoCalcolo) {
+        this.dateX = dateX;
+        this.dateY=dateY;
+        this.missedDue = missedDue;
+        this.declineSupport=declineSupport;
+        this.bloccoCalcolo=bloccoCalcolo;
+    }
+}
+
 export default class HdtActiveRepentant extends LightningElement {
     @track missedDueDate;
     @track limitDateX;
@@ -15,9 +25,20 @@ export default class HdtActiveRepentant extends LightningElement {
     @api dateDichiarazione;
     @api city;
 
+    //variables from flow
+    @api recordId;
+    @api objectApiName;
+    @api outputWrp;
+
     buttonPressed() {
         this.disabled=true;
-        this.dispatchEvent(CustomEvent("request_data"));
+        if(this.recordId){
+            //flow
+            let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
+            this.startActiveRepentant(decorrenza);
+        }else{
+            this.dispatchEvent(CustomEvent("request_data"));
+        }
         return;
     }
 
@@ -26,6 +47,25 @@ export default class HdtActiveRepentant extends LightningElement {
         if(this.disabled)   return true;//algoritmo in fase di calcolo
         if(this.skipCheck)  return false;//controllo non necessario
         return !(this.dateDecorrenza && this.dateDecorrenza == dateDecorrenza);//controlla che la data decorrenza sia popolata e aggiornata
+    }
+
+    @api validate(){        
+        let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
+        let isValid = !this.validateDate(decorrenza);
+        this.outputWrp=this.outputObject();
+        return { isValid : isValid, 
+            errorMessage: isValid? null : 'Verificare il ravvedimento operoso prima di procedere'
+        };
+    }
+
+    outputObject(){
+        return new outputData(
+            this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value,
+            this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value,
+            this.template.querySelector("[data-id='MissingDueAmount__c']").value,
+            this.template.querySelector("[data-id='DeclineComputationSupport__c']").value,
+            this.template.querySelector("[data-id='BlockOnComputation__c']").value
+        );
     }
 
     @api startActiveRepentant(dateDecorrenza) {
@@ -151,19 +191,37 @@ export default class HdtActiveRepentant extends LightningElement {
     }
 
     finish() {
-        this.dispatchEvent(
-            CustomEvent("end_algorithm", {
-                detail: {
-                    dateX: this.limitDateX,
-                    dateY: this.limitDateY,
-                    missedDue: this.missedDueDate,
-                    period: this.periodType
-                }
-            })
-        );
+        const evt = CustomEvent("end_algorithm", {
+            detail: {
+                dateX: this.limitDateX? this.getFormattedDate(this.limitDateX) : null,
+                dateY: this.limitDateY? this.getFormattedDate(this.limitDateY) : null,
+                missedDue: this.missedDueDate,
+                period: this.periodType
+            }
+        });
+
+        this.dispatchEvent(evt);
+
+        if(this.recordId)    this.populateFormFields(evt);
         this.limitDateX=null;
         this.limitDateY=null;
         this.missedDueDate=null;//reset data to avoid conflicts
         this.disabled=false;
+    }
+
+    populateFormFields(event) {//function executed on parent context
+        console.log('###Missed Due Event >>> ');
+        this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = event.detail.dateX;
+        this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = event.detail.dateY;
+        //this.missedDueDate = this.getFormattedDate(event.detail.missedDue);
+        this.template.querySelector("[data-id='MissingDueAmount__c']").required = event.detail.missedDue? true : false;
+        if(event.detail.period=="Y"){
+            this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = true;
+            this.template.querySelector("[data-id='BlockOnComputation__c']").value = 'Y';
+        }
+    }
+
+    getFormattedDate(date){
+        return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
     }
 }

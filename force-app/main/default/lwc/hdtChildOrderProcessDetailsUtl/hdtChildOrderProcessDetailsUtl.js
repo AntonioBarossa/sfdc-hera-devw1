@@ -47,7 +47,7 @@
                     new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', this.typeVisibility('both'), false, false,'',' '),
                     new fieldData('Importo mancato dovuto','MissingDueAmount__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Pagamento Unico Annuale TARI','SingleAnnualTARIPayment__c', this.typeVisibility('both'), false, false,'',''),
-                    new fieldData('Data dichiarazione','CreatedDate', this.typeVisibility('both'), true, true,'',''),
+                    new fieldData('Data dichiarazione','DeclarationDate__c', this.typeVisibility('both'), true, true,'', this.order.Sale__r.CreatedDate?.substring(0, 10)),
                     new fieldData('Data decorrenza','EffectiveDate__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Integrazione alla Dichiarazione (da Gestore)','OperatorDeclarationInfos__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('integrazione Riduzione Agevolazione Esclusione','IntegrationExclusion__c', this.typeVisibility('both'), false, true,'',''),

@@ -1156,10 +1156,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.template.querySelector("c-hdt-active-repentant").startActiveRepentant(decorrenza);
     }
 
-    handleActiveRepentantFinish(event) {//function executed on parent context
+    handleActiveRepentantFinish(event) {
         console.log('###Missed Due Event >>> ');
-        this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = event.detail.dateX? this.getFormattedDate(event.detail.dateX) : null;
-        this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = event.detail.dateY? this.getFormattedDate(event.detail.dateY) : null;
+        this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = event.detail.dateX;
+        this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = event.detail.dateY;
         //this.missedDueDate = this.getFormattedDate(event.detail.missedDue);
         this.template.querySelector("[data-id='MissingDueAmount__c']").required = event.detail.missedDue? true : false;
         if(event.detail.period=="Y"){
@@ -1167,8 +1167,5 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.template.querySelector("[data-id='BlockOnComputation__c']").value = 'Y';
         }
     }
-
-    getFormattedDate(date){
-        return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
-    }
+    
 }

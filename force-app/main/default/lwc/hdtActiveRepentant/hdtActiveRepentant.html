@@ -1,3 +1,24 @@
 <template>
+    <template if:true={recordId}>
+        <lightning-record-edit-form record-id={recordId} object-api-name={objectApiName}>
+            <div class="slds-grid slds-wrap slds-m-top_small">
+                <lightning-input-field name="DeclarationDate__c" data-id='DeclarationDate__c' field-name="CustomerName__c" disabled
+                    class="slds-size_1-of-5 fieldsData">
+                </lightning-input-field>
+                <lightning-input-field name="EffectiveDate__c" field-name="EffectiveDate__c" data-id='EffectiveDate__c'
+                    class="slds-size_1-of-5 fieldsData"> </lightning-input-field>
+                <lightning-input-field name="BlockOnComputation__c" field-name="BlockOnComputation__c"  data-id='BlockOnComputation__c'
+                    class="slds-size_1-of-5 fieldsData"> </lightning-input-field>
+                <lightning-input-field name="DeclineComputationSupport__c" field-name="DeclineComputationSupport__c" disabled data-id='DeclineComputationSupport__c'
+                    class="slds-size_1-of-5 fieldsData"> </lightning-input-field>
+                    <lightning-input-field name="OnerousReviewableStartDate__c" data-id='OnerousReviewableStartDate__c' field-name="OnerousReviewableStartDate__c" disabled
+                    class="slds-size_1-of-5 fieldsData"> </lightning-input-field>
+                <lightning-input-field name="OnerousUnreviewableStartDate__c" field-name="OnerousUnreviewableStartDate__c" data-id='OnerousUnreviewableStartDate__c' disabled
+                    class="slds-size_1-of-5 fieldsData"> </lightning-input-field>
+                <lightning-input-field name="MissingDueAmount__c" field-name="MissingDueAmount__c" data-id='MissingDueAmount__c'
+                    class="slds-size_1-of-5 fieldsData"> </lightning-input-field>
+            </div>
+        </lightning-record-edit-form>
+    </template>
     <lightning-button disabled={disabled} onclick={buttonPressed} label="Verifica Ravvedimento Operoso" variant="brand" class="slds-m-left_x-small"></lightning-button>
 </template>
