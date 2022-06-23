@@ -1,3 +1,10 @@
+<!--
+  @description       : 
+  @author            : Giacinto Florio
+  @group             : 
+  @last modified on  : 23-06-2022
+  @last modified by  : Giacinto Florio
+-->
 <template>
     <template if:true={order}>
         <lightning-card title={title}>
@@ -85,6 +92,14 @@
 
                                 </template> 
                             
+                                <div class="slds-clearfix slds-p-around_small">
+                                    <div>
+                                        <template if:true={section.hasAllegatiObbligatori}>
+                                            <c-hdt-attachment-manager record-id={section.recordId}></c-hdt-attachment-manager>
+                                        </template>
+                                    </div>
+                                </div>
+
                                 <div class="slds-clearfix slds-p-around_small">
                                     <div class="slds-float_right">
                                         <template if:true={section.hasCalculateButton}>
