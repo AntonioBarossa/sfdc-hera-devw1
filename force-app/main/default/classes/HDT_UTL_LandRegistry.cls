@@ -6,10 +6,15 @@
 public with sharing class HDT_UTL_LandRegistry {
 
     @AuraEnabled
-    public static list<LandRegistry__c> retrieveLandRegistry(list<Id> servicePointIds) {
-
+    public static list<LandRegistry__c> retrieveLandRegistryTable(list<Id> servicePointIds) {
         HDT_QR_LandRegistry qrClass = new HDT_QR_LandRegistry();
         return qrClass.getTARILandRegistryByServicePointIds(servicePointIds);
+    }
+
+    @AuraEnabled
+    public static list<LandRegistry__c> retrieveLandRegistry(list<Id> ids) {
+        HDT_QR_LandRegistry qrClass = new HDT_QR_LandRegistry();
+        return qrClass.getTARILandRegistryById(ids);
     }
     
     @AuraEnabled
