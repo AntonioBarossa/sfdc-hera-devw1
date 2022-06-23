@@ -1,8 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 import getRecordsById from '@salesforce/apex/HDT_LC_AttachmentManager.getRecordsById';
-import getAdditionalAttachmentFromCase from '@salesforce/apex/HDT_LC_AttachmentManager.getAdditionalAttachmentFromCase';
-import getRequiredAttachmentFromCase from '@salesforce/apex/HDT_LC_AttachmentManager.getRequiredAttachmentFromCase';
-import updateAttachment from '@salesforce/apex/HDT_LC_AttachmentManager.updateAttachment';
+import getAdditionalAttachment from '@salesforce/apex/HDT_LC_AttachmentManager.getAdditionalAttachment';
+import getRequiredAttachment from '@salesforce/apex/HDT_LC_AttachmentManager.getRequiredAttachment';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 
 export default class HdtAttachmentManager extends LightningElement {
@@ -12,6 +11,7 @@ export default class HdtAttachmentManager extends LightningElement {
     @api additional;
     @api required;
     @track numberOfFiles = 0;
+    @api paramsWrap;
 
     get acceptedFormats() {
         return ['.pdf', '.png'];
@@ -70,32 +70,22 @@ export default class HdtAttachmentManager extends LightningElement {
     }
 
     @api
-    validate(){
-        updateAttachment({
-            caseId: this.recordId,
-            required: this.required,
-            additional: this.additional
-            }).then(result => {
-                console.log(JSON.stringify(result));
-            })
-            .catch(error => {
-                this.error = error;
-            }); 
+    validate(){ 
         if(this.required?.length > 0 && this.numberOfFiles == 0){
             return { 
-                isValid: false, 
-                errorMessage: 'Inserire gli allegati descritti' 
-                 }; 
+                    isValid: false, 
+                    errorMessage: 'Inserire gli allegati descritti' 
+                    }; 
         }else if(this.additional?.length > 0 && this.numberOfFiles == 0){
             return { 
-                isValid: false, 
-                errorMessage: 'Inserire gli allegati descritti' 
-                 }; 
+                    isValid: false, 
+                    errorMessage: 'Inserire gli allegati descritti' 
+                    }; 
         }else if(!(this.additional?.length || this.required?.length) && this.numberOfFiles > 0){
             return { 
-                isValid: false, 
-                errorMessage: 'Descrivere gli allegati inseriti nel campo "Allegati Aggiuntivi"' 
-                 }; 
+                    isValid: false, 
+                    errorMessage: 'Descrivere gli allegati inseriti nel campo "Allegati Aggiuntivi"' 
+                    }; 
         }else{
             return { isValid: true };
         }
@@ -105,8 +95,8 @@ export default class HdtAttachmentManager extends LightningElement {
 
         this.getFiles();
 
-        getAdditionalAttachmentFromCase({
-            caseId: this.recordId
+        getAdditionalAttachment({
+            recordId: this.recordId
             })
             .then(result => {
                 console.log(JSON.stringify(result));
@@ -119,8 +109,9 @@ export default class HdtAttachmentManager extends LightningElement {
                 this.error = error;
             });
 
-        getRequiredAttachmentFromCase({
-            caseId: this.recordId
+        getRequiredAttachment({
+            recordId: this.recordId,
+            paramsWrap: this.paramsWrap
             })
             .then(result => {
                 console.log(JSON.stringify(result));
@@ -136,6 +127,10 @@ export default class HdtAttachmentManager extends LightningElement {
             
     }
 
-    
+    disconnectedCallback(){
+        this.dispatchEvent(new CustomEvent('closemttachmentmanager', {bubbles: true, composed: true, detail: {  required: this.required,
+                                                                                                                additional: this.additional
+                                                                                                               }}));
+    }
 
 }
