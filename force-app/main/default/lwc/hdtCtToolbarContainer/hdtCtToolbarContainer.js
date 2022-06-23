@@ -40,8 +40,8 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
     @track endCallDateTime;
     @track waitingTime;
     @track callDuration;
-    @api regLink = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?filter={"filter":{"ecid":""},"sort":{"startTs":-1},"index":0}';
-    @api regLinkHost = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?';
+    @api regLink = 'https://heraprosfdc.cloudando.com/ctreplay/externalView/search?filter={"filter":{"ecid":""},"sort":{"startTs":-1},"index":0}';
+    @api regLinkHost = 'https://heraprosfdc.cloudando.com/ctreplay/externalView/search?';
     @api regListParam = 'filter={"filter":{"ecid":"[PLACE]"},"sort":{"startTs":-1},"index":0}';
     @track registrationLinkVo;
     @track saleId;
@@ -188,7 +188,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                     console.log('******postIF Inbound3:' + password);
                     let searchparams2 = 'filter={"filter":{"uuid":"' + this.uuid + '"},"sort":{"startTs":-1},"index":0}'   ; 
                     let searchparams = encodeURI(searchparams2);
-                    let reiteklink = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?' + searchparams;//this.regLink.replace(url.searchParams.get('filter'), newparams);
+                    let reiteklink = 'https://heraprosfdc.cloudando.com/ctreplay/externalView/search?' + searchparams;//this.regLink.replace(url.searchParams.get('filter'), newparams);
                     createActivityInbound({
                         //startCall: startCallDateTime,
                         'reiteklink': reiteklink,
@@ -238,7 +238,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                                     let phoneNum = event.detail.eventObj.dnis
                                     let searchparams2 = 'filter={"filter":{"ecid":"' + ecid + '"},"sort":{"startTs":-1},"index":0}';
                                     let searchparams = encodeURI(searchparams2);
-                                    let reiteklink = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?' + searchparams;
+                                    let reiteklink = 'https://heraprosfdc.cloudando.com/ctreplay/externalView/search?' + searchparams;
                                     this.registrationLinkVo = reiteklink;
 
                                     createActivity({
