@@ -6,7 +6,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class hdtCampaignMemberButtonList2 extends NavigationMixin(LightningElement) {
     @api objectApiName;
     @api recordId;
-    @api reiteklink = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?filter={"filter":{"ecid":"saashrapp|1|123|17"},"sort":{"startTs":-1},"index":0}';
+    @api reiteklink = 'https://heraprosfdc.cloudando.com/ctreplay/externalView/search?filter={"filter":{"ecid":"saashrapp|1|123|17"},"sort":{"startTs":-1},"index":0}';
     @track surveyIcon;
 
     connectedCallback() {
