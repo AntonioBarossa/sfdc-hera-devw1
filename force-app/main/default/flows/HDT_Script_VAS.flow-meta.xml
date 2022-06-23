@@ -3119,21 +3119,6 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
-            <name>vasHeraMonopattino</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Monopattino&lt;/strong&gt;?&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA MONOPATTINO</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>VAS_HERA_EBIKE_0</name>
             <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera E-Bike&lt;/strong&gt;?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -3228,6 +3213,36 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
+            <name>VAS_HERA_NOPROBLEM_LUCE_1</name>
+            <fieldText>&lt;p&gt;Per Hera NoProblem Luce, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA NO PROBLEM LUCE</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>VAS_HERA_NOPROBLEM_GAS_0</name>
+            <fieldText>&lt;p&gt;Per Hera NoProblem Gas, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA NO PROBLEM GAS</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>VAS_HERA_CALDAIA_SICURA_1</name>
             <fieldText>&lt;p&gt;Per Hera Caldaia Sicura, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -3309,36 +3324,6 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
-            <name>VAS_HERA_NOPROBLEM_LUCE_1</name>
-            <fieldText>&lt;p&gt;Per Hera NoProblem Luce, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA NO PROBLEM LUCE</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>VAS_HERA_NOPROBLEM_GAS_0</name>
-            <fieldText>&lt;p&gt;Per Hera NoProblem Gas, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA NO PROBLEM GAS</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>VAS_HERA_NOPROBLEM_ACQUA_1</name>
             <fieldText>&lt;p&gt;Per Hera NoProblem Acqua, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -3349,21 +3334,6 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>HERA NO PROBLEM ACQUA</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>recessoMonopIn</name>
-            <fieldText>&lt;p&gt;Per Hera Monopattino, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA MONOPATTINO</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3825,36 +3795,6 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>HERA NO PROBLEM ACQUA</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>recessoSanifica</name>
-            <fieldText>&lt;p&gt;Per Hera Sanifica Aria, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>SANIFICATORE</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>recessoMonopat</name>
-            <fieldText>&lt;p&gt;Per Hera Monopattino, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA MONOPATTINO</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4627,7 +4567,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_EBIKE_Generico_0_1</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il metodo di pagamento richiesto è  {!GetOrder.VASBillingMode__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il suo numero di telefono è {!GetOrder.Account.MobilePhone__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;L’E-Bike verrà consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o la non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il metodo di pagamento richiesto è in {!GetOrder.PaymentMode__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il suo numero di telefono è {!GetOrder.Account.MobilePhone__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;L’E-Bike verrà consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o la non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4637,10 +4577,10 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>A-Rate fisse</stringValue>
+                        <stringValue>Rate</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4652,10 +4592,10 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue>A-Rate fisse</stringValue>
+                        <stringValue>Rate</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4857,7 +4797,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_EBIKE_Generico_1_3</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il metodo di pagamento richiesto è  {!GetOrder.VASBillingMode__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il suo numero di telefono è {!GetOrder.Account.MobilePhone__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;L’E-Bike verrà consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o la non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il metodo di pagamento richiesto è in {!GetOrder.PaymentMode__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il suo numero di telefono è {!GetOrder.Account.MobilePhone__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;L’E-Bike verrà consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o la non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4867,10 +4807,10 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>A-Rate fisse</stringValue>
+                        <stringValue>Rate</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4882,10 +4822,17 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue>A-Rate fisse</stringValue>
+                        <stringValue>Rate</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -5221,7 +5168,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_1_3</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;   CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;Le lampadine verranno consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;Riceverà una fattura una per ogni contratto che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue, assieme allo “sconto fedeltà” applicato al momento dell’acquisto.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;   CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;Le lampadine verranno consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;Riceverà una fattura una per ogni contratto che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue, assieme allo “sconto fedeltà” applicato al momento dell’acquisto.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5236,7 +5183,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_2_3</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;Le lampadine verranno consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;Riceverà una fattura una per ogni contratto che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue, assieme allo “sconto fedeltà” applicato al momento dell’acquisto.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;Le lampadine verranno consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;Riceverà una fattura una per ogni contratto che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue, assieme allo “sconto fedeltà” applicato al momento dell’acquisto.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5552,7 +5499,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_1_Generico_1_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le lampadine verranno consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;Riceverà una fattura [una per ogni Contratto] che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue, assieme allo “sconto fedeltà” applicato al momento dell’acquisto.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le lampadine verranno consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;Riceverà una fattura [una per ogni Contratto] che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue, assieme allo “sconto fedeltà” applicato al momento dell’acquisto.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5822,7 +5769,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_GAS_Generico_2_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede la copertura assicurativa è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede la copertura assicurativa è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -5896,7 +5843,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_GAS_Generico_0_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede la copertura assicurativa è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede la copertura assicurativa è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -5945,7 +5892,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_GAS_Generico_1_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede la copertura assicurativa è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede la copertura assicurativa è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>

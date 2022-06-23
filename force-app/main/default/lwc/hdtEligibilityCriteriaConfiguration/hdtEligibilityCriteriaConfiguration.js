@@ -212,14 +212,6 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
                     this.disabled = '';
                 }
             });
-            //** fix enable search on disabled items*/
-            this.template.querySelectorAll('lightning-input').forEach(li => {
-                if(li.name==='searchRemoved'){
-                    li.disabled = false;
-                    this.disabledR = '';
-                }
-            });
-            /**/ 
 
             let operatorButton = this.template.querySelector('button');
             if(operatorButton.dataset.id==='operator'){
@@ -239,7 +231,7 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
         let foundRow = this.cityZipCode.provinceOptions.find(ele  => ele.value === e);
         this.dataToView = foundRow.cityAvailable;
         this.dataRemoved = foundRow.cityRemoved;
-
+        
         this.showEmptyImmage = false;
         this.showAvailableItems = true;
         this.showSearchTable = false;
@@ -515,9 +507,7 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
                     this.dataToView.push(itemRemoved);
                 }
             });
-            //this.dataRemoved = [];
-            this.dataRemoved.splice(0,this.dataRemoved.length)
-            console.log('## ' + this.dataRemoved.length);
+            this.dataRemoved = [];
         }
 
         this.dataToView.sort(this.compare);

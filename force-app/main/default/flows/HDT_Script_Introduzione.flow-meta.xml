@@ -710,7 +710,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Introduzione_Inbound_3_Text_NIP</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[*** Inizio registrazione ***]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Per conto di &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!salesCompanyToDisplay}&lt;/span&gt; , le propongo le nostre offerte a mercato libero {!offerNameInput}.&lt;/p&gt;&lt;p&gt;Le ricordo che essere servito sul mercato libero dell’energia significa poter decidere quale fornitore e tipo di contratto scegliere.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;La informo che questa telefonata proviene dall’Italia.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da Lei richiesti, previa consultazione del Sistema di informazioni Creditizie e potranno essere comunicati al distributore ai fini dell’erogazione del servizio, di cui riceverà l’informativa dettagliata nel plico contrattuale che le invieremo per posta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che è intenzionato ad aderire alla nostra offerta a mercato libero &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!offerNameInput}&lt;/span&gt; per la sua abitazione, procedendo con la registrazione di questa telefonata, anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[*** Inizio registrazione ***]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Per conto di &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!salesCompanyToDisplay}&lt;/span&gt; , le propongo le nostre offerte a mercato libero {!offerNameInput} [e l’adesione alla Polizza AXA Assistance Hera NoProblem [Luce/Gas].&lt;/p&gt;&lt;p&gt;Le ricordo che essere servito sul mercato libero dell’energia significa poter decidere quale fornitore e tipo di contratto scegliere.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da Lei richiesti, previa consultazione del Sistema di informazioni Creditizie e potranno essere comunicati al distributore ai fini dell’erogazione del servizio, di cui riceverà l’informativa dettagliata nel plico contrattuale che le invieremo per posta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che è intenzionato ad aderire alla nostra offerta a mercato libero &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!offerNameInput}&lt;/span&gt; per la sua abitazione, procedendo con la registrazione di questa telefonata, anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -732,7 +732,7 @@
         </fields>
         <fields>
             <name>Introduzione_Inbound_3_Text</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[*** Inizio registrazione ***]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Chiamo per conto di {!salesCompanyToDisplay} , per proporle le nostre offerte a mercato libero {!offerNameInput}. Se non vuole ricevere chiamate promozionali, può iscriversi al Registro pubblico degli abbonati.&lt;/p&gt;&lt;p&gt;Le ricordo che essere servito sul mercato libero dell’energia significa poter decidere quale fornitore e tipo di contratto scegliere.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La informo che questa telefonata proviene dall’Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da lei richiesti, previa consultazione del Sistema di informazioni Creditizie e potranno essere comunicati al distributore ai fini dell’erogazione del servizio, di cui riceverà l’informativa dettagliata nel plico contrattuale che riceverà per posta.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[*** Inizio registrazione ***]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Chiamo per conto di {!salesCompanyToDisplay} , per proporle le nostre offerte a mercato libero {!offerNameInput} [e per l’adesione alla Polizza AXA Assistance Hera NoProblem [Luce/Gas]]. Se non vuole ricevere chiamate promozionali, può iscriversi al Registro pubblico degli abbonati.&lt;/p&gt;&lt;p&gt;Le ricordo che essere servito sul mercato libero dell’energia significa poter decidere quale fornitore e tipo di contratto scegliere.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	La informo che questa telefonata proviene dall’Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da lei richiesti, previa consultazione del Sistema di informazioni Creditizie e potranno essere comunicati al distributore ai fini dell’erogazione del servizio, di cui riceverà l’informativa dettagliata nel plico contrattuale che riceverà per posta.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -809,7 +809,58 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Introduzione_Outbound_Aziende</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[*** Inizio registrazione ***]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Chiamo per conto di {!salesCompanyToDisplay} , per proporle le nostre offerte a mercato libero {!offerNameInput}. Se non vuole ricevere chiamate promozionali, può iscriversi al Registro pubblico degli abbonati.&lt;/p&gt;&lt;p&gt;Le ricordo che essere servito sul mercato libero dell’energia significa poter decidere quale fornitore e tipo di contratto scegliere.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	La informo che questa telefonata proviene dall&apos;Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da lei richiesti, previa consultazione del Sistema di informazioni Creditizie e potranno essere comunicati al distributore ai fini dell’erogazione del servizio, di cui riceverà l’informativa dettagliata nel plico contrattuale che riceverà per posta.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[*** Inizio registrazione ***]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Chiamo per conto di {!salesCompanyToDisplay} , per proporle le nostre offerte a mercato libero {!offerNameInput}. &lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.ClientCategoryFormula__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Aziende</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.IsVAS__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>DispAxa</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt; E per l’adesione alla Polizza AXA Assistance Hera NoProblem [Luce/Gas]&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.ClientCategoryFormula__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Aziende</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.IsVAS__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isAxa3</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Introduzione_Outbound_Aziende2</name>
+            <fieldText>&lt;p&gt;Se non vuole ricevere chiamate promozionali, può iscriversi al Registro pubblico degli abbonati.&lt;/p&gt;&lt;p&gt;Le ricordo che essere servito sul mercato libero dell’energia significa poter decidere quale fornitore e tipo di contratto scegliere.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	La informo che questa telefonata proviene dall&apos;Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da lei richiesti, previa consultazione del Sistema di informazioni Creditizie e potranno essere comunicati al distributore ai fini dell’erogazione del servizio, di cui riceverà l’informativa dettagliata nel plico contrattuale che riceverà per posta.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -831,7 +882,58 @@
         </fields>
         <fields>
             <name>Introduzione_Outbound_Famiglie</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[*** Inizio registrazione ***]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Chiamo per conto di {!salesCompanyToDisplay} , per proporle le nostre offerte a mercato libero {!offerNameInput}, nel rispetto delle disposizione di cui al Codice del Consumo e di cui al Codice di Condotta Commerciale per la vendita di energia elettrica e di gas, di cui può prendere visione sul sito www.autorita.energia.it. Se non vuole ricevere chiamate promozionali, può iscriversi al Registro Pubblico degli abbonati.&lt;/p&gt;&lt;p&gt;Le ricordo che essere servito sul mercato libero dell’energia significa poter decidere quale fornitore e tipo di contratto scegliere.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•&amp;nbsp;&amp;nbsp;&amp;nbsp;La informo che questa telefonata proviene dall’Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da Lei richiesti, previa consultazione del Sistema di informazioni Creditizie e potranno essere comunicati al distributore ai fini dell’erogazione del servizio, di cui riceverà l’informativa dettagliata nel plico contrattuale che le invieremo nella modalità da Lei prescelta.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[*** Inizio registrazione ***]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Chiamo per conto di {!salesCompanyToDisplay} , per proporle le nostre offerte a mercato libero {!offerNameInput}, &lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.ClientCategoryFormula__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Famiglie</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.IsVAS__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>DispAxaF</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;e per l’adesione alla Polizza AXA Assistance Hera NoProblem [Luce/Gas],&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.ClientCategoryFormula__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Famiglie</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.IsVAS__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isAxa3</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Introduzione_Outbound_Famiglie2</name>
+            <fieldText>&lt;p&gt;nel rispetto delle disposizione di cui al Codice del Consumo e di cui al Codice di Condotta Commerciale per la vendita di energia elettrica e di gas, di cui può prendere visione sul sito www.autorita.energia.it. Se non vuole ricevere chiamate promozionali, può iscriversi al Registro Pubblico degli abbonati.&lt;/p&gt;&lt;p&gt;Le ricordo che essere servito sul mercato libero dell’energia significa poter decidere quale fornitore e tipo di contratto scegliere.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•&amp;nbsp;&amp;nbsp;&amp;nbsp;La informo che questa telefonata proviene dall’Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da Lei richiesti, previa consultazione del Sistema di informazioni Creditizie e potranno essere comunicati al distributore ai fini dell’erogazione del servizio, di cui riceverà l’informativa dettagliata nel plico contrattuale che le invieremo nella modalità da Lei prescelta.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -905,7 +1007,7 @@
             <targetReference>GetChildOrder</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <textTemplates>
         <name>Introduzione_Inbound_1</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
