@@ -32967,6 +32967,9 @@
     <layoutAssignments>
         <layout>SiebelRdsAttribute__x-SiebelRdsAttribute Layout</layout>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelMsgNotifica__x-SiebelMsgNotifica Layout</layout>
+    </layoutAssignments>
     <loginFlows>
         <flow>HDT_FL_UserLoginFlow</flow>
         <flowType>UI</flowType>
