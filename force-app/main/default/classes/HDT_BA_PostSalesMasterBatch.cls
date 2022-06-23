@@ -35,23 +35,6 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
     @SuppressWarnings('PMD.AvoidDebugStatements')
     public void execute(Database.BatchableContext bc, List<SObject> scope){
 
-        Sobject mySobj2;
-        Sobject mySobj3;
-
-        try{
-            //Get Data for source Custom Setting
-            String whereConditionFieldValue1 = 'Autolettura';
-            String queryString1 = 'SELECT id, Type__c, NumberOfDays__c FROM CS_DaysToExpiration__c where Type__c = \'' + String.escapeSingleQuotes(whereConditionFieldValue1) + '\'';
-            mySobj2 = database.query(queryString1);
-
-            String whereConditionFieldValue2 = 'PostSales';
-            String queryString2 = 'SELECT id, Type__c, NumberOfDays__c FROM CS_DaysToExpiration__c where Type__c = \'' + String.escapeSingleQuotes(whereConditionFieldValue2) + '\'';
-            mySobj3 = database.query(queryString2);
-
-        }catch(Exception e){
-            System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
-        }
-
         List<Case> myCurrentCaseList = new List<Case>();
         //List<HDT_PEV_NonReqContract__e> eventsToPublish = new List<HDT_PEV_NonReqContract__e>();
 

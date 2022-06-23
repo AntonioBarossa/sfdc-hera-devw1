@@ -5,7 +5,7 @@
         <name>AssignCaldaiaSicura</name>
         <label>AssignCaldaiaSicura</label>
         <locationX>2360</locationX>
-        <locationY>4502</locationY>
+        <locationY>4382</locationY>
         <assignmentItems>
             <assignToReference>ExistCaldaiaSicura</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>AssignContaWatt</name>
         <label>AssignContaWatt</label>
         <locationX>1568</locationX>
-        <locationY>4502</locationY>
+        <locationY>4382</locationY>
         <assignmentItems>
             <assignToReference>ExistContaWatt</assignToReference>
             <operator>Assign</operator>
@@ -34,124 +34,12 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssignEbike</name>
-        <label>AssignEbike</label>
-        <locationX>3416</locationX>
-        <locationY>4502</locationY>
-        <assignmentItems>
-            <assignToReference>ExistEbike</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Order_Items_Vas_Loop</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssignEE</name>
-        <label>AssignEE</label>
-        <locationX>622</locationX>
-        <locationY>1118</locationY>
-        <assignmentItems>
-            <assignToReference>IsEnergiaElettrica</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>CanaleVenditaDecision</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssignEE_0</name>
-        <label>AssignEE</label>
-        <locationX>1590</locationX>
-        <locationY>1118</locationY>
-        <assignmentItems>
-            <assignToReference>IsEnergiaElettrica</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>CanaleVenditaDecision_0_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssignFotoVoltaico</name>
-        <label>AssignFotoVoltaico</label>
-        <locationX>4208</locationX>
-        <locationY>4502</locationY>
-        <assignmentItems>
-            <assignToReference>ExistFotoVoltaico</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Order_Items_Vas_Loop</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssignGas</name>
-        <label>AssignGas</label>
-        <locationX>1502</locationX>
-        <locationY>1118</locationY>
-        <assignmentItems>
-            <assignToReference>IsGas</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>CanaleVenditaDecision_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssignGas_0</name>
-        <label>AssignGas</label>
-        <locationX>2118</locationX>
-        <locationY>1118</locationY>
-        <assignmentItems>
-            <assignToReference>IsGas</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>CanaleVenditaDecision_0_0_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>AssignLED</name>
         <label>AssignLED</label>
         <locationX>1040</locationX>
-        <locationY>4502</locationY>
+        <locationY>4382</locationY>
         <assignmentItems>
             <assignToReference>ExistLED</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Order_Items_Vas_Loop</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssignMonopattino</name>
-        <label>AssignMonopattino</label>
-        <locationX>3680</locationX>
-        <locationY>4502</locationY>
-        <assignmentItems>
-            <assignToReference>ExistMonopattino</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -165,7 +53,7 @@
         <name>AssignNoProblemAcqua</name>
         <label>AssignNoProblemAcqua</label>
         <locationX>3152</locationX>
-        <locationY>4502</locationY>
+        <locationY>4382</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemAcqua</assignToReference>
             <operator>Assign</operator>
@@ -181,7 +69,7 @@
         <name>AssignNoProblemGas</name>
         <label>AssignNoProblemGas</label>
         <locationX>2096</locationX>
-        <locationY>4502</locationY>
+        <locationY>4382</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemGas</assignToReference>
             <operator>Assign</operator>
@@ -197,7 +85,7 @@
         <name>AssignNoProblemLuce</name>
         <label>AssignNoProblemLuce</label>
         <locationX>1832</locationX>
-        <locationY>4502</locationY>
+        <locationY>4382</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemLuce</assignToReference>
             <operator>Assign</operator>
@@ -213,7 +101,7 @@
         <name>AssignRicaricaPrivata</name>
         <label>AssignRicaricaPrivata</label>
         <locationX>2888</locationX>
-        <locationY>4502</locationY>
+        <locationY>4382</locationY>
         <assignmentItems>
             <assignToReference>ExistRicaricaPrivata</assignToReference>
             <operator>Assign</operator>
@@ -229,25 +117,9 @@
         <name>AssignRicaricaPubblica</name>
         <label>AssignRicaricaPubblica</label>
         <locationX>2624</locationX>
-        <locationY>4502</locationY>
+        <locationY>4382</locationY>
         <assignmentItems>
             <assignToReference>ExistRicaricaPubblica</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Order_Items_Vas_Loop</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssignSanifica</name>
-        <label>AssignSanifica</label>
-        <locationX>3944</locationX>
-        <locationY>4502</locationY>
-        <assignmentItems>
-            <assignToReference>ExistSanifica</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -261,7 +133,7 @@
         <name>AssignThermo</name>
         <label>AssignThermo</label>
         <locationX>1304</locationX>
-        <locationY>4502</locationY>
+        <locationY>4382</locationY>
         <assignmentItems>
             <assignToReference>ExistThermo</assignToReference>
             <operator>Assign</operator>
@@ -353,7 +225,7 @@
         <name>ExistAnaConsAssignment_0</name>
         <label>ExistAnaConsAssignment_0</label>
         <locationX>50</locationX>
-        <locationY>3470</locationY>
+        <locationY>3350</locationY>
         <assignmentItems>
             <assignToReference>ExistAnaCons</assignToReference>
             <operator>Assign</operator>
@@ -368,8 +240,8 @@
     <assignments>
         <name>VasPresentiAssign</name>
         <label>VasPresentiAssign</label>
-        <locationX>2756</locationX>
-        <locationY>4262</locationY>
+        <locationX>2228</locationX>
+        <locationY>4142</locationY>
         <assignmentItems>
             <assignToReference>VasPresentiBool</assignToReference>
             <operator>Assign</operator>
@@ -385,7 +257,7 @@
         <name>Bonus_Decision_0_0</name>
         <label>Bonus Decision</label>
         <locationX>1854</locationX>
-        <locationY>1670</locationY>
+        <locationY>1550</locationY>
         <defaultConnector>
             <targetReference>Servizio_Decision_0_0_0</targetReference>
         </defaultConnector>
@@ -410,7 +282,7 @@
         <name>Bonus_Decision_0_0_0_0</name>
         <label>Bonus Decision</label>
         <locationX>842</locationX>
-        <locationY>1478</locationY>
+        <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -442,7 +314,7 @@
         <name>Bonus_Decision_0_0_0_0_0</name>
         <label>Bonus Decision</label>
         <locationX>1722</locationX>
-        <locationY>1598</locationY>
+        <locationY>1478</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -488,7 +360,7 @@
         <name>Bonus_Decision_0_0_0_0_0_0_0</name>
         <label>Bonus Decision</label>
         <locationX>402</locationX>
-        <locationY>1478</locationY>
+        <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision_0_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -520,7 +392,7 @@
         <name>Bonus_Decision_0_0_0_0_0_0_0_0</name>
         <label>Bonus Decision</label>
         <locationX>1282</locationX>
-        <locationY>1598</locationY>
+        <locationY>1478</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision_0_0_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -566,7 +438,7 @@
         <name>CanaleVenditaDecision</name>
         <label>CanaleVenditaDecision</label>
         <locationX>622</locationX>
-        <locationY>1238</locationY>
+        <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Famiglie_EE_0</targetReference>
         </defaultConnector>
@@ -575,10 +447,17 @@
             <name>isOutbound</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>LoopOrdiniFigliOfferta.Channel__c</leftValueReference>
+                <leftValueReference>LoopOrdiniFigliOfferta.LoginChannel__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Outbound</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.LoginChannel__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Teleselling</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -591,19 +470,26 @@
         <name>CanaleVenditaDecision_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1502</locationX>
-        <locationY>1238</locationY>
+        <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Famiglie_GAS</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isInbound</defaultConnectorLabel>
         <rules>
             <name>isOutbound_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>LoopOrdiniFigliOfferta.Channel__c</leftValueReference>
+                <leftValueReference>LoopOrdiniFigliOfferta.LoginChannel__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Outbound</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.LoginChannel__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Teleselling</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -616,7 +502,7 @@
         <name>CanaleVenditaDecision_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1590</locationX>
-        <locationY>1238</locationY>
+        <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Aziende_EE_0</targetReference>
         </defaultConnector>
@@ -625,10 +511,17 @@
             <name>isOutbound_0_0</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>LoopOrdiniFigliOfferta_0.Channel__c</leftValueReference>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.LoginChannel__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Outbound</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.LoginChannel__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Teleselling</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -641,7 +534,7 @@
         <name>CanaleVenditaDecision_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>2118</locationX>
-        <locationY>1238</locationY>
+        <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Aziende_GAS_0</targetReference>
         </defaultConnector>
@@ -650,10 +543,17 @@
             <name>isOutbound_0_0_0</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>LoopOrdiniFigliOfferta_0.Channel__c</leftValueReference>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.LoginChannel__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Outbound</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.LoginChannel__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Teleselling</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -666,7 +566,7 @@
         <name>CanaleVenditaDecision_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>798</locationX>
-        <locationY>2582</locationY>
+        <locationY>2462</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_EE</targetReference>
         </defaultConnector>
@@ -675,10 +575,17 @@
             <name>isOutbound_0_0_0_0</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>LoopOrdiniFigliOfferta.Channel__c</leftValueReference>
+                <leftValueReference>LoopOrdiniFigliOfferta.LoginChannel__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Outbound</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.LoginChannel__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Teleselling</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -691,7 +598,7 @@
         <name>CanaleVenditaDecision_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1326</locationX>
-        <locationY>2582</locationY>
+        <locationY>2462</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_GAS</targetReference>
         </defaultConnector>
@@ -700,10 +607,17 @@
             <name>isOutbound_0_0_0_0_0</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>LoopOrdiniFigliOfferta.Channel__c</leftValueReference>
+                <leftValueReference>LoopOrdiniFigliOfferta.LoginChannel__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Outbound</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.LoginChannel__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Teleselling</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -716,7 +630,7 @@
         <name>CanaleVenditaDecision_0_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1590</locationX>
-        <locationY>2126</locationY>
+        <locationY>2006</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Aziende_EE_0_0</targetReference>
         </defaultConnector>
@@ -725,10 +639,17 @@
             <name>isOutbound_0_0_0_0_0_0</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>LoopOrdiniFigliOfferta_0.Channel__c</leftValueReference>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.LoginChannel__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Outbound</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.LoginChannel__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Teleselling</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -741,7 +662,7 @@
         <name>CanaleVenditaDecision_0_0_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>2118</locationX>
-        <locationY>2126</locationY>
+        <locationY>2006</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Aziende_GAS_0_0</targetReference>
         </defaultConnector>
@@ -750,10 +671,17 @@
             <name>isOutbound_0_0_0_0_0_0_0</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>LoopOrdiniFigliOfferta_0.Channel__c</leftValueReference>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.LoginChannel__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Outbound</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.LoginChannel__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Teleselling</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -791,7 +719,7 @@
         <name>Categoria_Cliente_Decision_0</name>
         <label>Categoria Cliente Decision</label>
         <locationX>776</locationX>
-        <locationY>4910</locationY>
+        <locationY>4790</locationY>
         <defaultConnector>
             <targetReference>Durata_Contratto_0</targetReference>
         </defaultConnector>
@@ -816,7 +744,7 @@
         <name>Categoria_Cliente_Decision_0_0</name>
         <label>Categoria Cliente Decision</label>
         <locationX>776</locationX>
-        <locationY>5246</locationY>
+        <locationY>5126</locationY>
         <defaultConnector>
             <targetReference>Conferma_Adesione_Screen_0</targetReference>
         </defaultConnector>
@@ -832,41 +760,16 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>ChannelDecision</targetReference>
+                <targetReference>Conferma_Adesione_Screen_0_0</targetReference>
             </connector>
             <label>isFamiglie</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>ChannelDecision</name>
-        <label>ChannelDecision</label>
-        <locationX>578</locationX>
-        <locationY>5366</locationY>
-        <defaultConnector>
-            <targetReference>Conferma_Adesione_Screen_0_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Outbound</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Outbound</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Conferma_Adesione_Screen_0_0_0</targetReference>
-            </connector>
-            <label>Outbound</label>
         </rules>
     </decisions>
     <decisions>
         <name>ExistOrderAnaCons</name>
         <label>ExistOrderAnaCons</label>
         <locationX>182</locationX>
-        <locationY>3230</locationY>
+        <locationY>3110</locationY>
         <defaultConnector>
             <targetReference>Servizi_Bundle</targetReference>
         </defaultConnector>
@@ -891,7 +794,7 @@
         <name>Promo_Decision_0_0_0_0_0</name>
         <label>Promo Decision</label>
         <locationX>842</locationX>
-        <locationY>1814</locationY>
+        <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>Servizio_Decision_0</targetReference>
         </defaultConnector>
@@ -937,14 +840,14 @@
         <name>Promo_Decision_0_0_0_0_0_0</name>
         <label>Promo Decision</label>
         <locationX>1722</locationX>
-        <locationY>1934</locationY>
+        <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>Servizio_Decision_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
             <name>isPromo_0_0_0_0_0_0</name>
-            <conditionLogic>(1 OR 2 OR 4) AND 3</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
@@ -966,13 +869,6 @@
                     <stringValue>Nuova Impronta Zero Casa</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>PROMO</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>CondizioniEconomichePromozioni_0_0_0_0_0_0</targetReference>
             </connector>
@@ -983,7 +879,7 @@
         <name>Promo_Decision_0_0_0_0_0_0_0_0</name>
         <label>Promo Decision</label>
         <locationX>402</locationX>
-        <locationY>1814</locationY>
+        <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>Servizio_Decision_0</targetReference>
         </defaultConnector>
@@ -1022,14 +918,14 @@
         <name>Promo_Decision_0_0_0_0_0_0_0_0_0</name>
         <label>Promo Decision</label>
         <locationX>1282</locationX>
-        <locationY>1934</locationY>
+        <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>Servizio_Decision_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
             <name>isPromo_0_0_0_0_0_0_0_0_0</name>
-            <conditionLogic>(1 OR 2 OR 4) AND 3</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
@@ -1051,13 +947,6 @@
                     <stringValue>Nuova Impronta Zero Casa</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>PROMO</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>CondizioniEconomichePromozioni_0_0_0_0_0_0_0_0_0</targetReference>
             </connector>
@@ -1070,7 +959,7 @@
         <locationX>1062</locationX>
         <locationY>998</locationY>
         <defaultConnector>
-            <targetReference>AssignGas</targetReference>
+            <targetReference>CanaleVenditaDecision_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isGAS</defaultConnectorLabel>
         <rules>
@@ -1084,7 +973,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>AssignEE</targetReference>
+                <targetReference>CanaleVenditaDecision</targetReference>
             </connector>
             <label>isEE</label>
         </rules>
@@ -1093,7 +982,7 @@
         <name>Servizio_Decision_0</name>
         <label>Servizio Decision</label>
         <locationX>1062</locationX>
-        <locationY>2462</locationY>
+        <locationY>2342</locationY>
         <defaultConnector>
             <targetReference>CanaleVenditaDecision_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1120,7 +1009,7 @@
         <locationX>1854</locationX>
         <locationY>998</locationY>
         <defaultConnector>
-            <targetReference>AssignGas_0</targetReference>
+            <targetReference>CanaleVenditaDecision_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isGAS</defaultConnectorLabel>
         <rules>
@@ -1134,7 +1023,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>AssignEE_0</targetReference>
+                <targetReference>CanaleVenditaDecision_0_0</targetReference>
             </connector>
             <label>isEE</label>
         </rules>
@@ -1143,7 +1032,7 @@
         <name>Servizio_Decision_0_0_0</name>
         <label>Servizio Decision</label>
         <locationX>1854</locationX>
-        <locationY>2006</locationY>
+        <locationY>1886</locationY>
         <defaultConnector>
             <targetReference>CanaleVenditaDecision_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1167,8 +1056,8 @@
     <decisions>
         <name>Vas_Presenti_Decision</name>
         <label>Vas Presenti Decision</label>
-        <locationX>1810</locationX>
-        <locationY>4142</locationY>
+        <locationX>1546</locationX>
+        <locationY>4022</locationY>
         <defaultConnector>
             <targetReference>VasPresentiAssign</targetReference>
         </defaultConnector>
@@ -1192,8 +1081,8 @@
     <decisions>
         <name>WhichVasName</name>
         <label>WhichVasName</label>
-        <locationX>2756</locationX>
-        <locationY>4382</locationY>
+        <locationX>2228</locationX>
+        <locationY>4262</locationY>
         <defaultConnector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </defaultConnector>
@@ -1333,66 +1222,6 @@
             </connector>
             <label>HeraNoProblemAcqua</label>
         </rules>
-        <rules>
-            <name>HERA_E_BIKE</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>HDT_Script_VAS.outputVasType</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>HERA E-BIKE</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>AssignEbike</targetReference>
-            </connector>
-            <label>HERA E-BIKE</label>
-        </rules>
-        <rules>
-            <name>HERA_MONOPATTINO_ELETTRICO</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>HDT_Script_VAS.outputVasType</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>HERA MONOPATTINO</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>AssignMonopattino</targetReference>
-            </connector>
-            <label>HERA MONOPATTINO ELETTRICO</label>
-        </rules>
-        <rules>
-            <name>HERA_SANIFICA_ARIA</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>HDT_Script_VAS.outputVasType</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>SANIFICATORE</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>AssignSanifica</targetReference>
-            </connector>
-            <label>HERA SANIFICA ARIA</label>
-        </rules>
-        <rules>
-            <name>HERA_FOTOVOLTAICO</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>HDT_Script_VAS.outputVasType</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>HERA FV KIT FAIDATE</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>AssignFotoVoltaico</targetReference>
-            </connector>
-            <label>HERA FOTOVOLTAICO</label>
-        </rules>
     </decisions>
     <formulas>
         <name>AzPrezzoLordoF1Formula</name>
@@ -1473,8 +1302,7 @@
         <dataType>String</dataType>
         <expression>IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;24&quot;), &quot;24&quot;, 
  IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;Sole&quot;), &quot;Sole-Luna&quot;, 
- IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;SL&quot;), &quot;Sole-Luna&quot;, 
-  IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;Luna&quot;), &quot;Sole-Luna&quot;, &quot;&quot;))))</expression>
+  IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;Luna&quot;), &quot;Sole-Luna&quot;, &quot;&quot;)))</expression>
     </formulas>
     <interviewLabel>HDL FL VO Script - Nuova Impronta Zero {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDL FL VO Script - Nuova Impronta Zero</label>
@@ -1510,7 +1338,7 @@
         <name>Order_Items_Vas_Loop</name>
         <label>Order Items Vas Loop</label>
         <locationX>776</locationX>
-        <locationY>3902</locationY>
+        <locationY>3782</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVASBonusOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1543,7 +1371,7 @@
         <name>GetAnalisiConsumi</name>
         <label>GetAnalisiConsumi</label>
         <locationX>50</locationX>
-        <locationY>3350</locationY>
+        <locationY>3230</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ExistAnaConsAssignment_0</targetReference>
@@ -1564,7 +1392,7 @@
         <name>GetOrderAnaCons</name>
         <label>GetOrderAnaCons</label>
         <locationX>182</locationX>
-        <locationY>3110</locationY>
+        <locationY>2990</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ExistOrderAnaCons</targetReference>
@@ -1599,7 +1427,7 @@
         <name>Bonus_Fisso_0_0_0_Gas</name>
         <label>Bonus Fisso Gas</label>
         <locationX>1722</locationX>
-        <locationY>1478</locationY>
+        <locationY>1358</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1618,7 +1446,7 @@
         <name>Bonus_Fisso_0_0_Gas</name>
         <label>Bonus Fisso Gas</label>
         <locationX>1282</locationX>
-        <locationY>1478</locationY>
+        <locationY>1358</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1637,7 +1465,7 @@
         <name>Condizioni_Economiche_Aziende_EE</name>
         <label>Condizioni Economiche Aziende EE</label>
         <locationX>1458</locationX>
-        <locationY>1358</locationY>
+        <locationY>1238</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1753,7 +1581,7 @@
         <name>Condizioni_Economiche_Aziende_EE_0</name>
         <label>Condizioni Economiche Aziende EE</label>
         <locationX>1722</locationX>
-        <locationY>1358</locationY>
+        <locationY>1238</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1869,7 +1697,7 @@
         <name>Condizioni_Economiche_Aziende_GAS_0</name>
         <label>Condizioni Economiche Aziende GAS</label>
         <locationX>2250</locationX>
-        <locationY>1358</locationY>
+        <locationY>1238</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1935,7 +1763,7 @@
         <name>Condizioni_Economiche_Aziende_GAS_0_0</name>
         <label>Condizioni Economiche Aziende GAS</label>
         <locationX>1986</locationX>
-        <locationY>1358</locationY>
+        <locationY>1238</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2006,7 +1834,7 @@
         <name>Condizioni_Economiche_Bonus_0_0</name>
         <label>Condizioni Economiche Bonus</label>
         <locationX>1722</locationX>
-        <locationY>1790</locationY>
+        <locationY>1670</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2026,7 +1854,7 @@
         <name>Condizioni_Economiche_Bonus_0_0_0_0_0_0_0</name>
         <label>Condizioni Economiche Bonus</label>
         <locationX>710</locationX>
-        <locationY>1598</locationY>
+        <locationY>1478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2171,7 +1999,7 @@
         <name>Condizioni_Economiche_Bonus_0_0_0_0_0_0_0_0</name>
         <label>Condizioni Economiche Bonus</label>
         <locationX>1590</locationX>
-        <locationY>1718</locationY>
+        <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2280,7 +2108,7 @@
         <name>Condizioni_Economiche_Bonus_0_0_0_0_0_0_0_0_0_0</name>
         <label>Condizioni Economiche Bonus</label>
         <locationX>270</locationX>
-        <locationY>1598</locationY>
+        <locationY>1478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2387,7 +2215,7 @@
         <name>Condizioni_Economiche_Bonus_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Condizioni Economiche Bonus</label>
         <locationX>1150</locationX>
-        <locationY>1718</locationY>
+        <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2400,27 +2228,6 @@
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>(1 OR 2 OR 3 OR 5) AND 4 AND 6</conditionLogic>
-                <conditions>
-                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Bonus Soluzioni Sostenibili</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>VAS</stringValue>
-                    </rightValue>
-                </conditions>
                 <conditions>
                     <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
                     <operator>Contains</operator>
@@ -2440,6 +2247,27 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Bonus Soluzioni Sostenibili</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>VAS</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2495,7 +2323,7 @@
         <name>Condizioni_Economiche_Famiglie_EE</name>
         <label>Condizioni Economiche Famiglie EE</label>
         <locationX>402</locationX>
-        <locationY>1358</locationY>
+        <locationY>1238</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2525,13 +2353,6 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Luna</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>SL</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2622,7 +2443,7 @@
         <name>Condizioni_Economiche_Famiglie_EE_0</name>
         <label>Condizioni Economiche Famiglie EE</label>
         <locationX>842</locationX>
-        <locationY>1358</locationY>
+        <locationY>1238</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2742,7 +2563,7 @@
         <name>Condizioni_Economiche_Famiglie_GAS</name>
         <label>Condizioni Economiche Famiglie GAS</label>
         <locationX>1722</locationX>
-        <locationY>1358</locationY>
+        <locationY>1238</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2822,7 +2643,7 @@
         <name>Condizioni_Economiche_Famiglie_GAS_0</name>
         <label>Condizioni Economiche Famiglie GAS</label>
         <locationX>1282</locationX>
-        <locationY>1358</locationY>
+        <locationY>1238</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2891,7 +2712,7 @@
         <name>CondizioniEconomichePromozioni_0_0_0_0_0</name>
         <label>Condizioni Economiche Promozioni</label>
         <locationX>710</locationX>
-        <locationY>1934</locationY>
+        <locationY>1814</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2950,7 +2771,7 @@
         <name>CondizioniEconomichePromozioni_0_0_0_0_0_0</name>
         <label>Condizioni Economiche Promozioni</label>
         <locationX>1590</locationX>
-        <locationY>2054</locationY>
+        <locationY>1934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3001,7 +2822,7 @@
                     <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>PROMO 100</stringValue>
+                        <stringValue>Promo 100</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -3021,7 +2842,7 @@
         <name>CondizioniEconomichePromozioni_0_0_0_0_0_0_0_0</name>
         <label>Condizioni Economiche Promozioni</label>
         <locationX>270</locationX>
-        <locationY>1934</locationY>
+        <locationY>1814</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3065,7 +2886,7 @@
         <name>CondizioniEconomichePromozioni_0_0_0_0_0_0_0_0_0</name>
         <label>Condizioni Economiche Promozioni</label>
         <locationX>1150</locationX>
-        <locationY>2054</locationY>
+        <locationY>1934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3085,9 +2906,9 @@
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
-                    <operator>Contains</operator>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>PROMO 100</stringValue>
+                        <stringValue>Promo 100</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -3134,8 +2955,8 @@
     <screens>
         <name>Conferma_Adesione_Screen_0</name>
         <label>Conferma Adesione Screen</label>
-        <locationX>974</locationX>
-        <locationY>5366</locationY>
+        <locationX>908</locationX>
+        <locationY>5246</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3150,8 +2971,8 @@
     <screens>
         <name>Conferma_Adesione_Screen_0_0</name>
         <label>Conferma Adesione Screen</label>
-        <locationX>710</locationX>
-        <locationY>5486</locationY>
+        <locationX>644</locationX>
+        <locationY>5246</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3162,7 +2983,7 @@
         </fields>
         <fields>
             <name>newtext1_0_2</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera LED&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta Hera LED?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3177,7 +2998,7 @@
         </fields>
         <fields>
             <name>newtext1_0_3</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera Thermo&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta Hera Thermo?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3192,7 +3013,7 @@
         </fields>
         <fields>
             <name>newtext1_0_4</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera ContaWatt&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta Hera ContaWatt?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3207,7 +3028,7 @@
         </fields>
         <fields>
             <name>newtext1_0_5</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera No Problem Luce&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta Hera No Problem Luce?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3222,7 +3043,7 @@
         </fields>
         <fields>
             <name>newtext1_0_6</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera No Problem Gas&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta Hera No Problem Gas?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3237,7 +3058,7 @@
         </fields>
         <fields>
             <name>newtext1_0_7</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta Hera Caldaia Sicura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3251,83 +3072,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>newtext1_0_10</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera No Problem Acqua&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistNoProblemAcqua</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>confermaEbike</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera E-Bike&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistEbike</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>confermaMonop</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Monopattino&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistMonopattino</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>confermaSanifica</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Sanifica Aria&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistSanifica</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>confermaFV</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta&amp;nbsp;&lt;strong&gt;Hera Fotovoltaico Kit Fai da Te&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistFotoVoltaico</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>newtext1_0_8</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera Ricarica Pubblica&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta Hera Ricarica Pubblica?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3342,12 +3088,27 @@
         </fields>
         <fields>
             <name>newtext1_0_9</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera Ricarica Privata&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta Hera Ricarica Privata?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>ExistRicaricaPrivata</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>newtext1_0_10</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta Hera No Problem Acqua?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemAcqua</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -3424,7 +3185,7 @@
         </fields>
         <fields>
             <name>newtext1_0_14</name>
-            <fieldText>&lt;p&gt;•	Per&lt;strong&gt; [Hera Thermo/Hera LED]&lt;/strong&gt;, entro 14 giorni dalla consegna del prodotto, Lei potrà esercitare il diritto di recesso nelle modalità che troverà indicate nel documento “Istruzioni per il reso e il recesso”.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Per [Hera Thermo/Hera LED], entro 14 giorni dalla consegna del prodotto, Lei potrà esercitare il diritto di recesso nelle modalità che troverà indicate nel documento “Istruzioni per il reso e il recesso”.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -3476,7 +3237,7 @@
         </fields>
         <fields>
             <name>newtext1_0_16</name>
-            <fieldText>&lt;p&gt;•	Per &lt;strong&gt;Hera ContaWatt&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna per il dispositivo e con un preavviso di almeno 30 giorni per il servizio.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Per Hera ContaWatt, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna per il dispositivo e con un preavviso di almeno 30 giorni per il servizio.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3513,7 +3274,7 @@
         </fields>
         <fields>
             <name>newtext1_0_19</name>
-            <fieldText>&lt;p&gt;•	Per &lt;strong&gt;Hera NoProblem Luce&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Per Hera NoProblem Luce, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3528,7 +3289,7 @@
         </fields>
         <fields>
             <name>newtext1_0_20</name>
-            <fieldText>&lt;p&gt;•	Per &lt;strong&gt;Hera NoProblem Gas&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Per Hera NoProblem Gas, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3543,7 +3304,7 @@
         </fields>
         <fields>
             <name>newtext1_0_21</name>
-            <fieldText>&lt;p&gt;•	Per &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Per Hera Caldaia Sicura, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3558,7 +3319,7 @@
         </fields>
         <fields>
             <name>newtext1_0_22</name>
-            <fieldText>&lt;p&gt;•	Per &lt;strong&gt;Hera Ricarica Pubblica&lt;/strong&gt;, lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Per Hera Ricarica Pubblica, lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3588,72 +3349,12 @@
         </fields>
         <fields>
             <name>newtext1_0_25</name>
-            <fieldText>&lt;p&gt;•	Per &lt;strong&gt;Hera NoProblem Acqua&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Per Hera NoProblem Acqua, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>ExistNoProblemAcqua</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>recessoMonopattino</name>
-            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Monopattino&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistMonopattino</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>recessoEbikeIn</name>
-            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera E-Bike&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistEbike</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>recessoSanificaIn</name>
-            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Sanifica Aria&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistSanifica</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>recessoFvIn</name>
-            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Fotovoltaico Kit Fai da Te&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistFotoVoltaico</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -3670,505 +3371,10 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Conferma_Adesione_Screen_0_0_0</name>
-        <label>Conferma Adesione Screen</label>
-        <locationX>446</locationX>
-        <locationY>5486</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>newtext1_0_1_0</name>
-            <fieldText>&lt;p&gt;[9. Conferma adesione]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La informo che il contratto di fornitura si concluderà al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>ConfermaLuce_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta Luce?&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>IsEnergiaElettrica</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>ConfermaGas_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta Gas?&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>IsGas</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_2_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera LED&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistLED</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_3_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera Thermo&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistThermo</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_4_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera ContaWatt&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistContaWatt</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_5_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera No Problem Luce&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_6_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera No Problem Gas&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistNoProblemGas</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_7_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistCaldaiaSicura</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_10_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera No Problem Acqua&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistNoProblemAcqua</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>confermaEbike_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera E-Bike&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistEbike</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>confermaMonop_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Monopattino&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistMonopattino</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>confermaSanifica_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Sanifica Aria&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistSanifica</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>confermaFV_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta&amp;nbsp;&lt;strong&gt;Hera Fotovoltaico Kit Fai da Te&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistFotoVoltaico</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_8_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera Ricarica Pubblica&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistRicaricaPubblica</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_9_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera Ricarica Privata&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistRicaricaPrivata</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_11_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che vuole ricevere la documentazione contrattuale e la scheda di confrontabilità dell’offerta rispetto al regime di tutela presso il suo indirizzo di comunicazione postale?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.DocSendingMethod__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue>E-Mail</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>sendEmail</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che vuole ricevere la documentazione contrattuale e la scheda di confrontabilità dell’offerta rispetto al regime di tutela via e-mail?&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.DocSendingMethod__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>E-Mail</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>LinearNoProbLG</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che vuole ricevere da Linear la comunicazione sull’accettazione o mancata accettazione dell’adesione alla polizza, la data di effetto della copertura assicurativa e la data di cessazione dell’adesione mediante email o SMS?&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>ExistNoProblemGas</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>verificaRicezione</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Nei prossimi 10 giorni provvederemo a verificare la ricezione della documentazione contrattuale e la conclusione del contratto. La verifica potrà avvenire in due modalità:&lt;ul&gt;&lt;li&gt;Attraverso un nostro operatore che la ricontatterà per chiederle conferma;&lt;/li&gt;&lt;li&gt;Con le credenziali personali che troverà indicate all’interno della documentazione contrattuale e con le quali potrà chiamare il numero verde oppure accedere al sito internet per confermare la conclusione del contratto ed ascoltare la registrazione di questa telefonata.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>newtext1_0_13_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Per il contratto di fornitura, entro 14 giorni dal ricevimento, potrà esercitare il diritto di ripensamento, inviando un fax al numero verde 800.999.600, oppure una e-mail all’indirizzo contratti@gruppohera.it oppure una raccomandata con ricevuta di ritorno presso l’indirizzo della nostra sede legale.&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>ledThermo</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Entro 14 giorni dalla comunicazione del recesso dovrà restituire a proprie spese il prodotto, nelle modalità che troverà indicate nel documento “Istruzioni per il reso e il recesso”.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistLED</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>ExistThermo</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_15_0</name>
-            <fieldText>&lt;p&gt;•	[se ha acquistato 2 o 3 termostati]: Il recesso può essere esercitato su tutti i termostati acquistati, e non solo su una parte di essi.&lt;/p&gt;&lt;p&gt;•	[se ha acquistato anche il servizio di installazione]. Le ricordo che, ad avvenuta installazione da parte del tecnico, non potrà più recedere dal servizio di installazione.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistThermo</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_17_0</name>
-            <fieldText>&lt;p&gt;•	[se ha acquistato 2 KIT]: Per ogni contratto il recesso può inoltre essere esercitato su tutti i KIT abbinati al medesimo contratto di fornitura e non solo su una parte di essi.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistLED</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_16_0</name>
-            <fieldText>&lt;p&gt;•	Per &lt;strong&gt;Hera ContaWatt&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna per il dispositivo e con un preavviso di almeno 30 giorni per il servizio.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistContaWatt</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_19_0</name>
-            <fieldText>&lt;p&gt;•	Per &lt;strong&gt;Hera NoProblem Luce&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_20_0</name>
-            <fieldText>&lt;p&gt;•	Per &lt;strong&gt;Hera NoProblem Gas&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistNoProblemGas</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_21_0</name>
-            <fieldText>&lt;p&gt;•	Per &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistCaldaiaSicura</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_25_0</name>
-            <fieldText>&lt;p&gt;•	Per &lt;strong&gt;Hera NoProblem Acqua&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistNoProblemAcqua</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>recessoEbike</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Per &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Hera E-Bike&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistEbike</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>recessoMonop</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Per &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Hera Monopattino&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistMonopattino</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>recessoSanifica</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Per &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Hera Sanifica Aria&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistSanifica</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>recessoFv</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Per &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Hera Fotovoltaico Kit Fai da Te&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistFotoVoltaico</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente, può ricorrere al Servizio di Conciliazione ARERA oppure alla Conciliazione Paritetica attraverso le modalità indicate sul sito www.gruppohera.it&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento per:&lt;ul&gt;&lt;li&gt;la fornitura di gas in regime di tutela.&lt;/li&gt;&lt;li&gt;la nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;•	CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.LastName__c} abbiamo terminato la registrazione, benvenuto in &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!HDT_Script_Introduzione.salesCompany}.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;[***FINE REGISTRAZIONE**]&lt;/strong&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
         <name>Dati_Tecnici_Aziende_EE_0_0</name>
         <label>Dati Tecnici Aziende EE</label>
         <locationX>1722</locationX>
-        <locationY>2246</locationY>
+        <locationY>2126</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4207,7 +3413,7 @@
         <name>Dati_Tecnici_Aziende_EE_0_0_0</name>
         <label>Dati Tecnici Aziende EE</label>
         <locationX>1458</locationX>
-        <locationY>2246</locationY>
+        <locationY>2126</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4246,7 +3452,7 @@
         <name>Dati_Tecnici_Aziende_GAS_0_0</name>
         <label>Dati Tecnici Aziende GAS</label>
         <locationX>2250</locationX>
-        <locationY>2246</locationY>
+        <locationY>2126</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4275,7 +3481,7 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text3_0_0</name>
-            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta_0.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;•	Mi conferma che  la durata del prezzo fisso è 12 mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice PDR è {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che  la durata del prezzo fisso è 12 mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4300,7 +3506,7 @@
         <name>Dati_Tecnici_Aziende_GAS_0_0_0</name>
         <label>Dati Tecnici Aziende GAS</label>
         <locationX>1986</locationX>
-        <locationY>2246</locationY>
+        <locationY>2126</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4329,7 +3535,7 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text3_0_0_0</name>
-            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta_0.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;•	Mi conferma che  la durata del prezzo fisso è 12 mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice PDR è {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che  la durata del prezzo fisso è 12 mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4354,7 +3560,7 @@
         <name>Dati_Tecnici_Famiglie_EE</name>
         <label>Dati Tecnici Famiglie EE</label>
         <locationX>930</locationX>
-        <locationY>2702</locationY>
+        <locationY>2582</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4499,7 +3705,7 @@
         <name>Dati_Tecnici_Famiglie_EE_0</name>
         <label>Dati Tecnici Famiglie EE</label>
         <locationX>666</locationX>
-        <locationY>2702</locationY>
+        <locationY>2582</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4538,7 +3744,7 @@
         <name>Dati_Tecnici_Famiglie_GAS</name>
         <label>Dati Tecnici Famiglie GAS</label>
         <locationX>1458</locationX>
-        <locationY>2702</locationY>
+        <locationY>2582</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4567,7 +3773,7 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text3</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Mi conferma che usa il gas per {!LoopOrdiniFigliOfferta.ImplantType__c}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice PDR del contatore GAS è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la durata del prezzo fisso scelta è 24 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che usa il gas per {!LoopOrdiniFigliOfferta.UseCategory__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice PDR è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la durata del prezzo fisso scelta è 24 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4686,7 +3892,7 @@
         <name>Dati_Tecnici_Famiglie_GAS_0</name>
         <label>Dati Tecnici Famiglie GAS</label>
         <locationX>1194</locationX>
-        <locationY>2702</locationY>
+        <locationY>2582</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4715,7 +3921,7 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text3_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Mi conferma che usa il gas per {!LoopOrdiniFigliOfferta.ImplantType__c}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la durata del prezzo fisso scelta è 24 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice PDR del contatore GAS è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che usa il gas per {!LoopOrdiniFigliOfferta.UseCategory__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la durata del prezzo fisso scelta è 24 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice PDR è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -4725,7 +3931,7 @@
         <name>Durata_Contratto</name>
         <label>Durata Contratto</label>
         <locationX>644</locationX>
-        <locationY>5030</locationY>
+        <locationY>4910</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4734,37 +3940,7 @@
         </connector>
         <fields>
             <name>Durata_Contratto_Text1</name>
-            <fieldText>&lt;p&gt;In riferimento all’offerta Luce  {!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>IsEnergiaElettrica</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>GasText_1</name>
-            <fieldText>&lt;p&gt;In riferimento all’offerta Gas {!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>IsGas</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Durata_Contratto_Text1_gas</name>
-            <fieldText>&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 30 giorni presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta bimestrale per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 3000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 3000 smc/anno.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste le può essere sospesa la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Qualora la fornitura si interrompa prima del periodo scelto, ci riserviamo la possibilità di conguagliare tutti i consumi, utilizzando il prezzo del profilo con durata più prossima a quella effettiva della fornitura&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;In riferimento all’offerta Luce e/o Gas {!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 30 giorni presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta bimestrale per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 3000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 3000 smc/anno.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste le può essere sospesa la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Qualora la fornitura si interrompa prima del periodo scelto, ci riserviamo la possibilità di conguagliare tutti i consumi, utilizzando il prezzo del profilo con durata più prossima a quella effettiva della fornitura&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -4774,7 +3950,7 @@
         <name>Durata_Contratto_0</name>
         <label>Durata Contratto</label>
         <locationX>908</locationX>
-        <locationY>5030</locationY>
+        <locationY>4910</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4793,7 +3969,7 @@
         <name>Servizi_Bundle</name>
         <label>Servizi Bundle</label>
         <locationX>182</locationX>
-        <locationY>3686</locationY>
+        <locationY>3566</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4802,33 +3978,8 @@
         </connector>
         <fields>
             <name>Bundle_Text1</name>
-            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta Luce, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi “DIARIO DEI CONSUMI e Hera Fast check up . A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di abitanti della sua abitazione è {!GetAnalisiConsumi.OccupantsNumber__c} e la superficie è {!GetAnalisiConsumi.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[“DIARIO DEI CONSUMI E “HERA FAST CHECK UP” (HC EST e HCM)]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi “DIARIO DEI CONSUMI e Hera Fast check up . A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di abitanti della sua abitazione è {!GetAnalisiConsumi.OccupantsNumber__c} e la superficie è {!GetAnalisiConsumi.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>IsEnergiaElettrica</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>BundleText1_2</name>
-            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi “DIARIO DEI CONSUMI e Hera Fast check up . A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di abitanti della sua abitazione è {!GetAnalisiConsumi.OccupantsNumber__c} e la superficie è {!GetAnalisiConsumi.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>IsGas</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>Bundle_Text6</name>
@@ -4845,7 +3996,7 @@
                     <leftValueReference>GetAnalisiConsumi.OwnerAC__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Si</stringValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -4874,7 +4025,7 @@
                     <leftValueReference>GetAnalisiConsumi.OwnerAC__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>No</stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4886,7 +4037,7 @@
         </fields>
         <fields>
             <name>Bundle_Text2</name>
-            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente sui Servizi On Line, per tutta la durata della fornitura, il servizio Hera Fast check up.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio, di cui riceverà il dettaglio nel plico contrattuale, non sarà più disponibile.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[“HERA FAST CHECK UP” (HC EST e HCM]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente sui Servizi On Line, per tutta la durata della fornitura, il servizio Hera Fast check up.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio, di cui riceverà il dettaglio nel plico contrattuale, non sarà più disponibile.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -4896,7 +4047,7 @@
         <name>Servizi_Bundle_0</name>
         <label>Servizi Bundle</label>
         <locationX>1370</locationX>
-        <locationY>2654</locationY>
+        <locationY>2534</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4909,52 +4060,8 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>ele01</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Con la sottoscrizione dell’offerta Luce, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, il servizio DIARIO DEI CONSUMI. A questo proposito, mi conferma che:&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>IsEnergiaElettrica</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OrdinePadre.Email__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue></stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Gas01</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Con la sottoscrizione dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, il servizio DIARIO DEI CONSUMI. A questo proposito, mi conferma che:&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>IsGas</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OrdinePadre.Email__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue></stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>Bundle_Text1_0</name>
-            <fieldText>&lt;p&gt;•	il numero di addetti che lavorano nella sua attività è XXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	la superficie dello stabile è XXXX metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Il report di DIARIO DEI CONSUMI le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio non sarà più disponibile.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il servizio citato è descritto in dettaglio nel plico contrattuale che riceverà.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, il servizio DIARIO DEI CONSUMI. A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di addetti che lavorano nella sua attività è XXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	la superficie dello stabile è XXXX metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Il report di DIARIO DEI CONSUMI le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio non sarà più disponibile.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il servizio citato è descritto in dettaglio nel plico contrattuale che riceverà.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5122,8 +4229,8 @@
     <subflows>
         <name>HDT_Script_VAS</name>
         <label>HDT Script - VAS</label>
-        <locationX>1810</locationX>
-        <locationY>4022</locationY>
+        <locationX>1546</locationX>
+        <locationY>3902</locationY>
         <connector>
             <targetReference>Vas_Presenti_Decision</targetReference>
         </connector>
@@ -5211,20 +4318,6 @@
         </value>
     </variables>
     <variables>
-        <name>ExistEbike</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>ExistFotoVoltaico</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>ExistLED</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -5233,13 +4326,6 @@
         <value>
             <booleanValue>false</booleanValue>
         </value>
-    </variables>
-    <variables>
-        <name>ExistMonopattino</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>ExistNoProblemAcqua</name>
@@ -5292,13 +4378,6 @@
         </value>
     </variables>
     <variables>
-        <name>ExistSanifica</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>ExistThermo</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -5314,26 +4393,6 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>IsEnergiaElettrica</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
-        <name>IsGas</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
     </variables>
     <variables>
         <name>NomiFamiglie_Bonus_Concatenati</name>
