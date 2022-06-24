@@ -270,6 +270,14 @@
             <valueName>Volture e subentri</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Contratti</controllingFieldValue>
+            <valueName>Modifiche unilaterali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratti</controllingFieldValue>
+            <valueName>Recesso</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Altro</controllingFieldValue>
             <valueName>Fotovoltaico</valueName>
         </valueSettings>
