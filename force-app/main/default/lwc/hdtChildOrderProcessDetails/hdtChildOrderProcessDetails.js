@@ -46,7 +46,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track lastStepData = {};
     @track isNoDayAfterthought = false;
     loginChannel;
-    //missedDueDate;
+    validateAttachment = {isValid:false};
+    @track additionalAttachments;
+
     get orderWithData(){
        console.log('#Order With Data >>> ' +JSON.stringify(this.sectionDataToSubmit));
        return {...this.order, ...this.sectionDataToSubmit};
@@ -175,11 +177,18 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(this.lastStepNumber === this.currentSection.step) {
             this.lastStepData = draftData;
         }
+
+        if(draftData.AdditionalAttachments__c){
+            this.additionalAttachments = draftData.AdditionalAttachments__c;
+            console.log('data AdditionalAttachments__c '+ draftData.AdditionalAttachments__c);
+        }
+
         this.dispatchEvent(new CustomEvent('emitdraftdata', {detail: {
             objectApiName: this.currentSectionObjectApi,
             fields: draftData,
             lastStepData: this.lastStepData
         }}));
+        
     }
 
     handleShowModuloInformativo(){
@@ -589,11 +598,20 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             }
             if(currentSectionName === 'variabiliDiProcesso'){
                 let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
+                let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
                 //if(!this.isActiveRepentantPressed){
-                if(this.template.querySelector("c-hdt-active-repentant")?.validateDate(decorrenza)){
+                if(this.template.querySelector("c-hdt-active-repentant")?.validateDate(decorrenza, dichiarazione)){
                     this.showMessage('Errore', 'Verificare il ravvedimento operoso prima di procedere', 'error');
                     return;
                 }
+
+                if(this.template.querySelector("[data-id='MandatoryAttachments__c']")?.value != ''){
+                    if(!this.validateAttachment.isValid){
+                        this.showMessage('Errore', this.validateAttachment.errorMessage? this.validateAttachment.errorMessage : "Verificare gli allegati obbligatori prima di procedere", 'error');
+                        return;
+                    }
+                }
+
             }
             if(currentSectionName === 'dettaglioImpianto'){
                 if( this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
@@ -1135,6 +1153,23 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             })
             .catch(error=>{console.log(error)})
         }, 3000)
+    }
+
+    handleValidateAttachments(event){
+        console.log('###Attachments Event >>> ' + JSON.stringify(event.detail));
+        this.validateAttachment = event.detail;
+    }
+
+    handleCloseAttachment(event){
+        console.log('###CloseAttachmentEvent in details>>> ' + JSON.stringify(event.detail));
+
+        if(event.detail.required){
+            this.template.querySelector("[data-id='MandatoryAttachments__c']").value = event.detail.required;
+        }
+        if(event.detail.additional){
+            this.template.querySelector("[data-id='AdditionalAttachments__c']").value = event.detail.additional;
+        }
+        
     }
 
     handleUpdateCodAtecoEvent(event){

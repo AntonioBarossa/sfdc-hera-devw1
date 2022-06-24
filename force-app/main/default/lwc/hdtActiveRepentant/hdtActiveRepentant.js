@@ -4,14 +4,16 @@ import getTerms from "@salesforce/apex/HDT_LC_ActiveRepentant.getTerms";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
 class outputData{
-    constructor(dateX, dateY, missedDue, declineSupport, bloccoCalcolo) {
+    constructor(dateX, dateY, missedDue, declineSupport, refuseSupport, bloccoCalcolo, dateDecorrenza, dateDichiarazione) {
         this.dateX = dateX;
         this.dateY=dateY;
         this.missedDue = missedDue;
-        this.declineSupport=declineSupport;
+        this.declineSupport=declineSupport? declineSupport : refuseSupport? refuseSupport : null;
         this.bloccoCalcolo=bloccoCalcolo;
+        this.dateDecorrenza=dateDecorrenza;
+        this.dateDichiarazione=dateDichiarazione;
     }
-}
+}//Prendere anche data dichiarazione in maniera dinamica
 
 export default class HdtActiveRepentant extends LightningElement {
     @track missedDueDate;
@@ -28,31 +30,56 @@ export default class HdtActiveRepentant extends LightningElement {
     //variables from flow
     @api recordId;
     @api objectApiName;
-    @api outputWrp;
+    @api outputWrp={};
+    @api sessionid;
+
+    get isCase(){
+        return this.objectApiName=="Case";
+    }
+
+    connectedCallback(){
+        const oldWrpStr = window.sessionStorage.getItem(this.sessionid);
+        if(this.sessionid && oldWrpStr){
+            try{
+                this.outputWrp = JSON.parse(oldWrpStr);
+            }catch(e){
+                console.log(e);
+            }
+        }
+    }
 
     buttonPressed() {
         this.disabled=true;
         if(this.recordId){
             //flow
             let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
-            this.startActiveRepentant(decorrenza);
+            this.dateDichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
+            if(this.dateDichiarazione){     this.startActiveRepentant(decorrenza);  }  
+            else{   this.showMessage("Attenzione!", "Popolare Data Dichiarazione", "error");this.disabled=false;    }
         }else{
+            //wizard Attivazioni
             this.dispatchEvent(CustomEvent("request_data"));
         }
         return;
     }
 
-    @api validateDate(dateDecorrenza) {
+    @api validateDate(dateDecorrenza, dateDichiarazione) {
         //valida controllo, dateDecorrenza non può essere futura
         if(this.disabled)   return true;//algoritmo in fase di calcolo
         if(this.skipCheck)  return false;//controllo non necessario
-        return !(this.dateDecorrenza && this.dateDecorrenza == dateDecorrenza);//controlla che la data decorrenza sia popolata e aggiornata
+        return !((this.dateDecorrenza && this.dateDecorrenza == dateDecorrenza) && (this.dateDichiarazione && this.dateDichiarazione?.startsWith(dateDichiarazione)));//controlla che la data decorrenza sia popolata e aggiornata
     }
 
     @api validate(){        
         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
-        let isValid = !this.validateDate(decorrenza);
+        let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
+        let isValid = !this.validateDate(decorrenza, dichiarazione);
         this.outputWrp=this.outputObject();
+        if(!isValid){
+            window.sessionStorage.setItem(this.sessionid, JSON.stringify(this.outputWrp));
+        }else{
+            window.sessionStorage.removeItem(this.sessionid);
+        }
         return { isValid : isValid, 
             errorMessage: isValid? null : 'Verificare il ravvedimento operoso prima di procedere'
         };
@@ -62,9 +89,12 @@ export default class HdtActiveRepentant extends LightningElement {
         return new outputData(
             this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value,
             this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value,
-            this.template.querySelector("[data-id='MissingDueAmount__c']").value,
-            this.template.querySelector("[data-id='DeclineComputationSupport__c']").value,
-            this.template.querySelector("[data-id='BlockOnComputation__c']").value
+            this.template.querySelector("[data-id='MissingDueAmount__c']")?.value,
+            this.template.querySelector("[data-id='DeclineComputationSupport__c']")?.value,
+            this.template.querySelector("[data-id='CustomerRepentanceRefusal__c']")?.value,            
+            this.template.querySelector("[data-id='BlockOnComputation__c']").value,
+            this.template.querySelector("[data-id='EffectiveDate__c']").value,
+            this.template.querySelector("[data-id='DeclarationDate__c']").value
         );
     }
 
@@ -211,12 +241,22 @@ export default class HdtActiveRepentant extends LightningElement {
 
     populateFormFields(event) {//function executed on parent context
         console.log('###Missed Due Event >>> ');
-        this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = event.detail.dateX;
-        this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = event.detail.dateY;
-        //this.missedDueDate = this.getFormattedDate(event.detail.missedDue);
-        this.template.querySelector("[data-id='MissingDueAmount__c']").required = event.detail.missedDue? true : false;
+        const revDate = this.template.querySelector("[data-id='OnerousReviewableStartDate__c']");
+        if(revDate) revDate.value = event.detail.dateX;
+
+        const unrevDate = this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']");
+        if(unrevDate)   unrevDate.value = event.detail.dateY;
+
         if(event.detail.period=="Y"){
-            this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = true;
+            const missingDueAmount = this.template.querySelector("[data-id='MissingDueAmount__c']");
+            if(missingDueAmount)    missingDueAmount.required = event.detail.missedDue? true : false;
+
+            const decline = this.template.querySelector("[data-id='DeclineComputationSupport__c']");
+            if(decline) decline.required = true;
+
+            const refusal = this.template.querySelector("[data-id='CustomerRepentanceRefusal__c']");
+            if(refusal) refusal.required=true;
+
             this.template.querySelector("[data-id='BlockOnComputation__c']").value = 'Y';
         }
     }

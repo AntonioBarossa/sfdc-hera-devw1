@@ -9,9 +9,9 @@
         <targetConfig targets="lightning__FlowScreen">            
             <property name="recordId" type="String" label="Record Id" description="searchLabel" role="inputOnly"/>             
             <property name="objectApiName" type="String" label="Object Name" description="object ApiName" role="inputOnly"/>             
-            <property name="dateDichiarazione" type="DateTime" label="Data Dichiarazione" role="inputOnly"/>             
             <property name="city" type="String" label="Comune" role="inputOnly"/>             
             <property name="outputWrp" type="apex://HDT_LC_ActiveRepentant" label="Wrapper Output" role="outputOnly"/>   
+            <property name="sessionid" type="String" label="Session Flow Id" role="inputOnly"/>   
         </targetConfig>       
     </targetConfigs>
 </LightningComponentBundle>
