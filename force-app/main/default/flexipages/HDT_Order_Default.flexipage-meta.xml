@@ -57,7 +57,7 @@
                 <componentName>hdtActivityTrace</componentName>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
+        <!-- <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>activityId</name>
@@ -67,7 +67,7 @@
                 </componentInstanceProperties>
                 <componentName>hdtActivityTrace</componentName>
             </componentInstance>
-        </itemInstances>
+        </itemInstances> -->
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
