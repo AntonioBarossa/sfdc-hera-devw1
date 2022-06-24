@@ -231,7 +231,7 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
         let foundRow = this.cityZipCode.provinceOptions.find(ele  => ele.value === e);
         this.dataToView = foundRow.cityAvailable;
         this.dataRemoved = foundRow.cityRemoved;
-        
+
         this.showEmptyImmage = false;
         this.showAvailableItems = true;
         this.showSearchTable = false;
@@ -507,7 +507,9 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
                     this.dataToView.push(itemRemoved);
                 }
             });
-            this.dataRemoved = [];
+            //this.dataRemoved = [];
+            this.dataRemoved.splice(0,this.dataRemoved.length)
+            console.log('## ' + this.dataRemoved.length);
         }
 
         this.dataToView.sort(this.compare);
