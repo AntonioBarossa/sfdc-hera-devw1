@@ -301,10 +301,6 @@
             <valueName>Preventivi - tempistiche/modalità/costi</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
-            <valueName>Preventivi- tempistiche/modalità/costi</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Continuità</controllingFieldValue>
             <valueName>Interruzione servizio</valueName>
         </valueSettings>
