@@ -78,7 +78,7 @@
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Segnalazioni Ambientali Anonime</stringValue>
+                <stringValue>Gestione Rifiuti Anonimi</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -221,6 +221,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Segnalazioni</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.Note__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -454,6 +461,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>CONSULTA IL RIFIUTOLOGO</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Indicare indirizzo completo solo se diverso da campo indirizzo precedente</stringValue>
             </value>
         </assignmentItems>
         <connector>
