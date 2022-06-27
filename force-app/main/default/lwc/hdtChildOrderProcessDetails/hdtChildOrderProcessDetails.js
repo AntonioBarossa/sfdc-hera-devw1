@@ -188,6 +188,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             fields: draftData,
             lastStepData: this.lastStepData
         }}));
+        
     }
 
     handleShowModuloInformativo(){
@@ -597,8 +598,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             }
             if(currentSectionName === 'variabiliDiProcesso'){
                 let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
+                let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
                 //if(!this.isActiveRepentantPressed){
-                if(this.template.querySelector("c-hdt-active-repentant")?.validateDate(decorrenza)){
+                if(this.template.querySelector("c-hdt-active-repentant")?.validateDate(decorrenza, dichiarazione)){
                     this.showMessage('Errore', 'Verificare il ravvedimento operoso prima di procedere', 'error');
                     return;
                 }

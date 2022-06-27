@@ -23,7 +23,11 @@ public with sharing class HDT_LC_ActiveRepentant {
     @AuraEnabled
     public String bloccoCalcolo {get;set;}
 
+    @AuraEnabled
+    public Date dateDecorrenza {get;set;}
 
+    @AuraEnabled
+    public Date dateDichiarazione {get;set;}
 
     @AuraEnabled
     public static List<TermTable__c> getPeriods(String comune, String sottotipo){
