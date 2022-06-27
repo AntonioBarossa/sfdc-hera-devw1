@@ -94,7 +94,7 @@ public inherited sharing class HDT_QR_BillingProfile {
             InvoicingCity__c, 
             InvoicingStreetNumber__c, 
             InvoicingCountry__c, 
-            //InvoicingStreetToponym__c, 
+            InvoicingStreetToponym__c, 
             InvoicingStreetName__c, 
             InvoicingStreetNumberExtension__c	,
             InvoicingProvince__c,

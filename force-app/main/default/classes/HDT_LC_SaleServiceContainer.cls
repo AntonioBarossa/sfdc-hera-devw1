@@ -59,6 +59,7 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
          * Caricamento manuale in Siebel
          */
         if ( isTransition && regexPattern.matcher(acc[0].CustomerMarking__c).matches() ){
+            //siebelLoadingActivity(sale.Id, sale.Account__c, 'Sale__c');
             message = true;
         }
         

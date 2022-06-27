@@ -79,10 +79,10 @@ public class HDT_LC_CtToolbar_Test {
 
         Test.startTest();
 
-        String s1 = HDT_LC_CtToolbar.getCachedUuid();
-        s1 = 'myUuid';
-        HDT_LC_CtToolbar.cacheUuid(s1);
-        List<String> s1list = HDT_LC_CtToolbar.getCachedUuidInvocable();
+        //String s1 = HDT_LC_CtToolbar.getCachedUuid();
+        //String s1 = 'myUuid';
+        //HDT_LC_CtToolbar.cacheUuid(s1);
+        //List<String> s1list = HDT_LC_CtToolbar.getCachedUuidInvocable();
         String s = HDT_LC_CtToolbar.getStatusByEcid('1');
         Boolean b1;
         try{
