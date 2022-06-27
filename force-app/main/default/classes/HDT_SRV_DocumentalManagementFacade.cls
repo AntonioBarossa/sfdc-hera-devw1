@@ -27,7 +27,6 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             resultMap.put('result',result);
             resultMap.put('message',message);
             resultMap.put('status',status);
-            /*
             system.debug(LoggingLevel.DEBUG,'body --> '+body);
             system.debug(LoggingLevel.DEBUG,'documentalResponse --> '+documentalResponse);
             system.debug(LoggingLevel.DEBUG,'baseSixtyFour --> '+baseSixtyFour);
@@ -40,7 +39,6 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             system.debug(LoggingLevel.DEBUG,'context --> '+context);
             system.debug(LoggingLevel.DEBUG,'formParams --> '+formParams);
             system.debug(LoggingLevel.DEBUG,'resultMap --> '+JSON.serialize(resultMap));
-            */
         }
         catch(LimitException limitEx)
         {
