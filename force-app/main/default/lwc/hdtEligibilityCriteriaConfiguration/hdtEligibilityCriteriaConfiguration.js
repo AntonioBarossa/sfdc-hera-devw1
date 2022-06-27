@@ -212,6 +212,14 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
                     this.disabled = '';
                 }
             });
+            //** fix enable search on disabled items*/
+            this.template.querySelectorAll('lightning-input').forEach(li => {
+                if(li.name==='searchRemoved'){
+                    li.disabled = false;
+                    this.disabledR = '';
+                }
+            });
+            /**/ 
 
             let operatorButton = this.template.querySelector('button');
             if(operatorButton.dataset.id==='operator'){
