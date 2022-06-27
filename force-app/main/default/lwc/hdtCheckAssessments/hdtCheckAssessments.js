@@ -17,7 +17,9 @@ const columns = [ { label: 'Nr. Atto', fieldName: 'NrAtto',  sortable: "true"}, 
                   { label: 'Categoria Accertata', fieldName: 'CategoriaAccertata'}];
 
 export default class HdtCheckAssessments extends LightningElement {
-    @api order;
+    @api fiscalCode;
+    @api supplyCity;
+    @api customerMarking;
     @track data;
     columns = columns;
     defaultSortDirection = 'asc';
@@ -53,11 +55,11 @@ export default class HdtCheckAssessments extends LightningElement {
 
     connectedCallback(){
         console.log('CallBack start');
-        
+
         handleSearch({
-            cfPiva : this.order.Account.FiscalCode__c,
-            comuneFornitura : this.order.SupplyCity__c,
-            tipoPersona : this.order.Account.CustomerMarking__c,
+            cfPiva : this.fiscalCode,
+            comuneFornitura : this.supplyCity,
+            tipoPersona : this.CustomerMarking,
         }).then(result =>{
             if (!result){
                 console.log('result ->' + this.result);
