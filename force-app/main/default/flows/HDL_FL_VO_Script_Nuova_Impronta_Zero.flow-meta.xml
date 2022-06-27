@@ -5,7 +5,7 @@
         <name>AssignCaldaiaSicura</name>
         <label>AssignCaldaiaSicura</label>
         <locationX>2360</locationX>
-        <locationY>4502</locationY>
+        <locationY>6518</locationY>
         <assignmentItems>
             <assignToReference>ExistCaldaiaSicura</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>AssignContaWatt</name>
         <label>AssignContaWatt</label>
         <locationX>1568</locationX>
-        <locationY>4502</locationY>
+        <locationY>6518</locationY>
         <assignmentItems>
             <assignToReference>ExistContaWatt</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +37,7 @@
         <name>AssignEbike</name>
         <label>AssignEbike</label>
         <locationX>3416</locationX>
-        <locationY>4502</locationY>
+        <locationY>6518</locationY>
         <assignmentItems>
             <assignToReference>ExistEbike</assignToReference>
             <operator>Assign</operator>
@@ -85,7 +85,7 @@
         <name>AssignFotoVoltaico</name>
         <label>AssignFotoVoltaico</label>
         <locationX>4208</locationX>
-        <locationY>4502</locationY>
+        <locationY>6518</locationY>
         <assignmentItems>
             <assignToReference>ExistFotoVoltaico</assignToReference>
             <operator>Assign</operator>
@@ -130,10 +130,42 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssignInstallazione</name>
+        <label>AssignInstallazione</label>
+        <locationX>1150</locationX>
+        <locationY>3158</locationY>
+        <assignmentItems>
+            <assignToReference>ContainsInstallazioneTermostato</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>KitLed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignInstallazioneStandard</name>
+        <label>AssignInstallazioneStandard</label>
+        <locationX>1150</locationX>
+        <locationY>4166</locationY>
+        <assignmentItems>
+            <assignToReference>ContainsInstallazioneStandard</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CounterLoop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignLED</name>
         <label>AssignLED</label>
         <locationX>1040</locationX>
-        <locationY>4502</locationY>
+        <locationY>6518</locationY>
         <assignmentItems>
             <assignToReference>ExistLED</assignToReference>
             <operator>Assign</operator>
@@ -146,10 +178,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssignLedKit</name>
+        <label>AssignLedKit</label>
+        <locationX>1150</locationX>
+        <locationY>3494</locationY>
+        <assignmentItems>
+            <assignToReference>KitLedVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>WallBox</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignMonopattino</name>
         <label>AssignMonopattino</label>
         <locationX>3680</locationX>
-        <locationY>4502</locationY>
+        <locationY>6518</locationY>
         <assignmentItems>
             <assignToReference>ExistMonopattino</assignToReference>
             <operator>Assign</operator>
@@ -165,7 +213,7 @@
         <name>AssignNoProblemAcqua</name>
         <label>AssignNoProblemAcqua</label>
         <locationX>3152</locationX>
-        <locationY>4502</locationY>
+        <locationY>6518</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemAcqua</assignToReference>
             <operator>Assign</operator>
@@ -181,7 +229,7 @@
         <name>AssignNoProblemGas</name>
         <label>AssignNoProblemGas</label>
         <locationX>2096</locationX>
-        <locationY>4502</locationY>
+        <locationY>6518</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemGas</assignToReference>
             <operator>Assign</operator>
@@ -197,7 +245,7 @@
         <name>AssignNoProblemLuce</name>
         <label>AssignNoProblemLuce</label>
         <locationX>1832</locationX>
-        <locationY>4502</locationY>
+        <locationY>6518</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemLuce</assignToReference>
             <operator>Assign</operator>
@@ -213,7 +261,7 @@
         <name>AssignRicaricaPrivata</name>
         <label>AssignRicaricaPrivata</label>
         <locationX>2888</locationX>
-        <locationY>4502</locationY>
+        <locationY>6518</locationY>
         <assignmentItems>
             <assignToReference>ExistRicaricaPrivata</assignToReference>
             <operator>Assign</operator>
@@ -229,7 +277,7 @@
         <name>AssignRicaricaPubblica</name>
         <label>AssignRicaricaPubblica</label>
         <locationX>2624</locationX>
-        <locationY>4502</locationY>
+        <locationY>6518</locationY>
         <assignmentItems>
             <assignToReference>ExistRicaricaPubblica</assignToReference>
             <operator>Assign</operator>
@@ -245,7 +293,7 @@
         <name>AssignSanifica</name>
         <label>AssignSanifica</label>
         <locationX>3944</locationX>
-        <locationY>4502</locationY>
+        <locationY>6518</locationY>
         <assignmentItems>
             <assignToReference>ExistSanifica</assignToReference>
             <operator>Assign</operator>
@@ -261,7 +309,7 @@
         <name>AssignThermo</name>
         <label>AssignThermo</label>
         <locationX>1304</locationX>
-        <locationY>4502</locationY>
+        <locationY>6518</locationY>
         <assignmentItems>
             <assignToReference>ExistThermo</assignToReference>
             <operator>Assign</operator>
@@ -350,10 +398,42 @@
         </connector>
     </assignments>
     <assignments>
+        <name>CounterTermostato</name>
+        <label>CounterTermostato</label>
+        <locationX>1150</locationX>
+        <locationY>2822</locationY>
+        <assignmentItems>
+            <assignToReference>TermostatoQuantity</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>InstallazioneTermostato</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>CounterWallBox</name>
+        <label>CounterWallBox</label>
+        <locationX>1150</locationX>
+        <locationY>3830</locationY>
+        <assignmentItems>
+            <assignToReference>WallBoxCounter</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>InstallazioneStandard</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>ExistAnaConsAssignment_0</name>
         <label>ExistAnaConsAssignment_0</label>
         <locationX>50</locationX>
-        <locationY>3470</locationY>
+        <locationY>5486</locationY>
         <assignmentItems>
             <assignToReference>ExistAnaCons</assignToReference>
             <operator>Assign</operator>
@@ -369,7 +449,7 @@
         <name>VasPresentiAssign</name>
         <label>VasPresentiAssign</label>
         <locationX>2756</locationX>
-        <locationY>4262</locationY>
+        <locationY>6278</locationY>
         <assignmentItems>
             <assignToReference>VasPresentiBool</assignToReference>
             <operator>Assign</operator>
@@ -666,7 +746,7 @@
         <name>CanaleVenditaDecision_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>798</locationX>
-        <locationY>2582</locationY>
+        <locationY>4598</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_EE</targetReference>
         </defaultConnector>
@@ -691,7 +771,7 @@
         <name>CanaleVenditaDecision_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1326</locationX>
-        <locationY>2582</locationY>
+        <locationY>4598</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_GAS</targetReference>
         </defaultConnector>
@@ -791,7 +871,7 @@
         <name>Categoria_Cliente_Decision_0</name>
         <label>Categoria Cliente Decision</label>
         <locationX>776</locationX>
-        <locationY>4910</locationY>
+        <locationY>6926</locationY>
         <defaultConnector>
             <targetReference>Durata_Contratto_0</targetReference>
         </defaultConnector>
@@ -816,7 +896,7 @@
         <name>Categoria_Cliente_Decision_0_0</name>
         <label>Categoria Cliente Decision</label>
         <locationX>776</locationX>
-        <locationY>5246</locationY>
+        <locationY>7262</locationY>
         <defaultConnector>
             <targetReference>Conferma_Adesione_Screen_0</targetReference>
         </defaultConnector>
@@ -841,7 +921,7 @@
         <name>ChannelDecision</name>
         <label>ChannelDecision</label>
         <locationX>578</locationX>
-        <locationY>5366</locationY>
+        <locationY>7382</locationY>
         <defaultConnector>
             <targetReference>Conferma_Adesione_Screen_0_0</targetReference>
         </defaultConnector>
@@ -866,7 +946,7 @@
         <name>ExistOrderAnaCons</name>
         <label>ExistOrderAnaCons</label>
         <locationX>182</locationX>
-        <locationY>3230</locationY>
+        <locationY>5246</locationY>
         <defaultConnector>
             <targetReference>Servizi_Bundle</targetReference>
         </defaultConnector>
@@ -888,12 +968,87 @@
         </rules>
     </decisions>
     <decisions>
+        <name>InstallazioneStandard</name>
+        <label>InstallazioneStandard</label>
+        <locationX>1282</locationX>
+        <locationY>4046</locationY>
+        <defaultConnector>
+            <targetReference>CounterLoop</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isInstallazioneStandard</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CounterLoop.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>INSTALLAZIONE STANDARD</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignInstallazioneStandard</targetReference>
+            </connector>
+            <label>isInstallazioneStandard</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>InstallazioneTermostato</name>
+        <label>InstallazioneTermostato</label>
+        <locationX>1282</locationX>
+        <locationY>3038</locationY>
+        <defaultConnector>
+            <targetReference>KitLed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isInstallazione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CounterLoop.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>TERMOSTATO CON INSTALLAZIONE</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignInstallazione</targetReference>
+            </connector>
+            <label>isInstallazione</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>KitLed</name>
+        <label>KitLed</label>
+        <locationX>1282</locationX>
+        <locationY>3374</locationY>
+        <defaultConnector>
+            <targetReference>WallBox</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>is2Kit</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CounterLoop.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>HERA LED 2 KIT</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignLedKit</targetReference>
+            </connector>
+            <label>is2Kit</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Promo_Decision_0_0_0_0_0</name>
         <label>Promo Decision</label>
         <locationX>842</locationX>
         <locationY>1814</locationY>
         <defaultConnector>
-            <targetReference>Servizio_Decision_0</targetReference>
+            <targetReference>GetOrderItem</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
@@ -939,7 +1094,7 @@
         <locationX>1722</locationX>
         <locationY>1934</locationY>
         <defaultConnector>
-            <targetReference>Servizio_Decision_0</targetReference>
+            <targetReference>GetOrderItem</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
@@ -985,7 +1140,7 @@
         <locationX>402</locationX>
         <locationY>1814</locationY>
         <defaultConnector>
-            <targetReference>Servizio_Decision_0</targetReference>
+            <targetReference>GetOrderItem</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
@@ -1024,7 +1179,7 @@
         <locationX>1282</locationX>
         <locationY>1934</locationY>
         <defaultConnector>
-            <targetReference>Servizio_Decision_0</targetReference>
+            <targetReference>GetOrderItem</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
@@ -1093,7 +1248,7 @@
         <name>Servizio_Decision_0</name>
         <label>Servizio Decision</label>
         <locationX>1062</locationX>
-        <locationY>2462</locationY>
+        <locationY>4478</locationY>
         <defaultConnector>
             <targetReference>CanaleVenditaDecision_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1165,10 +1320,42 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Termostato</name>
+        <label>Termostato</label>
+        <locationX>1282</locationX>
+        <locationY>2702</locationY>
+        <defaultConnector>
+            <targetReference>InstallazioneTermostato</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isTermostato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CounterLoop.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>TERMOSTATO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CounterLoop.ProductName__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>CONSEGNA TERMOSTATO</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CounterTermostato</targetReference>
+            </connector>
+            <label>isTermostato</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Vas_Presenti_Decision</name>
         <label>Vas Presenti Decision</label>
         <locationX>1810</locationX>
-        <locationY>4142</locationY>
+        <locationY>6158</locationY>
         <defaultConnector>
             <targetReference>VasPresentiAssign</targetReference>
         </defaultConnector>
@@ -1190,10 +1377,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>WallBox</name>
+        <label>WallBox</label>
+        <locationX>1282</locationX>
+        <locationY>3710</locationY>
+        <defaultConnector>
+            <targetReference>InstallazioneStandard</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isWalBox</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CounterLoop.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>WALLBOX</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CounterWallBox</targetReference>
+            </connector>
+            <label>isWalBox</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>WhichVasName</name>
         <label>WhichVasName</label>
         <locationX>2756</locationX>
-        <locationY>4382</locationY>
+        <locationY>6398</locationY>
         <defaultConnector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </defaultConnector>
@@ -1479,6 +1691,20 @@
     <interviewLabel>HDL FL VO Script - Nuova Impronta Zero {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDL FL VO Script - Nuova Impronta Zero</label>
     <loops>
+        <name>CounterLoop</name>
+        <label>CounterLoop</label>
+        <locationX>1062</locationX>
+        <locationY>2582</locationY>
+        <collectionReference>GetOrderItem</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Termostato</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Servizio_Decision_0</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
         <name>LoopOrdiniFigliOfferta</name>
         <label>LoopOrdiniFigliOfferta</label>
         <locationX>182</locationX>
@@ -1510,7 +1736,7 @@
         <name>Order_Items_Vas_Loop</name>
         <label>Order Items Vas Loop</label>
         <locationX>776</locationX>
-        <locationY>3902</locationY>
+        <locationY>5918</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVASBonusOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1543,7 +1769,7 @@
         <name>GetAnalisiConsumi</name>
         <label>GetAnalisiConsumi</label>
         <locationX>50</locationX>
-        <locationY>3350</locationY>
+        <locationY>5366</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ExistAnaConsAssignment_0</targetReference>
@@ -1564,7 +1790,7 @@
         <name>GetOrderAnaCons</name>
         <label>GetOrderAnaCons</label>
         <locationX>182</locationX>
-        <locationY>3110</locationY>
+        <locationY>5126</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ExistOrderAnaCons</targetReference>
@@ -1593,6 +1819,27 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetOrderItem</name>
+        <label>GetOrderItem</label>
+        <locationX>1062</locationX>
+        <locationY>2462</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CounterLoop</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OrderId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>LoopOrdiniFigliOfferta.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>OrderItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
@@ -2896,7 +3143,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Servizio_Decision_0</targetReference>
+            <targetReference>GetOrderItem</targetReference>
         </connector>
         <fields>
             <name>Promo_Text_1_0_0_0_0_0_0_0</name>
@@ -2955,7 +3202,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Servizio_Decision_0</targetReference>
+            <targetReference>GetOrderItem</targetReference>
         </connector>
         <fields>
             <name>Promo_Text_2_0_0_0_0_0_0_0_0_0_0</name>
@@ -3026,7 +3273,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Servizio_Decision_0</targetReference>
+            <targetReference>GetOrderItem</targetReference>
         </connector>
         <fields>
             <name>Promo_Text_2_0_0_0_0_0_0_0_0_0_0_0</name>
@@ -3070,7 +3317,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Servizio_Decision_0</targetReference>
+            <targetReference>GetOrderItem</targetReference>
         </connector>
         <fields>
             <name>Promo_Text_2_0_0_0_0_0_0_0_0_0_0_0_3</name>
@@ -3135,7 +3382,7 @@
         <name>Conferma_Adesione_Screen_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>974</locationX>
-        <locationY>5366</locationY>
+        <locationY>7382</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3151,7 +3398,7 @@
         <name>Conferma_Adesione_Screen_0_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>710</locationX>
-        <locationY>5486</locationY>
+        <locationY>7502</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3424,7 +3671,7 @@
         </fields>
         <fields>
             <name>newtext1_0_14</name>
-            <fieldText>&lt;p&gt;•	Per&lt;strong&gt; [Hera Thermo/Hera LED]&lt;/strong&gt;, entro 14 giorni dalla consegna del prodotto, Lei potrà esercitare il diritto di recesso nelle modalità che troverà indicate nel documento “Istruzioni per il reso e il recesso”.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Entro 14 giorni dalla consegna del prodotto, Lei potrà esercitare il diritto di recesso nelle modalità che troverà indicate nel documento “Istruzioni per il reso e il recesso”.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -3446,7 +3693,7 @@
         </fields>
         <fields>
             <name>newtext1_0_15</name>
-            <fieldText>&lt;p&gt;•	[se ha acquistato 2 o 3 termostati]: Il recesso può essere esercitato su tutti i termostati acquistati, e non solo su una parte di essi.&lt;/p&gt;&lt;p&gt;•	[se ha acquistato anche il servizio di installazione]. Le ricordo che, ad avvenuta installazione da parte del tecnico, non potrà più recedere dal servizio di installazione.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il recesso può essere esercitato su tutti i termostati acquistati, e non solo su una parte di essi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3457,16 +3704,59 @@
                         <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>TermostatoQuantity</leftValueReference>
+                    <operator>GreaterThanOrEqualTo</operator>
+                    <rightValue>
+                        <numberValue>2.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>TermostatoQuantity</leftValueReference>
+                    <operator>LessThanOrEqualTo</operator>
+                    <rightValue>
+                        <numberValue>3.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>newtext1_0_24</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	[se ha acquistato anche il servizio di installazione]. Le ricordo che, ad avvenuta installazione da parte del tecnico, non potrà più recedere dal servizio di installazione.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistThermo</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ContainsInstallazioneTermostato</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>newtext1_0_17</name>
-            <fieldText>&lt;p&gt;•	[se ha acquistato 2 KIT]: Per ogni contratto il recesso può inoltre essere esercitato su tutti i KIT abbinati al medesimo contratto di fornitura e non solo su una parte di essi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Per ogni contratto il recesso può inoltre essere esercitato su tutti i KIT abbinati al medesimo contratto di fornitura e non solo su una parte di essi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>ExistLED</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>KitLedVariable</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -3573,12 +3863,41 @@
         </fields>
         <fields>
             <name>newtext1_0_23</name>
-            <fieldText>&lt;p&gt;•	[se ha acquistato 2 o più Wall Box]: Il recesso può essere esercitato su tutte le Wall Box acquistate, e non solo su una parte di esse.&lt;/p&gt;&lt;p&gt;•	[se ha acquistato anche il servizio di installazione standard]. Le ricordo che, ad avvenuta installazione da parte del tecnico, non potrà più recedere dal Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il recesso può essere esercitato su tutte le Wall Box acquistate, e non solo su una parte di esse.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>ExistRicaricaPrivata</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>WallBoxCounter</leftValueReference>
+                    <operator>GreaterThanOrEqualTo</operator>
+                    <rightValue>
+                        <numberValue>2.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>newtext1_0_26</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Le ricordo che, ad avvenuta installazione da parte del tecnico, non potrà più recedere dal Contratto.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistRicaricaPrivata</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ContainsInstallazioneStandard</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -3673,7 +3992,7 @@
         <name>Conferma_Adesione_Screen_0_0_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>446</locationX>
-        <locationY>5486</locationY>
+        <locationY>7502</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3993,7 +4312,7 @@
         </fields>
         <fields>
             <name>newtext1_0_15_0</name>
-            <fieldText>&lt;p&gt;•	[se ha acquistato 2 o 3 termostati]: Il recesso può essere esercitato su tutti i termostati acquistati, e non solo su una parte di essi.&lt;/p&gt;&lt;p&gt;•	[se ha acquistato anche il servizio di installazione]. Le ricordo che, ad avvenuta installazione da parte del tecnico, non potrà più recedere dal servizio di installazione.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il recesso può essere esercitato su tutti i termostati acquistati, e non solo su una parte di essi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4004,16 +4323,59 @@
                         <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>TermostatoQuantity</leftValueReference>
+                    <operator>GreaterThanOrEqualTo</operator>
+                    <rightValue>
+                        <numberValue>2.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>TermostatoQuantity</leftValueReference>
+                    <operator>LessThanOrEqualTo</operator>
+                    <rightValue>
+                        <numberValue>3.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>newtext1_0_18_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Le ricordo che, ad avvenuta installazione da parte del tecnico, non potrà più recedere dal servizio di installazione.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistThermo</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ContainsInstallazioneTermostato</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>newtext1_0_17_0</name>
-            <fieldText>&lt;p&gt;•	[se ha acquistato 2 KIT]: Per ogni contratto il recesso può inoltre essere esercitato su tutti i KIT abbinati al medesimo contratto di fornitura e non solo su una parte di essi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Per ogni contratto il recesso può inoltre essere esercitato su tutti i KIT abbinati al medesimo contratto di fornitura e non solo su una parte di essi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>ExistLED</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>KitLedVariable</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -4354,7 +4716,7 @@
         <name>Dati_Tecnici_Famiglie_EE</name>
         <label>Dati Tecnici Famiglie EE</label>
         <locationX>930</locationX>
-        <locationY>2702</locationY>
+        <locationY>4718</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4499,7 +4861,7 @@
         <name>Dati_Tecnici_Famiglie_EE_0</name>
         <label>Dati Tecnici Famiglie EE</label>
         <locationX>666</locationX>
-        <locationY>2702</locationY>
+        <locationY>4718</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4538,7 +4900,7 @@
         <name>Dati_Tecnici_Famiglie_GAS</name>
         <label>Dati Tecnici Famiglie GAS</label>
         <locationX>1458</locationX>
-        <locationY>2702</locationY>
+        <locationY>4718</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4686,7 +5048,7 @@
         <name>Dati_Tecnici_Famiglie_GAS_0</name>
         <label>Dati Tecnici Famiglie GAS</label>
         <locationX>1194</locationX>
-        <locationY>2702</locationY>
+        <locationY>4718</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4725,7 +5087,7 @@
         <name>Durata_Contratto</name>
         <label>Durata Contratto</label>
         <locationX>644</locationX>
-        <locationY>5030</locationY>
+        <locationY>7046</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4774,7 +5136,7 @@
         <name>Durata_Contratto_0</name>
         <label>Durata Contratto</label>
         <locationX>908</locationX>
-        <locationY>5030</locationY>
+        <locationY>7046</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4793,7 +5155,7 @@
         <name>Servizi_Bundle</name>
         <label>Servizi Bundle</label>
         <locationX>182</locationX>
-        <locationY>3686</locationY>
+        <locationY>5702</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5123,7 +5485,7 @@
         <name>HDT_Script_VAS</name>
         <label>HDT Script - VAS</label>
         <locationX>1810</locationX>
-        <locationY>4022</locationY>
+        <locationY>6038</locationY>
         <connector>
             <targetReference>Vas_Presenti_Decision</targetReference>
         </connector>
@@ -5179,6 +5541,26 @@
         <isInput>true</isInput>
         <isOutput>true</isOutput>
         <objectType>et4ae5__abTest__c</objectType>
+    </variables>
+    <variables>
+        <name>ContainsInstallazioneStandard</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>ContainsInstallazioneTermostato</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>ExistAnaCons</name>
@@ -5336,6 +5718,16 @@
         </value>
     </variables>
     <variables>
+        <name>KitLedVariable</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <name>NomiFamiglie_Bonus_Concatenati</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -5394,6 +5786,17 @@
         <objectType>et4ae5__abTest__c</objectType>
     </variables>
     <variables>
+        <name>TermostatoQuantity</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
         <name>VasPresentiBool</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -5401,6 +5804,17 @@
         <isOutput>false</isOutput>
         <value>
             <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>WallBoxCounter</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
         </value>
     </variables>
 </Flow>
