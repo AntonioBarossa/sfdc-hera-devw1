@@ -1,3 +1,9 @@
+/*
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 27/06/2022
+    * @description JS - Gestione Allegati Obbligatori e Aggiuntivi
+*/
+
 import { LightningElement, api, track } from 'lwc';
 import getRecordsById from '@salesforce/apex/HDT_LC_AttachmentManager.getRecordsById';
 import getAdditionalAttachment from '@salesforce/apex/HDT_LC_AttachmentManager.getAdditionalAttachment';
@@ -95,19 +101,21 @@ export default class HdtAttachmentManager extends LightningElement {
 
         this.getFiles();
 
-        getAdditionalAttachment({
-            recordId: this.recordId
-            })
-            .then(result => {
-                console.log(JSON.stringify(result));
-                if(result.length > 0 )
-                    this.additional = result;
-                else
-                    this.additional = '';
-            })
-            .catch(error => {
-                this.error = error;
-            });
+        if(!this.additional){
+            getAdditionalAttachment({
+                recordId: this.recordId
+                })
+                .then(result => {
+                    console.log(JSON.stringify(result));
+                    if(result.length > 0 )
+                        this.additional = result;
+                    else
+                        this.additional = '';
+                })
+                .catch(error => {
+                    this.error = error;
+                });
+        }
 
         getRequiredAttachment({
             recordId: this.recordId,
@@ -128,9 +136,11 @@ export default class HdtAttachmentManager extends LightningElement {
     }
 
     disconnectedCallback(){
-        this.dispatchEvent(new CustomEvent('closemttachmentmanager', {bubbles: true, composed: true, detail: {  required: this.required,
-                                                                                                                additional: this.additional
-                                                                                                               }}));
+        console.log("disconnectedCallback -> manager")
+        this.dispatchEvent(new CustomEvent('close_attachment_manager', 
+                            {bubbles: true, composed: true, 
+                                detail: {  required: this.required,
+                                            additional: this.additional }}));
     }
 
 }

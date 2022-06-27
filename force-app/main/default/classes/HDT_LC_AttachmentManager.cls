@@ -1,3 +1,10 @@
+/*
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 27/06/2022
+    * @description Controller - Gestione Allegati Obbligatori e Aggiuntivi
+*/
+
+@SuppressWarnings('PMD.EmptyStatementBlock')
 public with sharing class HDT_LC_AttachmentManager {
 
     @AuraEnabled
@@ -23,6 +30,27 @@ public with sharing class HDT_LC_AttachmentManager {
 
     @AuraEnabled
     public String  SubscriberType {get;set;}
+
+    @AuraEnabled
+    public String  additionalAttachments {get;set;}
+    
+    @AuraEnabled
+    public String  parentOrderId {get;set;}
+
+    public HDT_LC_AttachmentManager(){}
+
+    public HDT_LC_AttachmentManager(String accountType, String contactChannel, String city, String cluster, 
+                                    String processType, String subProcessType, String productCode, String SubscriberType){
+        this.accountType = accountType;
+        this.contactChannel = contactChannel;
+        this.city = city;
+        this.cluster = cluster;
+        this.processType = processType;
+        this.subProcessType = subProcessType;
+        this.productCode = productCode;
+        this.SubscriberType = SubscriberType;
+    }
+
     
     @AuraEnabled
     public static String getAdditionalAttachment(Id recordId){
@@ -87,6 +115,17 @@ public with sharing class HDT_LC_AttachmentManager {
         }
     }
 */
+    @AuraEnabled
+    public static HDT_LC_AttachmentManager getOrderForButton(Id recordId){
+        Order currOrder = [SELECT Id,AccountholderTypeBeneficiary__c,Channel__c,BillingCity__c,Cluster__c,ProcessType__c,Subprocess__c,CommercialProductCode__c,SignatoryType__c
+        FROM Order WHERE Id =:recordId];
+        HDT_LC_AttachmentManager paramsWrap = new HDT_LC_AttachmentManager(currOrder.AccountholderTypeBeneficiary__c, currOrder.Channel__c,
+                                                                            currOrder.BillingCity__c, currOrder.Cluster__c, currOrder.ProcessType__c, currOrder.Subprocess__c, 
+                                                                            currOrder.CommercialProductCode__c, currOrder.SignatoryType__c);
+        
+        system.debug('paramsWrapSelected -> ' + paramsWrap);
+        return paramsWrap;
+    }
 
     @AuraEnabled
     public static String getRequiredAttachment(Id recordId, HDT_LC_AttachmentManager paramsWrap){
