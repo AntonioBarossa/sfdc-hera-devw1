@@ -349,7 +349,12 @@
     <customSettingAccesses>
         <enabled>true</enabled>
         <name>wrts_prcgvr__ServiceCatalogReportSetting__c</name>
-    </customSettingAccesses>    
+    </customSettingAccesses>   
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CampaignMember.Ext_Agency_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>AmministrazioneFrodi__c.BpNumber__c</field>
@@ -7983,6 +7988,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>City__c.ProvinceName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>City__c.ATO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>City__c.ServiceTari__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -33103,6 +33118,14 @@
     <layoutAssignments>
         <layout>ServicePoint__c-Service Point Gas</layout>
         <recordType>ServicePoint__c.HDT_RT_Gas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ServicePoint__c-Service Point Acqua</layout>
+        <recordType>ServicePoint__c.HDT_RT_Acqua</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ServicePoint__c-Service Point Ambiente</layout>
+        <recordType>ServicePoint__c.HDT_RT_Ambiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ServicePoint__c-Service Point Layout</layout>
