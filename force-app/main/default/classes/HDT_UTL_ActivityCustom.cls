@@ -320,7 +320,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         List<String> excludedActivityType = new List<String>{'chiamata outbound', 'chiamata inbound', 'sportello'};
         for(wrts_prcgvr__Activity__c activity : activites) {
             activity.CreatorGroup__c = user.CreatorGroup__c;
-            if (String.isNotBlank(activity.Type__c) && !excludedActivityType.contains(activity.Type__c.toLowerCase())){
+            if (!activity.IsMigrated__c && String.isNotBlank(activity.Type__c) && !excludedActivityType.contains(activity.Type__c.toLowerCase())){
                 activity.Place__c	 = user.Station__c;
                 activity.LoginChannel__c = user.LoginChannel__c;
             }
