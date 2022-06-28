@@ -684,7 +684,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         && (getFieldValue(fields, 'CompliantOriginEmail__c') == null || getFieldValue(fields, 'CompliantOriginEmail__c') == '')){
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire indirizzo Email provenienza reclamo'));
-        /*}else if(delegateName != null && delegateName != ''){
+        }else if(delegateName != null && delegateName != ''){
             
             attachedDocument = caseValidationQr.getDocumentByCaseId(recordId); 
             
@@ -697,8 +697,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
                  
             }
-        */
-        }else if((getFieldValue(fields,'FithLevelComplaintClassification__c') == null || getFieldValue(fields,'FithLevelComplaintClassification__c') == '')
+       
+        } else if((getFieldValue(fields,'FithLevelComplaintClassification__c') == null || getFieldValue(fields,'FithLevelComplaintClassification__c') == '')
         && (getFieldValue(fields, 'SoldBy__c') != null && getFieldValue(fields, 'SoldBy__c') != '')){
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Venduto Da non deve essere valorizzato se 5° Livello non é valorizzato'));

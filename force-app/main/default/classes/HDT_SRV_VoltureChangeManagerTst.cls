@@ -52,7 +52,7 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         childOrderList[0].Channel__c = 'Agenzie';
         childOrderList[0].ServicePoint__c = spList[0].Id;
         childOrderList[0].LoginWorkstation__c = 'CC_LT_Staff';
-        childOrderList[0].Email__c = 'assistenza@servizioclienti.com';
+        childOrderList[0].Email__c = 'test@email.com';
         childOrderList[0].BillingProfile__c = BillingProfileList[0].Id;
         childOrderList[0].ServicePointCode__c = 'IT001E00032928';
         childOrderList[0].SapContractCode__c = '3001002003';
@@ -106,8 +106,7 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         DocSendingMethod__c,
         Sale__c,
         Pricebook2Id,
-        Contact__c,
-        Email__c 
+        Contact__c 
         FROM Order WHERE ParentOrder__c != null];
         List<OrderItem> orderItemList = voltureChangeQr.getOrderItemByOrderId(orderList[0].Id);
 

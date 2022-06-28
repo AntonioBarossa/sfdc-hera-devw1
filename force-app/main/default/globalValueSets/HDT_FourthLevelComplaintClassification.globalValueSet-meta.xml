@@ -256,9 +256,9 @@
         <label>Emissione prima bolletta</label>
     </customValue>
     <customValue>
-        <fullName>Falso procuratore</fullName>
+        <fullName>Falso procurato</fullName>
         <default>false</default>
-        <label>Falso procuratore</label>
+        <label>Falso procurato</label>
     </customValue>
     <customValue>
         <fullName>Fattura di chiusura</fullName>
@@ -491,9 +491,9 @@
         <label>Prelievi fraudolenti</label>
     </customValue>
     <customValue>
-        <fullName>Prelievo abusivo</fullName>
+        <fullName>Prelivo abusivo</fullName>
         <default>false</default>
-        <label>Prelievo abusivo</label>
+        <label>Prelivo abusivo</label>
     </customValue>
     <customValue>
         <fullName>Pressione</fullName>

@@ -172,12 +172,10 @@ export default class hdtBillingProfileForm extends LightningElement {
                     switch (el) {
                         case 'ElectronicInvoicingMethod__c':
                             required = true;
-                            value = this.cloneObject.ElectronicInvoicingMethod__c ?? 'XML + carta/email';
-                            this.dataToSubmit['ElectronicInvoicingMethod__c'] = value;
+                            value = this.cloneObject.ElectronicInvoicingMethod__c ?? '';
                             break;
                         case 'XMLType__c':
                             value = this.cloneObject.XMLType__c ?? 'Sintetico';
-                            this.dataToSubmit['XMLType__c'] = value;
                             console.log('XMLType__c default: ', value);
                             break;
                         default:

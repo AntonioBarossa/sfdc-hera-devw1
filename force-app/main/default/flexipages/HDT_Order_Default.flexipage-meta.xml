@@ -49,28 +49,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>activityId</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>recordId</name>
-                </componentInstanceProperties>
-                <componentName>hdtActivityTrace</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>activityId</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>recordId</name>
-                </componentInstanceProperties>
-                <componentName>hdtActivityTrace</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
                     <name>parentFieldApiName</name>
                     <value>Order.Id</value>
                 </componentInstanceProperties>
@@ -715,14 +693,6 @@
                     <value>--None--</value>
                 </componentInstanceProperties>
                 <componentName>wrts_prcgvr:PhaseChevronPathLtgCmp_1_0</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>recordId</name>
-                </componentInstanceProperties>
-                <componentName>hdtAlertPrivacy</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>

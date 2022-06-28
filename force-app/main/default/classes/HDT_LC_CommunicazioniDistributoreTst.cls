@@ -37,7 +37,6 @@ public with sharing class HDT_LC_CommunicazioniDistributoreTst {
         actList[0].Distributor__c = acctList[0].Id;
         actList[0].Contact__c = contacts[0].Id;
         actList[0].AppointmentDateToConfirm__c = date.newinstance(2022, 1, 27);
-        actList[0].AppointmentDate__c = date.newinstance(2022, 1, 27);
         
         insert actList;
         actList = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Id = :actList[0].Id];

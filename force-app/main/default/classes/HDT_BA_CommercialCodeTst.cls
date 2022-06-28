@@ -50,28 +50,35 @@ public class HDT_BA_CommercialCodeTst {
             insert contacts;
             
             
-            List<CampaignMember> campMembers = HDT_UTL_DataFactoryTst.createCampaignMember(true,camps[0].id,leads,contacts);
+            HDT_UTL_DataFactoryTst.createCampaignMember(true,camps[0].id,leads,contacts);
 
-            Commercial_Code_Batch_Context__c context = new Commercial_Code_Batch_Context__c(Name = 'textContext',
-                                                                                            CampaignId__c = camps[0].id,
-                                                                                            CampaignMemberId__c = campMembers[0].Id,
-                                                                                            CommercialCodeDone__c = FALSE,
-                                                                                            BollettaDone__c = FALSE);
-            insert context;
         }
     }
     
     @isTest
     static void test(){
-        List<Commercial_Code_Batch_Context__c> context = [SELECT Id, CampaignId__c, CampaignMemberId__c FROM Commercial_Code_Batch_Context__c];
-        CampaignMember cmBefore = [SELECT id,PromoCommercialCode__c from CampaignMember where id = :context[0].CampaignMemberId__c];
+        
+        String campaignId = [SELECT id from Campaign].id;
+        
+        List<String> campaignMembers = new List<String>();
+        List <CampaignMember> cm = [SELECT id from CampaignMember];
+        for(CampaignMember m : cm){
+        	campaignMembers.add(m.id);
+        }
+                
+        CampaignMember  cmBefore = [SELECT id,PromoCommercialCode__c from CampaignMember limit 1];
+        Map<String,List<String>> allMembers = new Map<String,List<String>>();
+        allMembers.put(campaignId, campaignMembers);            
         
         Test.startTest();
 		HDT_BA_CommercialCode cc = new HDT_BA_CommercialCode();     
         Database.executeBatch(cc,200);
         Test.stopTest();
         
-        CampaignMember cmAfter = [SELECT id,PromoCommercialCode__c from CampaignMember where id = :context[0].CampaignMemberId__c];
+        CampaignMember  cmAfter = [SELECT id,PromoCommercialCode__c from CampaignMember limit 1];
         System.assertNotEquals(cmBefore.PromoCommercialCode__c,cmAfter.PromoCommercialCode__c,'CampaignMember field PromoCommercialCode__c not updated by the batch'); 
+        
+        List<CommercialCode__c> commercialCodes = [select id from CommercialCode__c];
+    	System.assertEquals(100, commercialCodes.size(), 'The number of CommercialCodes in the system does not double the number of CampaignMembers');
     }
 }

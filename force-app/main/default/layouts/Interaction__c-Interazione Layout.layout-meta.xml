@@ -115,7 +115,7 @@
             <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Interaction__c.HDT_SendSms</actionName>
+            <actionName>HDT_SendSms</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
         </platformActionListItems>

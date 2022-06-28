@@ -6084,7 +6084,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Falso procuratore</fullName>
+            <fullName>Falso procurato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6272,7 +6272,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Prelievo abusivo</fullName>
+            <fullName>Prelivo abusivo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10156,7 +10156,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</fullName>
+            <fullName>Importi per consumi risalenti a più di due anni</fullName>
             <default>false</default>
         </values>
         <values>

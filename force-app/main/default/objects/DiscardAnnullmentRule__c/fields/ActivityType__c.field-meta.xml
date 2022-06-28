@@ -27,11 +27,11 @@
                 <default>false</default>
                 <label>Esito KO pre-MDM</label>
             </value>
-            <!-- <value>
+            <value>
                 <fullName>Annullamento SII</fullName>
                 <default>false</default>
                 <label>Annullamento SII</label>
-            </value> -->
+            </value>
             <value>
                 <fullName>Ammissibilità KO</fullName>
                 <default>false</default>
@@ -51,7 +51,6 @@
             <controllingFieldValue>Verifica GDM</controllingFieldValue>
             <controllingFieldValue>Rimozione Impianto</controllingFieldValue>
             <controllingFieldValue>Cambio Offerta Gas</controllingFieldValue>
-            <controllingFieldValue>Cambio Offerta Ele</controllingFieldValue>
             <controllingFieldValue>Consegna copia chiave GdM</controllingFieldValue>
             <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
             <controllingFieldValue>Richiesta lettura cliente</controllingFieldValue>
@@ -61,7 +60,6 @@
             <controllingFieldValue>Proroga Temporanea</controllingFieldValue>
             <controllingFieldValue>Riattivazione Fornitura non morosa</controllingFieldValue>
             <controllingFieldValue>Subentro Gas</controllingFieldValue>
-            <controllingFieldValue>Prima Attivazione con modifica</controllingFieldValue>
             <controllingFieldValue>Prima Attivazione Ele</controllingFieldValue>
             <controllingFieldValue>Temporanea - Nuova Attivazione</controllingFieldValue>
             <controllingFieldValue>Risoluzione Punto Sospeso</controllingFieldValue>
@@ -72,7 +70,6 @@
             <controllingFieldValue>Prima Attivazione Fuori delibera</controllingFieldValue>
             <controllingFieldValue>Switch in Ele</controllingFieldValue>
             <controllingFieldValue>Risoluzione NO Contatore</controllingFieldValue>
-            <controllingFieldValue>Voltura con Autolettura</controllingFieldValue>
             <valueName>Ammissibilità KO</valueName>
         </valueSettings>
         <!--valueSettings>
@@ -95,7 +92,6 @@
             <controllingFieldValue>Verifica GDM</controllingFieldValue>
             <controllingFieldValue>Rimozione Impianto</controllingFieldValue>
             <controllingFieldValue>Cambio Offerta Gas</controllingFieldValue>
-            <controllingFieldValue>Cambio Offerta Ele</controllingFieldValue>
             <controllingFieldValue>Consegna copia chiave GdM</controllingFieldValue>
             <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
             <controllingFieldValue>Richiesta lettura cliente</controllingFieldValue>
@@ -105,7 +101,6 @@
             <controllingFieldValue>Proroga Temporanea</controllingFieldValue>
             <controllingFieldValue>Riattivazione Fornitura non morosa</controllingFieldValue>
             <controllingFieldValue>Subentro Gas</controllingFieldValue>
-            <controllingFieldValue>Prima Attivazione con modifica</controllingFieldValue>
             <controllingFieldValue>Prima Attivazione Ele</controllingFieldValue>
             <controllingFieldValue>Temporanea - Nuova Attivazione</controllingFieldValue>
             <controllingFieldValue>Risoluzione Punto Sospeso</controllingFieldValue>
@@ -116,7 +111,6 @@
             <controllingFieldValue>Prima Attivazione Fuori delibera</controllingFieldValue>
             <controllingFieldValue>Switch in Ele</controllingFieldValue>
             <controllingFieldValue>Risoluzione NO Contatore</controllingFieldValue>
-            <controllingFieldValue>Voltura con Autolettura</controllingFieldValue>
             <valueName>Esito KO da DL</valueName>
         </valueSettings>
         <valueSettings>

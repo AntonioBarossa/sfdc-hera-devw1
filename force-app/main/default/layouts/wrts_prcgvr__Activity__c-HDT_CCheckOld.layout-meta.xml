@@ -3,6 +3,7 @@
     <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
+    <!--<excludeButtons>IsotopeSubscription</excludeButtons>-->
     <excludeButtons>PrintableView</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -115,10 +116,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ManuallyReassigned__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>AssignedToQueueDate__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

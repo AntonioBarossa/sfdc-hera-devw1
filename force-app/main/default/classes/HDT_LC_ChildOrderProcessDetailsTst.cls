@@ -61,7 +61,6 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			orders[0].RequestOption__c='Domestici-TD';
 			orders[0].CreditCheckDescription__c='test1';
 			orders[0].ProcessCode__c='PN1';
-			orders[0].QuotationType__c = 'Rapido';
 
 			orders[1].RecordTypeId=orderVoltura;
 			orders[1].CreditCheckDescription__c='test2Voltura';
@@ -108,10 +107,9 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			childOrders[0].QualityCall__c=true;
 			insert childOrders;
 
-			List<ServicePoint__c> servPoints=HDT_UTL_DataFactoryTst.createServicePoint(2, false);
+			List<ServicePoint__c> servPoints=HDT_UTL_DataFactoryTst.createServicePoint(1, false);
 			servPoints[0].Distributor__c=accDist[0].Id;
 			servPoints[0].CommoditySector__c='Energia Elettrica';
-			servPoints[1].CommoditySector__c='Gas';
 
 			insert servPoints;
 
@@ -120,7 +118,6 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			quotes[0].AmendmentAllowed__c=false;
 			insert quotes;
 
-			orders[1].ServicePoint__c=servPoints[1].Id;
 			orders[0].ServicePoint__c=servPoints[0].Id;
 			orders[0].SBQQ__Quote__c=quotes[0].id;
 			orders[3].ServicePoint__c=servPoints[0].Id;
@@ -382,57 +379,4 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			System.assertNotEquals(true, orderGetDates.Id==null, 'getDates did not work correctly');
 		}
 	}
-
-	@isTest
-	static void testupdateProcessStep2(){
-
-		User tUser=[SELECT Id, Alias
-		            FROM User
-		            WHERE Alias='crmuser'
-		            LIMIT 1];
-
-		System.runAs(tUser){
-
-			Test.startTest();
-
-			List<Order> tOrder1=[SELECT Id, Name, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
-			                    FROM Order
-								WHERE RecordType.DeveloperName != 'HDT_RT_TemporaneaNuovaAtt'
-								AND ImplantType__c != null
-								AND PowerCommitted__c != null
-			                    LIMIT 1];
-
-			try{
-
-				HDT_LC_ChildOrderProcessDetails.updateProcessStep(tOrder1[0], true, true, true, date.today());
-
-			} catch (Exception e){
-
-				System.debug('tOrder updateProcessStep Exception : '+e.getMessage());
-
-			}
-			Test.stopTest();
-
-
-			System.assert(tOrder1 != null, 'The Order is null');
-		}
-	}
-
-	@isTest
-	static void isPreventivoTest(){
-
-		Test.startTest();
-
-			List<Order> tOrder=[SELECT Id, Name
-			                    FROM Order 
-			                    WHERE Name='testOrderName0'
-								AND QuotationType__c = 'Rapido'
-			                    LIMIT 1];
-
-			Boolean tipoPreventivo = HDT_LC_ChildOrderProcessDetails.isPreventivo(tOrder[0]);
-
-			Test.stopTest();
-			System.assertEquals(true, tipoPreventivo, 'Order non preventivo');
-	}
-
 }

@@ -19,12 +19,9 @@ public class HDT_QBL_BpCaRequestTst {
 		System.runAs(internalUser){
         HDT_UTL_DataFactoryTst.createWebServiceConfiguration('BP_CA','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
         HDT_UTL_DataFactoryTst.createWebServiceCredential('MulesoftSalesforceUser', 'a74b50dbaac04215bfbf89a2ee315a80','48fe5165a40c49aa9bf4b3d9bca2552f');
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-		    List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
-        AccountContactRelation myAccConRel =  HDT_UTL_DataFactoryTst.createAccountContactRelation(false, accList[1].Id, conList[0].Id);
-        myAccConRel.Roles = 'Amministratore condominio';
-			  insert myAccConRel;
-        HDT_QBL_BpCaRequest testim = new HDT_QBL_BpCaRequest(accList[1],conList[0]);
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+		List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);  
+        HDT_QBL_BpCaRequest testim = new HDT_QBL_BpCaRequest(accList[0],conList[0]);
         Test.startTest();   
         System.enqueueJob(testim);
         Test.stopTest();

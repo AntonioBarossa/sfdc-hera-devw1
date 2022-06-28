@@ -1,10 +1,7 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
-public with sharing class HDT_BA_ExpiredOrders implements Database.Batchable<sObject> , Schedulable {
-
-    public void execute(SchedulableContext ctx){
-        Database.executebatch(this,100);
-    }
-
+public with sharing class HDT_BA_ExpiredOrders implements Database.Batchable<sObject> {
+    
+    
     //BATCH START
     
     //TODO: SOSTITUIRE SEND DATE CON DocusignExpirationDate__c --> Fatto

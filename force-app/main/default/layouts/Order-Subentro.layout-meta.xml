@@ -47,14 +47,6 @@
                 <behavior>Readonly</behavior>
                 <field>Priority__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ExciseGAS__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ImplantType__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -96,14 +88,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>DistributorPracticeCode__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ExciseEle__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>VAT__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -152,6 +136,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>MarketOrigin__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ImplantType__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -317,11 +305,19 @@
                 <behavior>Readonly</behavior>
                 <field>VATfacilitationFlag__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>VAT__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>FacilitationExcise__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ExciseEle__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

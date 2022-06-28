@@ -102,11 +102,6 @@
                 <label>Voltura</label>
             </value>
             <value>
-                <fullName>Voltura con Autolettura</fullName>
-                <default>false</default>
-                <label>Voltura con Autolettura</label>
-            </value>
-            <value>
                 <fullName>Connessione con Attivazione</fullName>
                 <default>false</default>
                 <label>Connessione con Attivazione</label>
@@ -125,11 +120,6 @@
                 <fullName>Subentro Gas</fullName>
                 <default>false</default>
                 <label>Subentro Gas</label>
-            </value>
-            <value>
-                <fullName>Prima Attivazione con modifica</fullName>
-                <default>false</default>
-                <label>Prima Attivazione con modifica</label>
             </value>
             <value>
                 <fullName>Prima Attivazione Ele</fullName>

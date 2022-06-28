@@ -337,7 +337,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         String outcome = requestBody.outcome;
         String transactionId = 'idPlico_0';
         SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
-        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId,SupplyType__c  FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
         HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate[0],requestBody, transactionId);
         //HDT_SRV_DocumentalManagement.handleRadioGroup(record,listOfRadio,envelopeId);
 
@@ -352,7 +352,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         String outcome = requestBody.outcome;
         String transactionId = 'idPlico_0';
         SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
-        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId,SupplyType__c  FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
         HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate[0],requestBody, transactionId);
         //HDT_SRV_DocumentalManagement.handleRadioGroup(record,listOfRadio,envelopeId);
 
@@ -368,7 +368,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         String outcome = requestBody.outcome;
         String transactionId = 'idPlico_0';
         SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
-        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId,SupplyType__c  FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
         HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate[0],requestBody, transactionId);
         //HDT_SRV_DocumentalManagement.handleRadioGroup(record,listOfRadio,envelopeId);
 
@@ -384,7 +384,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         String outcome = requestBody.outcome;
         String transactionId = 'idPlico_0';
         SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
-        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId,SupplyType__c FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
         HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate[0],requestBody, transactionId);
         //HDT_SRV_DocumentalManagement.handleRadioGroup(record,listOfRadio,envelopeId);
 

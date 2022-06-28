@@ -80,7 +80,7 @@ export default class hdtSaleServiceContainer extends LightningElement {
 
             this.refreshTileData();
             this.dispatchEvent(new CustomEvent('newtile'));
-            if(data.isTransition && data.message === false){
+            if(data.isTransition){
                 const toastWarning = new ShowToastEvent({
                     title: 'Warning',
                     message: 'E stato creato un caso transitorio!',
@@ -88,17 +88,7 @@ export default class hdtSaleServiceContainer extends LightningElement {
                 });
                 this.dispatchEvent(toastWarning);
     
-            }
-            else if(data.isTransition && data.message === true)
-            {
-                const toastWarning = new ShowToastEvent({
-                    title: 'Warning',
-                    message: 'E stato creato un caso transitorio! Verrà creata un\'activity di tracciamento per il caricamento della vendita in Siebel',
-                    variant: 'warning'
-                });
-                this.dispatchEvent(toastWarning);
-            }
-            else{
+            }else{
                 const toastSuccessMessage = new ShowToastEvent({
                     title: 'Successo',
                     message: 'Service Point confermato con successo',

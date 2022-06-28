@@ -52,8 +52,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         queryString = '%' + queryString + '%';
         User currentUser = getCurrentUser();
         List<PermissionSetAssignment> assignments = new HDT_QR_PermissionSet().getPermissionSetAssignmentByName('HDT_OmniSupervisor', currentUser.Id);
-        List<PermissionSetAssignment> assignToUser = new HDT_QR_PermissionSet().getPermissionSetAssignmentByName('HDT_AssignToUser', currentUser.Id);
-        if(!assignments.isEmpty() || !assignToUser.isEmpty()) {
+        if(!assignments.isEmpty()) {
             for(User user : [SELECT Id, Name, LoginChannel__c, CreatorGroup__c, UserCompany__c FROM User WHERE UserCompany__c = :currentUser.UserCompany__c AND Name LIKE :queryString WITH SECURITY_ENFORCED]) {
                 results.add(new Map<String,String>{
                     'id' => user.Id,
@@ -113,8 +112,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
                     WorkGroup__c = workGroup,
                     Agency__c = agency,
                     ManuallyReassigned__c = true,
-                    Queue__c = null,
-                    AssignedToQueueDate__c = Date.today()
+                    Queue__c = null
                 );
 
                 if(String.isNotBlank(wrapperId)) {
