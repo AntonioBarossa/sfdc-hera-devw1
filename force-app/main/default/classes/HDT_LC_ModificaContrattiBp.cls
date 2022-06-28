@@ -8,13 +8,6 @@ public inherited sharing class HDT_LC_ModificaContrattiBp {
         system.debug(JSON.serialize(bpData));
         try {
             //Set<String> caseFields = ((SObject)Type.forName('Schema','Product2').newInstance()).getSObjectType().getDescribe().fields.getMap().keySet();
-            Set<String> caseFields = Schema.SObjectType.Case.fields.getMap().keySet();
-            Map<String,String> unmappedField = new Map<String,String>{
-                'PaymentMethod__c'=>'DocumentPaymentMethod__c',
-                'SignatoryType__c'=>'AccountholderTypeBeneficiary__c',
-                'undefined'=>'AccountholderTypeBeneficiary__c',
-                'InvoiceEmailAddress__c'=>'InvoiceEmail__c'
-            };
             Map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.BillingProfile__c.fields.getMap();
             Case c = new Case(Id=caseId);
             Datetime nowDate = Datetime.now();
@@ -23,12 +16,7 @@ public inherited sharing class HDT_LC_ModificaContrattiBp {
             {
                 if(bpData.get(field) != null && String.isNotBlank(String.valueOf(bpData.get(field))) && !field.equalsIgnoreCase('undefined'))
                 {
-                    //c.Note__c += '\n' + '\"' +fieldMap.get(field).getDescribe().getLabel() + '\"' + ': ' + '\"' + bpData.get(field) + '\"';
-                    if(caseFields.contains(field.toLowerCase())){
-                        c.put(field, bpData.get(field));
-                    }else if(unmappedField.containsKey(field)){
-                        c.put(unmappedField.get(field), bpData.get(field));
-                    }
+                    c.Note__c += '\n' + '\"' +fieldMap.get(field).getDescribe().getLabel() + '\"' + ': ' + '\"' + bpData.get(field) + '\"';
                 }
             }
             HDT_UTL_DatabaseService.updateSObject(c);

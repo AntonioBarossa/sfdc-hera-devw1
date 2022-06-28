@@ -1,4 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
+
 export default class Popover extends LightningElement {
     @api campaignId;
     @api recordId;
@@ -6,11 +7,9 @@ export default class Popover extends LightningElement {
     @api processType;
     @api caseCluster;
     @api caseType;
-    @api flowFound;
     @track showNewCaseButton;
     @track showNewSaleButton;
-    @track showHelpButton;
-    
+
     statusUpdate() {
         this.dispatchEvent(new CustomEvent('statusupdate'));
     }
@@ -30,10 +29,6 @@ export default class Popover extends LightningElement {
 
             default:
                 break;
-        }
-
-        if(this.flowFound != null && this.flowFound != "" && this.flowFound != "undefined"){
-            this.showHelpButton = true;
         }
     }
 }

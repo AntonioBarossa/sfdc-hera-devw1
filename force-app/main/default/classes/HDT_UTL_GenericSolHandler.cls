@@ -8,7 +8,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
                 Name = 'Vendita Analisi Consumi da Web ' + Date.today(),
                 CurrentStep__c = 4.0,
                 SalesContactRole__c = 'Titolare',
-                SalesContact__c = getTitolare(accountId)?.Contact?.Id,//contactId,
+                SalesContact__c = getTitolare(accountId),//contactId,
                 Status__c = 'Bozza',
                 IsMonitoring__c = false,
                 Channel__c = 'Web',
@@ -93,44 +93,9 @@ public with sharing class HDT_UTL_GenericSolHandler {
         BillingProfile__c bp = qrBilling.getRecordByContractAccount(contractAccount);
         Order childOrder = new Order();
         String accountId = (String)params.get('accountId');
-        AccountContactRelation accContRel = getTitolare(accountId);
-        childOrder.EffectiveDate__c = System.today();
-        childOrder.AggregateBilling__c = 'Si';
-        Contact cont = accContRel.Contact;//(String)params.get('contactId');
-        Account acc = accContRel.Account;
+        String contactId = getTitolare(accountId);//(String)params.get('contactId');
         childOrder.RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
         childOrder.AccountId = accountId;
-        // da Account
-        childOrder.ContractAccountCode__c = contractAccount;
-        childOrder.CustomerLastName__c = acc.LastName__c;
-        childOrder.CustomerName__c = acc.FirstName__c; 
-        childOrder.CustomerType__c = acc.CustomerType__c;
-        childOrder.CustomerVATNumber__c = acc.VATNumber__c;
-        childOrder.CustomerFiscalCode__c = acc.FiscalCode__c;
-        childOrder.PhoneNumber__c = acc.Phone;
-        if ('HDT_RT_Business'.equalsIgnoreCase(acc.RecordType.DeveloperName)) {
-            childOrder.CustomerCompanyName__c = acc.LastName__c;
-            childOrder.VAT__c = 'Iva 22% (Cod. 02)';
-            childOrder.AtecoCode__c = 'K74878';
-            childOrder.HerAteco__c = 'K74878';
-        } else if ('HDT_RT_Residenziale'.equalsIgnoreCase(acc.RecordType.DeveloperName)) {
-            childOrder.CustomerName__c = acc.FirstName__c;
-            childOrder.CustomerLastName__c = acc.LastName__c;
-            childOrder.VAT__c = 'Iva 10% (Cod. 01)';
-            childOrder.AtecoCode__c = '999999';
-            childOrder.HerAteco__c = '999999';
-        }
-        //Contact Address
-        childOrder.ResidentialPlace__c = acc.BillingPlace__c;
-        childOrder.ResidentialPostalCode__c = acc.BillingPostalCode; 
-        childOrder.ResidentialCity__c = acc.BillingCity; 
-        childOrder.ResidentialStreetName__c = acc.BillingStreetName__c; 
-        childOrder.ResidentialStreetNumber__c = acc.BillingStreetNumber__c;
-        childOrder.ResidentialCountry__c = acc.BillingCountry; 
-        childOrder.ResidentialStreetNumberExtension__c = acc.BillingStreetNumberExtension__c;
-        childOrder.ResidentialStreetToponym__c = acc.BillingStreetToponym__c;
-        childOrder.ResidentialState__c = acc.BillingState;
-
         childOrder.ProcessType__c = 'VAS';
         childOrder.SignatureMethod__c = 'Accettato digitalmente';
         childOrder.DocSendingMethod__c = 'Posta Cartacea';
@@ -140,21 +105,9 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.BillingProfile__c = bp.Id;
         childOrder.Sale__c = saleId;
         childOrder.VasSubtype__c = 'Analisi Consumi';
-        childOrder.Contact__c = cont?.Id;
-        childOrder.SalesContact__c = cont?.Id;
-        //Billing Address
-        childOrder.BillingPlace__c = bp.InvoicingPlace__c;
-        childOrder.BillingPostalCode__c = bp.InvoicingPostalCode__c; 
-        childOrder.BillingCity__c = bp.InvoicingCity__c; 
-        childOrder.BillingStreetNumber__c = bp.InvoicingStreetNumber__c; 
-        childOrder.BillingCountry__c = bp.InvoicingCountry__c; 
-        childOrder.BillingStreetToponym__c = bp.InvoicingStreetToponym__c; 
-        childOrder.BillingStreetName__c = bp.InvoicingStreetName__c; 
-        childOrder.BillingStreetNumberExtension__c = bp.InvoicingStreetNumberExtension__c;
-        childOrder.BillingProvince__c = bp.InvoicingProvince__c;
-        childOrder.BankAccountSignatoryLastName__c = bp.BankAccountSignatoryLastName__c;
+        childOrder.Contact__c = contactId;
+        childOrder.SalesContact__c = contactId;
         HDT_UTL_DatabaseService.insertSObject(childOrder);
-        HDT_UTL_Order.calculateRateCategory(childOrder);
     }
 
     public static Order createChildOrderWithItem(Order childOrder, Map<String,Object> params){
@@ -179,17 +132,6 @@ public with sharing class HDT_UTL_GenericSolHandler {
             childOrder.Commodity__c = contractList[0].ServicePoint__r.CommoditySector__c;
             childOrder.ProcessCode__c = 'Gas'.equalsIgnoreCase(childOrder.Commodity__c) ? 'VCG' : 
                                         'Energia Elettrica'.equalsIgnoreCase(childOrder.Commodity__c) ? 'VCE' : '';
-            //dati Service point
-            childOrder.Resident__c = contractList[0].ServicePoint__r.Resident__c;
-            childOrder.NumeratorGroup__c = contractList[0].ServicePoint__r.NumeratorGroup__c;
-            childOrder.SAPImplantCode__c = contractList[0].ServicePoint__r.SAPImplantCode__c;
-            childOrder.AnnualConsumption__c = contractList[0].ServicePoint__r.AnnualConsumption__c;
-            childOrder.ServicePointCode__c = contractList[0].ServicePoint__r.ServicePointCode__c; 
-            childOrder.ImplantType__c = contractList[0].ServicePoint__r.ImplantType__c;
-            childOrder.Market__c = contractList[0].ServicePoint__r.MarketOrigin__c;
-            childOrder.DisconnectibilityPhone__c = contractList[0].ServicePoint__r.DisconnectibilityPhone__c;
-            childOrder.SupplyPostalCode__c = contractList[0].ServicePoint__r.SupplyPostalCode__c;
-
             SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractList[0].Id);
             if(subscription != null){
                 childOrder.CommercialProduct__c = subscription.SBQQ__ProductName__c;
@@ -218,56 +160,13 @@ public with sharing class HDT_UTL_GenericSolHandler {
     }
 
     public static List<Contract> getContractByNumber(String contractNumber){
-        List<Contract> returnList = [SELECT 
-                                        Id,
-                                        ServicePoint__c,
-                                        ServicePoint__r.Distributor__r.Code__c,
-                                        ContractSalesCompany__c,
-                                        ServicePoint__r.CommoditySector__c,
-                                        ServicePoint__r.Resident__c,
-                                        ServicePoint__r.NumeratorGroup__c,
-                                        ServicePoint__r.SAPImplantCode__c,
-                                        ServicePoint__r.AnnualConsumption__c,
-                                        ServicePoint__r.ServicePointCode__c,
-                                        ServicePoint__r.ImplantType__c,
-                                        ServicePoint__r.MarketOrigin__c,
-                                        ServicePoint__r.DisconnectibilityPhone__c,
-                                        ServicePoint__r.SupplyPostalCode__c
-                                    FROM Contract WHERE SAPContractCode__c =: contractNumber WITH SECURITY_ENFORCED];
+        List<Contract> returnList = [SELECT Id,ServicePoint__c,ServicePoint__r.Distributor__r.Code__c,ContractSalesCompany__c,ServicePoint__r.CommoditySector__c from Contract WHERE SAPContractCode__c =: contractNumber WITH SECURITY_ENFORCED];
         return returnList;
     }
 
-    private static AccountContactRelation getTitolare(Id accountId){
-        List<AccountContactRelation> contactRel = [
-            SELECT 
-            Account.Id,
-            Account.CompanyOwner__c,
-            Account.LastName__c,
-            Account.FirstName__c,
-            Account.CustomerType__c,
-            Account.VATNumber__c,
-            Account.FiscalCode__c,
-            Account.Phone,
-            Account.RecordType.DeveloperName,
-            Account.BillingPlace__c,
-            Account.BillingPostalCode, 
-            Account.BillingCity, 
-            Account.BillingStreetName__c, 
-            Account.BillingStreetNumber__c, 
-            Account.BillingCountry, 
-            Account.BillingStreetNumberExtension__c, 
-            Account.BillingStreetToponym__c,  
-            Account.BillingState,
-            Contact.Id, 
-            Roles
-            FROM AccountContactRelation 
-            WHERE AccountId = :accountId
-            AND Roles  = 'Titolare'
-            AND IsActive = True
-            WITH SECURITY_ENFORCED
-        ];
-        
-        return contactRel.isEmpty()? null : contactRel[0];
+    private static Id getTitolare(Id accountId){
+        HDT_QR_AccountContactRelation  qrAccountRel = new HDT_QR_AccountContactRelation();
+        return qrAccountRel.getPrimaryContactRelation(accountId)?.ContactId;
     }
 
     /*public static Map<String,String> amendContract(String contractNumber){

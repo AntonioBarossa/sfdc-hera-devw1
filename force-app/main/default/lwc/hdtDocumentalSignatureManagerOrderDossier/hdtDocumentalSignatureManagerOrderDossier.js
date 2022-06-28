@@ -482,12 +482,6 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         const recordInput = { fields };            
         this.dataToSubmit['Id'] = this.orderParentRecord.Id;
         let returnValue = this.template.querySelector('c-hdt-document-signature-manager');
-        var dataFirma = this.actualSignedDate;
-        var dataFirmaDate = new Date(); //dd-mm-YYYY
-        if(dataFirma != null){
-            dataFirmaDate = new Date(dataFirma); //dd-mm-YYYY
-        }
-        var today = new Date();
         if (this.isVisibleSignedDate && this.actualSignedDate === null){
             this.loading = false;
             const errorDataFirma = new ShowToastEvent({
@@ -497,16 +491,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 mode: 'sticky'
             });
             this.dispatchEvent(errorDataFirma);
-        }else if(dataFirma != null && dataFirmaDate > today){
-            const errorDataFirma = new ShowToastEvent({
-                title: 'Errore',
-                message: 'La data firma non può essere nel futuro',
-                variant: 'error',
-                mode: 'sticky'
-            });
-            this.dispatchEvent(errorDataFirma);
-        }
-        else if(returnValue){
+        }else if(returnValue){
             returnValue.checkForm();
         }else{
             this.loading = true;

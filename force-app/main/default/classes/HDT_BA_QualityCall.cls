@@ -4,11 +4,10 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
     private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
     public List<Order> ordersToUpdate = new List<Order>();
-    public Map<String, List<String>> parentToChildOrderMap = new Map<String, List<String>>();
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
 
-        String query = 'SELECT Id, OrderNumber, IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c FROM Order '+
+        String query = 'SELECT Id,IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c FROM Order '+
         'Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND VasSubtype__c != \'Analisi Consumi\'';
         return Database.getQueryLocator(query);
     }
@@ -103,7 +102,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     ordToUpd.Phase__c = 'Annullato';
                     ordToUpd.Status = 'Activated';
                 }
-                else if(!notCancelNonBillable.contains(ord.Phase__c) && !notCancelBillable.contains(ord.Phase__c)) {
+                else {
                     ordToUpd.QualityCall__c = false;
                     if(orderToItemMap.get(ord.Id) != null){
                         for(OrderItem item : orderToItemMap.get(ord.Id)){
@@ -114,14 +113,6 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                             }
                         }
                     }
-                }
-                //DV: VADO A CREARMI UNA MAPPA DI TUTTI GLI ORDINI VECCHI, CORRELATI AL PARENT
-                if(parentToChildOrderMap.get(ord.ParentOrder__c) != null){
-                    parentToChildOrderMap.get(ord.ParentOrder__c).add(ord.OrderNumber);
-                }
-                else {
-                    parentToChildOrderMap.put(ord.ParentOrder__c, new List<String>());
-                    parentToChildOrderMap.get(ord.ParentOrder__c).add(ord.OrderNumber);
                 }
 
                 if ((ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))) {
@@ -163,34 +154,6 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                         callActivities.add(activity);
                     }    
                     orderActivityMap.put(ord.id, activity);
-                }
-            }
-        }
-
-        //Dv: applico logica dei 50gg -> se tutti gli ordini su un ordine parent (esclusi gli ordini di analisi consumi) sono stati messi in annullato, e sul parent e' presente un'activity di 
-        //quality call, la vado a chiudere. 
-        //Vado a controllare se ci sono ordini annullati perche' superati i 50gg
-        if(!parentToChildOrderMap.keySet().isEmpty()){
-            //Mi vado a prendere tutti gli ordini correlati ai parent censiti e le relative activities
-            Map<String, List<String>> allChildByParent = HDT_QR_Order.getOrdersByParent(parentToChildOrderMap.keySet());
-            Map<String, wrts_prcgvr__Activity__c> parentQualCallMap = HDT_QR_ActivityCustom.getQualCallByParentOrder(parentToChildOrderMap.keySet());
-            //Controllo che ci siano attività da chiudere
-            if(!parentQualCallMap.keySet().isEmpty()){
-                for(String parent : parentQualCallMap.keySet()){
-                    Boolean allCanceled = true;
-                    //Per ogni parent vado a controllare che tutti i suoi figli stiano passando in annullato
-                    for(String child : allChildByParent.get(parent)){
-                        if(!parentToChildOrderMap.get(parent).contains(child)){
-                            allCanceled = false;
-                            break;
-                        }
-                    }
-                    if(allCanceled && parentQualCallMap.get(parent) != null){
-                        //Devo andare a controllare se sul Parent Order è presente una QualityCall aperta. Nel caso, vado a chiuderla.
-                        wrts_prcgvr__Activity__c actToClose = parentQualCallMap.get(parent);
-                        actToClose.wrts_prcgvr__Status__c = 'Chiusa';
-                        activitiesToClose.add(actToClose);
-                    }
                 }
             }
         }

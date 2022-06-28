@@ -8,6 +8,6 @@
         <plural>true</plural>
         <value>ForzaturaChiusuraCreditCheck</value>
     </caseValues> 
-    <gender>Feminine</gender>
+    <gender>Neuter</gender>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

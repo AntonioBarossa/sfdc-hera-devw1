@@ -132,13 +132,11 @@ public with sharing class HDT_UTL_ProcessDateManager {
 			if(order.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
 				dateToFrom = order.EffectiveDate__c;
 			}else if(order.EffectiveDate__c == null){
-				continue;
+				break;
 			}else {
-				continue;
+				break;
 			}
-			if(!order.IsActivationDeferred__c){
-				order.DateSentToSII__c = order.WizardCompletedDate__c != null? order.WizardCompletedDate__c:Date.today();
-			}else if(dateToFrom != null){
+			if(dateToFrom != null){
 				Boolean founded = false;
 				for(FulfillmentDateMatrix__c singleRecord : dateMatrix){
 						founded = false;

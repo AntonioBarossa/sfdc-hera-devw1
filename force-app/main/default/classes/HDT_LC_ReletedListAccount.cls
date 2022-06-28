@@ -38,43 +38,12 @@ public with sharing class HDT_LC_ReletedListAccount {
         contactSrv.checkCreateAccess(contact);
         Contact cont= contactSrv.createRecord(contact);
         if(dataContact.get('role')!=null){
-            List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(dataContact.get('accountId'), cont.Id, 'Id, AccountId');
+            List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(dataContact.get('accountId'), cont.Id, 'Id');
             if(listAccCon != null && listAccCon.size() > 0){
                 AccountContactRelation acr= new AccountContactRelation(Id= listAccCon[0].Id,ContactId= cont.Id, AccountId= dataContact.get('accountId'), Roles= dataContact.get('role'));
                 accoContRelSrv.updateRecord(acr);
             }
-            if(dataContact.get('role').equalsIgnoreCase('Amministratore Condominio'))
-            {
-                String accountId = listAccCon[0].AccountId;
-                Account acc = [SELECT Id,
-                RecordTypeId,
-                Category__c,
-                FirstName__c,
-                FiscalCode__c,
-                BillingStreetNumber__c,
-                BillingStreetName__c,
-                BillingCountry,
-                BillingState,
-                BillingCity,
-                BillingPostalCode,
-                VATNumber__c,
-                LastName__c,
-                CustomerCode__c,
-                MobilePhone__c,
-                fax,
-                customerMarking__c,
-                BuildingFloor__c,
-                PrimaryEmail__c,
-                VATGroup__c,
-                VATGroupStartDate__c,
-                VATGroupEndDate__c
-                FROM Account
-                WHERE Id = :accountId
-                WITH SECURITY_ENFORCED
-                LIMIT 1
-                ];
-                System.enqueueJob(new HDT_QBL_BpCaRequest(acc, contact));
-            }
+
         }
         return contact;
     }
