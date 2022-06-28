@@ -1896,7 +1896,7 @@
                 <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>Hera Caldaia Sicura</stringValue>
+                    <stringValue>HERA CALDAIA SICURA</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1911,7 +1911,7 @@
                 <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>Hera Ricarica Pubblica</stringValue>
+                    <stringValue>HERA RICARICA PUBBLICA</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1966,12 +1966,12 @@
         </rules>
         <rules>
             <name>HERA_MONOPATTINO_ELETTRICO_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>HERA MONOPATTINO</stringValue>
+                    <stringValue>MONOPATTINO</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1986,7 +1986,7 @@
                 <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>SANIFICATORE</stringValue>
+                    <stringValue>HERA SANIFICARIA</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2083,7 +2083,7 @@
                 <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>HERA SANIFICA ARIA</stringValue>
+                    <stringValue>HERA SANIFICARIA</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2240,7 +2240,7 @@
                 <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>HERA MONOPATTINO</stringValue>
+                    <stringValue>MONOPATTINO</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2255,7 +2255,7 @@
                 <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>HERA SANIFICA ARIA</stringValue>
+                    <stringValue>HERA SANIFICARIA</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2804,7 +2804,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>SANIFICATORE</stringValue>
+                        <stringValue>SANIFICARIA</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3128,7 +3128,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>HERA MONOPATTINO</stringValue>
+                        <stringValue>MONOPATTINO</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3158,7 +3158,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>SANIFICATORE</stringValue>
+                        <stringValue>HERA SANIFICARIA</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3363,7 +3363,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>HERA MONOPATTINO</stringValue>
+                        <stringValue>MONOPATTINO</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3393,7 +3393,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>SANIFICATORE</stringValue>
+                        <stringValue>HERA SANIFICARIA</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3564,7 +3564,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>HERA MONOPATTINO</stringValue>
+                        <stringValue>MONOPATTINO</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3579,7 +3579,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>SANIFICATORE</stringValue>
+                        <stringValue>SANIFICARIA</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3839,7 +3839,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>SANIFICATORE</stringValue>
+                        <stringValue>SANIFICARIA</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3854,7 +3854,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>HERA MONOPATTINO</stringValue>
+                        <stringValue>MONOPATTINO</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3930,7 +3930,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_CALDAIA_SICURA_Generico_2_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede il servizio di manutenzione della caldaia e per il quale le viene reso in omaggio il servizio assistenza all’abitazione è {!GetOrder.&lt;span style=&quot;background-color: rgb(255, 255, 255); font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Web&amp;quot;, sans-serif; color: rgb(36, 36, 36);&quot;&gt;ShippingAddressFormula__c&lt;/span&gt;}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il Contratto Hera Caldaia Sicura si intende attivato con la conclusione del Contratto. Il servizio ha durata biennale, ed è tacitamente rinnovato ogni 24 mesi salvo disdetta.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il servizio di assistenza all’abitazione decorre 30 giorni dopo l’attivazione del Contratto Hera Caldaia Sicura, ha durata biennale e non sarà rinnovato dopo i primi 24 mesi.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Riceverà una fattura che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di gas associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede il servizio di manutenzione della caldaia e per il quale le viene reso in omaggio il servizio assistenza all’abitazione è {!GetOrder.SupplyAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il Contratto Hera Caldaia Sicura si intende attivato con la conclusione del Contratto. Il servizio ha durata biennale, ed è tacitamente rinnovato ogni 24 mesi salvo disdetta.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il servizio di assistenza all’abitazione decorre 30 giorni dopo l’attivazione del Contratto Hera Caldaia Sicura, ha durata biennale e non sarà rinnovato dopo i primi 24 mesi.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Riceverà una fattura che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di gas associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -3969,7 +3969,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_CALDAIA_SICURA_Generico_0_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede il servizio di manutenzione della caldaia e per il quale le viene reso in omaggio il servizio assistenza all’abitazione è {!GetOrder.DeliveryAddress__c} {!GetOrder.SupplyAddressFormula__c} ?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il Contratto Hera Caldaia Sicura si intende attivato con la conclusione del Contratto. Il servizio ha durata biennale, ed è tacitamente rinnovato ogni 24 mesi salvo disdetta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il servizio di assistenza all’abitazione decorre 30 giorni dopo l’attivazione del Contratto Hera Caldaia Sicura ha durata biennale e non sarà rinnovato dopo i primi 24 mesi.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Riceverà una fattura che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di gas associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede il servizio di manutenzione della caldaia e per il quale le viene reso in omaggio il servizio assistenza all’abitazione è {!GetOrder.SupplyAddressFormula__c} ?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il Contratto Hera Caldaia Sicura si intende attivato con la conclusione del Contratto. Il servizio ha durata biennale, ed è tacitamente rinnovato ogni 24 mesi salvo disdetta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il servizio di assistenza all’abitazione decorre 30 giorni dopo l’attivazione del Contratto Hera Caldaia Sicura ha durata biennale e non sarà rinnovato dopo i primi 24 mesi.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Riceverà una fattura che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di gas associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -4008,7 +4008,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_CALDAIA_SICURA_Generico_1_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede il servizio di manutenzione della caldaia e per il quale le viene reso in omaggio il servizio assistenza all’abitazione è {!GetOrder.DeliveryAddress__c} ?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il Contratto Hera Caldaia Sicura si intende attivato con la conclusione del Contratto. Il servizio ha durata biennale, ed è tacitamente rinnovato ogni 24 mesi salvo disdetta.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il Servizio di assistenza all’abitazione decorre 30 giorni dopo l’attivazione del Contratto Hera Caldaia Sicura, ha durata biennale e non sarà rinnovato dopo i primi 24 mesi.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Riceverà una fattura che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di gas associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede il servizio di manutenzione della caldaia e per il quale le viene reso in omaggio il servizio assistenza all’abitazione è {!GetOrder.SupplyAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il Contratto Hera Caldaia Sicura si intende attivato con la conclusione del Contratto. Il servizio ha durata biennale, ed è tacitamente rinnovato ogni 24 mesi salvo disdetta.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il Servizio di assistenza all’abitazione decorre 30 giorni dopo l’attivazione del Contratto Hera Caldaia Sicura, ha durata biennale e non sarà rinnovato dopo i primi 24 mesi.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Riceverà una fattura che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di gas associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -4047,7 +4047,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_CONTAWATT_Generico_2_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto di fornitura. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;b&gt;[Garanzia del prodotto]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;﻿Ogni misuratore è coperto da garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto di fornitura. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;[Garanzia del prodotto]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni misuratore è coperto da garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -5567,7 +5567,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_2_Generico_1_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le lampadine verranno consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Riceverà una fattura [una per ogni Contratto] che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue, assieme allo “sconto fedeltà” applicato al momento dell’acquisto.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le lampadine verranno consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Riceverà una fattura [una per ogni Contratto] che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue, assieme allo “sconto fedeltà” applicato al momento dell’acquisto.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5744,7 +5744,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_ACQUA_Generico_0_1</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede il servizio è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il servizio decorre 30 giorni dopo la conclusione del Contratto; la conferma dell’attivazione del Servizio e la data effettiva dalla quale potrà usufruire delle prestazioni previste saranno confermate mediante l’invio di una e-mail al suo indirizzo di posta elettronica. Il Servizio a cui aderisce ha durata di 24 mesi e sarà tacitamente rinnovato ogni 24 mesi, salvo disdetta almeno 30 giorni prima della data di scadenza.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;In caso di guasto all’impianto idrico è previsto l’intervento di un idraulico per un massimo di 2 interventi all’anno; eventuali interventi non richiesti non potranno essere cumulati con quelli dell’anno successivo. Per ogni intervento richiesto sono inclusi i costi relativi al diritto di chiamata del Tecnico, le prime 2 ore di manodopera e parti di ricambio fino ad un massimo di 200€ iva inclusa.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il costo del servizio le verrà addebitato in rate mensili nelle bollette della fornitura di [Energia Elettrica/Gas], con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima la fornitura e poi le rate. In caso di cessazione del Contratto di fornitura o di recesso dal Servizio prima del saldo delle 24 rate, nella bolletta di cessazione del contratto di fornitura verranno addebitate in un’unica soluzione tutte le rate residue.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede il servizio è {!GetOrder.SupplyAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il servizio decorre 30 giorni dopo la conclusione del Contratto; la conferma dell’attivazione del Servizio e la data effettiva dalla quale potrà usufruire delle prestazioni previste saranno confermate mediante l’invio di una e-mail al suo indirizzo di posta elettronica. Il Servizio a cui aderisce ha durata di 24 mesi e sarà tacitamente rinnovato ogni 24 mesi, salvo disdetta almeno 30 giorni prima della data di scadenza.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;In caso di guasto all’impianto idrico è previsto l’intervento di un idraulico per un massimo di 2 interventi all’anno; eventuali interventi non richiesti non potranno essere cumulati con quelli dell’anno successivo. Per ogni intervento richiesto sono inclusi i costi relativi al diritto di chiamata del Tecnico, le prime 2 ore di manodopera e parti di ricambio fino ad un massimo di 200€ iva inclusa.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il costo del servizio le verrà addebitato in rate mensili nelle bollette della fornitura di [Energia Elettrica/Gas], con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima la fornitura e poi le rate. In caso di cessazione del Contratto di fornitura o di recesso dal Servizio prima del saldo delle 24 rate, nella bolletta di cessazione del contratto di fornitura verranno addebitate in un’unica soluzione tutte le rate residue.&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -5783,7 +5783,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_ACQUA_Generico_1_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede il servizio è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il servizio decorre 30 giorni dopo la conclusione del Contratto; la conferma dell’attivazione del Servizio e la data effettiva dalla quale potrà usufruire delle prestazioni previste saranno confermate mediante l’invio di una e-mail al suo indirizzo di posta elettronica. Il Servizio a cui aderisce ha durata di 24 mesi e sarà tacitamente rinnovato ogni 24 mesi, salvo disdetta almeno 30 giorni prima della data di scadenza.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;In caso di guasto all’impianto idrico è previsto l’intervento di un idraulico per un massimo di 2 interventi all’anno; eventuali interventi non richiesti non potranno essere cumulati con quelli dell’anno successivo. Per ogni intervento richiesto sono inclusi i costi relativi al diritto di chiamata del Tecnico, le prime 2 ore di manodopera e parti di ricambio fino ad un massimo di 200€ iva inclusa.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il costo del servizio le verrà addebitato in rate mensili nelle bollette della fornitura di [Energia Elettrica/Gas], con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima la fornitura e poi le rate. In caso di cessazione del Contratto di fornitura o di recesso dal Servizio prima del saldo delle 24 rate, nella bolletta di cessazione del contratto di fornitura verranno addebitate in un’unica soluzione tutte le rate residue.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede il servizio è {!GetOrder.SupplyAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il servizio decorre 30 giorni dopo la conclusione del Contratto; la conferma dell’attivazione del Servizio e la data effettiva dalla quale potrà usufruire delle prestazioni previste saranno confermate mediante l’invio di una e-mail al suo indirizzo di posta elettronica. Il Servizio a cui aderisce ha durata di 24 mesi e sarà tacitamente rinnovato ogni 24 mesi, salvo disdetta almeno 30 giorni prima della data di scadenza.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;In caso di guasto all’impianto idrico è previsto l’intervento di un idraulico per un massimo di 2 interventi all’anno; eventuali interventi non richiesti non potranno essere cumulati con quelli dell’anno successivo. Per ogni intervento richiesto sono inclusi i costi relativi al diritto di chiamata del Tecnico, le prime 2 ore di manodopera e parti di ricambio fino ad un massimo di 200€ iva inclusa.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il costo del servizio le verrà addebitato in rate mensili nelle bollette della fornitura di [Energia Elettrica/Gas], con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima la fornitura e poi le rate. In caso di cessazione del Contratto di fornitura o di recesso dal Servizio prima del saldo delle 24 rate, nella bolletta di cessazione del contratto di fornitura verranno addebitate in un’unica soluzione tutte le rate residue.&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -5822,27 +5822,17 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_GAS_Generico_2_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede la copertura assicurativa è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede la copertura assicurativa è {!GetOrder.SupplyAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_GAS_NEW_CLIENT_2_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;La copertura assicurativa decorre:&lt;ul&gt;&lt;li&gt;dalle ore 24:00 della data riportata sulla comunicazione inviata dalla Società, a seguito dell’attivazione del contratto di fornitura del gas; il giorno effettivo di partenza le verrà comunicato tramite l’invio del certificato di polizza via email da parte di AXA Partners. La polizza a cui aderisce ha durata annuale, con tacito rinnovo salvo disdetta.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;La copertura assicurativa decorre:&lt;ul&gt;&lt;li&gt;&lt;strong&gt;[per i nuovi clienti]&lt;/strong&gt;&amp;nbsp;dalle ore 24:00 della data riportata sulla comunicazione inviata dalla Società, a seguito dell’attivazione del contratto di fornitura del gas; il giorno effettivo di partenza le verrà comunicato tramite l’invio del certificato di polizza via email da parte di AXA Partners. La polizza a cui aderisce ha durata annuale, con tacito rinnovo salvo disdetta.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetOrder.NewClient__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Y</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_GAS_OLD_CLIENT_2_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;La copertura assicurativa decorre:&lt;ul&gt;&lt;li&gt;dalle ore 24:00 della data riportata sulla comunicazione inviata dalla Società; il giorno effettivo di partenza le verrà comunicato tramite l’invio del certificato di polizza via email da parte di AXA Partners. La polizza a cui aderisce ha durata annuale, con tacito rinnovo salvo disdetta.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;La copertura assicurativa decorre:&lt;ul&gt;&lt;li&gt;&lt;strong&gt;[per i già clienti]&lt;/strong&gt;&amp;nbsp;dalle ore 24:00 della data riportata sulla comunicazione inviata dalla Società; il giorno effettivo di partenza le verrà comunicato tramite l’invio del certificato di polizza via email da parte di AXA Partners. La polizza a cui aderisce ha durata annuale, con tacito rinnovo salvo disdetta.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5896,7 +5886,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_GAS_Generico_0_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede la copertura assicurativa è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede la copertura assicurativa è {!GetOrder.SupplyAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -5945,7 +5935,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_GAS_Generico_1_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede la copertura assicurativa è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede la copertura assicurativa è {!GetOrder.SupplyAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -5994,38 +5984,18 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_LUCE_Generico_2_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede la copertura assicurativa è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede la copertura assicurativa è {!GetOrder.SupplyAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_LUCE_NEW_CLIENT_2_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;La copertura assicurativa decorre:&lt;ul&gt;&lt;li&gt;dalle ore 24:00 della data riportata sulla comunicazione inviata dalla Società, a seguito dell’attivazione del contratto di fornitura di energia elettrica; il giorno effettivo di partenza le verrà comunicato tramite l’invio del certificato di polizza via email da parte di AXA Partners. La polizza a cui aderisce ha durata annuale, con tacito rinnovo salvo disdetta.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;La copertura assicurativa decorre:&lt;ul&gt;&lt;li&gt;&lt;strong&gt;[per i nuovi clienti]&lt;/strong&gt;&amp;nbsp;dalle ore 24:00 della data riportata sulla comunicazione inviata dalla Società, a seguito dell’attivazione del contratto di fornitura di energia elettrica; il giorno effettivo di partenza le verrà comunicato tramite l’invio del certificato di polizza via email da parte di AXA Partners. La polizza a cui aderisce ha durata annuale, con tacito rinnovo salvo disdetta.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetOrder.NewClient__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Y</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_LUCE_OLD_CLIENT_2_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;La copertura assicurativa decorre:&lt;ul&gt;&lt;li&gt;dalle ore 24:00 della data riportata sulla comunicazione inviata dalla Società; il giorno effettivo di partenza le verrà comunicato tramite l’invio del certificato di polizza via email da parte di AXA Partners. La polizza a cui aderisce ha durata annuale, con tacito rinnovo salvo disdetta.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;La copertura assicurativa decorre:&lt;ul&gt;&lt;li&gt;&lt;strong&gt;[per i già clienti]&lt;/strong&gt;&amp;nbsp;dalle ore 24:00 della data riportata sulla comunicazione inviata dalla Società; il giorno effettivo di partenza le verrà comunicato tramite l’invio del certificato di polizza via email da parte di AXA Partners. La polizza a cui aderisce ha durata annuale, con tacito rinnovo salvo disdetta.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetOrder.NewClient__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>N</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_LUCE_Generico_2_1</name>
@@ -6127,7 +6097,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_LUCE_Generico_1_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede la copertura assicurativa è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede la copertura assicurativa è {!GetOrder.SupplyAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -6365,7 +6335,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_RICARICA_PRIVATA_Generico_3</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -6566,7 +6536,29 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_SANIFICA_ARIA_Dispositivo_1_0</name>
-            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto del sanificatore è 279 €, comprensivo di spese di spedizione e di IVA, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[HERA SANIFICA ARIA]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore_0_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica_0_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_SANIFICA_ARIA_Dispositivo_1_1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[Condizioni economiche e di acquisto Hera Sanifica Aria]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il costo di acquisto del sanificatore è 279 €, comprensivo di spese di spedizione e di IVA, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6588,7 +6580,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_SANIFICA_ARIA_Accessorio_1_0_0</name>
-            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di un accessorio relativo al sanificatore (Lampada di ricarica).&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo della Lampada di ricarica è pari a 49,90€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;[HERA SANIFICA ARIA]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di un accessorio relativo al sanificatore (Lampada di ricarica).&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6609,8 +6601,52 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
+            <name>HERA_SANIFICA_ARIA_Accessorio_1_1_0</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;[Condizioni economiche e di acquisto Hera Sanifica Aria]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo della Lampada di ricarica è pari a 49,90€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica_0_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterSanificatore_0_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>HERA_SANIFICA_ARIA_Accessorio_1_0_1</name>
-            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di due accessori relativi al sanificatore (Lampade di ricarica).&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo di due Lampade di ricarica è pari a 99,80€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;[HERA SANIFICA ARIA]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di due accessori relativi al sanificatore (Lampade di ricarica).&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore_0_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica_0_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>2.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_SANIFICA_ARIA_Accessorio_1_1_1</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;[Condizioni economiche e di acquisto Hera Sanifica Aria]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo di due Lampade di ricarica è pari a 99,80€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6656,7 +6692,29 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_SANIFICA_ARIA_Dispositivo_0_0</name>
-            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto del sanificatore è 279 €, comprensivo di spese di spedizione e di IVA, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA SANIFICA ARIA&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_SANIFICA_ARIA_Dispositivo_0_1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera Sanifica Aria&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il costo di acquisto del sanificatore è 279 €, comprensivo di spese di spedizione e di IVA, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6678,7 +6736,29 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_SANIFICA_ARIA_Accessorio_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di un accessorio relativo al sanificatore (Lampada di ricarica).&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo della Lampada di ricarica è pari a 49,90€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;HERA SANIFICA ARIA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di un accessorio relativo al sanificatore (Lampada di ricarica).&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_SANIFICA_ARIA_Accessorio_0_1</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Condizioni economiche e di acquisto Hera Sanifica Aria&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo della Lampada di ricarica è pari a 49,90€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6700,7 +6780,29 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_SANIFICA_ARIA_Accessorio_1_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di due accessori relativi al sanificatore (Lampade di ricarica).&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo di due Lampade di ricarica è pari a 99,80€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;HERA SANIFICA ARIA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di due accessori relativi al sanificatore (Lampade di ricarica).&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>2.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_SANIFICA_ARIA_Accessorio_1_1</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Condizioni economiche e di acquisto Hera Sanifica Aria&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;﻿Il costo di acquisto del sanificatore è pari a 279€ mentre il costo di due Lampade di ricarica è pari a 99,80€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6746,7 +6848,29 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_SANIFICA_ARIA_Dispositivo_0_0_0</name>
-            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto del sanificatore è 279 €, comprensivo di spese di spedizione e di IVA, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[HERA SANIFICA ARIA]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_SANIFICA_ARIA_Dispositivo_0_0_1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[Condizioni economiche e di acquisto Hera Sanifica Aria]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Il costo di acquisto del sanificatore è 279 €, comprensivo di spese di spedizione e di IVA, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6768,7 +6892,29 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_SANIFICA_ARIA_Accessorio_0_0_1_0</name>
-            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di un accessorio relativo al sanificatore (Lampada di ricarica).&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo della Lampada di ricarica è pari a 49,90€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;[HERA SANIFICA ARIA]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di un accessorio relativo al sanificatore (Lampada di ricarica).&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_SANIFICA_ARIA_Accessorio_0_1_1_0</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;[Condizioni economiche e di acquisto Hera Sanifica Aria]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo della Lampada di ricarica è pari a 49,90€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6790,7 +6936,29 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_SANIFICA_ARIA_Accessorio_0_0_1_1</name>
-            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di due accessori relativi al sanificatore (Lampade di ricarica).&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo di due Lampade di ricarica è pari a 99,80€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;[HERA SANIFICA ARIA]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di due accessori relativi al sanificatore (Lampade di ricarica).&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>2.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_SANIFICA_ARIA_Accessorio_0_1_1_1</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;[Condizioni economiche e di acquisto Hera Sanifica Aria]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo di due Lampade di ricarica è pari a 99,80€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6812,7 +6980,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_SANIFICA_ARIA_Body_1_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt; •	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -6871,7 +7039,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_THERMO_Generico_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo di per le spese di spedizione è di 15 €.&lt;/li&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Se ha acquistato anche il servizio di installazione, la consegna avverrà invece da parte del tecnico che la contatterà per concordare giorno e ora dell’installazione. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/li&gt;&lt;li&gt;Mi conferma che vuole pagare con {!GetVasOrderItem.PaymentMode__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo di per le spese di spedizione è di 15 €.&lt;/li&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Se ha acquistato anche il servizio di installazione, la consegna avverrà invece da parte del tecnico che la contatterà per concordare giorno e ora dell’installazione. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/li&gt;&lt;li&gt;Mi conferma che vuole pagare con {!GetVasOrderItem.PaymentMode__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -7196,7 +7364,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_THERMO_Generico_1_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo per le spese di spedizione è di 15 €, IVA compresa.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Se ha acquistato anche il servizio di installazione, la consegna avverrà invece da parte del tecnico che la contatterà per concordare giorno e ora dell’installazione.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che vuole pagare con {!GetVasOrderItem.PaymentMode__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo per le spese di spedizione è di 15 €, IVA compresa.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Se ha acquistato anche il servizio di installazione, la consegna avverrà invece da parte del tecnico che la contatterà per concordare giorno e ora dell’installazione.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che vuole pagare con {!GetVasOrderItem.PaymentMode__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
