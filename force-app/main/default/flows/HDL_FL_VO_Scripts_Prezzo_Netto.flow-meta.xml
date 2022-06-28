@@ -45,6 +45,13 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>VasNames</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Hera Caldaia Sicura</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </connector>
@@ -59,6 +66,13 @@
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>VasNames</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Hera ContaWatt</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -359,6 +373,20 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>VasNames</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Hera LED</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NamesRecessoThermoLed</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Hera LED</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </connector>
@@ -373,6 +401,13 @@
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>VasNames</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Hera No Problem Acqua</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -391,6 +426,13 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>VasNames</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Hera No Problem Gas</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </connector>
@@ -407,6 +449,13 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>VasNames</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Hera No Problem Luce</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </connector>
@@ -421,6 +470,20 @@
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>VasNames</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Hera Thermo</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NamesRecessoThermoLed</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Hera Thermo</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -770,7 +833,7 @@
         <locationX>554</locationX>
         <locationY>7934</locationY>
         <defaultConnector>
-            <targetReference>Conferma_Adesione_Screen</targetReference>
+            <targetReference>ChannelDecisionAziende</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isAziende</defaultConnectorLabel>
         <rules>
@@ -784,9 +847,59 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Conferma_Adesione_Screen_0</targetReference>
+                <targetReference>ChannelDecision</targetReference>
             </connector>
             <label>isFamiglie</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>ChannelDecision</name>
+        <label>ChannelDecision</label>
+        <locationX>290</locationX>
+        <locationY>8054</locationY>
+        <defaultConnector>
+            <targetReference>Conferma_Adesione_Screen_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Inbound</defaultConnectorLabel>
+        <rules>
+            <name>Outbound</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Outbound</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Conferma_Adesione_Screen_0_0</targetReference>
+            </connector>
+            <label>Outbound</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>ChannelDecisionAziende</name>
+        <label>ChannelDecisionAziende</label>
+        <locationX>818</locationX>
+        <locationY>8054</locationY>
+        <defaultConnector>
+            <targetReference>Conferma_Adesione_Screen_0_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Inbound_AZ</defaultConnectorLabel>
+        <rules>
+            <name>Outbound_AZ</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Outbound</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Conferma_Adesione_Screen_0</targetReference>
+            </connector>
+            <label>Outbound_AZ</label>
         </rules>
     </decisions>
     <decisions>
@@ -1307,7 +1420,7 @@
                 <leftValueReference>HDT_Script_VAS.outputVasType</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>CALDAIA</stringValue>
+                    <stringValue>CALDAIA SICURA</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1322,7 +1435,7 @@
                 <leftValueReference>HDT_Script_VAS.outputVasType</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>WATT</stringValue>
+                    <stringValue>CONTAWATT</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1382,7 +1495,7 @@
                 <leftValueReference>HDT_Script_VAS.outputVasType</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>THERMO</stringValue>
+                    <stringValue>HERA THERMO</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2932,21 +3045,82 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Conferma_Adesione_Screen</name>
+        <name>Conferma_Adesione_Screen_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>686</locationX>
-        <locationY>8054</locationY>
+        <locationY>8174</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
-            <name>ConfermaAdesioneAziendeText</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;[9. CONFERMA ADESIONE]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <name>ConfermaAdesioneAziendeText_0</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma quindi che aderisce all’offerta&amp;nbsp;&lt;strong&gt;Luce &lt;/strong&gt;e all’offerta&amp;nbsp;&lt;strong&gt;Gas&lt;/strong&gt;?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
-            <name>AdesioneContaWattText</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta Hera ContaWatt?&lt;/p&gt;</fieldText>
+            <name>Only_Luce_Az_Out</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma quindi che aderisce all’offerta&amp;nbsp;&lt;strong&gt;Luce&lt;/strong&gt;?&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Only_Gas_Az_Out</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma quindi che aderisce all’offerta &lt;strong&gt;Gas&lt;/strong&gt;?&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AdesioneContaWattText_0</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera ContaWatt&lt;/strong&gt;?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2960,8 +3134,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>ConfermaNoProblemLuceText</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta Hera No Problem Luce?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>ConfermaNoProblemLuceText_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Hera No Problem Luce&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2975,8 +3149,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>ConfermaNoProblemGasText</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Mi conferma che aderisce all’offerta Hera No Problem Gas?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>ConfermaNoProblemGasText_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Hera No Problem Gas&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2990,8 +3164,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>ConfermaCaldaiaSicura</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta Hera Caldaia Sicura?&lt;/p&gt;</fieldText>
+            <name>ConfermaCaldaiaSicura_0</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3005,7 +3179,7 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Text_No_Problem_Luce_Gas</name>
+            <name>Text_No_Problem_Luce_Gas_0</name>
             <fieldText>&lt;p&gt;Mi conferma che vuole ricevere da AXA Partners la comunicazione sull’accettazione o mancata accettazione dell’adesione alla polizza, la data di effetto della copertura assicurativa e la data di cessazione dell’adesione mediante email o sms?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
@@ -3027,7 +3201,7 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>textCA1</name>
+            <name>textCA1_0</name>
             <fieldText>&lt;p&gt;Le ricordo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se deve inviare un reclamo o richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La informo che, qualora lei abbia i requisiti previsti per legge e voglia l’applicazione dell’aliquota IVA ridotta al 10%, ci dovrà restituire, debitamente compilata, la modulistica predisposta a tale scopo che troverà all’interno del plico contrattuale che riceverà per posta.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento della nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesContact__r.LastName} abbiamo terminato la registrazione, benvenuto/a in {!HDT_Script_Introduzione.salesCompany}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;[***FINE REGISTRAZIONE**]&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
@@ -3035,93 +3209,224 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Conferma_Adesione_Screen_0</name>
+        <name>Conferma_Adesione_Screen_0_0</name>
         <label>Conferma Adesione Screen</label>
-        <locationX>422</locationX>
-        <locationY>8054</locationY>
+        <locationX>158</locationX>
+        <locationY>8174</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
-            <name>textfix2_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[9. Conferma adesione]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;La informo che il contratto di fornitura si concluderà&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt; al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>textfix3_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta Luce e all&apos;offerta Gas?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <name>textfix2_0_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La informo che il contratto di fornitura si concluderà&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt; al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>or</conditionLogic>
+                <conditionLogic>(1 OR 2) AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9</conditionLogic>
                 <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Channel__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Outbound</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Outbound</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</leftValueReference>
+                    <leftValueReference>isGas</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Teleselling Outbound</stringValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistCaldaiaSicura</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistNoProblemGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistNoProblmeAcqua</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistThermo</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistWatt</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistLed</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
-            <name>textfix4_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi Luce&amp;nbsp;e Gas&amp;nbsp;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <name>Title2</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La informo che il contratto di fornitura ed il contratto {!VasNames} si concluderanno&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt; al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>or</conditionLogic>
+                <conditionLogic>(1 OR 2) AND (3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9)</conditionLogic>
                 <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Channel__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Inbound</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Inbound</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</leftValueReference>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Teleselling Inbound</stringValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</leftValueReference>
+                    <leftValueReference>isGas</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Telefono</stringValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>ExistThermo</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Telefono</stringValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistLed</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistWatt</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistNoProblemGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistNoProblmeAcqua</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistCaldaiaSicura</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
-            <name>textfix5_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Mi conferma che aderisce all’offerta Hera LED?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <name>textfix3_0_0</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Luce &lt;/strong&gt;e all&apos;offerta &lt;strong&gt;Gas&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Only_LUce</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Luce&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Only_Gas</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Gas&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>textfix5_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta Hera &lt;/span&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;LED&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3135,8 +3440,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>textfix6_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta Hera Thermo?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <name>textfix6_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta Hera &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Thermo&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3150,8 +3455,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>textfix7_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta Hera ContaWatt?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <name>textfix7_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta Hera &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;ContaWatt&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3165,8 +3470,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>textfix8_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta Hera No Problem Luce?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <name>textfix8_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Hera No Problem Luce&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3180,8 +3485,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>textfix9_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta Hera No Problem Gas?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <name>textfix9_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Hera No Problem Gas&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3195,8 +3500,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>textfix10_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta Hera No Problem Acqua?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <name>textfix10_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Hera No Problem Acqua&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3210,8 +3515,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>textfix11_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta Hera Caldaia Sicura?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <name>textfix11_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Hera Caldaia Sicura&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3225,62 +3530,11 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>textfix12_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta Hera Ricarica Pubblica?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Channel__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Inbound</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>ExistPubblica</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>textfix13_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta Hera Ricarica Privata?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Channel__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Inbound</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>ExistPrivata</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>displayText_OB_1</name>
+            <name>displayText_OB_1_0</name>
             <fieldText>&lt;p&gt;Mi conferma che vuole ricevere la documentazione contrattuale e la scheda di confrontabilità dell’offerta rispetto al regime di tutela presso il suo indirizzo di comunicazione postale?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Channel__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Outbound</stringValue>
-                    </rightValue>
-                </conditions>
+                <conditionLogic>1 OR 2</conditionLogic>
                 <conditions>
                     <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.DocSendingMethod__c</leftValueReference>
                     <operator>EqualTo</operator>
@@ -3298,18 +3552,11 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>displayText_OB_2</name>
+            <name>displayText_OB_2_0</name>
             <fieldText>&lt;p&gt;Mi conferma che vuole ricevere la documentazione contrattuale e la scheda di confrontabilità dell’offerta rispetto al regime di tutela via e-mail?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Channel__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Outbound</stringValue>
-                    </rightValue>
-                </conditions>
                 <conditions>
                     <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.DocSendingMethod__c</leftValueReference>
                     <operator>EqualTo</operator>
@@ -3320,26 +3567,11 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>displayText_IN</name>
-            <fieldText>&lt;p&gt;Le ricordo che il contratto si concluderà al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le invieremo tramite posta il plico contrattuale con le specifiche che le ho elencato per la sua fornitura, e comprensivo della scheda di confrontabilità dell’offerta, rispetto al regime di tutela.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le invieremo inoltre il plico contrattuale con le specifiche di {!HDT_Script_VAS.outputVasType}.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Per il contratto di fornitura, entro 14 giorni dal ricevimento, potrà esercitare il diritto di ripensamento, inviando un fax al numero verde 800.999.600, oppure una e-mail all’indirizzo contratti@gruppohera.it oppure una raccomandata con ricevuta di ritorno presso l’indirizzo della nostra sede legale.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Channel__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Inbound</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>displayText_IN_3</name>
+            <name>displayText_IN_3_0</name>
             <fieldText>&lt;p&gt;Mi conferma che vuole ricevere da AXA Partners la comunicazione sull’accettazione o mancata accettazione dell’adesione alla polizza, la data di effetto della copertura assicurativa e la data di cessazione dell’adesione mediante email o SMS?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>ExistNoProblemGas</leftValueReference>
                     <operator>EqualTo</operator>
@@ -3354,33 +3586,16 @@
                         <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Channel__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Outbound</stringValue>
-                    </rightValue>
-                </conditions>
             </visibilityRule>
         </fields>
         <fields>
-            <name>displayText_OB_3</name>
+            <name>displayText_OB_3_0</name>
             <fieldText>&lt;p&gt;Nei prossimi 10 giorni provvederemo a verificare la ricezione della documentazione contrattuale e la conclusione del contratto. La verifica potrà avvenire in due modalità:&lt;/p&gt;&lt;p&gt;o	Attraverso un nostro operatore che la ricontatterà per chiederle conferma;&lt;/p&gt;&lt;p&gt;o	Con le credenziali personali che troverà indicate all’interno della documentazione contrattuale e con le quali potrà chiamare il numero verde oppure accedere al sito internet per confermare la conclusione del contratto ed ascoltare la registrazione di questa telefonata.&lt;/p&gt;&lt;p&gt;Per il contratto di fornitura, entro 14 giorni dalla conferma del ricevimento della documentazione contrattuale, Lei potrà esercitare il diritto di ripensamento, inviando un fax al numero verde 800.999.600, oppure una e-mail all’indirizzo Contratti@gruppohera.it oppure una raccomandata con ricevuta di ritorno presso l’indirizzo della nostra sede legale.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Channel__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Outbound</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
-            <name>Text_Hera_Thermo_Led</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Per [Hera Thermo/Hera LED], entro 14 giorni dalla consegna del prodotto, Lei potrà esercitare il diritto di recesso nelle modalità che troverà indicate nel documento “Istruzioni per il reso e il recesso”.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>Text_Hera_Thermo_Led_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Per {!NamesRecessoThermoLed}, entro 14 giorni dalla consegna del prodotto, Lei potrà esercitare il diritto di recesso nelle modalità che troverà indicate nel documento “Istruzioni per il reso e il recesso”.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -3401,7 +3616,7 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Text_HERA_Thermo_Termostati</name>
+            <name>Text_HERA_Thermo_Termostati_0</name>
             <fieldText>&lt;p&gt;Il recesso può essere esercitato su tutti i termostati acquistati, e non solo su una parte di essi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
@@ -3430,7 +3645,7 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Text_HERA_Thermo_Installazione</name>
+            <name>Text_HERA_Thermo_Installazione_0</name>
             <fieldText>&lt;p&gt;Le ricordo che, ad avvenuta installazione da parte del tecnico, non potrà più recedere dal servizio di installazione.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
@@ -3452,7 +3667,7 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Text_HERA_LED_KIT</name>
+            <name>Text_HERA_LED_KIT_0</name>
             <fieldText>&lt;p&gt;Per ogni contratto il recesso può inoltre essere esercitato su tutti i KIT abbinati al medesimo contratto di fornitura e non solo su una parte di essi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
@@ -3474,8 +3689,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>displayText_IN_2</name>
-            <fieldText>&lt;p&gt;Per Hera ContaWatt, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna per il dispositivo e con un preavviso di almeno 30 giorni per il servizio.&lt;/p&gt;</fieldText>
+            <name>displayText_IN_2_0</name>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera ContaWatt&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna per il dispositivo e con un preavviso di almeno 30 giorni per il servizio.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3489,37 +3704,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>displayText_IN_8</name>
-            <fieldText>&lt;p&gt;Mi conferma che vuole ricevere da AXA Partners la comunicazione sull’accettazione o mancata accettazione dell’adesione alla polizza, la data di effetto della copertura assicurativa e la data di cessazione dell’adesione mediante email o SMS?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Channel__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Inbound</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>ExistNoProblemGas</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>displayText_IN_4</name>
-            <fieldText>&lt;p&gt;Per Hera NoProblem Luce, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <name>displayText_IN_4_0</name>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera NoProblem Luce&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3533,8 +3719,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>displayText_IN_5</name>
-            <fieldText>&lt;p&gt;Per Hera NoProblem Gas, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <name>displayText_IN_5_0</name>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera NoProblem Gas&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3548,8 +3734,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>displayText_IN_6</name>
-            <fieldText>&lt;p&gt;Per Hera Caldaia Sicura, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <name>displayText_IN_6_0</name>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3563,18 +3749,355 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>displayText_IN_7</name>
-            <fieldText>&lt;p&gt;Per Hera Ricarica Pubblica, lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <name>displayText_IN_9_0</name>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera NoProblem Acqua&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Channel__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>ExistNoProblmeAcqua</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Inbound</stringValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>displayText_IN_10_0</name>
+            <fieldText>&lt;p&gt;Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente, può ricorrere al Servizio di Conciliazione ARERA oppure alla Conciliazione Paritetica attraverso le modalità indicate sul sito www.gruppohera.it&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento per:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;la fornitura di gas in regime di tutela.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;la nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;i conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesContact__r.LastName} abbiamo terminato la registrazione, benvenuto in {!HDT_Script_Introduzione.salesCompany}.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;[***FINE REGISTRAZIONE**]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Conferma_Adesione_Screen_0_0_0</name>
+        <label>Conferma Adesione Screen</label>
+        <locationX>422</locationX>
+        <locationY>8174</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>textfix2_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La informo che il contratto di fornitura si concluderà&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt; al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistThermo</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistLed</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistWatt</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistNoProblemGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistNoProblmeAcqua</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistCaldaiaSicura</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistPrivata</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistPubblica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>title2_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La informo che il contratto di fornitura ed il contratto {!VasNames} si concluderanno&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt; al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistCaldaiaSicura</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistLed</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistNoProblemGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistNoProblmeAcqua</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistPrivata</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistPubblica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistThermo</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistWatt</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>textfix4_0_0_0</name>
+            <fieldText>&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Luce&amp;nbsp;&lt;/strong&gt;e &lt;strong&gt;Gas&amp;nbsp;&lt;/strong&gt;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Only_Luce_0</name>
+            <fieldText>&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Luce&amp;nbsp;&lt;/strong&gt;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Only_Gas_0</name>
+            <fieldText>&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Gas&amp;nbsp;&lt;/strong&gt;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>textfix5_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Hera LED&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistLed</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>textfix6_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Hera Thermo&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistThermo</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>textfix7_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Hera ContaWatt&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistWatt</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>textfix8_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Hera No Problem Luce&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>textfix9_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Hera No Problem Gas&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>textfix10_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Hera No Problem Acqua&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblmeAcqua</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>textfix11_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Hera Caldaia Sicura&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistCaldaiaSicura</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>textfix12_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Hera Ricarica Pubblica&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>ExistPubblica</leftValueReference>
                     <operator>EqualTo</operator>
@@ -3585,8 +4108,23 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Text_Hera_Ricarica_Privata_Wallbox</name>
-            <fieldText>&lt;p&gt;Il recesso può essere esercitato su tutte le Wall Box acquistate, e non solo su una parte di esse.&lt;/p&gt;</fieldText>
+            <name>textfix13_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Hera Ricarica Privata&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistPrivata</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>displayText_IN_0_0</name>
+            <fieldText>&lt;p&gt;Le ricordo che il contratto si concluderà al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le invieremo tramite posta il plico contrattuale con le specifiche che le ho elencato per la sua fornitura, e comprensivo della scheda di confrontabilità dell’offerta, rispetto al regime di tutela.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le invieremo inoltre il plico contrattuale con le specifiche di {!VasNames}.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Per il contratto di fornitura, entro 14 giorni dal ricevimento, potrà esercitare il diritto di ripensamento, inviando un fax al numero verde 800.999.600, oppure una e-mail all’indirizzo contratti@gruppohera.it oppure una raccomandata con ricevuta di ritorno presso l’indirizzo della nostra sede legale.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3597,6 +4135,206 @@
                         <stringValue>Inbound</stringValue>
                     </rightValue>
                 </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Text_Hera_Thermo_Led_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Per &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!NamesRecessoThermoLed}&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;, entro 14 giorni dalla consegna del prodotto, Lei potrà esercitare il diritto di recesso nelle modalità che troverà indicate nel documento “Istruzioni per il reso e il recesso”.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistThermo</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistLed</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Text_HERA_Thermo_Termostati_0_0</name>
+            <fieldText>&lt;p&gt;Il recesso può essere esercitato su tutti i termostati acquistati, e non solo su una parte di essi.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>TermostatoQuantity</leftValueReference>
+                    <operator>GreaterThanOrEqualTo</operator>
+                    <rightValue>
+                        <numberValue>2.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>TermostatoQuantity</leftValueReference>
+                    <operator>LessThanOrEqualTo</operator>
+                    <rightValue>
+                        <numberValue>3.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistThermo</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Text_HERA_Thermo_Installazione_0_0</name>
+            <fieldText>&lt;p&gt;Le ricordo che, ad avvenuta installazione da parte del tecnico, non potrà più recedere dal servizio di installazione.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistThermo</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>InstallazioneTermostato</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Text_HERA_LED_KIT_0_0</name>
+            <fieldText>&lt;p&gt;Per ogni contratto il recesso può inoltre essere esercitato su tutti i KIT abbinati al medesimo contratto di fornitura e non solo su una parte di essi.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistLed</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>KitLed</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>displayText_IN_2_0_0</name>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera ContaWatt&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna per il dispositivo e con un preavviso di almeno 30 giorni per il servizio.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistWatt</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>displayText_IN_8_0_0</name>
+            <fieldText>&lt;p&gt;Mi conferma che vuole ricevere da AXA Partners la comunicazione sull’accettazione o mancata accettazione dell’adesione alla polizza, la data di effetto della copertura assicurativa e la data di cessazione dell’adesione mediante email o SMS?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>displayText_IN_4_0_0</name>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera NoProblem Luce&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>displayText_IN_5_0_0</name>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera NoProblem Gas&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>displayText_IN_6_0_0</name>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistCaldaiaSicura</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>displayText_IN_7_0_0</name>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Ricarica Pubblica&lt;/strong&gt;, lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistPubblica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Text_Hera_Ricarica_Privata_Wallbox_0_0</name>
+            <fieldText>&lt;p&gt;Il recesso può essere esercitato su tutte le Wall Box acquistate, e non solo su una parte di esse.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>ExistPrivata</leftValueReference>
                     <operator>EqualTo</operator>
@@ -3614,7 +4352,7 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Text_Hera_Ricarica_Privata_Installazione</name>
+            <name>Text_Hera_Ricarica_Privata_Installazione_0_0</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Le ricordo che, ad avvenuta installazione da parte del tecnico, non potrà più recedere dal Contratto.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
@@ -3633,18 +4371,11 @@
                         <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Channel__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Inbound</stringValue>
-                    </rightValue>
-                </conditions>
             </visibilityRule>
         </fields>
         <fields>
-            <name>displayText_IN_9</name>
-            <fieldText>&lt;p&gt;Per Hera NoProblem Acqua, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <name>displayText_IN_9_0_0</name>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera NoProblem Acqua&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3658,8 +4389,172 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>displayText_IN_10</name>
+            <name>displayText_IN_10_0_0</name>
             <fieldText>&lt;p&gt;Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente, può ricorrere al Servizio di Conciliazione ARERA oppure alla Conciliazione Paritetica attraverso le modalità indicate sul sito www.gruppohera.it&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento per:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;la fornitura di gas in regime di tutela.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;la nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;i conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesContact__r.LastName} abbiamo terminato la registrazione, benvenuto in {!HDT_Script_Introduzione.salesCompany}.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;[***FINE REGISTRAZIONE**]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Conferma_Adesione_Screen_0_0_0_0</name>
+        <label>Conferma Adesione Screen</label>
+        <locationX>950</locationX>
+        <locationY>8174</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ConfermaAdesioneAziendeText_0_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Luce &lt;/strong&gt;e &lt;strong&gt;Gas &lt;/strong&gt;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Title_Only_Luce</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Luce&lt;/strong&gt; che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Title_Only_Gas</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Gas&lt;/strong&gt; che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AdesioneContaWattText_0_0</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera ContaWatt&lt;/strong&gt;?&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistWatt</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ConfermaNoProblemLuceText_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Hera No Problem Luce&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ConfermaNoProblemGasText_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Mi conferma che aderisce all’offerta &lt;/span&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Hera No Problem Gas&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ConfermaCaldaiaSicura_0_0</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;?&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistCaldaiaSicura</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Text_No_Problem_Luce_Gas_0_0</name>
+            <fieldText>&lt;p&gt;Mi conferma che vuole ricevere da AXA Partners la comunicazione sull’accettazione o mancata accettazione dell’adesione alla polizza, la data di effetto della copertura assicurativa e la data di cessazione dell’adesione mediante email o sms?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>textCA1_0_0</name>
+            <fieldText>&lt;p&gt;Le ricordo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se deve inviare un reclamo o richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La informo che, qualora lei abbia i requisiti previsti per legge e voglia l’applicazione dell’aliquota IVA ridotta al 10%, ci dovrà restituire, debitamente compilata, la modulistica predisposta a tale scopo che troverà all’interno del plico contrattuale che riceverà per posta.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento della nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesContact__r.LastName} abbiamo terminato la registrazione, benvenuto/a in {!HDT_Script_Introduzione.salesCompany}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;[***FINE REGISTRAZIONE**]&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -4269,7 +5164,7 @@
         </fields>
         <fields>
             <name>text_isGas</name>
-            <fieldText>&lt;h1&gt;&lt;span style=&quot;font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Helvetica, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;); font-size: var(--lwc-fontSize3,0.8125rem); color: var(--lwc-colorTextWeak,rgb(68, 68, 68)); background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255));&quot;&gt;•	In riferimento all’offerta Gas  {!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/span&gt;&lt;/h1&gt;</fieldText>
+            <fieldText>&lt;h1&gt;&lt;span style=&quot;font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Helvetica, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;); font-size: var(--lwc-fontSize3,0.8125rem); color: var(--lwc-colorTextWeak,rgb(68, 68, 68)); background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255));&quot;&gt;•	In riferimento all’offerta &lt;/span&gt;&lt;strong style=&quot;font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Helvetica, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;); font-size: var(--lwc-fontSize3,0.8125rem); color: var(--lwc-colorTextWeak,rgb(68, 68, 68)); background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255));&quot;&gt;Gas  &lt;/strong&gt;&lt;span style=&quot;font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Helvetica, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;); font-size: var(--lwc-fontSize3,0.8125rem); color: var(--lwc-colorTextWeak,rgb(68, 68, 68)); background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255));&quot;&gt;{!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/span&gt;&lt;/h1&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4280,16 +5175,52 @@
                         <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>text_isELE</name>
-            <fieldText>&lt;p&gt;•	In riferimento all’offerta Luce  {!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	In riferimento all’offerta &lt;strong&gt;Luce  &lt;/strong&gt;{!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Luce_Gas_True</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	In riferimento all’offerta &lt;/span&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Luce e Gas&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;  {!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -4921,6 +5852,13 @@
         </value>
     </variables>
     <variables>
+        <name>NamesRecessoThermoLed</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>NomiFamiglie_Bonus_Concatenati</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -4990,6 +5928,13 @@
         <value>
             <booleanValue>false</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>VasNames</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>VasPresentiBool</name>
