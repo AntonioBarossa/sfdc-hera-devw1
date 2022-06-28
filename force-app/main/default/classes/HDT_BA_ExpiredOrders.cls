@@ -10,12 +10,8 @@ public with sharing class HDT_BA_ExpiredOrders implements Database.Batchable<sOb
     //TODO: SOSTITUIRE SEND DATE CON DocusignExpirationDate__c --> Fatto
     public Database.QueryLocator start(Database.BatchableContext bc){
         Date todayDate = Date.today();
-        String query = 'SELECT Id, Status, DocusignExpirationDate__c, Phase__c, CancellationReason__c '
-                    + 'FROM Order '
-                    + 'WHERE DocusignExpirationDate__c < ' + String.valueOf(todayDate) + ' AND DocusignExpirationDate__c != null'
-                    + ' WITH SECURITY_ENFORCED';
-
-        return Database.getQueryLocator(query);
+        Set<String> recordTypeSet = new Set<String>{'HDT_RT_VAS','HDT_RT_ScontiBonus'};
+        return Database.getQueryLocator('SELECT Id, Status, ParentOrder__c, ParentOrder__r.DocusignExpirationDate__c, Phase__c, CancellationReason__c FROM Order WHERE  (ParentOrder__r.DocusignExpirationDate__c != null AND ParentOrder__r.DocusignExpirationDate__c < :todayDate) AND ParentOrder__r.Phase__c NOT IN (\'Documentazione Gestita\') AND Phase__c NOT IN (\'Completata\', \'Annullato\') AND RecordType.DeveloperName NOT IN :recordTypeSet');
     }
     
     //BATCH EXECUTE
@@ -23,6 +19,7 @@ public with sharing class HDT_BA_ExpiredOrders implements Database.Batchable<sOb
         
         for(Order myOrder : ordersToNullify){
             myOrder.Phase__c = 'Annullato';
+            myOrder.Status = 'Annullato';
             myOrder.CancellationReason__c = 'Annullato per no conferma cliente';
         }
         System.debug(LoggingLevel.DEBUG, 'HDT_BA_ExpiredOrders - Aggiorno Order Record: ' + ordersToNullify.size());

@@ -1285,6 +1285,42 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.PraxidiaPostWorkAction__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Lavorazione Reclamo Post Survey</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.PraxidiaPostWorkCause__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Lavorazione Reclamo Post Survey</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.PraxidiaPostWorkOutcome__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Lavorazione Reclamo Post Survey</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-89e09c30-566d-4833-be03-3b926e0c4b28</name>
         <type>Facet</type>
     </flexiPageRegions>

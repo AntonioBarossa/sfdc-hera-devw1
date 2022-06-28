@@ -679,6 +679,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.ImplantType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.SwitchOutDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -15552,6 +15557,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.PreviousDateSwitch__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.PriceF0__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.PriceF1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.PriceF2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.PriceF3__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -32812,6 +32837,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>SiebelRdsAttribute__x-SiebelRdsAttribute Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelMsgNotifica__x-SiebelMsgNotifica Layout</layout>
     </layoutAssignments>
     <loginFlows>
         <flow>HDT_FL_UserLoginFlow</flow>

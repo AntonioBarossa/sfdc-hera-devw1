@@ -161,9 +161,10 @@ public with sharing class HDT_UTL_OrderProcessTst {
             childOrders[7].ProcessType__c = 'Switch in Ele';
             insert childOrders;
 
-            List<ServiceRequest__c> mySRList = HDT_UTL_DataFactoryTst.createServiceRequest(1, false);
-            mySRList[0].Order__c = childOrders[4].Id;
-            insert mySRList;
+            List<ServiceRequest__c> myServiceRequestList = HDT_UTL_DataFactoryTst.createServiceRequest(1, false);
+            myServiceRequestList[0].Order__c = childOrders[4].Id;
+            myServiceRequestList[0].NextPhase__c = 'Esportazione VS Siebel';
+            insert myServiceRequestList;
 
 
             List<AgentMatrix__c> agMatrixList = HDT_UTL_DataFactoryTst.createAgentMatrix(1, false, 'Telefono');
@@ -942,8 +943,8 @@ public with sharing class HDT_UTL_OrderProcessTst {
             List<Order> ordTest = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId FROM Order WHERE Id = :newOrderList[0].Id LIMIT 1];
             ordTestUno = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId FROM Order WHERE Id = :ordTestUno[0].Id LIMIT 1];
 
-            System.assertEquals('Sequenzializzato', ordTestUno[0].Phase__c, 'Fase non aggiornata correttamente.');
-            //System.assertEquals('Annullato', ordTestUno[0].Status, 'Status non aggiornata correttamente.');
+            System.assertEquals('Annullato', ordTestUno[0].Phase__c, 'Fase non aggiornata correttamente.');
+            System.assertEquals('Annullato', ordTestUno[0].Status, 'Status non aggiornata correttamente.');
         }
     }
 

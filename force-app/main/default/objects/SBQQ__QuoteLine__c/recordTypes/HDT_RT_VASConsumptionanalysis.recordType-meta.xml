@@ -22,6 +22,10 @@
             <fullName>E-Canone fisso</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>F-Standalone</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CategoryFamily__c</picklist>
@@ -347,10 +351,10 @@
             <fullName>Bolletta per e-mail</fullName>
             <default>false</default>
         </values>
-        <!--<values>
+        <values>
             <fullName>Bolletta per e-mail %2B Carta</fullName>
             <default>false</default>
-        </values>-->
+        </values>
         <values>
             <fullName>Cartaceo</fullName>
             <default>false</default>
@@ -403,6 +407,10 @@
         </values>
         <values>
             <fullName>E-Canone fisso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>F-Standalone</fullName>
             <default>false</default>
         </values>
     </picklistValues>

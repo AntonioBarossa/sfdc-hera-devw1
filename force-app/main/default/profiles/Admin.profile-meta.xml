@@ -15719,6 +15719,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>OrderItem.Discount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>OrderItem.DurationDayGas__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -15905,6 +15910,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.PreviousDateSwitch__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.PriceF0__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.PriceF1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.PriceF2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.PriceF3__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -35209,6 +35234,9 @@
     <layoutAssignments>
         <layout>SiebelRdsAttribute__x-SiebelRdsAttribute Layout</layout>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelMsgNotifica__x-SiebelMsgNotifica Layout</layout>
+    </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
@@ -38504,6 +38532,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>PercentageRulesForAssigningVisits__c</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>SBQQ__LookupData__c</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>

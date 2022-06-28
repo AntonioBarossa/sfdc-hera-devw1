@@ -217,30 +217,6 @@ public with sharing class HDT_UTL_CampaignMemberTst {
     }
 
     @isTest
-    public static void testCreateCommercialCode(){
-
-        Campaign campaign = [SELECT Id, Channel__c FROM Campaign LIMIT 1];
-
-        System.debug('Campaign CCode-> ' + campaign);
-        campaign.Category__c = 'Campagna Outbound';
-        campaign.Channel__c = 'Bolletta';
-        campaign.CodeManagementModel__c = 'Per singolo Campaign Member';
-        campaign.CodeGenerationRule__c = 'PrefissoProgressivo';
-
-        update campaign;
-
-        List<CampaignMember> lstCampaignMember = [SELECT Id, CampaignId, PromoCommercialCode__c FROM CampaignMember WHERE CampaignId =: campaign.Id];
-
-        Test.startTest();
-
-            HDT_UTL_CampaignMember.createCommercialCode(lstCampaignMember);
-
-        Test.stopTest();
-        List<Commercial_Code_Batch_Context__c> context = [SELECT Id, CampaignId__c, CampaignMemberId__c FROM Commercial_Code_Batch_Context__c];
-        System.assert(context.size() > 0, 'Test Ended');
-    }
-
-    @isTest
     public static void testCampaignSuspension(){
 
         Boolean finished = false;

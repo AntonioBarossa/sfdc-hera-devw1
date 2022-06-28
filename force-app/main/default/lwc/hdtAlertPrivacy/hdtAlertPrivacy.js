@@ -1,8 +1,12 @@
-import { LightningElement,api,track } from 'lwc';
+import { LightningElement,api,track,wire } from 'lwc';
 import getRecordTypeAccount from '@salesforce/apex/HDT_LC_AlertPrivacy.handleShowAlert';
+import { getRecord } from 'lightning/uiRecordApi';
+const FIELDS = ['Order.DocSendingMethod__c', 'Order.Phase__c','Order.ParentOrder__c'];
 export default class HdtAlertPrivacy extends LightningElement {
     @api recordId;
+    order;
     @track showAlert = false;
+    @track showAlertDoc = false;
     connectedCallback(){
 
         getRecordTypeAccount({orderId: this.recordId })
@@ -16,8 +20,36 @@ export default class HdtAlertPrivacy extends LightningElement {
             this.showAlert = false;
         });
     }
+    @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
+    wiredRecord({ error, data }) {
+        if (error) {
+            let message = 'Unknown error';
+            if (Array.isArray(error.body)) {
+                message = error.body.map(e => e.message).join(', ');
+            } else if (typeof error.body.message === 'string') {
+                message = error.body.message;
+            }
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error loading contact',
+                    message,
+                    variant: 'error',
+                }),
+            );
+        } else if (data) {
+            this.order = data;
+            var parentId = this.order.fields.ParentOrder__c.value;
+            var sendMethod = this.order.fields.DocSendingMethod__c.value;
+            var phase = this.order.fields.Phase__c.value;
+            if(parentId){
+                this.showAlertDoc = false;
+            }else if(sendMethod && phase && sendMethod.localeCompare('Stampa Cartacea') === 0 && phase.localeCompare('Documentazione da firmare') === 0){
+                this.showAlertDoc = true;
+            }
+        }
+    }
 
-    newCaseClick() {
+    /*newCaseClick() {
         if(this.caseObj.AccountId != null && this.caseObj != null){
             createNewCase({ c: this.caseObj }).then(data => {
                 console.log('case --> '+JSON.stringify(data));
@@ -81,5 +113,5 @@ export default class HdtAlertPrivacy extends LightningElement {
                 })
             );
         }
-    }
+    }*/
 }
