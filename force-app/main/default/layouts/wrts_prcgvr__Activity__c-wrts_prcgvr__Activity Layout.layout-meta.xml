@@ -197,10 +197,6 @@
                 <behavior>Readonly</behavior>
                 <field>ManuallyReassigned__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>AssignedToQueueDate__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

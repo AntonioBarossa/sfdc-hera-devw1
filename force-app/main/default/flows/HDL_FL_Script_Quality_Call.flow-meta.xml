@@ -156,24 +156,12 @@
     <decisions>
         <name>Risposta_Decision</name>
         <label>Risposta Decision</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Non_Confermo_Screen</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Confermo</defaultConnectorLabel>
-        <rules>
-            <name>Presa_Appuntamento</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>RB_1</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>False_1</elementReference>
-                </rightValue>
-            </conditions>
-            <label>Presa Appuntamento</label>
-        </rules>
         <rules>
             <name>Confermo</name>
             <conditionLogic>and</conditionLogic>
@@ -229,7 +217,7 @@
     <recordLookups>
         <name>GetCampaignMember</name>
         <label>GetCampaignMember</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -250,7 +238,7 @@
     <recordLookups>
         <name>GetOrder</name>
         <label>GetOrder</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -394,7 +382,7 @@
     <screens>
         <name>Quality_Call</name>
         <label>Quality Call</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -507,7 +495,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetCampaignMember</targetReference>

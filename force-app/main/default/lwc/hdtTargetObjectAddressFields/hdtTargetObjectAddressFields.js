@@ -833,7 +833,7 @@ handleAddressValuesIfSap(servicepointretrieveddata){
                     if(element.provincia !== undefined && element.provincia !== null && element.provincia !== ''){
                         dataForTableForn += element.provincia+ ',';
                     }
-                    if(element.estensCivico !== undefined && element.estensCivico !== null){
+                    if(element.estensCivico !== undefined && element.estensCivico !== null && element.estensCivico !== ''){
                         dataForTableForn += element.estensCivico + ',';
                     }
                     if(element.stato !== undefined && element.stato !== null && element.stato !== ''){

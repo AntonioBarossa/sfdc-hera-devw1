@@ -532,6 +532,10 @@
             <valueName>Doppia Fatturazione</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Doppia Fatturazione</controllingFieldValue>
+            <valueName>Venditore ha titolarità</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Periodicità e fattura di chiusura</controllingFieldValue>
             <valueName>Emissione prima bolletta</valueName>
         </valueSettings>

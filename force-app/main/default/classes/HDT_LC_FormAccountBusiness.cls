@@ -61,9 +61,6 @@ public with sharing class HDT_LC_FormAccountBusiness {
             if( !checkVatNumber(account.VATNumber__c) ){
                 throw new AuraHandledException('Partita Iva non corretta.');
             }
-            if(!String.isBlank(account.FiscalCode__c) &&  account.FiscalCode__c.isNumeric() && !checkVatNumber(account.FiscalCode__c)){
-                throw new AuraHandledException('Partita Iva non corretta.');
-            }
         } else if( account.FiscalCode__c.isNumeric() ){
             if( !checkVatNumber(account.FiscalCode__c) ){
                 throw new AuraHandledException('Partita Iva non corretta.');

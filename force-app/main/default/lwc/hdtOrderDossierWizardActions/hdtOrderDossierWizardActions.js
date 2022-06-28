@@ -128,8 +128,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
 
     handleModalPreview(){
         this.isPreviewForbidden = true;
-
-        /*if( this.isFraud ){
+        if( this.isFraud ){
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
                 message: 'Possibile frode in corso, tutti gli ordini correlati verranno annullati.',
@@ -138,54 +137,25 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             this.dispatchEvent(toastSuccessMessage);
         }else{
             console.log('Nessuna Frode in corso');
-        }*/
-        console.log('### Start Fraud ###');
-        this.loading = true;
-        seekFraud({recordId: this.recordId, orderParent: this.orderParentRecord}).then(result =>{
-            console.log('### Fraud Result >>> ' + result);
-            this.loading = false;
-
-            var resultParsed = JSON.parse(result);
-            console.log('### Is Fraud >>> ' + resultParsed.isFraud);
-            this.isFraud = resultParsed.isFraud;
-
-            if(this.isFraud)
-            {
-                const toastSuccessMessage = new ShowToastEvent({
-                    title: 'Attenzione!',
-                    message: 'Possibile frode in corso, tutti gli ordini correlati verranno annullati.',
-                    variant: 'warning'
-                });
-                this.dispatchEvent(toastSuccessMessage);
-                this.dispatchEvent(new CustomEvent('redirecttoorderrecordpage'));
-                return;
-            }
-            else
-            {
-
-                isCommunity().then(result => {
-                    this.isCommunity = result;
-                    getCachedUuid().then(uuid => {
-                        if(this.isCommunity && uuid) {
-                            this.isPreviewForbidden = false;
-                            this.isModalOpen = true;
-                        } else {
-                            this.handlePreview();
-                        }
-                    }).catch(error =>{
-                        console.error(error);
-                        this.isPreviewForbidden = false;
-                    });
-                }).catch(error => {
-                    this.loading = false;
-                    console.error(error);
+        }
+        isCommunity().then(result => {
+            this.isCommunity = result;
+            getCachedUuid().then(uuid => {
+                if(this.isCommunity && uuid) {
                     this.isPreviewForbidden = false;
-                });
-            }
-        })
-        .catch(error => {
-            console.log('#FRAUD_ERROR >>> ' + JSON.stringify(error));
-        })
+                    this.isModalOpen = true;
+                } else {
+                    this.handlePreview();
+                }
+            }).catch(error =>{
+                console.error(error);
+                this.isPreviewForbidden = false;
+            });
+        }).catch(error => {
+            this.loading = false;
+            console.error(error);
+            this.isPreviewForbidden = false;
+        });
         
     }
 
@@ -514,7 +484,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         this.getIsOnlyAmend();
         this.getCancelButtonStatus();
         this.getActivityVocalOrder();
-        //this.getFraud();
+        this.getFraud();
     }
 
     getActivityVocalOrder(){

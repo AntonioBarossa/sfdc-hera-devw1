@@ -3,7 +3,7 @@ public with sharing class HDT_LC_CommunicazioniDistributore {
     public static String createActivity(String recordId, string type){
         try {
             List <wrts_prcgvr__Activity__c> listAct=new list <wrts_prcgvr__Activity__c>();
-        listAct=HDT_QR_GenericQuery.getGenericRecords('Id, Distributor__c, Account__c, AppoitmentTimeSlotConfirmed__c, Contact__c, AppointmentDateToConfirm__c, AppointmentDate__c', 'wrts_prcgvr__Activity__c', 'Id = \''+String.escapeSingleQuotes(recordId)+'\'');
+        listAct=HDT_QR_GenericQuery.getGenericRecords('Id, Distributor__c, Account__c, AppoitmentTimeSlotConfirmed__c, Contact__c, AppointmentDateToConfirm__c', 'wrts_prcgvr__Activity__c', 'Id = \''+String.escapeSingleQuotes(recordId)+'\'');
         //system.debug('@@@lista  ' + listAct[0]);
         Id devRecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_DistributorCommunication').getRecordTypeId();
 
@@ -27,9 +27,6 @@ public with sharing class HDT_LC_CommunicazioniDistributore {
             }
             if(listAct[0].AppointmentDateToConfirm__c!=null){
                 actToInsert.AppointmentDateToConfirm__c=listAct[0].AppointmentDateToConfirm__c;
-            }
-            if(listAct[0].AppointmentDate__c!=null){
-                actToInsert.AppointmentDate__c=listAct[0].AppointmentDate__c;
             }
             if (String.isNotBlank(devRecordTypeId)) {
                 actToInsert.RecordTypeId=devRecordTypeId;

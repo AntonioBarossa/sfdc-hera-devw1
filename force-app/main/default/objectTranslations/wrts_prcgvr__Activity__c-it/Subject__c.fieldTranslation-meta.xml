@@ -39,6 +39,10 @@
         <translation></translation>
     </picklistValues>
     <picklistValues>
+        <masterLabel>Assistenza procedurale e gestione pratiche</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
         <masterLabel>Attività concordate</masterLabel>
         <translation></translation>
     </picklistValues>
@@ -248,6 +252,10 @@
     </picklistValues>
     <picklistValues>
         <masterLabel>Invito a fatturare non ricevuto</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>MPI Profilazione Utente-Anomalie</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>

@@ -431,16 +431,6 @@
                 <label>Protocollo - Da tipizzare</label>
             </value>
             <value>
-                <fullName>Protocollo - Reclami Contratti</fullName>
-                <default>false</default>
-                <label>Protocollo - Reclami Contratti</label>
-            </value>
-			<value>
-                <fullName>Protocollo - Reclami Post Vendita</fullName>
-                <default>false</default>
-                <label>Protocollo - Reclami Post Vendita</label>
-            </value>
-            <value>
                 <fullName>Protocollo - Disattivazioni</fullName>
                 <default>false</default>
                 <label>Protocollo - Disattivazioni</label>

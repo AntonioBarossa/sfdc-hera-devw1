@@ -43,7 +43,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>QuoteLine__c</field>
+                <field>QuoteLine__c</field><!-- QuoteLine Concetta 29/09/2021-->
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -118,10 +118,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ManuallyReassigned__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>AssignedToQueueDate__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
