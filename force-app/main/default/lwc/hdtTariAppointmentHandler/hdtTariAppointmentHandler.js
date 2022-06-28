@@ -1,12 +1,17 @@
 import { LightningElement, api, track,wire } from 'lwc';
 import getCase from '@salesforce/apex/HDT_LC_AppointmentAgenda.getCase';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { updateRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
+import ID_FIELD from '@salesforce/schema/Case.Id';
+import PHASE_FIELD from '@salesforce/schema/Case.Phase__c';
 
 const OBJECT_FIELDS =[
     'Id',
     'Phase__c',
     'StartAppointment__c',
-    'Outcome__c'
+    'Outcome__c',
+    'PhaseStory__c'
 ];
 
 export default class HdtTariAppointmentHandler extends LightningElement{
@@ -25,7 +30,8 @@ export default class HdtTariAppointmentHandler extends LightningElement{
     
     @track tempList = [
         {label: 'Prendi Appuntamento ', name: 'newDate', iconName: 'utility:retail_execution', desc: 'Prendi un nuovo appuntamento con il DL', enable : false, visible : true},
-        {label: 'Visualizza Appuntamento', name: 'viewDate', iconName: 'utility:record_delete', desc: 'Visualizza il tuo appuntamento', enable : false, visible : true}
+        {label: 'Visualizza Appuntamento', name: 'viewDate', iconName: 'utility:record_lookup', desc: 'Visualizza il tuo appuntamento', enable : false, visible : true},
+        {label: 'Annulla Appuntamento', name: 'cancelDate', iconName: 'utility:record_delete', desc: 'Cancella il tuo appuntamento', enable : false, visible : true}
     ];
     
     get stmtValue(){
@@ -57,6 +63,14 @@ export default class HdtTariAppointmentHandler extends LightningElement{
                                     item.enable = true;
                                 }
                             break;
+                            case 'cancelDate':
+                                if(
+                                    this.case.Phase__c == 'Da Inviare' 
+                                    && this.case?.PhaseStory__c?.split(/\|\||@@/)?.some(str=>str?.toLowerCase()?.startsWith("in attesa appuntamento"))
+                                ){
+                                    item.enable = true;
+                                }
+                            break;
                         }
                 });
             }
@@ -80,19 +94,61 @@ export default class HdtTariAppointmentHandler extends LightningElement{
                     method : 'handleSearch',
                     searchType : 'FirstSearch'
                 };
-            break;
+                break;
             case 'viewDate':
                 this.params ={
                     method : 'handleView',
                     searchType : 'View'
                 };
+                break;
+            case 'cancelDate':
+                showAgenda=false;
+                this.updatePhase();
+                break;
         }
         if (showAgenda){
             this.params = {...this.params,userCommunity : this.isCommunity};
             this.showAgenda = showAgenda;
         }else{
-            this.showForm = true;
+            //this.showForm = true;
         }
+
+    }
+
+    updatePhase(){
+        const fields = {};
+        fields[ID_FIELD.fieldApiName] = this.recordId;
+        fields[PHASE_FIELD.fieldApiName] = "Richiesto Annullamento";
+
+        const recordInput = { fields };
+        updateRecord(recordInput)
+            .then(() => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Case aggiornato',
+                        variant: 'success'
+                    })
+                );
+                // Display fresh data in the form
+                if (this.isCommunity){
+                    let myWiredCase = this.wiredCase;
+                    setTimeout(function(){refreshApex(myWiredCase)},5000);
+                }else{
+                    window.location.reload();
+                }
+            })
+            .catch(error => {
+                let message = error.body?.output?.errors?.[0]?.message;
+                message=message? message : error.body.message;
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Errore Aggiornamento Fase',
+                        message: message,
+                        variant: 'error'
+                    })
+                );
+            });
 
     }
 
