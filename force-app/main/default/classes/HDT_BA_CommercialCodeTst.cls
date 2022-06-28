@@ -71,7 +71,7 @@ public class HDT_BA_CommercialCodeTst {
         allMembers.put(campaignId, campaignMembers);            
         
         Test.startTest();
-		HDT_BA_CommercialCode cc = new HDT_BA_CommercialCode(allMembers);     
+		HDT_BA_CommercialCode cc = new HDT_BA_CommercialCode();     
         Database.executeBatch(cc,200);
         Test.stopTest();
         
