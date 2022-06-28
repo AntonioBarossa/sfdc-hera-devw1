@@ -133,10 +133,6 @@
                 <behavior>Edit</behavior>
                 <field>ExciseGAS__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>VAT__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

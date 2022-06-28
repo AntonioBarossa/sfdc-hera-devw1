@@ -116,11 +116,6 @@
                 <label>Caricamenti contratti</label>
             </value>
             <value>
-                <fullName>Caricamento Manuale Siebel</fullName>
-                <default>false</default>
-                <label>Caricamento Manuale Siebel</label>
-            </value>
-            <value>
                 <fullName>Check preliminari KO</fullName>
                 <default>false</default>
                 <label>Check preliminari KO</label>

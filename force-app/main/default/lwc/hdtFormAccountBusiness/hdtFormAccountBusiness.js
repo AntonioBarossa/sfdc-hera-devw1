@@ -652,10 +652,6 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             if(mobilephoneNumber.value.length<9 || mobilephoneNumber.value.length > 10){
                 isValidated=false;
                 messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre!";
-            }            
-            if( String(mobilephoneNumber.value).charAt(0)!='3' ){
-                isValidated=false;
-                messageError=" Il numero di cellulare deve iniziare con il numero 3!";
             }
         }
         if(!(contactPhoneNumber.value=== undefined || contactPhoneNumber.value.trim()==='')){

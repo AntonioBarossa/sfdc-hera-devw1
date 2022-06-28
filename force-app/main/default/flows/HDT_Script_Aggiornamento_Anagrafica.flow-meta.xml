@@ -395,7 +395,7 @@
         </connector>
         <fields>
             <name>text1_Si</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Innanzitutto le riepilogo quali dati di contatto sono in nostro possesso e poi nel caso ci sia da aggiornare qualcosa procederemo immediatamente&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Questi sono i dati di contatto in nostro possesso:&lt;/p&gt;&lt;p&gt;Telefono Fisso 1: {!GetCampaignMember.Contact.Phone}&lt;/p&gt;&lt;p&gt;Telefono Fisso 2: {!GetCampaignMember.Contact.OtherPhone}&lt;/p&gt;&lt;p&gt;Telefono Cellulare1: {!GetCampaignMember.Contact.MobilePhone}&lt;/p&gt;&lt;p&gt;&amp;nbsp;Mail: {!GetCampaignMember.Contact.Email}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ci sono dati da aggiornare?&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Innanzitutto le riepilogo quali dati di contatto sono in nostro possesso e poi nel caso ci sia da aggiornare qualcosa procederemo immediatamente&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Questi sono i dati di contatto in nostro possesso:&lt;/p&gt;&lt;p&gt;Telefono Fisso 1: {!GetCampaignMember.Contact.Account.Phone}&lt;/p&gt;&lt;p&gt;Telefono Fisso 2: {!GetCampaignMember.Contact.Account.OtherPhone__c}&lt;/p&gt;&lt;p&gt;Telefono Cellulare1: {!GetCampaignMember.Contact.Account.MobilePhone__c}&lt;/p&gt;&lt;p&gt;&amp;nbsp;Mail: {!GetCampaignMember.Contact.Account.PrimaryEmail__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ci sono dati da aggiornare?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>

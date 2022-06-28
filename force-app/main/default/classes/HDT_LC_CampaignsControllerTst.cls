@@ -664,7 +664,7 @@ CampaignMember member = new CampaignMember(
 			ord.AdministrativeBurden__c=1;
 			ord.EstimatedVAT__c=1;
 			ord.ValidityDateEstimate__c=Date.today().addDays(30);
-			//ord.Phase__c='Da Inviare';
+			ord.Phase__c='Da Inviare';
             ord.Sale__c = salesList[0].Id;
 			ord.CIAccoutn__c='Richiesto';
 			ord.QuickQuote__c='Richiesto';
@@ -964,58 +964,6 @@ CampaignMember member = new CampaignMember(
         Test.startTest();
         CampaignMember campMembTest = HDT_LC_CampaignsController.getCampaignAndAccountByMember(testMembers[0].Id);
         System.assertNotEquals(null, campMembTest, 'campMembTest != null');
-        Test.stopTest();
-    }
-
-    @isTest
-    static void getAccountIdTest(){
-
-        Account accRecord = [SELECT Id FROM Account LIMIT 1];
-        List<Contact> contactList = [SELECT Id FROM Contact LIMIT 1];
-        List<Campaign> listCampaign = [SELECT Id FROM Campaign LIMIT 1];
-        List<CampaignMember> members = new List<CampaignMember>();
-        CampaignMember member = new CampaignMember(
-            ContactId = contactList[0].Id,
-            Status = 'Inviato',
-            CampaignId = listCampaign[0].Id,
-            GenericField1__c = accRecord.Id
-        ); 
-        members.add(member); 
-        insert members;
-        List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
-
-        Test.startTest();
-        String accIdTest = HDT_LC_CampaignsController.getAccountId(testMembers[0].Id);
-        System.assert(accIdTest != null, 'Nessun Account');
-        testMembers[0].GenericField1__c = '';
-        update testMembers;
-        accIdTest = HDT_LC_CampaignsController.getAccountId(testMembers[0].Id);
-        System.assert(accIdTest == null, 'Nessun CampaignMember');
-        Test.stopTest();
-    }
-
-    @isTest
-    static void getCampaignChannelTest(){
-
-        List<Contact> contactList = [SELECT Id FROM Contact LIMIT 1];
-        List<Campaign> listCampaign = [SELECT Id, Channel__c FROM Campaign LIMIT 1];
-        List<CampaignMember> members = new List<CampaignMember>();
-        CampaignMember member = new CampaignMember(
-            ContactId = contactList[0].Id,
-            Status = 'Inviato',
-            CampaignId = listCampaign[0].Id
-        ); 
-        members.add(member); 
-        insert members;
-        List<CampaignMember> testMembers = [SELECT Id, Campaign.Channel__c FROM CampaignMember LIMIT 1];
-
-        Test.startTest();
-        String campaignChannel = HDT_LC_CampaignsController.getCampaignChannel(testMembers[0].Id);
-        System.assert(campaignChannel != null, 'Nessun Account');
-        listCampaign[0].Channel__c = '';
-        update listCampaign;
-        campaignChannel = HDT_LC_CampaignsController.getCampaignChannel(testMembers[0].Id);
-        System.assert(campaignChannel == null, 'Nessun CampaignMember');
         Test.stopTest();
     }
 

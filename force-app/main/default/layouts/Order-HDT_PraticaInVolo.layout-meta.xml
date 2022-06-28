@@ -53,10 +53,6 @@
                 <behavior>Edit</behavior>
                 <field>ExciseEle__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>VAT__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

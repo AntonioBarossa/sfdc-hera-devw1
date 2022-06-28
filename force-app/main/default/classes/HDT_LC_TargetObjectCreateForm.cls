@@ -123,16 +123,14 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
             if(sa!=null){
                 s = saQr.getRecordById(sa.id,'id,Account__r.Category__c,Account__r.CompanyOwner__c');
             }
-            if(sa != null){
-                boolean isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
-                if(isTransitorio){
-                    HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
-                    if(resp != null && resp.result!=null && !resp.result.isEmpty()){
-                        if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
-                            servicePo.SwitchInWinback__c = true;
-                            if(resp.result[0].effectiveDate != null){
-                                servicePo.SwitchOutDate__c = date.valueOf(resp.result[0].effectiveDate);
-                            }
+            boolean isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
+            if(isTransitorio){
+                HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
+                if(resp != null && resp.result!=null && !resp.result.isEmpty()){
+                    if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
+                        servicePo.SwitchInWinback__c = true;
+                        if(resp.result[0].effectiveDate != null){
+                            servicePo.SwitchOutDate__c = date.valueOf(resp.result[0].effectiveDate);
                         }
                     }
                 }

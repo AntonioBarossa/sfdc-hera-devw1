@@ -302,7 +302,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             ordersOld[0].Phase__c = 'Documentazione validata';
             update ordersOld;
 
-            List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId, VasSubtype__c,
+            List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
                                             Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
                                     FROM Order 
@@ -311,7 +311,6 @@ public with sharing class HDT_UTL_OrderProcessTst {
             ordersNew[0].isTransition__c = false;
             ordersNew[0].Phase__c = 'Comunicazione Verso Heroku';
             ordersNew[0].PhaseStory__c = '';
-            ordersNew[0].VasSubtype__c = 'HERA LED 1 KIT V2';
             update ordersNew;
 
             HDT_UTL_OrderProcess.salesProcessManagementBefore(ordersNew, ordersOld);

@@ -326,19 +326,12 @@
         <connector>
             <targetReference>permissionset_assignment_get</targetReference>
         </connector>
-        <filterLogic>or</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>HDT_OmniSupervisor</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>HDT_AssignToUser</stringValue>
+                <stringValue>HDT_OmniSupervisorPermissionSet</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

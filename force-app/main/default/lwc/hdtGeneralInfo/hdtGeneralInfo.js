@@ -7,7 +7,6 @@ import getAgents from '@salesforce/apex/HDT_LC_GeneralInfo.getAgents';
 import handleAutomaticAgentAssign from '@salesforce/apex/HDT_LC_GeneralInfo.handleAutomaticAgentAssign';
 import getSaleContactRole from '@salesforce/apex/HDT_LC_GeneralInfo.getSaleContactRole';
 import initComp from '@salesforce/apex/HDT_LC_GeneralInfo.initComp';
-import { ingestDataConnector } from 'lightning/analyticsWaveApi';
 export default class HdtGeneralInfo extends LightningElement {
     @api saleRecord = {};
     @api campaignId;
@@ -62,8 +61,6 @@ export default class HdtGeneralInfo extends LightningElement {
     isProfileTeleselling = false;
     @track filterLookup = '';
 
-    @track valueObj = '';
-
     channelOptionsComm = [
         {label: 'Teleselling Inbound', value: 'Teleselling Inbound'},
         {label: 'Teleselling Outbound', value: 'Teleselling Outbound'}
@@ -91,7 +88,6 @@ export default class HdtGeneralInfo extends LightningElement {
     }
 
     toggle(){
-        this.channelDisabled = !this.channelDisabled;
         this.disabledInput = !this.disabledInput;
         this.disabledNext = !this.disabledNext;
         this.hiddenEdit = !this.hiddenEdit;
@@ -103,7 +99,6 @@ export default class HdtGeneralInfo extends LightningElement {
     {
         console.log('# OnSelectEvent >>> ' + JSON.stringify(event.detail));
         this.dataToSubmit['SalesContact__c'] = event.detail.code;
-        this.valueObj = event.detail.name;
         getSaleContactRole({accountId: this.saleRecord.Account__c, contactId: this.dataToSubmit['SalesContact__c']})
         .then(data => 
             {
@@ -356,10 +351,6 @@ export default class HdtGeneralInfo extends LightningElement {
         console.log('Channel:::::::' + this.saleRecord.Channel__c);
         this.channelValue = this.saleRecord.Channel__c;
         this.filterLookup = 'AccountId = \'' + this.saleRecord.Account__c + '\'';
-        if(this.saleRecord.SalesContact__c !== null && this.saleRecord.SalesContact__c !== undefined && this.saleRecord.SalesContact__c !== '')
-        {
-            this.valueObj = this.saleRecord.SalesContact__r.Name;
-        }
        if(this.saleRecord.Channel__c == 'Teleselling Inbound' || this.saleRecord.Channel__c == 'Teleselling Outbound'){
             this.isServiceCommissioning = true;
             console.log('Channel:::::::true');
@@ -378,8 +369,6 @@ export default class HdtGeneralInfo extends LightningElement {
         }
 
         this.initDataToSubmit();
-        console.log('# SaleRecord.Step >>> ' + this.saleRecord.CurrentStep__c);
-        console.log('# Variable step >>> ' +this.currentStep);
         if (this.saleRecord.CurrentStep__c != this.currentStep) {
             this.toggle();
         }
@@ -647,9 +636,9 @@ export default class HdtGeneralInfo extends LightningElement {
                 this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
                 this.template.querySelector("[data-id='VendorFirstName__c']").value = data[0].AgentFirstName__c;
                 this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
-                if(data.length>1){
+                /*if(data.length>1){
                     this.disabledAgency = false;
-                }
+                }*/
             }).catch(error => {
                 this.loaded = true;
                 this.disabledAgency = false;
@@ -675,9 +664,6 @@ export default class HdtGeneralInfo extends LightningElement {
                 this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
                 this.template.querySelector("[data-id='VendorFirstName__c']").value = data[0].AgentFirstName__c;
                 this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
-                if(data.length>1){
-                    this.disabledAgency = false;
-                }
             }).catch(error => {
                 this.loaded = true;
                 this.disabledAgency = false;
@@ -703,9 +689,7 @@ export default class HdtGeneralInfo extends LightningElement {
                 this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
                 this.template.querySelector("[data-id='VendorFirstName__c']").value = data[0].AgentFirstName__c;
                 this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
-                if(data.length>1){
-                    this.disabledAgency = false;
-                }
+
             }).catch(error => {
                 this.loaded = true;
                 this.disabledAgency = false;

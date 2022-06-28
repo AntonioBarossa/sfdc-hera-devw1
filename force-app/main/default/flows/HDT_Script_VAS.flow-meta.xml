@@ -1733,28 +1733,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>isVas</name>
-        <label>isVas</label>
-        <locationX>13074</locationX>
-        <locationY>2342</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>checkForVas</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Screen_Conferma_Adesione_Famiglie_Outbound</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Nuovo_o_Vecchio_Cliente</name>
         <label>Nuovo o Vecchio Cliente</label>
         <locationX>13382</locationX>
@@ -2136,7 +2114,7 @@
                 <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>HERA CALDAIA SICURA</stringValue>
+                    <stringValue>Hera Caldaia Sicura</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -3234,16 +3212,11 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_Conferma_Adesione_Famiglie_Outbound</name>
         <label>Screen Conferma Adesione Famiglie Outbound</label>
-        <locationX>12942</locationX>
-        <locationY>2462</locationY>
+        <locationX>13074</locationX>
+        <locationY>2342</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
-        <fields>
-            <name>InizioConfermaAdesione</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: &amp;quot;Segoe UI&amp;quot;, sans-serif; font-size: 16px;&quot;&gt;La&amp;nbsp;informo che il contratto si conclude al termine della telefonata.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: &amp;quot;Segoe UI&amp;quot;, sans-serif; font-size: 16px;&quot;&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;/span&gt;&lt;strong&gt;Luce e Gas&lt;/strong&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: &amp;quot;Segoe UI&amp;quot;, sans-serif; font-size: 16px;&quot;&gt; che le ho descritto fin qui?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px; font-family: &amp;quot;Segoe UI&amp;quot;, sans-serif; color: rgb(0, 0, 0);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
         <fields>
             <name>VAS_HERA_LED_1_0</name>
             <fieldText>&lt;ul&gt;&lt;li&gt;&lt;b&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/b&gt;Mi conferma che aderisce all’offerta &lt;b&gt;Hera LED&lt;/b&gt;?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
@@ -3714,7 +3687,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_CALDAIA_SICURA_Generico_0_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede il servizio di manutenzione della caldaia e per il quale le viene reso in omaggio il servizio assistenza all’abitazione è {!GetOrder.DeliveryAddress__c} {!GetOrder.SupplyAddressFormula__c} ?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il Contratto Hera Caldaia Sicura si intende attivato con la conclusione del Contratto. Il servizio ha durata biennale, ed è tacitamente rinnovato ogni 24 mesi salvo disdetta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il servizio di assistenza all’abitazione decorre 30 giorni dopo l’attivazione del Contratto Hera Caldaia Sicura ha durata biennale e non sarà rinnovato dopo i primi 24 mesi.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Riceverà una fattura che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di gas associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede il servizio di manutenzione della caldaia e per il quale le viene reso in omaggio il servizio assistenza all’abitazione è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il Contratto Hera Caldaia Sicura si intende attivato con la conclusione del Contratto. Il servizio ha durata biennale, ed è tacitamente rinnovato ogni 24 mesi salvo disdetta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il servizio di assistenza all’abitazione decorre 30 giorni dopo l’attivazione del Contratto Hera Caldaia Sicura ha durata biennale e non sarà rinnovato dopo i primi 24 mesi.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Riceverà una fattura che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di gas associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -3729,7 +3702,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>isVas</targetReference>
+            <targetReference>Screen_Conferma_Adesione_Famiglie_Outbound</targetReference>
         </connector>
         <fields>
             <name>HERA_CALDAIA_SICURA_Generico_1_0</name>
@@ -3753,7 +3726,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_CALDAIA_SICURA_Generico_1_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede il servizio di manutenzione della caldaia e per il quale le viene reso in omaggio il servizio assistenza all’abitazione è {!GetOrder.DeliveryAddress__c} ?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il Contratto Hera Caldaia Sicura si intende attivato con la conclusione del Contratto. Il servizio ha durata biennale, ed è tacitamente rinnovato ogni 24 mesi salvo disdetta.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il Servizio di assistenza all’abitazione decorre 30 giorni dopo l’attivazione del Contratto Hera Caldaia Sicura, ha durata biennale e non sarà rinnovato dopo i primi 24 mesi.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Riceverà una fattura che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di gas associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di fornitura per il quale richiede il servizio di manutenzione della caldaia e per il quale le viene reso in omaggio il servizio assistenza all’abitazione è {!GetOrder.DeliveryAddress__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il Contratto Hera Caldaia Sicura si intende attivato con la conclusione del Contratto. Il servizio ha durata biennale, ed è tacitamente rinnovato ogni 24 mesi salvo disdetta.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il Servizio di assistenza all’abitazione decorre 30 giorni dopo l’attivazione del Contratto Hera Caldaia Sicura, ha durata biennale e non sarà rinnovato dopo i primi 24 mesi.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Riceverà una fattura che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di gas associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -3846,7 +3819,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>isVas</targetReference>
+            <targetReference>Screen_Conferma_Adesione_Famiglie_Outbound</targetReference>
         </connector>
         <fields>
             <name>HERA_CONTAWATT_Generico_1_0</name>
@@ -4466,7 +4439,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>isVas</targetReference>
+            <targetReference>Screen_Conferma_Adesione_Famiglie_Outbound</targetReference>
         </connector>
         <fields>
             <name>HERA_EBIKE_Generico_1_0</name>
@@ -4856,7 +4829,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>isVas</targetReference>
+            <targetReference>Screen_Conferma_Adesione_Famiglie_Outbound</targetReference>
         </connector>
         <fields>
             <name>HERA_LED_Generico_1_0</name>
@@ -5106,14 +5079,14 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>DIP</stringValue>
+                        <stringValue>HERA LED 2</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
                     <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>HERA LED 2</stringValue>
+                        <stringValue>DIP</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -5241,7 +5214,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>isVas</targetReference>
+            <targetReference>Screen_Conferma_Adesione_Famiglie_Outbound</targetReference>
         </connector>
         <fields>
             <name>HERA_MONOPATTINO_ELETTRICO_Generico_0_0</name>
@@ -5334,7 +5307,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>isVas</targetReference>
+            <targetReference>Screen_Conferma_Adesione_Famiglie_Outbound</targetReference>
         </connector>
         <fields>
             <name>HERA_NO_PROBLEM_ACQUA_Generico_1_0</name>
@@ -5521,7 +5494,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>isVas</targetReference>
+            <targetReference>Screen_Conferma_Adesione_Famiglie_Outbound</targetReference>
         </connector>
         <fields>
             <name>HERA_NO_PROBLEM_GAS_Generico_1_0</name>
@@ -5711,7 +5684,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <leftValueReference>isNewClient</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>N</stringValue>
+                        <stringValue>Y</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -5753,11 +5726,11 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>isVas</targetReference>
+            <targetReference>Screen_Conferma_Adesione_Famiglie_Outbound</targetReference>
         </connector>
         <fields>
             <name>HERA_NO_PROBLEM_LUCE_Generico_1_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[HERA NO PROBLEM LUCE]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo di aderire alla polizza AXA Assistance “Hera No Problem Luce” che le offre copertura assicurativa in caso di guasto all’impianto elettrico, al quadro elettrico, alle prese o portalampada e agli interruttori, anche in caso di fulmine, come ampiamente illustrato in corso di proposizione commerciale precedente a questa registrazione.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Dopo averle esposto il prodotto, la normativa vigente mi impone di verificare che il prodotto che le sto offrendo sia adeguato a lei, perciò vorrei farle alcune domande volte a individuare i suoi bisogni e le sue esigenze e a valutare l’adeguatezza del prodotto oggetto della vendita.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che è interessato a sottoscrivere una polizza assicurativa che protegga gli impianti di luce da guasti improvvisi e/o non corretto funzionamento.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;                  CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che è informato sulla possibile presenza nella polizza assicurativa di Scoperti/Franchigie/Carenze /Limiti/Esclusioni?&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;                 CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;                 Il contratto offerto è coerente con le richieste ed esigenze del contraente – e può                      quindi essere stipulato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;[Condizioni economiche e di adesione a Hera No Problem Luce]&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma di avere un contratto per un punto di fornitura con potenza impegnata entro i 16 kW?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il premio annuale della polizza è 74,8 €, pari a 6,23 €/mese.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;[HERA NO PROBLEM LUCE]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo di aderire alla polizza AXA Assistance “Hera No Problem Luce” che le offre copertura assicurativa in caso di guasto all’impianto elettrico, al quadro elettrico, alle prese o portalampada e agli interruttori, anche in caso di fulmine, come ampiamente illustrato in corso di proposizione commerciale precedente a questa registrazione.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;b&gt;[Condizioni economiche e di adesione a Hera No Problem Luce]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma di avere un contratto per un punto di fornitura con potenza impegnata entro i 16 kW?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il premio annuale della polizza è 74,8 €, pari a 6,23 €/mese.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -6417,7 +6390,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>isVas</targetReference>
+            <targetReference>Screen_Conferma_Adesione_Famiglie_Outbound</targetReference>
         </connector>
         <fields>
             <name>HERA_SANIFICA_ARIA_Dispositivo_0_0_0</name>
@@ -6628,7 +6601,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>isVas</targetReference>
+            <targetReference>Screen_Conferma_Adesione_Famiglie_Outbound</targetReference>
         </connector>
         <fields>
             <name>HERA_THERMO_Generico_1_0</name>
@@ -6951,16 +6924,6 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <scale>0</scale>
         <value>
             <numberValue>0.0</numberValue>
-        </value>
-    </variables>
-    <variables>
-        <name>checkForVas</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
-        <value>
-            <booleanValue>true</booleanValue>
         </value>
     </variables>
     <variables>

@@ -2833,10 +2833,10 @@
             <fullName>Protocollo - Preventivi</fullName>
             <default>false</default>
         </values>
-        <!--<values>
+        <values>
             <fullName>Protocollo - Reclami</fullName>
             <default>false</default>
-        </values>-->
+        </values>
         <values>
             <fullName>Protocollo - VAS</fullName>
             <default>false</default>

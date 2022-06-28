@@ -4,9 +4,37 @@
     <description>Destinazione Uso</description>
     <externalId>false</externalId>
     <label>Destinazione Uso</label>
-    <length>30</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1</fullName>
+                <default>false</default>
+                <label>Uso abitativo</label>
+            </value>
+            <value>
+                <fullName>2</fullName>
+                <default>false</default>
+                <label>Immobile tenuto a disposizione</label>
+            </value>
+            <value>
+                <fullName>3</fullName>
+                <default>false</default>
+                <label>Uso commerciale</label>
+            </value>
+            <value>
+                <fullName>4</fullName>
+                <default>false</default>
+                <label>Locali adibiti a box</label>
+            </value>
+            <value>
+                <fullName>5</fullName>
+                <default>false</default>
+                <label>Altri usi</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>

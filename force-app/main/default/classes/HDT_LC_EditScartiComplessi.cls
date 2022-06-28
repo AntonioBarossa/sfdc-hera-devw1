@@ -93,14 +93,14 @@ public with sharing class HDT_LC_EditScartiComplessi {
                 step = 11;
             }
             when 'HDT_RT_Attivazione','HDT_RT_AttivazioneConModifica','HDT_RT_ScontiBonus','HDT_RT_CambioOfferta',
-                'HDT_RT_CambioUso','HDT_RT_ConnessioneConAttivazione','HDT_RT_TemporaneaNuovaAtt','HDT_RT_VAS','HDT_RT_Subentro'{
+                'HDT_RT_CambioUso','HDT_RT_ConnessioneConAttivazione','HDT_RT_TemporaneaNuovaAtt','HDT_RT_VAS'{
                 step = 5;
             }
-            /* when 'HDT_RT_Subentro'{
-                step = 5; //setStepCheckAccount(ord, ord.ServicePoint__r, 5);
-            } */
+            when 'HDT_RT_Subentro'{
+                step = setStepCheckAccount(ord, ord.ServicePoint__r, 5);
+            }
             when 'HDT_RT_Voltura'{
-                step = 3;//setStepCheckAccount(ord, ord.ServicePoint__r, 3);
+                step = setStepCheckAccount(ord, ord.ServicePoint__r, 3);
             }
             when 'HDT_RT_VolturaConSwitch'{
                 step = setStepForVoltureWithSwitch(ord.ServicePoint__r, ord.AccountId);
@@ -115,12 +115,12 @@ public with sharing class HDT_LC_EditScartiComplessi {
         }
     }
 
-    /* private static Double setStepCheckAccount(Order ord, ServicePoint__c serv,Double step){
+    private static Double setStepCheckAccount(Order ord, ServicePoint__c serv,Double step){
         if (serv != null && serv.Account__c != null && serv.Account__c != ord.AccountId){
             return null;
         }
         return step;
-    } */
+    }
 
     @TestVisible
     private static Double setStepForVoltureWithSwitch(ServicePoint__c serv, Id accountId){
