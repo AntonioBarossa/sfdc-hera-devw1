@@ -108,7 +108,7 @@ public with sharing class HDT_LC_FormAccountResidenziale {
         Date birthdate = (dataAccount.get('birthDate') != null && dataAccount.get('birthDate') != '' ? Date.valueOf(dataAccount.get('birthDate')) : null );
         Account account= new Account(CustomerType__c=       dataAccount.get('customerType'),        CustomerAccountStatus__c=   'Prospect',
                                      BirthDate__c=          birthdate,                              BirthProvince__c=           dataAccount.get('birthplace'), 
-                                     FirstName__c=          dataAccount.get('firstName').trim(),           LastName__c=                dataAccount.get('lastName'),
+                                     FirstName__c=          dataAccount.get('firstName'),           LastName__c=                dataAccount.get('lastName'),
                                      FiscalCode__c=         dataAccount.get('fiscalCode'),          Profession__c=              dataAccount.get('profession'),  
                                      PhonePrefix__c=        dataAccount.get('phonePrefix'),         Phone=                      dataAccount.get('phoneNumber'),
                                      MobilePhonePrefix__c=  dataAccount.get('mobilePhonePrefix'),   MobilePhone__c =            dataAccount.get('mobilePhone'),
