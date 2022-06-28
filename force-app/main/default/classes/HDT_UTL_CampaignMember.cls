@@ -190,10 +190,12 @@ public with sharing class HDT_UTL_CampaignMember {
         Map<String, List<String>> actToOrdersToCancelMap = new Map<String, List<String>>();
         HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
 
-        for(CampaignMember campMemb : newCampMembList){
-            if(campMemb.RelatedActivity__c != null){
-                actIdSet.add(campMemb.RelatedActivity__c);
-            }
+        List<CampaignMember> filteredNewCampaignMembList = new List<CampaignMember>();
+
+        // Modificata per Apex CPU time limit exceeded for(CampaignMember campMemb : newCampMembList){
+        for(CampaignMember campMemb : [SELECT Id, HasResponded, RelatedActivity__c, ResultType__c FROM CampaignMember WHERE HasResponded = true AND RelatedActivity__c != null AND ResultType__c = 'Macchina' AND Id IN : newCampMembList WITH SECURITY_ENFORCED]){
+            actIdSet.add(campMemb.RelatedActivity__c);
+            filteredNewCampaignMembList.add(campMemb);
         }
 
         if(actIdSet.size() > 0) {
@@ -217,7 +219,7 @@ public with sharing class HDT_UTL_CampaignMember {
             }
         }
 
-        for(CampaignMember member : newCampMembList){
+        for(CampaignMember member : filteredNewCampaignMembList){
             if(member.ResultType__c == 'Macchina' && member.HasResponded==true && member.RelatedActivity__c != null){ //&& member.ResultType__c != campMembOldMap.get(member.Id).ResultType__c 
                 if(actToOrderIdMap.get(member.RelatedActivity__c) != null && isMonitoringList.contains(actToOrderIdMap.get(member.RelatedActivity__c).AgencyCode__c)){
                     if(!actToOrderIdMap.get(member.RelatedActivity__c).RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_OrderDossier')){

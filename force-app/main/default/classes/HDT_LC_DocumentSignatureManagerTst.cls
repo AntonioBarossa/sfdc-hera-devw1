@@ -15,7 +15,11 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         HDT_UTL_DataFactoryTst.createDriverJson();
         HDT_UTL_DataFactoryTst.pClickInstance();
         HDT_UTL_DataFactoryTst.pClickCasePhase();
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
         insert new DocusignSettings__c(CustomerEnviromentId__c = 'HERA-TEST');
+        DocumentSendTracking__c documentSendTracking = new DocumentSendTracking__c();
+        documentSendTracking.EnvelopeId__c = 'resendDocusignTst';
+        insert documentSendTracking;
     }
 
     @isTest
@@ -99,5 +103,38 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         Test.stopTest();
     }
 
+    @isTest
+    static void handleContactPoint(){
+        Test.startTest();
+        Contact con = [SELECT Id FROM Contact LIMIT 1];
+        String result = HDT_LC_DocumentSignatureManager.handleContactPoint('email@email.com','3333333333',con.Id,'query');
+        result = HDT_LC_DocumentSignatureManager.handleContactPoint('email@email.com','3333333333',con.Id,'insert');
+        Boolean resultBool = String.isNotBlank(result)?true:false;
+        System.assert(resultBool, true);
+        Test.stopTest();
+    }
+
+    @isTest
+    static void resendDocusignEnvelopeTst()
+    {
+        List<DocumentSendTracking__c> documentSendTracking = [SELECT Id, EnvelopeId__c FROM DocumentSendTracking__c];
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_DocumentalIntegrationTstMock());
+        Test.startTest();
+            String result = HDT_LC_DocumentSignatureManager.resendDocusignEnvelope(documentSendTracking[0].Id);
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(result), 'ResendDocusignEnvelope test fallito');
+    }
+
+    @isTest
+    static void sendAdvanceDocumentationTst()
+    {
+        List<Order> orderList = [SELECT Id FROM Order];
+        String formParams = '{\"sendMode\" : \"Cartacea\",\"mode\" : \"Print\",\"Archiviato\" : \"Y\",\"TipoPlico\": \"MODULISTICA_B12\"}';
+        String context = 'DocumentazioneAnticipata';
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_DocumentalIntegrationTstMock());
+        Test.startTest();
+            HDT_LC_DocumentSignatureManager.sendAdvanceDocumentation(orderList[0].Id,context,formParams);
+        Test.stopTest();
+    }
     
 }

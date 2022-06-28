@@ -9,13 +9,25 @@ public inherited sharing class HDT_UTL_CaseApprovalProcess {
         Case c = cases[0];
         Approval.ProcessResult result;
 
+        List<Group> approvalGroup = [SELECT Id, (SELECT Id, UserOrGroupId FROM GroupMembers) FROM Group WHERE DeveloperName = 'HDT_PG_ApprovatoriPianoRata'];
+
+
         List<Id> approversIds = new List<Id>();
-        approversIds.add(UserInfo.getUserId());
+        for(GroupMember userMember : approvalGroup[0].GroupMembers)
+        {
+            if(!approversIds.contains(userMember.UserOrGroupId))
+            {
+                approversIds.add(userMember.UserOrGroupId);
+            }
+        }
+
+        System.debug(approversIds.size());
+        List<Id> approverIdList = new List<Id>{approversIds[0]};
 
         Approval.ProcessSubmitRequest req = new Approval.ProcessSubmitRequest();
         req.SetComments('Sottomissione ad Approvazione Piano Rate');
         req.setObjectId(c.Id);
-        req.setNextApproverIds(approversIds);
+        req.setNextApproverIds(approverIdList);
 
         result = Approval.process(req);
 
@@ -24,4 +36,4 @@ public inherited sharing class HDT_UTL_CaseApprovalProcess {
     }
 
 
-}   
+}
