@@ -295,28 +295,12 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>MarketOrigin__c</picklist>
-        <values>
-            <fullName>Default</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FUI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Libero</fullName>
-            <default>false</default>
-        </values>
+        <picklist>MarketOrigin__c</picklist>        
         <values>
             <fullName>Regolamentato</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Salvaguardia</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
+        </picklistValues>
     <picklistValues>
         <picklist>MeterClass__c</picklist>
         <values>
