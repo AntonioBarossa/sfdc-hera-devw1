@@ -202,7 +202,7 @@ public inherited sharing class HDT_UTL_EligibilityCriteria {
             return true;
         }
 
-        if(quoteLogin.contains(loginGroupName)){
+        if(quoteLogin != null && quoteLogin.contains(loginGroupName)){
             return true;
         } else {
             return false;
