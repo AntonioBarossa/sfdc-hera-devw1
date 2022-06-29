@@ -100,7 +100,7 @@ public inherited sharing class HDT_SRV_ScriptManager {
     
             }
     
-            List<AggregateResult> offerNames = [SELECT Product2.CategoryFamily__c FROM OrderItem WHERE Product2.ProductCode IN: offerCodes WITH SECURITY_ENFORCED GROUP BY Product2.CategoryFamily__c];
+            List<AggregateResult> offerNames = [SELECT CategoryFamily__c FROM Product2 WHERE ProductCode IN: offerCodes WITH SECURITY_ENFORCED GROUP BY CategoryFamily__c];
     
             String flowUrl = '';
             String nomeOfferta = '';

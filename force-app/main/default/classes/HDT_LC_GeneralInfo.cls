@@ -110,7 +110,7 @@ public inherited sharing class HDT_LC_GeneralInfo {
     System.debug('Channel '+Channel);
     System.debug('agentList '+agentList);
     if(agentList.size()==0){
-        throw new AuraHandledException('Per la tua utenza e per il canale selezionato non è censito un Id Commerciale. Contattare il proprio responsabile');
+        throw new AuraHandledException('Per la tua utenza e per il canale selezionato non è censito un Id Commerciale. Selezionane uno tramite il tasto Seleziona Agenzia');
     }
 
 

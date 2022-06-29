@@ -1249,7 +1249,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         String correctionRight = 'No';
         Boolean expiredCorrection = False;
         String correctionDocumentEmissionDate = null;
-        Decimal indemnityDueSendResponse = 0;
+        Decimal indemnityDueSendResponse = 1;
         String boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
         System.assertEquals('1', boxType, 'Indemnity Box Test OK');
 
@@ -1267,6 +1267,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         indemnityMotivation = null;
         correctionRight = 'Si';
         expiredCorrection = True;
+        indemnityDueSendResponse = 0;
         correctionDocumentEmissionDate = String.valueOf(Date.today());
         boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
         System.assertEquals('2', boxType, 'Indemnity Box Test OK');
@@ -1296,7 +1297,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         expiredCorrection = False;
         correctionDocumentEmissionDate = null;
         boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
-        System.assertEquals('1', boxType, 'Indemnity Box Test OK');
+        System.assertEquals('', boxType, 'Indemnity Box Test OK');
 
         complaintClassification = 'Rettifica Doppia Fatturazione';
         indemnityConfirmed = True;

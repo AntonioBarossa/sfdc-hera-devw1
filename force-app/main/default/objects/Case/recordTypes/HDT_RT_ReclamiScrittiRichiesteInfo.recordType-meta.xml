@@ -5860,6 +5860,30 @@
     <picklistValues>
         <picklist>FourthLevelComplaintClassification__c</picklist>
         <values>
+            <fullName>Evoluzioni automatiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PdR errato sulla fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>POD errato sulla fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimborsi - assegno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimborsi - mancato accredito/doppio pagamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>cambio contatore gestito in ritardo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>APP - Accessibilità canale</fullName>
             <default>false</default>
         </values>
@@ -6064,7 +6088,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Falso procurato</fullName>
+            <fullName>Falso procuratore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6252,7 +6276,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Prelivo abusivo</fullName>
+            <fullName>Prelievo abusivo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10100,7 +10124,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Importi per consumi risalenti a più di due anni</fullName>
+            <fullName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</fullName>
             <default>false</default>
         </values>
         <values>

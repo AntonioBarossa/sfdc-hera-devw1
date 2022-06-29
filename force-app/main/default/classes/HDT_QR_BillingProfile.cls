@@ -88,7 +88,17 @@ public inherited sharing class HDT_QR_BillingProfile {
 
         List<BillingProfile__c> records = [
             SELECT
-            Id
+            Id,
+            InvoicingPlace__c, 
+            InvoicingPostalCode__c, 
+            InvoicingCity__c, 
+            InvoicingStreetNumber__c, 
+            InvoicingCountry__c, 
+            //InvoicingStreetToponym__c, 
+            InvoicingStreetName__c, 
+            InvoicingStreetNumberExtension__c	,
+            InvoicingProvince__c,
+            BankAccountSignatoryLastName__c
             FROM BillingProfile__c
             WHERE ContractAccountCode__c = :contractAccount
             WITH SECURITY_ENFORCED

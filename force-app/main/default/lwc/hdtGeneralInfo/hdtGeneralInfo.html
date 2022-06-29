@@ -20,9 +20,35 @@
 
                             <lightning-input-field disabled onchange={handleDataCollection} class="slds-size_1-of-3"
                                 field-name="CreatedBy__c" value={currentUserName} variant="label-stacked"></lightning-input-field>
-                            <lightning-input-field required disabled={disabledInput} onchange={handleDataCollection} placeholder=""
-                                class="slds-size_1-of-3" data-id="SalesContact__c" field-name="SalesContact__c" variant="label-stacked"></lightning-input-field>
-                            
+                            <!-- <lightning-input-field required disabled={disabledInput} onchange={handleDataCollection} placeholder=""
+                                class="slds-size_1-of-3" data-id="SalesContact__c" field-name="SalesContact__c" variant="label-stacked"></lightning-input-field> -->
+                            <div if:false={disabledInput} class="slds-size_1-of-3">
+                                <label class="slds-form-element__label slds-no-flex"><abbr class="slds-required" title="required">*</abbr>Contatto di Vendita</label>
+                                <c-hdt-custom-lookup 
+                                    obj-name="AccountContactRelation" 
+                                    set-as-key="ContactId"
+                                    search-by="Contact.Name"
+                                    detail-fields="Roles"
+                                    icon-name="standard:contact"
+                                    filter={filterLookup}
+                                    onvalueselect={handleContactSelection}>
+                                </c-hdt-custom-lookup>
+                            </div>
+                            <div if:true={disabledInput} style="display: block !important;" class="slds-size_1-of-3">
+                                <label class="slds-form-element__label slds-no-flex"><abbr class="slds-required" title="required">*</abbr>Contatto di Vendita</label>
+                                <br>
+                                <span style="background-color: #F3F3F3;" class="slds-pill">
+                                    <span class="slds-pill__icon_container">
+                                        <slot>
+                                            <lightning-icon icon-name="standard:contact"></lightning-icon>
+                                        </slot>
+                                    </span>
+                                    <span title={valueObj} class="slds-pill__label">{valueObj}</span>
+                                </span>
+                                <!-- <lightning-pill class="read-only-pill" label={valueObj} name={valueObj}>
+                                    <lightning-icon icon-name="standard:contact" alternative-text="contact" ></lightning-icon>
+                                </lightning-pill> -->
+                            </div>
                             <lightning-input-field disabled class="slds-size_1-of-3" field-name="SalesContactRole__c" placeholder=""
                                 data-name="SalesContactRole__c" variant="label-stacked"> </lightning-input-field>
                             <lightning-input-field disabled required placeholder=""
