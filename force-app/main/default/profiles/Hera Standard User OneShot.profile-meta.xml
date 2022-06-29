@@ -36199,6 +36199,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>SBQQ__LookupData__c</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>SBQQ__PriceRule__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
