@@ -1470,7 +1470,7 @@
         </defaultConnector>
         <defaultConnectorLabel>noInstallazione</defaultConnectorLabel>
         <rules>
-            <name>isCITYBIKE_NUVOLA_DONNA_OB</name>
+            <name>hasInstallazione_1</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>ForEachOrderProduct_1.ProductName__c</leftValueReference>
@@ -1480,9 +1480,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>aumentaNuvolaDonna</targetReference>
+                <targetReference>setInstallazioneWallbox</targetReference>
             </connector>
-            <label>isCITYBIKE_NUVOLA_DONNA_OB</label>
+            <label>hasInstallazione</label>
         </rules>
     </decisions>
     <decisions>
@@ -1640,19 +1640,19 @@
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>isCITYBIKE_PRESTIGE_UOMO_OB</name>
+            <name>isMonopattinoElettrico</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>ForEachOrderProduct_2_0.ProductCode__c</leftValueReference>
+                <leftValueReference>ForEachOrderProduct_3.ProductCode__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>MONOP</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>aumentaContatorePrestigeUomo</targetReference>
+                <targetReference>assignMonopattinoElettrico</targetReference>
             </connector>
-            <label>isCITYBIKE_PRESTIGE_UOMO_OB</label>
+            <label>isMonopattinoElettrico</label>
         </rules>
     </decisions>
     <decisions>
@@ -4883,13 +4883,6 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                         <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
-                <conditions>
-                    <leftValueReference>GetOrder.ServicePoint__r.CommoditySector__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Gas</stringValue>
-                    </rightValue>
-                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -5179,13 +5172,6 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetOrder.ServicePoint__r.CommoditySector__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -7658,23 +7644,6 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <name>SANIFICARIA_SHIPPINGADDRESS_INB</name>
             <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>counterSanificatore_0_0</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <numberValue>1.0</numberValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>counterLampadadiRicarica_0_0</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <numberValue>1.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>SANIFICARIA_PHONE_INB</name>
@@ -7851,23 +7820,6 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <name>SANIFICARIA_SHIPPINGADDRESS</name>
             <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>counterSanificatore_0</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <numberValue>1.0</numberValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>counterLampadadiRicarica_0</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <numberValue>1.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>SANIFICARIA_PHONE</name>
