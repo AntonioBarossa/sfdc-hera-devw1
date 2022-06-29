@@ -8,6 +8,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
 	private  Id recordTypeD2DId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_VisitaD2D').getRecordTypeId();
 
     public override void beforeInsert(){
+        HDT_UTL_ActivityCustom.setConvertCloseStatus((List<wrts_prcgvr__Activity__c>) trigger.new);
         //Start>>> modifica marco.arci@webresults.it 11/10/21
         wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)
         wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
@@ -26,6 +27,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
   //	public override void afterUndelete(){}
     
     public override void beforeUpdate(){
+        HDT_UTL_ActivityCustom.setConvertCloseStatus((List<wrts_prcgvr__Activity__c>) trigger.new);
         //Start>>> modifica marco.arci@webresults.it 11/10/21
         wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)
         wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');

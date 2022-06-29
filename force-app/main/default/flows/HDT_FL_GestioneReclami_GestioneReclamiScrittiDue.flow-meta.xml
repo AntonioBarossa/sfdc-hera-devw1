@@ -220,13 +220,13 @@
                 <elementReference>$User.LoginChannel__c</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
+        <!--assignmentItems>
             <assignToReference>Get_Activity.Place__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>$User.Station__c</elementReference>
             </value>
-        </assignmentItems>
+        </assignmentItems-->
         <assignmentItems>
             <assignToReference>Get_Activity.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -938,6 +938,7 @@
             <targetReference>AssegnaValori_2</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>AssegnaValori_2</targetReference>
         </faultConnector>
         <inputReference>Get_Activity</inputReference>
@@ -1394,7 +1395,7 @@
             <targetReference>Get_Input_Case</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>

@@ -60,12 +60,12 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 			insert cases;
 
 			List<wrts_prcgvr__Activity__c> activityCustom=HDT_UTL_DataFactoryTst.createActivityCustom(2, false, accounts[0].Id);
-			activityCustom[0].Place__c='testPlace';
+			//activityCustom[0].Place__c='testPlace';
 			activityCustom[0].Case__c=cases[0].Id;
 			activityCustom[0].Order__c=orderWithPricebook[0].Id;
 			activityCustom[0].RecordTypeId=actCustDist;
 
-			activityCustom[1].Place__c='testPlace1';
+			//activityCustom[1].Place__c='testPlace1';
 			activityCustom[1].Case__c=cases[0].Id;
 			activityCustom[1].Order__c=orderWithPricebook[1].Id;
 			activityCustom[1].RecordTypeId=actCustDist;
@@ -88,7 +88,7 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 
 			List<wrts_prcgvr__Activity__c> tActivCust=[SELECT Id, Place__c
 			                                           FROM wrts_prcgvr__Activity__c
-			                                           WHERE Place__c='testPlace'];
+			                                           WHERE Order__r.RecordType.DeveloperName = 'HDT_RT_Default'];
 
 			Boolean riassegnaComCod=HDT_UTL_ActivityCustom.riassegnaComCod(tActivCust[0].Id, 'Standby per attesa cessazione contratto');
 
@@ -113,7 +113,7 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 
 			List<wrts_prcgvr__Activity__c> tActivCust=[SELECT Id, Place__c, Case__c, recordtypeid, Account__c
 			                                           FROM wrts_prcgvr__Activity__c
-			                                           WHERE Place__c='testPlace'];
+			                                           WHERE Order__r.RecordType.DeveloperName = 'HDT_RT_Default'];
 
 			Boolean cambiaPhaseComm=HDT_UTL_ActivityCustom.cambiaphaseComm(tActivCust[0].Id, 'Si');
 
@@ -175,7 +175,7 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 
 			List<wrts_prcgvr__Activity__c> tActivCust=[SELECT Id, Place__c
 			                                           FROM wrts_prcgvr__Activity__c
-			                                           WHERE Place__c='testPlace'];
+			                                           WHERE Order__r.RecordType.DeveloperName = 'HDT_RT_Default'];
 
 			Boolean validaActivityVocal=HDT_UTL_ActivityCustom.validaActivityVocal(tActivCust[0].Id, 'Si');
 
@@ -193,16 +193,20 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 		            FROM User
 		            WHERE Alias='crmuser'
 		            LIMIT 1];
-
+		List<wrts_prcgvr__Activity__c> tActivCust=[SELECT Id, Place__c
+					FROM wrts_prcgvr__Activity__c
+					WHERE Order__r.RecordType.DeveloperName = 'HDT_RT_OrderDossier'];
+		String validaActivityDocument=HDT_UTL_ActivityCustom.validaActivityDocument(tActivCust[0].Id, 'Si');
+		tActivCust[0].OwnerId = tUser.Id;
+		tActivCust[0].ManuallyReassigned__c = true;
+		update tActivCust;
 		System.runAs(tUser){
 
 			test.startTest();
 
-			List<wrts_prcgvr__Activity__c> tActivCust=[SELECT Id, Place__c
-			                                           FROM wrts_prcgvr__Activity__c
-			                                           WHERE Place__c='testPlace1'];
+			
 
-			string validaActivityDocument=HDT_UTL_ActivityCustom.validaActivityDocument(tActivCust[0].Id, 'Si');
+			validaActivityDocument=HDT_UTL_ActivityCustom.validaActivityDocument(tActivCust[0].Id, 'Si');
 			HDT_UTL_ActivityCustom.validaActivityDocument(tActivCust[0].Id, 'No');
 
 			test.stopTest();
@@ -237,16 +241,18 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 		            FROM User
 		            WHERE Alias='crmuser'
 		            LIMIT 1];
-
+		List<wrts_prcgvr__Activity__c> tActivCust=[SELECT Id, Place__c
+					FROM wrts_prcgvr__Activity__c
+					WHERE Order__r.RecordType.DeveloperName = 'HDT_RT_OrderDossier'];
+		String rejectActivityDocument=HDT_UTL_ActivityCustom.rejectActivityDocument(tActivCust[0].Id, 'Si');
+		tActivCust[0].OwnerId = tUser.Id;
+		tActivCust[0].ManuallyReassigned__c = true;
+		update tActivCust;
 		System.runAs(tUser){
 
 			test.startTest();
 
-			List<wrts_prcgvr__Activity__c> tActivCust=[SELECT Id, Place__c
-			                                           FROM wrts_prcgvr__Activity__c
-			                                           WHERE Place__c='testPlace1'];
-
-			string rejectActivityDocument=HDT_UTL_ActivityCustom.rejectActivityDocument(tActivCust[0].Id, 'Si');
+			rejectActivityDocument=HDT_UTL_ActivityCustom.rejectActivityDocument(tActivCust[0].Id, 'Si');
 			HDT_UTL_ActivityCustom.rejectActivityDocument(tActivCust[0].Id, 'No');
 
 			test.stopTest();
