@@ -1281,7 +1281,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento prestazione</stringValue>
+                <stringValue>Annullamento segnalazioni</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
