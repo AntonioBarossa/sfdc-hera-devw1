@@ -23,14 +23,7 @@ public inherited sharing class HDT_QBL_AnagAlignment implements Queueable, Datab
             if(anagAlignCase.Excises__c == null && String.isNotBlank(anagAlignCase.Taxes__c))
             {
                 List<HDT_ExciseTranscode__mdt> exciseTranscode = [SELECT Id, Excise__c FROM HDT_ExciseTranscode__mdt WHERE ExciseString__c = :anagAlignCase.Taxes__c];
-                if(!exciseTranscode.isEmpty())
-                {
-                    anagAlignCase.Excises__c = exciseTranscode[0].Excise__c;
-                }
-                else
-                {
-                    anagAlignCase.Excises__c = 0.0;
-                }
+                anagAlignCase.Excises__c = !exciseTranscode.isEmpty() ? exciseTranscode[0].Excise__c : 0.0;
             }
         } catch (Exception ex){
             System.debug(LoggingLevel.DEBUG, 'HDT_QBL_AnagAlignment: arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
