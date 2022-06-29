@@ -123,9 +123,26 @@ public inherited sharing class HDT_LC_SaleActions {
         quoteSrv.checkReadAccess('SBQQ__Status__c,SBQQ__Ordered__c,SBQQ__LineItemsGrouped__c,SBQQ__OrderByQuoteLineGroup__c');
         List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsForSaleSaveEvent(sale.Id); //quotes that have a status of not rejected
 
+        /**@frpanico check for activities
+         * Caricamento Manuale Siebel
+        */
+        Boolean ordered = true;
+        Integer currentStep = 4;
+        if(sale.isTransition__c)
+        {
+            String regex = '^D[0-9] - .*';
+            Pattern regexPattern = Pattern.compile(regex);
+            List<Sale__c> transitionSale = [SELECT Id, IsTransition__c, Account__c, Account__r.CustomerMarking__c FROM Sale__c WHERE Id = :sale.Id WITH SECURITY_ENFORCED];
+            if(!transitionSale.isEmpty() && regexPattern.matcher(transitionSale[0].Account__r.CustomerMarking__c).matches())
+            {
+                ordered = false;
+                currentStep = 50;
+                HDT_LC_SaleServiceContainer.siebelLoadingActivity(transitionSale[0].Id, transitionSale[0].Account__c, 'Sale__c');
+            }
+        }
         for (SBQQ__Quote__c quote : quoteList) {
             quote.SBQQ__Status__c = 'Chiusa';
-            quote.SBQQ__Ordered__c = true;
+            quote.SBQQ__Ordered__c = ordered;
             quote.SBQQ__LineItemsGrouped__c = true;
             quote.SBQQ__OrderByQuoteLineGroup__c = true;
             quote.CancellationReason__c = null;
@@ -135,7 +152,7 @@ public inherited sharing class HDT_LC_SaleActions {
         system.debug('quoteList: ' + quoteList);
 
         //4 - Update Sale
-        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Attiva', CampaignEleggibilityGroup__c = campaignElegibilityGroup, isTransition__c = sale.isTransition__c);
+        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Attiva', CampaignEleggibilityGroup__c = campaignElegibilityGroup, isTransition__c = sale.isTransition__c, CurrentStep__c = currentStep);
 
         //5 - SBQQ__QuoteLineGroup__c
         //Creazione di un QuoteLineGroup per ogni QuoteLine principale.

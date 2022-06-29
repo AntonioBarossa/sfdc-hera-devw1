@@ -170,6 +170,17 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>activityId</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>recordId</name>
+                </componentInstanceProperties>
+                <componentName>hdtActivityTrace</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>displayOption</name>
                     <value>CARD</value>
                 </componentInstanceProperties>

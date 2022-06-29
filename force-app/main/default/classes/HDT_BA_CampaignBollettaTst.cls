@@ -44,12 +44,17 @@ public class HDT_BA_CampaignBollettaTst {
                 i++;
             }
             insert contacts;
+
+            List<CommercialCode__c> CommCodes = HDT_UTL_DataFactoryTst.createCommCode(50, true);
             
             
             List<CampaignMember> campMembers = HDT_UTL_DataFactoryTst.createCampaignMember(false,camps[0].id,leads,contacts);
+            i = 0;
             for(CampaignMember c : campMembers){
                 c.ContractReference__c = 'testContractReference';
                 c.isWsBollettaInvoked__c = false;
+                c.PromoCommercialCode__c = CommCodes[i].Id;
+                i++;
             }
             insert campMembers;
 
@@ -60,21 +65,14 @@ public class HDT_BA_CampaignBollettaTst {
     
     @isTest
     static void test(){
-             
-        String campaignId = [SELECT id from Campaign where Name='Test Campaign' limit 1].id;     
-        List<CampaignMember> listaCMpreBatch = [SELECT id,isWsBollettaInvoked__c from CampaignMember where ContractReference__c = 'testContractReference'];
-        for(CampaignMember c : listaCMpreBatch)
-            c.isWsBollettaInvoked__c=false;
-        update listaCMpreBatch;
+        CampaignMember cmBefore = [SELECT id,isWsBollettaInvoked__c from CampaignMember WHERE isWsBollettaInvoked__c = FALSE LIMIT 1];
         
         Test.startTest();
         HDT_BA_CampaignBolletta cb = new HDT_BA_CampaignBolletta(); //Updated method signature
-        Database.executeBatch(cb,200);
+        Database.executeBatch(cb);
         Test.stopTest();
         
-        List<CampaignMember> listaCm = [SELECT id,isWsBollettaInvoked__c from CampaignMember where ContractReference__c = 'testContractReference' and isWsBollettaInvoked__c = true];              
-        
-        System.assertEquals(50, listaCM.size(), 'CampaignMembers field isWsBollettaInvoked__c were not set to true by the batch');
-        System.assertNotEquals(listaCMpreBatch[0].isWsBollettaInvoked__c, listaCM[0].isWsBollettaInvoked__c ,'CampaignMember field isWsBollettaInvoked__c was not updated by the batch');
+        CampaignMember cmAfter = [SELECT id,isWsBollettaInvoked__c from CampaignMember where id = :cmBefore.Id];
+        System.assertNotEquals(cmBefore.isWsBollettaInvoked__c,cmAfter.isWsBollettaInvoked__c,'CampaignMember field isWsBollettaInvoked__c not updated by the batch'); 
     }
 }

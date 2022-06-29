@@ -25,6 +25,8 @@ public class HDT_WS_InvioNumerazioniTst {
         List<Lead> leadList = HDT_UTL_DataFactoryTst.createLead(1, true);
         List<Campaign> campaignList = HDT_UTL_DataFactoryTst.createCampaign(1, true);
         List<CampaignMember> campaignMemberList = HDT_UTL_DataFactoryTst.createCampaignMember(true, campaignList[0].Id, leadList, contactList);
+        campaignMemberList[0].Agency__c = accList[0].Id;
+        update campaignMemberList;
 
         insert internalUser;
 
@@ -40,11 +42,11 @@ public class HDT_WS_InvioNumerazioniTst {
 
         String macroactivity = 'macro';
         String phonenumber = 'phone';
-        String cmId = [Select id from CampaignMember LIMIT 1].Id;
+        List<CampaignMember> cmId = [Select id, Agency__r.Name from CampaignMember LIMIT 1];
         
         test.startTest();
         
-        HDT_WS_Response res = HDT_WS_InvioNumerazioni.callService(macroactivity,phonenumber, cmId);
+        HDT_WS_Response res = HDT_WS_InvioNumerazioni.callService(macroactivity,phonenumber, cmId[0].Id, cmId[0].Agency__r.Name);
         
         test.stopTest();
         

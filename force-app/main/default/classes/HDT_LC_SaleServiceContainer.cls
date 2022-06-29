@@ -50,13 +50,16 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
     public static Map<String,Boolean> createSaleServiceItemTile(ServicePoint__c servicePoint, Sale__c sale, String oldSupplyType){
         
         Map<String,String> extraParams = new Map<String,String>();
+        Boolean message = false;
         boolean isTransition =HDT_UTL_Sales.isTransition(ServicePoint,sale);
         List<account> acc = [ SELECT CustomerMarking__c FROM account WHERE Id=:sale.Account__c WITH SECURITY_ENFORCED];
         String regex = '^D[0-9] - .*';
         Pattern regexPattern = Pattern.compile(regex);
-
+        /**@frpanico necessaria creazione activity
+         * Caricamento manuale in Siebel
+         */
         if ( isTransition && regexPattern.matcher(acc[0].CustomerMarking__c).matches() ){
-                throw new AuraHandledException('Impossibile effettuare vendita fuori ambito per cliente migrato. Necessario creare un nuovo cliente clone');
+            message = true;
         }
         
         if (hasUsoEnergiaChangedForEle(sale.Account__c, servicePoint, oldSupplyType,isTransition)) {
@@ -69,12 +72,37 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
         saleServiceItemSrv.createRecord(servicePoint, sale, extraParams);
         //boolean isTransition =HDT_UTL_Sales.isTransition(ServicePoint,sale);
         Map<String,Boolean> result = new Map<String,Boolean>{
-            'isTransition'=>isTransition
+            'isTransition'=>isTransition,
+            'message' => message
         };
         return result;
 
     }
     
+
+    /**@frpanico metodo creazione activity
+     * manuale
+     */
+    public static String siebelLoadingActivity(String recordId, String accountId, String objectType)
+    {
+        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+        activity.wrts_prcgvr__Status__c = 'Aperta';
+        activity.Account__c = accountId;
+        activity.ActivityStartTime__c = System.now();
+        activity.Type__c = 'Caricamento Manuale Siebel';
+        activity.DiscardCategory__c = 'Manuale';
+        if(objectType.equalsIgnoreCase('Order'))
+        {
+            activity.Order__c = recordId;
+        }
+        else if(objectType.equalsIgnoreCase('Sale__c'))
+        {
+            activity.Sale__c = recordId;
+        }
+        HDT_UTL_DatabaseService.insertSObject(activity);
+        return activity.Id != null ? activity.Id : '';
+    }
+
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Update Sale

@@ -1,20 +1,22 @@
-public with sharing class HDT_BA_CampaignBolletta implements Database.Batchable<CampaignMember>, Database.AllowsCallouts {
-    private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
+public with sharing class HDT_BA_CampaignBolletta implements Database.Batchable<sObject>, Database.AllowsCallouts {
 
-    public List<CampaignMember> campaignMembers;
-    public HDT_BA_CampaignBolletta(List<String> campaignIds) {
-        this.campaignMembers = [SELECT ContractReference__c, PromoCommercialCode__r.fullcode__c, Campaign.Name, Campaign.Description, Campaign.StaticTextMessageBill__c, Campaign.Channel__c FROM CampaignMember WHERE CampaignId IN :campaignIds AND ContractReference__c != null AND isWsBollettaInvoked__c = false AND Campaign.Channel__c INCLUDES ('Bolletta') WITH SECURITY_ENFORCED];
+    public Database.QueryLocator start(Database.BatchableContext bc) {
+        String query = 'SELECT ContractReference__c, PromoCommercialCode__r.fullcode__c, Campaign.Name, Campaign.Description, Campaign.StaticTextMessageBill__c, Campaign.Channel__c'
+        +' FROM CampaignMember'
+        +' WHERE ContractReference__c != null'
+        +' AND isWsBollettaInvoked__c = false'
+        +' AND PromoCommercialCode__c != null'
+        +' AND Campaign.Channel__c = \'Bolletta\''
+        +' WITH SECURITY_ENFORCED';
+        return Database.getQueryLocator(query);
     }
 
-    public Iterable<CampaignMember> start(Database.BatchableContext bc) {
-        return this.campaignMembers;
-    }
-
-    public void execute(Database.BatchableContext BC, List<CampaignMember> scope) {
+    public void execute(Database.BatchableContext BC, List<sObject> context) {
         List<CampaignMember> membersToUpdate = new List<CampaignMember>();
         List<HDT_WS_CampaignBolletta.HDT_WS_CampaignBollettaRequest> wsReqList = new List<HDT_WS_CampaignBolletta.HDT_WS_CampaignBollettaRequest>();
 
-        for (CampaignMember cm : scope) {
+        for (sObject obj : context) {
+                CampaignMember cm = (CampaignMember)obj;
                 HDT_WS_CampaignBolletta.HDT_WS_CampaignBollettaRequest wsReq = new HDT_WS_CampaignBolletta.HDT_WS_CampaignBollettaRequest();
                 wsReq.campaignId = cm.CampaignId;
                 wsReq.campaignName = cm.Campaign.Name;
@@ -28,10 +30,12 @@ public with sharing class HDT_BA_CampaignBolletta implements Database.Batchable<
         
         //WS call
         if (wsReqList.size() > 0) {
+            System.debug(wsReqList);
             HDT_WS_Response res = HDT_WS_CampaignBolletta.channelBolletta(wsReqList);
             System.debug(res);
             if (res.status != 'failed') {
-                for (CampaignMember cm : scope) {
+                for (sObject obj : context) {
+                    CampaignMember cm = (CampaignMember)obj;
                     CampaignMember newCm = new CampaignMember();
                     newCm.Id = cm.Id;
                     newCm.isWsBollettaInvoked__c = true;
@@ -41,10 +45,23 @@ public with sharing class HDT_BA_CampaignBolletta implements Database.Batchable<
                     update membersToUpdate;
                 }
             }
-        }        
+        }
     }
 
     public void finish(Database.BatchableContext bc){
-        System.debug('-------- finish batch');
+        System.debug('-------- finish batch HDT_BA_CampaignBolletta');
+        /*
+        List<CampaignMember> remainingContext = [
+            SELECT ContractReference__c, PromoCommercialCode__r.fullcode__c, Campaign.Name, Campaign.Description, Campaign.StaticTextMessageBill__c, Campaign.Channel__c 
+            FROM CampaignMember 
+            WHERE ContractReference__c != null
+            AND isWsBollettaInvoked__c = false
+            AND PromoCommercialCode__c != null
+            AND Campaign.Channel__c = 'Bolletta'
+            WITH SECURITY_ENFORCED];
+        if (remainingContext.size() > 0) {
+            System.scheduleBatch(new HDT_BA_CampaignBolletta(), 'HDT_BA_CampaignBolletta', 1, 100);
+        }
+        */
     }
 }

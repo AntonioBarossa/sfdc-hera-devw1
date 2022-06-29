@@ -833,7 +833,7 @@ handleAddressValuesIfSap(servicepointretrieveddata){
                     if(element.provincia !== undefined && element.provincia !== null && element.provincia !== ''){
                         dataForTableForn += element.provincia+ ',';
                     }
-                    if(element.estensCivico !== undefined && element.estensCivico !== null && element.estensCivico !== ''){
+                    if(element.estensCivico !== undefined && element.estensCivico !== null){
                         dataForTableForn += element.estensCivico + ',';
                     }
                     if(element.stato !== undefined && element.stato !== null && element.stato !== ''){
@@ -1572,7 +1572,8 @@ disabledverifyFieldsAddressDisabled(){
 
         console.log('connectedCallback indirizzo estero : ' + JSON.stringify(this.IndEstero));
         this.disableFieldByIndEstero();
-        if(this.processtype !== undefined && this.processtype!= null && this.processtype!=''){
+        if(this.processtype !== undefined && this.processtype!= null && this.processtype!='' && this.processtype!=='Reclamo Scritto/Rich. Info' && !this.processtype.localeCompare('Venditori') === -1){
+            console.log('Entering if with processtype >>> ' + this.processtype);
             this.disableAll=true;
             this.disableCodComuneSap=true;
             this.disableCap=true;

@@ -1,3 +1,6 @@
 .class1 {
     pointer-events: none; 
 }
+.read-only-pill .slds-pill__remove {
+    display: none !important;
+}

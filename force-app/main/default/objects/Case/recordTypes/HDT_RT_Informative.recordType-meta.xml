@@ -977,6 +977,10 @@
             <fullName>Multi</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>VAS</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CompanyOwner__c</picklist>
@@ -6063,7 +6067,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Falso procurato</fullName>
+            <fullName>Falso procuratore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6251,7 +6255,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Prelivo abusivo</fullName>
+            <fullName>Prelievo abusivo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7295,6 +7299,10 @@
         </values>
         <values>
             <fullName>Reclamo Scritto%2FRich%2E Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rettifica Consumi</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10283,7 +10291,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Importi per consumi risalenti a più di due anni</fullName>
+            <fullName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</fullName>
             <default>false</default>
         </values>
         <values>

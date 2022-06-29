@@ -23,8 +23,9 @@ public with sharing class HDT_UTL_AccountTst{
 			HDT_UTL_DataFactoryTst.createWebServiceConfiguration('BP_CA', 'test.com', 'post', 'testUser');
 			HDT_UTL_DataFactoryTst.createWebServiceCredential('testUser', '12345', 'usernameTest');
 
-			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-			HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
+			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(2, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+			List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
+			AccountContactRelation myAccConRel =  HDT_UTL_DataFactoryTst.createAccountContactRelation(true, accounts[1].Id, contacts[0].Id);
 		}
 	}
 
@@ -150,16 +151,21 @@ public with sharing class HDT_UTL_AccountTst{
 
 			Test.setMock(HttpCalloutMock.class, mock);
 
+			AccountContactRelation testAccConRel = [SELECT AccountId, ContactId, Roles, Account.Category__c FROM AccountContactRelation WHERE Roles = 'Titolare' LIMIT 1];
+
 			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, CustomerType__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
 			                    FROM Account
-			                    WHERE Name='test account0'];
+			                    WHERE Id=:testAccConRel.AccountId];
 
 			List<Contact> tCon=[SELECT Id, FirstName, MobilePhone, email, fiscalCode__c, CertifiedEmail__c, phone
 			                    FROM Contact
-			                    WHERE FirstName='test'];
+			                    WHERE Id=:testAccConRel.ContactId];
 
+			testAccConRel.Roles = 'Amministratore condominio';
+			update testAccConRel;
+			
 			HDT_UTL_Account.makeRequest(tAcc[0], tCon[0]);
-
+			
 			test.stopTest();
 
             List<Account> tResult = [SELECT Id, Code__c FROM Account WHERE Code__c = 'test' LIMIT 1];
