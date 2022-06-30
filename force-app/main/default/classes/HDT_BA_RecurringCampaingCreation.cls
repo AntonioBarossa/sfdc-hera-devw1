@@ -93,5 +93,42 @@ public with sharing class HDT_BA_RecurringCampaingCreation implements Database.B
         }
         HDT_SRV_Campaign.insertCampaigns(clonedRelatedCampaigns);
         HDT_SRV_Campaign.updateCampaigns(campaignToUpdate);
+
+        List <Campaign> campaignsForStatus=new List <Campaign>();
+
+        campaignsForStatus.addAll(clonedCampaigns);
+        campaignsForStatus.addAll(clonedRelatedCampaigns);
+
+        List<CampaignMemberStatus> campaignMemberStatuses= new List<CampaignMemberStatus>();
+        List<HDT_CampaignMemberStatus__mdt> campaignStatusMdt = HDT_QR_CampaignMemberStatusMetadata.getRecords();
+
+        for (campaign c:campaignsForStatus ){        
+            for(HDT_CampaignMemberStatus__mdt cmdt : campaignStatusMdt){
+                        if (
+                            (cmdt.Category__c == 'Entrambi' && cmdt.Channel__c == 'Tutti' && c.Channel__c!='Door to Door') ||
+                            (c.Category__c == 'Campagna CRM' && (cmdt.Category__c == 'Inbound' || cmdt.Category__c == 'Entrambi') && cmdt.Channel__c == 'Tutti') || (
+                                (c.Category__c == 'Campagna Outbound' && cmdt.Category__c == 'Outbound') && (
+                                    (c.Channel__c == 'Telefonico Outbound' && cmdt.Channel__c == 'Telefonico Outbound') ||
+                                    (c.Channel__c == 'Cartaceo' && cmdt.Channel__c == 'Cartaceo')
+                                )
+                            ) ||
+                            (c.Category__c == 'Campagna Marketing Cloud' && cmdt.Category__c == 'Marketing Cloud') || 
+                            (cmdt.Category__c == 'Outbound' && cmdt.Channel__c == 'Door to Door' && c.Channel__c=='Door to Door')
+                        ) {
+                            campaignMemberStatuses.add(new CampaignMemberStatus(
+                                CampaignId = c.Id,
+                                Label = cmdt.StatusName__c,
+                                HasResponded = cmdt.HasResponded__c,
+                                IsDefault = cmdt.Default__c
+                            ));
+                        }
+                    }
+            }
+                try {
+                    HDT_SRV_CampaignMemberStatus.createRecord(campaignMemberStatuses);
+                }
+                catch(Exception e) {
+                    System.debug(LoggingLevel.DEBUG, 'Andato in Eccezione');
+                }
     }
 }
