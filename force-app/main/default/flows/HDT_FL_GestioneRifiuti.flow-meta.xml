@@ -223,13 +223,6 @@
                 <stringValue>Segnalazioni</stringValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.Note__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getOldCase.Note__c</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Assign_Process_Type_0</targetReference>
         </connector>
@@ -461,13 +454,6 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>CONSULTA IL RIFIUTOLOGO</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.Note__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Indicare indirizzo completo solo se diverso da campo indirizzo precedente</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -1156,6 +1142,11 @@
             <targetReference>NextStep</targetReference>
         </connector>
         <fields>
+            <name>titolo</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Gestione Rifiuti&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;u&gt;Indicare indirizzo completo solo se diverso da campo indirizzo precedente&lt;/u&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
             <name>WizardLwc</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -1223,12 +1214,6 @@
                 <name>showReadOnly</name>
                 <value>
                     <elementReference>showIndirizziReadOnly</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelInputSection</name>
-                <value>
-                    <stringValue>Gestione Rifiuti</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
