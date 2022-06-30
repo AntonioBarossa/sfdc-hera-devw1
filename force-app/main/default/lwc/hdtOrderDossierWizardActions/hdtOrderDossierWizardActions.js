@@ -19,6 +19,7 @@ import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';import get
 import SIGNED_FIELD from '@salesforce/schema/Order.ContractSigned__c';
 //Il seguente campo è stato utilizzato per tracciare l'ultimo SignatureMethod inviato a docusign.
 import OLDSIGN_FIELD from '@salesforce/schema/Order.SignMode__c';
+import CHANNEL_FIELD from '@salesforce/schema/Order.Channel__c';
 import isOnlyAmend from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.isOnlyAmend';
 // TOOLBAR STUFF
 import { loadScript } from 'lightning/platformResourceLoader';
@@ -32,6 +33,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     isPreviewForbidden = false;
     currentStep = 2;
     loading = false;
+    channel = '';
     signatureMethod = '';
     isSaveButtonDisabled = false;
     isCancelButtonDisabled = false;
@@ -46,7 +48,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     isCommunity=false;
 
     get disablePrintButtonFunction() {
-        return this.isPrintButtonDisabled  || (this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare'));
+        return this.isPrintButtonDisabled  || (this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare' && (this.channel !== null && this.channel == 'Teleselling Outbound')));
     }
 
     get disablePreviewButton(){
@@ -56,7 +58,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     @wire(getPicklistValue,{objectApiName: 'Order', fieldApiName: 'SignMode__c'})
     activeValue;
 
-    @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD,OLDSIGN_FIELD] })
+    @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD,OLDSIGN_FIELD, CHANNEL_FIELD] })
     wiredParentOrder({ error, data }) {
         if (error) {
             let message = 'Unknown error';
@@ -76,9 +78,11 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             this.parentOrder = data;
             //var signed = this.parentOrder.fields.ContractSigned__c.value;
             this.signatureMethod = data.fields.SignatureMethod__c.value;
+            this.channel = data.fields.Channel__c.value;
             // 28/12/2021: commentata logica che disabilita il component documentale, poichè deve sempre essere visibile nel wizard.
             //this.enableDocumental = !signed;
             console.log('### Signature method >>> ' + this.signatureMethod)
+            console.log('### ParentOrder Channel >>> ' + this.channel);
             this.enableDocumental = this.signatureMethod !== 'Contratto già firmato'
         }
     }
@@ -268,7 +272,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                         this.loading = false;
                         this.showMessage('Attenzione','Errore nella composizione del plico','error');
                     }
-                    if(this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare')){
+                    if(this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare' && (this.channel !== null && this.channel == 'Telefono Outbound'))){
                         const toastSuccessMessage = new ShowToastEvent({
                             title: 'Successo',
                             message: 'Ordine sottomesso, in attesa validazione',
