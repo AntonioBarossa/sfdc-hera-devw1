@@ -1,6 +1,6 @@
 <template>
     <template if:true={recordId}>
-        <lightning-record-edit-form record-id={recordId} object-api-name={objectApiName} onload={loadedForm}>
+        <lightning-record-edit-form record-id={recordId} object-api-name={objectApiName}>
             <div class="slds-grid slds-wrap slds-m-top_small">
                 <lightning-input-field name="DeclarationDate__c" data-id='DeclarationDate__c' value={outputWrp.dateDichiarazione} field-name="DeclarationDate__c"
                     class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
