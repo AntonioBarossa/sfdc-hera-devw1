@@ -1,6 +1,6 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_QBL_AnagAlignment implements Queueable, Database.AllowsCallouts {
-    
+    private static HDT_QR_AnagAlignment anagAlignQr = new HDT_QR_AnagAlignment();
     private List<Case> anagAlignCases;
 
     public HDT_QBL_AnagAlignment(List<Case> anagAlignCases) {
@@ -24,6 +24,10 @@ public inherited sharing class HDT_QBL_AnagAlignment implements Queueable, Datab
             {
                 List<HDT_ExciseTranscode__mdt> exciseTranscode = [SELECT Id, Excise__c FROM HDT_ExciseTranscode__mdt WHERE ExciseString__c = :anagAlignCase.Taxes__c];
                 anagAlignCase.Excises__c = !exciseTranscode.isEmpty() ? exciseTranscode[0].Excise__c : 0.0;
+            }
+            if(anagAlignCase.RegionalAdditional__c == null && String.isNotBlank(anagAlignCase.Taxes__c))
+            {
+                anagAlignCase.RegionalAdditional__c = anagAlignQr.findRegionalAdditional(anagAlignCase.Taxes__c, anagAlignCase.SupplyCity__c, '');
             }
         } catch (Exception ex){
             System.debug(LoggingLevel.DEBUG, 'HDT_QBL_AnagAlignment: arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
