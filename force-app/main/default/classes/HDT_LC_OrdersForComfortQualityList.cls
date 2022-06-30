@@ -210,7 +210,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             ClosedByUsername__c=actAppo.ClosedByUsername__c,
             ClosingCreatorGroup__c = actAppo.ClosingCreatorGroup__c,
             ClosingUserChannel__c = actAppo.ClosingUserChannel__c,
-            Place__c = actAppo.Place__c,
+            //@ealpi valorizzato in apertura activity --> Place__c = actAppo.Place__c,
             ActivityEndTime__c = actAppo.ActivityEndTime__c
         );
     }
