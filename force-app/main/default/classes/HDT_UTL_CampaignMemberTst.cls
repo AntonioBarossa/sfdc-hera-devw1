@@ -367,8 +367,8 @@ public with sharing class HDT_UTL_CampaignMemberTst {
         Test.startTest();
             update cMember;
         Test.stopTest();
-        act = [SELECT Id,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c LIMIT 1];
-        System.assertEquals('Non Esitata', act.wrts_prcgvr__Status__c, 'Activity non correttamente gestita.');
+        List<AsyncApexJob> asyncJob = [SELECT Id FROM AsyncApexJob WHERE ApexClass.Name = 'HDT_BA_CampaignMemberManaged'];
+        System.assertEquals(1, asyncJob.size(), 'Activity non correttamente gestita.');
     }
 
 }
