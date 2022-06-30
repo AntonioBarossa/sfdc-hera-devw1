@@ -22,10 +22,12 @@ export default class HdtActiveRepentant extends LightningElement {
     @track period;
     skipCheck = false;
     disabled = false;
+    loading=true;
 
     @api dateDecorrenza;
     @api dateDichiarazione;
     @api city;
+    @api sottotipo;
 
     //variables from flow
     @api recordId;
@@ -35,6 +37,10 @@ export default class HdtActiveRepentant extends LightningElement {
 
     get isCase(){
         return this.objectApiName=="Case";
+    }
+
+    loadedForm(){
+        this.loading=false;
     }
 
     connectedCallback(){
@@ -73,15 +79,22 @@ export default class HdtActiveRepentant extends LightningElement {
     @api validate(){        
         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
         let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
-        let isValid = !this.validateDate(decorrenza, dichiarazione);
+        let message, isValid=false;
+        if([...this.template.querySelectorAll("lightning-input-field")].every(el=> (!el.required || el.value))){
+            isValid = !this.validateDate(decorrenza, dichiarazione);
+        }else{
+            message = 'Compilare campi obbligatori';
+        }
+        //let 
         this.outputWrp=this.outputObject();
         if(!isValid){
             window.sessionStorage.setItem(this.sessionid, JSON.stringify(this.outputWrp));
+            message = message? message : 'Verificare il ravvedimento operoso prima di procedere';
         }else{
             window.sessionStorage.removeItem(this.sessionid);
         }
         return { isValid : isValid, 
-            errorMessage: isValid? null : 'Verificare il ravvedimento operoso prima di procedere'
+            errorMessage: message? message : null
         };
     }
 
@@ -118,7 +131,7 @@ export default class HdtActiveRepentant extends LightningElement {
         console.log("Richiesta Subentro ");
 
         try{
-            let data = await getPeriods({ comune: this.city, sottotipo: "Subentro" });
+            let data = await getPeriods({ comune: this.city, sottotipo: this.sottotipo });
             let terms = await getTerms({ comune: this.city });
             if (data?.length) {
                 this.skipCheck=false;
@@ -200,22 +213,23 @@ export default class HdtActiveRepentant extends LightningElement {
         if (declarationDate.getTime() > this.limitDateY.getTime()) {
             console.log("Periodo non ravv Z");
             this.periodType ="Z";
-            this.showMessage("Attenzione!", this.period.PopupZ__c, " error");
+            this.showMessage("Attenzione!", this.period.PopupZ__c, " error", "sticky");
             return;
         } else {
             console.log("Periodo Ravvedibile Y");
             this.periodType ="Y";
             this.calculateMissedDue(terms, declarationDate);
-            this.showMessage("Attenzione!", this.period.PopupY__c, " error");
+            this.showMessage("Attenzione!", this.period.PopupY__c, " error", "sticky");
         }
     }
 
-    showMessage(title, message, variant) {
+    showMessage(title, message, variant, mode) {
         this.loading = false;
         const toastErrorMessage = new ShowToastEvent({
             title: title,
             message: message,
             variant: variant,
+            mode: mode
         });
         this.dispatchEvent(toastErrorMessage);
     }
