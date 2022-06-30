@@ -238,7 +238,7 @@
             <targetReference>GetOrderItems</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>Assign_Nomi_E_Famiglie_Di_Bonus_E_Promo</name>
         <dataType>String</dataType>

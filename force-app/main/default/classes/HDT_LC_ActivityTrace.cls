@@ -28,7 +28,7 @@ public with sharing class HDT_LC_ActivityTrace {
                 
             }
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            resultMap.put('error', e.getMessage());
         }
         return JSON.serialize(resultMap);
     }

@@ -2,10 +2,58 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
     <assignments>
+        <name>AllVas</name>
+        <label>AllVas</label>
+        <locationX>3086</locationX>
+        <locationY>1310</locationY>
+        <assignmentItems>
+            <assignToReference>ChildProcessTypeVas</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetOrderItem_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignAxa</name>
+        <label>assignAxa</label>
+        <locationX>4274</locationX>
+        <locationY>1886</locationY>
+        <assignmentItems>
+            <assignToReference>isAxa3</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>VasName</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignCaldaiaSicura</name>
+        <label>AssignCaldaiaSicura</label>
+        <locationX>5198</locationX>
+        <locationY>2222</locationY>
+        <assignmentItems>
+            <assignToReference>VasToDisplay</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>servizio di manutenzione programmata della caldaia Hera Caldaia Sicura</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LoopOrderItem</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>assignEstEnergy</name>
         <label>assignEstEnergy</label>
         <locationX>798</locationX>
-        <locationY>1526</locationY>
+        <locationY>2870</locationY>
         <assignmentItems>
             <assignToReference>salesCompanyToDisplay</assignToReference>
             <operator>Add</operator>
@@ -18,10 +66,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssignHeraAcqua</name>
+        <label>AssignHeraAcqua</label>
+        <locationX>4934</locationX>
+        <locationY>2222</locationY>
+        <assignmentItems>
+            <assignToReference>VasToDisplay</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>per l’adesione al servizio di assistenza e manutenzione dell’impianto idrico domestico Hera NoProblem Acqua</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LoopOrderItem</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>assignHeraComm</name>
         <label>assignHeraComm</label>
         <locationX>270</locationX>
-        <locationY>1526</locationY>
+        <locationY>2870</locationY>
         <assignmentItems>
             <assignToReference>salesCompanyToDisplay</assignToReference>
             <operator>Add</operator>
@@ -37,7 +101,7 @@
         <name>assignHeraCommMarche</name>
         <label>assignHeraCommMarche</label>
         <locationX>534</locationX>
-        <locationY>1526</locationY>
+        <locationY>2870</locationY>
         <assignmentItems>
             <assignToReference>salesCompanyToDisplay</assignToReference>
             <operator>Add</operator>
@@ -50,9 +114,89 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssignHeraContawatt</name>
+        <label>AssignHeraContawatt</label>
+        <locationX>4142</locationX>
+        <locationY>2222</locationY>
+        <assignmentItems>
+            <assignToReference>VasToDisplay</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>del dispositivo per la misurazione di consumi di energia elettrica Hera ContaWatt e  del  relativo servizio per il monitoraggio dei dati rilevati </stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LoopOrderItem</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignHeraGas</name>
+        <label>AssignHeraGas</label>
+        <locationX>4670</locationX>
+        <locationY>2222</locationY>
+        <assignmentItems>
+            <assignToReference>VasToDisplay</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>per l’adesione alla Polizza AXA Assistance Hera NoProblem Gas</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LoopOrderItem</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignHeraLed</name>
+        <label>AssignHeraLed</label>
+        <locationX>3614</locationX>
+        <locationY>2222</locationY>
+        <assignmentItems>
+            <assignToReference>VasToDisplay</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>KIT di lampadine LED da abbinare alle nostre offerte luce o gas </stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LoopOrderItem</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignHeraLuce</name>
+        <label>AssignHeraLuce</label>
+        <locationX>4406</locationX>
+        <locationY>2222</locationY>
+        <assignmentItems>
+            <assignToReference>VasToDisplay</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>per l’adesione alla Polizza AXA Assistance Hera NoProblem Luce</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LoopOrderItem</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignHerEBike</name>
+        <label>AssignHerEBike</label>
+        <locationX>3350</locationX>
+        <locationY>2222</locationY>
+        <assignmentItems>
+            <assignToReference>VasToDisplay</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>e-bike, biciclette a pedalata assistita equipaggiate di un motore elettrico</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LoopOrderItem</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignmentVariableFromLoop</name>
         <label>AssignmentVariableFromLoop</label>
-        <locationX>358</locationX>
+        <locationX>2998</locationX>
         <locationY>734</locationY>
         <assignmentItems>
             <assignToReference>containsSalesCompany</assignToReference>
@@ -62,7 +206,23 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>decisionTest</targetReference>
+            <targetReference>decisionSalesCompany</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignMonopattino</name>
+        <label>AssignMonopattino</label>
+        <locationX>3086</locationX>
+        <locationY>2222</locationY>
+        <assignmentItems>
+            <assignToReference>VasToDisplay</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Monopattino elettrico </stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LoopOrderItem</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -82,9 +242,41 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssignRicarica</name>
+        <label>AssignRicarica</label>
+        <locationX>5462</locationX>
+        <locationY>2222</locationY>
+        <assignmentItems>
+            <assignToReference>VasToDisplay</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>dispositivi di ricarica di veicoli elettrici Hera Ricarica</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LoopOrderItem</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignTermostato</name>
+        <label>AssignTermostato</label>
+        <locationX>3878</locationX>
+        <locationY>2222</locationY>
+        <assignmentItems>
+            <assignToReference>VasToDisplay</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>un termostato Netatmo, da abbinare alle nostre offerte gas</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LoopOrderItem</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>notContains_0</name>
         <label>notContains</label>
-        <locationX>446</locationX>
+        <locationX>3086</locationX>
         <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>salesCompany</assignToReference>
@@ -94,14 +286,39 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>LoopOrderChild</targetReference>
+            <targetReference>ProcessType</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Axa</name>
+        <label>Axa</label>
+        <locationX>4406</locationX>
+        <locationY>1766</locationY>
+        <defaultConnector>
+            <targetReference>VasName</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isAxa_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrderItem.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>AXA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>assignAxa</targetReference>
+            </connector>
+            <label>isAxa_1</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>callTypeDecision</name>
         <label>callTypeDecision</label>
         <locationX>182</locationX>
-        <locationY>1838</locationY>
+        <locationY>3182</locationY>
         <defaultConnector>
             <targetReference>Introduzione_Inbound</targetReference>
         </defaultConnector>
@@ -123,16 +340,16 @@
         </rules>
     </decisions>
     <decisions>
-        <name>decisionTest</name>
-        <label>decisionTest</label>
-        <locationX>358</locationX>
+        <name>decisionSalesCompany</name>
+        <label>decisionSalesCompany</label>
+        <locationX>2998</locationX>
         <locationY>854</locationY>
         <defaultConnector>
             <targetReference>notContains_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>containsTest</name>
+            <name>containsSC</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>salesCompany</leftValueReference>
@@ -142,16 +359,41 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>LoopOrderChild</targetReference>
+                <targetReference>ProcessType</targetReference>
             </connector>
-            <label>containsTest</label>
+            <label>containsSC</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>ProcessType</name>
+        <label>ProcessType</label>
+        <locationX>2998</locationX>
+        <locationY>1190</locationY>
+        <defaultConnector>
+            <targetReference>AllVas</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NotVas</defaultConnectorLabel>
+        <rules>
+            <name>Vas</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrderChild.ProcessType__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>VAS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetOrderItem_0</targetReference>
+            </connector>
+            <label>Vas</label>
         </rules>
     </decisions>
     <decisions>
         <name>salesCompanyDisplay</name>
         <label>salesCompanyDisplay</label>
         <locationX>666</locationX>
-        <locationY>1406</locationY>
+        <locationY>2750</locationY>
         <defaultConnector>
             <targetReference>LoopSalesCompany</targetReference>
         </defaultConnector>
@@ -227,6 +469,166 @@
             <label>isNull</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>VasName</name>
+        <label>VasName</label>
+        <locationX>4406</locationX>
+        <locationY>2102</locationY>
+        <defaultConnector>
+            <targetReference>LoopOrderItem</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isMonopattinoElettrico</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrderItem.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>MONOPATTINO ELETTRICO</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignMonopattino</targetReference>
+            </connector>
+            <label>isMonopattinoElettrico</label>
+        </rules>
+        <rules>
+            <name>isHeraEBike</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrderItem.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>HERA E-BIKE</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignHerEBike</targetReference>
+            </connector>
+            <label>isHeraEBike</label>
+        </rules>
+        <rules>
+            <name>isHeraLedKit</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrderItem.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>HERA LED KIT</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignHeraLed</targetReference>
+            </connector>
+            <label>isHeraLedKit</label>
+        </rules>
+        <rules>
+            <name>isTermostato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrderItem.ProductName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>TERMOSTATO</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignTermostato</targetReference>
+            </connector>
+            <label>isTermostato</label>
+        </rules>
+        <rules>
+            <name>isHeraContawatt</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrderItem.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>HERA CONTAWATT</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignHeraContawatt</targetReference>
+            </connector>
+            <label>isHeraContawatt</label>
+        </rules>
+        <rules>
+            <name>isHeraNoProblemLuce</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrderItem.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>HERA NO PROBLEM LUCE</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignHeraLuce</targetReference>
+            </connector>
+            <label>isHeraNoProblemLuce</label>
+        </rules>
+        <rules>
+            <name>isHeraNoProblemGas</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrderItem.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>HERA NO PROBLEM GAS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignHeraGas</targetReference>
+            </connector>
+            <label>isHeraNoProblemGas</label>
+        </rules>
+        <rules>
+            <name>isHeraNoProblemAcqua</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrderItem.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>HERA NO PROBLEM ACQUA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignHeraAcqua</targetReference>
+            </connector>
+            <label>isHeraNoProblemAcqua</label>
+        </rules>
+        <rules>
+            <name>isCaldaiaSicura</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrderItem.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>HERA CALDAIA SICURA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignCaldaiaSicura</targetReference>
+            </connector>
+            <label>isHeraCaldaiaSicura</label>
+        </rules>
+        <rules>
+            <name>isRicarica</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrderItem.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>HERA RICARICA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignRicarica</targetReference>
+            </connector>
+            <label>isRicarica</label>
+        </rules>
+    </decisions>
     <formulas>
         <name>SalesCompanyFormula</name>
         <dataType>String</dataType>
@@ -251,10 +653,24 @@
         </noMoreValuesConnector>
     </loops>
     <loops>
+        <name>LoopOrderItem</name>
+        <label>LoopOrderItem</label>
+        <locationX>2998</locationX>
+        <locationY>1646</locationY>
+        <collectionReference>GetOrderItem_0</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Axa</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>LoopOrderChild</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
         <name>LoopSalesCompany</name>
         <label>LoopSalesCompany</label>
         <locationX>182</locationX>
-        <locationY>1286</locationY>
+        <locationY>2630</locationY>
         <collectionReference>salesCompany</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -304,58 +720,50 @@
         <object>Order</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetOrderItem_0</name>
+        <label>GetOrderItem</label>
+        <locationX>2998</locationX>
+        <locationY>1526</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>LoopOrderItem</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OrderId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>LoopOrderChild.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>OrderItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <screens>
         <name>Introduzione_Inbound</name>
         <label>Introduzione Inbound</label>
         <locationX>314</locationX>
-        <locationY>1958</locationY>
+        <locationY>3302</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
-            <name>text_isLinear</name>
-            <fieldText>&lt;p&gt;{!Introduzione_isLinear}&lt;/p&gt;</fieldText>
+            <name>Introduzione_Inbound_3_Text_NIP</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[*** Inizio registrazione ***]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Per conto di &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!salesCompanyToDisplay}&lt;/span&gt; , le propongo le nostre offerte a mercato libero {!offerNameInput}.&lt;/p&gt;&lt;p&gt;Le ricordo che essere servito sul mercato libero dell’energia significa poter decidere quale fornitore e tipo di contratto scegliere.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;La informo che questa telefonata proviene dall’Italia.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da Lei richiesti, previa consultazione del Sistema di informazioni Creditizie e potranno essere comunicati al distributore ai fini dell’erogazione del servizio, di cui riceverà l’informativa dettagliata nel plico contrattuale che le invieremo per posta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che è intenzionato ad aderire alla nostra offerta a mercato libero &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!offerNameInput}&lt;/span&gt; per la sua abitazione, procedendo con la registrazione di questa telefonata, anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>isAxa</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue>Y</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>isVas</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Introduzione_Inbound_Aziende2</name>
-            <fieldText>&lt;p&gt;{!Introduzione_Inbound_Aziende2}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OrderData.CommercialProduct__c</leftValueReference>
+                    <leftValueReference>OrderData.ClientCategoryFormula__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Prezzo Netto</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OrderData.Account.Category__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
                         <stringValue>Famiglie</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>isVas</leftValueReference>
+                    <leftValueReference>ChildProcessTypeVas</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
@@ -364,57 +772,20 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Introduzione_Inbound_1_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!Introduzione_Inbound_1}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>Introduzione_Inbound_3_Text</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[*** Inizio registrazione ***]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Chiamo per conto di {!salesCompanyToDisplay} , per proporle le nostre offerte a mercato libero {!offerNameInput}. Se non vuole ricevere chiamate promozionali, può iscriversi al Registro pubblico degli abbonati.&lt;/p&gt;&lt;p&gt;Le ricordo che essere servito sul mercato libero dell’energia significa poter decidere quale fornitore e tipo di contratto scegliere.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La informo che questa telefonata proviene dall’Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da lei richiesti, previa consultazione del Sistema di informazioni Creditizie e potranno essere comunicati al distributore ai fini dell’erogazione del servizio, di cui riceverà l’informativa dettagliata nel plico contrattuale che riceverà per posta.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>isAxa</leftValueReference>
-                    <operator>EqualTo</operator>
+                    <leftValueReference>OrderData.ClientCategoryFormula__c</leftValueReference>
+                    <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Y</stringValue>
+                        <stringValue>Aziende</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>isVas</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Introduzione_Inbound_2_Text</name>
-            <fieldText>&lt;p&gt;{!Introduzione_Inbound_2}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>isVas</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>text1</name>
-            <fieldText>&lt;p&gt;Mi conferma che è intenzionato ad aderire alla nostra offerta a mercato libero {!offerNameInput} per la sua abitazione, procedendo con la registrazione di questa telefonata, anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OrderData.Account.Category__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Famiglie</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>isVas</leftValueReference>
+                    <leftValueReference>ChildProcessTypeVas</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
@@ -424,12 +795,41 @@
         </fields>
         <fields>
             <name>Vas_Introduction</name>
-            <fieldText>&lt;p&gt;[*** Inizio registrazione ***]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Chiamo per conto di {!salesCompanyToDisplay}, per la vendita di&amp;nbsp;{!offerNameInput} nel rispetto delle disposizione di cui al Codice del Consumo. Se non vuole ricevere chiamate promozionali, può iscriversi al Registro Pubblico degli abbonati.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La informo che questa telefonata proviene dall’Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per dare seguito all’ordine e potranno essere comunicati al fornitore del prodotto/servizio ai fini dell’erogazione dello stesso, di cui riceverà l’informativa dettagliata nel plico contrattuale che le invieremo.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[*** Inizio registrazione ***]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Chiamo per conto di {!salesCompanyToDisplay} , per la vendita {!VasToDisplay},&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;		La informo che questa telefonata proviene dall’Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per dare seguito all’ordine e potranno essere comunicati al fornitore del prodotto/servizio ai fini dell’erogazione dello stesso, di cui riceverà l’informativa dettagliata nel plico contrattuale che le invieremo.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>isVas</leftValueReference>
+                    <leftValueReference>OrderData.ClientCategoryFormula__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Aziende</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ChildProcessTypeVas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Introduzione_Vas_Famiglie_Inbound</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[*** Inizio registrazione ***]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Chiamo per conto di {!salesCompanyToDisplay} , per la vendita di {!VasToDisplay}, nel rispetto delle disposizione di cui al Codice del Consumo. Se non vuole ricevere chiamate promozionali, può iscriversi al Registro Pubblico degli abbonati.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•		La informo che questa telefonata proviene dall’Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per dare seguito all’ordine e potranno essere comunicati al fornitore del prodotto/servizio ai fini dell’erogazione dello stesso, di cui riceverà l’informativa dettagliata nel plico contrattuale che le invieremo.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.ClientCategoryFormula__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Famiglie</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ChildProcessTypeVas</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -444,44 +844,97 @@
         <name>Introduzione_Outbound</name>
         <label>Introduzione_Outbound</label>
         <locationX>50</locationX>
-        <locationY>1958</locationY>
+        <locationY>3302</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
-            <name>Introduzione_Outbound_1_Text</name>
-            <fieldText>&lt;p&gt;{!isLinear_Outbound}&lt;/p&gt;</fieldText>
+            <name>Introduzione_Outbound_Aziende</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[*** Inizio registrazione ***]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Chiamo per conto di {!salesCompanyToDisplay} , per proporle le nostre offerte a mercato libero {!offerNameInput}. Se non vuole ricevere chiamate promozionali, può iscriversi al Registro pubblico degli abbonati.&lt;/p&gt;&lt;p&gt;Le ricordo che essere servito sul mercato libero dell’energia significa poter decidere quale fornitore e tipo di contratto scegliere.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	La informo che questa telefonata proviene dall&apos;Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da lei richiesti, previa consultazione del Sistema di informazioni Creditizie e potranno essere comunicati al distributore ai fini dell’erogazione del servizio, di cui riceverà l’informativa dettagliata nel plico contrattuale che riceverà per posta.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>isAxa</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>OrderData.ClientCategoryFormula__c</leftValueReference>
+                    <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Y</stringValue>
+                        <stringValue>Aziende</stringValue>
                     </rightValue>
                 </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Introduzione_Outbound_isAxa_1_Text</name>
-            <fieldText>&lt;p&gt;{!Introduzione_Outbound_isAxa_1}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>isAxa</leftValueReference>
+                    <leftValueReference>ChildProcessTypeVas</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Y</stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
-            <name>Introduzione_Outbound_2_Text</name>
-            <fieldText>&lt;p&gt;{!Introduzione_Outbound_2}&lt;/p&gt;</fieldText>
+            <name>Introduzione_Outbound_Famiglie</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[*** Inizio registrazione ***]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Chiamo per conto di {!salesCompanyToDisplay} , per proporle le nostre offerte a mercato libero {!offerNameInput}, nel rispetto delle disposizione di cui al Codice del Consumo e di cui al Codice di Condotta Commerciale per la vendita di energia elettrica e di gas, di cui può prendere visione sul sito www.autorita.energia.it. Se non vuole ricevere chiamate promozionali, può iscriversi al Registro Pubblico degli abbonati.&lt;/p&gt;&lt;p&gt;Le ricordo che essere servito sul mercato libero dell’energia significa poter decidere quale fornitore e tipo di contratto scegliere.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•&amp;nbsp;&amp;nbsp;&amp;nbsp;La informo che questa telefonata proviene dall’Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da Lei richiesti, previa consultazione del Sistema di informazioni Creditizie e potranno essere comunicati al distributore ai fini dell’erogazione del servizio, di cui riceverà l’informativa dettagliata nel plico contrattuale che le invieremo nella modalità da Lei prescelta.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.ClientCategoryFormula__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Famiglie</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ChildProcessTypeVas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Introduzione_Vas_Aziende_Outbound</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[*** Inizio registrazione ***]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Chiamo per conto di {!salesCompanyToDisplay} , per la vendita {!VasToDisplay} ,&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La informo che questa telefonata proviene dall’Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per dare seguito all’ordine e potranno essere comunicati al fornitore del prodotto/servizio ai fini dell’erogazione dello stesso, di cui riceverà l’informativa dettagliata nel plico contrattuale che le invieremo.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.ClientCategoryFormula__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Aziende</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ChildProcessTypeVas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Introduzione_Vas_Famiglie_Outbound</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[*** Inizio registrazione ***]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Chiamo per conto di {!salesCompanyToDisplay} per la vendita di {!VasToDisplay} , nel rispetto delle disposizione di cui al Codice del Consumo. Se non vuole ricevere chiamate promozionali, può iscriversi al Registro Pubblico degli abbonati.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La informo che questa telefonata proviene dall’Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per dare seguito all’ordine e potranno essere comunicati al fornitore del prodotto/servizio ai fini dell’erogazione dello stesso, di cui riceverà l’informativa dettagliata nel plico contrattuale che le invieremo.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.ClientCategoryFormula__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Famiglie</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ChildProcessTypeVas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -562,6 +1015,16 @@
         </value>
     </variables>
     <variables>
+        <name>ChildProcessTypeVas</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <name>containsSalesCompany</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -574,6 +1037,16 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>isAxa3</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>isVas</name>
@@ -616,9 +1089,9 @@
         <isOutput>true</isOutput>
     </variables>
     <variables>
-        <name>testVariable</name>
+        <name>VasToDisplay</name>
         <dataType>String</dataType>
-        <isCollection>false</isCollection>
+        <isCollection>true</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
     </variables>

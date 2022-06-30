@@ -47,6 +47,19 @@ public with sharing class HDT_UTL_CampaignMemberTst {
 
             insert cmb;
 
+
+            //Copertura metodo Check Esito
+            HDT_UTL_DataFactoryTst.pClickInstance();
+            List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(2, false, acc[0].Id, 'Bozza');
+            orderList[0].RecordTypeId = constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+            orderList[0].QualityCall__c = true;
+            insert orderList[0];
+            orderList[1].ParentOrder__c = orderList[0].Id;
+            orderList[1].QualityCall__c = true;
+            insert orderList[1];
+            List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(1,false, acc[0].Id);
+            activities[0].Order__c = orderList[1].Id;
+            insert activities;
         }
 
     }
@@ -217,30 +230,6 @@ public with sharing class HDT_UTL_CampaignMemberTst {
     }
 
     @isTest
-    public static void testCreateCommercialCode(){
-
-        Campaign campaign = [SELECT Id, Channel__c FROM Campaign LIMIT 1];
-
-        System.debug('Campaign CCode-> ' + campaign);
-        campaign.Category__c = 'Campagna Outbound';
-        campaign.Channel__c = 'Bolletta';
-        campaign.CodeManagementModel__c = 'Per singolo Campaign Member';
-        campaign.CodeGenerationRule__c = 'PrefissoProgressivo';
-
-        update campaign;
-
-        List<CampaignMember> lstCampaignMember = [SELECT Id, CampaignId, PromoCommercialCode__c FROM CampaignMember WHERE CampaignId =: campaign.Id];
-
-        Test.startTest();
-
-            HDT_UTL_CampaignMember.createCommercialCode(lstCampaignMember);
-
-        Test.stopTest();
-        List<Commercial_Code_Batch_Context__c> context = [SELECT Id, CampaignId__c, CampaignMemberId__c FROM Commercial_Code_Batch_Context__c];
-        System.assert(context.size() > 0, 'Test Ended');
-    }
-
-    @isTest
     public static void testCampaignSuspension(){
 
         Boolean finished = false;
@@ -306,7 +295,7 @@ public with sharing class HDT_UTL_CampaignMemberTst {
         System.assertEquals(true, finished, 'Test Ended');
     }
 
-
+/*
     @isTest
     public static void doCallMeBackTest(){
 
@@ -336,7 +325,7 @@ public with sharing class HDT_UTL_CampaignMemberTst {
 
         System.assert(lstCampaignMember != null, 'lstCampaignMember è null');
     }
-
+*/
     @isTest
     public static void cancelContractTest(){
 
@@ -364,6 +353,22 @@ public with sharing class HDT_UTL_CampaignMemberTst {
 
         System.assert(rt != null, 'rt è null');
 
+    }
+
+    @isTest
+    public static void checkTipoEsitoTest(){
+        Campaign cmp = [SELECT Id  FROM Campaign WHERE AssignmentType__c = 'Peso Percentuale' LIMIT 1];
+        CampaignMember cMember = [SELECT Id, CampaignId, LeadId, PhoneNumber__c FROM CampaignMember WHERE CampaignId = :cmp.Id LIMIT 1];
+        wrts_prcgvr__Activity__c act = [SELECT Id FROM wrts_prcgvr__Activity__c LIMIT 1];
+        cMember.Status = 'Lotto scaduto';
+        cMember.RelatedActivity__c = act.Id; 
+        cMember.ResultType__c = 'Macchina';
+        insert new CampaignMemberStatus(Label = 'Lotto scaduto', HasResponded = true, sortOrder = 0, CampaignId = cmp.Id);
+        Test.startTest();
+            update cMember;
+        Test.stopTest();
+        act = [SELECT Id,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c LIMIT 1];
+        System.assertEquals('Non Esitata', act.wrts_prcgvr__Status__c, 'Activity non correttamente gestita.');
     }
 
 }
