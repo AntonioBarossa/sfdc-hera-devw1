@@ -2,7 +2,7 @@
   @description       : 
   @author            : Giacinto Florio
   @group             : 
-  @last modified on  : 24-06-2022
+  @last modified on  : 27-06-2022
   @last modified by  : Giacinto Florio
 -->
 <template>
@@ -109,7 +109,7 @@
                                         <lightning-button if:true={section.readingButton} class="slds-p-around_small" value={section.name} disabled={readingDisabled} onclick={handleNext} label="Inserisci Autolettura" name='goReading' variant="brand" icon-name="utility:right"></lightning-button>
                                         <lightning-button if:false={section.firstStep} value={section.name} onclick={handlePrevious} label="Indietro" variant="brand" icon-name="utility:left" class="slds-m-left_x-small"></lightning-button>
                                         <template if:true={section.hasAllegatiObbligatori}>
-                                            <c-hdt-attachment-manager-button record-id={section.recordId} onvalidate_attachments={handleValidateAttachments} onclose_attachment_manager={handleCloseAttachment} additional-attachments={additionalAttachments}></c-hdt-attachment-manager-button>
+                                            <c-hdt-attachment-manager-button record-id={section.recordId} parent-record-id={order.ParentOrder__c} onvalidate_attachments={handleValidateAttachments} onclose_attachment_manager={handleCloseAttachment} additional-attachments={additionalAttachments}></c-hdt-attachment-manager-button>
                                         </template>
                                         <template if:true={section.hasVerificaAccertamento}>
                                             <c-hdt-active-repentant city={order.ServicePoint__r.SupplyCity__c} date-dichiarazione={order.Sale__r.CreatedDate} onrequest_data={handleActiveRepentantStart} onend_algorithm={handleActiveRepentantFinish}></c-hdt-active-repentant>
