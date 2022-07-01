@@ -220,7 +220,7 @@ public inherited sharing class HDT_QR_CampaignMember {
             Id,
             Name
             FROM Account
-            WHERE RecordType.DeveloperName = 'HDT_RT_Partner' 
+            WHERE RecordType.DeveloperName = 'HDT_RT_Partner' AND owner.Name ='Outbound Channel Manager'
             WITH SECURITY_ENFORCED ORDER BY Name asc
         ];
     }
