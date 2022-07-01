@@ -12,6 +12,7 @@
         <targetConfig targets="lightning__FlowScreen">
 
             <property name="recordId" type="String" label="recordId" description="Id del Record" role="inputOnly"/>
+            <property name="objectName" type="String" label="objectName" description="Nome dell'Object" role="inputOnly"/>
             <property name="paramsWrap" type="apex://HDT_LC_AttachmentManager" label="paramsWrap" description="Parametri allegati" role="inputOnly"/>
             <property name="additional" type="String" label="additionalAttachment" description="Allegati aggiuntivi"/>
             <property name="required" type="String" label="requiredAttachment" description="Allegati Obbligatori" role="outputOnly"/>
