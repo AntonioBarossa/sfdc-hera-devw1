@@ -271,11 +271,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CaseID__c.ModeSendPaperlessCode__c</field>
-            <table>SMSTracking__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>CaseID__c.Phase__c</field>
             <table>SMSTracking__c</table>
         </columns>

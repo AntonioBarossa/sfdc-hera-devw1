@@ -29,12 +29,18 @@ global with sharing class ConnectorEntityController {
 				when 'Outbound' {
 					activity.Type__c = 'Chiamata Outbound';
 					// activity.CallCenterNumber__c = (String) message.get('ANI');
-					activity.ClientNumber__c = message.get('DNIS') != null ? ((String) message.get('DNIS')).removeStart('0') : null;
+					//activity.ClientNumber__c = message.get('DNIS') != null ? ((String) message.get('DNIS')).removeStart('0') : null;
+					
+					//AF RIMOSSA ISTRUZIONE removeStart('0') in quanto rimuovendo lo 0 non veniva fatto il match con i numeri presenti in SFDC
+					activity.ClientNumber__c = message.get('DNIS') != null ? (String) message.get('DNIS') : null;
 				}
 				when 'Inbound' {
 					activity.Type__c = 'Chiamata Inbound';
 					// activity.CallCenterNumber__c = (String) message.get('DNIS');
-					activity.ClientNumber__c = message.get('ANI') != null ? ((String) message.get('ANI')).removeStart('0') : null;
+					//activity.ClientNumber__c = message.get('ANI') != null ? ((String) message.get('ANI')).removeStart('0') : null;
+					
+					//AF RIMOSSA ISTRUZIONE removeStart('0') in quanto rimuovendo lo 0 non veniva fatto il match con i numeri presenti in SFDC
+					activity.ClientNumber__c = message.get('ANI') != null ? (String) message.get('ANI') : null;
 				}
 			}
 
@@ -74,14 +80,19 @@ global with sharing class ConnectorEntityController {
 	global static String closeActivity(String jsonMessage) {
 		Map<String,Object> message = (Map<String,Object>) JSON.deserializeUntyped(jsonMessage);
 		Map<String,Object> attachdata = (Map<String,Object>) message.get('attachdata');
-
+		System.debug('#message ' +message);
+		System.debug('#message JSON ' + jsonMessage);
+		System.debug('#attachdata JSON ' + json.serialize(attachdata));
+		System.debug('#attachdata ' + attachdata);
 		try {
+			Decimal callDuration = (Decimal) message.get('Duration');
+			callDuration = callDuration != null? callDuration/60:0;
 			wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
 				Id = (String) attachdata.get('sf_activity_id'),
 				wrts_prcgvr__Status__c = 'Chiusa',
 				ActivityEndTime__c = Datetime.now(),
 				CallEndTime__c = Datetime.now(),
-				CallDuration__c = (Decimal) message.get('Duration'),
+				CallDuration__c = callDuration,
 				RecordingLink__c = (String) attachdata.get('URLREC'),
 				WaitingTime__c = 0 // WIP
 			);

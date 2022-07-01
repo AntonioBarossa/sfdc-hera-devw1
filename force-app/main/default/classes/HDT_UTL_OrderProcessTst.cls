@@ -161,6 +161,12 @@ public with sharing class HDT_UTL_OrderProcessTst {
             childOrders[7].ProcessType__c = 'Switch in Ele';
             insert childOrders;
 
+            List<ServiceRequest__c> myServiceRequestList = HDT_UTL_DataFactoryTst.createServiceRequest(1, false);
+            myServiceRequestList[0].Order__c = childOrders[4].Id;
+            myServiceRequestList[0].NextPhase__c = 'Esportazione VS Siebel';
+            insert myServiceRequestList;
+
+
             List<AgentMatrix__c> agMatrixList = HDT_UTL_DataFactoryTst.createAgentMatrix(1, false, 'Telefono');
             agMatrixList[0].AgencyCode__c = 'AgencyCode';
             agMatrixList[0].IsMonitoring__c = true;
@@ -302,7 +308,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             ordersOld[0].Phase__c = 'Documentazione validata';
             update ordersOld;
 
-            List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+            List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId, VasSubtype__c,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
                                             Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
                                     FROM Order 
@@ -311,6 +317,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             ordersNew[0].isTransition__c = false;
             ordersNew[0].Phase__c = 'Comunicazione Verso Heroku';
             ordersNew[0].PhaseStory__c = '';
+            ordersNew[0].VasSubtype__c = 'HERA LED 1 KIT V2';
             update ordersNew;
 
             HDT_UTL_OrderProcess.salesProcessManagementBefore(ordersNew, ordersOld);
@@ -914,7 +921,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             List<Order> ordTestUno = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId FROM Order WHERE Phase__c = 'Sequenzializzato' LIMIT 1];
 
 
-            List<Order> orderList = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId, isTransition__c FROM Order WHERE ParentOrder__c != null AND Phase__c != 'Sequenzializzato' LIMIT 1];
+            List<Order> orderList = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId, isTransition__c FROM Order WHERE ParentOrder__c != null AND Phase__c = 'Documentazione Validata' LIMIT 1];
             orderList[0].SiebelStatus__c = 'Annullato';
 
             Order helpOrd = new Order();

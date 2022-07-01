@@ -218,6 +218,11 @@
                 <default>false</default>
                 <label>Venduto da</label>
             </value>
+            <value>
+                <fullName>FriendCode__c</fullName>
+                <default>false</default>
+                <label>Codice Amico</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -405,6 +410,10 @@
             <controllingFieldValue>Quote</controllingFieldValue>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
             <valueName>CommercialId__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>FriendCode__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>

@@ -1,53 +1,55 @@
 ({
     openWizardForCase : function(component,event) {
         console.log('@@@working in progress...');
-        console.log('@@@@openWizardForOrder' );
+        console.log('@@@@openWizardForCase' );
         let workspaceAPI = component.find("workspace");
         let recordId = component.get("v.recordId");
         let url = '/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__id='+recordId+'&c__flowName=HDT_FL_PostSalesDiscardDispatch';
         const that = this;
+        
+        let parentId;
+        workspaceAPI.getAllTabInfo().then(function(response) {
+            console.log('----------');
+            response.forEach((element) => {
+                if(element.pageReference.type === 'standard__recordPage'){
+                    
+                    if(element.pageReference.attributes.recordId === recordId){
+                        parentId = element.tabId;
+                    }
+                    
+                }
+            });
+            console.log('----------');
+
+        }).catch(function(error) {
+            console.log(error);
+        });
+
         workspaceAPI.getFocusedTabInfo().then(function(response) {
             let focusedTabId = response.parentTabId;
-            if (focusedTabId){
-                workspaceAPI.openSubtab({
-                    parentTabId: focusedTabId,
-                    url: url,
-                    focus: true
-                }).then(function(response) {
-                    console.log('@@@@then openSubTab');
-                    workspaceAPI.setTabLabel({
-                        tabId: response,
-                        label: "Processo PostSales"
-                    });
-                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
-                    dismissActionPanel.fire();
-                })
-                .catch(function(error) {
-                    console.log('@@@@catch openSubTab');
-                    that.showAlert(component,JSON.stringify(error),'error','Attenzione!');
-                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
-                    dismissActionPanel.fire();
-                });
-            }else{
-                workspaceAPI.openTab({
-                    url: url,
-                    focus: true
-                }).then(function(response) {
-                    console.log('@@@@then openSubTab');
-                    workspaceAPI.setTabLabel({
-                        tabId: response,
-                        label: "Processo PostSales"
-                    });
-                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
-                    dismissActionPanel.fire();
-                })
-                .catch(function(error) {
-                    console.log('@@@@catch openSubTab');
-                    that.showAlert(component,JSON.stringify(error),'error','Attenzione!');
-                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
-                    dismissActionPanel.fire();
-                });
+            if (!focusedTabId){
+                focusedTabId = parentId;
             }
+            
+            workspaceAPI.openSubtab({
+                parentTabId: focusedTabId,
+                url: url,
+                focus: true
+            }).then(function(response) {
+                console.log('@@@@then openSubTab');
+                workspaceAPI.setTabLabel({
+                    tabId: response,
+                    label: "Processo PostSales"
+                });
+                var dismissActionPanel = $A.get("e.force:closeQuickAction");
+                dismissActionPanel.fire();
+            })
+            .catch(function(error) {
+                console.log('@@@@catch openSubTab');
+                that.showAlert(component,JSON.stringify(error),'error','Attenzione!');
+                var dismissActionPanel = $A.get("e.force:closeQuickAction");
+                dismissActionPanel.fire();
+            });
         })
         .catch(function(error) {
             console.log('@@@@catch getFocusTabInfo');
@@ -241,48 +243,50 @@
         let objectToCancel = component.get('v.objectToCancell');
         let url = '/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__id='+recordId+'&c__flowName=HDT_FL_GestioneAnnullamento&c__sObjectRecordToCancell='+objectToCancel+'&c__processType=Annullamento+prestazione&c__discardRework=true';
         const that = this;
+        let activityId = component.get('v.recordId');
+        let parentId;
+        workspaceAPI.getAllTabInfo().then(function(response) {
+            console.log('----------');
+            response.forEach((element) => {
+                if(element.pageReference.type === 'standard__recordPage'){
+                    
+                    if(element.pageReference.attributes.recordId === activityId){
+                        parentId = element.tabId;
+                    }
+                    
+                }
+            });
+            console.log('----------');
+
+        }).catch(function(error) {
+            console.log(error);
+        });
+
+
         workspaceAPI.getFocusedTabInfo().then(function(response) {
             let focusedTabId = response.parentTabId;
-            if (focusedTabId){
-                workspaceAPI.openSubtab({
-                    parentTabId: focusedTabId,
-                    url: url,
-                    focus: true
-                }).then(function(response) {
-                    console.log('@@@@then openSubTab');
-                    workspaceAPI.setTabLabel({
-                        tabId: response,
-                        label: "Wizard Annullamento"
-                    });
-                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
-                    dismissActionPanel.fire();
-                })
-                .catch(function(error) {
-                    console.log('@@@@catch openSubTab');
-                    that.showAlert(component,JSON.stringify(error),'error','Attenzione!');
-                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
-                    dismissActionPanel.fire();
-                });
-            }else{
-                workspaceAPI.openTab({
-                    url: url,
-                    focus: true
-                }).then(function(response) {
-                    console.log('@@@@then openSubTab');
-                    workspaceAPI.setTabLabel({
-                        tabId: response,
-                        label: "Wizard Annullamento"
-                    });
-                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
-                    dismissActionPanel.fire();
-                })
-                .catch(function(error) {
-                    console.log('@@@@catch openSubTab');
-                    that.showAlert(component,JSON.stringify(error),'error','Attenzione!');
-                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
-                    dismissActionPanel.fire();
-                });
+            if (!focusedTabId){
+                focusedTabId = parentId;
             }
+            workspaceAPI.openSubtab({
+                parentTabId: focusedTabId,
+                url: url,
+                focus: true
+            }).then(function(response) {
+                console.log('@@@@then openSubTab');
+                workspaceAPI.setTabLabel({
+                    tabId: response,
+                    label: "Wizard Annullamento"
+                });
+                var dismissActionPanel = $A.get("e.force:closeQuickAction");
+                dismissActionPanel.fire();
+            })
+            .catch(function(error) {
+                console.log('@@@@catch openSubTab');
+                that.showAlert(component,JSON.stringify(error),'error','Attenzione!');
+                var dismissActionPanel = $A.get("e.force:closeQuickAction");
+                dismissActionPanel.fire();
+            });
         })
         .catch(function(error) {
             console.log('@@@@catch getFocusTabInfo');
