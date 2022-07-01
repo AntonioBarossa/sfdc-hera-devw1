@@ -36,5 +36,8 @@ export default class HdtAssignAccountToMe extends LightningElement {
     closeModal() {
         this.showSpinner= false;
         this.dispatchEvent(new CloseActionScreenEvent());
+        setTimeout(() => {
+             eval("$A.get('e.force:refreshView').fire();");
+        }, 1000);
     }
 }

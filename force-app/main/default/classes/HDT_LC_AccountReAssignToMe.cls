@@ -22,7 +22,11 @@ public with sharing class HDT_LC_AccountReAssignToMe {
             catch (Exception ex) {
                 retVal = ex.getMessage();
             }
+            return retVal;
         }
-        return retVal;
+        else {
+            retVal = 'Errore. Assegnazione non riuscita.';
+            return retVal;
+        }
     }
 }
