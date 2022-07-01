@@ -293,7 +293,8 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             }
 
             system.debug(LoggingLevel.DEBUG, 'HDT_VFC_InputWrapperDetail 2 ---> ' + JSON.serialize(iwd)); 
-
+            String separator =  String.isBlank(act.Order__r.Account?.CustomerCode__c)? ',':' ';
+            
             HDT_WS_CreditCheckRequest iw = new HDT_WS_CreditCheckRequest();
             iw.sistema = 'eEnergy';
             iw.caso = 'Transazionale';
@@ -304,7 +305,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             iw.account = 'AccountCommercialePRM';
             iw.jobTitle = act.Order__r.ChannelTransCode__c;
             iw.internalCustomerId = act.Order__r.Account?.CustomerCode__c;
-            iw.companyName = String.isNotBlank(act.Order__r.Account?.FirstName__c)? act.Order__r.Account.FirstName__c+' '+act.Order__r.Account.LastName__c : act.Order__r.Account?.LastName__c;
+            iw.companyName = String.isNotBlank(act.Order__r.Account?.FirstName__c)? act.Order__r.Account.FirstName__c+separator+act.Order__r.Account.LastName__c : act.Order__r.Account?.LastName__c;
             iw.externalCustomerId = String.isNotBlank(act.Order__r.Account?.FiscalCode__c)? act.Order__r.Account.FiscalCode__c : act.Order__r.Account?.VATNumber__c;
             iw.secondaryCustomerId = act.Order__r.Account.VATNumber__c;
             iw.bpClass =  bpClass;
