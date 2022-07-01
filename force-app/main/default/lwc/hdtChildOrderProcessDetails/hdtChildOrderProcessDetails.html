@@ -2,7 +2,7 @@
   @description       : 
   @author            : Giacinto Florio
   @group             : 
-  @last modified on  : 27-06-2022
+  @last modified on  : 30-06-2022
   @last modified by  : Giacinto Florio
 -->
 <template>
@@ -93,6 +93,11 @@
                                 </template> 
                                 
                                 <div class="slds-clearfix slds-p-around_small">
+                                    <div class="slds-float_left">
+                                        <template if:true={section.hasVerificaAccertamento}>
+                                            <p><lightning-formatted-url value="https://gerav.bingest.net"  label="Supporto al Ravvedimento Operoso" target="_blank" ></lightning-formatted-url></p>
+                                        </template>
+                                    </div>
                                     <div class="slds-float_right">
                                         <template if:true={section.hasCalculateButton}>
                                             <c-hdt-calculate-estimated-cost record-id={section.recordId} oncalculatecost={getFieldsForEstimatedCost}></c-hdt-calculate-estimated-cost>
@@ -112,7 +117,7 @@
                                             <c-hdt-attachment-manager-button record-id={section.recordId} parent-record-id={order.ParentOrder__c} onvalidate_attachments={handleValidateAttachments} onclose_attachment_manager={handleCloseAttachment} additional-attachments={additionalAttachments}></c-hdt-attachment-manager-button>
                                         </template>
                                         <template if:true={section.hasVerificaAccertamento}>
-                                            <c-hdt-active-repentant city={order.ServicePoint__r.SupplyCity__c} date-dichiarazione={order.Sale__r.CreatedDate} onrequest_data={handleActiveRepentantStart} onend_algorithm={handleActiveRepentantFinish}></c-hdt-active-repentant>
+                                           <c-hdt-active-repentant city={order.ServicePoint__r.SupplyCity__c} sottotipo="Subentro" date-dichiarazione={order.Sale__r.CreatedDate} onrequest_data={handleActiveRepentantStart} onend_algorithm={handleActiveRepentantFinish}></c-hdt-active-repentant>
                                         </template>
                                         <lightning-button if:false={section.lastStep} value={section.name} onclick={handleNext} label="Avanti" variant="brand" class="slds-m-left_x-small" icon-name="utility:right"></lightning-button>
                                     </div>

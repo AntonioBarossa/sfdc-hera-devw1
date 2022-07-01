@@ -91,6 +91,7 @@ export default class HdtCheckAssessments extends LightningElement {
                                 CategoriaAccertata : element.CategoriaAccertata
                             });
                         });
+                        this.data.sort(this.sortBy('NrAtto', -1));
                     }
                 }catch(e){
                     console.error(e);

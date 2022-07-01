@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 22-06-2022
+ * @last modified on  : 01-07-2022
  * @last modified by  : Giacinto Florio
 **/
 public with sharing class HDT_LC_CheckAssessments {
@@ -64,6 +64,6 @@ public with sharing class HDT_LC_CheckAssessments {
   @AuraEnabled(cacheable=true)
     public static String handleSearch(String cf_piva, String comune_fornitura, String tipo_persona) {
       String response = '';
-      return '{"data" : [{"NrAtto" : "1","DataAtto" : "2020-01-01","TipoTributo" : "3","AccertamentoPer" : "4","Stato" : "5","BaseDati" :"6","DataInizio" :"2010-01-01","DataFine" :"8","Soggetto" :"9","Indirizzo" :"10","Civico" :"11","Contratto" :"12","SuperficieAccertata" :"13","CategoriaAccertata" :"14"},{"NrAtto" : "2","DataAtto" : "2021-01-01","TipoTributo" : "23","AccertamentoPer" : "24","Stato" : "25","BaseDati" :"6","DataInizio" :"2011-01-01","DataFine" :"8","Soggetto" :"9","Indirizzo" :"10","Civico" :"11","Contratto" :"12","SuperficieAccertata" :"13","CategoriaAccertata" :"14"},{"NrAtto" : "3","DataAtto" : "2022-01-01","TipoTributo" : "33","AccertamentoPer" : "34","Stato" : "35","BaseDati" :"6","DataInizio" :"2012-01-01","DataFine" :"8","Soggetto" :"9","Indirizzo" :"10","Civico" :"11","Contratto" :"12","SuperficieAccertata" :"13","CategoriaAccertata" :"14"}]}';
+      return '{"data" : [{"NrAtto" : "1","DataAtto" : "2020-01-01","TipoTributo" : "3","AccertamentoPer" : "Infedele dichiarazione","Stato" : "5","BaseDati" :"In Attesa Aggiornamento","DataInizio" :"2010-01-01","DataFine" :"2030-01-01","Soggetto" :"9","Indirizzo" :"10","Civico" :"11","Contratto" :"12","SuperficieAccertata" :"13","CategoriaAccertata" :"14"},{"NrAtto" : "2","DataAtto" : "2021-01-01","TipoTributo" : "23","AccertamentoPer" : "Infedele dichiarazione","Stato" : "25","BaseDati" :"Aggiornamento Ordinato","DataInizio" :"2011-01-01","DataFine" :"2031-01-01","Soggetto" :"9","Indirizzo" :"10","Civico" :"11","Contratto" :"12","SuperficieAccertata" :"13","CategoriaAccertata" :"14"},{"NrAtto" : "3","DataAtto" : "2022-01-01","TipoTributo" : "33","AccertamentoPer" : "Omessa dichiarazione","Stato" : "35","BaseDati" :"In Attesa Caricamento","DataInizio" :"2012-01-01","DataFine" :"2032-01-01","Soggetto" :"9","Indirizzo" :"10","Civico" :"11","Contratto" :"12","SuperficieAccertata" :"13","CategoriaAccertata" :"14"},{"NrAtto" : "4","DataAtto" : "2023-01-01","TipoTributo" : "3","AccertamentoPer" : "Omessa dichiarazione","Stato" : "5","BaseDati" :"Caricamento Ordinato","DataInizio" :"2013-01-01","DataFine" :"2033-01-01","Soggetto" :"9","Indirizzo" :"10","Civico" :"11","Contratto" :"12","SuperficieAccertata" :"13","CategoriaAccertata" :"14"}]}';
   }
 }
