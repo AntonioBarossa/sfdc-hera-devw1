@@ -1,0 +1,17 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+    </template>
+    <template if:false={showSpinner}>
+        <lightning-quick-action-panel header="Riassegna Cliente">
+            <div style="font-size: medium;">
+                Si vuole procedere con la riassegnazione?
+            </div>
+            <div slot="footer">
+                <lightning-button variant="neutral" label="Annulla" onclick={closeModal}></lightning-button>
+                <lightning-button variant="brand" label="Assegna" onclick={handleChangeAccountOwner} class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </lightning-quick-action-panel>
+    </template>
+</template>

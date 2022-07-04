@@ -57,6 +57,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera E-Bike Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera EtàPiù Dual</valueName>
         </valueSettings>
         <valueSettings>
@@ -74,6 +78,10 @@
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera Fotovoltaico Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Fotovoltaico Kit fai da te</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
@@ -113,6 +121,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera No Problem Acqua</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera No Problem Lavoro</valueName>
         </valueSettings>
         <valueSettings>
@@ -149,6 +161,26 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Ricarica Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Ricarica Privata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Ricarica Pubblica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Sanifica Aria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Sanifica Aria Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera Scaldacqua</valueName>
         </valueSettings>
         <valueSettings>
@@ -158,6 +190,22 @@
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera Thermo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Noleggio Auto Elettrica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Offerta Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Offerte Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Offerte Luce e Gas</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>

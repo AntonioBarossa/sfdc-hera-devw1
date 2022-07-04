@@ -54,10 +54,13 @@ public inherited sharing class HDT_UTL_ContractProcess {
             if ( contr.Id != null ){             
                 contr.Status = 'Cessato';
                 contr.EndDate = date.Today();
+                contrs.add(contr);
             }
-            contrs.add(contr);
         }
-        HDT_UTL_DatabaseService.updateSObject(contrs);
+        if(!contrs.isEmpty())
+        {
+            HDT_UTL_DatabaseService.updateSObject(contrs);   
+        }
     }
     private static Contract createContractFromOrder(Order orderCompleted){
         Contract contract = new Contract();

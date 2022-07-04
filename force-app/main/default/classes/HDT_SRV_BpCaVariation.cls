@@ -173,7 +173,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.fattura.modello = modello;
         requestBody.ordine.fattura.fatturaXml = fatturaXml;
         requestBody.ordine.emailPec = (String) caseRecord.get('ReminderCertifiedEmailAddress__c');
-        requestBody.ordine.flagAttivazPec = String.valueOf(caseRecord.get('ReminderFlag__c'));
+        requestBody.ordine.flagAttivazPec = caseRecord.get('ReminderFlag__c') == true ? String.valueOf(caseRecord.get('ReminderFlag__c')):'';
 
         System.debug(LoggingLevel.DEBUG, 'requestBody ' + requestBody);
         inputParams.requestBody = JSON.serialize(requestBody);
