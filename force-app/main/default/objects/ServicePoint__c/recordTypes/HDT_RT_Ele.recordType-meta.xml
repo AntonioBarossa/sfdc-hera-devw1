@@ -366,14 +366,6 @@
     <picklistValues>
         <picklist>MarketOrigin__c</picklist>
         <values>
-            <fullName>Default</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FUI</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Libero</fullName>
             <default>false</default>
         </values>
