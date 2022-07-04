@@ -18,7 +18,6 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                 responseWrap.outcome = 'OK';
                 responseWrap.outcomeDescription = outcomeResponse.outcomeDescription;
             } catch (Exception e) {
-                System.debug('@@@@error ' + e.getMessage());
                 response.statusCode = 400;
                 responseWrap.outcome = 'KO';
                 responseWrap.outcomeDescription = e.getMessage();
