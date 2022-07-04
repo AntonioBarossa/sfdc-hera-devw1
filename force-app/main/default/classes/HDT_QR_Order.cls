@@ -1025,7 +1025,8 @@ public inherited sharing class HDT_QR_Order {
         IsTechnicalTransfer__c,
         Sale__c,
         RecordTypeId,
-        ParentOrder__c
+        ParentOrder__c,
+        ImplantType__c
         FROM Order 
         WHERE ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
@@ -1121,7 +1122,8 @@ public inherited sharing class HDT_QR_Order {
         AccountId,
         IsTechnicalTransfer__c,
         RecordTypeId,
-        ParentOrder__c
+        ParentOrder__c,
+        ImplantType__c
         FROM Order 
         WHERE Id = :recordId WITH SECURITY_ENFORCED];
     }
