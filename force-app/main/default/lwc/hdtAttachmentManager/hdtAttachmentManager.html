@@ -11,7 +11,7 @@
         <div class="slds-grid slds-wrap">
             <div class="slds-col slds-size_6-of-12">
                 <lightning-input type="text" label="Allegati Obbligatori" value={required} required disabled></lightning-input>
-                <lightning-input type="text" label="Allegati Aggiuntivi" value={additional} onchange={handleAdditionalChange}></lightning-input>
+                <lightning-input type="text" data-id = "AdditionalAttachments__c" label="Allegati Aggiuntivi" value={additional} onchange={handleAdditionalChange}></lightning-input>
             </div>
             <div class="slds-col slds-size_6-of-12"></div>
         </div>

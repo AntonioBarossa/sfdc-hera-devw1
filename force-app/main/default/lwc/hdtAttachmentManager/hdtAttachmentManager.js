@@ -4,12 +4,15 @@
     * @description JS - Gestione Allegati Obbligatori e Aggiuntivi
 */
 
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import getRecordsById from '@salesforce/apex/HDT_LC_AttachmentManager.getRecordsById';
 import getAdditionalAttachment from '@salesforce/apex/HDT_LC_AttachmentManager.getAdditionalAttachment';
 import getRequiredAttachment from '@salesforce/apex/HDT_LC_AttachmentManager.getRequiredAttachment';
 import getRecordsToCheck from '@salesforce/apex/HDT_LC_AttachmentManager.getRecordsToCheck';
+import { MessageContext, subscribe, unsubscribe, APPLICATION_SCOPE} from "lightning/messageService";
+import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
+
 
 export default class HdtAttachmentManager extends LightningElement {
 
@@ -22,6 +25,12 @@ export default class HdtAttachmentManager extends LightningElement {
     @api required;
     @track numberOfFiles = 0;
     @api paramsWrap;
+    @api interviewId;
+
+     //subscribe
+     @wire(MessageContext)
+     messageContext;
+     //subscribe
 
     get acceptedFormats() {
         return ['.pdf', '.png', '.jpg'];
@@ -79,6 +88,12 @@ export default class HdtAttachmentManager extends LightningElement {
             }); 
     }
 
+    outputObject(){
+        return {
+            AdditionalAttachments__c: this.template.querySelector("[data-id='AdditionalAttachments__c']")?.value
+        };
+    }
+
     @api
     specificValidate(){
         let objectToReturn = null;
@@ -114,42 +129,86 @@ export default class HdtAttachmentManager extends LightningElement {
         return objectToReturn;
     }
 
+    subscribeMC() {
+		// recordId is populated on Record Pages, and this component
+		// should not update when this component is on a record page.
+        this.subscription = subscribe(
+            this.messageContext,
+            BUTTONMC,
+            (mc) => {if(this.interviewId==mc.sessionid) this.eventButton = mc.message},
+            //{ scope: APPLICATION_SCOPE }
+        );
+		// Subscribe to the message channel
+	}
+
+    unsubscribeToMessageChannel() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
+    }
+
     @api
     validate(){ 
-        if(this.numberOfFiles == 0){    //se non ci sono allegati, quale messaggio mostrare
-            var checkCustomValidate = this.specificValidate();
-            if(checkCustomValidate?.isValid == false){
-                return checkCustomValidate;
-            }else if(this.required?.length > 0){
+        console.log("event catched   "+this.eventButton);
+        this.unsubscribeToMessageChannel();
+        let message, isValid=true;
+        if('cancel' != this.eventButton){
+            if(this.numberOfFiles == 0){    //se non ci sono allegati, quale messaggio mostrare
+                var checkCustomValidate = this.specificValidate();
+                if(checkCustomValidate?.isValid == false){
+                    isValid = checkCustomValidate?.isValid;
+                    message = checkCustomValidate?.errorMessage;
+                }else if(this.required?.length > 0){
+                    isValid = false; 
+                    message = 'Inserire gli allegati Obbligatori';
+            
+        /*  }else if(this.additional?.length > 0 && this.numberOfFiles == 0){
                 return { 
                         isValid: false, 
-                        errorMessage: 'Inserire gli allegati Obbligatori' 
-                        };
-        
-    /*  }else if(this.additional?.length > 0 && this.numberOfFiles == 0){
-            return { 
-                    isValid: false, 
-                    errorMessage: 'Inserire gli allegati descritti' 
-                    }; 
-        }else if(!(this.additional?.length || this.required?.length) && this.numberOfFiles > 0){
-            return { 
-                    isValid: false, 
-                    errorMessage: 'Descrivere gli allegati inseriti nel campo "Allegati Aggiuntivi"' 
-                    }; 
-    */
-            }else{
-                return { isValid: true };
+                        errorMessage: 'Inserire gli allegati descritti' 
+                        }; 
+            }else if(!(this.additional?.length || this.required?.length) && this.numberOfFiles > 0){
+                return { 
+                        isValid: false, 
+                        errorMessage: 'Descrivere gli allegati inseriti nel campo "Allegati Aggiuntivi"' 
+                        }; 
+        */
+                }
             }
         }
+
+        let outputAdditional = this.outputObject();
+        if(this.interviewId){
+            if(!isValid){
+                window.sessionStorage.setItem(this.interviewId, JSON.stringify(outputAdditional));
+            }else{
+                window.sessionStorage.removeItem(this.interviewId);
+            }
+        }
+
+        return { isValid : isValid
+                ,errorMessage: message? message : null
+        };
     }
 
     async connectedCallback(){
+
+        this.subscribeMC();
 
         this.getFiles();
 
         this.currObject = await getRecordsToCheck({
             recordId: this.recordId
             });
+
+
+        const oldAdditional = window.sessionStorage.getItem(this.interviewId);
+        if(this.interviewId && oldAdditional){
+            try{
+                this.additional = JSON.parse(oldAdditional)?.AdditionalAttachments__c;
+            }catch(e){
+                console.log(e);
+            }
+        }
 
         if(!this.additional){
             getAdditionalAttachment({
