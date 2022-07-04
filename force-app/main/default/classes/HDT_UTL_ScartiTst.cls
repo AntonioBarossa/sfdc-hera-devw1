@@ -125,6 +125,7 @@ public class HDT_UTL_ScartiTst {
             rules[0].ProcessField__c = 'ProcessType__c';
             rules[0].ProcessValue__c = 'Connessione con Attivazione';
             rules[0].DiscardNoteReliability__c='Alta';
+            rules[0].IsActive__c = true;
             insert rules;
             
             List<DiscardAnnullmentRule__c> rulesCase = HDT_UTL_DataFactoryTst.createDiscardAnnullmentRule(1,false,'Case');
@@ -134,6 +135,7 @@ public class HDT_UTL_ScartiTst {
             rulesCase[0].ProcessField__c = 'Type';
             rulesCase[0].ProcessValue__c = 'Consegna copia chiave GdM';
             rulesCase[0].DiscardNoteReliability__c='Alta';
+            rulesCase[0].IsActive__c = true;
             insert rulesCase;
             
             List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(4,false,accId);
