@@ -329,10 +329,12 @@ public with sharing class HDT_SRV_SalesHandler {
                                     }
                                 }
                                 when 'Amm. Precheck KO SII' {
-                                    ord.PrecheckReasonSII__c = mapRequestFields.get('DES_ERR_ES');
+                                    ord.PrecheckReasonSII__c = mapRequestFields.get('TESTO_ERRR');
                                     ord.CausalCode__c = mapRequestFields.get('CODERR_ES');
                                     ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                    ord.DiscardReason__c = (String.isNotBlank(ord.PrecheckReasonSII__c) && String.isNotBlank(ord.CausalCode__c))? ord.CausalCode__c+' - '+ord.PrecheckReasonSII__c 
+                                        : (String.isBlank(ord.CausalCode__c))? ord.PrecheckReasonSII__c : ord.CausalCode__c;
 
                                     if(mapRequestFields.get('CODERR_ES') == '003' || mapRequestFields.get('CODERR_ES') == '103'){
                                         ord.IsTechnicalTransfer__c = true;
