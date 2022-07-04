@@ -1,7 +1,9 @@
-import { LightningElement, api, track } from "lwc";
+import { LightningElement, api, track, wire } from "lwc";
 import getPeriods from "@salesforce/apex/HDT_LC_ActiveRepentant.getPeriods";
 import getTerms from "@salesforce/apex/HDT_LC_ActiveRepentant.getTerms";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import { MessageContext, subscribe, unsubscribe, APPLICATION_SCOPE} from "lightning/messageService";
+import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
 
 class outputData{
     constructor(dateX, dateY, missedDue, declineSupport, refuseSupport, bloccoCalcolo, dateDecorrenza, dateDichiarazione) {
@@ -35,6 +37,9 @@ export default class HdtActiveRepentant extends LightningElement {
     @api outputWrp={};
     @api sessionid;
 
+    @wire(MessageContext)
+	messageContext;
+
     get isCase(){
         return this.objectApiName=="Case";
     }
@@ -44,6 +49,7 @@ export default class HdtActiveRepentant extends LightningElement {
     }
 
     connectedCallback(){
+        this.subscribeMC();
         const oldWrpStr = window.sessionStorage.getItem(this.sessionid);
         if(this.sessionid && oldWrpStr){
             try{
@@ -76,22 +82,28 @@ export default class HdtActiveRepentant extends LightningElement {
         return !((this.dateDecorrenza && this.dateDecorrenza == dateDecorrenza) && (this.dateDichiarazione && this.dateDichiarazione?.startsWith(dateDichiarazione)));//controlla che la data decorrenza sia popolata e aggiornata
     }
 
-    @api validate(){        
+    @api validate(){   
+        console.log("event catched   "+this.eventButton);
+        this.unsubscribeToMessageChannel();
         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
         let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
         let message, isValid=false;
-        if([...this.template.querySelectorAll("lightning-input-field")].every(el=> (!el.required || el.value))){
-            isValid = !this.validateDate(decorrenza, dichiarazione);
+        if('cancel' != this.eventButton){
+            if([...this.template.querySelectorAll("lightning-input-field")].every(el=> (!el.required || el.value))){
+                isValid = !this.validateDate(decorrenza, dichiarazione);
+            }else{
+                message = 'Compilare campi obbligatori';
+            }
+            //let 
+            this.outputWrp=this.outputObject();
+            if(!isValid){
+                window.sessionStorage.setItem(this.sessionid, JSON.stringify(this.outputWrp));
+                message = message? message : 'Verificare il ravvedimento operoso prima di procedere';
+            }else{
+                window.sessionStorage.removeItem(this.sessionid);
+            }
         }else{
-            message = 'Compilare campi obbligatori';
-        }
-        //let 
-        this.outputWrp=this.outputObject();
-        if(!isValid){
-            window.sessionStorage.setItem(this.sessionid, JSON.stringify(this.outputWrp));
-            message = message? message : 'Verificare il ravvedimento operoso prima di procedere';
-        }else{
-            window.sessionStorage.removeItem(this.sessionid);
+            isValid=true;
         }
         return { isValid : isValid, 
             errorMessage: message? message : null
@@ -277,5 +289,22 @@ export default class HdtActiveRepentant extends LightningElement {
 
     getFormattedDate(date){
         return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
+    }
+
+    subscribeMC() {
+		// recordId is populated on Record Pages, and this component
+		// should not update when this component is on a record page.
+        this.subscription = subscribe(
+            this.messageContext,
+            BUTTONMC,
+            (mc) => {if(this.sessionid==mc.sessionid) this.eventButton = mc.message},
+            //{ scope: APPLICATION_SCOPE }
+        );
+		// Subscribe to the message channel
+	}
+
+    unsubscribeToMessageChannel() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
     }
 }
