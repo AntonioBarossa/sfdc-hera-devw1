@@ -142,14 +142,16 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         console.log('Gestione lettura: ' + JSON.stringify(readingObj));
         console.log('rowObj: ' + JSON.stringify(this.rowObj));
+        console.log('Object length >>> ' + readingObj.length);
 
         if (this.commodity === 'Energia Elettrica') {
             this.isVisible = (this.rowObj.id <= readingObj.length);
             var indexSerialNumberEle = this.registerObj.findIndex(p => p.name === 'readingSerialNumber');
             this.registerObj[indexSerialNumberEle].disabled = !this.isProcessReading;
         } else if (this.commodity === 'Gas') {
-            this.isVisible = (this.rowObj.id === 'Meter' || (this.rowObj.id === 'Corrector' && readingObj.length === 2));
+            this.isVisible = (this.rowObj.id === 'Meter' || (this.rowObj.id === 'Corrector' && readingObj.length >= 2));
         }
+        console.log('IsVisible >>> ' + this.isVisible);
 
         
         // Per l'autolettura da processo la matricola deve poter essere inseribile da operatore.
@@ -225,7 +227,8 @@ export default class HdtSelfReadingRegister extends LightningElement {
     handleSave(readingCustomerDate){
 
         try {
-            if (!this.isProcessReading) {
+            if (!this.isProcessReading){
+                console.log('#RegisterObj >>> ' + JSON.stringify(this.registerObj));
                 this.registerObj.forEach(element => {
                     if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
                         this.advanceError = 'Impossibile procedere: Nuova Lettura deve essere valorizzata.';

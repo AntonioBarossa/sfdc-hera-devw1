@@ -770,6 +770,42 @@
         <default>false</default>
         <label>Voltura con richiesta accessoria</label>
     </customValue>
+    <customValue>
+        <fullName>Evoluzioni automatiche</fullName>
+        <default>false</default>
+        <label>Evoluzioni automatiche</label>
+    </customValue>
+    <customValue>
+        <fullName>PdR errato sulla fornitura</fullName>
+        <default>false</default>
+        <label>PdR errato sulla fornitura</label>
+    </customValue>
+    <customValue>
+        <fullName>POD errato sulla fornitura</fullName>
+        <default>false</default>
+        <label>POD errato sulla fornitura</label>
+    </customValue>
+    <customValue>
+        <fullName>Rimborsi - assegno</fullName>
+        <default>false</default>
+        <label>Rimborsi - assegno</label>
+    </customValue>
+    <customValue>
+        <fullName>Rimborsi - mancato accredito/doppio pagamento</fullName>
+        <default>false</default>
+        <label>Rimborsi - mancato accredito/doppio pagamento</label>
+    </customValue>
+    <customValue>
+        <fullName>cambio contatore gestito in ritardo</fullName>
+        <default>false</default>
+        <label>cambio contatore gestito in ritardo</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica Contratto Preattivazione</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Modifica Contratto Preattivazione</label>
+    </customValue>
     <description>Classificazione Quarto Livello (cluster Reclami)</description>
     <masterLabel>4° Livello</masterLabel>
     <sorted>false</sorted>

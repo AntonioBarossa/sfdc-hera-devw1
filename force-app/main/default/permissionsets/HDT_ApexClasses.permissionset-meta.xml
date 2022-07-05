@@ -561,6 +561,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_AccountReAssignToMe</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_AccountSelectorController</apexClass>
         <enabled>true</enabled>
     </classAccesses>

@@ -79,6 +79,7 @@ public with sharing class HDT_UTL_ContractProcessTst {
 
         List<Contract> cttList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].Id);
         cttList[0].SBQQ__Order__c = orderList[0].Id;
+        cttList[0].Status = 'Attivo';
         insert cttList;
         
         
@@ -123,6 +124,20 @@ public with sharing class HDT_UTL_ContractProcessTst {
         
         Test.stopTest();
     }
+
+    @isTest
+    public static void testMoveOutNoContrat()
+    {   setup2();
+        Test.startTest();
+            List<Contract> cttList = [SELECT Id,Status,EndDate FROM Contract LIMIT 1];
+            List<Order> orderList = [SELECT Id FROM Order LIMIT 1];
+
+            HDT_UTL_ContractProcess.moveOut( orderList[0].Id, 'ContractReference__c' );
+        Test.stopTest();
+        cttList = [SELECT Id,Status,EndDate FROM Contract LIMIT 1];
+        System.assertEquals('Attivo', cttList[0].Status, 'Contratto aggiornato erroneamente');
+    }
+
 
     @isTest
     public static void testHandleMassiveContractCreationVAS() {

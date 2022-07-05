@@ -1,11 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>AssignEleAz</name>
+        <label>AssignEleAz</label>
+        <locationX>1366</locationX>
+        <locationY>878</locationY>
+        <assignmentItems>
+            <assignToReference>isEnergiaElettrica</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CanaleVenditaDecision_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignEleFam</name>
+        <label>AssignEleFam</label>
+        <locationX>270</locationX>
+        <locationY>878</locationY>
+        <assignmentItems>
+            <assignToReference>isEnergiaElettrica</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CanaleVenditaDecision</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignGasFam</name>
+        <label>AssignGasFam</label>
+        <locationX>798</locationX>
+        <locationY>878</locationY>
+        <assignmentItems>
+            <assignToReference>isGas</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CanaleVenditaDecision_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>isGasAz</name>
+        <label>AssignGasAz</label>
+        <locationX>1894</locationX>
+        <locationY>878</locationY>
+        <assignmentItems>
+            <assignToReference>isGas</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CanaleVenditaDecision_0_0_0</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>CanaleVenditaDecision</name>
         <label>CanaleVenditaDecision</label>
         <locationX>270</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Famiglie_EE_0</targetReference>
         </defaultConnector>
@@ -30,7 +94,7 @@
         <name>CanaleVenditaDecision_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>798</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Famiglie_GAS</targetReference>
         </defaultConnector>
@@ -55,7 +119,7 @@
         <name>CanaleVenditaDecision_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1366</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Aziende_EE_0</targetReference>
         </defaultConnector>
@@ -80,7 +144,7 @@
         <name>CanaleVenditaDecision_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1894</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Aziende_GAS_0</targetReference>
         </defaultConnector>
@@ -105,7 +169,7 @@
         <name>CanaleVenditaDecision_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>270</locationX>
-        <locationY>1550</locationY>
+        <locationY>1670</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_EE</targetReference>
         </defaultConnector>
@@ -130,7 +194,7 @@
         <name>CanaleVenditaDecision_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>798</locationX>
-        <locationY>1550</locationY>
+        <locationY>1670</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_GAS</targetReference>
         </defaultConnector>
@@ -155,7 +219,7 @@
         <name>CanaleVenditaDecision_0_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1366</locationX>
-        <locationY>1550</locationY>
+        <locationY>1670</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Aziende_EE_0_0</targetReference>
         </defaultConnector>
@@ -180,7 +244,7 @@
         <name>CanaleVenditaDecision_0_0_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1894</locationX>
-        <locationY>1550</locationY>
+        <locationY>1670</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Aziende_GAS_0_0</targetReference>
         </defaultConnector>
@@ -227,12 +291,62 @@
         </rules>
     </decisions>
     <decisions>
+        <name>CategoryDecisionConferma</name>
+        <label>CategoryDecisionConferma</label>
+        <locationX>598</locationX>
+        <locationY>2966</locationY>
+        <defaultConnector>
+            <targetReference>Conferma_Adesione_0_0_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Aziende</defaultConnectorLabel>
+        <rules>
+            <name>Famiglie_ConfermaAdesione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Famiglie</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Conferma_Adesione_0_0_0</targetReference>
+            </connector>
+            <label>Famiglie</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>CategoryDecisionDurata</name>
+        <label>CategoryDecisionDurata</label>
+        <locationX>598</locationX>
+        <locationY>2630</locationY>
+        <defaultConnector>
+            <targetReference>Durata_Contratto_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Aziende</defaultConnectorLabel>
+        <rules>
+            <name>Famiglie</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Famiglie</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Durata_Contratto_0</targetReference>
+            </connector>
+            <label>Famiglie</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Servizio_Decision</name>
         <label>Servizio Decision</label>
         <locationX>534</locationX>
         <locationY>758</locationY>
         <defaultConnector>
-            <targetReference>CanaleVenditaDecision_0</targetReference>
+            <targetReference>AssignGasFam</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isGAS</defaultConnectorLabel>
         <rules>
@@ -246,7 +360,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>CanaleVenditaDecision</targetReference>
+                <targetReference>AssignEleFam</targetReference>
             </connector>
             <label>isEE</label>
         </rules>
@@ -255,7 +369,7 @@
         <name>Servizio_Decision_0</name>
         <label>Servizio Decision</label>
         <locationX>534</locationX>
-        <locationY>1430</locationY>
+        <locationY>1550</locationY>
         <defaultConnector>
             <targetReference>CanaleVenditaDecision_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -282,7 +396,7 @@
         <locationX>1630</locationX>
         <locationY>758</locationY>
         <defaultConnector>
-            <targetReference>CanaleVenditaDecision_0_0_0</targetReference>
+            <targetReference>isGasAz</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isGAS</defaultConnectorLabel>
         <rules>
@@ -296,7 +410,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>CanaleVenditaDecision_0_0</targetReference>
+                <targetReference>AssignEleAz</targetReference>
             </connector>
             <label>isEE</label>
         </rules>
@@ -305,7 +419,7 @@
         <name>Servizio_Decision_0_0_0</name>
         <label>Servizio Decision</label>
         <locationX>1630</locationX>
-        <locationY>1430</locationY>
+        <locationY>1550</locationY>
         <defaultConnector>
             <targetReference>CanaleVenditaDecision_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -367,14 +481,14 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>Order_Items_Vas_Loop</name>
         <label>Order Items Vas Loop</label>
         <locationX>598</locationX>
-        <locationY>2174</locationY>
+        <locationY>2294</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVASBonusOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>HDT_Script_VAS</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Durata_Contratto</targetReference>
+            <targetReference>CategoryDecisionDurata</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -400,7 +514,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>GetOrderItems</name>
         <label>GetOrderItems</label>
         <locationX>534</locationX>
-        <locationY>1310</locationY>
+        <locationY>1430</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Servizio_Decision_0</targetReference>
@@ -421,7 +535,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>GetOrderItems_0</name>
         <label>GetOrderItems</label>
         <locationX>1630</locationX>
-        <locationY>1310</locationY>
+        <locationY>1430</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Servizio_Decision_0_0_0</targetReference>
@@ -442,7 +556,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>Condizioni_Economiche_Aziende_EE</name>
         <label>Condizioni Economiche Aziende EE</label>
         <locationX>1234</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -540,7 +654,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>Condizioni_Economiche_Aziende_EE_0</name>
         <label>Condizioni Economiche Aziende EE</label>
         <locationX>1498</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -549,7 +663,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         </connector>
         <fields>
             <name>text_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt;&quot;&gt;[3. Condizioni economiche Energia elettrica per: &lt;/strong&gt;&lt;strong style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 11pt;&quot;&gt;HERA PLACET LUCE LAVORO]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 12pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;Condizioni economiche Energia elettrica per: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -587,14 +701,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
             <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 23,00.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue>Mortis Causa</stringValue>
-                    </rightValue>
-                </conditions>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
                     <operator>EqualTo</operator>
@@ -645,7 +752,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>Condizioni_Economiche_Aziende_GAS</name>
         <label>Condizioni Economiche Aziende GAS</label>
         <locationX>1762</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -743,7 +850,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>Condizioni_Economiche_Aziende_GAS_0</name>
         <label>Condizioni Economiche Aziende GAS</label>
         <locationX>2026</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -752,7 +859,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         </connector>
         <fields>
             <name>text_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt;&quot;&gt;[4. Condizioni economiche Gas naturale&lt;/strong&gt;&lt;strong style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 11pt;&quot;&gt;]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 12pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;Condizioni economiche Gas naturale&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -816,7 +923,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>Condizioni_Economiche_Famiglie_EE</name>
         <label>Condizioni Economiche Famiglie EE</label>
         <locationX>138</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -914,7 +1021,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>Condizioni_Economiche_Famiglie_EE_0</name>
         <label>Condizioni Economiche Famiglie EE</label>
         <locationX>402</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -923,7 +1030,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         </connector>
         <fields>
             <name>text_0</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 12pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;[3. Condizioni economiche Energia elettrica per: &lt;/strong&gt;&lt;strong style=&quot;font-size: 11pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;HERA PLACET LUCE CASA]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 12pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;Condizioni economiche Energia elettrica per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1019,7 +1126,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>Condizioni_Economiche_Famiglie_GAS</name>
         <label>Condizioni Economiche Famiglie GAS</label>
         <locationX>930</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1028,7 +1135,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text1</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[4. Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1070,7 +1177,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text4</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 25,00 e quelli applicabili a discrezione del Distributore Locale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 25,00 e quelli applicabili a discrezione del Distributore Locale.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -1096,6 +1203,11 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
                     </rightValue>
                 </conditions>
             </visibilityRule>
+        </fields>
+        <fields>
+            <name>general_text</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text6</name>
@@ -1126,7 +1238,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>Condizioni_Economiche_Famiglie_GAS_0</name>
         <label>Condizioni Economiche Famiglie GAS</label>
         <locationX>666</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1228,36 +1340,92 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Conferma_Adesione</name>
+        <name>Conferma_Adesione_0_0_0</name>
         <label>Conferma Adesione</label>
-        <locationX>598</locationX>
-        <locationY>2630</locationY>
+        <locationX>466</locationX>
+        <locationY>3086</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
-            <name>Conferma_Adesione_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[9. Conferma adesione]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <name>Conferma_Adesione_0_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Conferma_Adesione_Aziende</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi Luce&amp;nbsp;e/o Gas&amp;nbsp;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se deve inviare un reclamo o richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	La informo che, qualora lei abbia i requisiti previsti per legge e voglia l’applicazione dell’aliquota IVA ridotta al 10%, ci dovrà restituire, debitamente compilata, la modulistica predisposta a tale scopo che troverà all’interno del plico contrattuale che riceverà per posta.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;[SI/NO]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;[SI/NO]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Contact__r.LastName} abbiamo terminato la registrazione, benvenuto/a in {!HDT_Script_Introduzione.salesCompany}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;[***FINE REGISTRAZIONE***]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <name>Conferma_Adesione_Famiglie_1</name>
+            <fieldText>&lt;p&gt;La informo che il contratto di fornitura si concluderà al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Conferma_Adesione_Famiglie_2</name>
+            <fieldText>&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Luce&amp;nbsp;&lt;/strong&gt;e &lt;strong&gt;Gas&amp;nbsp;&lt;/strong&gt;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.ClientCategoryFormula__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Aziende</stringValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
-            <name>Conferma_Adesione_Famiglie</name>
-            <fieldText>&lt;p&gt;•	La informo che il contratto di fornitura si concluderà al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi Luce&amp;nbsp;e Gas&amp;nbsp;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le invieremo tramite posta il plico contrattuale con le specifiche che le ho elencato per la sua fornitura, e comprensivo della scheda di confrontabilità dell’offerta rispetto al regime di tutela.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Entro 14 giorni dalla conferma del ricevimento della documentazione contrattuale, Lei potrà esercitare il diritto di ripensamento, inviando un fax al numero verde 800.999.600, oppure una e-mail all’indirizzo contratti@gruppohera.it oppure una raccomandata con ricevuta di ritorno presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	 Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente, può ricorrere al Servizio di Conciliazione ARERA oppure attraverso le modalità indicate sul sito www.gruppohera.it&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;[SI/NO]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;[SI/NO]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Contact__r.LastName} abbiamo terminato la registrazione, benvenuto in {!HDT_Script_Introduzione.salesCompany}.&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;[***FINE REGISTRAZIONE***]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <name>Conferma_Adesione_Famiglie_3</name>
+            <fieldText>&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Luce&amp;nbsp;&lt;/strong&gt;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Conferma_Adesione_Famiglie_4</name>
+            <fieldText>&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Gas&amp;nbsp;&lt;/strong&gt;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Conferma_Adesione_Famiglie_0</name>
+            <fieldText>&lt;p&gt;Le ricordo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le invieremo tramite posta il plico contrattuale con le specifiche che le ho elencato per la sua fornitura, e comprensivo della scheda di confrontabilità dell’offerta rispetto al regime di tutela.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Entro 14 giorni dalla conferma del ricevimento della documentazione contrattuale, Lei potrà esercitare il diritto di ripensamento, inviando un fax al numero verde 800.999.600, oppure una e-mail all’indirizzo contratti@gruppohera.it oppure una raccomandata con ricevuta di ritorno presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente, può ricorrere al Servizio di Conciliazione ARERA oppure attraverso le modalità indicate sul sito www.gruppohera.it&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;[SI/NO]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;[SI/NO]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Contact__r.LastName} abbiamo terminato la registrazione, benvenuto in {!HDT_Script_Introduzione.salesCompany}.&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;[***FINE REGISTRAZIONE***]&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1274,10 +1442,97 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Conferma_Adesione_0_0_0_0_0</name>
+        <label>Conferma Adesione</label>
+        <locationX>730</locationX>
+        <locationY>3086</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Conferma_Adesione_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Conferma_Adesione_Aziende_0_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Luce&amp;nbsp;&lt;/strong&gt;e &lt;strong&gt;Gas&lt;/strong&gt;&amp;nbsp;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Conferma_Adesione_Aziende_0_1</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Luce&amp;nbsp;&lt;/strong&gt;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Conferma_Adesione_Aziende_0_2</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Gas&amp;nbsp;&lt;/strong&gt;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Conferma_Adesione_Aziende_0_3</name>
+            <fieldText>&lt;p&gt;Se deve inviare un reclamo o richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	La informo che, qualora lei abbia i requisiti previsti per legge e voglia l’applicazione dell’aliquota IVA ridotta al 10%, ci dovrà restituire, debitamente compilata, la modulistica predisposta a tale scopo che troverà all’interno del plico contrattuale che riceverà per posta.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;[SI/NO]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;[SI/NO]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Contact__r.LastName} abbiamo terminato la registrazione, benvenuto/a in {!HDT_Script_Introduzione.salesCompany}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;[***FINE REGISTRAZIONE***]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Dati_Tecnici_Aziende_EE_0_0</name>
         <label>Dati Tecnici Aziende EE</label>
         <locationX>1498</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1286,7 +1541,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text1_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Energia Elettrica&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1296,10 +1551,10 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text2_0_0</name>
-            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
                     <operator>EqualTo</operator>
@@ -1314,11 +1569,62 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
                         <stringValue>Voltura con Switch</stringValue>
                     </rightValue>
                 </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_INB_ELE_AZ</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Name} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue>Mortis Causa</stringValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_INB_ELE_AZ_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousHolderFirstName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1364,7 +1670,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>Dati_Tecnici_Aziende_EE_0_0_0</name>
         <label>Dati Tecnici Aziende EE</label>
         <locationX>1234</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1373,12 +1679,12 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text1_0_0_0</name>
-            <fieldText>&lt;p&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è DATO_MANCANTE?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta della luce [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura] ?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Energia Elettrica&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta della luce [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura] ?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text2_0_0_0</name>
-            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/p&gt;&lt;p&gt;•	[Se esiste per il precedente venditore (facoltativo)] Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1387,6 +1693,93 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_ELE_OUT_AZ</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Name} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_ELE_OUT_AZ_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_ELE_OUT_AZ_ACC</name>
+            <fieldText>&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1403,7 +1796,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>Dati_Tecnici_Aziende_GAS_0_0</name>
         <label>Dati Tecnici Aziende GAS</label>
         <locationX>2026</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1412,22 +1805,15 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[Dati Tecnici Gas]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Gas&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text2_0_0</name>
-            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue></stringValue>
-                    </rightValue>
-                </conditions>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
                     <operator>EqualTo</operator>
@@ -1445,23 +1831,74 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
             </visibilityRule>
         </fields>
         <fields>
-            <name>text_7</name>
-            <fieldText>&lt;p&gt;•	 Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <name>AZ_GAS_INB_PRE_CU</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Name} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c</leftValueReference>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__c</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Mortis Causa</stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AZ_GAS_INB_PRE_CU_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text_7</name>
+            <fieldText>&lt;p&gt;•	 Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -1507,7 +1944,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>Dati_Tecnici_Aziende_GAS_0_0_0</name>
         <label>Dati Tecnici Aziende GAS</label>
         <locationX>1762</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1516,12 +1953,12 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1_0_0_0</name>
-            <fieldText>&lt;p&gt;[Dati Tecnici Gas]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è DATO_MANCANTE?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura]?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Gas&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text2_0_0_0</name>
-            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/p&gt;&lt;p&gt;•	[Se esiste per il precedente venditore (facoltativo)] Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1530,6 +1967,93 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_AZ_OUT_GAS</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Name} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_AZ_OUT_GAS_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousHolderFirstName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_AZ_OUT_GAS_ACC</name>
+            <fieldText>&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1551,7 +2075,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>Dati_Tecnici_Famiglie_EE</name>
         <label>Dati Tecnici Famiglie EE</label>
         <locationX>402</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1560,12 +2084,12 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text1</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta della luce sono presenti i dati anagrafici della persona cui va intestato il contratto? &lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Energia Elettrica&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta della luce sono presenti i dati anagrafici della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text2</name>
-            <fieldText>&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura.&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma di essere titolare del diritto di [proprietà/locazione/comodato] sull’immobile?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHolderLastName__c} {!LoopOrdiniFigliOfferta.PreviousHolderFirstName__c} e {!LoopOrdiniFigliOfferta.PreviousHolderFiscalCode__c}?&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura.&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma di essere titolare del diritto di [proprietà/locazione/comodato] sull’immobile?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -1586,13 +2110,71 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
             </visibilityRule>
         </fields>
         <fields>
+            <name>PRE_CU_OUT_FAM_ELE</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Name} e {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FiscalCode__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_OUT_FAM_ELE_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHolderLastName__c} {!LoopOrdiniFigliOfferta.PreviousHolderFirstName__c}  e {!LoopOrdiniFigliOfferta.PreviousHolderFiscalCode__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousHolderFirstName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text10</name>
             <fieldText>&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c</leftValueReference>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
@@ -1727,7 +2309,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>Dati_Tecnici_Famiglie_EE_0</name>
         <label>Dati Tecnici Famiglie EE</label>
         <locationX>138</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1736,20 +2318,114 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text1_0</name>
-            <fieldText>&lt;p&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è DATO_MANCANTE?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta della luce sono presenti i dati anagrafici della persona cui va intestato il contratto? [nel caso siano presenti procedere; in caso contrario chiedere autorizzazione a voltura]&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Energia Elettrica&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta della luce sono presenti i dati anagrafici della persona cui va intestato il contratto? &lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text2_0</name>
-            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura.&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma di essere titolare del diritto di [proprietà/locazione/comodato] sull’immobile?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHolderLastName__c} {!LoopOrdiniFigliOfferta.PreviousHolderFirstName__c} e {!LoopOrdiniFigliOfferta.PreviousHolderFiscalCode__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	[Se esiste per il precedente venditore (facoltativo)] Conferma che il codice cliente è {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura.&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma di essere titolare del diritto di [proprietà/locazione/comodato] sull’immobile?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_FAM_ELE_INB</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Name} e {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FiscalCode__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_FAM_ELE_INB_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHolderLastName__c} {!LoopOrdiniFigliOfferta.PreviousHolderFirstName__c}  e {!LoopOrdiniFigliOfferta.PreviousHolderFiscalCode__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousHolderFirstName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_CODE_ELE_FAM</name>
+            <fieldText>&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1766,7 +2442,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>Dati_Tecnici_Famiglie_GAS</name>
         <label>Dati Tecnici Famiglie GAS</label>
         <locationX>930</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1775,15 +2451,73 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[Dati Tecnici Gas]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta del gas sono presenti i dati anagrafici della persona cui va intestato il contratto? &lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Gas&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta del gas sono presenti i dati anagrafici della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text2</name>
-            <fieldText>&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma di essere titolare del diritto di [proprietà/locazione/comodato] sull’immobile?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Cognome, Nome e codice fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHolderLastName__c} {!LoopOrdiniFigliOfferta.PreviousHolderFirstName__c} e {!LoopOrdiniFigliOfferta.PreviousHolderFiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma di essere titolare del diritto di [proprietà/locazione/comodato] sull’immobile?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_GAS_INB_FAM</name>
+            <fieldText>&lt;p&gt;•	Conferma che Cognome, Nome e codice fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Name} e {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_GAS_INB_FAM_2</name>
+            <fieldText>&lt;p&gt;•	Conferma che Cognome, Nome e codice fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHolderLastName__c} {!LoopOrdiniFigliOfferta.PreviousHolderFirstName__c} e {!LoopOrdiniFigliOfferta.PreviousHolderFiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousHolderFirstName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
                     <operator>EqualTo</operator>
@@ -1807,7 +2541,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c</leftValueReference>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
@@ -1971,7 +2705,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>Dati_Tecnici_Famiglie_GAS_0</name>
         <label>Dati Tecnici Famiglie GAS</label>
         <locationX>666</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1980,20 +2714,114 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1_0</name>
-            <fieldText>&lt;p&gt;[Dati Tecnici Gas]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è DATO_MANCANTE?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta del gas sono presenti i dati anagrafici della persona cui va intestato il contratto? &lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Gas&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta del gas sono presenti i dati anagrafici della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text2_0</name>
-            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta.PreviousHolderVatNumber__c}?&lt;/p&gt;&lt;p&gt;•	[Se esiste per il precedente venditore (facoltativo)] Conferma che il codice cliente è {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_OUT_GAS_FAM</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Name} e {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FiscalCode__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_OUT_GAS_FAM_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHolderLastName__c} {!LoopOrdiniFigliOfferta.PreviousHolderFirstName__c} e {!LoopOrdiniFigliOfferta.PreviousHolderFiscalCode__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousHolderFirstName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_ACC_GAS_FAM_OUT</name>
+            <fieldText>&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2007,19 +2835,90 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Durata_Contratto</name>
+        <name>Durata_Contratto_0</name>
         <label>Durata Contratto</label>
-        <locationX>598</locationX>
-        <locationY>2510</locationY>
+        <locationX>466</locationX>
+        <locationY>2750</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Conferma_Adesione</targetReference>
+            <targetReference>CategoryDecisionConferma</targetReference>
         </connector>
         <fields>
-            <name>Durata_Contratto_Placet_Famiglie</name>
-            <fieldText>&lt;p&gt;In riferimento all’offerta Luce e/o Gas le ricordo le seguenti condizioni contrattuali:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordiamo che le condizioni economiche durano 12 mesi e che almeno 3 mesi prima della scadenza riceverà una comunicazione scritta con la proposizione delle nuove condizioni economiche che saranno applicate.&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta bimestrale per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 5000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 5000 smc/anno.&lt;/p&gt;&lt;p&gt;•	In mancanza di consumi reali, questi saranno stimati, con successivo conguaglio.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <name>Title_Durata_Contratto_Fam</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Durata contratto&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Durata_Contratto_Placet_Famiglie_1</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;In riferimento all’offerta &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Luce &lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;e &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Gas &lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;le ricordo le seguenti condizioni contrattuali:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Durata_Contratto_Placet_Famiglie_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;In riferimento all’offerta &lt;/span&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Luce &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;le ricordo le seguenti condizioni contrattuali:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Durata_Contratto_Placet_Famiglie_3</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;In riferimento all’offerta &lt;/span&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Gas &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;le ricordo le seguenti condizioni contrattuali:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Durata_Contratto_Placet_Famiglie_0</name>
+            <fieldText>&lt;p&gt;•	Le ricordiamo che le condizioni economiche durano 12 mesi e che almeno 3 mesi prima della scadenza riceverà una comunicazione scritta con la proposizione delle nuove condizioni economiche che saranno applicate.&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta bimestrale per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 5000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 5000 smc/anno.&lt;/p&gt;&lt;p&gt;•	In mancanza di consumi reali, questi saranno stimati, con successivo conguaglio.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2032,20 +2931,29 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
                 </conditions>
             </visibilityRule>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Durata_Contratto_0_0</name>
+        <label>Durata Contratto</label>
+        <locationX>730</locationX>
+        <locationY>2750</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>CategoryDecisionConferma</targetReference>
+        </connector>
         <fields>
-            <name>Durata_Contratto_Placet_Aziende</name>
+            <name>Title_Durata_Contratto_Aziende</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Durata contratto&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Durata_Contratto_Placet_Aziende_0_0</name>
             <fieldText>&lt;p&gt;•	La informo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 9 mesi presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Qualora il punto di fornitura di energia elettrica sia connesso in bassa tensione e/o&amp;nbsp;i consumi di gas non siano superiori a 200.000 Smc/anno può recedere in qualsiasi momento entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Per la luce, riceverà una bolletta bimestrale, se la sua potenza è inferiore a 16,5 kW, altrimenti mensile. La bolletta sarà basata su consumi reali, ma se ciò non fosse possibile i suoi consumi saranno stimati, con successivo conguaglio.&lt;/p&gt;&lt;p&gt;•	Per il gas, la frequenza sarà almeno trimestrale per consumi compresi fra 500 e 5000 Smc/anno, almeno quadrimestrale per consumi inferiori a 500 Smc/anno, mensile per consumi superiori a 5000 Smc/anno. Le fatture saranno sempre salvo conguaglio.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.ClientCategoryFormula__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Aziende</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -2151,7 +3059,7 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <name>HDT_Script_VAS</name>
         <label>HDT Script - VAS</label>
         <locationX>686</locationX>
-        <locationY>2294</locationY>
+        <locationY>2414</locationY>
         <connector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </connector>
@@ -2188,6 +3096,26 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>isEnergiaElettrica</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>isGas</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>offertaInput</name>

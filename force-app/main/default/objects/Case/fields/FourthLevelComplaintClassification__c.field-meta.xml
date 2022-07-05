@@ -16,12 +16,15 @@
             <controllingFieldValue>Cambio fornitore</controllingFieldValue>
             <controllingFieldValue>Modifiche unilaterali</controllingFieldValue>
             <controllingFieldValue>Recesso</controllingFieldValue>
+            <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
             <controllingFieldValue>Autolettura (uso della)</controllingFieldValue>
             <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
             <controllingFieldValue>Indennizzi</controllingFieldValue>
             <controllingFieldValue>Erogazioni</controllingFieldValue>
             <controllingFieldValue>Cessazioni</controllingFieldValue>
             <controllingFieldValue>Validazioni</controllingFieldValue>
+            <controllingFieldValue>Continuità</controllingFieldValue>
+            <controllingFieldValue>Mancate letture</controllingFieldValue>
             <controllingFieldValue>Cambio misuratore</controllingFieldValue>
             <controllingFieldValue>Altro</controllingFieldValue>
             <controllingFieldValue>Doppia Fatturazione</controllingFieldValue>
@@ -124,6 +127,14 @@
         <valueSettings>
             <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
             <valueName>Rimborsi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Rimborsi - assegno</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Rimborsi - mancato accredito/doppio pagamento</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sicurezza</controllingFieldValue>
@@ -336,6 +347,10 @@
             <valueName>Cambio contatore</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Cambio misuratore</controllingFieldValue>
+            <valueName>cambio contatore gestito in ritardo</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Altro</controllingFieldValue>
             <valueName>Accise</valueName>
         </valueSettings>
@@ -452,6 +467,10 @@
             <valueName>Venditore terzo</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Evoluzioni automatiche</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
             <valueName>Accollo Totale</valueName>
         </valueSettings>
@@ -490,6 +509,14 @@
         <valueSettings>
             <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
             <valueName>Ripristino condizioni precedenti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Doppia Fatturazione</controllingFieldValue>
+            <valueName>Doppia Fatturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Doppia Fatturazione</controllingFieldValue>
+            <valueName>Venditore ha titolarità</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Periodicità e fattura di chiusura</controllingFieldValue>
@@ -546,6 +573,14 @@
         <valueSettings>
             <controllingFieldValue>Volture e subentri</controllingFieldValue>
             <valueName>Voltura con richiesta accessoria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>PdR errato sulla fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>POD errato sulla fornitura</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Privacy</controllingFieldValue>
