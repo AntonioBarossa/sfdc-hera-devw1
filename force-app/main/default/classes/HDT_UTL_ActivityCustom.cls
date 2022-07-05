@@ -329,9 +329,21 @@ public inherited sharing class HDT_UTL_ActivityCustom {
 
     public static void setConvertCloseStatus(List<wrts_prcgvr__Activity__c> activites){
         List<String> stateToConvert = new List<String>{'completed'};
+        Set<String> closedStatus = new Set<String>();
+        for (wrts_prcgvr__ActivityStatusSetting__c config : wrts_prcgvr__ActivityStatusSetting__c.getAll().values()){
+            if (String.isNotBlank(config.wrts_prcgvr__ApiName__c)){
+                closedStatus.add(config.wrts_prcgvr__ApiName__c.toUpperCase());
+            }
+        }
         for(wrts_prcgvr__Activity__c activity : activites) {
             if (String.isNotBlank(activity.wrts_prcgvr__Status__c) && stateToConvert.contains(activity.wrts_prcgvr__Status__c.toLowerCase())){
                 activity.wrts_prcgvr__Status__c = 'Chiusa';
+            }
+            if (activity.EndDate__c == null && String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase())){
+                activity.EndDate__c = Date.today();
+            }
+            if (activity.ActivityEndTime__c == null && String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase())){
+                activity.ActivityEndTime__c = DateTime.now();
             }
         }
     }
