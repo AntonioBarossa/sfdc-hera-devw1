@@ -143,25 +143,25 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Oggetto per la gestione dell&apos;invio delle notifiche alla pubblicazione di una news verso specifici ruoli in base alle DataCategories associate all&apos;articolo di News</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
     <gender>Feminine</gender>
-    <label>Regola Notifiche News</label>
+    <label>Richiesta Esito Autolettura</label>
     <nameField>
-        <label>Name</label>
-        <type>Text</type>
+        <displayFormat>REA-{00000000}</displayFormat>
+        <label>Richiesta Esito Autolettura Name</label>
+        <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Regole Notifiche News</pluralLabel>
+    <pluralLabel>Richieste Esito Autolettura</pluralLabel>
     <searchLayouts></searchLayouts>
-    <sharingModel>Private</sharingModel>
+    <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
