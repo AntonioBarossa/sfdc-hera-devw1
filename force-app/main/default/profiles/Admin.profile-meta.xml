@@ -567,6 +567,41 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SelfReadingOutcomeRequest__c.ActivityType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SelfReadingOutcomeRequest__c.Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SelfReadingOutcomeRequest__c.ErrorCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SelfReadingOutcomeRequest__c.ErrorDescription__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SelfReadingOutcomeRequest__c.Request_Json__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SelfReadingOutcomeRequest__c.StatusDescription__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SelfReadingOutcomeRequest__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.SalesCompanyCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -35077,6 +35112,9 @@
         <layout>ScriptConfig__c-HDT Layout Admin</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>SelfReadingOutcomeRequest__c-Richiesta Esito Autolettura Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>ServicePoint__c-Service Point Ele</layout>
         <recordType>ServicePoint__c.HDT_RT_Ele</recordType>
     </layoutAssignments>
@@ -37125,6 +37163,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>ScriptConfig__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>SelfReadingOutcomeRequest__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
