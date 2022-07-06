@@ -153,4 +153,16 @@ public with sharing class HDT_UTL_EligibilityCriteriaTst
             System.assertEquals(true, testSet.isEmpty(), 'Test notAdminSuperUserTst fallito');
         }
     }
+
+    @isTest
+    static void convertSupplyCityCodeTst()
+    {
+        Test.startTest();
+        String testResult = '';
+        testResult = HDT_UTL_EligibilityCriteria.convertSupplyCityCode('97080');
+        System.assertEquals(testResult, '16215');
+        testResult = HDT_UTL_EligibilityCriteria.convertSupplyCityCode('20201');
+        System.assertEquals(testResult, '20201');
+        Test.stopTest();
+    }
 }

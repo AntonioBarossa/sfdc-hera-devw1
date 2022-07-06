@@ -314,6 +314,7 @@ public inherited sharing class HDT_UTL_EligibilityCriteria {
         }
     }
 
+    @TestVisible 
     private static String convertSupplyCityCode(String codeToSearch){
         try {
             HDT_QR_StaticResource staticResourceQr = new HDT_QR_StaticResource();
