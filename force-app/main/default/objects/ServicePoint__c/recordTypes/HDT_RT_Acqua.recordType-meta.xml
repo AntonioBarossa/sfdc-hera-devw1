@@ -5,6 +5,17 @@
     <description>Punto di fornitura Idrico</description>
     <label>Punto Idrico</label>
     <picklistValues>
+        <picklist>AuthorizedNotToConfer__c</picklist>
+        <values>
+            <fullName>0-Non autorizzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1-Autorizzato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CommoditySector__c</picklist>
         <values>
             <fullName>Acqua</fullName>
@@ -295,12 +306,12 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>MarketOrigin__c</picklist>        
+        <picklist>MarketOrigin__c</picklist>
         <values>
             <fullName>Regolamentato</fullName>
             <default>false</default>
         </values>
-        </picklistValues>
+    </picklistValues>
     <picklistValues>
         <picklist>MeterClass__c</picklist>
         <values>

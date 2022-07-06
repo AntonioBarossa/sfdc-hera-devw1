@@ -5,6 +5,17 @@
     <description>Punto di fornitura Ambiente</description>
     <label>Punto Ambiente</label>
     <picklistValues>
+        <picklist>AuthorizedNotToConfer__c</picklist>
+        <values>
+            <fullName>0-Non autorizzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1-Autorizzato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CommoditySector__c</picklist>
         <values>
             <fullName>Ambiente</fullName>
