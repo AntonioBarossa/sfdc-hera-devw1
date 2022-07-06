@@ -320,12 +320,12 @@ public inherited sharing class HDT_UTL_EligibilityCriteria {
             HDT_QR_StaticResource staticResourceQr = new HDT_QR_StaticResource();
             List<StaticResource> staticResources = staticResourceQr.getRecordByName('ConvertOldCityCode');
     
-            List<HDT_CodeMap> convertList = (List<HDT_CodeMap>)JSON.deserialize(staticResources.get(0).Body.toString(), List<HDT_CodeMap>.class);
+            List<HDT_WRP_CodeMap> convertList = (List<HDT_WRP_CodeMap>)JSON.deserialize(staticResources.get(0).Body.toString(), List<HDT_WRP_CodeMap>.class);
     
             String supplyCity = codeToSearch.replaceFirst('^0+', '');
             String newValue = '';
     
-            for(HDT_CodeMap obj : convertList){
+            for(HDT_WRP_CodeMap obj : convertList){
                 if(obj.oldValue.equalsIgnoreCase(supplyCity)){
                     newValue = String.valueOf(obj.newValue);
                     break;
@@ -345,7 +345,7 @@ public inherited sharing class HDT_UTL_EligibilityCriteria {
     
     }
 
-    public class HDT_CodeMap {
+    public class HDT_WRP_CodeMap {
         public String oldValue;
         public String newValue;
     }
