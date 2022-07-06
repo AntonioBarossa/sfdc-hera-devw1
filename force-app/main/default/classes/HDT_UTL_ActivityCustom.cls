@@ -347,4 +347,59 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             }
         }
     }
+
+    public static void checkForProcessFields(List<wrts_prcgvr__Activity__c> newActivities, Map<Id,wrts_prcgvr__Activity__c> oldActivitiesMap){
+        Set<Id> caseId = new Set<Id>();
+        Set<Id> orderId = new Set<Id>();
+        for (wrts_prcgvr__Activity__c act :newActivities){
+            if (conditionForProcessFields(act,  oldActivitiesMap.get(act.Id), 'Case__c')){
+                caseId.add(act.Case__c);
+            }else if (conditionForProcessFields(act,  oldActivitiesMap.get(act.Id), 'Order__c')){
+                orderId.add(act.Order__c);
+            }else if (act.Case__c == null && act.Order__c == null){
+                act.ParentCluster__c = null;
+                act.ParentProcess__c = null;
+                act.ParentSubprocess__c = null;
+            }
+        }
+        Map<Id,Case> caseFieldProcessMap = new Map<Id,Case>();
+        Map<Id,Order> orderFieldProcessMap = new Map<Id,Order>();
+        if (!caseId.isEmpty()){
+            caseFieldProcessMap = new Map<Id,Case>([SELECT id,Cluster__c,Type,Subprocess__c  FROM Case WHERE Id IN: caseId WITH SECURITY_ENFORCED]);
+        }
+        if (!orderId.isEmpty()){
+            orderFieldProcessMap = new Map<Id,Order>([SELECT id,ProcessType__c,Subprocess__c FROM Order WHERE Id IN: orderId WITH SECURITY_ENFORCED]);
+        }
+        if (!caseFieldProcessMap.isEmpty() || !orderFieldProcessMap.isEmpty()){
+            setAllProcessFields(newActivities, caseFieldProcessMap, orderFieldProcessMap);
+        }
+    }
+
+    private static Boolean conditionForProcessFields(wrts_prcgvr__Activity__c newAct,wrts_prcgvr__Activity__c oldAct, String fieldToCheck){
+        switch on fieldToCheck {
+            when 'Case__c' {
+                return newAct.Case__c != null && (oldAct == null || newAct.Case__c != oldAct.Case__c || (String.isBlank(newAct.ParentCluster__c)&&String.isBlank(newAct.ParentProcess__c)&&String.isBlank(newAct.ParentSubprocess__c)));
+            }
+            when 'Order__c' {
+                return newAct.Case__c == null && newAct.Order__c != null && (oldAct == null || newAct.Order__c != oldAct.Order__c || (String.isBlank(newAct.ParentProcess__c)&&String.isBlank(newAct.ParentSubprocess__c)));
+            }
+        }
+        return false; 
+    }
+
+    private static void setAllProcessFields(List<wrts_prcgvr__Activity__c> activities,Map<Id,Case> caseFieldProcessMap,Map<Id,Order> orderFieldProcessMap){
+        for (wrts_prcgvr__Activity__c act : activities){
+            if (act.Case__c != null && caseFieldProcessMap.containsKey(act.Case__c)){
+                Case c = caseFieldProcessMap.get(act.Case__c);
+                act.ParentCluster__c = c.Cluster__c;
+                act.ParentProcess__c = c.Type;
+                act.ParentSubprocess__c = c.Subprocess__c;
+            }else if (act.Order__c != null && orderFieldProcessMap.containsKey(act.Order__c)){
+                Order o = orderFieldProcessMap.get(act.Order__c);
+                act.ParentCluster__c = null;
+                act.ParentProcess__c = o.ProcessType__c;
+                act.ParentSubprocess__c = o.Subprocess__c;
+            }
+        }
+    }
 }
