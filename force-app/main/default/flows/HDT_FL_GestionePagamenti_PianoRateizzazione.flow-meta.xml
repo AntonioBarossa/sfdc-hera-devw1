@@ -1845,7 +1845,7 @@
             <inputParameters>
                 <name>source</name>
                 <value>
-                    <elementReference>CaseInput.Origin</elementReference>
+                    <elementReference>$User.LoginChannel__c</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
