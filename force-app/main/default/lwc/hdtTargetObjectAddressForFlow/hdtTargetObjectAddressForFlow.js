@@ -14,16 +14,20 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
 
     @api
     validate() {
-        let address = this.getAddress();
-        let validity = this.validateAddress(address);
-        if (validity.isValid) {
-            this.populateCase(address);
-            //lanciare evento per inviare oggetto theCase;
-            //integrare coi campi del BP (non fare update diretto da apex, torna un nuovo case)
-            //Gestire salva in bozza in cui saltiamo i controlli dell'input ma poi siamo anche in grado di riprenderli (sfrutta funzionalità clona bp)
-            //anche per cb indirizzi, abilita sempre il tasto per verifica indirizzi
+        if(!this.cancelCase){
+            let address = this.getAddress();
+            let validity = this.validateAddress(address);
+            if (validity.isValid) {
+                this.populateCase(address);
+                //lanciare evento per inviare oggetto theCase;
+                //integrare coi campi del BP (non fare update diretto da apex, torna un nuovo case)
+                //Gestire salva in bozza in cui saltiamo i controlli dell'input ma poi siamo anche in grado di riprenderli (sfrutta funzionalità clona bp)
+                //anche per cb indirizzi, abilita sempre il tasto per verifica indirizzi
+            }
+            return validity;
+        }else{
+            return {isValid: true};
         }
-        return validity;
     }
 
     @api
@@ -118,8 +122,10 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
             wrapperAddress['Civico'] = this.theCase["InvoicingStreetNumber__c"];
         }
         //wrapperAddress["AbilitaVerifica"]=false;//abilita il tasto verifica
-        wrapperAddress["Flag Verificato"]=true;//questi due abilitano la check "verificata"
-        wrapperAddress["FlagVerificato"]=true;//questi due abilitano la check "verificata"
+        //START MODIFICA >>> marco.arci@webresults.it -> i due valori da true impostati a false per impedire l'avanzamento senza aver popolato nulla
+        wrapperAddress["Flag Verificato"]=false;//questi due abilitano la check "verificata"
+        wrapperAddress["FlagVerificato"]=false;//questi due abilitano la check "verificata"
+        //END MODIFICA >>> marco.arci@webresults.it -> i due valori da true impostati a false per impedire l'avanzamento senza aver popolato nulla
         console.log('wrapper addr'+JSON.stringify(wrapperAddress));
         const targetFields = this.template.querySelector("c-hdt-target-object-address-fields");
         //getInstanceWrapObject()
