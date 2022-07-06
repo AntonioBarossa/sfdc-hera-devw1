@@ -124,13 +124,13 @@ export default class HdtActiveRepentant extends LightningElement {
     }
 
     @api startActiveRepentant(dateDecorrenza) {
-        if (dateDecorrenza && new Date(dateDecorrenza).getTime() < new Date().getTime()) {
+        if (dateDecorrenza && new Date(dateDecorrenza).getTime() <= new Date().getTime() && this.dateDichiarazione && new Date(dateDecorrenza).getTime() <= new Date(this.dateDichiarazione).getTime()) {
             this.dateDecorrenza = dateDecorrenza;
             this.handleRepentant();
         } else {
             this.showMessage(
                 "Attenzione!",
-                dateDecorrenza? "La data decorrenza non può essere futura" : "Popolare Data Decorrenza",
+                dateDecorrenza && this.dateDichiarazione? "La data decorrenza non può essere futura né maggiore a data dichiarazione" : "Popolare Data Decorrenza / Dichiaraziones",
                 "error"
             );
             this.dateDecorrenza=null;
