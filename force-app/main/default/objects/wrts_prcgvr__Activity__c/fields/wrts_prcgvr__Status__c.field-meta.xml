@@ -99,9 +99,9 @@
                 <label>Comunicazione inviata</label>
             </value>
             <value>
-                <fullName>Comunicazione inviata</fullName>
+                <fullName>KO Definitivo</fullName>
                 <default>false</default>
-                <label>Comunicazione inviata</label>
+                <label>KO Definitivo</label>
             </value>
             <value>
                 <fullName>Completed</fullName>
