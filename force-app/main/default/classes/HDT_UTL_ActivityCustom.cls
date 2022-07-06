@@ -331,7 +331,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         List<String> stateToConvert = new List<String>{'completed'};
         Set<String> closedStatus = new Set<String>();
         for (wrts_prcgvr__ActivityStatusSetting__c config : wrts_prcgvr__ActivityStatusSetting__c.getAll().values()){
-            if (String.isNotBlank(config.wrts_prcgvr__ApiName__c)){
+            if (String.isNotBlank(config.wrts_prcgvr__ApiName__c) && config.wrts_prcgvr__IsClosed__c){
                 closedStatus.add(config.wrts_prcgvr__ApiName__c.toUpperCase());
             }
         }
