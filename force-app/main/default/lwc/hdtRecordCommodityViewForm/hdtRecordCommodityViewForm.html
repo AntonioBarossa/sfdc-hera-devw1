@@ -1,0 +1,43 @@
+<template>
+
+    <!-- Test di Visualizzazione LWC 
+    <lightning-card title="Test di Visualizzazione LWC" icon-name="custom:custom14">
+        <div class="slds-m-around_medium">
+        <p>LWC, {greeting}</p>
+        <lightning-input label="Campo" value={greeting} onchange={changeHandler}></lightning-input>
+        </div>
+    </lightning-card> -->
+
+    <lightning-card title="LWC Commodity View" icon-name="custom:custom14">
+        <!-- <template if:true={showViewSection}> -->
+            <lightning-record-view-form record-id={recordId}
+                                        object-api-name={objectName}
+                                        density={density}>
+                        <div class="slds-section slds-is-open">
+                            <h3 class="slds-section__title slds-theme_shade">
+                                <span class="slds-truncate slds-p-horizontal_small" title="Section Title">{labelReadOnlySection}</span>
+                            </h3>
+                            <div aria-hidden="false" class="slds-section__content slds-theme_shade">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <template for:each={firstColumn} for:item="field">
+                                            <lightning-output-field field-name={field.FieldName} key={field.FieldName}>
+                                            </lightning-output-field>
+                                        </template>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-8 slds-grow-none"> 
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <template for:each={secondColumn} for:item="field">
+                                            <lightning-output-field field-name={field.FieldName} key={field.FieldName}>
+                                            </lightning-output-field>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-record-view-form>
+        <!-- </template> -->
+    </lightning-card>
+      
+</template>
