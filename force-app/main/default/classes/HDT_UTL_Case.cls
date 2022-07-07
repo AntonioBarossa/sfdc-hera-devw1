@@ -306,6 +306,7 @@ public inherited sharing class HDT_UTL_Case {
             srRequest.CommoditySector__c = singleCase.CommodityFormula__c;
             srRequest.ProcessType__c = processType;
             srRequest.ServicePointCode__c = singleCase.PODPDRFormula__c;
+            srRequest.ServicePoint__c = singleCase.ServicePoint__c;
             srRequest.Status__c = status;
             srRequest.Type__c = type;
             serviceRequestList.add(srRequest);
