@@ -5,7 +5,7 @@
     <description>Campo di configurazione usato per indicare l&apos;agenzia del record di criterio nella funzionalità di Configurazione Offerta Tecnica</description>
     <externalId>false</externalId>
     <label>Agenzia</label>
-    <referenceTo>Account</referenceTo>
+    <referenceTo>AgentMatrix__c</referenceTo>
     <relationshipLabel>Criteri di Eleggibilita</relationshipLabel>
     <relationshipName>Criteri_di_Eleggibilita</relationshipName>
     <required>false</required>

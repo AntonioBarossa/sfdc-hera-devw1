@@ -8,6 +8,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
 	private  Id recordTypeD2DId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_VisitaD2D').getRecordTypeId();
 
     public override void beforeInsert(){
+        HDT_UTL_ActivityCustom.setConvertCloseStatus((List<wrts_prcgvr__Activity__c>) trigger.new);
         //Start>>> modifica marco.arci@webresults.it 11/10/21
         wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)
         wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
@@ -18,6 +19,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
         //End>>> modifica marco.arci@webresults.it 11/10/21
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
         HDT_UTL_Scarti.setLookupFields(trigger.new);
+        HDT_UTL_ActivityCustom.inheritUserFields((List<wrts_prcgvr__Activity__c>) trigger.new);
     }
 
  	//public override void beforeDelete(){}
@@ -25,7 +27,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
   //	public override void afterUndelete(){}
     
     public override void beforeUpdate(){
-        System.debug('beforeUpdate');
+        HDT_UTL_ActivityCustom.setConvertCloseStatus((List<wrts_prcgvr__Activity__c>) trigger.new);
         //Start>>> modifica marco.arci@webresults.it 11/10/21
         wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)
         wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
@@ -43,7 +45,6 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
             if (mapNew.get(tempAct.id)!=null && mapOld.get(tempAct.id)!=null
                 && mapNew.get(tempAct.id).OwnerId !=  mapOld.get(tempAct.id).OwnerId
                 && mapNew.get(tempAct.id).wrts_prcgvr__Status__c!=varStatus&& mapNew.get(tempAct.id).RecordTypeId==recordTypeD2DId ) {
-                    System.debug('********HERE');
                     tempAct.wrts_prcgvr__Status__c=varStatus;
             }
         }
@@ -58,8 +59,8 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
 
         HDT_UTL_ActivityCustomProcess.changeAssignRelatedRecord(trigger.new,trigger.old);
 
-        // @Picchiri 08.06.21 Credit Check Annullamento Ordine
-        HDT_UTL_ActivityCustomProcess.annullamentoActivityCustom(trigger.new,trigger.old);
+        // @Picchiri 08.06.21 Credit Check Annullamento Ordine  
+        HDT_UTL_ActivityCustomProcess.annullamentoActivityCustom(trigger.new,(Map<Id, wrts_prcgvr__Activity__c>)trigger.oldMap);
 
         // @Picchiri 14.06.21 Credit innesco credi check al cambio dello stato        
         HDT_UTL_ActivityCustomProcess.creditCheckKoPrecedenteCliente(trigger.new,trigger.old);
@@ -72,12 +73,14 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
        // Da capire se ha senso questo method o si può proprio rimuovere.
        //HDT_UTL_Scarti.updatePraticaForScartoDocumentale(trigger.new, trigger.old);
 
-        //f. defelice Chiusura case Proroga
-        HDT_UTL_ActivityCustomProcess.closeSobjectOnActivityClosing(trigger.new, trigger.old);
+        //f. defelice Chiusura case Proroga Temp
+        //HDT_UTL_ActivityCustomProcess.closeSobjectOnActivityClosing(trigger.new, trigger.old);
         HDT_UTL_ActivityCustom.checkForMandatoryAttachment((Map<Id, wrts_prcgvr__Activity__c>) trigger.newMap);
 
         // Assessment Gestione Scarti: rimossa chiamata a method poichè errato.
         // HDT_UTL_Scarti.handleEditButtonPress(trigger.new, (Map<Id, wrts_prcgvr__Activity__c>) trigger.oldMap);
+        HDT_UTL_ActivityCustomProcess.sendCloseNotification(Trigger.new, Trigger.oldMap);
+        HDT_UTL_ActivityCustomProcess.shareRecordAppointmentSelf(Trigger.new, Trigger.oldMap);
     }
 
     public override void afterInsert(){

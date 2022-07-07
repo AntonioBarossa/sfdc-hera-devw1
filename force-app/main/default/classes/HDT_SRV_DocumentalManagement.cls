@@ -1,5 +1,5 @@
-@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveClassLength, PMD.ExcessivePublicCount')
-public class HDT_SRV_DocumentalManagement{
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveClassLength, PMD.ExcessivePublicCount, PMD.CyclomaticComplexity, PMD.AvoidDeeplyNestedIfStmts, PMD.NcssMethodCount, PMD.ExcessiveParameterList')
+public with sharing class  HDT_SRV_DocumentalManagement{
 	
 	public static String generateRequest(String recordId, String context, String formParams){
 		
@@ -355,7 +355,7 @@ public class HDT_SRV_DocumentalManagement{
 		SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
 		if(docSendTracking != null){
 			if(docSendTracking.get('Case__c') != null){
-				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact.IndividualId,Type FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
+				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact.IndividualId,Type,Lead__r.IndividualId FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
 				return caseList[0];
 			}else {
 				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
@@ -372,7 +372,7 @@ public class HDT_SRV_DocumentalManagement{
 			String cluster = (String)record.get('Cluster__c');
 			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio>();
 			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData>();
-			if(requestBody.listOfRadioGroup != null && requestBody.listOfRadioGroup.size()>0){
+            if(requestBody.listOfRadioGroup != null && requestBody.listOfRadioGroup.size()>0){
 				listOfRadio.addAll(requestBody.listOfRadioGroup);
 				System.debug(LoggingLevel.DEBUG, requestBody.listOfRadioGroup);
 			}
@@ -404,7 +404,7 @@ public class HDT_SRV_DocumentalManagement{
 				}
 			}
 			handleRadioGroup(record,listOfRadio,envelopeId);
-			//handleLandRegistry(record,listOfData,listOfRadio);
+			handleLandRegistry(record,listOfData,listOfRadio);
 			HDT_UTL_DatabaseService.upsertSObject(record);
 		}
 	}
@@ -441,16 +441,22 @@ public class HDT_SRV_DocumentalManagement{
 	}
 
 	private static void handleRadioGroup(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio, String envelopeId){
-		if(listOfRadio != null && listOfRadio.size()>0){
+        if(listOfRadio != null && listOfRadio.size()>0){
 			String individualId;
 			if(record.getSobjectType() == Case.getSobjectType()){
 				Case caseRecord = (Case) record;
 				Contact caseContact = (Contact) caseRecord.Contact;
+				Lead caseLead;
 				if (caseContact != null){
 					individualId = caseContact.IndividualId;
+				}else {
+					caseLead = (Lead) caseRecord.Lead__r;
+					individualId = caseLead != null? caseLead.IndividualId:'';
 				}
 			}else{
 				Order orderRecord = (Order) record;
+				//FIX data firma su order figli
+				//List<Order> orderList = HDT_QR_GenericQuery.getGenericRecords('select Id,Account.RecordType.DeveloperName,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c from Order where ParentOrder__c = \''+(String)orderRecord.Id+'\'', 'Order');
 				Contact orderContact = (Contact) orderRecord.Contact__r;
 				if (orderContact != null){
 					individualId = orderContact.IndividualId;
@@ -490,6 +496,10 @@ public class HDT_SRV_DocumentalManagement{
 				}
 			}else{
 				List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Order__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
+				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
+				List<SObject> orderToUpdate = new List<SObject>();
+				List<wrts_prcgvr__Activity__c> voltureActList = new List<wrts_prcgvr__Activity__c>();
+				Boolean isVoltura = false;
 				Set<String> moduliOpzionaliMancanti = new Set<String>();
 				List<DocumentalActivity__c> activitiesToCreate = new List<DocumentalActivity__c>();
 				DocumentalActivity__c actOtpSign  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
@@ -513,33 +523,49 @@ public class HDT_SRV_DocumentalManagement{
 							individualRecord.MarketingPrivacy__c = value;
 							individualRecord.PrivacyMarketingChoiceDate__c = Date.today();
 							individualRecord.MarketingPrivacyVersion__c = privacyVersion;
+							individualRecord.PrivacyMarketingChoiceSource__c = 'CONTRATTO';
 						}else if (singleRadio.groupName.indexOf('radio2') > -1) {
 							individualRecord.ProfilingPrivacy__c = value;
 							individualRecord.PrivacyProfilingChoiceDate__c = Date.today(); 
 							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
+							individualRecord.PrivacyMarketingChoiceSource__c = 'CONTRATTO';
 						}
 						// Verifica radiobutton nei moduli opzionali (dati catastali, legge 80, istanza 326)
 						// I nomi dei radiobutton sono presenti nel JSON che manda Docusign
-						if (singleRadio.groupName.equalsIgnoreCase('DTC_radio1')){
+						if (singleRadio.groupName.contains('DTC_radio1')){
+							String actDescription = 'Ritornato correttamente';
 							if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+								if(singleRadio.groupName.contains('_1')){
+									actDescription  = actDescription + ' su ordine '+ orderList[0].get('OrderNumber');
+								}else {
+									actDescription  = actDescription + ' su ordine '+ orderList[1].get('OrderNumber');
+								}
 								DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
 								if (documentalActivity != null){
 									documentalActivity.AttachmentCode__c = 'DATI_CATASTALI'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
 									documentalActivity.ActivityType__c = 'Allegati ricevuti';
-									documentalActivity.AttachmentDescription__c = 'Ritornato correttamente';
+									documentalActivity.AttachmentDescription__c = actDescription;
 									activitiesToCreate.add(documentalActivity);
 								}
 							} else {
 								moduliOpzionaliMancanti.add(singleRadio.groupName);
 							}
 						}
-						if (singleRadio.groupName.equalsIgnoreCase('L80_radio')){
+						if (singleRadio.groupName.contains('L80_radio')){
 							if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+								String actDescriptionLeggeOtt = 'Ritornato correttamente';
+								if(singleRadio.groupName.contains('_1')){
+									actDescriptionLeggeOtt  = actDescriptionLeggeOtt + ' su ordine '+ orderList[0].get('OrderNumber');
+									orderList[0].put('DocumentLow80__c','Validato');
+								}else {
+									actDescriptionLeggeOtt  = actDescriptionLeggeOtt + ' su ordine '+ orderList[1].get('OrderNumber');
+									orderList[1].put('DocumentLow80__c','Validato');
+								}
 								DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
 								if (documentalActivity != null){
 									documentalActivity.AttachmentCode__c = 'LEGGE_80'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
 									documentalActivity.ActivityType__c = 'Allegati ricevuti';
-									documentalActivity.AttachmentDescription__c = 'Ritornato correttamente';
+									documentalActivity.AttachmentDescription__c = actDescriptionLeggeOtt;
 									activitiesToCreate.add(documentalActivity);
 								}
 							} else {
@@ -547,6 +573,7 @@ public class HDT_SRV_DocumentalManagement{
 							}
 						}
 						// TODO: gestire radio button per istanza 326
+						
 					}
 				}
 				try {
@@ -556,10 +583,62 @@ public class HDT_SRV_DocumentalManagement{
 					} else {
 						record.put('DocumentalPhase__c','Plico firmato');
 					}
+					record.put('Phase__c','Documentazione Gestita');
+					Order orderRecord = (Order) record;
 					HDT_UTL_DatabaseService.updateSObject(record);
 					if (!activitiesToCreate.isEmpty()){
 						HDT_UTL_DatabaseService.insertSObject(activitiesToCreate);
 					}
+					List<Order> childToUpdate = new List<Order>();
+					Map<Id,String> orderPhaseMap = new Map<Id,String>();
+					for(Sobject childOrder : orderList){
+						Order singleOrder = new Order();
+						singleOrder.Id = childOrder.Id;
+						singleOrder.CIAccoutn__c = 'Validato';
+						singleOrder.DocumentLow80__c = (String)childOrder.get('DocumentLow80__c');
+						singleOrder.Instance326__c = (String)childOrder.get('Instance326__c');
+						String leggeOtt = (String)childOrder.get('DocumentLow80__c');
+						String istanza = (String)childOrder.get('Instance326__c');
+						if((String.isBlank(leggeOtt) || (String.isNotBlank(leggeOtt) && leggeOtt.equalsIgnoreCase('Validato'))) && 
+						(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))){
+							singleOrder.Phase__c = 'Documentazione Validata';
+							orderPhaseMap.put(singleOrder.Id, 'Documentazione Validata');
+						}
+						childToUpdate.add(singleOrder);
+					}
+					/**
+					 * AF Fix Accettazione Voltura.
+					 * E' necessario chiudere l'attività prima di settare Documentazione Validata
+					 */
+					try {
+						if(!orderList.isEmpty()){
+							Set<Id> voltOrdSet = new Set<Id>();
+							String processTypeVol = '';
+							String phase = '';
+							for (SObject voltOrder : orderList) {
+								processTypeVol = (String)voltOrder.get('DocumentalProcessType__c');
+								phase = orderPhaseMap.get((Id)voltOrder.get('Id')) != null? orderPhaseMap.get((Id)voltOrder.get('Id')):'';
+								if(String.isNotBlank(processTypeVol) && processTypeVol.containsIgnoreCase('Voltura') && String.isNotBlank(phase) && phase.equalsIgnoreCase('Documentazione Validata')){
+									voltOrdSet.add((Id)voltOrder.get('Id'));
+								}
+							}
+							if(!voltOrdSet.isEmpty()){
+								voltureActList = [SELECT Id,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Order__c IN:voltOrdSet AND wrts_prcgvr__Status__c = 'Aperta' AND Type__c = 'Accettazione Voltura'  WITH SECURITY_ENFORCED];
+								for(wrts_prcgvr__Activity__c singleAct : voltureActList){
+									singleAct.wrts_prcgvr__Status__c = 'Chiusa';
+								}
+								if(!voltureActList.isEmpty()){
+									HDT_UTL_DatabaseService.updateSObject(voltureActList);
+								}
+							}
+						}
+					} catch (Exception ex) {
+						//no throws
+					}
+					if(!childToUpdate.isEmpty()){
+						HDT_UTL_DatabaseService.updateSObject(childToUpdate);
+					}
+					
 				}catch(Exception ex){
 					System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
 				}
@@ -573,12 +652,17 @@ public class HDT_SRV_DocumentalManagement{
 					System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
 				}
 			}
+		}else if(record.getSobjectType() == Order.getSobjectType()){
+			record.put('DocumentalPhase__c','Plico firmato');
+			record.put('Phase__c','Documentazione Gestita');
+			HDT_UTL_DatabaseService.updateSObject(record);
 		}
 	}
-	private static void handleLandRegistry(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio){
+	private static void handleLandRegistry( Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio){
 		if(record != null && record.getSobjectType() == Case.getSobjectType()){
 			return;
 		}
+		List<Order> orderList = (List<Order>)HDT_QR_GenericQuery.getGenericRecords('SELECT Id,OrderNumber,ServicePoint__c,EffectiveDate__c,SupplyState__c,SurfaceServed__c,SupplyType__c FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
 		List<LandRegistry__c> registries = new List<LandRegistry__c>();
 		Map<String, String> docusignData = new Map<String, String>();
 		for (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData singleData : listOfData) {
@@ -592,12 +676,13 @@ public class HDT_SRV_DocumentalManagement{
 				docusignRadioGroups.put(singleRadio.groupName, singleRadio.value);
 			}
 		}
-
-		Order childOrder = new Order();
-		// TODO: ricavare childOrder a partire dall'id order presente in listOfData
-		LandRegistry__c reg = HDT_UTL_DocumentalManagement.createLandRegistryRecord(docusignData, docusignRadioGroups, childOrder);
-		// TODO: gestire scenario in cui due o più order figli hanno dati catastali (necessario creare più record su LandRegistry__c)
-		registries.add(reg);
+		Integer i = 1;
+		for(Order childOrder : orderList){
+			LandRegistry__c reg = HDT_UTL_DocumentalManagement.createLandRegistryRecord(docusignData, docusignRadioGroups, childOrder,i);
+			registries.add(reg);
+			i++;
+		}
+		
 
 		if (!registries.isEmpty()){
 			try {
@@ -634,6 +719,11 @@ public class HDT_SRV_DocumentalManagement{
 					String pkgId = response.deliverPackageResponse.packageIds;
 					HDT_UTL_DocumentalManagement.createDocumentSendTracking(msg, recordId, pkgId, processRecord);
 					HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(response, context);
+					if(context == 'Order' && (String)processRecord.get('DocSendingMethod__c') != null && (String)processRecord.get('DocSendingMethod__c') == 'Stampa Cartacea'){
+						Date dToday = Date.today();
+						String dateStr = dToday.day() + '/' + dToday.month() + '/' + dToday.year();
+						createPublicLink(recordId, response.deliverPackageResponse.composedDocument, 'Plico Contrattuale ' +dateStr);
+					}
 				}
 			}
 		}catch(Exception ex){
@@ -674,6 +764,7 @@ public class HDT_SRV_DocumentalManagement{
 			sPackageRequest.objectId = recordId;
 			sPackageRequest.signMode = signMode;
 			sPackageRequest.mode = mode;
+			sPackageRequest.documentId = '1';
 			for(Map<String,Object> singleMap : driverPayloadListMap){
 				sPackage = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage((List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver>)singleMap.get('driver'),(String)singleMap.get('payload'));
 				sPackageRequest.sPackage.add(sPackage);
@@ -714,11 +805,13 @@ public class HDT_SRV_DocumentalManagement{
 			signInfo.idCheckConfigurationName = docusignCustomSettings.IdCheckConfigurationName__c;
 			signInfo.pageUrl = docusignCustomSettings.PageUrl__c;
 			signInfo.requireIdLookup = docusignCustomSettings.RequireIdLookup__c;
+			signInfo.transcodeTemplate = 'true';
 			signInfo.status = docusignCustomSettings.Status__c;
 			signInfo.senderProvidedNumbers.add(telephoneNumber);
 			//customerInfo
 			String email = String.isNotBlank(emailCase)?emailCase:emailOrder;
 			String creationUrl = formParams.get('signMode') == 'OTP Remoto'? 'false':'true';
+			String clientUserId = formParams.get('signMode') == 'OTP Coopresenza'? '1':null;
 			String vatCode = HDT_UTL_DocumentalManagement.getValue('Account','VATNumber__c',0,inputs,formParams);
 			String fiscalCode = HDT_UTL_DocumentalManagement.getValue('Account','FiscalCode__c',0,inputs,formParams);
 			String accountName = HDT_UTL_DocumentalManagement.getValue('PrimaryContact','Name',0,inputs,formParams);
@@ -732,12 +825,19 @@ public class HDT_SRV_DocumentalManagement{
 			if(String.isNotBlank(processTypeCase)){
 				processType = processTypeCase;
 			}
+			if(String.isBlank(accountName)){
+				firstName = HDT_UTL_DocumentalManagement.getValue('Case','FirstName__c',0,inputs,formParams);
+				lastName = HDT_UTL_DocumentalManagement.getValue('Case','LastName__c',0,inputs,formParams);
+				accountName = firstName + ' ' + lastName;
+			}
 			customerInfo.email = email;
 			customerInfo.name = accountName;
 			customerInfo.fiscalCode = fiscalCode;
 			customerInfo.vatNumber = vatCode;
 			customerInfo.creationUrl = creationUrl;
+			customerInfo.clientUserId = clientUserId;
 			customerInfo.emailSubject = 'HERA - ' + processType;
+			customerInfo.roleName = 'Cliente';
 			//@ealpi nuovi campi inviati
 			customerInfo.rds = rds;
 			customerInfo.dateCreationDocument = today.format('yyyy-MM-dd HH:mm:ss');
@@ -1476,5 +1576,82 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			this.signMode = new Map<String,String>();
 			this.sendMode = new List<Map<String,String>>();
 		}
+	}
+
+	public static String queryContactPoint(String email,String phone,String contactId){
+		List<SObject> cpEmailList = new List<Sobject>();
+		List<Contact> conList = [SELECT Id, IndividualId FROM Contact WHERE Id = :contactId WITH SECURITY_ENFORCED];
+		if(String.isNotBlank(email)){
+			cpEmailList =HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointEmail', 'EmailAddress =\''+String.escapeSingleQuotes(email)+'\' AND ParentId=\''+conList[0].IndividualId+'\'');
+			if(cpEmailList.isEmpty())
+			{
+				cpEmailList =HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointEmail', 'EmailAddress =\''+String.escapeSingleQuotes(email)+'\' AND Contact__c=\''+contactId+'\'');
+			}
+		}
+		List<SObject> cpPhone = new List<Sobject>();
+		if(String.isNotBlank(phone)){
+			cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND ParentId=\''+conList[0].IndividualId+'\'');
+			if(cpPhone.isEmpty())
+			{
+				cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND Contact__c=\''+contactId+'\'');
+			}
+		}	
+		Map<String,String> result = new Map<String,String>();
+		if((!cpEmailList.isEmpty() && !cpPhone.isEmpty()) || (String.isBlank(email) && String.isBlank(phone))
+		||(!cpEmailList.isEmpty() && cpPhone.isEmpty() && String.isBlank(phone))
+		||(cpEmailList.isEmpty() && String.isBlank(email) && !cpPhone.isEmpty())){
+			result.put('email', 'OK');
+			result.put('phone', 'OK');
+			result.put('result', 'OK');
+		}else if(cpEmailList.isEmpty() && cpPhone.isEmpty() && String.isNotBlank(email) && String.isNotBlank(phone)){
+			result.put('email', 'KO');
+			result.put('phone', 'KO');
+			result.put('result', 'KO');
+			result.put('message', 'Attenzione! Scegliendo di procedere verrano creati i contact point: ' + email + ' e ' + phone);
+		}else if(cpEmailList.isEmpty() && String.isNotBlank(email)){
+			result.put('email', 'KO');
+			result.put('phone', 'OK');
+			result.put('result', 'KO');
+			result.put('message', 'Attenzione! Scegliendo di procedere verrà creato il contact point: ' + email); 
+		}else if(cpPhone.isEmpty() && String.isNotBlank(phone)) {
+			result.put('email', 'OK');
+			result.put('phone', 'KO');
+			result.put('result', 'KO');
+			result.put('message', 'Attenzione! Scegliendo di procedere verrà creato il contact point: ' + phone);
+		}
+		return JSON.serialize(result);
+	}
+
+	public static String createContactPoint(String email,String phone,String contactId){
+		String result = 'OK';
+		try{
+			HDT_QR_Contact qrContact = new HDT_QR_Contact();
+			Contact cont = qrContact.getRecordById(contactId);
+			List<SObject> objectList = new List<SObject>();
+			if(String.isNotBlank(email)){
+				ContactPointEmail cpEmail = new ContactPointEmail();
+				cpEmail.ParentId = cont.IndividualId;
+				cpEmail.EmailAddress = email;
+				cpEmail.Type__c = 'E-mail Anagrafica';
+				cpEmail.Contact__c = contactId;
+				objectList.add(cpEmail);
+			}
+	
+			if(String.isNotBlank(phone)){
+				ContactPointPhone cpPhone = new ContactPointPhone();
+				cpPhone.ParentId = cont.IndividualId;
+				cpPhone.TelephoneNumber = phone;
+				cpPhone.Type__c = 'Mobile';
+				cpPhone.Contact__c = contactId;
+				cpPhone.Prefix__c = '+39';
+				objectList.add(cpPhone);
+			}
+			if(!objectList.isEmpty()){
+				HDT_UTL_DatabaseService.insertSObject(objectList);
+			}
+		}catch(Exception ex){
+			result = 'KO';
+		}
+		return result;
 	}
 }

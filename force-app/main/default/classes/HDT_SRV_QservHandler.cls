@@ -7,51 +7,73 @@ public with sharing class HDT_SRV_QservHandler {
 
         Map<String, Object> transcodeMap = new Map<String, Object>();
 
-        try {
+        String sObjName = sobj.getSObjectType().getDescribe().getName();
+        String myFieldApiName;
+        Boolean myFlag;
 
-            String body = HDT_UTL_CreateGenericRequestBody.createBodyRequest(sobj);
-            HttpResponse response = makePostCallout(body);
-            HDT_WRP_MrrResponse deserializedResponse = (HDT_WRP_MrrResponse) JSON.deserialize(response.getBody(), HDT_WRP_MrrResponse.class);
+        if(sObjName.equals('Order')==true){
+            myFieldApiName = 'DistributorFormula__c';
+        }else{
+            myFieldApiName = 'DistributorName__c';
+        }
 
-            System.debug(LoggingLevel.DEBUG, 'RESPONSE: ' + deserializedResponse);
+        /*HDT_LocalDispatcherInrete__mdt myRecord = HDT_LocalDispatcherInrete__mdt.getInstance(myFieldApiName);
+        if(myRecord != null){
+            myFlag = true;
+        }else{
+            myFlag = false;
+        }*/
 
-            if(deserializedResponse != null){
+        myFlag = HDT_UTL_QuoteManagement.checkLocalDispatcher(String.valueOf(sobj.get(myFieldApiName)));
 
-                List<HDT_QServicesTranscode__mdt> transcodeConfigList = [SELECT HerokuField__c, SfdcField__c FROM HDT_QServicesTranscode__mdt WHERE ObjectName__c =: String.valueof(sobj.getSObjectType().getDescribe().getName()) WITH SECURITY_ENFORCED];
+        if(myFlag){
+            try {
+                String body = HDT_UTL_CreateGenericRequestBody.createBodyRequest(sobj);
+                HttpResponse response = makePostCallout(body);
+                HDT_WRP_MrrResponse deserializedResponse = (HDT_WRP_MrrResponse) JSON.deserialize(response.getBody(), HDT_WRP_MrrResponse.class);
 
-                if (transcodeConfigList.size() > 0) {
-                    for(HDT_WRP_MrrResponse.HDT_WRP_Field field : deserializedResponse.responses.get(0).objects.get(0).fields){ 
-                        for (HDT_QServicesTranscode__mdt transcodeConfig : transcodeConfigList){
+                System.debug(LoggingLevel.DEBUG, 'RESPONSE: ' + deserializedResponse);
 
-                            if ('FASE'.equals(field.name) && field.value.containsIgnoreCase('KO')){
-                                transcodeMap.put('ESITO', false);
-                            }else if ('FASE'.equals(field.name) && field.value.containsIgnoreCase('OK')){
-                                transcodeMap.put('ESITO', true);
-                            }else if ('DES_ERR_AEEG'.equals(field.name)){
-                                transcodeMap.put('DES_ERR_AEEG', field.value);
-                            }else if ('errorMessage'.equals(field.name) && ((field.value).containsIgnoreCase('venditore') || (field.value).containsIgnoreCase('distributore'))){
-                                System.debug(LoggingLevel.DEBUG, 'Error thrown: ' + field.value);
-                                transcodeMap.put('ESITO', true);
-                                transcodeMap.put('DES_ERR_AEEG', field.value);
-                                break;
-                            }else if ('errorMessage'.equals(field.name) && (field.value != null || !String.isBlank(field.value))){
-                                System.debug(LoggingLevel.DEBUG, 'Error thrown: ' + field.value);
-                                transcodeMap.put('ESITO', false);
-                                transcodeMap.put('DES_ERR_AEEG', field.value);
-                                break;
-                            }
+                if(deserializedResponse != null){
 
-                            if (field.name == transcodeConfig.HerokuField__c){
-                                sobj.put(transcodeConfig.SfdcField__c, field.value);
+                    List<HDT_QServicesTranscode__mdt> transcodeConfigList = [SELECT HerokuField__c, SfdcField__c FROM HDT_QServicesTranscode__mdt WHERE ObjectName__c =: String.valueof(sobj.getSObjectType().getDescribe().getName()) WITH SECURITY_ENFORCED];
+
+                    if (transcodeConfigList.size() > 0) {
+                        for(HDT_WRP_MrrResponse.HDT_WRP_Field field : deserializedResponse.responses.get(0).objects.get(0).fields){ 
+                            for (HDT_QServicesTranscode__mdt transcodeConfig : transcodeConfigList){
+
+                                if ('FASE'.equals(field.name) && field.value.containsIgnoreCase('KO')){
+                                    transcodeMap.put('ESITO', false);
+                                }else if ('FASE'.equals(field.name) && field.value.containsIgnoreCase('OK')){
+                                    transcodeMap.put('ESITO', true);
+                                }else if ('DES_ERR_AEEG'.equals(field.name)){
+                                    transcodeMap.put('DES_ERR_AEEG', field.value);
+                                }else if ('errorMessage'.equals(field.name) && ((field.value).containsIgnoreCase('venditore') || (field.value).containsIgnoreCase('distributore'))){
+                                    System.debug(LoggingLevel.DEBUG, 'Error thrown: ' + field.value);
+                                    transcodeMap.put('ESITO', true);
+                                    transcodeMap.put('DES_ERR_AEEG', field.value);
+                                    break;
+                                }else if ('errorMessage'.equals(field.name) && (field.value != null || !String.isBlank(field.value))){
+                                    System.debug(LoggingLevel.DEBUG, 'Error thrown: ' + field.value);
+                                    transcodeMap.put('ESITO', false);
+                                    transcodeMap.put('DES_ERR_AEEG', field.value);
+                                    break;
+                                }
+
+                                if (field.name == transcodeConfig.HerokuField__c){
+                                    sobj.put(transcodeConfig.SfdcField__c, field.value);
+                                }
                             }
                         }
                     }
-                }
 
-                HDT_UTL_DatabaseService.updateSObject(sobj);
+                    HDT_UTL_DatabaseService.updateSObject(sobj);
+                }
+            } catch (Exception e) {
+                throw e;
             }
-        } catch (Exception e) {
-            throw e;
+        }else{
+            transcodeMap.put('ESITO', true);
         }
 
         System.debug(LoggingLevel.DEBUG, 'transcodeMap: ' + transcodeMap);

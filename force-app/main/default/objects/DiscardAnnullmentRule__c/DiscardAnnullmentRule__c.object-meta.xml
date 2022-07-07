@@ -163,10 +163,13 @@
     </nameField>
     <pluralLabel>Regola Annullamento Scarto</pluralLabel>
     <searchLayouts>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>MassChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Import</excludedStandardButtons>
         <searchResultsAdditionalFields>ActivityType__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ProcessValue__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ControllingValue__c</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Read</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

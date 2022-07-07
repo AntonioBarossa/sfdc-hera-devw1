@@ -70,7 +70,20 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
 
             wrts_prcgvr.MRR_1_0.MultiRequest mrrList = (wrts_prcgvr.MRR_1_0.MultiRequest) argsMap.get('multirequest');
             
-
+            /**@frpanico per allineamento anagrafica
+             * e' necessaria una customizzazione per inviare
+             * soltanto la subscription di offerta commerciale
+             */
+            
+            mrrList = removeNonCommoditySubscriptions(mrrList);
+            String processType = obj.get('Type') != null ? (String)obj.get('Type') : '';
+            if(String.isNotBlank(processType) && 
+            (processType.equalsIgnoreCase('Richiesta Domiciliazione')
+            || processType.equalsIgnoreCase('Variazione Domiciliazione')
+            || processType.equalsIgnoreCase('Rimborso')))
+            {
+                mrrList = addIbanCountry(mrrList); 
+            }
             arg.put('endpoint', endpoint);
             arg.put('timeout', 12000);
             arg.put('payload',mrrList);
@@ -115,7 +128,37 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             String serializedCase = JSON.serialize(caseToUpdate[0]);
             //updateFuture(serializedCase);
         }*/
-        
+
+        if(!wrpResponses.isEmpty() && wrpResponses[0].responseMap != null){
+            Map<String,String> utilityMap = new Map<String, String>();
+                            
+            String errdesc = '';
+            if(String.isNotBlank(wrpResponses[0].responseMap.get('NOTE_ERR'))){
+                errdesc += HDT_UTL_Accents.removeDiacritics(wrpResponses[0].responseMap.get('NOTE_ERR')) + '\n';
+            }
+            if(String.isNotBlank(wrpResponses[0].responseMap.get('DES_ERR_AEEG'))){
+                errdesc += HDT_UTL_Accents.removeDiacritics(wrpResponses[0].responseMap.get('DES_ERR_AEEG')) + '\n';
+            }
+            if(String.isNotBlank(wrpResponses[0].responseMap.get('TESTO_ERRR'))){
+                errdesc += HDT_UTL_Accents.removeDiacritics(wrpResponses[0].responseMap.get('TESTO_ERRR')) + '\n';
+            }
+            if(String.isNotBlank(wrpResponses[0].responseMap.get('ANNOTAZIONI'))){
+                errdesc += HDT_UTL_Accents.removeDiacritics(wrpResponses[0].responseMap.get('ANNOTAZIONI'));
+            }
+
+            utilityMap.put('NOTE_ERR', errdesc);
+            utilityMap.put('DISCARD_MESSAGE', errdesc);
+            utilityMap.put('DATA_ELABORAZIONE', String.isNotBlank(wrpResponses[0].responseMap.get('DATA_ELABORAZIONE')) ? wrpResponses[0].responseMap.get('DATA_ELABORAZIONE') : 
+                            String.isNotBlank(wrpResponses[0].responseMap.get('DATA_EVENTO')) ? wrpResponses[0].responseMap.get('DATA_EVENTO') : '');
+            utilityMap.put('CMP', String.isNotBlank(wrpResponses[0].responseMap.get('CMP')) ? wrpResponses[0].responseMap.get('CMP') : '');
+            utilityMap.put('UTENZA', String.isNotBlank(wrpResponses[0].responseMap.get('UTENZA')) ? wrpResponses[0].responseMap.get('UTENZA') : '');
+            utilityMap.put('FASE', String.isNotBlank(wrpResponses[0].responseMap.get('FASE')) ? wrpResponses[0].responseMap.get('FASE') : '');
+            utilityMap.put('RECORD_ID', String.isNotBlank(wrpResponses[0].responseMap.get('RECORD_ID')) ? wrpResponses[0].responseMap.get('RECORD_ID') : '');
+            utilityMap.put('OBJECT_TYPE', 'Case');
+
+            HDT_UTL_Scarti.handleHerokuResponse(caseToUpdate[0].Id,wrpResponses[0].responseMap.get('ATTIVITA'), wrpResponses[0].responseMap.get('FASE'), utilityMap);
+            HDT_UTL_Scarti.discardManagement(utilityMap);
+        }
 
         response.success = true;
         response.message = 'OK';
@@ -237,5 +280,111 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         responseFieldList = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{rifRich, recordId,herokuCode};
         return responseFieldList;
     }
+    /**@frpanico 2022-04-07
+     * Aggiunta rimozione delle subrsciptions
+     * Non di offerta commerciale
+     * Si recuperano tutte le subscritpions dalla request
+     * Si controlla quale sia la subscription di offerta commerciale
+     * Si rimuovono dunque tutte quelle subscriptions non di offerta commerciale
+     */
+    @TestVisible
+    private static wrts_prcgvr.MRR_1_0.MultiRequest removeNonCommoditySubscriptions(wrts_prcgvr.MRR_1_0.MultiRequest mrrList)
+    {
+        Set<Id> subscriptionsId = new Set<Id>();
+        String commoditySubscription;
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
+        {
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('SBQQ__Subscription__c'))
+            {
+                subscriptionsId.add(obj.id);
+            }
+        }
+        List<SBQQ__Subscription__c> subscriptionList = [SELECT Id, SBQQ__Product__r.Family FROM SBQQ__Subscription__c WHERE Id IN :subscriptionsId  AND SBQQ__Product__r.Family = 'Offerta commerciale' WITH SECURITY_ENFORCED];
+        if(!subscriptionList.isEmpty())
+        {
+            commoditySubscription = subscriptionList[0].Id;
+        }
+        for(Integer i = mrrList.requests[0].objects.size() - 1; i >= 0; --i)
+        {
+            wrts_prcgvr.MRR_1_0.WObject obj = mrrList.requests[0].objects[i];
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('SBQQ__Subscription__c'))
+            {
+                if(obj.id.equalsIgnoreCase(commoditySubscription))
+                {
+                    continue;
+                }
+                else
+                {
+                    mrrList.requests[0].objects.remove(i); 
+                }
+            }
+        }
+        return mrrList;
+    }
     
+    @TestVisible
+    private static wrts_prcgvr.MRR_1_0.MultiRequest removeNonCommodityOrderItems(wrts_prcgvr.MRR_1_0.MultiRequest mrrList)
+    {
+        Set<Id> orderItemsId = new Set<Id>();
+        String commodityOrderItem;
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
+        {
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('OrderItem'))
+            {
+                orderItemsId.add(obj.Id);
+            }
+        }
+        List<OrderItem> orderItems = [SELECT Id FROM OrderItem WHERE Id IN :orderItemsId AND ProductFamily__c = 'Offerta commerciale' WITH SECURITY_ENFORCED];
+        if(!orderItems.isEmpty())
+        {
+            commodityOrderItem = orderItems[0].Id;
+        }
+        for(Integer i = mrrList.requests[0].objects.size() - 1; i >= 0; --i)
+        {
+            wrts_prcgvr.MRR_1_0.WObject obj = mrrList.requests[0].objects[i];
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('OrderItem'))
+            {
+                if(obj.id.equalsIgnoreCase(commodityOrderItem))
+                {
+                    continue;
+                }
+                else
+                {
+                    mrrList.requests[0].objects.remove(i); 
+                }
+            }
+        }
+        return mrrList;
+    }
+
+    @TestVisible
+    private static wrts_prcgvr.MRR_1_0.MultiRequest addIbanCountry(wrts_prcgvr.MRR_1_0.MultiRequest mrrList)
+    {
+        Boolean ibanCountry = false;
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
+        {
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('BillingProfile__c'))
+            {
+                for(wrts_prcgvr.MRR_1_0.Field f : obj.fields)
+                {
+                    if(f.name.equalsIgnoreCase('PAESE_IBAN'))
+                    {
+                        ibanCountry = true;
+                        break;
+                    }
+                }
+                if(!ibanCountry)
+                {
+                    wrts_prcgvr.MRR_1_0.Field ibanField = new wrts_prcgvr.MRR_1_0.Field();
+                    ibanField.name = 'PAESE_IBAN';
+                    ibanField.fieldType = 'STRING';
+                    ibanField.value = 'IT';
+                    obj.fields.add(ibanField);
+                }
+                break;
+            }
+        }
+        return mrrList;
+    }
+
 }

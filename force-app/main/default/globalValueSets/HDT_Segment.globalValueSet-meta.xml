@@ -16,9 +16,24 @@
         <label>AZIENDE Soho</label>
     </customValue>
     <customValue>
+        <fullName>CONDOMINI</fullName>
+        <default>false</default>
+        <label>CONDOMINI</label>
+    </customValue>
+    <customValue>
         <fullName>CONDOMINI Small</fullName>
         <default>false</default>
         <label>CONDOMINI Small</label>
+    </customValue>
+    <customValue>
+        <fullName>Corporate_CONSIP</fullName>
+        <default>false</default>
+        <label>Corporate_CONSIP</label>
+    </customValue>
+    <customValue>
+        <fullName>Corporate_GDA</fullName>
+        <default>false</default>
+        <label>Corporate_GDA</label>
     </customValue>
     <customValue>
         <fullName>Corporate_IC</fullName>
@@ -36,9 +51,19 @@
         <label>Corporate_TOP</label>
     </customValue>
     <customValue>
+        <fullName>ENTI</fullName>
+        <default>false</default>
+        <label>ENTI</label>
+    </customValue>
+    <customValue>
         <fullName>FAMIGLIE</fullName>
         <default>false</default>
         <label>FAMIGLIE</label>
+    </customValue>
+    <customValue>
+        <fullName>GOLD</fullName>
+        <default>false</default>
+        <label>GOLD</label>
     </customValue>
     <customValue>
         <fullName>GOLD Aziende Sme</fullName>
@@ -59,6 +84,11 @@
         <fullName>GOLD Top Business</fullName>
         <default>false</default>
         <label>GOLD Top Business</label>
+    </customValue>
+    <customValue>
+        <fullName>HCNE_Coporate_GDA</fullName>
+        <default>false</default>
+        <label>HCNE_Coporate_GDA</label>
     </customValue>
     <customValue>
         <fullName>HCNE_Corporate_SME</fullName>
@@ -96,6 +126,11 @@
         <label>Mui_No SV_Enti</label>
     </customValue>
     <customValue>
+        <fullName>MUI_STG</fullName>
+        <default>false</default>
+        <label>MUI_STG</label>
+    </customValue>
+    <customValue>
         <fullName>Mui_SV_Aziende</fullName>
         <default>false</default>
         <label>Mui_SV_Aziende</label>
@@ -116,6 +151,11 @@
         <label>SALVAGUARDIA</label>
     </customValue>
     <customValue>
+        <fullName>SILVER</fullName>
+        <default>false</default>
+        <label>SILVER</label>
+    </customValue>
+    <customValue>
         <fullName>SILVER Aziende Soho</fullName>
         <default>false</default>
         <label>SILVER Aziende Soho</label>
@@ -125,32 +165,7 @@
         <default>false</default>
         <label>ZCOD-DA codificare</label>
     </customValue>
-    <customValue>
-        <fullName>GOLD</fullName>
-        <default>false</default>
-        <label>GOLD</label>
-    </customValue>
-    <customValue>
-        <fullName>SILVER</fullName>
-        <default>false</default>
-        <label>SILVER</label>
-    </customValue>
-    <customValue>
-        <fullName>CONDOMINI</fullName>
-        <default>false</default>
-        <label>CONDOMINI</label>
-    </customValue>
-    <customValue>
-        <fullName>ENTI</fullName>
-        <default>false</default>
-        <label>ENTI</label>
-    </customValue>
-    <customValue>
-        <fullName>Corporate_CONSIP</fullName>
-        <default>false</default>
-        <label>Corporate_CONSIP</label>
-    </customValue>
     <description>Codice Segmento SAP</description>
     <masterLabel>Segmento</masterLabel>
-    <sorted>false</sorted>
+    <sorted>true</sorted>
 </GlobalValueSet>

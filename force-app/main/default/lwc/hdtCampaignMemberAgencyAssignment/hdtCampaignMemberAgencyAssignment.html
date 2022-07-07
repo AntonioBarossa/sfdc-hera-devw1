@@ -4,32 +4,58 @@
             <div class="slds-col slds-size--1-of-1">
                 <template if:true={isOutbound}>
                     <template if:true={showResults}>
-                        <div class="slds-p-horizontal--x-small">
-                            <div class="slds-form-element__label slds-p-bottom--x-small">Numerazioni ancora da
-                                assegnare:
-                                {remainingToAssign}</div>
+                        <div class="slds-form-element__label slds-p-bottom--x-small">Numerazioni ancora da
+                            assegnare:{remainingToAssign}
                         </div>
                         <div class="slds-grid">
-                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                        <div class="slds-col slds-size_4-of-12">
+                            <lightning-input required="true" data-id="valDate" label="Data Inizio Validità" type="date"></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-12"></div>
+                        <div class="slds-col slds-size_6-of-12 slds-p-around--x-small">
                                 <lightning-radio-group name="assignmentType" label="Modalità di assegnazione"
                                     value={assignmentType} options={options} onchange={handleAssignmentTypeChange} >
                                 </lightning-radio-group>
                             </div>
                         </div>
                         <div class="slds-p-around--x-small">
-                            <div class="slds-form-element__label">
-                                Agenzia
+                            <div class="slds-grid">
+                                <div style="font-weight: bold;" class="slds-col slds-size_4-of-12">
+                                    Agenzia
+                                </div>
+                                <div class="slds-col slds-size_1-of-12"></div>
+                                <div style="font-weight: bold;" class="slds-col slds-size_2-of-12">
+                                    Perc/Num
+                                </div>
+                                <div class="slds-col slds-size_1-of-12"></div>
+                                <div style="font-weight: bold;" class="slds-col slds-size_4-of-12">
+                                    Tipo Lavorazione
+                                </div>
                             </div>
                             <template for:each={agencies} for:item="agency">
                                 <article class="slds-grid slds-m-vertical--x-small" key={agency.id}>
-                                    <div class="slds-align-bottom slds-col slds-size_1-of-2 slds-m-bottom--xx-small">
+                                    <div class="slds-align-bottom slds-col slds-size_4-of-12 slds-m-bottom--xx-small">
                                         {agency.name}
                                     </div>
-                                    <div class="inpValue slds-col slds-size_1-of-2">
+                                    <div class="slds-col slds-size_1-of-12"></div>
+                                    <div class="inpValue slds-col slds-size_2-of-12">
                                         <lightning-input data-id={agency.id} type="number" formatter={inputFormatStyle}
                                             label="Valore" variant="label-hidden" onchange={handleValueChange} min="0"
                                             max={agency.maxValue} message-when-range-overflow={rangeOverflowMessage}>
                                         </lightning-input>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-12"></div>
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <lightning-combobox
+                                            name="tipoLavorazione"
+                                            label="Tipo Lavorazione"
+                                            variant="label-hidden"
+                                            value={value}
+                                            data-index={agency.id}
+                                            placeholder="-Tipo Lavorazione-"
+                                            options={optionsLavorazione}
+                                            onchange={handleChange} >
+                                        </lightning-combobox>
                                     </div>
                                 </article>
                             </template>

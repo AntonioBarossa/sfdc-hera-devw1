@@ -28,6 +28,25 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
     private static Boolean isVowel(String test, String letter){
         return test.contains(letter)?true:false;
     }
+
+    /**@frpanico 2022-31-03
+     * Inserito controllo per 
+     * validare nome e cognome del codice fiscale
+     */
+    public static Boolean checkFirstLastNameFromFiscalCode(String fiscalCode, String firstName, String lastName)
+    {
+        fiscalCode = fiscalCode.toUpperCase();
+        String lastNameCode = fiscalCode.substring(0,3);
+        String firstNameCode = fiscalCode.substring(3,6);
+        String lastNameCodeToCheck = getLastNameCode(lastName.toUpperCase().replace(' ',''));
+        String firstNameCodeToCheck = getFirstNameCode(firstName.toUpperCase());
+        Boolean resultFirstName = firstNameCode.equalsIgnoreCase(firstNameCodeToCheck);
+        Boolean resultLastName = lastNameCode.equalsIgnoreCase(lastNameCodeToCheck);
+
+        return resultFirstName && resultLastName;
+    }
+    
+
     private static String getLastNameCode(String word){
         String lastNameCode='';
         splitLetters(word);

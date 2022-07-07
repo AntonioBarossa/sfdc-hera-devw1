@@ -3,7 +3,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import getSignSendMode from '@salesforce/apex/HDT_LC_DocumentSignatureManager.getSignSendMode';
-
+import handleContactPoint from '@salesforce/apex/HDT_LC_DocumentSignatureManager.handleContactPoint';
 const sourceWithDefault = ['Agenzie','Agenzie SME','Business Agent'];
 const signModeAgenzie = 'Contratto già firmato';
 const sendModeAgenzie = 'Posta Cartacea';
@@ -20,6 +20,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     //Address: Required. This variable is a complex type Name - Value. Pass all the fields that compose an Address and the Complete Address.
     @track address;
     //AccountId: Required. Pass the Id of the Account. Used to retreive all the Account Address.
+    @track loginSource;
     @track accountId;
     @track documents;
     @api params;
@@ -45,6 +46,9 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track showAddress = false;
     @track documents;
     @track tipoPlico='';
+    @track showModalContact=false;
+    @track contactPointInfo;
+    @track requireSendMode=true;
     defautlAgenciesManagement;
 
     //@frpanico 07/09 added EntryChannel__c (Canale di Ingresso) to predefault SendMode
@@ -87,6 +91,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.recordId = inputWrapper.recordId;
                 this.processType = inputWrapper.processType;
                 this.source = inputWrapper.source;
+                this.loginSource = inputWrapper.loginSource;
                 this.phone = inputWrapper.phone;
                 this.email = inputWrapper.email;
                 this.accountId = inputWrapper.accountId;
@@ -97,6 +102,11 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.sendMode = inputWrapper.sendMode;
                 this.entryChannel = inputWrapper.entryChannel;
                 this.defautlAgenciesManagement = false;
+
+                if(this.signMode === 'Vocal Order' && this.processType === 'Modifica Privacy'){
+                    this.requireSendMode = false;
+                    this.emailRequired = false;
+                }
                 if (inputWrapper.checkAgencies && inputWrapper.checkAgencies.localeCompare('Y') === 0){
                     this.defautlAgenciesManagement = true;
                 }
@@ -137,8 +147,13 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     var sendMode = [];
                     var signSendMode;
                     var signSendModeList = [];
+                    var existContrattoFirmato = false;
                     resultJSON.forEach((element) => {
                         signMode.push(element.signMode);
+                        console.log('#element >>> ' + JSON.stringify(element.signMode));
+                        if(element.signMode.value === 'Contratto già firmato'){
+                            existContrattoFirmato = true;
+                        }
                         element.sendMode.forEach((element2) => {
                             sendMode.push(element2);
                         });
@@ -149,6 +164,19 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                         signSendModeList.push(signSendMode);
                         sendMode = [];
                     });
+                    if(this.loginSource != null && this.loginSource.localeCompare('Back office') === 0 && this.context.localeCompare('Order') === 0 && !existContrattoFirmato){
+                        console.log('##inside backoffice');
+                        sendMode = [];
+                        const obj = {value: 'Stampa Cartacea', label: 'Stampa Cartacea'};
+                        sendMode.push(obj);
+                        signSendMode = {
+                            signMode : 'Contratto già firmato',
+                            sendMode : sendMode
+                        };
+                        const obj2 = {value: 'Contratto già firmato', label: 'Contratto già firmato'};
+                        signMode.push(obj2);
+                        signSendModeList.push(signSendMode);
+                    }
                     this.signSendMap = signSendModeList; 
                     this.modalitaFirma = signMode;
                     console.log('this.signSendMap ' + JSON.stringify( this.signSendMap));
@@ -205,7 +233,13 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     handleChangeAddress(event){
         this.isModalOpen = !this.isModalOpen;
     }
+
+    handleCloseModalContact(event){
+        this.showModalContact = false;
+        this.disableinput=false;
+    }
     handleCloseModal(event){
+        
         var addressWrapper = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         console.log(JSON.stringify(addressWrapper));
         if((addressWrapper['Flag Verificato']) && addressWrapper.Via != null && addressWrapper.Via != ""){
@@ -261,7 +295,11 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
             if (modSpedizione == null){
                 modSpedizione = '';
             }
-            if(modFirma.localeCompare('OTP Coopresenza')===0 || modFirma.localeCompare('OTP Remoto')===0){
+            if(modFirma.localeCompare('Vocal Order')===0 && this.processType != null && this.processType === 'Modifica Privacy'){
+                this.emailRequired = false;
+                this.phoneRequired = false;
+                this.addressRequired = false;
+            }else if(modFirma.localeCompare('OTP Coopresenza')===0 || modFirma.localeCompare('OTP Remoto')===0){
                 this.emailRequired = true;
                 this.phoneRequired = true;
                 this.addressRequired = false;
@@ -293,12 +331,18 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     handleChangeSignMode(event){
         try{
             this.sendMode = null;
+            this.dispatchEvent(new CustomEvent('changesignmode', { detail: event.detail.value}));
             var temp = this.signSendMap.find(function(post, index) {
                 if(post.signMode == event.detail.value)
                     return true;
             });
             console.log(JSON.stringify(temp));
             this.modalitaInvio = temp.sendMode;
+            console.log('Mod Invio ' + this.modalitaInvio);
+            if(event.detail.value === 'Vocal Order' && this.processType != null && this.processType === 'Modifica Privacy'){
+                this.requireSendMode = false;
+                this.emailRequired = false;
+            }
             console.log('mod invio ' + this.modalitaInvio);
             this.phoneRequired = false;
             this.addressRequired = false;
@@ -309,6 +353,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 resetDate = false;
             }
             this.launchSetRequiredFieldEvent(resetDate);
+            
         }catch(error){
             console.error(error);
         }
@@ -350,12 +395,69 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                         this.returnWrapper.email = email.value;
                         this.returnWrapper.addressWrapper.completeAddress = address.value;
                         this.returnWrapper.dataConfirmed = true;
-                        this.dispatchEvent(new CustomEvent('confirmdata', { detail: JSON.stringify(this.returnWrapper)}));
+                        //this.dispatchEvent(new CustomEvent('confirmdata', { detail: JSON.stringify(this.returnWrapper)}));
+                        this.checkContactPoint();
                     }
                 }
         }catch (error) {
             console.error(error);
         }
+    }
+
+    checkContactPoint(){
+        console.log('### ' +this.returnWrapper.email);
+        console.log('### ' +this.returnWrapper.phone);
+        console.log('### ' +this.returnWrapper.contactId);
+        if(this.returnWrapper.contactId != '' && this.returnWrapper.contactId != undefined){
+            handleContactPoint({
+                email: this.returnWrapper.email,
+                phone: this.returnWrapper.phone,
+                contactId:this.returnWrapper.contactId,
+                mode:'query'
+            }).then(result => {
+                this.contactPointInfo = JSON.parse(result);
+                console.log('#RESULT >>> ' + JSON.stringify(this.contactPointInfo));
+                if(this.contactPointInfo.result ==='OK'){
+                    this.dispatchEvent(new CustomEvent('confirmdata', { detail: JSON.stringify(this.returnWrapper)}));
+                }else{
+                    this.showModalContact = true;
+                }
+            })
+        }
+        else{
+            this.dispatchEvent(new CustomEvent('confirmdata', { detail: JSON.stringify(this.returnWrapper)}));
+        }
+        
+    }
+    createContactPoint(){
+        var email = '';
+        var phone = '';
+        if(this.contactPointInfo.email === 'KO'){
+            email = this.returnWrapper.email;
+        }
+        if(this.contactPointInfo.phone === 'KO'){
+            phone = this.returnWrapper.phone;
+        }
+        
+        handleContactPoint({
+            email: email,
+            phone: phone,
+            contactId:this.returnWrapper.contactId,
+            mode:'insert'
+        }).then(result => {
+            console.log('result' + result);
+            if(result ==='OK'){
+                this.showModalContact = false;
+                this.dispatchEvent(new CustomEvent('confirmdata', { detail: JSON.stringify(this.returnWrapper)}));
+            }else{
+                this.showMessage('Attenzione','Errore nella creazione dei contact point','error');
+                this.showModalContact = false;
+            }
+        }).catch(error => {
+            console.log('error ' + error);
+            this.showMessage('Attenzione','Errore nella creazione dei contact point','error');
+            this.showModalContact = false;
+        });
     }
 
     showMessage(title,message,variant){

@@ -1,9 +1,12 @@
 public with sharing class HDT_UTL_VoltureChangeManager {
     
     private static HDT_UTL_VoltureChangeUtilities voltureChangeUtils = new HDT_UTL_VoltureChangeUtilities();
+    private static HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
     //private static String lawEightyActivityTemplate = '';
     @TestVisible
     private static String lawEightyPhase = 'In Attesa Legge 80';
+    private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    private static HDT_QR_Case caseQr = new HDT_QR_Case();
 
     /*
      *@frpanico 06/10/2021
@@ -30,7 +33,8 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             'CreatedDate',
             'CreatedById',
             'OwnerId',
-            'LastModifiedById'
+            'LastModifiedById',
+            'DateSentToSII__c'
         };
         SObject newSobj = Schema.getGlobalDescribe().get(sobjName).newSObject();
         /*Assign the correct set<string> to be used for field exclusion*/
@@ -102,41 +106,83 @@ public with sharing class HDT_UTL_VoltureChangeManager {
     {
         Order orderToUpdate = new Order();
         orderToUpdate.Id = currentOrder.Id;
-        /* Write text fields */
-        orderToUpdate.TecnicalPhase__c = (String)fieldsMap.get('FASE');
-        orderToUpdate.CausalCode__c = (String)fieldsMap.get('CODERR');
-        orderToUpdate.Description = (String)fieldsMap.get('ANNOTAZIONI');
-        orderToUpdate.SupplyStreetName__c = (String)fieldsMap.get('VIA');
-        orderToUpdate.SupplyStreetNumber__c = (String)fieldsMap.get('CIV');
-        orderToUpdate.SupplyPostalCode__c = (String)fieldsMap.get('CAP');
-        orderToUpdate.SupplyCityCode__c = (String)fieldsMap.get('ISTAT');
-        orderToUpdate.SupplyCity__c = (String)fieldsMap.get('LOCALITA');
-        orderToUpdate.SupplyState__c = (String)fieldsMap.get('PROV');
-        orderToUpdate.SupplyCountry__c = (String)fieldsMap.get('NAZIONE');
-        orderToUpdate.DiscardReason__c = HDT_UTL_Accents.removeDiacritics((String)fieldsMap.get('DES_ERR_AEEG'));
-        orderToUpdate.HerokuPracticeCode__c = (String)fieldsMap.get('COD_PRAT_UTENTE');
-        orderToUpdate.DistributorPracticeCode__c = (String)fieldsMap.get('COD_PRAT_DISTR');
-        /* Date Fields */
-        orderToUpdate.SwitchOutDate__c = fieldsMap.get('DATA_DECORRENZA_SW') != null
-            ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_SW'))
-            : null;   
-        orderToUpdate.EffectiveDate__c = fieldsMap.get('DATA_DECORRENZA_VT_TIT_III') != null
-            ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III'))
-            : null;
-        orderToUpdate.EffectiveDate__c = fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV') != null 
-            ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV'))
-            : null;
-        /* Number Fields */
-        orderToUpdate.PowerCommitted__c = fieldsMap.get('POTCONTRIMP') != null 
-            ? Decimal.valueOf((String)fieldsMap.get('POTCONTRIMP'))
-            : null;
-        orderToUpdate.PowerAvailable__c = fieldsMap.get('POTDISP') != null 
-            ? Decimal.valueOf((String)fieldsMap.get('POTDISP'))
-            : null;
-        /* Field "TENSIONE" */
-        orderToUpdate.VoltageLevel__c = fieldsMap.get('TENSIONE') != null 
-            ? voltureChangeUtils.getTension((String)fieldsMap.get('TENSIONE'))
-            : null;
+        /* Handle Result KO */
+        if(((String)fieldsMap.get('result')).equalsIgnoreCase('OK'))
+        {
+            /* Write text fields */
+            orderToUpdate.PrecheckResultSII__c = ((String)fieldsMap.get('FASE')).equalsIgnoreCase('Amm. Precheck OK SII') ? 'OK' : 'KO';
+            orderToUpdate.TecnicalPhase__c = (String)fieldsMap.get('FASE');
+            orderToUpdate.CausalCode__c = (String)fieldsMap.get('CODERR');
+            orderToUpdate.Description = (String)fieldsMap.get('ANNOTAZIONI');
+
+            /**@frpanico 26/10/2021
+             * Cambio Voltura - RN008 "Voltura con Switch"
+            */
+            voltureChangeSrv.handleAmmissibilityCheck(fieldsMap, currentOrder);
+
+            /*
+            if(! string.isBlank((String)fieldsMap.get('VIA')) ){
+                orderToUpdate.SupplyStreetName__c = (String)fieldsMap.get('VIA');
+            }
+            if(! string.isBlank((String)fieldsMap.get('CIV')) ){
+                orderToUpdate.SupplyStreetNumber__c = (String)fieldsMap.get('CIV');
+            }
+            if(! string.isBlank((String)fieldsMap.get('CAP')) ){
+                orderToUpdate.SupplyPostalCode__c = (String)fieldsMap.get('CAP');
+            }
+            if(! string.isBlank((String)fieldsMap.get('ISTAT')) ){
+                orderToUpdate.SupplyCityCode__c = (String)fieldsMap.get('ISTAT');
+            }
+            if(! string.isBlank((String)fieldsMap.get('LOCALITA')) ){
+                orderToUpdate.SupplyCity__c = (String)fieldsMap.get('LOCALITA');
+            }
+            if(! string.isBlank((String)fieldsMap.get('PROV')) ){
+                orderToUpdate.SupplyState__c = (String)fieldsMap.get('PROV');
+            }
+            if(! string.isBlank((String)fieldsMap.get('NAZIONE')) ){
+                orderToUpdate.SupplyCountry__c = (String)fieldsMap.get('NAZIONE');
+            }
+            */
+            orderToUpdate.DiscardReason__c = HDT_UTL_Accents.removeDiacritics((String)fieldsMap.get('DES_ERR_AEEG'));
+            orderToUpdate.HerokuPracticeCode__c = (String)fieldsMap.get('COD_PRAT_UTENTE');
+            orderToUpdate.DistributorPracticeCode__c = (String)fieldsMap.get('COD_PRAT_DISTR');
+            /* Date Fields */
+            if( ! string.isBlank((String)fieldsMap.get('DATA_DECORRENZA_SW')) ){
+                orderToUpdate.SwitchOutDate__c = voltureChangeUtils.convertDdMmYyyy((String)fieldsMap.get('DATA_DECORRENZA_SW'));
+            }
+            if( ! string.isBlank((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III')) ){
+
+                orderToUpdate.EffectiveDate__c = voltureChangeUtils.convertDdMmYyyy((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III'));
+
+            }
+
+            if(  ! string.isBlank((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV'))){
+
+                orderToUpdate.EffectiveDate__c = voltureChangeUtils.convertDdMmYyyy((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV'));
+
+            }
+            
+            // if( ! string.isBlank((String)fieldsMap.get('POTCONTRIMP')) ){
+            //     orderToUpdate.PowerCommitted__c = Decimal.valueOf((String)fieldsMap.get('POTCONTRIMP'));
+            // }
+            // /* Number Fields */
+            // if( ! string.isBlank((String)fieldsMap.get('POTDISP'))){
+            //     orderToUpdate.PowerAvailable__c = Decimal.valueOf((String)fieldsMap.get('POTDISP'));
+            // }
+            // /* Field "TENSIONE" */
+            // if( ! string.isBlank((String)fieldsMap.get('TENSIONE')) ){
+            //     orderToUpdate.VoltageLevel__c = voltureChangeUtils.getTension((String)fieldsMap.get('TENSIONE'));
+            // }
+            
+        }
+        /* result KO */
+        else 
+        {
+            orderToUpdate.TecnicalPhase__c = 'Comunicazione verso Heroku KO';
+            orderToUpdate.Description = (String)fieldsMap.get('errorMessage');
+            orderToUpdate.DiscardReason__c = (String)fieldsMap.get('errorMessage');
+
+        }
         return orderToUpdate;
     }
     
@@ -162,7 +208,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             via => currentOrder.SupplyStreetName__c,
             civico => currentOrder.SupplyStreetNumber__c,
             cap => currentOrder.SupplyPostalCode__c,
-            istat => currentOrder.SupplyCityCode__c,
+            //istat => currentOrder.SupplyCityCode__c,
             localita => currentOrder.SupplyCity__c,
             provincia => currentOrder.SupplyState__c,
             nazione => currentOrder.SupplyCountry__c
@@ -175,36 +221,50 @@ public with sharing class HDT_UTL_VoltureChangeManager {
          * Address check is done inside the voltureChangeUtils.addressCheck(addressCheckMap) method
          */
 
+        String message = 'Valori non corrispondenti: ';
+        List<String> errorMessage = new List<String>();
+        List<String> noteList = new List<String>();
+        returnMap.put('message', '');
+        returnMap.put('result',true);
         /* Tension Check */
         if(String.isNotEmpty(tension) && voltureChangeUtils.getTension(tension) != currentOrder.VoltageLevel__c)
         {
-            returnMap.put('message', 'Valori tensione non corrispondenti');
-            returnMap.put('result', false);
-            return returnMap;
+            errorMessage.add('Tensione');
+            noteList.add('Tensione: ' + voltureChangeUtils.getTension(tension));
         }
         /* Power Available Check */
         if(String.isNotEmpty(powerAvailable) && !voltureChangeUtils.powerCheck(powerAvailable, String.valueOf(currentOrder.PowerAvailable__c)))
         {
-            returnMap.put('message', 'Valori Potenza Disponibile non corrispondenti');
-            returnMap.put('result', false);
-            return returnMap;
+            errorMessage.add('Potenza Disponibile');
+            noteList.add('Potenza Disponibile: ' + powerAvailable);
         }
         /* Power Committed Check */
         if(String.isNotEmpty(powerCommitted) && !voltureChangeUtils.powerCheck(powerCommitted, String.valueOf(currentOrder.PowerCommitted__c)))
         {
-            returnMap.put('message', 'Valori Potenza Impegnata non corrispondenti');
-            returnMap.put('result', false);
-            return returnMap;
+            errorMessage.add('Potenza Impegnata');
+            noteList.add('Potenza Impegnata: ' + powerCommitted);
         }
         /* Address Check */
         if(!voltureChangeUtils.addressCheck(addressCheckMap))
         {
-            returnMap.put('message', 'Indirizzi non corrispondenti');
-            returnMap.put('result', false);
-            return returnMap;
+            errorMessage.add('Indirizzo');
+            String addressVia = String.isNotBlank(via) ? via + ', ' : '';
+            String addressCivico = String.isNotBlank(civico) ? civico + ', ' : '';
+            String addressCap = String.isNotBlank(cap) ? cap + ', ' : '';
+            String addressIstat = String.isNotBlank(istat) ? istat + ', ' : '';
+            String addressLocalita = String.isNotBlank(localita) ? localita + ', ' : '';
+            String addressProvincia = String.isNotBlank(provincia) ? provincia + ', ' : '';
+            String addressNazione = String.isNotBlank(nazione) ? nazione + ', ' : '';
+            String address = addressVia + addressCivico + addressCap + addressIstat + addressLocalita + addressProvincia + addressNazione;
+            noteList.add('Indirizzo: ' + address);
         }
-        returnMap.put('message', '');
-        returnMap.put('result',true);
+        /* Set the error message */
+        if(!errorMessage.isEmpty())
+        {
+            returnMap.put('message',message + String.join(errorMessage,','));
+            returnMap.put('note', String.join(noteList,'\n'));
+            returnMap.put('result',false);
+        }
         return returnMap;
     
     }
@@ -297,6 +357,178 @@ public with sharing class HDT_UTL_VoltureChangeManager {
         else
         {
             return Integer.valueOf(posizione.valore);    
+        }
+    }
+    /**@frpanico 01/02/2022 
+     * Introduced method
+     * to perform process check
+     * The map contains four key/value pairs
+     * ('orderNew',inserted field)
+     * ('currentOrder',retrieved order)
+     * ('isReading', input booleans)
+     * ('isRetroactive', input booleans)
+     * ('readingDate', reading date for readings)
+    */
+    public static HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck processCheck(Map<String,Object> checkMap)
+    {
+        String message;
+        String result='OK';
+
+        Order order = (Order) checkMap.get('orderNew');
+        Order currentOrder = (Order) checkMap.get('currentOrder');
+        //Boolean isVolture = (Boolean) checkMap.get('isVolture');
+        Boolean isReading = (Boolean) checkMap.get('isReading');
+        Boolean isRetroactive = (Boolean) checkMap.get('isRetroactive');
+        Boolean isUpdateStep = (Boolean) checkMap.get('isUpdateStep');
+        Date readingDate = (Date) checkMap.get('readingDate');
+        String phase = currentOrder.Phase__c != null?currentOrder.Phase__c:'';
+        Boolean isFromEdit = phase.equalsIgnoreCase('Ammissibilità KO') || phase.equalsIgnoreCase('Caricamento Siebel KO')?true:false;
+
+        order.NotRegisteredMeterCase__c = order.NotRegisteredMeterCase__c!=null?order.NotRegisteredMeterCase__c:currentOrder.NotRegisteredMeterCase__c;
+        order.VoltureType__c = order.VoltureType__c!=null? order.VoltureType__c: currentOrder.VoltureType__c;
+        order.EffectiveDate__c = order.EffectiveDate__c!=null? order.EffectiveDate__c:currentOrder.EffectiveDate__c;
+        order.RetroactiveDate__c = order.RetroactiveDate__c!=null? order.RetroactiveDate__c:currentOrder.RetroactiveDate__c;
+        order.Subprocess__c = order.Subprocess__c!=null? order.Subprocess__c:currentOrder.Subprocess__c;
+        
+        if(order.NotRegisteredMeterCase__c == true){
+                if(caseQr.getChageNonRegMeterByOrder(order.Id).size() == 0)
+                {                
+                    message = 'Necessario completare un Case di \'Cambio Contatore Non Registrato\'';
+                    result='KO';
+                }
+            }
+            //@frpanico check "Tipo Voltura"
+            if( String.isBlank(order.VoltureType__c) )
+            {
+                message = 'Valorizzare campi obbligatori';
+                result='KO';
+            }
+            /**@frpanico 31/01/2022
+             * Aggiunto controllo
+             * Su Voltura in Recupero
+             */
+            if(order.VoltureType__c.equalsIgnoreCase('In continuità_no_addebito') && !currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Gas')){
+                message = 'Per poter selezionare \"' + order.VoltureType__c + '\" è necessario un punto di fornitura Gas';
+                result='KO';
+            }
+            /**@frpanico 31/01/2022
+             * Aggiunto controllo se
+             * In continuita_no_addebito
+             * La voltura deve essere gas
+             */
+            if( order.VoltureType__c.equalsIgnoreCase('Recupero') && order.EffectiveDate__c >= orderSrv.addBusinessDay(System.today(),3))
+            {
+                message = 'Per poter selezionare \"' + order.VoltureType__c + '\" è necessario inserire una data decorrenza antecedente al 31/08/2015';
+                result='KO';
+            }
+            /* Check Tipo Voltura "In Continuita"/"Recupero" ammesso solo se marcatura entrante/uscente e' "Persona Fisica"/"Persona Giuridica" */
+            if(order.VoltureType__c.containsIgnoreCase('In Continuità'))
+            {
+                if(currentOrder.PreviousCustomer__r.Account.CustomerMarking__c != currentOrder.Account.CustomerMarking__c || !currentOrder.Account.CustomerMarking__c.containsIgnoreCase('Persona Fisica'))
+                {
+                    message = 'Per Voltura \"' + order.VoltureType__c + '\", entrambi i clienti (uscente ed entrante) devono essere \"Persone Fisiche\"';
+                    result='KO';
+                }
+            }
+            else if( order.VoltureType__c.equalsIgnoreCase('Incorporazione societaria') )
+            {
+                if(currentOrder.PreviousCustomer__r.Account.RecordType.DeveloperName != currentOrder.Account.RecordType.DeveloperName
+                    || !currentOrder.Account.RecordType.DeveloperName.containsIgnoreCase('HDT_RT_Business'))
+                {
+                    message = 'Per Voltura \"' + order.VoltureType__c + '\", entrambi i clienti (uscente ed entrante) devono essere \"Persone Giuridiche\"';
+                    result='KO';
+                }
+            }
+            //@frpanico check "Data Decorrenza"
+            /**@frpanico 12/11/2021
+             * Update check VoltureType "Recupero" the date has been changed to 2015/08/31
+             */
+            if(isUpdateStep != null && isUpdateStep == true &&  order.EffectiveDate__c != null && !isFromEdit)
+            {
+                if( order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
+                {
+                    if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva')))
+                    {
+                        message = 'Impossibile inserire una data inferiore a 3 gg lavorativi';
+                        result='KO';
+                    }
+                    else if( order.VoltureType__c == 'Recupero' && order.EffectiveDate__c > Date.newInstance(2015, 08, 31))
+                    {
+                        message = 'Per Voltura di tipo \"Recupero\" è necessario inserire una data antecedente al 31/08/2015';
+                        result='KO';
+                    }
+                    else
+                    {    
+                        order.RetroactiveDate__c = order.EffectiveDate__c;
+                        order.Subprocess__c = 'Retroattiva';
+                    }
+                } 
+                else 
+                {
+                    order.RetroactiveDate__c = null;
+                    order.Subprocess__c = 'Standard';
+                }    
+            }
+            //@frpanico check "Voltura con Autolettura"
+            if(isReading != null && isReading == true && isRetroactive != null && isRetroactive == false)
+            {
+                order.Subprocess__c = 'Con Autolettura';
+            }
+            //@frpanico valorizzazione "Data Lettura"
+            if(readingDate != null && (isReading != null && isReading == true))
+            {
+                //AF inserito per ribaltare campi da Reading__c a Order
+                if(currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Gas')){
+                    HDT_QR_SelfReadings qrReading = new HDT_QR_SelfReadings();
+                    try {
+                        Reading__c selfRead = qrReading.getReading('Order',order.Id,'Gas','ReadingValueMeter__c,ReadingSerialNumberCorrector__c,ReadingValueCorrector__c');
+                        order.ReadingValueMeter__c = selfRead.ReadingValueMeter__c;
+                        order.ReadingValueCorrector__c = selfRead.ReadingValueCorrector__c;
+                        order.ReadingSerialNumberCorrector__c = selfRead.ReadingSerialNumberCorrector__c;
+                    } catch (Exception ex) {
+                        //no record
+                    }
+                }
+                
+                order.ReadingCustomerDate__c = readingDate;
+            }
+
+        HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck wrp = new HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck(result,message,(SObject)order);
+        return wrp;
+    }
+    /**@frpanico 2022-05-16
+     * Annullamento Voltura Tecnica a Seguito di Annullmento SwitchIn
+     * Defect 3112
+     */
+    public static void cancelTechnicalVolture(List<Order> switchOrders)
+    {
+        Set<String> orderIds = new Set<String>();
+        for(Order switchOrder: switchOrders)
+        {    
+            if(switchOrder.ProcessType__c != null && switchOrder.Phase__c != null && 
+                !((String)switchOrder.get('ProcessType__c')).equalsIgnoreCase('Switch in Gas') && !((String)switchOrder.get('Phase__c')).equalsIgnoreCase('Annullato'))
+            {
+                continue;
+            }
+            orderIds.add(switchOrder.Id);
+        }
+        /* If OrderIds are empty 
+        * exits the methos to prevent
+        * querying unwanted
+        */
+        if(orderIds.isEmpty())
+        {
+            return;
+        }
+        List<Case> techincalVoltures = [SELECT Id, Phase__c,Status FROM Case WHERE Type = 'Voltura Tecnica' AND Order__c IN :orderIds WITH SECURITY_ENFORCED];
+        if(!techincalVoltures.isEmpty())
+        {
+            for(Case c : techincalVoltures)
+            {
+                c.Phase__c = 'Annullato';
+                c.Status = 'Closed';
+            }
+            HDT_UTL_DatabaseService.updateSObject(techincalVoltures);
         }
     }
 

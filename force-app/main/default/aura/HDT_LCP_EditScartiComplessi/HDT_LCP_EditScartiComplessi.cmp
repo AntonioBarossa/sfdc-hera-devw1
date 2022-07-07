@@ -1,6 +1,11 @@
 <aura:component controller="HDT_LC_EditScartiComplessi" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId">
     <aura:attribute name="recordId" type="String"/>
     <aura:attribute name="order" type="Order"/>
+    <aura:attribute name="activity" type="wrts_prcgvr__Activity__c"/>
+    <!--Gestione Edit Annullamento-->
+    <aura:attribute name="inputRecordId" type="String"/>
+    <aura:attribute name="objectToCancell" type="String"/>
+    <!--Fine Gestione Edit Annullamento-->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <lightning:workspaceAPI aura:id="workspace"/>
     <div class="exampleHolder">

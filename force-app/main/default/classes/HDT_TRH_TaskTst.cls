@@ -84,8 +84,7 @@ public with sharing class HDT_TRH_TaskTst {
     private static void doValidationTest_DescTooLong(){
         
         //DEBUG
-        String debugString = TEST_NAME + ' - ' + 'doValidationTest_DescTooLong';
-        System.debug(debugString);
+        System.debug(TEST_NAME + ' - ' + 'doValidationTest_DescTooLong');
         
         //SETUP
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
@@ -101,24 +100,26 @@ public with sharing class HDT_TRH_TaskTst {
         
         //NB: Description deve essere sopra lunghezza di 320 caratteri.
         myTask.Description = 'My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.';
+        System.debug('myTask.Description >>>>>>>' + myTask);
         
+        Test.startTest();
+
         //TESTING
-        
         Boolean caught = false;
         String myExcMessage = '';
+
         try{
             insert myTask;
-            
-            
         } catch (Exception e) {
-            System.debug(debugString + ' - Eccezione Type: ' + e.getTypeName());
-            System.debug(debugString + ' - Eccezione Message: ' + e.getMessage());
-            System.debug(debugString + ' - Eccezione StackTrace: ' + e.getStackTraceString());
+            System.debug('Eccezione Type: ' + e.getTypeName());
+            System.debug('Eccezione Message: ' + e.getMessage());
+            System.debug('Eccezione StackTrace: ' + e.getStackTraceString());
             caught = true;
             myExcMessage = e.getMessage();
-            
         }
-        
+
+        Test.stopTest();
+
         System.assert(caught, 'Eccezione non catchata. ');
         System.assert(myExcMessage.contains('È necessario inserire un testo inferiore a 320 caratteri.'), 'Eccezione non è del tipo corretto.');
         
@@ -265,7 +266,7 @@ public with sharing class HDT_TRH_TaskTst {
         String result4 = myObjectToTest.doxeeTemplateCode('Ultimo Avviso (26)');
         System.assert('026'.equalsIgnoreCase(result4), 'Result4 non è 026');
         
-        String result5 = myObjectToTest.doxeeTemplateCode('ELSE');
+        String result5 = myObjectToTest.doxeeTemplateCode('0');
         System.assert('0'.equalsIgnoreCase(result5), 'Result6 non è 0');
         
     }

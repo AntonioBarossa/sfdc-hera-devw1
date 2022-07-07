@@ -1,41 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
-    <sharingGuestRules>
-        <fullName>HDT_SR_AppointmentAgendaSelf</fullName>
-        <accessLevel>Read</accessLevel>
-        <description>Condivisione delle attività presa appuntamento con i guest della comunity.</description>
-        <label>HDT_SR_AppointmentAgendaSelf</label>
-        <sharedTo>
-            <guestUser>PrendiAppuntamento</guestUser>
-        </sharedTo>
-        <booleanFilter>1 AND 2 AND 3 AND (4 OR 5)</booleanFilter>
-        <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Appuntamento Distributore</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>isAtoA__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>isSelfAppointment__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>AppointmentCompetence__c</field>
-            <operation>notEqual</operation>
-            <value>Distributore</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Type__c</field>
-            <operation>equals</operation>
-            <value>Presa Appuntamento</value>
-        </criteriaItems>
-        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
-    </sharingGuestRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_ActivityAAAEBT</fullName>
         <accessLevel>Edit</accessLevel>
@@ -48,6 +12,7 @@
             <operation>equals</operation>
             <value>AAA-EBT</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_ActivityCallOutboundHERACOMM</fullName>
@@ -72,6 +37,7 @@
             <operation>equals</operation>
             <value>Sportello</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_ActivityCallOutboundAAAEBT</fullName>
@@ -96,6 +62,7 @@
             <operation>equals</operation>
             <value>Sportello</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_ActivityCallOutboundMMS</fullName>
@@ -120,6 +87,7 @@
             <operation>equals</operation>
             <value>Sportello</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_ActivityHERACOMM</fullName>
@@ -133,6 +101,7 @@
             <operation>equals</operation>
             <value>HERA COMM</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_ActivityMMS</fullName>
@@ -146,6 +115,7 @@
             <operation>equals</operation>
             <value>MMS</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_ActivityOutbound</fullName>
@@ -159,6 +129,7 @@
             <operation>equals</operation>
             <value>HERA COMM</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_ActivityReseller</fullName>
@@ -172,5 +143,6 @@
             <operation>equals</operation>
             <value>Reseller</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
 </SharingRules>

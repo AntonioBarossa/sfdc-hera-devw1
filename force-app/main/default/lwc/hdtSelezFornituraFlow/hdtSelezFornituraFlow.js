@@ -64,11 +64,12 @@ const DATA_ACCESS_MAP = {
             data.forEach((item) => {
                 item.ContactName = item.Contact !== undefined ? item.Contact.Name : '';
                 item.ProductName = item.Product2 !== undefined ? item.Product2.Name : '';
+                item.ContractNumber = item.Contract__r !== undefined ? item.Contract__r.SAPContractCode__c : ''
             });
         },
         columns: [
             {label: 'Nome', fieldName: 'Name', type: 'text'},
-            {label: 'Numero serial', fieldName: 'SerialNumber', type: 'text'},
+            {label: 'Codice Contratto SAP', fieldName: 'ContractNumber', type: 'text'},
             {label: 'Data installazione', fieldName: 'InstallDate', type: 'date'},
             {label: 'Referente', fieldName: 'ContactName', type: 'text'},
             {label: 'Prodotto', fieldName: 'ProductName', type: 'text'},
@@ -77,10 +78,11 @@ const DATA_ACCESS_MAP = {
     'SUBS_ANALISI_CONSUMI':{
         label : 'Subscriptions Analisi Consumi',
         sObjectName: 'SBQQ__Subscription__c',
-        emptyMessage: 'Non ci sono subscriptions',
+        emptyMessage: 'Non ci sono subscriptions, oppure vi è già una richiesta aperta.',
         dataProcessFunction: (data) => {
             data.forEach((item) => {
-                item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.ContractNumber : '';
+                item.ProductName = item.SBQQ__Product__r !== undefined ? item.SBQQ__Product__r.Name : '';
+                item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.SAPContractCode__c : '';
                 item.PodPdr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
                     item.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c : '';
                 item.ServicePointAddr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
@@ -88,7 +90,30 @@ const DATA_ACCESS_MAP = {
             });
         },
         columns: [
-            {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'Nome Prodotto', fieldName: 'ProductName', type: 'text'},
+            {label: 'Codice Contratto SAP', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
+    'SUBS_ANALISI_CONSUMI_RENEW':
+    {
+        label : 'Subscriptions Analisi Consumi Rinnovabili',
+        sObjectName: 'SBQQ__Subscription__c',
+        emptyMessage: 'Non ci sono subscriptions, oppure vi è già una richiesta aperta.',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.ProductName = item.SBQQ__Product__r !== undefined ? item.SBQQ__Product__r.Name : '';
+                item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.SAPContractCode__c : '';
+                item.PodPdr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
+                    item.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
+                    item.SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Nome Prodotto', fieldName: 'ProductName', type: 'text'},
+            {label: 'Codice Contratto SAP', fieldName: 'ContractNumber', type: 'text'},
             {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
@@ -96,10 +121,11 @@ const DATA_ACCESS_MAP = {
     'SUBS_VAS_SERVIZIO':{
         label : 'VAS Servizio',
         sObjectName: 'SBQQ__Subscription__c',
-        emptyMessage: 'Non ci sono subscriptions',
+        emptyMessage: 'Non ci sono subscriptions, oppure vi è già una richiesta aperta.',
         dataProcessFunction: (data) => {
             data.forEach((item) => {
-                item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.ContractNumber : '';
+                item.ProductName = item.SBQQ__Product__r !== undefined ? item.SBQQ__Product__r.Name : '';
+                item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.SAPContractCode__c : '';
                 item.PodPdr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
                     item.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c : '';
                 item.ServicePointAddr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
@@ -107,7 +133,29 @@ const DATA_ACCESS_MAP = {
             });
         },
         columns: [
-            {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'Nome Prodotto', fieldName: 'ProductName', type: 'text'},
+            {label: 'Numero Contratto SAP', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
+    'SUBS_VAS_SERVIZIO_RENEW':{
+        label : 'VAS Servizio Rinnovabili',
+        sObjectName: 'SBQQ__Subscription__c',
+        emptyMessage: 'Non ci sono subscriptions, oppure vi è già una richiesta aperta.',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.ProductName = item.SBQQ__Product__r !== undefined ? item.SBQQ__Product__r.Name : '';
+                item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.SAPContractCode__c : '';
+                item.PodPdr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
+                    item.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
+                    item.SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Nome Prodotto', fieldName: 'ProductName', type: 'text'},
+            {label: 'Numero Contratto SAP', fieldName: 'ContractNumber', type: 'text'},
             {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
@@ -124,7 +172,7 @@ const DATA_ACCESS_MAP = {
             });
         },
         columns: [
-            {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'Codice Contratto SAP', fieldName: 'SAPContractCode__c', type: 'text'},
             {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]

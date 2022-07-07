@@ -23,6 +23,7 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 		HDT_UTL_DataFactoryTst.newPhaseTransition('In Attesa Approvazione', 'Bozza', rtId, 'HDT_RT_DocCopiaContratto');
 		HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione', 'Bozza', rtId, 'HDT_RT_DocCopiaContratto');
 		HDT_UTL_DataFactoryTst.newPhaseTransition('Registrazione validata  Firmato/Inviato', 'Bozza', ordRtId, 'HDT_RT_Default');
+		HDT_UTL_DataFactoryTst.newPhaseTransition('Registrazione validata', 'Bozza', ordRtId, 'HDT_RT_Default');
 		HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita', 'Bozza', ordRtDoss, 'HDT_RT_OrderDossier');
 
 		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
@@ -44,7 +45,10 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 			List<Order> orderWithPricebook=HDT_UTL_DataFactoryTst.createOrderWithPricebook(2, false, accounts[0].Id, sales, pricebookId);
 			orderWithPricebook[1].RecordTypeId=ordRtDoss;
 			orderWithPricebook[1].CommercialProduct__c=prods[0].Id;
+			orderWithPricebook[0].Contact__c = contacts[0].Id;
 			insert orderWithPricebook;
+			orderWithPricebook[1].ParentOrder__c = orderWithPricebook[0].Id;
+			update orderWithPricebook;
 			List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, accounts[0].Id, 'Bozza');
 			List<PricebookEntry> pricebokEntry=HDT_UTL_DataFactoryTst.createPricebookEntry(prods, true, pricebookId);
 			List<OrderItem> orderItem=HDT_UTL_DataFactoryTst.createOrderItem(2, false, orderWithPricebook[0].Id, servPoints[0].Id, prods[0].Id, pricebokEntry[0].Id);
@@ -56,12 +60,12 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 			insert cases;
 
 			List<wrts_prcgvr__Activity__c> activityCustom=HDT_UTL_DataFactoryTst.createActivityCustom(2, false, accounts[0].Id);
-			activityCustom[0].Place__c='testPlace';
+			//activityCustom[0].Place__c='testPlace';
 			activityCustom[0].Case__c=cases[0].Id;
 			activityCustom[0].Order__c=orderWithPricebook[0].Id;
 			activityCustom[0].RecordTypeId=actCustDist;
 
-			activityCustom[1].Place__c='testPlace1';
+			//activityCustom[1].Place__c='testPlace1';
 			activityCustom[1].Case__c=cases[0].Id;
 			activityCustom[1].Order__c=orderWithPricebook[1].Id;
 			activityCustom[1].RecordTypeId=actCustDist;
@@ -84,7 +88,7 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 
 			List<wrts_prcgvr__Activity__c> tActivCust=[SELECT Id, Place__c
 			                                           FROM wrts_prcgvr__Activity__c
-			                                           WHERE Place__c='testPlace'];
+			                                           WHERE Order__r.RecordType.DeveloperName = 'HDT_RT_Default'];
 
 			Boolean riassegnaComCod=HDT_UTL_ActivityCustom.riassegnaComCod(tActivCust[0].Id, 'Standby per attesa cessazione contratto');
 
@@ -109,7 +113,7 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 
 			List<wrts_prcgvr__Activity__c> tActivCust=[SELECT Id, Place__c, Case__c, recordtypeid, Account__c
 			                                           FROM wrts_prcgvr__Activity__c
-			                                           WHERE Place__c='testPlace'];
+			                                           WHERE Order__r.RecordType.DeveloperName = 'HDT_RT_Default'];
 
 			Boolean cambiaPhaseComm=HDT_UTL_ActivityCustom.cambiaphaseComm(tActivCust[0].Id, 'Si');
 
@@ -171,7 +175,7 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 
 			List<wrts_prcgvr__Activity__c> tActivCust=[SELECT Id, Place__c
 			                                           FROM wrts_prcgvr__Activity__c
-			                                           WHERE Place__c='testPlace'];
+			                                           WHERE Order__r.RecordType.DeveloperName = 'HDT_RT_Default'];
 
 			Boolean validaActivityVocal=HDT_UTL_ActivityCustom.validaActivityVocal(tActivCust[0].Id, 'Si');
 
@@ -189,16 +193,20 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 		            FROM User
 		            WHERE Alias='crmuser'
 		            LIMIT 1];
-
+		List<wrts_prcgvr__Activity__c> tActivCust=[SELECT Id, Place__c
+					FROM wrts_prcgvr__Activity__c
+					WHERE Order__r.RecordType.DeveloperName = 'HDT_RT_OrderDossier'];
+		String validaActivityDocument=HDT_UTL_ActivityCustom.validaActivityDocument(tActivCust[0].Id, 'Si');
+		tActivCust[0].OwnerId = tUser.Id;
+		tActivCust[0].ManuallyReassigned__c = true;
+		update tActivCust;
 		System.runAs(tUser){
 
 			test.startTest();
 
-			List<wrts_prcgvr__Activity__c> tActivCust=[SELECT Id, Place__c
-			                                           FROM wrts_prcgvr__Activity__c
-			                                           WHERE Place__c='testPlace1'];
+			
 
-			string validaActivityDocument=HDT_UTL_ActivityCustom.validaActivityDocument(tActivCust[0].Id, 'Si');
+			validaActivityDocument=HDT_UTL_ActivityCustom.validaActivityDocument(tActivCust[0].Id, 'Si');
 			HDT_UTL_ActivityCustom.validaActivityDocument(tActivCust[0].Id, 'No');
 
 			test.stopTest();
@@ -221,9 +229,41 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 
 		Boolean isClose = HDT_UTL_ActivityCustom.isMandatoryComplete( activities[0].Case__r.id );
 
-		System.assertEquals( isClose, true, 'isActivityNotClosed work correctly' );
+		System.assertEquals( isClose, false, 'isActivityNotClosed work correctly' );
 
 		test.stopTest();
 	
 	}
+    @isTest
+    public static void testRejectActivityDocument(){
+
+		User tUser=[SELECT Id
+		            FROM User
+		            WHERE Alias='crmuser'
+		            LIMIT 1];
+		List<wrts_prcgvr__Activity__c> tActivCust=[SELECT Id, Place__c
+					FROM wrts_prcgvr__Activity__c
+					WHERE Order__r.RecordType.DeveloperName = 'HDT_RT_OrderDossier'];
+		String rejectActivityDocument=HDT_UTL_ActivityCustom.rejectActivityDocument(tActivCust[0].Id, 'Si');
+		tActivCust[0].OwnerId = tUser.Id;
+		tActivCust[0].ManuallyReassigned__c = true;
+		update tActivCust;
+		System.runAs(tUser){
+
+			test.startTest();
+
+			rejectActivityDocument=HDT_UTL_ActivityCustom.rejectActivityDocument(tActivCust[0].Id, 'Si');
+			HDT_UTL_ActivityCustom.rejectActivityDocument(tActivCust[0].Id, 'No');
+
+			test.stopTest();
+
+			System.assertEquals(true, rejectActivityDocument!=null, 'Return is wrong');
+			System.assertNotEquals(false, rejectActivityDocument!=null, 'Return is wrong');
+		}
+	}
+
+    
+    
+    
+    
 }

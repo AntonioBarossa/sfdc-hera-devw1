@@ -2,7 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_FlyingRequest</fullName>
     <active>true</active>
-    <compactLayoutAssignment>Order_Compact_Layout</compactLayoutAssignment>
+    <compactLayoutAssignment>CompactFlyingRequest</compactLayoutAssignment>
     <description>Indica gli order delle pratiche in volo</description>
     <label>Pratica in volo</label>
     <picklistValues>
@@ -32,6 +32,25 @@
         </values>
         <values>
             <fullName>No</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>MethodSignedAccepted__c</picklist>
+        <values>
+            <fullName>IVR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comfort call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>firma digitale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>web assistito</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -71,10 +90,10 @@
             <fullName>Bolletta per e-mail</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>Bolletta per e-mail %2B Carta</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>Cartaceo</fullName>
             <default>false</default>
@@ -460,6 +479,10 @@
         </values>
         <values>
             <fullName>Contattare banca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contatto Quality Fallito</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1843,7 +1866,7 @@
     <picklistValues>
         <picklist>DocSendingMethod__c</picklist>
         <values>
-            <fullName>E-mail</fullName>
+            <fullName>E-Mail</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2110,61 +2133,6 @@
         </values>
         <values>
             <fullName>Salvaguardia</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>MaxRequiredPotential__c</picklist>
-        <values>
-            <fullName>46</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>76</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>100</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>191</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>200</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>307</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>498</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>767</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1228</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2398</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>3837</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6236</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>9594</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2461,6 +2429,22 @@
         </values>
         <values>
             <fullName>In attesa validazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Corso caricamento Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esportazione VS Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel KO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3235,7 +3219,11 @@
         <values>
             <fullName>E-Canone fisso</fullName>
             <default>false</default>
-        </values>
+        </values>          
+        <values>
+            <fullName>F-Standalone</fullName>
+            <default>false</default>
+        </values>   
     </picklistValues>
     <picklistValues>
         <picklist>VAT__c</picklist>

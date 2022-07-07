@@ -29,6 +29,18 @@ global with sharing class HDT_SRV_VoltureChangeDispatcher implements wrts_prcgvr
 
                 voltureChangeSrv.orderPrecheckOk((Order)sender);
             }
+            when 'volturaTecnica'{ //Modifica di HRADTR_GV 09/02/2022
+                
+                voltureChangeSrv.createCaseFromOrder((Order)sender);
+            }
+            when 'bloccoVoltura'{
+                
+                voltureChangeSrv.bloccoVoltura((Order)sender,'B0');
+            }
+            when 'service26'
+            {
+                voltureChangeSrv.checkCallServiceTwentySix(argsMap);
+            }
         }
 
         return null;

@@ -3,6 +3,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
+    private static HDT_SRV_CampaignMember campMembSrv = new HDT_SRV_CampaignMember();
     private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
 
     @AuraEnabled
@@ -14,10 +15,10 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         if (actList[0].Order__r.RecordType.DeveloperName == 'HDT_RT_OrderDossier') {
             resultList = orderQr.getOrderForComfortQualityResult(actList[0].Order__c);
-        } else {
+        }
+        else {
             resultList = actList;
         }
-
         return resultList;
     }
 
@@ -40,7 +41,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
             switch on ordComf[0].RecordType.DeveloperName {
                 when  'HDT_RT_VAS'{
-                    phase ='Comunicazione Motore VAS';
+                    phase = calculateVasPhase(ordComf[0]);
                 }
                 when 'HDT_RT_CambioOfferta' {
                     phase = 'Comunicazione verso Heroku';
@@ -48,11 +49,15 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 when 'HDT_RT_SwitchIn' {
                     phase = 'Comunicazione verso Heroku';
                 }
+                when 'HDT_RT_Voltura'{
+                    phase = 'Documentazione Validata';
+                }
             }
             
             orderUpdate.SignedDate__c = Date.today();
             orderUpdate.Phase__c = phase;
-        } else {
+        }
+        else {
             List<Order> orderActiveMonitoring = orderQr.getOrderForActiveMonitoringCheck(ordId);
             List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
             
@@ -60,20 +65,27 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 orderUpdate.Phase__c = 'Quality Call OK';
                 orderUpdate.SignedDate__c = Date.today();
             }
-
             causalQuality = 'Quality Call OK';
 
         }
-
         orderSrv.updateRecord(orderUpdate);
 
-        activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
-            Id = activityId,
-            wrts_prcgvr__Status__c = 'Esitata',
-            ContactResult__c	 = causalQuality
-        ));
+        wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
+        act.wrts_prcgvr__Status__c = 'Esitata';
+        act.ContactResult__c = causalQuality;
+
+        activitySrv.updateRecord(act);
+
+        List<CampaignMember> campMembList = HDT_QR_CampaignMember.getCampMembByActivity(activityId);
+        for(CampaignMember cm : campMembList){
+            if(String.isNotBlank(cm.Campaign.PositiveOutcomeDefaultStatus__c)){
+                cm.Status = cm.Campaign.PositiveOutcomeDefaultStatus__c;
+            }
+        }
+        campMembSrv.updateRecords(campMembList);
     }
 
+    @SuppressWarnings('PMD.CyclomaticComplexity')
     @AuraEnabled
     public static void cancelContract(String ordId, String activityId, String causal){
 
@@ -106,12 +118,15 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         List<Order> ordToCheck = orderQr.getOrderForComfort(ordId);
 
         if (notCancelPhase.contains(ordToCheck[0].Phase__c) || notCancelNonBillable.contains(ordToCheck[0].Phase__c) || notCancelBillable.contains(ordToCheck[0].Phase__c)) {
-            if ('Firma Falsa'.equalsIgnoreCase(causal) || 'Volontà estorta'.equalsIgnoreCase(causal)) {
-                activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
-                    Id = activityId,
-                    wrts_prcgvr__Status__c = 'Esitata',
-                    ContactResult__c	 = 'Annullato'
-                ));
+            if ('Firma Falsa'.equalsIgnoreCase(causal) || 'Volontà estorta'.equalsIgnoreCase(causal) || causal.equalsIgnoreCase('Contatto Quality Fallito')) {
+
+                //wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = activityId, ContactResult__c = 'Annullato');
+                wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
+                act.ContactResult__c = 'Annullato';
+                if(causal.equalsIgnoreCase('Contatto Quality Fallito')){
+                    act.wrts_prcgvr__Status__c = 'Non Esitata';
+                }    
+                activitySrv.updateRecord(act);
 
                 RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
                 activitySrv.createRecord(new wrts_prcgvr__Activity__c(
@@ -121,21 +136,43 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                     Note__c = 'Non è stato possibile procedere all’annullamento, inserire un case di Annullamento contratti'
                 ));
             }
-            throw new AuraHandledException('Non è possibile procedere all’annullamento, effettuare una richiesta di recesso');
-        } else {
-
+            if(!causal.equalsIgnoreCase('Contatto Quality Fallito')){
+                throw new AuraHandledException('Non è possibile procedere all’annullamento, effettuare una richiesta di recesso');
+            }
+        }
+        else {
             orderSrv.updateRecord(new Order(
                 Id = ordId,
                 Phase__c = 'Annullato',
                 CancellationReason__c = causal,
-                Status = 'Activated'
+                Status = 'Annullato'
             ));
 
-            activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
-                Id = activityId,
-                wrts_prcgvr__Status__c = 'Esitata',
-                ContactResult__c	 = 'Annullato'
-            ));
+            wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
+            act.ContactResult__c = 'Annullato';
+            if(causal.equalsIgnoreCase('Contatto Quality Fallito')){
+                act.wrts_prcgvr__Status__c = 'Non Esitata';
+            }
+
+            activitySrv.updateRecord(act);
+        }
+
+        List<CampaignMember> campMembList = HDT_QR_CampaignMember.getCampMembByActivity(activityId);
+        for(CampaignMember cm : campMembList){
+            if(String.isNotBlank(cm.Campaign.PositiveOutcomeDefaultStatus__c)){
+                cm.Status = cm.Campaign.PositiveOutcomeDefaultStatus__c;
+            }
+        }
+        campMembSrv.updateRecords(campMembList);
+    }
+
+    @AuraEnabled
+    public static String checkOwner(String activityId){
+        try {
+            List<wrts_prcgvr__Activity__c> activities = HDT_QR_GenericQuery.getGenericRecords('Id, isUserActivity__c', 'wrts_prcgvr__Activity__c', 'Id =\''+String.escapeSingleQuotes(activityId)+'\'');
+            return (activities[0].isUserActivity__c) ? 'OK' : 'KO';
+        } catch (Exception e) {
+            return 'NO CHECK';
         }
     }
 
@@ -149,5 +186,32 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         return processActivityMap.get(orderRecordType);
 
+    }
+
+    private static String calculateVasPhase(Order currentOrder)
+    {
+        String newPhase = '';
+        if( currentOrder.VASType__c == 'VAS Servizio' && !currentOrder.IsEarlyActivation__c ){
+            newPhase =  'In attesa tempi di ripensamento';
+        }else if( currentOrder.VASType__c == 'VAS Fatturabili' ){
+            newPhase = 'Comunicazione verso Heroku';
+        }else{
+            newPhase =  'Comunicazione Motore VAS';
+        }
+        return newPhase;
+    }
+
+    private static wrts_prcgvr__Activity__c createActivityToClose(String activityId){
+        wrts_prcgvr__Activity__c actAppo = HDT_UTL_Scarti.closeDiscardActivity(activityId);
+        return new wrts_prcgvr__Activity__c(
+            Id = activityId,
+            EndDate__c = actAppo.EndDate__c, 
+            UserCompany__c = actAppo.UserCompany__c, 
+            ClosedByUsername__c=actAppo.ClosedByUsername__c,
+            ClosingCreatorGroup__c = actAppo.ClosingCreatorGroup__c,
+            ClosingUserChannel__c = actAppo.ClosingUserChannel__c,
+            //@ealpi valorizzato in apertura activity --> Place__c = actAppo.Place__c,
+            ActivityEndTime__c = actAppo.ActivityEndTime__c
+        );
     }
 }

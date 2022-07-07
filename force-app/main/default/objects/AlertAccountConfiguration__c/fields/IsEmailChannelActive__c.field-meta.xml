@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Flag per accendere/spegnere la delivery dell&apos;alert sul canale Email</description>
     <externalId>false</externalId>
-    <label>Canale Email</label>
+    <label>Email</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

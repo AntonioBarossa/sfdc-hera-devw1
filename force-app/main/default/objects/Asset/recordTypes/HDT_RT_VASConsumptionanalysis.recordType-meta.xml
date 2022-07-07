@@ -708,6 +708,18 @@
     <picklistValues>
         <picklist>Origin__c</picklist>
         <values>
+            <fullName>Default</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salvaguardia</fullName>
+            <default>false</default>
+        </values>
+		<values>
             <fullName>Libero</fullName>
             <default>false</default>
         </values>
@@ -1058,6 +1070,10 @@
         </values>
         <values>
             <fullName>E-Canone fisso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>F-Standalone</fullName>
             <default>false</default>
         </values>
     </picklistValues>

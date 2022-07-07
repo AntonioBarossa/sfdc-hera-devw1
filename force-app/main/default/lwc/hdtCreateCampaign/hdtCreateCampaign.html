@@ -26,13 +26,11 @@
                                 <lightning-input-field field-name="Channel__c" onchange={handleChangeChannel}
                                     required={channelFieldRequired} value={channelValues}>
                                 </lightning-input-field>
-
                             </template>
-
                         </div>
                     </div>
                     <div class="slds-grid">
-                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small tipologyField">
                             <lightning-input-field field-name="Tipology__c" onchange={handleType}>
                             </lightning-input-field>
                         </div>
@@ -79,6 +77,21 @@
                             <lightning-input-field field-name="ProcessType__c" required={processTypeFieldRequired} onchange={handleChangeProcessType}>
                             </lightning-input-field>
                         </div>
+                        <div if:true={showDefaultFinalState} class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                            <lightning-input-field required={showDefaultFinalState} field-name="PositiveOutcomeDefaultStatus__c"></lightning-input-field>
+                        </div>
+                    </div>
+                    <template if:true={showCampaignInboundFields}>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                <lightning-input-field field-name="CaseCategory__c" required={campaignInboundFields}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                <lightning-input-field field-name="CaseSubCategory__c" required={campaignInboundFields}></lightning-input-field>
+                            </div>
+                        </div>
+                    </template>
+                    <div class="slds-grid">
                         <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
                             <lightning-input-field field-name="Description"></lightning-input-field>
                         </div>
@@ -94,16 +107,7 @@
                         </template>
                     </div>
 
-                    <template if:true={showCampaignInboundFields}>
-                        <div class="slds-grid slds-wrap">
-                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                                <lightning-input-field field-name="CaseCategory__c" required={campaignInboundFields}></lightning-input-field>
-                            </div>
-                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                                <lightning-input-field field-name="CaseSubCategory__c" required={campaignInboundFields}></lightning-input-field>
-                            </div>
-                        </div>
-                    </template>
+
 
                     <template if:true={campaignOutboundFields}>
                         <div class="slds-grid slds-wrap">
@@ -130,19 +134,24 @@
                                     required={campaignMemberAssignmentTypeRequired}>
                                 </lightning-input-field>
                             </div>
-                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                                <lightning-input-field field-name="CampaignMemberAssigment__c"
-                                    required={campaignMemberAssignmentRequired}
-                                    onchange={handleChangeCampaignMemberAssignment}></lightning-input-field>
-                            </div>
+                                <div if:true={showcampaignMemberAssignment} class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                    <lightning-input-field field-name="CampaignMemberAssigment__c"
+                                        required={campaignMemberAssignmentRequired}
+                                        onchange={handleChangeCampaignMemberAssignment}></lightning-input-field>
+                                </div>
                         </div>
                         <div class="slds-grid slds-wrap">
                             <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
                                 <lightning-input-field field-name="SurveyCRM__c"></lightning-input-field>
                             </div>
                         </div>
-                    </template>
 
+                    </template>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                            <lightning-input-field field-name="FlowType__c"></lightning-input-field>
+                        </div>
+                    </div>
                     <template if:true={campaignBillingFields}>
                         <div class="slds-grid slds-wrap">
                             <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">

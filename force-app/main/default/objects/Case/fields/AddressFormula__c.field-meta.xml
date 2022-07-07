@@ -3,7 +3,7 @@
     <fullName>AddressFormula__c</fullName>
     <description>Indirizzo di fornitura preso in lookup dal Service Point</description>
     <externalId>false</externalId>
-    <formula>ServicePoint__r.SupplyAddress__c</formula>
+    <formula>IF(ISBLANK(ServicePoint__c), &apos;&apos;,ServicePoint__r.SupplyAddress__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Indirizzo di fornitura</label>
     <required>false</required>

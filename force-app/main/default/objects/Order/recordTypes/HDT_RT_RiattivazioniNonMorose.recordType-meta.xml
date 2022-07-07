@@ -25,9 +25,32 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>MethodSignedAccepted__c</picklist>
+        <values>
+            <fullName>IVR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comfort call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>firma digitale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>web assistito</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CancellationReason__c</picklist>
         <values>
             <fullName>Annullato per no conferma cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato per possibile frode</fullName>
             <default>false</default>
         </values>
     </picklistValues>

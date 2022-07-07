@@ -11,12 +11,13 @@
             <operation>equals</operation>
             <valueField>Contact.Account.Id</valueField>
         </filterItems>
-        <isOptional>false</isOptional>
+        <isOptional>true</isOptional>
     </lookupFilter>
     <referenceTo>Contact</referenceTo>
     <relationshipLabel>Vendite</relationshipLabel>
     <relationshipName>Vendite</relationshipName>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

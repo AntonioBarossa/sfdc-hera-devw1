@@ -3,8 +3,8 @@
     <actionCalls>
         <name>CreatActivityPClick</name>
         <label>CreatActivityPClick</label>
-        <locationX>772</locationX>
-        <locationY>318</locationY>
+        <locationX>446</locationX>
+        <locationY>854</locationY>
         <actionName>HDT_UTL_Scarti</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -45,8 +45,8 @@
     <actionCalls>
         <name>Redirect_to_activity</name>
         <label>Redirect to activity</label>
-        <locationX>1247</locationX>
-        <locationY>268</locationY>
+        <locationX>446</locationX>
+        <locationY>1334</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -60,10 +60,33 @@
     </actionCalls>
     <apiVersion>52.0</apiVersion>
     <assignments>
+        <name>Assegna_Valori</name>
+        <label>Assegna Valori</label>
+        <locationX>50</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Activity.EffectiveDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EffectiveDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.ServicePointCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ServicePointCode</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>UpdateActivity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>SetFields</name>
         <label>SetFields</label>
-        <locationX>602</locationX>
-        <locationY>274</locationY>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Activity.Account__c</assignToReference>
             <operator>Assign</operator>
@@ -83,10 +106,33 @@
         </connector>
     </assignments>
     <assignments>
+        <name>SetFields_0</name>
+        <label>SetFields</label>
+        <locationX>578</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>Activity.Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tipologiaSelezionata</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Tipologia</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CreatActivityPClick</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Update_with_opening_notes</name>
         <label>Update with opening notes</label>
-        <locationX>919</locationX>
-        <locationY>417</locationY>
+        <locationX>446</locationX>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>Activity.Id</assignToReference>
             <operator>Assign</operator>
@@ -101,10 +147,46 @@
                 <elementReference>Note_di_apertura_text</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Activity.ContactResult__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>esitoContatto</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Activity.ClosingNote__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>noteChiusuraDefault</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Activity.AttemptCount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>numeroTentativi</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Activity.ActivityOutcome__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>esitoAttivita</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_activity</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>Clienteirreperibile</name>
+        <choiceText>&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Cliente irreperibile&lt;/span&gt;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Cliente irreperibile</stringValue>
+        </value>
+    </choices>
     <choices>
         <name>Contattareilcliente</name>
         <choiceText>Contattare il cliente</choiceText>
@@ -113,6 +195,103 @@
             <stringValue>CBS_CRP001__CONTATTARE_IL_CLIENTE</stringValue>
         </value>
     </choices>
+    <choices>
+        <name>ContattoCliente</name>
+        <choiceText>Contatto Cliente</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Contatto Cliente</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Negativo</name>
+        <choiceText>Negativo</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Negativo</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Okcontattato</name>
+        <choiceText>&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;OK contattato&lt;/span&gt;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>OK contattato</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Positivo</name>
+        <choiceText>&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Positivo&lt;/span&gt;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Positivo</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>SwitchRipristinatorio</name>
+        <choiceText>Gestione Switch in Ripristinatorio</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Gestione Switch in Ripristinatorio</stringValue>
+        </value>
+    </choices>
+    <decisions>
+        <name>is_recordId_Valorized_0</name>
+        <label>is recordId Valorized?</label>
+        <locationX>446</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>SetFields_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Si</defaultConnectorLabel>
+        <rules>
+            <name>No_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetFields</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Quale_Attivita</name>
+        <label>Quale Attivita</label>
+        <locationX>248</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>Nuova_Attivita</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Contatto Cliente</defaultConnectorLabel>
+        <rules>
+            <name>Switch_Ripristinatorio</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Tipo_Attivit</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>SwitchRipristinatorio</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetAccount</targetReference>
+            </connector>
+            <label>Switch Ripristinatorio</label>
+        </rules>
+    </decisions>
     <interviewLabel>HDT_FL_CreationManualActivity {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_CreationManualActivity</label>
     <processMetadataValues>
@@ -124,7 +303,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -134,26 +313,203 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>CreateActivity</name>
+        <label>CreateActivity</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Creazione_Attivita</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Account__c</field>
+            <value>
+                <elementReference>GetAccount.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FiscalCode__c</field>
+            <value>
+                <elementReference>GetAccount.FiscalCode__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>GetRecordTypeManuale.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <stringValue>Gestione Switch in Ripristinatorio</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>VATNumber__c</field>
+            <value>
+                <elementReference>GetAccount.VATNumber__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__Status__c</field>
+            <value>
+                <stringValue>Aperta</stringValue>
+            </value>
+        </inputAssignments>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Get_Activity</name>
+        <label>Get Activity</label>
+        <locationX>50</locationX>
+        <locationY>878</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Valori</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CreateActivity</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetAccount</name>
+        <label>GetAccount</label>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>GetRecordTypeManuale</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetRecordTypeManuale</name>
+        <label>GetRecordTypeManuale</label>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CreateActivity</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_AttivitaGestionali</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Update_activity</name>
         <label>Update activity</label>
-        <locationX>972</locationX>
-        <locationY>234</locationY>
+        <locationX>446</locationX>
+        <locationY>1094</locationY>
         <connector>
             <targetReference>ScreenEsito</targetReference>
         </connector>
         <inputReference>Activity</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>UpdateActivity</name>
+        <label>UpdateActivity</label>
+        <locationX>50</locationX>
+        <locationY>1118</locationY>
+        <inputReference>Get_Activity</inputReference>
+    </recordUpdates>
+    <screens>
+        <name>Creazione_Attivita</name>
+        <label>Creazione Attivita</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Get_Activity</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Attività di {!SwitchRipristinatorio}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compila manualmente i dati sottostanti.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Creazione_Attivita_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Creazione_Attivita_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>ServicePointCode</name>
+                    <dataType>String</dataType>
+                    <fieldText>Codice Punto</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Creazione_Attivita_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>EffectiveDate</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Data Decorrenza</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <screens>
         <name>Nuova_Attivita</name>
         <label>Nuova Attività</label>
-        <locationX>463</locationX>
-        <locationY>204</locationY>
+        <locationX>446</locationX>
+        <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>SetFields</targetReference>
+            <targetReference>is_recordId_Valorized_0</targetReference>
         </connector>
         <fields>
             <name>FlowError</name>
@@ -161,56 +517,132 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Account</name>
-            <extensionName>flowruntime:lookup</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>fieldApiName</name>
-                <value>
-                    <stringValue>Account__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Cliente</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectApiName</name>
-                <value>
-                    <stringValue>wrts_prcgvr__Activity__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>AccountId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>Tipologia</name>
-            <choiceReferences>Contattareilcliente</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Tipologia</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>Note_di_apertura_text</name>
-            <fieldText>Note di apertura</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <isRequired>true</isRequired>
+            <name>Nuova_Attivita_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Nuova_Attivita_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Account</name>
+                    <extensionName>flowruntime:lookup</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>fieldApiName</name>
+                        <value>
+                            <stringValue>Account__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>label</name>
+                        <value>
+                            <stringValue>Cliente</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value>
+                            <stringValue>wrts_prcgvr__Activity__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>recordId</name>
+                        <value>
+                            <elementReference>AccountId</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>required</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <visibilityRule>
+                        <conditionLogic>or</conditionLogic>
+                        <conditions>
+                            <leftValueReference>recordId</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue></stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>recordId</leftValueReference>
+                            <operator>IsNull</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Tipologia</name>
+                    <choiceReferences>Contattareilcliente</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Tipologia</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>numeroTentativi</name>
+                    <dataType>Number</dataType>
+                    <fieldText>Numero tentativi</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <scale>0</scale>
+                </fields>
+                <fields>
+                    <name>Note_di_apertura_text</name>
+                    <fieldText>Note di apertura</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Nuova_Attivita_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>esitoContatto</name>
+                    <choiceReferences>Okcontattato</choiceReferences>
+                    <choiceReferences>Clienteirreperibile</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Esito contatto</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>esitoAttivita</name>
+                    <choiceReferences>Positivo</choiceReferences>
+                    <choiceReferences>Negativo</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Esito attività</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>noteChiusuraDefault</name>
+                    <fieldText>Note di chiusura</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -218,8 +650,8 @@
     <screens>
         <name>ScreenEsito</name>
         <label>Screen Esito</label>
-        <locationX>1123</locationX>
-        <locationY>134</locationY>
+        <locationX>446</locationX>
+        <locationY>1214</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -259,11 +691,39 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <start>
-        <locationX>50</locationX>
-        <locationY>50</locationY>
+    <screens>
+        <name>Seleziona_Attivit</name>
+        <label>Seleziona TIpo Attività</label>
+        <locationX>248</locationX>
+        <locationY>158</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
         <connector>
-            <targetReference>Nuova_Attivita</targetReference>
+            <targetReference>Quale_Attivita</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Seleziona il Tipo attività da creare tra quelli disponibili&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Tipo_Attivit</name>
+            <choiceReferences>ContattoCliente</choiceReferences>
+            <choiceReferences>SwitchRipristinatorio</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Tipo Attività</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>122</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Seleziona_Attivit</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -312,6 +772,13 @@
         <value>
             <stringValue></stringValue>
         </value>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>tipologiaSelezionata</name>

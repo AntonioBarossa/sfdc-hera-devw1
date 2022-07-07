@@ -59,10 +59,10 @@
             <fullName>Bolletta per e-mail</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>Bolletta per e-mail %2B Carta</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>Cartaceo</fullName>
             <default>false</default>
@@ -255,6 +255,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato per possibile frode</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento da cliente</fullName>
             <default>false</default>
         </values>
@@ -284,6 +288,10 @@
         </values>
         <values>
             <fullName>Contattare banca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contatto Quality Fallito</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1663,7 +1671,7 @@
     <picklistValues>
         <picklist>DocSendingMethod__c</picklist>
         <values>
-            <fullName>E-mail</fullName>
+            <fullName>E-Mail</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1934,57 +1942,21 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>MaxRequiredPotential__c</picklist>
+        <picklist>MethodSignedAccepted__c</picklist>
         <values>
-            <fullName>46</fullName>
+            <fullName>IVR</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>76</fullName>
+            <fullName>Comfort call</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>100</fullName>
+            <fullName>firma digitale</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>191</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>200</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>307</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>498</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>767</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1228</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2398</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>3837</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6236</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>9594</fullName>
+            <fullName>web assistito</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2035,14 +2007,14 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
-        <values>
+<!--         <values>
             <fullName>Accettazione pagamento a DL</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Amm%2E Precheck OK SII</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
@@ -2051,14 +2023,14 @@
             <fullName>Ammissibilità OK</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Ammissibilità conformità KO</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Ammissibilità conformità OK</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullamento - Ammissibilità KO</fullName>
             <default>false</default>
@@ -2091,18 +2063,18 @@
             <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>
         </values>
-        <values>
+  <!--       <values>
             <fullName>Annullamento - Revocato</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+ <!--        <values>
             <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Annullamento SII - Ricezione</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullamento dal SII</fullName>
             <default>false</default>
@@ -2111,10 +2083,10 @@
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Annullato SII</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Attesa conferma preventivo cliente</fullName>
             <default>false</default>
@@ -2139,22 +2111,22 @@
             <fullName>Comunicazione verso Heroku OK</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Conferma Appuntamento KO</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+<!--         <values>
             <fullName>DL Documentazione completa</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>DL accertamento OK</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+<!--         <values>
             <fullName>DL documentazione incompleta</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Da Inviare</fullName>
             <default>false</default>
@@ -2167,14 +2139,14 @@
             <fullName>Errore lavorazione SAP</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Esecuzione Appuntamento KO</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Esecuzione Appuntamento OK</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Esito KO da DL</fullName>
             <default>false</default>
@@ -2183,10 +2155,10 @@
             <fullName>Esito OK da DL</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Gestione appuntamento su portale DL</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>In Lavorazione</fullName>
             <default>false</default>
@@ -2195,7 +2167,7 @@
             <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
         </values>
-        <values>
+ <!--        <values>
             <fullName>In attesa appuntamento DL</fullName>
             <default>false</default>
         </values>
@@ -2210,27 +2182,43 @@
         <values>
             <fullName>In attesa tempi di ripensamento</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>In sequenzializzazione</fullName>
+            <fullName>In Corso caricamento Siebel</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Esportazione VS Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel KO</fullName>
+            <default>false</default>
+        </values>
+<!--         <values>
+            <fullName>In sequenzializzazione</fullName>
+            <default>false</default>
+        </values> -->
         <values>
             <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
-        <values>
+  <!--       <values>
             <fullName>Invio allegato a DL</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>OK SAP</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Preventivo Accettato</fullName>
             <default>false</default>
@@ -2279,14 +2267,14 @@
             <fullName>Ripensamento - Inviato al SII</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+<!--         <values>
             <fullName>Ripensato</fullName>
             <default>false</default>
-        </values>
+        </values> -->
     </picklistValues>
     <picklistValues>
         <picklist>PressureLevel__c</picklist>
@@ -2839,7 +2827,11 @@
         <values>
             <fullName>E-Canone fisso</fullName>
             <default>false</default>
-        </values>
+        </values>              
+        <values>
+            <fullName>F-Standalone</fullName>
+            <default>false</default>
+        </values>  
     </picklistValues>
     <picklistValues>
         <picklist>VAT__c</picklist>

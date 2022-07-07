@@ -4,7 +4,7 @@
     <description>Indica se la regola permette il delivery dell&apos;alert sul canale Email</description>
     <externalId>false</externalId>
     <formula>AlertConfiguration__r.IsEmailChannelActive__c</formula>
-    <label>Canale Email</label>
+    <label>Email</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

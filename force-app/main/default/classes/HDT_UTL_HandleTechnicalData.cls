@@ -62,11 +62,23 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
     public void handleE154Flow(Map<String, String> mapRequestFields, Order ord){
         System.debug(LoggingLevel.DEBUG, 'flusso E154');
         if (!String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
+            HDT_LC_CalculateEstimatedCost calculateAmount = new HDT_LC_CalculateEstimatedCost();
             ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
+            Map<String,Decimal> amounts = calculateAmount.getAmounts(ord.SupplyType__c, ord.EstimateAmount__c);
+            ord.AdministrativeBurden__c = amounts.get('fixedAmount');
+            ord.VariableAmount__c = amounts.get('variableAmount');
             ord.QuotationType__c = 'Analitico';
         }
         if(!String.isBlank(mapRequestFields.get('DT_MAX_PREV'))){
-            if(mapRequestFields.get('DT_MAX_PREV').getChars().size()==8){
+            try
+            {
+                ord.ValidityDateEstimate__c = Date.valueOf(mapRequestFields.get('DT_MAX_PREV'));
+            }
+            catch(Exception e)
+            {
+                System.debug(LoggingLevel.DEBUG, 'DT_MAX_PREV Exception -> ' + e.getMessage());
+            }
+            if(ord.ValidityDateEstimate__c == null && mapRequestFields.get('DT_MAX_PREV').getChars().size()==8){
                 ord.ValidityDateEstimate__c=getExpireDate(mapRequestFields.get('DT_MAX_PREV'));
             }
         }
@@ -167,6 +179,13 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
                 }
             }
         }
+
+        //Modifica HRADRT_GV 31/01/2022 - Inizio
+        if (!String.isBlank(mapRequestFields.get('NuovoAccount'))) {
+            sp.Account__c = mapRequestFields.get('NuovoAccount');
+        }
+        //Modifica HRADRT_GV 31/01/2022 - Fine
+
         sp.Status__c='Impianto compl. in funzione';
         updateServicePoint();
     }

@@ -275,7 +275,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         setSingleRow.discountCode.label = tempItem.DiscountCode__c;
         setSingleRow.discountCode.value = tempItem.DiscountCodeValue__c;
 
-        setSingleRow.stringValue.label = tempItem.StringValue__c;
+        setSingleRow.stringValue.value = tempItem.StringValue__c;
         return setSingleRow;
     }
 
@@ -337,6 +337,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         tecOffItem.DiscountCode__c = offerLine.discountCode.label;
         tecOffItem.DiscountCodeValue__c = offerLine.discountCode.value;
         tecOffItem.StringValue__c = offerLine.stringValue.value;
+
         return tecOffItem;
     }
     
@@ -626,6 +627,21 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             obj.header.isModificabile = techOff.AdmittingProfileModification__c;
             obj.header.isOffertaDaModificare = techOff.OfferToBeModified__c;
 
+            //BRIM
+
+            obj.header.ore = String.valueOf(techOff.Hours__c);
+            obj.header.percentuale = String.valueOf(techOff.Discount__c);
+            obj.header.parametroP0 = String.valueOf(techOff.P0__c);
+            obj.header.parametroK = String.valueOf(techOff.K__c);
+            obj.header.parametroI0 = String.valueOf(techOff.I0__c);
+            obj.header.parametroL = String.valueOf(techOff.Lambda__c);
+            obj.header.identificativoProdotto = String.valueOf(techOff.ProductIdentifier__c);
+
+            //obj.header.parametroP0 = (obj.header.parametroP0==null) ? null : obj.header.parametroP0.replace('.', ',');
+            //obj.header.parametroK = (obj.header.parametroK==null) ? null : obj.header.parametroK.replace('.', ',');
+            //obj.header.parametroI0 = (obj.header.parametroI0==null) ? null : obj.header.parametroI0.replace('.', ',');
+            //obj.header.parametroL = (obj.header.parametroL==null) ? null : obj.header.parametroL.replace('.', ',');
+
             obj.header.input = new List<HDT_WRP_TechnicalOffer.HDT_WRP_Position>();
 
             HDT_WRP_TechnicalOffer.HDT_WRP_Position position;
@@ -642,6 +658,10 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
                 position.sconto = item.DiscountCodeValue__c;
                 position.valore = item.NumericValue__c;
                 position.stringa = item.StringValue__c;
+
+                if(item.Type__c.equalsIgnoreCase('FLAG') && item.Flag__c){
+                    position.stringa = 'X';
+                }
 
                 obj.header.input.add(position);
             }

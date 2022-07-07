@@ -37,11 +37,12 @@ public with sharing class HDT_LC_CommunicazioniDistributoreTst {
         actList[0].Distributor__c = acctList[0].Id;
         actList[0].Contact__c = contacts[0].Id;
         actList[0].AppointmentDateToConfirm__c = date.newinstance(2022, 1, 27);
-        wrts_prcgvr__Activity__c at = new wrts_prcgvr__Activity__c();
+        actList[0].AppointmentDate__c = date.newinstance(2022, 1, 27);
         
         insert actList;
         actList = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Id = :actList[0].Id];
         String res = HDT_LC_CommunicazioniDistributore.createActivity(actList[0].Id,'Presa Appuntamento');
+        System.assertEquals('ok', res, 'La risposta ricevuta non è quella attesa');
     }
     
     

@@ -4,8 +4,8 @@
     <assignments>
         <name>Aggancia_Contratto</name>
         <label>Aggancia Contratto</label>
-        <locationX>407</locationX>
-        <locationY>998</locationY>
+        <locationX>506</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>Case.Contract__c</assignToReference>
             <operator>Assign</operator>
@@ -17,8 +17,8 @@
     <assignments>
         <name>Aggancia_Ordine</name>
         <label>Aggancia Ordine</label>
-        <locationX>143</locationX>
-        <locationY>998</locationY>
+        <locationX>242</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>Case.Order__c</assignToReference>
             <operator>Assign</operator>
@@ -30,7 +30,7 @@
     <assignments>
         <name>Set_Order</name>
         <label>Set Order</label>
-        <locationX>473</locationX>
+        <locationX>374</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>Case.AlternativeAddress__c</assignToReference>
@@ -229,36 +229,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Causale_Autoelettrica2</targetReference>
+            <targetReference>Selezione_Ordine_Contratto</targetReference>
         </connector>
     </assignments>
     <decisions>
-        <name>Causale_Autoelettrica2</name>
-        <label>Causale Autoelettrica?</label>
-        <locationX>473</locationX>
-        <locationY>638</locationY>
-        <defaultConnectorLabel>Heraricarica</defaultConnectorLabel>
-        <rules>
-            <name>Noleggio_Outcome</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Causale_Autoelettrica</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Noleggio</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Selezione_Ordine_Contratto</targetReference>
-            </connector>
-            <label>Noleggio</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Quale_Oggetto</name>
         <label>Quale Oggetto?</label>
-        <locationX>275</locationX>
-        <locationY>878</locationY>
+        <locationX>374</locationX>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Aggancia_Contratto</targetReference>
         </defaultConnector>
@@ -346,7 +324,7 @@
     <screens>
         <name>Dati_Cliente</name>
         <label>Dati Cliente</label>
-        <locationX>473</locationX>
+        <locationX>374</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -499,7 +477,7 @@
     <screens>
         <name>Dati_Pagamento</name>
         <label>Dati Pagamento</label>
-        <locationX>473</locationX>
+        <locationX>374</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -690,8 +668,8 @@
     <screens>
         <name>Selezione_Ordine_Contratto</name>
         <label>Selezione Ordine/Contratto</label>
-        <locationX>275</locationX>
-        <locationY>758</locationY>
+        <locationX>374</locationX>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>

@@ -11,6 +11,7 @@
             <property name="quoteType" type="String" label="Tipo Preventivo" description="Tipologia del preventivo" role="inputOnly"/>
             <property name="nextLabel" type="String" label="Next Label" description="Label next Button" role="inputOnly" default="Conferma Pratica"/>
             <property name="nextVariant" type="String" label="Next Variant" description="Variant del next Button" role="inputOnly" default="success"/>
+            <property name="cancelButton" type="Boolean" label="Cancel Button" description="Cancel Button" role="inputOnly"/>
             <property name="outcome" type="String" label="outcome" description="outcome" role="outputOnly"/>
             <property name="cancelCase" type="Boolean" label="cancelCase" description="if true case has to be cancelled" role="outputOnly"/>
             <property name="recordId" type="String" label="Record Id" description="Record Id" role="inputOnly"/>
@@ -18,6 +19,8 @@
             <property name="source" type="String" label="Source" description="Source" role="inputOnly"/>
             <property name="disableSignMode" type="Boolean" label="Disable Sign Mode" description="Disable Sign Mode field" role="inputOnly"/>
             <property name="entryChannel" type="String" label="Entry Channel (Reclami)" description="Entry Channel (Reclami)" role="inputOnly"/>
+            <property name="discardRework" type="String" label="Discard Rework" description="Discard Rework" role="inputOnly" default="false"/>
+            <property name="discardActivityId" type="String" label="Discard Activity Id" description="Discard Activity Id" role="inputOnly" default=""/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

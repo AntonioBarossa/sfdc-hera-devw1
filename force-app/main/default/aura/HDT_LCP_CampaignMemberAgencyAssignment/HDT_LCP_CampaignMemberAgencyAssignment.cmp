@@ -9,7 +9,7 @@
    </aura:html>
     <lightning:card>
         <aura:set attribute="title">
-            Assegnazione Agenzia
+           <div>Assegnazione Agenzia</div> 
         </aura:set>
         <aura:set attribute="footer">
             <lightning:button type="button" name="save" label="Assegna" variant="brand" onclick='{!c.handleSubmit}' />

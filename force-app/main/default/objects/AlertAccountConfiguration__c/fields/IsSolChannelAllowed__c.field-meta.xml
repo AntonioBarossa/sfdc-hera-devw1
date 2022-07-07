@@ -4,7 +4,7 @@
     <description>Indica se la regola permette il delivery dell&apos;alert sul canale SOL</description>
     <externalId>false</externalId>
     <formula>AlertConfiguration__r.IsSolChannelActive__c</formula>
-    <label>Canale SOL</label>
+    <label>SOL</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

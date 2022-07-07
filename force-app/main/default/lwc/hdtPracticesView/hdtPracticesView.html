@@ -1,0 +1,54 @@
+<template>
+    
+    <div if:true={showSpinner} >
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+
+    <div if:true={showError} class="slds-text-align_center">
+        <lightning-card>
+
+            <c-hdt-custom-illustration
+                message={showErrorMessage}
+                style-class="slds-text-heading_medium"
+            ></c-hdt-custom-illustration>
+
+        </lightning-card>
+    </div>
+
+    <template if:false={showError} >
+        <lightning-card  icon-name={iconName} title={tableTitle}>
+
+            <div class={height1} >
+                <lightning-datatable
+                        key-field="id"
+                        hide-checkbox-column="true"
+                        data={data}
+                        columns={columns}
+                        sorted-direction={sortDirection}
+                        sorted-by={sortedBy}
+                        onsort={onHandleSort}
+                ></lightning-datatable>
+                <!-- default-sort-direction={defaultSortDirection}-->
+            </div>
+        </lightning-card>
+
+        <template if:true={showSecondTable} >
+            <div class="slds-m-top_large" >
+                <lightning-card  icon-name={iconName2} title={tableTitle2} >
+                    <div class={height2} >
+                        <lightning-datatable
+                                key-field="id"
+                                hide-checkbox-column="true"
+                                data={data2}
+                                columns={columns2}
+                                sorted-direction={sortDirection}
+                                sorted-by={sortedBy}
+                                onsort={onHandleSort2}
+                        ></lightning-datatable>
+                    </div>
+                </lightning-card>
+            </div>
+        </template>
+    </template>
+
+</template>

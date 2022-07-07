@@ -20,12 +20,15 @@ import InvoicingPlace from '@salesforce/schema/Case.InvoicingPlace__c';
 import InvoicingStreetName from '@salesforce/schema/Case.InvoicingStreetName__c';
 import InvoicingCountry from '@salesforce/schema/Case.InvoicingCountry__c';
 import InvoicingProvince from '@salesforce/schema/Case.InvoicingProvince__c';
+import Origin from '@salesforce/schema/Case.Origin';
+import SignMode from '@salesforce/schema/Case.SignMode__c';
 import AddressFormula from '@salesforce/schema/Case.AddressFormula__c';
 import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import { NavigationMixin } from 'lightning/navigation';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import updateContactForScartoDocumentale from '@salesforce/apex/HDT_UTL_Scarti.updateContactForScartoDocumentale'; //costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+import getFlowCase from '@salesforce/apex/HDT_SRV_ScriptManager.getFlowCase';
 const FIELDS = ['Case.ContactMobile', 
                 'Case.ContactEmail',
                 'Case.DeliveryAddress__c',
@@ -54,7 +57,9 @@ const FIELDS = ['Case.ContactMobile',
 				'Case.InvoicingPlace__c',
 				'Case.InvoicingStreetName__c',
 				'Case.InvoicingCountry__c',
-                'Case.InvoicingProvince__c'];
+                'Case.InvoicingProvince__c',
+                'Case.Origin',
+                'Case.ContactId'];
 
 export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(LightningElement) {
     
@@ -75,8 +80,12 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
     @api nextVariant;
     @api documents;
     @api disableSignMode;
+    @api cancelButton;
     //@frpanico 07/09 added EntryChannel
     @api entryChannel;
+    //HRADTR_GV_Main
+    @api discardRework;
+    @api discardActivityId;
     caseRecord;
     @track inputParams;
     @track enableNext = false;
@@ -85,6 +94,8 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
     @track labelConfirm = 'Conferma pratica';
     @track showConfirmButton = false;
     @track showPreviewButton = true;
+    @track previousButton;
+    @track vocalOrderExecuted = false;
     @api
     get variantButton(){
         if(this.nextVariant != null && this.nextVariant !="" && this.nextVariant != "unedfined")
@@ -92,23 +103,78 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
         else 
             return "brand"
     }
-
+    
     @api
     get labelButton(){
         if(this.nextLabel != null && this.nextLabel!="" && this.nextLabel != "unedfined")
-            return this.nextLabel;
+        return this.nextLabel;
         else 
-            return "Conferma Pratica"
+        return "Conferma Pratica"
     }
+    /*get cancelButton()
+    {
+        if(this.cancelButton === null || this.cancelButton === undefined)
+        {
+            return true;
+        }
+    }*/
     oldSignMode = '';
+    
+    scriptAvailable = false;
+    openModal = false;
+    flowFound = false;
+    isLoading = true;
 
     connectedCallback(){
-        if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
+        console.log('Origin: ' + Origin);
+        console.log('SignMode: ' + SignMode);
+        /*if(this.processType && this.processType === 'Modifica Privacy'){
+            this.labelConfirm = 'Conferma pratica';
+            this.showPreviewButton = false;
+            this.previewExecuted = true;
+        }else*/ if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
             this.labelConfirm = 'Conferma pratica';
             this.showPreviewButton = false;
             this.previewExecuted = true;
         }else{
             this.labelConfirm = 'Invia documenti';
+        }
+        /*
+        if(!this.availableActions.find(action => action === 'BACK')){
+            this.previousButton = false;
+        }
+        else
+        {
+            this.previousButton = true;
+        }*/
+
+    }
+    handleSignModeChange(event){
+        var signMode = event.detail;
+        
+        if(signMode != null && signMode === 'Vocal Order' && (this.source === 'Telefono Inbound' || this.source === 'Telefono Outbound' || this.source === 'Teleselling') && this.processType === 'Modifica Privacy'){ 
+            this.scriptAvailable = true;
+        }else{
+            this.scriptAvailable = false;
+        }
+
+        if(signMode && this.processType && (this.processType == 'Richiesta Domiciliazione' || this.processType === 'Modifica Privacy') && signMode === 'Vocal Order'){
+            this.labelConfirm = 'Conferma pratica';
+            this.showPreviewButton = false;
+            this.previewExecuted = true;
+        }else if(signMode && this.source && this.processType && this.processType === 'Modifica Privacy' && signMode === 'Cartacea' && this.source === 'Chat'){
+            this.labelConfirm = 'Conferma pratica';
+            this.showPreviewButton = false;
+            this.previewExecuted = true;
+        }
+        else if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
+            this.labelConfirm = 'Conferma pratica';
+            this.showPreviewButton = false;
+            this.previewExecuted = true;
+        }else{
+            this.labelConfirm = 'Invia documenti';
+            this.showPreviewButton = true;
+            this.previewExecuted = false;
         }
     }
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
@@ -146,6 +212,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 var codiceViaStradarioSAP='';
                 var flagForzato=false;
                 var flagVerificato=false;
+                var canale = '';
 
                 var contactEmail = this.caseRecord.fields.ContactEmail.value;
                 var caseEmail = this.caseRecord.fields.Email__c.value;
@@ -229,11 +296,36 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                         FlagVerificato  : flagVerificato
                     },
                     sendMode:this.caseRecord.fields.SendMode__c.value,
-                    signMode:this.caseRecord.fields.SignMode__c.value 
+                    signMode:this.caseRecord.fields.SignMode__c.value,
+                    contactId:this.caseRecord.fields.ContactId.value 
                 }
+                canale = this.caseRecord.fields.Origin.value;
+                var signMode = this.caseRecord.fields.SignMode__c.value;
+                if(signMode != null && signMode === 'Vocal Order' && (canale === 'Telefono Inbound' || canale === 'Telefono Outbound' || canale === 'Teleselling') && this.processType === 'Modifica Privacy'){ 
+                    this.scriptAvailable = true;
+                }
+
                 this.inputParams = JSON.stringify(inputParams);
                 this.oldSignMode = this.caseRecord.fields.SignMode__c.value;
                 console.log(this.inputParams);
+                
+                if(signMode && signMode === 'Vocal Order' && this.processType && (this.processType == 'Richiesta Domiciliazione' || this.processType === 'Modifica Privacy')){
+                    this.labelConfirm = 'Conferma pratica';
+                    this.showPreviewButton = false;
+                    this.previewExecuted = true;
+                }
+                else if(signMode && this.source && this.processType && this.processType === 'Modifica Privacy' && signMode === 'Cartacea' && this.source === 'Chat'){
+                    this.labelConfirm = 'Conferma pratica';
+                    this.showPreviewButton = false;
+                    this.previewExecuted = true;
+                }
+                else if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
+                    this.labelConfirm = 'Conferma pratica';
+                    this.showPreviewButton = false;
+                    this.previewExecuted = true;
+                }else{
+                    this.labelConfirm = 'Invia documenti';
+                }
             }
         }
     handlePreviewExecuted(event){
@@ -241,6 +333,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
     }
 
     handlePreview(event){
+        console.log('this.processType ' + this.processType);
         let returnValue = this.template.querySelector('c-hdt-document-signature-manager').handlePreview();
     }
 
@@ -337,7 +430,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
             updateRecord(recordInput)
                 .then(() => {
                     //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
-                    try {
+                    /*try {
                         updateContactForScartoDocumentale({accountId:this.accountId, 
                                                             oldPhone: this.oldPhoneValue,
                                                             oldEmail: this.oldEmailValue,
@@ -345,7 +438,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                                                             newMail: resultWrapper.email});
                     } catch (error) {
                       console.error('updateContactForScartoDocumentale exception: ',JSON.stringify(error));
-                    }
+                    }*/
                     //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
                     // Display fresh data in the form
                     console.log('Record aggiornato');
@@ -373,6 +466,8 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
         let returnValue = this.template.querySelector('c-hdt-document-signature-manager').checkForm();
     }
     handleConfirm(){
+        var resultWrapper = JSON.parse(this.confirmData);
+        console.log('this.confirmData.signMode ' + resultWrapper.signMode);
         if(this.enableNext){
             if((!this.previewExecuted && this.quoteType && this.quoteType.localeCompare('Analitico') != 0)){
                 this.dispatchEvent(
@@ -382,9 +477,23 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                         variant: 'error',
                     }),
                 );
-            }else if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
+            }else if(!this.vocalOrderExecuted && resultWrapper.signMode != null && resultWrapper.signMode === 'Vocal Order'){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Errore',
+                        message:'Attenzione! Devi effettuare la registrazione del Vocal Order prima di procedere con il Conferma pratica',
+                        variant: 'error',
+                    }),
+                );
+            }
+            else if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
                 this.handleGoNext();
-            }else{
+            }else if(resultWrapper.signMode != null && resultWrapper.signMode === 'Vocal Order'){
+                this.handleGoNext();
+            }else if(resultWrapper.signMode != null && this.source && this.processType && this.processType === 'Modifica Privacy' && resultWrapper.signMode === 'Cartacea' && this.source === 'Chat'){
+                this.handleGoNext();
+            }
+            else{
                 console.log('sendDocumentFile');
                 this.sendDocumentFile();
             }
@@ -439,7 +548,9 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 TipoPlico : tipoPlico,
                 mode : 'Print',
                 Archiviato : 'Y',
-                DiscardOldEnvelope : discardOldEnvelope
+                DiscardOldEnvelope : discardOldEnvelope,
+                discardRework : this.discardRework,
+                discardActivityId : this.discardActivityId
             }
             if(sendMode.localeCompare('Sportello') ===0){
                 this.sendAndViewDocument(formParams);
@@ -482,9 +593,14 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
 
     handleGoBack(){
 
-        const navigateBackEvent = new FlowNavigationBackEvent();
-
-        this.dispatchEvent(navigateBackEvent);
+        if(!this.availableActions.find(action => action === 'BACK')){
+            this.previousButton = false;
+            showMessage('Attenzione','Non è possibile tornare indietro.','error')
+        }else{
+            const navigateBackEvent = new FlowNavigationBackEvent();
+            this.dispatchEvent(navigateBackEvent);
+        }
+        
 
     }
 
@@ -496,5 +612,36 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 variant: variant
             }),
         );
+    }
+
+    launchScript(){
+        
+        this.openModal = true;
+
+        getFlowCase({caseId: this.recordId}).then(flowUrl => {
+            console.log('flowUrl returned: ' + flowUrl);
+            if (flowUrl !== null && flowUrl !== '' && flowUrl !== 'flow not found') {
+                this.flowFound = true;
+                this.flowUrl = flowUrl;
+            }else{
+                this.flowFound = false;
+            }
+    
+            this.isLoading = false;
+        },error => {
+            console.log(error);
+            const evt = new ShowToastEvent({
+                title: 'Errore caricamento Script',
+                message: 'Non è stato possibile recuperare le informazioni relative agli script',
+                variant: 'error'
+            });
+            this.dispatchEvent(evt);
+        });
+    }
+
+    closeModal(){
+        this.openModal = false;
+        this.vocalOrderExecuted = true;
+        this.dispatchEvent(new CustomEvent('close'));
     }
 }

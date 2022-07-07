@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Process__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(ProcessType__c ,
+&apos;Subentro Gas&apos;, &apos;Subentro&apos;, 
+&apos;Subentro Ele&apos;, &apos;Subentro&apos;, 
+&apos;Prima Attivazione Ele&apos;, &apos;Attivazione&apos;, 
+&apos;Prima Attivazione In delibera&apos;, &apos;Attivazione&apos;, 
+&apos;Prima Attivazione Fuori delibera&apos;, &apos;Attivazione&apos;, 
+&apos;Prima Attivazione con modifica&apos;, &apos;Attivazione con Modifica&apos;,
+&apos;Cambio Offerta Ele&apos;, &apos;Cambio Offerta&apos;,
+&apos;Cambio Offerta Gas&apos;, &apos;Cambio Offerta&apos;,
+&apos;Aggiunta Sconti o Bonus VAS Ele&apos;, &apos;Aggiunta Sconti o Bonus VAS&apos;,
+&apos;Aggiunta Sconti o Bonus VAS Gas&apos;, &apos;Aggiunta Sconti o Bonus VAS&apos;,
+&apos;Switch in con voltura tecnica&apos;, &apos;Switch in&apos;,
+&apos;Switch in Ripristinatorio&apos;, &apos;Switch in&apos;,
+&apos;Switch in Fittizio&apos;, &apos;Switch in&apos;,
+&apos;Switch in Winback&apos;, &apos;Switch in&apos;,
+&apos;Switch in Ele&apos;, &apos;Switch in&apos;,
+&apos;Switch in Gas&apos;, &apos;Switch in&apos;, TEXT(ProcessType__c)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Processo</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

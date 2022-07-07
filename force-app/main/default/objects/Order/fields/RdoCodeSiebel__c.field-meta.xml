@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>RdoCodeSiebel__c</fullName>
     <externalId>false</externalId>
-    <label>RdoCodeSiebel</label>
+    <label>Numero Rdo Siebel</label>
     <length>255</length>
     <required>false</required>
     <trackHistory>false</trackHistory>

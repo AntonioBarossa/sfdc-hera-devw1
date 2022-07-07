@@ -13,6 +13,13 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         List<DocumentalActivity__c> docActList = HDT_UTL_DataFactoryTst.createDocumentalActivity(1,null,caseList[0].Id);
         HDT_UTL_DataFactoryTst.createJsonPayload();
         HDT_UTL_DataFactoryTst.createDriverJson();
+        HDT_UTL_DataFactoryTst.pClickInstance();
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
+        insert new DocusignSettings__c(CustomerEnviromentId__c = 'HERA-TEST');
+        DocumentSendTracking__c documentSendTracking = new DocumentSendTracking__c();
+        documentSendTracking.EnvelopeId__c = 'resendDocusignTst';
+        insert documentSendTracking;
     }
 
     @isTest
@@ -25,6 +32,21 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         System.assertEquals('OK', (String)mapResult.get('outcome'), 'showOriginalDocumentPdf did not work correctly');
         System.assertEquals('pdf', (String)mapResult.get('type'), 'showOriginalDocumentPdf did not work correctly');
         System.assertEquals('base64', (String)mapResult.get('base64'), 'showOriginalDocumentPdf did not work correctly');
+    }
+
+    @isTest
+    static void showOriginalDocumentZip(){
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_DocumentalIntegrationTstMock());
+        Case c = [SELECT Id FROM Case LIMIT 1];
+        update new Case(Id = c.Id, SignMode__c = 'OTP Remoto');
+        Test.startTest();
+        DocumentalActivity__c docAct = [SELECT Id FROM DocumentalActivity__c LIMIT 1];
+        String result = HDT_LC_DocumentSignatureManager.showOriginalDocument(docAct.Id);
+        Map<String,Object> mapResult = (Map<String,Object>) JSON.deserializeUntyped(result); 
+        System.assertEquals('OK', (String)mapResult.get('outcome'), 'showOriginalDocumentZip did not work correctly');
+        System.assertEquals('zip', (String)mapResult.get('type'), 'showOriginalDocumentZip did not work correctly');
+        System.assertEquals('base64', (String)mapResult.get('base64'), 'showOriginalDocumentZip did not work correctly');
+        System.assertEquals(true, mapResult.get('base64List') != null, 'showOriginalDocumentZip did not work correctly');
     }
     @isTest
     static void showArchivedAttachmentPdf(){
@@ -81,5 +103,38 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         Test.stopTest();
     }
 
+    @isTest
+    static void handleContactPoint(){
+        Test.startTest();
+        Contact con = [SELECT Id FROM Contact LIMIT 1];
+        String result = HDT_LC_DocumentSignatureManager.handleContactPoint('email@email.com','3333333333',con.Id,'query');
+        result = HDT_LC_DocumentSignatureManager.handleContactPoint('email@email.com','3333333333',con.Id,'insert');
+        Boolean resultBool = String.isNotBlank(result)?true:false;
+        System.assert(resultBool, true);
+        Test.stopTest();
+    }
+
+    @isTest
+    static void resendDocusignEnvelopeTst()
+    {
+        List<DocumentSendTracking__c> documentSendTracking = [SELECT Id, EnvelopeId__c FROM DocumentSendTracking__c];
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_DocumentalIntegrationTstMock());
+        Test.startTest();
+            String result = HDT_LC_DocumentSignatureManager.resendDocusignEnvelope(documentSendTracking[0].Id);
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(result), 'ResendDocusignEnvelope test fallito');
+    }
+
+    @isTest
+    static void sendAdvanceDocumentationTst()
+    {
+        List<Order> orderList = [SELECT Id FROM Order];
+        String formParams = '{\"sendMode\" : \"Cartacea\",\"mode\" : \"Print\",\"Archiviato\" : \"Y\",\"TipoPlico\": \"MODULISTICA_B12\"}';
+        String context = 'DocumentazioneAnticipata';
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_DocumentalIntegrationTstMock());
+        Test.startTest();
+            HDT_LC_DocumentSignatureManager.sendAdvanceDocumentation(orderList[0].Id,context,formParams);
+        Test.stopTest();
+    }
     
 }

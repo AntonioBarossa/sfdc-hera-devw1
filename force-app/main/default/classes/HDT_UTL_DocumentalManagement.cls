@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveParameterList')
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveParameterList, PMD.ExcessiveClassLength, PMD.CyclomaticComplexity, PMD.ExcessivePublicCount, PMD.AvoidDeeplyNestedIfStmts, PMD.NcssMethodCount')
 public inherited sharing class HDT_UTL_DocumentalManagement {
 	public static List<Map<String,List<sObject>>> getRecordObjectsList(List<SObject> recordsList, String context){
 		/*
@@ -175,6 +175,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String result = response.deliverPackageResponse.result;
 		String cluster = '';
 		String quotationType = '';
+		Boolean isMassive = false;
+		String signatureMethod = '';
+		if(context.equalsIgnoreCase('Order')){
+			isMassive = (Boolean) processRecord.get('isMassive__c');
+		}
 		if(result == '000'){
 			if(archive != 'Y'){
 				processRecord.put('DocumentalPhase__c','Preview');
@@ -203,9 +208,18 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 						}
 					}
 				}
+				if(isMassive){
+					signatureMethod = (String) processRecord.get('SignatureMethod__c');
+					if(!signatureMethod.equalsIgnoreCase('Contratto già firmato')){
+						processRecord.put('Phase__c', 'Documentazione da inviare');
+					}
+				}
 			}
 		}else {
 			processRecord.put('DocumentalPhase__c','Errore composizione');
+			if(isMassive){
+				processRecord.put('Phase__c', 'Comunicazione EngageOne KO');
+			}
 		}
 		return HDT_UTL_DatabaseService.updateSObject(processRecord);
 	}
@@ -218,7 +232,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String queryString = 'SELECT ';
 		switch on context {
 			when 'Order','DocumentazioneAnticipata' {
-				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,ShippingMail__c,SignMode__c,DocumentalPhase__c,Cluster__c';
+				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,ShippingMail__c,SignMode__c,DocumentalPhase__c,Cluster__c,Phase__c,isMassive__c,SignatureMethod__c';
 				fromString = 'Order';
 				whereString = ' OrderNumber = \''+requestId + '\'';
 			}
@@ -285,30 +299,53 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		if ('35'.equals(errorMessage)){
 			errorMessage = 'Indirizzo Email non valido.';
 			activityType = 'Busta Docusign non consegnata.';
-		}
-		try {
-			String sObjName = requestId.getSObjectType().getDescribe().getName();
-			DocumentalActivity__c documentalActivity = new DocumentalActivity__c ();
-			switch on sObjName {
-				when 'Case' {
-					documentalActivity.CaseId__c = (Id) requestId;
-					//System.debug(LoggingLevel.DEBUG, '### Account Id: '+processRecord.get('AccountId'));
+			try{
+				String sObjName = requestId.getSObjectType().getDescribe().getName();
+				wrts_prcgvr__Activity__c activityBusta = new wrts_prcgvr__Activity__c ();
+				Id actRecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
+				switch on sObjName {
+					when 'Case' {
+						activityBusta.Case__c = (Id) requestId;
+					}
+					when 'Order' {
+						activityBusta.Order__c = (Id) requestId;
+					}
 				}
-				when 'Order' {
-					documentalActivity.OrderId__c = (Id) requestId;
-				}
+				activityBusta.RecordTypeId=actRecordTypeId;
+				activityBusta.wrts_prcgvr__Description__c='Indirizzo Email non valido.';
+				activityBusta.DiscardCategory__c = 'Scarto complesso';
+				activityBusta.Type__c='Busta Docusign non consegnata';
+				HDT_UTL_DatabaseService.insertSObject(activityBusta);
+				
+			} catch (Exception ex) {
+				System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivityForError ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 			}
-			documentalActivity.EnvelopeId__c = envelopeId;
-			documentalActivity.ErrorDescription__c = String.isNotBlank(errorMessage) ? errorMessage : 'Errore Firma OTP';
-			documentalActivity.ActivityType__c = activityType;
-			/*
-				@Author: Davide Viola - 20/10/2021
-				Description: PMD -> Commentata variabile non utilizzata.
-			*/
-			/*Boolean result = */HDT_UTL_DatabaseService.insertSObject(documentalActivity);
-		} catch (Exception ex) {
-			System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivityForError ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+		}else{
+			try {
+				String sObjName = requestId.getSObjectType().getDescribe().getName();
+				DocumentalActivity__c documentalActivity = new DocumentalActivity__c ();
+				switch on sObjName {
+					when 'Case' {
+						documentalActivity.CaseId__c = (Id) requestId;
+						//System.debug(LoggingLevel.DEBUG, '### Account Id: '+processRecord.get('AccountId'));
+					}
+					when 'Order' {
+						documentalActivity.OrderId__c = (Id) requestId;
+					}
+				}
+				documentalActivity.EnvelopeId__c = envelopeId;
+				documentalActivity.ErrorDescription__c = String.isNotBlank(errorMessage) ? errorMessage : 'Errore Firma OTP';
+				documentalActivity.ActivityType__c = activityType;
+				/*
+					@Author: Davide Viola - 20/10/2021
+					Description: PMD -> Commentata variabile non utilizzata.
+				*/
+				/*Boolean result = */HDT_UTL_DatabaseService.insertSObject(documentalActivity);
+			} catch (Exception ex) {
+				System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivityForError ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+			}
 		}
+
 	}
 	
 	public static DocumentalActivity__c initDocumentalActivity(sObject parentRecord,String envelopeId){
@@ -887,11 +924,18 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		1-26371887987/1-C45530S;4003560309;1;;20201006;99991231;;RAVENNA;RAVENNA;H199;RA;F;;46;632;.;E;24;3;;
 		1-27373306691/1-CKPCYMQ;4003141636;1;;20201111;99991231;;FAENZA;FAENZA;D458;RA;F;.;192;13;.;E;6;1;A/3;151
 	 */
-	public static LandRegistry__c createLandRegistryRecord(Map<String, String> docusignData, Map<String, String> docusignRadioGroups, Order childOrder) {
+	public static LandRegistry__c createLandRegistryRecord(Map<String, String> docusignData, Map<String, String> docusignRadioGroups, Order childOrder,Integer i) {
 		LandRegistry__c r = new LandRegistry__c();
 
 		if (docusignData == null || childOrder == null) {
 			return r;
+		}
+		String supplyType = childOrder.SupplyType__c;
+		String destinazioneUso = '';
+		if(String.isNotBlank(supplyType) && (supplyType.equalsIgnoreCase('Domestico') || supplyType.equalsIgnoreCase('A-Domestico'))) {
+			destinazioneUso = '1';
+		}else {
+			destinazioneUso = '2';
 		}
 
 		//codice_offerta;
@@ -899,39 +943,40 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		// impianto
 		r.ServicePoint__c = childOrder.ServicePoint__c;
 		// destinazione_uso
-		// r.DestinationUsage__c = ???? TODO: da dove prendere la destinazione d'uso? non sembra esserci nel modulo, nè sull'order nè sul service point.
+		r.DestinationUsage__c = destinazioneUso;
 		// dt_ini_contratto;
 		r.StartDate__c = childOrder.EffectiveDate__c;
 		// codice_assenza_dati_catastali; 
-		r.CodeMissingRegistryData__c = transcodeCodiceAssenzaDatiCatastali(docusignRadioGroups.get('DTC_radiocat'));
+		r.CodeMissingRegistryData__c = transcodeCodiceAssenzaDatiCatastali(docusignRadioGroups.get('DTC_radiocat_'+i));
 		// comune_amministrativo;
-		r.LegalCity__c = docusignData.get('DTC_comune_amm');
+		r.LegalCity__c = docusignData.get('DTC_comune_amm_'+i);
 		// comune_catastale;
-		r.RegistryCity__c = docusignData.get('DTC_comune_cat');
+		r.RegistryCity__c = docusignData.get('DTC_comune_cat_'+i);
 		// codice_comune_catastale;
-		r.RegistryCityCode__c = docusignData.get('DTC_cod_comune');
+		r.RegistryCityCode__c = docusignData.get('DTC_cod_comune_'+i);
 		// provincia_ubicazione;
 		r.Province__c = childOrder.SupplyState__c;
 		// tipo_unita;
-		r.UnitType__c = docusignData.get('DTC_tipo_uni'); // Il modulo richiede l'inserimento di F o T, quindi non servono transcodifiche.
+		r.UnitType__c = docusignData.get('DTC_tipo_uni_'+i); // Il modulo richiede l'inserimento di F o T, quindi non servono transcodifiche.
 		// sezione_urbana;
-		r.UrbanSection__c = docusignData.get('DTC_sezione');
+		r.UrbanSection__c = docusignData.get('DTC_sezione_'+i);
 		// foglio;
-		r.Sheet__c = docusignData.get('DTC_foglio');
+		r.Sheet__c = docusignData.get('DTC_foglio_'+i);
 		// particella;
-		r.ParticleSheet__c = docusignData.get('DTC_partic');
+		r.ParticleSheet__c = docusignData.get('DTC_partic_'+i);
 		// particella_tavolare;
-		r.ParticleTable__c = docusignData.get('DTC_estens_partic');
+		r.ParticleTable__c = docusignData.get('DTC_estens_partic_'+i);
 		// tipo_particella;
-		r.ParticleType__c = docusignData.get('DTC_tipo_partic');
+		r.ParticleType__c = docusignData.get('DTC_tipo_partic_'+i);
 		// subalterno;
-		r.Subaltern__c = docusignData.get('DTC_sub');
+		r.Subaltern__c = docusignData.get('DTC_sub_'+i);
 		// qualifica_titolare;
-		r.Title__c = transcodeQualificaTitolare(docusignRadioGroups.get('DTC_qualitadi'));
+		r.Title__c = transcodeQualificaTitolare(docusignRadioGroups.get('DTC_qualitadi_'+i));
 		// Categoria_Catastale;
 		// r.RegistryCategory__c = ???? TODO: da dove prendere la categoria catastale? non sembra esserci nel modulo, nè sull'order nè sul service point.
 		// Superficie_Catastale
 		r.RegistrySurface__c = childOrder.SurfaceServed__c;
+		r.Order__c = childOrder.Id;
 
 		return r;
 	}

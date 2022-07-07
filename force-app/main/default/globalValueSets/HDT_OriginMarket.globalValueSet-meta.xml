@@ -10,6 +10,21 @@
         <default>false</default>
         <label>Regolamentato</label>
     </customValue>
+    <customValue>
+        <fullName>Salvaguardia</fullName>
+        <default>false</default>
+        <label>Salvaguardia</label>
+    </customValue>
+    <customValue>
+        <fullName>Default</fullName>
+        <default>false</default>
+        <label>Default</label>
+    </customValue>
+    <customValue>
+        <fullName>FUI</fullName>
+        <default>false</default>
+        <label>FUI</label>
+    </customValue>
     <description>Libero
 Regolamentato</description>
     <masterLabel>Mercato Provenienza</masterLabel>

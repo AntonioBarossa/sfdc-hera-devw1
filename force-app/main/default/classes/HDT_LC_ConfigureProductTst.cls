@@ -256,27 +256,16 @@ public with sharing class HDT_LC_ConfigureProductTst{
 
 		Test.startTest();
 
-		List<Sale__c> tSales=[SELECT Id, Name, Account__c, Account__r.Id
-		                      FROM Sale__c
-		                      WHERE Name='testSaleName0'];
+		List<Sale__c> tSales=[SELECT Id, Name, Account__c, Account__r.Id FROM Sale__c WHERE Name='testSaleName0'];
 
-		List<Product2> tprods=[SELECT Id, Name
-		                       FROM Product2
-		                       WHERE Name='POD'
-		                       LIMIT 1];
+		List<Product2> tprods=[SELECT Id, Name FROM Product2 WHERE Name='POD' LIMIT 1];
 
 		tprods[0].Status__c='Scaduta';
 		update tprods;
 
-		List<Account> tAccounts=[SELECT Id, VATNumber__c
-		                         FROM Account
-		                         WHERE VATNumber__c='12345678901'];
+		List<Account> tAccounts=[SELECT Id, VATNumber__c FROM Account WHERE VATNumber__c='12345678901'];
 
-		List<SBQQ__QuoteLine__c> tQuoteLines=[SELECT Id, ServicePoint__c, ServicePoint__r.ServicePointCode__c
-		                                      FROM SBQQ__QuoteLine__c];
-
-
-		HDT_LC_ConfigureProduct.checkApprovedProduct(tSales[0]);
+		List<SBQQ__QuoteLine__c> tQuoteLines=[SELECT Id, ServicePoint__c, ServicePoint__r.ServicePointCode__c FROM SBQQ__QuoteLine__c];
 
 		List<wrts_prcgvr__Activity__c> activtyCusts=HDT_UTL_DataFactoryTst.createActivityCustom(1, false, tAccounts[0].Id);
 		activtyCusts[0].QuoteLine__c=tQuoteLines[0].Id;
@@ -286,6 +275,33 @@ public with sharing class HDT_LC_ConfigureProductTst{
 
 		System.assertEquals(false, wrapValidity==null, 'WrapValidity not returned');
 		System.assertNotEquals(true, wrapValidity==null, 'value of parameter is not matching');
+
+		Test.stopTest();
+	}
+
+	@isTest
+	public static void testIsSwitchInRipristinatorio(){
+
+		Test.startTest();
+
+		List<Sale__c> tSales=[SELECT Id, Name, Account__c, Account__r.Id FROM Sale__c WHERE Name='testSaleName0'];
+
+		List<Product2> tprods=[SELECT Id, Name FROM Product2 WHERE Name='POD' LIMIT 1];
+
+		tprods[0].Status__c='Scaduta';
+		update tprods;
+
+		List<Account> tAccounts=[SELECT Id, VATNumber__c FROM Account WHERE VATNumber__c='12345678901'];
+
+		List<SBQQ__QuoteLine__c> tQuoteLines=[SELECT Id, ServicePoint__c, ServicePoint__r.ServicePointCode__c FROM SBQQ__QuoteLine__c];
+
+		List<wrts_prcgvr__Activity__c> activtyCusts=HDT_UTL_DataFactoryTst.createActivityCustom(1, false, tAccounts[0].Id);
+		activtyCusts[0].QuoteLine__c=tQuoteLines[0].Id;
+		insert activtyCusts;
+
+		Boolean result = HDT_LC_ConfigureProduct.isSwitchInRipristinatorio(tSales[0],tQuoteLines);
+
+		System.assertEquals(false, result, 'Wrong result, expecting True');
 
 		Test.stopTest();
 	}

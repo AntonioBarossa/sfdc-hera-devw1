@@ -95,8 +95,7 @@ public class HDT_UTL_ActivityCustomProcessTst {
             msg = e.getMessage();
         }
         
-        System.assertEquals('Script-thrown exception', msg, 'createActivityForCreditCheck did not work correctly');
-        System.assertNotEquals(null, msg, 'createActivityForCreditCheck did not work correctly');        
+        System.assertNotEquals(null, mapp, 'mapp è null!');
     }
     
     @isTest static void recheckCreditCheck(){
@@ -107,23 +106,24 @@ public class HDT_UTL_ActivityCustomProcessTst {
         myOrder.RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
         update myOrder;*/
         
-        List<wrts_prcgvr__Activity__c> myActivity = [SELECT id, Order__r.ServicePoint__r.CommoditySector__c, Order__r.RecordType.DeveloperName,
+        Id myActivityId = [SELECT id, Order__r.ServicePoint__r.CommoditySector__c, Order__r.RecordType.DeveloperName,
                                                      Order__r.Account.RecordType.DeveloperName, Order__r.ServicePoint__r.Account__r.VATNumber__c,
                                                      Order__r.ServicePoint__r.AnnualConsumptionStandardM3__c, Order__r.OrderNumber, Order__r.CreatedById,
                                                      Order__r.Channel__c, Order__r.Account.CustomerCode__c, Order__r.SalesCompany__c, Order__r.Account.FiscalCode__c,
                                                      Order__r.Account.VATNumber__c, Order__r.Account.CustomerMarking__c, Order__r.Account.Category__c, 
                                                      Order__r.Account.CustomerType__c, Order__r.ProcessType__c, Order__r.Market__c, Order__r.Catalog__c,
                                                      Order__r.ServicePoint__r.Account__r.CustomerCode__c
-                                                     FROM wrts_prcgvr__Activity__c WHERE Account__r.Name = 'test account0'];
+                                                     FROM wrts_prcgvr__Activity__c WHERE Account__r.Name = 'test account0'].Id;
         
-        
+        List<Id> myActivityListId = new List<Id>();
+        myActivityListId.add(myActivityId);
         try{
-        	HDT_UTL_ActivityCustomProcess.recheckCreditCheck(myActivity);
+        	HDT_UTL_ActivityCustomProcess.recheckCreditCheck(myActivityListId);
         }catch(Exception e){
             ex = e;
         }
         
-        System.assertNotEquals(0, myActivity.size(), 'Activity not found');
+        System.assertNotEquals(0, myActivityListId.size(), 'Activity not found');
         System.assertEquals(null, ex, 'recheckCreditCheck did not work correctly');
     }
     
@@ -149,5 +149,16 @@ public class HDT_UTL_ActivityCustomProcessTst {
         
         System.assertEquals('new string', updatedActivity.CausalError__c, 'updateCreditCheckActivity did not work correctly');  
         System.assertNotEquals(null, updatedActivity.CausalError__c, 'updateCreditCheckActivity did not work correctly');      
+    }
+
+
+
+
+    @isTest static void closeSobjectOnActivityClosing(){
+        List<wrts_prcgvr__Activity__c> newActList = new List<wrts_prcgvr__Activity__c>();
+         List<wrts_prcgvr__Activity__c> oldActList  = new List<wrts_prcgvr__Activity__c>();
+
+        HDT_UTL_ActivityCustomProcess.closeSobjectOnActivityClosing(newActList, oldActList);
+
     }
 }

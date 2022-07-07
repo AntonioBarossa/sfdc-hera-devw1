@@ -304,7 +304,7 @@
         <language>it</language>
         <protected>false</protected>
         <shortDescription>HDT_ErrorOnDateDiff1</shortDescription>
-        <value>La data inizio deve essere maggiore della data attuale</value>
+        <value>La data inizio deve essere maggiore o uguale alla data attuale</value>
     </labels>
     <labels>
         <fullName>HDT_ErrorOnDateDiff2</fullName>
@@ -889,5 +889,74 @@
         <protected>false</protected>
         <shortDescription>Cpq_ProductAssociation_EnabledProfile</shortDescription>
         <value>Attenzione! Non possiedi i privilegi per questa funzionalità.</value>
+    </labels>
+    <labels>
+        <fullName>VARIAZIONI_INDIRIZZO_FORNITURA</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>VARIAZIONI_INDIRIZZO_FORNITURA</shortDescription>
+        <value>Variazione indirizzo di fornitura</value>
+    </labels>
+    <labels>
+        <fullName>VARIAZIONI_MARCATURA_USO_PDR</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>VARIAZIONI_MARCATURA_USO_PDR</shortDescription>
+        <value>Marcatura/Uso PdR</value>
+    </labels>
+    <labels>
+        <fullName>VARIAZIONI_TARIFFA_RES_NONRES</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>VARIAZIONI_TARIFFA_RES_NONRES</shortDescription>
+        <value>Modifica Tariffa Residente/Non Residente</value>
+    </labels>
+    <labels>
+        <fullName>CarMass_SalesAccountRequiredFieldsError</fullName>
+        <categories>CarMass</categories>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>CarMass_SalesAccountRequiredFieldsError</shortDescription>
+        <value>Campi Account necassari: Codice Cliente, CF + Marcatura oppure PIVA + Marcatura</value>
+    </labels>
+    <labels>
+        <fullName>CarMass_SalesForVasDataError</fullName>
+        <categories>CarMass</categories>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>CarMass_SalesForVasDataError</shortDescription>
+        <value>Errore nel formato dati</value>
+    </labels>
+    <labels>
+        <fullName>CarMass_SalesForVasContractError</fullName>
+        <categories>CarMass</categories>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>CarMass_SalesForVasContractError</shortDescription>
+        <value>Contratto non presente</value>
+    </labels>
+    <labels>
+        <fullName>CarMass_SalesForVasOrderError</fullName>
+        <categories>CarMass</categories>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>CarMass_SalesForVasOrderError</shortDescription>
+        <value>Controllare parametri Order</value>
+    </labels>
+    <labels>
+        <fullName>CarMass_SalesForVasOrderStructureError</fullName>
+        <categories>CarMass</categories>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>CarMass_SalesForVasOrderStructureError</shortDescription>
+        <value>Controllare struttura order</value>
+    </labels>
+    <labels>
+        <fullName>CarMass_SalesForVasOrderItemStructureError</fullName>
+        <categories>CarMass</categories>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>CarMass_SalesForVasOrderItemStructureError</shortDescription>
+        <value>Controllare struttura order item</value>
     </labels>
 </CustomLabels>

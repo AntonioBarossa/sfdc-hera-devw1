@@ -20,8 +20,8 @@ public inherited sharing class HDT_QR_SelfReadings {
         List<String> errorTypes = new List<String>();
         errorTypes.add('Esito KO pre-MDM');
         errorTypes.add('Esito KO da SAP');
-        Map<Id, DiscardAnnullmentRule__c> firstQuery = new Map<Id, DiscardAnnullmentRule__c>([SELECT Id, DiscardCode__c, IsActive__c,ControllingValue__c FROM DiscardAnnullmentRule__c WHERE ActivityType__c IN :errorTypes AND DiscardCode__c IN :errorCodes  WITH SECURITY_ENFORCED]);
-        Map<Id, DiscardAnnullmentRule__c> secondQuery = new Map<Id, DiscardAnnullmentRule__c>([SELECT Id, DiscardCode__c, IsActive__c,ControllingValue__c FROM DiscardAnnullmentRule__c WHERE ActivityType__c IN :errorTypes AND ControllingValue__c IN :errorCodes  WITH SECURITY_ENFORCED]);
+        Map<Id, DiscardAnnullmentRule__c> firstQuery = new Map<Id, DiscardAnnullmentRule__c>([SELECT Id, DiscardCode__c, ControllingCommodity__c, IsActive__c,ControllingValue__c,ActivityType__c FROM DiscardAnnullmentRule__c WHERE ActivityType__c IN :errorTypes AND DiscardCode__c IN :errorCodes AND ProcessValue__c = 'Autolettura da cliente' AND IsActive__c = true  WITH SECURITY_ENFORCED]);
+        Map<Id, DiscardAnnullmentRule__c> secondQuery = new Map<Id, DiscardAnnullmentRule__c>([SELECT Id, DiscardCode__c, ControllingCommodity__c, IsActive__c,ControllingValue__c,ActivityType__c FROM DiscardAnnullmentRule__c WHERE ActivityType__c IN :errorTypes AND ControllingValue__c IN :errorCodes AND ProcessValue__c = 'Autolettura da cliente'  AND IsActive__c = true  WITH SECURITY_ENFORCED]);
         firstQuery.putAll(secondQuery);
 
         System.debug(LoggingLevel.DEBUG, 'firstQuery.values() size:' + firstQuery.values().size());
@@ -42,11 +42,17 @@ public inherited sharing class HDT_QR_SelfReadings {
 
             System.debug(LoggingLevel.DEBUG, 'Query: ' + query);
             List<SObject> objects = Database.query(query);
-            
-            List<Reading__c> objReadings = objects[0].getSObjects(relationshipName);
-            Id readingId = (Id) objReadings[0].get('Id');
+            if(!objects.isEmpty() && (List<Reading__c>)objects[0].getSObjects(relationshipName) != null)
+            {
+                List<Reading__c> objReadings = objects[0].getSObjects(relationshipName);
+                Id readingId = (Id) objReadings[0].get('Id');
 
-            return readingId;
+                return readingId;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         return null;

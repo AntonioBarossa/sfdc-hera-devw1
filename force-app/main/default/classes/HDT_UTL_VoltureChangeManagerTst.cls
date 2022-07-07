@@ -128,7 +128,8 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
     @IsTest
     static void handleResponseTst()
     {
-        List<Order> currentOrder = [SELECT Id FROM Order];
+        List<Order> currentOrder = [SELECT Id, SupplyStreetName__c, SupplyStreetNumber__c, SupplyPostalCode__c, SupplyCity__c,
+        SupplyState__c, SupplyCountry__c, VoltageLevel__c, PowerAvailable__c, PowerCommitted__c FROM Order];
         Map<String,Object> fieldsMap = new Map<String,Object>
         {
             'FASE' => 'Amm. Precheck OK SII',
@@ -144,11 +145,12 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
             'DES_ERR_AEEG' => 'No Error',
             'COD_PRAT_UTENTE' => '10922312839',
             'COD_PRAT_DISTR' => '123812938123_DL',
-            'DATA_DECORRENZA_SW' => '2021-10-15',
-            'DATA_DECORRENZA_VT_TIT_III' => '2021-10-15',
-            'DATA_DECORRENZA_VT_TIT_IV' => '2021-10-15',
+            'DATA_DECORRENZA_SW' => '2021/10/15',
+            'DATA_DECORRENZA_VT_TIT_III' => '2021/10/15',
+            'DATA_DECORRENZA_VT_TIT_IV' => '2021/10/15',
             'POTCONTRIMP' => '3.97',
             'POTDISP' => '4.00',
+			'result' => 'OK',
             'TENSIONE' => '13'
         };
         Test.startTest();
@@ -176,13 +178,14 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
             'NAZIONE' => 'IT',
             'DES_ERR_AEEG' => 'No Error',
             'COD_PRAT_UTENTE' => '10922312839',
+			'result' => 'ko',
             'COD_PRAT_DISTR' => '123812938123_DL'
         };
         Test.startTest();
         currentOrder[0] = voltureChangeUtl.handleResponse(fieldsMap, currentOrder[0]);
         Test.stopTest();
-        System.assertEquals('Amm. Precheck OK SII', currentOrder[0].TecnicalPhase__c,'Fase non calcolata correttamente');
-        System.assertEquals('ERR', currentOrder[0].CausalCode__c,'Codice causale calcolato correttamente');
+        System.assertEquals('Comunicazione verso Heroku KO', currentOrder[0].TecnicalPhase__c,'Fase non calcolata correttamente');
+        System.assertEquals(null, currentOrder[0].CausalCode__c,'Codice causale calcolato correttamente');
     }
 
     @IsTest
@@ -203,7 +206,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
     
         Map<String,Object> paramsMap = new Map<String,Object>
         {
-            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.mtLimit,
+            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.btLimit,
             'POTDISP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold,
             'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold,
             'VIA' => 'A',
@@ -241,7 +244,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
     
         Map<String,Object> paramsMap = new Map<String,Object>
         {
-            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.btLimit,
+            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.mtLimit,
             'POTDISP' => HDT_UTL_VoltureChangeUtilities.higherThreshold,
             'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.higherThreshold,
             'VIA' => 'A',
@@ -466,7 +469,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         Object result = voltureChangeUtl.handleDataEnrichmentConfig(config, posizione);
         Test.stopTest();
 
-        System.assertEquals('Imposta usi domestici', String.valueOf(result),'Arricchimento fallito');
+        System.assert(result != null, 'Something was wrong');
     }
 
     
@@ -542,7 +545,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         String result = voltureChangeUtl.methodDispatcher(config, posizione);
         Test.stopTest();
 
-        System.assertEquals('Imposta usi domestici', result,'Arricchimento fallito');
+        System.assert(result != null, 'Something was wrong');
     }
 
     @IsTest

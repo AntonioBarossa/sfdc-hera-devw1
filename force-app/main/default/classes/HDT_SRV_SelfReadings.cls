@@ -280,14 +280,26 @@ public with sharing class HDT_SRV_SelfReadings {
                 String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
                 String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
                 readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
+                HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
                     HDT_UTL_Case.createActivity(caseId, errorMessage, 'CBS_AUT001__CHECK_PRELIMINARI_KO', 'Check preliminari KO');
                 }
                 HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 if (isClosingError(errorMessage, currentReadingCase.Origin)) {
-                    readingCaseToUpdate.Status = 'Closed';
-                    readingCaseToUpdate.Phase__c = 'Annullato';
-                    HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                    
+                    if(currentReadingCase.Origin.equalsIgnoreCase('Web') 
+                        || currentReadingCase.Origin.equalsIgnoreCase('App') 
+                        || currentReadingCase.Origin.equalsIgnoreCase('Sportello')
+                        || currentReadingCase.Origin.equalsIgnoreCase('Telefono Inbound')
+                    ){
+                        readingCaseToUpdate.Status = 'Closed';
+                        readingCaseToUpdate.Phase__c = 'Annullato';
+                        updateFuture(JSON.serialize(readingCaseToUpdate));
+                    }else{
+                        readingCaseToUpdate.Status = 'Closed';
+                        readingCaseToUpdate.TecnicalPhase__c = 'Annullato';
+                        HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                    }
                 }
                 
             }
@@ -418,10 +430,10 @@ public with sharing class HDT_SRV_SelfReadings {
             }
             when else {
                 /*
-                * @Author: Salvatore A. Sarà 18/10/2021
-                * Risoluzione "Avoid Empty Block Statements"
+                * @Author: NTTDATA 17/03/2022
+                * Risoluzione "Restituiamo true per tutti gli altri canali in quanto il case in caso di KO si deve Annullare"
                 */
-                return closeCase;
+                closeCase = true;
             }
         }
 

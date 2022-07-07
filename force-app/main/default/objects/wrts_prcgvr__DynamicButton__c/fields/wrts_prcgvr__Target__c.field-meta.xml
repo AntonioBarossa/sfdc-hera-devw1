@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wrts_prcgvr__Target__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Self/Blank in caso di navigazione classic i due valori rispettano il comportamento HTML classico, in caso di console self corrisponderà a newSubTab mentre blank a newTab. In LEX il parametro non utilizzabile.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Self/Blank in caso di navigazione classic i due valori rispettano il comportamento HTML classico, in caso di console self corrisponderà a newSubTab mentre blank a newTab. In LEX il parametro non utilizzabile.</inlineHelpText>
+    <label>Target</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>_self</fullName>
+                <default>true</default>
+                <label>self</label>
+            </value>
+            <value>
+                <fullName>_blank</fullName>
+                <default>false</default>
+                <label>blank</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

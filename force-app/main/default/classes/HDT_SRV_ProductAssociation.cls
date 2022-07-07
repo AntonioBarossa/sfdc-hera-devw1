@@ -115,6 +115,7 @@ public inherited sharing class HDT_SRV_ProductAssociation {
         List<Product2> prod2list;
         List<SBQQ__ProductFeature__c> productFeatureList;
         Map<Id, Id> skuIdFeatureIdMap;
+        List<HDT_ProductAssociation__mdt> prodAssMdtList;
 
         if(results.size()>0){
             optionIdToNumber = HDT_UTL_ProductAssociation.createNumberProductOptionMap(results);
@@ -129,8 +130,16 @@ public inherited sharing class HDT_SRV_ProductAssociation {
 
         skuIdFeatureIdMap = new Map<Id, Id>();
 
+        //Mapping Product2 Family -> Feature Name
+        prodAssMdtList = HDT_QR_ProductAssociation.getProductAssociationMdt(prodAssMdtList, prod2list[0].Family);
+
+        if(prodAssMdtList.size() == 0){
+            insertResult.success = false;
+            insertResult.message = 'Errore nel mapping Product2 Family -> Feature Name';
+            return insertResult;
+        }       
         if(prod2list != null && prod2list.size() > 0){
-            productFeatureList = HDT_QR_ProductAssociation.productFeatureListByFamily(productFeatureList, recordList, prod2list[0].Family);
+            productFeatureList = HDT_QR_ProductAssociation.productFeatureListByFamily(productFeatureList, recordList, prodAssMdtList[0].Value__c);
             System.debug(logginglevel.DEBUG, '>>> productFeatureList ' + productFeatureList.size());
             skuIdFeatureIdMap = HDT_UTL_ProductAssociation.generateSkuIdFeatureIdMap(productFeatureList, skuIdFeatureIdMap);
         }

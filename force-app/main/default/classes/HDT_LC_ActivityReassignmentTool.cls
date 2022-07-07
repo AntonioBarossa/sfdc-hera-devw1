@@ -26,10 +26,10 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         queryString = '%' + queryString + '%';
         List<Map<String,String>> results = new List<Map<String,String>>();
 
-        for(AggregateResult result : [SELECT Group__c, Agency__c FROM Queue__c WHERE Group__c LIKE :queryString WITH SECURITY_ENFORCED GROUP BY Group__c, Agency__c]) {
+        for(AggregateResult result : [SELECT WorkGroup__c, Agency2__c FROM Queue__c WHERE WorkGroup__c LIKE :queryString WITH SECURITY_ENFORCED GROUP BY WorkGroup__c, Agency2__c]) {
             results.add(new Map<String,String>{
-                'name' => (String) result.get('Group__c'),
-                'agency' => (String) result.get('Agency__c')
+                'name' => (String) result.get('WorkGroup__c'),
+                'agency' => (String) result.get('Agency2__c')
             });
         }
 
@@ -52,7 +52,8 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         queryString = '%' + queryString + '%';
         User currentUser = getCurrentUser();
         List<PermissionSetAssignment> assignments = new HDT_QR_PermissionSet().getPermissionSetAssignmentByName('HDT_OmniSupervisor', currentUser.Id);
-        if(!assignments.isEmpty()) {
+        List<PermissionSetAssignment> assignToUser = new HDT_QR_PermissionSet().getPermissionSetAssignmentByName('HDT_AssignToUser', currentUser.Id);
+        if(!assignments.isEmpty() || !assignToUser.isEmpty()) {
             for(User user : [SELECT Id, Name, LoginChannel__c, CreatorGroup__c, UserCompany__c FROM User WHERE UserCompany__c = :currentUser.UserCompany__c AND Name LIKE :queryString WITH SECURITY_ENFORCED]) {
                 results.add(new Map<String,String>{
                     'id' => user.Id,
@@ -66,13 +67,13 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
             }
         }
 
-        for(Queue__c queue : [SELECT Id, Name, QueueId__c, Group__c, Agency__c FROM Queue__c WHERE Name LIKE :queryString WITH SECURITY_ENFORCED]) {
+        for(Queue__c queue : [SELECT Id, Name, QueueId__c, WorkGroup__c, Agency2__c FROM Queue__c WHERE Name LIKE :queryString WITH SECURITY_ENFORCED]) {
             results.add(new Map<String,String>{
                 'id' => queue.QueueId__c,
                 'wrapperId' => queue.Id,
                 'name' => queue.Name,
-                'workGroup' => queue.Group__c,
-                'agency' => queue.Agency__c,
+                'workGroup' => queue.WorkGroup__c,
+                'agency' => queue.Agency2__c,
                 'icon' => 'standard:queue'
             });
         }
@@ -112,7 +113,8 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
                     WorkGroup__c = workGroup,
                     Agency__c = agency,
                     ManuallyReassigned__c = true,
-                    Queue__c = null
+                    Queue__c = null,
+                    AssignedToQueueDate__c = Date.today()
                 );
 
                 if(String.isNotBlank(wrapperId)) {
@@ -138,5 +140,19 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         User currentUser = getCurrentUser();
 
         return reassignActivity(idList, UserInfo.getUserId(), null, currentUser.CreatorGroup__c, currentUser.UserCompany__c);
+    }
+
+    @AuraEnabled(cacheable = true)
+    public static Boolean refreshPage(String recordId) {
+        Boolean response = false;
+        if (String.isNotBlank(recordId)){
+            List<String> typeToRefresh = new List<String>{'APPROVAZIONE BONUS COMMERCIALE'};
+            for (wrts_prcgvr__Activity__c act : [SELECT Type__c FROM wrts_prcgvr__Activity__c WHERE Id = :recordId WITH SECURITY_ENFORCED]){
+                if (String.isNotEmpty(act.Type__c) && typeToRefresh.contains(act.Type__c.toUpperCase())){
+                    response = true;
+                }
+            }
+        }
+        return response;
     }
 }

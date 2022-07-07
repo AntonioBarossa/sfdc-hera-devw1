@@ -36,10 +36,21 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
         System.debug(LoggingLevel.DEBUG, pretty);
         HttpRequest req = new HttpRequest();
         HDT_WRP_ArricchimentoResponse arricchimentoResponse = new HDT_WRP_ArricchimentoResponse();
+        HDT_WRP_ArricchimentoData emptyData = new HDT_WRP_ArricchimentoData();
+        List<HDT_WRP_ArricchimentoPosizioni> emptyPositions = new List<HDT_WRP_ArricchimentoPosizioni>();
+        HDT_WRP_ArricchimentoPosizioni emptyPosition = new HDT_WRP_ArricchimentoPosizioni();
+        HDT_WRP_ArricchimentoTestata emptyTestata = new HDT_WRP_ArricchimentoTestata();
+        emptyTestata.esito = '';
+        emptyPosition.campo = '';
+        emptyPosition.valore= '';
+        emptyPositions.add(emptyPosition);
+        emptyData.posizioni = emptyPositions;
+        emptyData.testata = emptyTestata;
         try {
             req.setEndpoint('Callout:ArricchimentoDatiTemp');
             req.setMethod('POST');
             req.setBody(pretty);
+            req.setTimeout(120000);
             req.setHeader('Accept', 'application/json');
             req.setHeader('Content-Type', 'application/json');
             Http http = new Http();
@@ -49,10 +60,6 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
             System.debug(LoggingLevel.DEBUG, arricchimentoResponse.data.posizioni);
         } catch (Exception ex) {
             /*@frpanico created empty response to not undergo "Attempt To De-reference null object" */
-            HDT_WRP_ArricchimentoData emptyData = new HDT_WRP_ArricchimentoData();
-            List<HDT_WRP_ArricchimentoPosizioni> emptyPositions = new List<HDT_WRP_ArricchimentoPosizioni>();
-            HDT_WRP_ArricchimentoPosizioni emptyPosition = new HDT_WRP_ArricchimentoPosizioni();
-            HDT_WRP_ArricchimentoTestata emptyTestata = new HDT_WRP_ArricchimentoTestata();
             emptyTestata.esito = '';
             emptyPosition.campo = '';
             emptyPosition.valore= '';
@@ -61,7 +68,14 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
             emptyData.testata = emptyTestata;
            //System.debug(ex.getMessage());
         }
-        return JSON.serialize(arricchimentoResponse.data.posizioni);
+        if(arricchimentoResponse.data != null && arricchimentoResponse.data.posizioni != null)
+        {
+            return JSON.serialize(arricchimentoResponse.data.posizioni);
+        }
+        else
+        {
+           return '';
+        }
     }
     
     //input details that comes to apex from flow

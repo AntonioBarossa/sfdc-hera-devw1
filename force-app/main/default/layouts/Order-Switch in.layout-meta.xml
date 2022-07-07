@@ -59,16 +59,20 @@
                 <behavior>Readonly</behavior>
                 <field>Priority__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>isSwitchReseller__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ExciseEle__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ImplantType__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ProcessType__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Phase__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Status</field>
@@ -95,10 +99,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SBQQ__Contracted__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>ConfirmCustomerContract__c</field>
             </layoutItems>
             <layoutItems>
@@ -108,6 +108,34 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>DiscardReason__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Cs1Outcome__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>OrderReference__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DistributorCancellationReason__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DistributorPracticeCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PreviousCompany__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ExciseGAS__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>VAT__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -163,10 +191,6 @@
                 <behavior>Readonly</behavior>
                 <field>PreviousHolderVatNumber__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>VolturaThirdTrader__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -205,6 +229,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>EffectiveDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>WaiverRightAfterthought__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -255,6 +283,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>DisconnectibilityPhone__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>RemiCode__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -376,6 +408,10 @@
                 <behavior>Readonly</behavior>
                 <field>SiebelReadingData__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SiebelStatus__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -386,7 +422,29 @@
                 <behavior>Readonly</behavior>
                 <field>SiebelOfferData__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>RdoCodeSiebel__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>RdsCodeSiebel__c</field>
+            </layoutItems>
         </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Informazioni Pratica</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CreatorGroup__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -394,12 +452,7 @@
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <label>System Information</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>CreatedById</field>
-            </layoutItems>
-        </layoutColumns>
+        <layoutColumns/>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -547,7 +600,26 @@
             <actionType>QuickAction</actionType>
             <sortOrder>21</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Order.Conferma_finale</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>22</sortOrder>
+        </platformActionListItems>
     </platformActionList>
+    <relatedLists>
+        <fields>CASES.CASE_NUMBER</fields>
+        <fields>CASES.TYPE</fields>
+        <fields>Phase__c</fields>
+        <fields>CASES.STATUS</fields>
+        <relatedList>Case.Order__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>ProcessType__c</fields>
+        <fields>Phase__c</fields>
+        <fields>ORDERS.STATUS</fields>
+        <relatedList>Order.OrderReference__c</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>Product2</fields>
         <fields>ProductCode</fields>
@@ -559,13 +631,12 @@
     </relatedLists>
     <relatedLists>
         <customButtons>CreaAttivitaManuale</customButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Type__c</fields>
         <fields>wrts_prcgvr__Description__c</fields>
         <fields>wrts_prcgvr__DueDate__c</fields>
         <fields>wrts_prcgvr__Status__c</fields>
-        <fields>OWNER.LAST_NAME</fields>
-        <fields>UPDATEDBY_USER</fields>
         <relatedList>wrts_prcgvr__Activity__c.Order__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -631,7 +702,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000002T62V</masterLabel>
+        <masterLabel>00h3N000002SmKC</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

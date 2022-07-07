@@ -16,7 +16,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         String codApp = '';
         String codFlusso = '';
         String esito = '';
-        String stato = String.isEmpty(activity.wrts_prcgvr__Status__c)? '' : activity.wrts_prcgvr__Status__c.toUpperCase();
+        String stato = String.isBlank(activity.wrts_prcgvr__Status__c)? '' : activity.wrts_prcgvr__Status__c;
         switch on requestMethod {
             when FIRST_SEARCH {
                 codFlusso = '0160';
@@ -25,7 +25,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
                 codFlusso = '0170';
                 esito = '1';
                 codApp = activity.AppointmentCode__c;
-                modApp = STATE_FOR_APPMODE.contains(activity.wrts_prcgvr__Status__c) ? 'X' : '';
+                modApp = STATE_FOR_APPMODE.contains(stato.toUpperCase()) ? 'X' : '';
             }
             when EDIT {
                 codFlusso = '0185';
@@ -34,7 +34,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
             when CONFIRM {
                 codFlusso = '0170';
                 esito = '0';
-                modApp = STATE_FOR_APPMODE.contains(activity.wrts_prcgvr__Status__c) ? 'X' : '';
+                modApp = STATE_FOR_APPMODE.contains(stato.toUpperCase()) ? 'X' : '';
             }
             when CANCELLATION {
                 codFlusso = '0170';
@@ -56,7 +56,8 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         if (appointmentDate != null){
             String day = (appointmentDate.day() > 9)? String.valueOf(appointmentDate.day()) : '0'+String.valueOf(appointmentDate.day());
             String month = (appointmentDate.month() > 9 )? String.valueOf(appointmentDate.month()) : '0'+ String.valueOf(appointmentDate.month());
-            formattedAppointment = appointmentDate.year()+'-'+month+'-'+day;
+            //formattedAppointment = appointmentDate.year()+'-'+month+'-'+day;
+            formattedAppointment = day+'/'+month+'/'+appointmentDate.year();
         }
         appointment.appData = formattedAppointment;
         appointment.appFasciaOrario = timeSlot;
@@ -293,11 +294,10 @@ public with sharing class HDT_UTL_AppointmentAgenda {
     public static Blob criptId(Id idToCript){
         Blob key = Crypto.generateAesKey(128);
         Blob data = Blob.valueOf((String)idToCript);
-        System.debug('original Blob -->' +JSON.serialize(data));
         return Crypto.encryptWithManagedIV('AES128', key, data);
     }
 
-    public static void updateExtraSystemAppointment(String nextPhase,Id recordId){
+    public static void updateExtraSystemAppointment(String nextPhase,Id recordId, String note, Map<String,String> mapActivityField){
         String objectName = 'wrts_prcgvr__Activity__c';
         String stato;
         if (nextPhase != null){
@@ -312,16 +312,44 @@ public with sharing class HDT_UTL_AppointmentAgenda {
                     return;
                 }
             }
+            string queryString = '';
+            if(!note.containsIgnoreCase('SCADENZA TEMPI FISSAZIONE APPUNTAMENTO')){
+                queryString = 'AND isAtoA__c = false ';
+            }
             Id rtId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_DistributorAppointment').getRecordTypeId();
-            List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords('Id', objectName, '(Case__c = \''+recordId+'\' OR Order__c = \''+recordId+'\') AND RecordTypeId = \''+rtId+'\' AND isAtoA__c = false AND wrts_prcgvr__Status__c NOT IN (\'Chiusa\',\'Annullata\',\'Appuntamento eseguito\',\'Appuntamento non eseguito\')');
+            List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords('Id', objectName, '(Case__c = \''+recordId+'\' OR Order__c = \''+recordId+'\') AND RecordTypeId = \''+rtId+'\' '+queryString+'AND wrts_prcgvr__Status__c NOT IN (\'Chiusa\',\'Annullata\',\'Appuntamento eseguito\',\'Appuntamento non eseguito\')');
             if (!activities.isEmpty()){
+                String endDate = mapActivityField.get('DATA_ELABORAZIONE');
+                String cmp = mapActivityField.get('CMP');
+                String utenza = mapActivityField.get('UTENZA');
+                Date endDateVal = null;
+                if(String.isNotBlank(endDate)){
+                    endDateVal = Date.valueOf(endDate);
+                }
+                Datetime endDatetimeVal = null;
+                if(String.isNotBlank(endDate)){
+                    endDatetimeVal = Datetime.valueOf(endDate);
+                }
                 for (Sobject activity : activities){
                     activity.put('wrts_prcgvr__Status__c',stato);
                     activity.put('IsAppointmentToEdit__c',false);
+                    activity.put('EndDate__c',endDateVal);
+                    activity.put('ActivityEndTime__c',endDatetimeVal);
+                    activity.put('ClosedByUsername__c',utenza);
+                    activity.put('UserCompany__c',cmp);
                 }
                 System.enqueueJob(new HDT_QBL_AppointmentActivityUpdate(activities));
             }
         }
+    }
+
+    public static String dateConverter(String dateWrongFormat){
+        String responseDate = dateWrongFormat;
+        if (String.isNotEmpty(dateWrongFormat) && Pattern.matches('[0-9]{4}[-](0?[1-9]|[1][0-2])[-](0?[1-9]|[1-2][0-9]|[3][0-1])',dateWrongFormat)){
+            List<String> dataArray = dateWrongFormat.split('-');
+            responseDate = dataArray.get(2)+'/'+dataArray.get(1)+'/'+dataArray.get(0);
+        }
+        return responseDate;
     }
     
     private static String formatDate(String dateToWork){

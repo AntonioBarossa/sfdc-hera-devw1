@@ -81,6 +81,8 @@ public class HDT_WRP_CampaignPraxidia {
         public String brand;
         public String segmento;
         public String comuneCorretto;
+        public String istatCorretto;
+        public String provincia;
         public String dirittoRettifica;
         public String flussoPratica;
         public String canaleDiUscita;

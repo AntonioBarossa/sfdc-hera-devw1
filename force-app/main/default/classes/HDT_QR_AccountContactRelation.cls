@@ -67,7 +67,7 @@ public inherited sharing class HDT_QR_AccountContactRelation {
             Id, AccountId,Contact.name,Roles,Contact.HomePhone,
             ContactId,Contact.Phone,
             Contact.MobilePhone,
-            Contact.Email,Contact.IndividualId,Contact.BPInterlocutor__c,EndDate,StartDate
+            Contact.Email,Contact.IndividualId,Contact.BPInterlocutor__c,EndDate,StartDate, Contact.ContactCode__c
             FROM AccountContactRelation 
             WHERE 
             AccountId = :accountId 
@@ -285,19 +285,37 @@ public inherited sharing class HDT_QR_AccountContactRelation {
     /**@frpanico 17/01/2022
      * Aggiunto metodo per servizio Crea BpCa
      */
-    public List<AccountContactRelation> getCreateBpCa(String AccountId)
+    public List<AccountContactRelation> getCreateBpCa(String accountId)
+    {
+        return 
+        [
+        SELECT Id,
+        Roles
+        FROM AccountContactRelation
+        WHERE (Roles = 'Titolare'
+        OR Roles = 'Amministratore condominio'
+        OR Roles = 'Legale rappresentante')
+        AND AccountId = :accountId
+        WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public static List<AccountContactRelation> getAccountContactData(String acrId)
     {
         return 
         [
         SELECT AccountId,
+        Account.Name,
+        Account.FirstName__c,
+        Account.LastName__c,
         Account.RecordTypeId,
         Account.Category__c,
+        Account.Fax,
         Account.CustomerMarking__c,
         Account.FiscalCode__c,
         Account.VatNumber__c,
         Account.BillingCity,
         Account.BillingCountry,
-        Account.BillingStreetToponym__c,
         Account.BillingPostalCode,
         Account.BillingState,
         Account.BillingStreetNumber__c,
@@ -309,13 +327,16 @@ public inherited sharing class HDT_QR_AccountContactRelation {
         Account.VATGroup__c,
         Account.VATGroupStartDate__c,
         Account.VATGroupEndDate__c,
+        //Account.BillingStreetToponym__c,
         ContactId,
         Contact.MobilePhone,
-        Contact.CertifiedEmail__c
+        Contact.CertifiedEmail__c,
+        Contact.Email,
+        Contact.Phone,
+        Contact.ContactCode__c,
+        Roles
         FROM AccountContactRelation
-        WHERE Roles = 'Titolare'
-        OR Roles = 'Amministratore condominio'
-        OR Roles = 'Legale rappresentante'
+        WHERE Id = :acrId
         WITH SECURITY_ENFORCED
         ];
     }

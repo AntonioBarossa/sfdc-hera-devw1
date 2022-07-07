@@ -42,6 +42,7 @@ public with sharing class HDT_LC_SaleVasTst {
             List<Contract> cttList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].Id);
             cttList[0].ServicePoint__c = spList[0].Id;
             cttList[0].SBQQ__Order__c = orderList[0].Id;
+            cttList[0].Status = 'Attivo';
             insert cttList;
 
             orderList[0].ContractReference__c = cttList[0].Id;
@@ -71,19 +72,21 @@ public with sharing class HDT_LC_SaleVasTst {
             orderList[0].SBQQ__Quote__c = quoteList[0].Id;
             update orderList;
 
-            List<Asset> assetList = HDT_UTL_DataFactoryTst.createAsset(2, false);
-            assetList[0].DigitalAssetStatus = 'Attivo';
-            assetList[0].AccountId = accList[0].Id;
-            assetList[0].Contract__c = cttList[0].Id;
-            assetList[1].DigitalAssetStatus = 'Attivo';
-            assetList[1].AccountId = accList[0].Id;
-            insert assetList;
-
             List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
 
             List<Product2> prodList = HDT_UTL_DataFactoryTst.createProduct2(1, false);
             prodList[0].Name = 'Analisi Consumi';
+            prodList[0].Family='VAS Fatturabili';
             insert prodList;
+
+            List<Asset> assetList = HDT_UTL_DataFactoryTst.createAsset(2, false);
+            assetList[0].DigitalAssetStatus = 'Attivo';
+            assetList[0].AccountId = accList[0].Id;
+            assetList[0].Contract__c = cttList[0].Id;
+            assetList[0].Product2Id = prodList[0].Id;
+            assetList[1].DigitalAssetStatus = 'Attivo';
+            assetList[1].AccountId = accList[0].Id;
+            insert assetList;
 
             List<SBQQ__Subscription__c> subscList = HDT_UTL_DataFactoryTst.createSubscription(2, false, accList[0].Id, cttList[0].Id, spList[0].Id);
             subscList[0].SBQQ__Account__c = accList[0].Id;
@@ -110,11 +113,11 @@ public with sharing class HDT_LC_SaleVasTst {
             Test.startTest();
 
             Account acc = [SELECT Id FROM Account WHERE CompanyOwner__c = 'HERA COMM' LIMIT 1];
-            Order order = [SELECT Id, ServicePoint__r.ServicePointCode__c, SalesCompany__c, AccountId, Market__c FROM Order WHERE Phase__c = 'Bozza' LIMIT 1];
+            Order order = [SELECT Id, ServicePoint__r.ServicePointCode__c, SalesCompany__c, AccountId, Market__c, ContractReference__c FROM Order WHERE Phase__c = 'Bozza' LIMIT 1];
             Contract contract = [SELECT Id FROM Contract WHERE SAPContractCode__c='3011913470' LIMIT 1];
             Sale__c sale = [SELECT Id, Name, Account__c, Agency__c, Channel__c, FriendCode__c, CampaignCode__c, CreatedBy__c, Campaign__c FROM Sale__c WHERE Status__c = 'Bozza' LIMIT 1];
 
-            HDT_LC_SaleVas.confirmAction('Ordini in corso', order, contract, '', acc.Id, sale);
+            HDT_LC_SaleVas.confirmAction('Ordini in corso', order, contract, '', acc.Id, sale); 
  
             List<Opportunity> opp = [SELECT Id FROM Opportunity WHERE StageName = 'Proposal' LIMIT 1];
 
@@ -136,7 +139,7 @@ public with sharing class HDT_LC_SaleVasTst {
 
             Account acc = [SELECT Id FROM Account WHERE CompanyOwner__c = 'HERA COMM' LIMIT 1];
             Order order = [SELECT Id FROM Order WHERE Phase__c = 'Bozza' LIMIT 1]; //, ServicePoint__r.ServicePointCode__c, SalesCompany__c, AccountId, Market__c
-            Contract contract = [SELECT Id, ServicePoint__r.ServicePointCode__c, AccountId FROM Contract WHERE SAPContractCode__c='3011913470' LIMIT 1];
+            Contract contract = [SELECT Id, ServicePoint__r.ServicePointCode__c, ServicePoint__r.Vendor__c, AccountId FROM Contract WHERE SAPContractCode__c='3011913470' LIMIT 1];
             Sale__c sale = [SELECT Id, Name, Account__c, Agency__c, Channel__c, FriendCode__c, CampaignCode__c, CreatedBy__c, Campaign__c FROM Sale__c WHERE Status__c = 'Bozza' LIMIT 1];
 
             HDT_LC_SaleVas.confirmAction('Contratti Attivi', order, contract, '', acc.Id, sale);
@@ -218,7 +221,7 @@ public with sharing class HDT_LC_SaleVasTst {
     }
 
     @isTest
-    public static void testTransitionCheck2() {
+    public static void testTransitionCheckNew() {
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -229,7 +232,7 @@ public with sharing class HDT_LC_SaleVasTst {
             Sale__c sale = [SELECT Id, isTransition__c FROM Sale__c WHERE Status__c = 'Bozza' LIMIT 1];
             City__c city = [SELECT Id, Name FROM City__c WHERE Province__c = 'AQ' LIMIT 1];
 
-            HDT_LC_SaleVas.wrapReturn wrap = HDT_LC_SaleVas.transitionCheck2(sale.Id, city.Name, 'VAS stand alone');
+            HDT_LC_SaleVas.wrapReturn wrap = HDT_LC_SaleVas.transitionCheckNew(sale.Id, city.Name, 'VAS stand alone');
  
             Test.stopTest();
 
@@ -297,9 +300,9 @@ public with sharing class HDT_LC_SaleVasTst {
 
             Account acc = [SELECT Id FROM Account WHERE CompanyOwner__c = 'HERA COMM' LIMIT 1];
 
-            List<Contract> cttList = [SELECT Id, Status FROM Contract WHERE SAPContractCode__c='3011913470' LIMIT 1];
+/*             List<Contract> cttList = [SELECT Id, Status FROM Contract WHERE SAPContractCode__c='3011913470' LIMIT 1];
             cttList[0].Status = 'Attivo';
-            update cttList;
+            update cttList; */
 
             List<Contract> result = HDT_LC_SaleVas.getContractsList(acc.Id);
  
@@ -418,13 +421,14 @@ public with sharing class HDT_LC_SaleVasTst {
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
         System.runAs(u){
- 
+
+            SBQQ__Subscription__c subscr = [SELECT Id, SBQQ__Account__c,SBQQ__Product__c,SBQQ__Product__r.Family FROM SBQQ__Subscription__c LIMIT 1];
+            system.debug('subscr>>>'+subscr);
+
             Test.startTest();
 
-            Order order = [SELECT Id, AccountId FROM Order WHERE Market__c = 'Default'];
-            
-            List<SObject> result = HDT_LC_SaleVas.getFornitura(order.AccountId, 'SUBS_ANALISI_CONSUMI');
- 
+            List<SObject> result = HDT_LC_SaleVas.getFornitura(subscr.SBQQ__Account__c, 'SUBS_ANALISI_CONSUMI');
+
             Test.stopTest();
 
             System.assertEquals(false, result.isEmpty(), 'Query done');
@@ -445,6 +449,15 @@ public with sharing class HDT_LC_SaleVasTst {
             order.RecordTypeId = constants.ORDER_RECORDTYPEID_VAS;
             update order;
 
+            SBQQ__Subscription__c sub = [Select Id FROM SBQQ__Subscription__c WHERE SBQQ__Account__c = :order.AccountId LIMIT 1];
+            Asset a = [Select Id FROM Asset WHERE AccountId = :order.AccountId LIMIT 1];
+            List<SObject> sobjToUpdate = new List<Sobject>();
+            sub.VasPracticeCode__c = '091820482';
+            a.VasPracticeCode__c = '091820482';
+            sobjToUpdate.add(sub);
+            sobjToUpdate.add(a);
+            update sobjToUpdate;
+
             List<SObject> result = HDT_LC_SaleVas.getFornitura(order.AccountId, 'CONTRACTS_VAS');
  
             Test.stopTest();
@@ -460,12 +473,15 @@ public with sharing class HDT_LC_SaleVasTst {
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
         System.runAs(u){
- 
+
+            //Contract ctt = [SELECT Id FROM Contract WHERE SAPContractCode__c='3011913470' LIMIT 1];
+
+            SBQQ__Subscription__c sub = [SELECT Name, SBQQ__Contract__c FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family like 'VAS%' LIMIT 1 ];
+            system.debug('sub>>>'+sub);
+
             Test.startTest();
 
-            Contract ctt = [SELECT Id FROM Contract WHERE SAPContractCode__c='3011913470' LIMIT 1];
-
-            List<SObject> result = HDT_LC_SaleVas.getFornitura(ctt.Id, 'SUBS_FROM_CONTRACT');
+            List<SObject> result = HDT_LC_SaleVas.getFornitura(sub.SBQQ__Contract__c, 'SUBS_FROM_CONTRACT');
  
             Test.stopTest();
 
@@ -483,9 +499,11 @@ public with sharing class HDT_LC_SaleVasTst {
  
             Test.startTest();
 
-            Contract ctt = [SELECT Id FROM Contract WHERE SAPContractCode__c='3011913470' LIMIT 1];
+            //Contract ctt = [SELECT Id FROM Contract WHERE SAPContractCode__c='3011913470' LIMIT 1];
 
-            List<SObject> result = HDT_LC_SaleVas.getFornitura(ctt.Id, 'ASSETS_FROM_CONTRACT');
+            Asset ast = [SELECT Name, Product2Id, Contract__c FROM Asset WHERE Product2.Family like 'VAS%' WITH SECURITY_ENFORCED];
+            system.debug('asset>>>'+ast);
+            List<SObject> result = HDT_LC_SaleVas.getFornitura(ast.Contract__c, 'ASSETS_FROM_CONTRACT');
  
             Test.stopTest();
 
@@ -503,9 +521,7 @@ public with sharing class HDT_LC_SaleVasTst {
  
             Test.startTest();
 
-            Contract ctt = [SELECT Id, AccountId, Status FROM Contract WHERE SAPContractCode__c='3011913470' LIMIT 1];
-            ctt.Status = 'Attivo';
-            update ctt;
+            Contract ctt = [SELECT Id, AccountId, Status FROM Contract WHERE Status = 'Attivo' AND SAPContractCode__c='3011913470' LIMIT 1];
 
             List<SObject> result = HDT_LC_SaleVas.getFornitura(ctt.AccountId, 'CONTRACT_ELE_ACTIVE');
  

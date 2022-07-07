@@ -31,6 +31,11 @@
         <label>Contattare banca</label>
     </customValue>
     <customValue>
+        <fullName>Contatto Quality Fallito</fullName>
+        <default>false</default>
+        <label>Contatto Quality Fallito</label>
+    </customValue>
+    <customValue>
         <fullName>Disattivazione in corso</fullName>
         <default>false</default>
         <label>Disattivazione in corso</label>
@@ -131,6 +136,11 @@
         <label>Annullato per no conferma cliente</label>
     </customValue>
     <customValue>
+        <fullName>Annullato per possibile frode</fullName>
+        <default>false</default>
+        <label>Annullato per possibile frode</label>
+    </customValue>
+    <customValue>
         <fullName>Il cliente rinuncia</fullName>
         <default>false</default>
         <label>Il cliente rinuncia</label>
@@ -184,6 +194,16 @@
         <fullName>Registrazione non conforme</fullName>
         <default>false</default>
         <label>Registrazione non conforme</label>
+    </customValue>
+    <customValue>
+        <fullName>Annullamento per dati discordanti</fullName>
+        <default>false</default>
+        <label>Annullamento per dati discordanti</label>
+    </customValue>
+    <customValue>
+        <fullName>Annullamento Ordine di Riferimento</fullName>
+        <default>false</default>
+        <label>Annullamento Ordine di Riferimento</label>
     </customValue>
     <masterLabel>Motivazione Annullamento</masterLabel>
     <sorted>false</sorted>

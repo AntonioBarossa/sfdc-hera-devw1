@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Canale Inferiore Agenzia</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -99,6 +100,11 @@
                 <fullName>WEB_SELF</fullName>
                 <default>false</default>
                 <label>WEB_SELF</label>
+            </value>
+            <value>
+                <fullName>AGENZIE BUSINESS</fullName>
+                <default>false</default>
+                <label>AGENZIE BUSINESS</label>
             </value>
         </valueSetDefinition>
     </valueSet>

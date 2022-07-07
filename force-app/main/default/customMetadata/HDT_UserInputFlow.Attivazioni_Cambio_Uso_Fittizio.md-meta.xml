@@ -6,8 +6,8 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {
-&quot;FieldName&quot;: &quot;UseChangeCharge__c&quot;,
-&quot;Required&quot;: true,
+&quot;FieldName&quot;: &quot;Order__c&quot;,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 1
 },
 {

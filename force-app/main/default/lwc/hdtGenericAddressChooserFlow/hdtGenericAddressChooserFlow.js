@@ -43,6 +43,7 @@ import BillingStreetName__c from '@salesforce/schema/Case.BillingStreetName__c';
 import BillingStreetNumber__c from '@salesforce/schema/Case.BillingStreetNumber__c';
 import BillingStreetNumberExtension__c from '@salesforce/schema/Case.BillingStreetNumberExtension__c';
 import AlternativeAddress__c from '@salesforce/schema/Case.AlternativeAddress__c';
+import AccountId from '@salesforce/schema/Case.AccountId';
 
 const FIELDS = ['Case.InvoicingPostalCode__c',
 				'Case.InvoicingStreetNumber__c',
@@ -82,7 +83,8 @@ const FIELDS = ['Case.InvoicingPostalCode__c',
                 'Case.BillingStreetName__c',
                 'Case.BillingStreetNumber__c',
                 'Case.BillingStreetNumberExtension__c',
-                'Case.AlternativeAddress__c'
+                'Case.AlternativeAddress__c',
+                'Case.AccountId'
             ];
 
 const FIELDS2 = ['Case.InvoicingPostalCode__c',
@@ -99,6 +101,9 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
     @track address;
     @track isModalOpen=false;
     @api availableActions = [];
+
+    @track openFromFlow = false;
+
     @api
     get inputAddressLabel(){
         if(this.addressLabel != null && this.addressLabel != "" && this.addressLabel != "undefined"){
@@ -131,6 +136,7 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
 
     connectedCallback(){
         //getRecordNotifyChange([{recordId: this.recordId}]);
+        this.openFromFlow = true;
     }
     
     handleChangeAddress(event){
@@ -176,6 +182,10 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                 this.caseRecord = data;
                 console.log(JSON.stringify(this.caseRecord.fields));
                 var inputParams;
+                if(this.accountId.startsWith('5')){
+                    this.accountId = this.caseRecord.fields.AccountId.value;
+                }
+                console.log('this.AccountId --> '+this.accountId);
                 console.log(this.addressType + ' ' + this.accountId );
                 
                 if(this.addressType.localeCompare('ServicePoint') == 0){  // Indirizzo di fornitura
@@ -289,7 +299,7 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
             if(this.addressType.localeCompare('ServicePoint') == 0){
                 fields[SupplyPostalCode.fieldApiName] = this.addressWrapper.CAP;
                 fields[SupplyStreetNumber.fieldApiName] = this.addressWrapper.Civico;
-                fields[SupplyCityCode.fieldApiName] = this.addressWrapper.CodiceComuneSAP;
+                fields[SupplyCityCode.fieldApiName] = this.addressWrapper['Codice Comune SAP'];
                 fields[SupplyStreetCode.fieldApiName] = this.addressWrapper.CodiceViaStradarioSAP;
                 fields[SupplyCity.fieldApiName] = this.addressWrapper.Comune;
                 fields[SupplyStreetNumberExtension.fieldApiName] = this.addressWrapper.EstensCivico;
@@ -303,7 +313,7 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
             }else if(this.addressType.localeCompare('BillingProfile') == 0){
                 fields[InvoicingPostalCode.fieldApiName] = this.addressWrapper.CAP;
                 fields[InvoicingStreetNumber.fieldApiName] = this.addressWrapper.Civico;
-                fields[InvoicingCityCode.fieldApiName] = this.addressWrapper.CodiceComuneSAP;
+                fields[InvoicingCityCode.fieldApiName] = this.addressWrapper['Codice Comune SAP'];
                 fields[InvoicingStreetCode.fieldApiName] = this.addressWrapper.CodiceViaStradarioSAP;
                 fields[InvoicingCity.fieldApiName] = this.addressWrapper.Comune;
                 fields[InvoicingStreetNumberExtension.fieldApiName] = this.addressWrapper.EstensCivico;
@@ -316,7 +326,7 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
             } else {
                 fields[BillingPostalCode__c.fieldApiName] = this.addressWrapper.CAP;
                 fields[BillingStreetNumber__c.fieldApiName] = this.addressWrapper.Civico;
-                fields[BillingCityCode__c.fieldApiName] = this.addressWrapper.CodiceComuneSAP;
+                fields[BillingCityCode__c.fieldApiName] = this.addressWrapper['Codice Comune SAP'];
                 fields[BillingStreetCode__c.fieldApiName] = this.addressWrapper.CodiceViaStradarioSAP;
                 fields[BillingCity__c.fieldApiName] = this.addressWrapper.Comune;
                 fields[BillingStreetNumberExtension__c.fieldApiName] = this.addressWrapper.EstensCivico;

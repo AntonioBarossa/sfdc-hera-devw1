@@ -271,6 +271,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Case.HDT_SendEmail</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Case.HDT_SendThirdPartyEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -279,11 +284,6 @@
             <actionName>HDT_SendSms</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>2</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.HDT_SendEmail</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>HDT_SendCertifiedEmail</actionName>
@@ -338,6 +338,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>ReadingSerialNumber1__c</fields>
         <fields>ReadingValue1__c</fields>
         <fields>ReadingValue2__c</fields>
         <fields>ReadingValue3__c</fields>
@@ -345,7 +346,9 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>ReadingSerialNumberMeter__c</fields>
         <fields>ReadingValueMeter__c</fields>
+        <fields>ReadingSerialNumberCorrector__c</fields>
         <fields>ReadingValueCorrector__c</fields>
         <relatedList>Reading__c.CaseGas__c</relatedList>
     </relatedLists>
@@ -379,6 +382,7 @@
     </relatedLists>
     <relatedLists>
         <customButtons>CreaAttivitaManuale</customButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Type__c</fields>
         <fields>wrts_prcgvr__Description__c</fields>
@@ -420,7 +424,7 @@
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1x000001XCJK</masterLabel>
+        <masterLabel>00h3N000002LiYY</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

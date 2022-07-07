@@ -52,12 +52,17 @@ public inherited sharing class HDT_QR_Opportunity {
      * @param opportunityId
      * @return Opportunity
      */
+    /**@frpanico 03/02/2022
+     * Aggiunto campo Sale__c
+     * Per aggiornare il campo il campo IsTransition a false.
+     */
     public Opportunity getRecordById(String opportunityId){
 
         List<Opportunity> records = [
             SELECT
             Id,
             StageName,
+            Sale__c,
             SBQQ__PrimaryQuote__c
             FROM Opportunity
             WHERE Id = :opportunityId

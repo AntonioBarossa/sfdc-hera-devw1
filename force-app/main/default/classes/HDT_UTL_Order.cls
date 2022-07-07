@@ -58,7 +58,7 @@ public inherited sharing class HDT_UTL_Order {
         Order o = orQr.getRecordById(ord.id);
         boolean res = false;
         String code = '';
-        List<RateCategory__c> listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__c != null ? o.ServicePoint__r.CommoditySector__c : 'Energia Elettrica',o.ServicePoint__r.distributor__r.code__c,o.CommercialProduct__c,o.ServicePoint__c != null ? o.SupplyType__c : o.supplyTypeTechnical__c);
+        List<RateCategory__c> listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__c != null ? o.ServicePoint__r.CommoditySector__c : 'Energia Elettrica',o.ServicePoint__r.distributor__r.code__c,o.CommercialProduct__c,o.SupplyType__c != null ? o.SupplyType__c : o.supplyTypeTechnical__c);
         for(RateCategory__c r : listRate){
             if(r.DistributorCode__c == o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Uguale'){
                 code = r.CalculatedValue__c;
@@ -77,7 +77,7 @@ public inherited sharing class HDT_UTL_Order {
             }
         }
         if(!res){
-            listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__c != null ? o.ServicePoint__r.CommoditySector__c : 'Energia Elettrica',o.ServicePoint__r.distributor__r.code__c,'N/A',o.ServicePoint__c != null ? o.SupplyType__c : o.supplyTypeTechnical__c);
+            listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__c != null ? o.ServicePoint__r.CommoditySector__c : 'Energia Elettrica',o.ServicePoint__r.distributor__r.code__c,'N/A',o.SupplyType__c != null ? o.SupplyType__c : o.supplyTypeTechnical__c);
             for(RateCategory__c r : listRate){
                 if(r.DistributorCode__c == o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Uguale'){
                     code = r.CalculatedValue__c;
@@ -154,9 +154,10 @@ public inherited sharing class HDT_UTL_Order {
     public static boolean checkToDiscordanti(String OrderId){
         try{
             Order newOrder = orderQr.getRecordById(OrderId);
+            List<OrderItem> mainOrderItem = orderItemQr.getMainItem(OrderId);
             HDT_SRV_ActivityCustom actSrv = new HDT_SRV_ActivityCustom();
             List<wrts_prcgvr__Activity__c> listActivity = HDT_QR_ActivityCustom.getRecordScartoDiscordante(newOrder.ServicePoint__c,newOrder.AccountId);
-            if(listActivity != null && !listActivity.isEmpty()){
+            if(listActivity != null && !listActivity.isEmpty() && !mainOrderItem.isEmpty() && mainOrderItem[0].Product2.Family.equalsIgnoreCase('Offerta commerciale')){
                 system.debug('DENTRO TRAVASO DATO DISCORDANTE 2');
                 wrts_prcgvr__Activity__c wr = listActivity[0];
                 wr.wrts_prcgvr__Status__c = 'Chiusa';
@@ -272,6 +273,7 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.isDatoDiscordante__c = true;
         orderToUpdate.Contact__c = oldOrder.Contact__c;
         orderToUpdate.OrderReference__c = oldOrder.Id;
+        orderToUpdate.AggregateBilling__c = oldOrder.AggregateBilling__c;
         HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
     }
 

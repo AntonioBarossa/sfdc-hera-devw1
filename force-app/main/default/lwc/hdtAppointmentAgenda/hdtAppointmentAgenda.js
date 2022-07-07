@@ -105,7 +105,7 @@ export default class HdtAppointmentAgenda extends LightningElement {
     
     connectedCallback(){
         if (this.params){
-            if (this.params.userCommunity){
+            if (this.params.userCommunity === true || this.params.userCommunity === 'true'){
                 this.isCommunity = true;
             }
             this.fieldsToRetrieve = OBJECT_FIELDS;
@@ -213,7 +213,7 @@ export default class HdtAppointmentAgenda extends LightningElement {
                 let slots = [];
                 try{
                     slots = data.appuntamento;
-
+                    this.records = [];
                     slots.forEach(element => {
                         this.addRecord({
                             codice : element.codiceApp, 

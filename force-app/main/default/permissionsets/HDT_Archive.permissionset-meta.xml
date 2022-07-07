@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
-        <apexClass>HDT_LC_DownloadAttachmentArchive</apexClass>
+        <apexClass>HDT_LC_ClientHistory</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_LC_ClientHistory</apexClass>
+        <apexClass>HDT_LC_DownloadAttachmentArchive</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <customPermissions>
@@ -164,6 +164,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelActivity__x.X_CALL_DURATION__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelActivity__x.X_CANALE_CAMPAGNA__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -230,6 +235,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelActivity__x.X_NOTE_SOSP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelActivity__x.X_NUMERO__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1934,11 +1944,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SiebelOrderAttribute__x.AZ_ImportDatetime__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SiebelOrderAttribute__x.BANK_BRANCH__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2620,6 +2625,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.ATTRIB_35__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.ATTRIB_36__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9896,8 +9906,4 @@
         <object>SiebelRds__x</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <tabSettings>
-        <tab>SiebelCustomer__x</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>

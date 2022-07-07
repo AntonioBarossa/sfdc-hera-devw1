@@ -5,4 +5,10 @@
     position: sticky;
     bottom: -1rem;
     background: #fff;
+    z-index: 1000;
+}
+
+.THIS .slds-card__header-title{
+    display: flex;
+    justify-content: center;
 }

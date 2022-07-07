@@ -72,7 +72,7 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
     public static void testGetExtimatedCost(){
         Test.startTest();
         
-        Order updateOrder = [SELECT id, Status, EstimateAmount__c, PowerQuote__c, AdministrativeBurden__c, EstimatedVAT__c, ValidityDateEstimate__c, 
+        Order updateOrder = [SELECT id, Status, EstimateAmount__c, DistributorFormula__c, PowerQuote__c, AdministrativeBurden__c, EstimatedVAT__c, ValidityDateEstimate__c, 
                              Phase__c, RecordTypeId, recordType.DeveloperName, PowerRequested__c, PowerAvailable__c, VoltageLevel__c, PowerCommitted__c,
                              UseTypeEnergy__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ConnectionType__c, ProcessCode__c
                             FROM Order
@@ -92,7 +92,7 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
     @isTest 
     public static void testGetFixedQuotes(){
         
-        Order updateOrder = [SELECT id, Status, EstimateAmount__c, PowerQuote__c, AdministrativeBurden__c, EstimatedVAT__c, ValidityDateEstimate__c, 
+        Order updateOrder = [SELECT id, Status, EstimateAmount__c, DistributorFormula__c, PowerQuote__c, AdministrativeBurden__c, EstimatedVAT__c, ValidityDateEstimate__c, 
                              Phase__c, RecordTypeId, recordType.DeveloperName, PowerRequested__c, PowerAvailable__c, VoltageLevel__c, PowerCommitted__c,
                              UseTypeEnergy__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ConnectionType__c, ProcessCode__c, SupplyType__c
                              FROM Order
@@ -101,15 +101,16 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
 
         HDT_LC_CalculateEstimatedCost.HDT_WRP_ExtimatedCost ext = new HDT_LC_CalculateEstimatedCost.HDT_WRP_ExtimatedCost();
         ext.fixedQuotes = new HDT_CalcoloPreventivi__mdt();
-        /*
+        /*updated 04/05/2022 by Edoardo Zanatta
+
         fixedQuotes.VAT__c >> 10.00
         fixedQuotes.DistributorFixedQuote__c >> 0.00
-        fixedQuotes.PowerQuote__c >> 56.16
+        fixedQuotes.PowerQuote__c >> 56.38
         fixedQuotes.SellerFixedQuote__c >> 23.00
         fixedQuotes.Type__c >> 'Domestico'
-        variableAmount >> -16.2864 
-        estimatedAmount >> 7.384960
-        estimatedAmount = estimatedAmount.setScale(2) >> 7.38
+        variableAmount >> -16.3502
+        estimatedAmount >> 6.6498
+        estimatedAmount = estimatedAmount.setScale(2) >> 6.65
         */
 
         Test.startTest();
@@ -119,7 +120,7 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
         
         Test.stopTest();
         
-        System.assertEquals(7.38, ext.estimatedAmount, 'EstimateAmount__c not correct!');
+        System.assertEquals(6.65, ext.estimatedAmount, 'EstimateAmount__c not correct!');
         System.assertEquals(1000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
         System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
         

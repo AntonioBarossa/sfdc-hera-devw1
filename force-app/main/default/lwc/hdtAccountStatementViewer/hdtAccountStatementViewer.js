@@ -18,6 +18,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     @api tabCode;
     @api isLoaded;
     @api statementType;
+    @api defaultRequestObj;
     @track accountData;
     @track columns;//++++ = columns;
     @track joinFilterModal = false;
@@ -90,6 +91,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     @track context;
     @track tipoPlico;
 
+    @track residualMessage = 'Residuo: € ';
+    @track residualSelected = parseFloat(0.0).toFixed(2);
+
     connectedCallback() {
         console.log('# connectedCallback #');
         console.log('# recordid -> ' + this.recordid);
@@ -157,7 +161,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                     this.openFilters();
                     this.closeMainSpinner();
                 } else {
-                    this.backendCall('home', '');// Chiamata in backend
+                    //this.backendCall('home', '');// Chiamata in backend
+                    this.backendCall('home', this.defaultRequestObj);// Chiamata in backend
                 }
 
                 this.columns.forEach((i) => {
@@ -692,51 +697,68 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         // Map checked items to their labels
         .map(element => element.checked);
 
+        let totalResidual = 0.0;
+
         this.accountData.forEach((i) => {
             this.template.querySelectorAll('lightning-input').forEach(li => {
                 
+
                 if ( li.type == 'checkbox' && li.name == i[this.uniqueId]) {
                     if(checked[0]){
                         li.checked = true;
 
                         if(!idlist.includes(i[this.uniqueId])){
                             idlist.push(i[this.uniqueId]);
+                            totalResidual += parseFloat(i["residuo"]);
                         }
 
                     } else {
                         li.checked = false;
                         idlist.splice(idlist.indexOf(i[this.uniqueId]), 1);
+                        totalResidual -= parseFloat(i["residuo"]);
                     }
                 }
                 
             });
         });
+        this.residualSelected = (parseFloat(this.residualSelected) + totalResidual).toFixed(2);
         this.checkboxCount = idlist.length.toString();
     }
 
     checkboxHandler(event){
         
         var i = event.target.value;
+        console.log('#Event target value >>> ' + event.target.value);
+
+
+
         
         if(i == '0'){
             var e = event.currentTarget.dataset.id;
+            let selectedRow = this.accountData.find(ele  => ele[this.uniqueId] === e);
+            console.log('### Residuo documento selezionato >>> ' + selectedRow["residuo"]);
+            let residualRow = parseFloat(selectedRow["residuo"]);
+            console.log('#TypeOf residualSelected >>> ' + typeof this.residualSelected);
+            console.log('#TypeOf residualRow >>> ' + typeof residualRow);
 
             if (idlist === undefined || idlist.length == 0) {
                 //only for the first id of the list
                 idlist.push(e);
+                this.residualSelected = (parseFloat(this.residualSelected) + residualRow).toFixed(2);
             } else {
                 //if id is already included in the list
                 if(idlist.includes(e)){
                     const index = idlist.indexOf(e);
                     if (index > -1) {
                         idlist.splice(index, 1);
+                        this.residualSelected = (parseFloat(this.residualSelected) - residualRow).toFixed(2);
                     }
                 } else {
                     idlist.push(e);
+                    this.residualSelected = (parseFloat(this.residualSelected) + residualRow).toFixed(2);
                 }
             }
             event.target.value = '1';
-
         } else {
             event.target.value = '0';
         }
@@ -775,6 +797,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         });
         idlist.splice(0, idlist.length);
         this.checkboxCount = 0;
+        this.residualSelected = parseFloat(0).toFixed(2)
     }
 
     backendCall(requestType, requestObj){

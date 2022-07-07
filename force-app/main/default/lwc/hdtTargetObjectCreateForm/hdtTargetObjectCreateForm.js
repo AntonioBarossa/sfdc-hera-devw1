@@ -86,12 +86,14 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     isValidFields = false;
     @api isricercainsap;
     @api recordDistributorPointCode;
+    @api selectedDistributor;
     isDistributor = false;
     booleanFormDistributor = false;
     @api retrievedDistributor = {};
     @api commodity = '';
     @api processtype;
-    oldServicePoint = {}; //keltin used for change use check
+    @track oldSupplyType = '';
+    @track spCodeChanged = false;
     
     /**
      * Handle save button availability
@@ -165,16 +167,19 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         let fieldReq = fieldReqParse.split(",");
 
         fieldsDataReq.forEach(element => {
+            console.log('this.fieldsDataReq --> '+fieldsDataReq);
             mapFieldReq.set(element, true);
 
         });
-
+        console.log('this.selectedservicepoint --> '+this.selectedservicepoint);
+        console.log('this.processtype --> '+this.processtype);
+        console.log('this.recordtype.label --> '+this.recordtype.label);
         fieldsData.forEach(element => {
+            console.log('this.element --> '+element);
 
             if (this.selectedservicepoint != undefined && this.processtype == '') {
 
                 if (element == 'CommoditySector__c') {
-                    console.log('entra in Punto Elettrico CommoditySector__c');
                     fieldsDataObject.push(
                         {
                             fieldname: element,
@@ -239,14 +244,39 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
+                // else if (element == 'PowerRequested__c') {
+
+                //     fieldsDataObject.push(
+                //         {
+                //             fieldname: element,
+                //             required: mapFieldReq.get(element),
+                //             value: null,
+                //             disabled: false
+                //         }
+                //     )
+                // }
+                else if (this.recordtype.label === 'Punto Elettrico' && element === 'PlugPresence__c') {
+                    console.log('ENTRATO IN PUNTO ELE');
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: mapFieldReq.get(element),
+                            value: this.servicePointRetrievedData[element],
+                            disabled: false
+                        }
+                    )
+                }
+                else if (this.recordtype.label === 'Punto Gas' && element === 'PlugPresence__c') {
+                    console.log('ENTRATO IN PUNTO GAS');
+                }
                 else if (element == 'PowerRequested__c') {
 
                     fieldsDataObject.push(
                         {
                             fieldname: element,
                             required: mapFieldReq.get(element),
-                            value: null,
-                            disabled: false
+                            value: this.servicePointRetrievedData[element],
+                            disabled: this.allSubmitedFields['PlugPresence__c'] == 'No'? true : false
                         }
                     )
                 }
@@ -262,7 +292,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     )
                 }
                 else {
-                    console.log('entra in else ++++' + JSON.stringify(element));
                     fieldsDataObject.push(
                         {
                             fieldname: element,
@@ -361,13 +390,59 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
-                else if (this.recordtype.label === 'Punto Gas' && element === 'RemiCode__c') {
+                // else if (this.recordtype.label === 'Punto Gas' && element === 'RemiCode__c') {
+                else if (element === 'RemiCode__c') {
                     fieldsDataObject.push(
                         {
                             fieldname: element,
                             required: mapFieldReq.get(element),
                             value: this.servicePointRetrievedData[element],
                             disabled: true
+                        }
+                    )
+                }
+                else if (this.recordtype.label === 'Punto Elettrico' && element === 'PlugPresence__c') {
+                    console.log('ENTRATO IN PUNTO ELE');
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: mapFieldReq.get(element),
+                            value: this.servicePointRetrievedData[element],
+                            disabled: false
+                        }
+                    )
+                }
+                else if (this.recordtype.label === 'Punto Gas' && element === 'PlugPresence__c') {
+                    console.log('ENTRATO IN PUNTO GAS');
+                }
+                else if (element == 'PowerRequested__c') {
+
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: mapFieldReq.get(element),
+                            value: this.servicePointRetrievedData[element],
+                            disabled: this.allSubmitedFields['PlugPresence__c'] == 'No'? true : false
+                        }
+                    )
+                }
+                else if (element === 'MeterSN__c') {
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: mapFieldReq.get(element),
+                            value: this.servicePointRetrievedData[element],
+                            disabled: true
+                        }
+                    )
+                }
+                else if (this.recordtype.label === 'Punto Gas' && element === 'ImplantType__c') {
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: true,
+                            value: this.servicePointRetrievedData[element],
+                            disabled: false
                         }
                     )
                 }
@@ -418,6 +493,16 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     )
                     this.isDistributor = false;
                 }
+                else if(this.recordtype.label === 'Punto Elettrico' && element === 'ServicePointCode__c' && this.allSubmitedFields['PlugPresence__c'] == 'No'){
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: false,
+                            value: this.allSubmitedFields['ServicePointCode__c'],
+                            disabled: false
+                        }
+                    )
+                }
                 else {
                     fieldsDataObject.push(
                         {
@@ -430,14 +515,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
             }
         });
-
         return fieldsDataObject;
     }
 
     toObjectAddressInit(data) {
 
         let fieldsDataObject = [];
-        console.log('');
         Object.keys(data).forEach(keys => {
             fieldsDataObject.push(
                 {
@@ -481,7 +564,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     extractDataFromArriccDataServiceWithExistingSp({ sp: sp, response: data }).then(datas => {
                         this.isSap = true;
                         this.servicePointRetrievedData = datas[0];
-                        this.oldServicePoint = datas[0];
+                        this.oldSupplyType = datas[0].SupplyType__c;
 
                         switch (this.servicePointRetrievedData['CommoditySector__c']) {
                             case 'Energia Elettrica':
@@ -504,7 +587,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 else {
                     extractDataFromArriccDataServiceWithExistingSp({ sp: this.servicePointRetrievedData, response: data }).then(datas => {
                         this.servicePointRetrievedData = datas[0];
-                        this.oldServicePoint = datas[0];
+                        this.oldSupplyType = datas[0].SupplyType__c;
 
                         switch (this.servicePointRetrievedData['CommoditySector__c']) {
                             case 'Energia Elettrica':
@@ -595,7 +678,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     }
                     this.manageFields();
                     this.getInstanceWrapObject(this.servicePointRetrievedData);
-
                 }).catch(error => {
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
@@ -603,13 +685,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         variant: 'error'
                     });
                     this.dispatchEvent(toastErrorMessage);
-                    console.log('error****' + error.message);
                 });
 
-            } else {
-                console.log(this.selectedservicepoint + 'selectedServicePoint');
+            }
+            else {
                 this.manageFields();
-                console.log('fieldsData' + this.fieldsAddress);
             }
             this.fieldsReady = true;
             this.loading = false;
@@ -662,14 +742,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     handleFillFieldsButtonAvailability(fieldName, fieldValue) {
         if (fieldName == 'ServicePointCode__c') {
-
             this.servicePointCode = fieldValue;
             if (this.servicePointCode.length > 13 && this.selectedservicepoint == undefined) {
                 this.fillFieldsDataDisabled = false;
-            } else {
+            }
+            else {
                 this.fillFieldsDataDisabled = true;
             }
-
         }
     }
 
@@ -697,6 +776,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         }
         //25/08/2021 - gabriele.rota@webresults.it - Switch Flag Resident in base a Tipo Fornitura
         if (event.target.fieldName == 'SupplyType__c') {
+            this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
+        }
+        if (event.target.fieldName == 'ServicePointCode__c') {
+            this.spCodeChanged = true;
+        }
+        if (event.target.fieldName == 'PlugPresence__c') {
             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
         }
     }
@@ -736,7 +821,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
             }
             this.allSubmitedFields = this.servicePointRetrievedData;
-
         } 
         else {
             this.allSubmitedFields.RecordTypeId = this.recordtype.value;
@@ -891,6 +975,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if ((this.allSubmitedFields['Distributor__c'] === undefined || this.allSubmitedFields['Distributor__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
             }
+            if ((this.allSubmitedFields['ImplantType__c'] === undefined || this.allSubmitedFields['ImplantType__c'] === '')) {
+                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Impianto, ');
+            }
             if ((this.allSubmitedFields['SupplyType__c'] === undefined || this.allSubmitedFields['SupplyType__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Tipo Fornitura, ');
             }
@@ -912,6 +999,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.allSubmitedFields['MaxRequiredPotential__c'] === undefined || this.allSubmitedFields['MaxRequiredPotential__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Potenzialità Massima Richiesta, ');
             }
+            if (this.allSubmitedFields['MeterClass__c'] === undefined || this.allSubmitedFields['MeterClass__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Classe Contatore, ');
+            }
         }
         if (concatPointErrorFields !== '') {
             this.isValid = false;
@@ -922,11 +1012,18 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     }
 
     validFieldsCreateServicePoint() {
-
+        if (this.allSubmitedFields['ServicePointCode__c'] !== undefined 
+            && this.allSubmitedFields['ServicePointCode__c'] !== ''
+            && this.allSubmitedFields['ServicePointCode__c'].length < 14) {
+            this.isValid = false;
+            this.isValidFields = false;
+            this.loading = false;
+            this.alert('Dati tabella', 'Il POD/PDR non può avere meno di 14 caratteri');
+        }
         let concatPointErrorFields = '';
         if (this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica') {
 
-            if ((this.allSubmitedFields['ServicePointCode__c'] === undefined || this.allSubmitedFields['ServicePointCode__c'] === '')) {
+            if (this.allSubmitedFields['PlugPresence__c'] == 'Si' && (this.allSubmitedFields['ServicePointCode__c'] === undefined || this.allSubmitedFields['ServicePointCode__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Codice Punto, ');
             }
             if (this.allSubmitedFields['CommoditySector__c'] === undefined || this.allSubmitedFields['CommoditySector__c'] === '') {
@@ -972,6 +1069,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.allSubmitedFields['ServicePointCode__c'] === undefined || this.allSubmitedFields['ServicePointCode__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Codice Punto, ');
             }
+            if ((this.allSubmitedFields['ImplantType__c'] === undefined || this.allSubmitedFields['ImplantType__c'] === '')) {
+                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Impianto, ');
+            }
             if (this.allSubmitedFields['CommoditySector__c'] === undefined || this.allSubmitedFields['CommoditySector__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Servizio, ');
             }
@@ -999,6 +1099,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.allSubmitedFields['MaxRequiredPotential__c'] === undefined || this.allSubmitedFields['MaxRequiredPotential__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Potenzialità Massima Richiesta, ');
             }
+            if (this.allSubmitedFields['MeterClass__c'] === undefined || this.allSubmitedFields['MeterClass__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Classe Contatore, ');
+            }
         }
         if (concatPointErrorFields !== '') {
             this.isValid = false;
@@ -1014,6 +1117,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.isValidFields = true;
             let concatAddressErrorFields = '';
 
+            //@DV: Controllo sull'obbligatorietà dei campi. Se non valorizzati, lancio l'errore!
             if (this.recordtype.label === 'Punto Elettrico' || this.recordtype.label == 'Punto Gas') {
                 this.validFieldsCreateServicePoint();
             }
@@ -1024,7 +1128,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             //Validate address
             if (this.theRecord['Indirizzo Estero'] == false || this.theRecord['Indirizzo Estero'] == undefined) {
                 if (this.theRecord['Flag Verificato'] == false || this.theRecord['Flag Verificato'] == undefined) {
-                    isValid = false;
                     this.isValidFields = false;
                     this.loading = false;
                     this.alert('Dati tabella', 'E\' necessario verificare l\'indirizzo per poter procedere al salvataggio', 'error');
@@ -1056,16 +1159,16 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     this.alert('Dati tabella', 'Per poter salvare popolare i seguenti campi di indirizzo: ' + concatAddressErrorFields.slice(0, -2), 'error')
                 }
             }
-
-            if ((this.allSubmitedFields['ServicePointCode__c'] != undefined && (JSON.stringify(this.allSubmitedFields['ServicePointCode__c'].trim()).length < 14 || JSON.stringify(this.allSubmitedFields['ServicePointCode__c'].trim()).length > 16))) {
+            console.log('### Error Skip Dimensione' + JSON.stringify(this.selectedDistributor));
+            if (this.selectedDistributor!== undefined && !this.selectedDistributor['SkipDimensione__c'] && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '').length != 14) {
                 this.isValidFields = false;
                 this.loading = false;
                 this.alert('Errore', 'Codice POD/PDR non valido', 'error');
             }
 
             if (this.allSubmitedFields['ServicePointCode__c'] != undefined) {
-                this.allSubmitedFields['ServicePointCode__c'] = this.allSubmitedFields['ServicePointCode__c'].trim();
-                if (this.allSubmitedFields['ServicePointCode__c'].substring(0, 2) != 'IT' && this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica') {
+                this.allSubmitedFields['ServicePointCode__c'] = this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '');
+                if (this.allSubmitedFields['PlugPresence__c'] == 'Si' && this.allSubmitedFields['ServicePointCode__c'].substring(0, 2) != 'IT' && this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica') {
                     this.isValidFields = false;
                     this.loading = false;
                     this.alert('Errore', 'Codice POD non valido', 'error');
@@ -1077,7 +1180,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
             } 
             else {
-                this.servicePointRetrievedData['ServicePointCode__c'] = this.servicePointRetrievedData['ServicePointCode__c'].trim();
+                this.servicePointRetrievedData['ServicePointCode__c'] = this.servicePointRetrievedData['ServicePointCode__c'].replace(/\s/g, '');
 
                 if (this.servicePointRetrievedData['ServicePointCode__c'].substring(0, 2) != 'IT' && this.servicePointRetrievedData['CommoditySector__c'] == 'Energia Elettrica') {
                     this.isValidFields = false;
@@ -1104,6 +1207,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 checkFieldMap['ProfiloPrelievo'] = this.allSubmitedFields['WithdrawalClass__c'];
                 checkFieldMap['CategoriaUso'] = this.allSubmitedFields['UseCategory__c'];
                 checkFieldMap['Imposta'] = imposta;
+                checkFieldMap['searchTaxes'] = false;
 
                 checkFieldCoerenceSpGas({
                     inputFieldMap : checkFieldMap
@@ -1112,7 +1216,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     if(!hasCoerence){
                         let errMess = 'Attenzione. Deve esserci coerenza nella compilazione dei seguenti campi: Tipologia Fornitura Cliente, Categoria Cliente, Tipo Impianto';
                         errMess += (this.accRecord.fields.Category__c.value == 'Famiglie' || this.accRecord.fields.Category__c.value == 'Grandi Condomini' || this.accRecord.fields.Category__c.value == 'Piccoli Condomini') ? ', Classe Profilo Prelievo, Categoria uso' : '';
-                        errMess += (imposta != '') ? ', Imposta' : '';
+                        //errMess += (imposta != '') ? ', Imposta' : '';
                         errMess += '.';
                         this.isValidFields = false;
                         this.loading = false;
@@ -1122,7 +1226,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     resolve();
                 })
                 .catch(error => {
-                    isValid = false;
                     this.isValidFields = false;
                     this.loading = false;
                     this.alert('Errore', 'Errore nel processo di controllo coerenza campi!', 'error');
@@ -1172,43 +1275,58 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
         this.loading = true;
         let addressRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
+        
+        if(this.spCodeChanged || this.allSubmitedFields['Distributor__c'] == undefined || this.allSubmitedFields['Distributor__c'].trim() == ''){
+            
+            if((this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica' && this.allSubmitedFields['PlugPresence__c'] == 'Si' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '') ||
+            (this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica' && this.allSubmitedFields['PlugPresence__c'] == 'No') ||
+            (this.allSubmitedFields['CommoditySector__c'] == 'Gas' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '')){
+                
+                if(addressRecord['Comune'] != undefined && addressRecord['Comune'].trim() != ''){
+                    let codicePunto = '';
+                    let servizio = this.allSubmitedFields['CommoditySector__c'];
+                    let radicePunto = '';
+                    if(this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != ''){
+                        codicePunto = this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '');
+                        radicePunto = servizio == 'Gas' ? codicePunto.substring(0, 4) : codicePunto.substring(0, 6);
+                    }
+                    if(this.allSubmitedFields['PlugPresence__c'] == 'No'){
+                        this.allSubmitedFields['ServicePointCode__c'] = 'PODPROVVISORIO';//POD FITTIZIO
+                    }
+                    let comune = servizio == 'Gas' ? addressRecord['Comune'] : '';
+                    let presenzaAllaccio = this.allSubmitedFields['PlugPresence__c'] != undefined ? this.allSubmitedFields['PlugPresence__c'] : '';
 
-        if(this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].trim() != ''){
-            if(addressRecord['Comune'] != undefined && addressRecord['Comune'].trim() != ''){
-                let codicePunto = this.allSubmitedFields['ServicePointCode__c'].trim();
-                let servizio = this.allSubmitedFields['CommoditySector__c'];
-                let radicePunto = servizio == 'Gas' ? codicePunto.substring(0, 4) : codicePunto.substring(0, 6);
-                let comune = servizio == 'Gas' ? addressRecord['Comune'] : '';
-                getDistributorPointCode({
-                    code : radicePunto,
-                    commodity: servizio,
-                    comune : comune
-                }).then(data => {
-                    this.retrievedDistributor = data;
-                    if (data.length > 1) {
-                        this.booleanFormDistributor = true;
-                        this.loading = false;
-                    }
-                    else {
-                        data.forEach(element => {                        
-                            this.recordDistributorPointCode = element.Account__r.Id;
-                        });
-                        this.isDistributor = true;
-                        this.allSubmitedFields['Distributor__c'] = this.recordDistributorPointCode;
-                        this.servicePointRetrievedData.Distributor__c = this.recordDistributorPointCode;
-                        this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
-                        this.save();
-                    }
-                });
+                    getDistributorPointCode({code : radicePunto, commodity: servizio, comune : comune, presenzaAllaccio: presenzaAllaccio}).then(data => {
+                        this.retrievedDistributor = data;
+                        if (data.length > 1) {
+                            this.booleanFormDistributor = true;
+                            this.loading = false;
+                        }
+                        else {
+                            data.forEach(element => {
+                                this.recordDistributorPointCode = element.Account__r.Id;
+                                this.selectedDistributor = element;
+                            });
+                            this.isDistributor = true;
+                            this.allSubmitedFields['Distributor__c'] = this.recordDistributorPointCode;
+                            this.servicePointRetrievedData.Distributor__c = this.recordDistributorPointCode;
+                            this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
+                            this.save();
+                        }
+                    });
+                }
+                else {
+                    this.loading = false;
+                    this.alert('Errore', 'E\' necessario inserire il Comune per poter procedere al salvataggio', 'error');
+                }
             }
             else {
                 this.loading = false;
-                this.alert('Errore', 'E\' necessario inserire il Comune per poter procedere al salvataggio', 'error');
+                this.alert('Errore', 'E\' necessario inserire il Codice Punto per poter procedere al salvataggio', 'error');
             }
         }
-        else {
-            this.loading = false;
-            this.alert('Errore', 'E\' necessario inserire il Codice Punto per poter procedere al salvataggio', 'error');
+        else{
+            this.save();
         }
     }
 
@@ -1288,7 +1406,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         else {
             title += this.recordtype.label;
         }
-        console.log('formTitle END');
         return title;
     }
 
@@ -1348,7 +1465,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.newServicePoint = data;
             this.isSap = false;
             this.dispatchEvent(new CustomEvent('newservicepoint', { detail: this.newServicePoint }));
-            this.dispatchEvent(new CustomEvent('confirmservicepoint', { detail: { newServicePoint: this.newServicePoint, oldServicePoint: this.oldServicePoint } })); //keltin used for change use check
+            this.dispatchEvent(new CustomEvent('confirmservicepoint', { detail: { newServicePoint: this.newServicePoint, oldSupplyType: this.oldSupplyType } }));
         }).catch(error => {
             this.loading = false;
             const toastErrorMessage = new ShowToastEvent({
@@ -1375,6 +1492,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.retrievedDistributor.forEach(element => {
             if (event.detail.Distributor === element.Account__r.Name) {
                 this.recordDistributorPointCode = element.Account__r.Id;
+                this.selectedDistributor = element;
             }
         });
         this.isDistributor = true;

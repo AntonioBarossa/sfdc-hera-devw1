@@ -10,6 +10,7 @@
                 component.set("v.parentEntityField", data.parentEntityField);
                 component.set("v.recordTypeId", data.recordTypeId);
                 component.set("v.showForm", true);
+                component.set("v.showPriorityField", data.showPriorityField);
             }
         });
         $A.enqueueAction(action);

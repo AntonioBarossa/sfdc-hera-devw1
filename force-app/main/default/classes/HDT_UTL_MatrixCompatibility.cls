@@ -24,17 +24,30 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             srRequest.Status__c = 'Bozza';
             srRequest.Order__c = String.valueOf(servReq.get('order'));
             srRequest.CommoditySector__c = String.valueOf(servReq.get('commoditySector'));
-            srRequest.Type__c = String.valueOf(servReq.get('type')); 
+            srRequest.Type__c = String.valueOf(servReq.get('type'));
+            if(srRequest.Type__c.equalsIgnoreCase('Case'))
+            {
+                List<ServicePoint__c> sp = [SELECT Id FROM ServicePoint__c WHERE ServicePointCode__c = :srRequest.ServicePointCode__c WITH SECURITY_ENFORCED];
+                if(!sp.isEmpty())
+                {
+                    servReq.put('servicePoint', sp[0].Id);
+                }
+            }
             if(servReq.get('servicePoint') != null){
                 srRequest.ServicePoint__c = String.valueOf(servReq.get('servicePoint'));
             }else{
                 srRequest.Account__c = String.valueOf(servReq.get('account'));
                 srRequest.BillingProfile__c = String.valueOf(servReq.get('billingProfile'));
             }
-            if(servReq.get('isBillableVas')!=null){
+            if( servReq.get('processType') != null && servReq.get('isBillableVas')!=null && !(String.valueOf(servReq.get('processType')).containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))){
                 Boolean isBillableVas=Boolean.valueOf(servReq.get('isBillableVas'));
                 String searchVas = isBillableVas? 'Vas Billabile' : 'Vas Non Billabile';
                 servReq.put('processType', searchVas);
+            }
+            if( servReq.get('processType') != null && String.valueOf(servReq.get('processType')).containsIgnoreCase('Aggiunta Sconti o Bonus VAS') || 
+                (String.isNotBlank(srRequest.ServicePointCode__c) && srRequest.ServicePointCode__c.equalsIgnoreCase('PODPROVVISORIO')))
+            {
+                srRequest.Account__c = String.valueOf(servReq.get('account'));
             }
 
 
@@ -56,7 +69,8 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             System.debug(srRequest);
             wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = checkCompatibility(sReq);
             System.debug(result);
-            if(isPostSales== null){
+            Boolean skipDelete = (String)servReq.get('isMassive') != null? true:false;
+            if(isPostSales== null && !((String)servReq.get('processType')).equalsIgnoreCase('Switch in Fittizio') && !skipDelete){
                 HDT_SRV_ServiceRequest.deleteRecord(sReq);
             }
             //list of incompatible records
@@ -75,6 +89,8 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                     sReq.Status__c = 'Annullato';
                     srList.add(sReq);
                     HDT_SRV_ServiceRequest.updateRecord(srList);
+                }else if(isPostSales!= null && !isPostSales && skipDelete){
+                    HDT_SRV_ServiceRequest.deleteRecord(sReq);
                 }
             }else{
                 resMap.put('compatibility', '');

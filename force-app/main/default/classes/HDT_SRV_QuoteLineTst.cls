@@ -174,7 +174,7 @@ public class HDT_SRV_QuoteLineTst{
 		System.assertEquals(true, finished, 'Teste Ended');
 	}
 
-	@isTest
+	/*@isTest
 	static void testcreateRecords(){
 
 		User u=[SELECT Id
@@ -237,7 +237,7 @@ public class HDT_SRV_QuoteLineTst{
 			Test.stopTest();
 
 		}
-	}
+	}*/
 
 	@isTest
 	static void testupdateRecord(){

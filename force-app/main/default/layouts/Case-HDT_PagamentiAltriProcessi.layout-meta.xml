@@ -43,6 +43,10 @@
                 <behavior>Readonly</behavior>
                 <field>DocumentPaymentMethod__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>DocumentPaymentMethod__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -287,6 +291,7 @@
     </relatedContent>
     <relatedLists>
         <customButtons>CreaAttivitaManuale</customButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Type__c</fields>
         <fields>wrts_prcgvr__Description__c</fields>

@@ -4,7 +4,7 @@
 * @description HDT_WS_MrrRequest – Rest API for inbound requests in the Mrr JSON format
 * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica​
 */
-
+@SuppressWarnings('PMD.AvoidDebugStatements')
 @RestResource(urlMapping='/MRRInboundService/*')
 global with sharing class HDT_WS_MrrRequest {
 
@@ -43,6 +43,8 @@ global with sharing class HDT_WS_MrrRequest {
 
         try {
 
+            Boolean richiestaNonIdentificata = true;
+
             String body = RestContext.request.requestBody.toString();
 
             HDT_WRP_MrrRequest requestBody = (HDT_WRP_MrrRequest) JSON.deserialize(body, HDT_WRP_MrrRequest.class);
@@ -54,12 +56,14 @@ global with sharing class HDT_WS_MrrRequest {
                 HDT_WRP_MrrRequest.HDT_WRP_Header header = request.header;
                 mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
                 mrrResponseItem.objects.clear();
-                if (header.fields.get(0).value == 'sales') {
+                if (header.fields != null && header.fields.get(0).value == 'sales') {
+                    richiestaNonIdentificata = false;
                     mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(request, mrrResponseItem);
                 }
             }
 
-            if(requestBody.requests[0].header.fields.get(0).value == 'postsales'){
+            if(requestBody.requests[0].header.fields != null && requestBody.requests[0].header.fields.get(0).value == 'postsales'){
+                richiestaNonIdentificata = false;
                 HDT_SRV_BillableVasDeactivation.handlerAsyncronousNotify(requestBody.requests[0]);
                 //HDT_SRV_BillableVasDeactivation billableVasHndlr = new HDT_SRV_BillableVasDeactivation(requestBody.requests[0]);
                 if (requestBody.requests[0].header.requestType=='NOTIF_VAS') {
@@ -76,12 +80,34 @@ global with sharing class HDT_WS_MrrRequest {
                     mrrResponseItem.objects.add(responseObject);
                     //FINE SVILUPPI EVERIS
                 }
+            }else if (requestBody.requests[0].header.fields != null && String.isBlank(requestBody.requests[0].header.fields.get(0).value)){
+                throw new HDT_UTL_HeraException('Required Header Field Missing: PROCESS_CATEGORY');
             }
+            if (richiestaNonIdentificata && requestBody.requests[0].objects != null && !requestBody.requests[0].objects.isEmpty() 
+                && requestBody.requests[0].objects[0] != null && requestBody.requests[0].objects[0].fields != null ){
+                    List<HDT_WRP_MrrResponse.HDT_WRP_Field> esitoFields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>();
+                    for (HDT_WRP_MrrRequest.HDT_WRP_Field field : requestBody.requests[0].objects[0].fields){
+                        if ('Richiesta non identificata'.equalsIgnoreCase(field.value)){
+                            HDT_WRP_MrrResponse.HDT_WRP_Field esitoField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
+                            esitoField.fieldType = 'TEXT';
+                            esitoField.name = 'ESITO';
+                            esitoField.value = 'OK';
+                            esitoFields.add(esitoField);
+                            break;
+                        }
+                    }
+                    if (!esitoFields.isEmpty()){
+                        mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(requestBody.requests[0]), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
+                        responseObject.fields = esitoFields;
+                        mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>{responseObject};
+                    }
+            }
+            HDT_UTL_Scarti.discardManagement(requestBody.requests);
         } catch (JSONException jsonEx) {
 
-            System.debug('requestbody: ' + String.valueOf(RestContext.request.requestBody));
-            System.debug('errorMessage: ' + jsonEx.getMessage());
-            System.debug('errorStack: ' + jsonEx.getStackTraceString());
+            System.debug(LoggingLevel.DEBUG,'requestbody: ' + String.valueOf(RestContext.request.requestBody));
+            System.debug(LoggingLevel.DEBUG,'errorMessage: ' + jsonEx.getMessage());
+            System.debug(LoggingLevel.DEBUG,'errorStack: ' + jsonEx.getStackTraceString());
             
             mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
 
@@ -95,14 +121,14 @@ global with sharing class HDT_WS_MrrRequest {
 
             responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
             mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>{responseObject};
-
+            HDT_UTL_IntegrationLog.handleMrrRequest(RestContext.request.requestBody.toString(),jsonEx.getMessage() + ' ' + jsonEx.getStackTraceString());
             RestContext.response.statusCode = 400;
 
         }catch(CustomMessageException e){
 
-            System.debug('requestbody: ' + String.valueOf(RestContext.request.requestBody));
-            System.debug('errorMessage: ' + e.getMessage());
-            System.debug('errorStack: ' + e.getStackTraceString());
+            System.debug(LoggingLevel.DEBUG,'requestbody: ' + String.valueOf(RestContext.request.requestBody));
+            System.debug(LoggingLevel.DEBUG,'errorMessage: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG,'errorStack: ' + e.getStackTraceString());
 
             mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
 
@@ -116,14 +142,14 @@ global with sharing class HDT_WS_MrrRequest {
 
             responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
             mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>{responseObject};
-
+            HDT_UTL_IntegrationLog.handleMrrRequest(RestContext.request.requestBody.toString(),e.getMessage() + ' ' + e.getStackTraceString());
             RestContext.response.statusCode = 500;
 
         }catch(Exception e) {
             
-            System.debug('requestbody: ' + String.valueOf(RestContext.request.requestBody));
-            System.debug('errorMessage: ' + e.getMessage());
-            System.debug('errorStack: ' + e.getStackTraceString());
+            System.debug(LoggingLevel.DEBUG,'requestbody: ' + String.valueOf(RestContext.request.requestBody));
+            System.debug(LoggingLevel.DEBUG,'errorMessage: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG,'errorStack: ' + e.getStackTraceString());
 
             mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
 
@@ -133,11 +159,12 @@ global with sharing class HDT_WS_MrrRequest {
 
             responseFieldError.fieldType = 'TEXT';
             responseFieldError.name = 'ERROR_MESSAGE';
-            responseFieldError.value = 'There was an unexpected error';
+            responseFieldError.value = e.getMessage();
 
             responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
             mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>{responseObject};
-
+            HDT_UTL_IntegrationLog integClass = new HDT_UTL_IntegrationLog();
+            HDT_UTL_IntegrationLog.handleMrrRequest(RestContext.request.requestBody.toString(),e.getMessage() + ' ' + e.getStackTraceString());
             RestContext.response.statusCode = 500;
             
         } 

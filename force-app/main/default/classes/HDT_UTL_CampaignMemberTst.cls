@@ -35,7 +35,7 @@ public with sharing class HDT_UTL_CampaignMemberTst {
             update cp;
 
             List<Lead> lead = HDT_UTL_DataFactoryTst.createLead(2, true);
-            List<Account> acc = HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
+            List<Account> acc = HDT_UTL_DataFactoryTst.createAccountPartner(1, true, 'Mario Verdi');
             List<Contact> ctt = HDT_UTL_DataFactoryTst.createContact(2, true, acc[0].Id);
             HDT_UTL_DataFactoryTst.createCampaignMemberAssigmentItem(1, true, acc.get(0).Id, cma.Id, 'Preview', 50.0);
 
@@ -47,6 +47,19 @@ public with sharing class HDT_UTL_CampaignMemberTst {
 
             insert cmb;
 
+
+            //Copertura metodo Check Esito
+            HDT_UTL_DataFactoryTst.pClickInstance();
+            List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(2, false, acc[0].Id, 'Bozza');
+            orderList[0].RecordTypeId = constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+            orderList[0].QualityCall__c = true;
+            insert orderList[0];
+            orderList[1].ParentOrder__c = orderList[0].Id;
+            orderList[1].QualityCall__c = true;
+            insert orderList[1];
+            List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(1,false, acc[0].Id);
+            activities[0].Order__c = orderList[1].Id;
+            insert activities;
         }
 
     }
@@ -217,34 +230,6 @@ public with sharing class HDT_UTL_CampaignMemberTst {
     }
 
     @isTest
-    public static void testCreateCommercialCode(){
-
-        Campaign campaign = [SELECT Id, Channel__c FROM Campaign LIMIT 1];
-
-        System.debug('Campaign CCode-> ' + campaign);
-        campaign.Category__c = 'Campagna Outbound';
-        campaign.Channel__c = 'Bolletta';
-        campaign.CodeManagementModel__c = 'Per singolo Campaign Member';
-        campaign.CodeGenerationRule__c = 'PrefissoProgressivo';
-
-        update campaign;
-
-        List<CampaignMember> lstCampaignMember = [SELECT Id, CampaignId, PromoCommercialCode__c FROM CampaignMember WHERE CampaignId =: campaign.Id];
-
-        Test.startTest();
-
-            HDT_UTL_CampaignMember.createCommercialCode(lstCampaignMember);
-
-        Test.stopTest();
-
-        List<CampaignMember> lstCampaignMemberAfter = [SELECT Id, CampaignId, PromoCommercialCode__c FROM CampaignMember WHERE CampaignId =: campaign.Id];
-
-        System.debug('Newly generated code ' + lstCampaignMemberAfter.get(0).PromoCommercialCode__c);
-        System.assertNotEquals(lstCampaignMember.get(0).PromoCommercialCode__c, lstCampaignMemberAfter.get(0).PromoCommercialCode__c, 'testCreateCommercialCode - the code was not updated correctly');
-
-    }
-
-    @isTest
     public static void testCampaignSuspension(){
 
         Boolean finished = false;
@@ -309,4 +294,81 @@ public with sharing class HDT_UTL_CampaignMemberTst {
 
         System.assertEquals(true, finished, 'Test Ended');
     }
+
+/*
+    @isTest
+    public static void doCallMeBackTest(){
+
+        Lead myLead = [SELECT Id FROM Lead LIMIT 1];
+        myLead.ContactDate__c = Date.today();
+        update myLead;
+
+        MacroActivityEasyCIM__c myMAECIM = new MacroActivityEasyCIM__c();
+        myMAECIM.Name = 'Test MacroActivityEasyCIM__c';
+        insert myMAECIM;
+
+        //Campaign myCampaign = [SELECT Id FROM Campaign LIMIT 1];
+        //campaign.ReitekIntegrationTechnology__c = 'Web Service';
+        //campaign.MacroActivityEasyCIM__c = myMAECIM.Id;     
+        //update myCampaign;
+
+        List<CampaignMember> lstCampaignMember = [SELECT Id, CampaignId, LeadId, PhoneNumber__c FROM CampaignMember LIMIT 1];
+        lstCampaignMember[0].PhoneNumber__c = '0043736452';
+        update lstCampaignMember;
+
+
+        Test.startTest();
+
+            HDT_UTL_CampaignMember.doCallMeBack(lstCampaignMember);
+
+        Test.stopTest();
+
+        System.assert(lstCampaignMember != null, 'lstCampaignMember è null');
+    }
+*/
+    @isTest
+    public static void cancelContractTest(){
+
+        Map<String, List<String>> strMap = new Map<String, List<String>>();
+
+        Test.startTest();
+
+            HDT_UTL_CampaignMember.cancelContract(strMap);
+
+        Test.stopTest();
+
+        System.assert(strMap != null, 'strMap è null');
+    }
+
+    @isTest
+    public static void transcodeProcessForActivityTest(){
+
+        String rt = 'HDT_RT_CambioOfferta';
+
+        Test.startTest();
+
+            HDT_UTL_CampaignMember.transcodeProcessForActivity(rt);
+
+        Test.stopTest();
+
+        System.assert(rt != null, 'rt è null');
+
+    }
+
+    @isTest
+    public static void checkTipoEsitoTest(){
+        Campaign cmp = [SELECT Id  FROM Campaign WHERE AssignmentType__c = 'Peso Percentuale' LIMIT 1];
+        CampaignMember cMember = [SELECT Id, CampaignId, LeadId, PhoneNumber__c FROM CampaignMember WHERE CampaignId = :cmp.Id LIMIT 1];
+        wrts_prcgvr__Activity__c act = [SELECT Id FROM wrts_prcgvr__Activity__c LIMIT 1];
+        cMember.Status = 'Lotto scaduto';
+        cMember.RelatedActivity__c = act.Id; 
+        cMember.ResultType__c = 'Macchina';
+        insert new CampaignMemberStatus(Label = 'Lotto scaduto', HasResponded = true, sortOrder = 0, CampaignId = cmp.Id);
+        Test.startTest();
+            update cMember;
+        Test.stopTest();
+        List<AsyncApexJob> asyncJob = [SELECT Id FROM AsyncApexJob WHERE ApexClass.Name = 'HDT_BA_CampaignMemberManaged'];
+        System.assertEquals(1, asyncJob.size(), 'Activity non correttamente gestita.');
+    }
+
 }

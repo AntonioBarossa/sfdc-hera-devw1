@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Controllo_Lunghezza_Massima</fullName>
+    <active>true</active>
+    <errorConditionFormula>LEN( StatusName__c ) &gt; 40</errorConditionFormula>
+    <errorDisplayField>StatusName__c</errorDisplayField>
+    <errorMessage>La lunghezza del Nome Stato non può superare i 40 caratteri.</errorMessage>
+</ValidationRule>

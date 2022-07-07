@@ -1,13 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>Assign_Order_Product_Name</name>
+        <label>Assign Order Product Name</label>
+        <locationX>440</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>VasProductsName</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_on_OrderProducts.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>VasProductsName</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>, </stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_on_OrderProducts</targetReference>
+        </connector>
+    </assignments>
+    <description>VAS Singolo assciato all&apos;offerta o Standalone</description>
     <interviewLabel>HDT Script - Vas Standalone {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>HDT Script - Vas Standalone</label>
+    <label>HDT FL Script - Vas</label>
+    <loops>
+        <name>Loop_On_Child_Order</name>
+        <label>Loop On Child Order</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <collectionReference>GetOrdersFigli</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Get_VAS_Order_Product</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>HDT_Script_Introduzione</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Loop_on_OrderProducts</name>
+        <label>Loop on OrderProducts</label>
+        <locationX>352</locationX>
+        <locationY>638</locationY>
+        <collectionReference>Get_VAS_Order_Product</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_Order_Product_Name</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Loop_On_Child_Order</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <loops>
         <name>LoopOrdiniFigli</name>
         <label>LoopOrdiniFigli</label>
         <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationY>1310</locationY>
         <collectionReference>GetOrdersFigli</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -33,6 +85,27 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_VAS_Order_Product</name>
+        <label>Get VAS Order Product</label>
+        <locationX>352</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_on_OrderProducts</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OrderId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Loop_On_Child_Order.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>OrderItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>GetOrderPadre</name>
         <label>GetOrderPadre</label>
@@ -61,7 +134,7 @@
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>HDT_Script_Introduzione</targetReference>
+            <targetReference>Loop_On_Child_Order</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -89,12 +162,12 @@
             <targetReference>GetOrderPadre</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>HDT_Script_Anagrafica</name>
         <label>HDT Script - Anagrafica</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>1190</locationY>
         <connector>
             <targetReference>LoopOrdiniFigli</targetReference>
         </connector>
@@ -102,7 +175,7 @@
         <inputAssignments>
             <name>callType</name>
             <value>
-                <stringValue>Famiglie</stringValue>
+                <elementReference>GetOrderPadre.Channel__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -128,15 +201,27 @@
         <name>HDT_Script_Introduzione</name>
         <label>HDT Script - Introduzione</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>1070</locationY>
         <connector>
             <targetReference>HDT_Script_Anagrafica</targetReference>
         </connector>
         <flowName>HDT_Script_Introduzione</flowName>
         <inputAssignments>
-            <name>callType</name>
+            <name>channelInput</name>
             <value>
-                <stringValue>Inbound</stringValue>
+                <elementReference>GetOrderPadre.Channel__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>isVas</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>offerNameInput</name>
+            <value>
+                <elementReference>VasProductsName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -145,12 +230,13 @@
                 <elementReference>GetOrderPadre</elementReference>
             </value>
         </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
         <name>HDT_Script_VAS</name>
         <label>HDT Script - VAS</label>
         <locationX>264</locationX>
-        <locationY>758</locationY>
+        <locationY>1430</locationY>
         <connector>
             <targetReference>LoopOrdiniFigli</targetReference>
         </connector>
@@ -176,10 +262,57 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
+        <name>ExistLed</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>ExistNoProblemGas</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>ExistNoProblemLuce</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>ExistThermo</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <name>idOrdinePadreInput</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>VasProductsName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

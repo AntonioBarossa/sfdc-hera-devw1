@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Processo__c</fullName>
+    <externalId>false</externalId>
+    <label>Processo</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Prima Attivazione con modifica</fullName>
+                <default>false</default>
+                <label>Prima Attivazione con modifica</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione Ele</fullName>
+                <default>false</default>
+                <label>Prima Attivazione Ele</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione Fuori delibera</fullName>
+                <default>false</default>
+                <label>Prima Attivazione Fuori delibera</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione In delibera</fullName>
+                <default>false</default>
+                <label>Prima Attivazione In delibera</label>
+            </value>
+            <value>
+                <fullName>Subentro Ele</fullName>
+                <default>false</default>
+                <label>Subentro Ele</label>
+            </value>
+            <value>
+                <fullName>Subentro Gas</fullName>
+                <default>false</default>
+                <label>Subentro Gas</label>
+            </value>
+            <value>
+                <fullName>Switch in con voltura tecnica</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Switch in con voltura tecnica</label>
+            </value>
+            <value>
+                <fullName>Switch in Ele</fullName>
+                <default>false</default>
+                <label>Switch in Ele</label>
+            </value>
+            <value>
+                <fullName>Switch in Fittizio</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Switch in Fittizio</label>
+            </value>
+            <value>
+                <fullName>Switch in Gas</fullName>
+                <default>false</default>
+                <label>Switch in Gas</label>
+            </value>
+            <value>
+                <fullName>Switch in Ripristinatorio</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Switch in Ripristinatorio</label>
+            </value>
+            <value>
+                <fullName>Switch in Winback</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Switch in Winback</label>
+            </value>
+            <value>
+                <fullName>Voltura</fullName>
+                <default>false</default>
+                <label>Voltura</label>
+            </value>
+            <value>
+                <fullName>Voltura con autolettura</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Voltura con autolettura</label>
+            </value>
+            <value>
+                <fullName>Voltura con Switch</fullName>
+                <default>false</default>
+                <label>Voltura con Switch</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

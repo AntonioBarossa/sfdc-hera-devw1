@@ -91,9 +91,11 @@ public with sharing class HDT_UTL_Accents {
 
     public static String removeDiacritics(String text) {
         if (String.isNotEmpty(text)){
+            text = String.escapeSingleQuotes(text);
             for (String letter : patterns.keySet()) {
                 text = text.replaceAll(patterns.get(letter), letter);
             }
+            text = text.replace('"', '');
         }
         return text;
     }

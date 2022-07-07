@@ -66,6 +66,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
             Sale__c s = new Sale__c();
             HDT_QR_Sale saQr = new HDT_QR_Sale();
 
+            
             if(listSale != null && !listSale.isEmpty()){
                 s.id = listSale[0].opportunity__r.Sale__c;
                 s = saQr.getRecordById(listSale[0].opportunity__r.Sale__c,'id,Account__r.Category__c,Account__r.CompanyOwner__c');
@@ -98,7 +99,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                 }
             }
 
-            if(isTransitorio){
+            //if(isTransitorio){
                 HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
                 if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                     if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
@@ -108,7 +109,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                         }
                     }
                 }
-            }
+            //}
         }
         serviceSp.updateRecord(servicePo);
     }
@@ -123,17 +124,19 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
             if(sa!=null){
                 s = saQr.getRecordById(sa.id,'id,Account__r.Category__c,Account__r.CompanyOwner__c');
             }
-            boolean isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
-            if(isTransitorio){
-                HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
-                if(resp != null && resp.result!=null && !resp.result.isEmpty()){
-                    if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
-                        servicePo.SwitchInWinback__c = true;
-                        if(resp.result[0].effectiveDate != null){
-                            servicePo.SwitchOutDate__c = date.valueOf(resp.result[0].effectiveDate);
+            if(sa != null){
+                boolean isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
+                //if(isTransitorio){
+                    HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
+                    if(resp != null && resp.result!=null && !resp.result.isEmpty()){
+                        if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
+                            servicePo.SwitchInWinback__c = true;
+                            if(resp.result[0].effectiveDate != null){
+                                servicePo.SwitchOutDate__c = date.valueOf(resp.result[0].effectiveDate);
+                            }
                         }
                     }
-                }
+                //}
             }
         }
         serviceSp.createRecord(servicePo);
@@ -167,13 +170,13 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     }
 
     @AuraEnabled
-    public static List<DistributorPointCode__c> getDistributorPointCode(String code, String commodity, String comune) {
+    public static List<DistributorPointCode__c> getDistributorPointCode(String code, String commodity, String comune, String presenzaAllaccio) {
 
         HDT_QR_DistributorPointCode queryClass = new HDT_QR_DistributorPointCode();
         List<DistributorPointCode__c> distrPointCodeWithCode = new List<DistributorPointCode__c>();
         List<DistributorPointCode__c> distrPointCodeWithOutCode = new List<DistributorPointCode__c>();
 
-        for(DistributorPointCode__c distPointCode : queryClass.getDistributorPointCode(code, commodity, comune)){
+        for(DistributorPointCode__c distPointCode : queryClass.getDistributorPointCode(code, commodity, comune, presenzaAllaccio)){
             if(distPointCode.PointCode__c != null && distPointCode.PointCode__c != ''){
                 distrPointCodeWithCode.add(distPointCode);
             }

@@ -27,7 +27,8 @@ export default class hdtChildOrderProcessActions extends LightningElement {
         resubmission({
             orderId : this.order.Id,
             activityId : this.activityIdToClose,
-            processType : this.order.ProcessType__c
+            processType : this.order.ProcessType__c,
+            phase : this.order.Phase__c
         }).then(response => {
             let _message = 'Risottomissione avvenuta con successo';
             let _title = 'Success';
@@ -36,6 +37,15 @@ export default class hdtChildOrderProcessActions extends LightningElement {
                _message = response;
                _title = 'Error';
                _variant = 'error'; 
+            }else{
+                this.loading = false;
+
+                if(this.order.ProcessType__c === 'Switch in Ripristinatorio' || this.order.IsCloned__c===true){
+                    console.log('redirect_attivazione_mod');
+                    this.dispatchEvent(new CustomEvent('redirect_attivazione_mod'));
+                } else {
+                    this.dispatchEvent(new CustomEvent('redirecttoparent'));
+                }
             }
             const toastSuccessMessage = new ShowToastEvent({
                 title: _title,
@@ -81,7 +91,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
 
         console.log('lastStepNumber disabledSave: ', this.lastStepNumber);
         console.log('this.order.Step__c disabledSave: ', this.order.Step__c);
-        return (this.order.Step__c !== this.lastStepNumber && ( this.order.RecordType.DeveloperName !== 'HDT_RT_ScontiBonus' && this.notBillableVas ));
+        return (this.order.Step__c !== this.lastStepNumber /*&& ( this.order.RecordType.DeveloperName !== 'HDT_RT_ScontiBonus' && this.notBillableVas )*/);
     }
 
     dateWithMonthsDelay (months) {

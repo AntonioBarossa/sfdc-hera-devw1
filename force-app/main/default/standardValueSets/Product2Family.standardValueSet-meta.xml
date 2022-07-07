@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>None</fullName>
+        <default>false</default>
+        <label>None</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Bonus Percentuale</fullName>
+        <default>false</default>
+        <label>Bonus Percentuale</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Bonus Eur/Giorno</fullName>
+        <default>false</default>
+        <label>Bonus Eur/Giorno</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Bonus Eur/Mese</fullName>
+        <default>false</default>
+        <label>Bonus Eur/Mese</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Bonus Eur/kWh</fullName>
+        <default>false</default>
+        <label>Bonus Eur/kWh</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contributo Eur/kWh</fullName>
+        <default>false</default>
+        <label>Contributo Eur/kWh</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contributo Eur/Mese</fullName>
+        <default>false</default>
+        <label>Contributo Eur/Mese</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contributo Eur/Giorno</fullName>
+        <default>false</default>
+        <label>Contributo Eur/Giorno</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contributo Eur/kW</fullName>
+        <default>false</default>
+        <label>Contributo Eur/kW</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Offerta commerciale</fullName>
+        <default>false</default>
+        <label>Offerta commerciale</label>
+    </standardValue>
+    <standardValue>
+        <fullName>VAS Prodotto</fullName>
+        <default>false</default>
+        <label>VAS Prodotto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>VAS Servizio</fullName>
+        <default>false</default>
+        <label>VAS Servizio</label>
+    </standardValue>
+    <standardValue>
+        <fullName>VAS Fatturabili</fullName>
+        <default>false</default>
+        <label>VAS Fatturabili</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Promozione</fullName>
+        <default>false</default>
+        <label>Promozione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Punto Fornitura</fullName>
+        <default>false</default>
+        <label>Punto Fornitura</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Bonus Eur/SMC</fullName>
+        <default>false</default>
+        <label>Bonus Eur/SMC</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contributo Eur/SMC</fullName>
+        <default>false</default>
+        <label>Contributo Eur/SMC</label>
+    </standardValue>
+    <standardValue>
+        <fullName>VAS Opzione prodotto</fullName>
+        <default>false</default>
+        <label>VAS Opzione prodotto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>VAS Opzione servizio</fullName>
+        <default>false</default>
+        <label>VAS Opzione servizio</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sconto Percentuale VAS</fullName>
+        <default>false</default>
+        <label>Sconto Percentuale VAS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sconto Eur/Giorno VAS</fullName>
+        <default>false</default>
+        <label>Sconto Eur/Giorno VAS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Esenzione VAS</fullName>
+        <default>false</default>
+        <label>Esenzione VAS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contenitore Bonus</fullName>
+        <default>false</default>
+        <label>Contenitore Bonus</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contenitore Contributi</fullName>
+        <default>false</default>
+        <label>Contenitore Contributi</label>
+    </standardValue>
+</StandardValueSet>

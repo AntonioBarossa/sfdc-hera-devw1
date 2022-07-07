@@ -24,20 +24,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>CategoryFamily__c</picklist>
-        <values>
-            <fullName>TBD</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>ChannelClient__c</picklist>
-        <values>
-            <fullName>TBD</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>CompanyOwner__c</picklist>
         <values>
             <fullName>AAA-EBT</fullName>
@@ -57,27 +43,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>ComponentPCV__c</picklist>
-        <values>
-            <fullName>TBD</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>ContributionsType__c</picklist>
-        <values>
-            <fullName>TBD</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Convention__c</picklist>
-        <values>
-            <fullName>TBD</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>DwellingType__c</picklist>
         <values>
             <fullName>Appartamento</fullName>
@@ -85,24 +50,6 @@
         </values>
         <values>
             <fullName>Casa Indipendente</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>EquipmentType__c</picklist>
-        <values>
-            <fullName>Monorario</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Multiorario</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>GreenCertificateIncluded__c</picklist>
-        <values>
-            <fullName>TBD</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -232,10 +179,10 @@
             <fullName>Bolletta per e-mail</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>Bolletta per e-mail %2B Carta</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>Cartaceo</fullName>
             <default>false</default>
@@ -246,17 +193,6 @@
         </values>
         <values>
             <fullName>Invio tramite PEC</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Typology__c</picklist>
-        <values>
-            <fullName>Prodotto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Servizio</fullName>
             <default>false</default>
         </values>
     </picklistValues>

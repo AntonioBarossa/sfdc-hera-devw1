@@ -14,8 +14,14 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
     List<String> caseIdList = new List<String>();
     String header = 'ID_JOB;RDS_RIGA;ACR;SOCIETA;ASSEGNATARIO;GRUPPO;DATA_RICEVIMENTO;DATA_CHIUSURA;TIPO;SERVIZIO;TIPO_FORNITURA;CATEGORIA_CLIENTE;CODICE_CLIENTE;STATO_PRATICA;CANALE_DI_RICEZIONE;REITERATA;EP_SOTTOTIPO;EP_CAUSALE;EP_CLASSIFICAZIONE;TE_SOL;TE_LAV;FUORI_STD_AEEGSI;CHIAMATA;BRAND;SEGMENTO;COMUNE_CORRETTO;ISTAT_CORRETTO;PROVINCIA;DIRITTO_RETTIFICA;FLUSSO_PRATICA;CANALE_DI_USCITA;EMAIL_USCITA;RICHIESTE_PARERI\n';
     String generateFile = header;
+    public String queryDate='';
     public Iterable<Case> start(Database.BatchableContext context) {
-
+        if(String.isNotBlank(queryDate)){
+            Datetime startDt=Datetime.valueOfGMT(queryDate + ' 00:00:00');
+            Datetime endDt=startDt.addDays(1);
+            dtos = caseQr.getRecordCreatedInRequestedDate('Reclami', startDt, endDt);
+            return this.dtos;
+        }
         dtos = caseQr.getRecordCreatedLastWeekEqualsBy('Reclami');
         return this.dtos;
     }
@@ -68,6 +74,8 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
                 fr.brand = '';
                 fr.segmento = ca.Account.segment__c != null ? ca.Account.segment__c : '';
                 fr.comuneCorretto = ca.ServicePoint__r.SupplyCity__c != null ? ca.ServicePoint__r.SupplyCity__c : '';
+                fr.istatCorretto = ca.SupplyCityCode__c != null ? ca.SupplyCityCode__c : '';
+                fr.provincia = ca.ServicePoint__r.SupplyProvince__c != null ? ca.ServicePoint__r.SupplyProvince__c : '';
                 fr.dirittoRettifica = ca.CorrectionRight__c != null ? ca.CorrectionRight__c : '';
                 fr.flussoPratica = ca.parentId != null ? 'S' : caseParentiIdChild.get(ca.id) != null ? 'M' : 'U';
                 fr.canaleDiUscita = ca.MotivatedResponseSendMode__c != null ? ca.MotivatedResponseSendMode__c : '';
@@ -107,6 +115,8 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
             rowFile = rowFile + fr.brand + ';' ;
             rowFile = rowFile + fr.segmento + ';' ;
             rowFile = rowFile + fr.comuneCorretto + ';' ; 
+            rowFile = rowFile + fr.istatCorretto + ';' ; 
+            rowFile = rowFile + fr.provincia + ';' ; 
             rowFile = rowFile + fr.dirittoRettifica + ';' ;
             rowFile = rowFile + fr.flussoPratica + ';' ;
             rowFile = rowFile + fr.canaleDiUscita + ';' ; 
@@ -121,8 +131,9 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
         ContentVersion cv = new ContentVersion();
         cv.ContentLocation = 'S';
         cv.VersionData = generateFileBlob;
-        cv.Title = 'PraxidiaReclami';
-        cv.PathOnClient = 'PraxidiaReclami.csv';
+        String dateTimeString = String.valueOf(Datetime.now()).replaceAll('-', '').replaceAll(':', '').replaceAll(' ', '_');
+        cv.Title = 'PraxidiaReclami_' + dateTimeString;
+        cv.PathOnClient = 'PraxidiaReclami' + dateTimeString + '.csv';
         contentSRV.insertRecords(new List<ContentVersion>{cv});
        /* ContentVersion cv2 = [Select id,contentDocumentId from ContentVersion Where id = :cv.id][0];
         ContentDocumentLink cnt = new ContentDocumentLink();

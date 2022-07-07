@@ -36,6 +36,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>MethodSignedAccepted__c</picklist>
+        <values>
+            <fullName>IVR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comfort call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>firma digitale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>web assistito</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>AggregateBilling__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -71,10 +90,10 @@
             <fullName>Bolletta per e-mail</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>Bolletta per e-mail %2B Carta</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>Cartaceo</fullName>
             <default>false</default>
@@ -267,6 +286,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato per possibile frode</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento da cliente</fullName>
             <default>false</default>
         </values>
@@ -280,6 +303,10 @@
         </values>
         <values>
             <fullName>Consegna%2FInstallazione Rifiutata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contatto Quality Fallito</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1595,7 +1622,7 @@
     <picklistValues>
         <picklist>DocSendingMethod__c</picklist>
         <values>
-            <fullName>E-mail</fullName>
+            <fullName>E-Mail</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1885,61 +1912,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>MaxRequiredPotential__c</picklist>
-        <values>
-            <fullName>46</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>76</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>100</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>191</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>200</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>307</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>498</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>767</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1228</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2398</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>3837</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6236</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>9594</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>OdvCreated__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -1986,10 +1958,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
-        <values>
+<!--         <values>
             <fullName>Amm%2E Precheck OK SII</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullato</fullName>
             <default>false</default>
@@ -2000,6 +1972,10 @@
         </values>
         <values>
             <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2016,6 +1992,18 @@
         </values>
         <values>
             <fullName>Documentazione da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esportazione VS Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa di quality call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2049,13 +2037,25 @@
         <values>
             <fullName>Plico validato Firmato</fullName>
             <default>false</default>
+        </values>        
+        <values>
+            <fullName>Quality Call OK</fullName>
+            <default>false</default>
         </values>
         <values>
             <fullName>Registrazione  da validare</fullName>
             <default>false</default>
         </values>
+<!--         <values>
+            <fullName>Registrazione da validare</fullName>
+            <default>false</default>
+        </values> -->
         <values>
             <fullName>Plico Firmato da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrazione validata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2370,6 +2370,10 @@
             <fullName>Contratto già firmato</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Accettato Digitalmente</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Status</picklist>
@@ -2625,6 +2629,10 @@
         </values>
         <values>
             <fullName>E-Canone fisso</fullName>
+            <default>false</default>
+        </values>        
+        <values>
+            <fullName>F-Standalone</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -4,7 +4,7 @@ import getAsyncJobByJobItem from '@salesforce/apex/HDT_UTL_HerokuPostSalesManage
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 //Time out for callout in seconds
-const timeOut = 60;
+const timeOut = 30;
 
 export default class HdtFlowNavigationButton extends LightningElement {
 

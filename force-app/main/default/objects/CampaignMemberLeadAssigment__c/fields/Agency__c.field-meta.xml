@@ -6,7 +6,6 @@
     <externalId>false</externalId>
     <label>Agenzia</label>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>Assegnazioni Campaign Member su base Lea</relationshipLabel>
     <relationshipName>Assegnazioni_Campaign_Member_su_base_Lea</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>

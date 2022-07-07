@@ -3,6 +3,10 @@
     <label></label>
     <name>Type__c</name>
     <picklistValues>
+        <masterLabel>Accettazione Voltura</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
         <masterLabel>Amm. Precheck KO SII</masterLabel>
         <translation></translation>
     </picklistValues>
@@ -119,10 +123,6 @@
         <translation></translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>Morosità Business</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
         <masterLabel>Preavviso cessazione</masterLabel>
         <translation></translation>
     </picklistValues>
@@ -183,87 +183,11 @@
         <translation></translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>Supporto Anomalia processo/sistema</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto Catalogo Prodotti</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
         <masterLabel>Supporto Contact Center</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>Supporto Esercizio Sistemi</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto Front</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto Verifiche contratti</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto caricamenti contratti</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto credito Credit Management – affidi ADR</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto credito Credit Management – affidi legale</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto credito Credit Management – cessioni</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto credito Credit Management – sospensioni</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto documentale</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto e segnalazioni back office</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto emissione SD</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto fatturazione</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto layout bollette</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
         <masterLabel>Supporto legale</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto pagamenti</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto su Bonus Sociale</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto su Canone Rai</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto verifica rimborsi Clienti</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>

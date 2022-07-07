@@ -588,7 +588,7 @@ public class HDT_QR_OrderTst{
 		System.assertNotEquals(null, orders, 'Order not found');
 	}
     
-	@isTest static void testGetRecordsByAccountIdCopContratto(){
+	@isTest static void testGetRecordsByAccountIdCopContrattoFirmato(){
 
         String acc = [SELECT Id FROM Account][0].id;
         
@@ -599,7 +599,26 @@ public class HDT_QR_OrderTst{
 		
 		Test.startTest();
         
-		List<Order> orders = orderQr.getRecordsByAccountIdCopContratto(acc, true);
+		List<Order> orders = orderQr.getRecordsByAccountIdCopContrattoFirmato(acc);
+
+		Test.stopTest();
+
+		System.assertEquals(0, orders.size(), 'Order not found');
+		System.assertNotEquals(null, orders, 'Order not found');
+	}
+    
+    	@isTest static void testGetRecordsByAccountIdCopContrattoNonFirmato(){
+
+        String acc = [SELECT Id FROM Account][0].id;
+        
+        Order ord = [Select id FROM Order WHERE Username__c='test'];
+        ord.ContractSigned__c = false;
+        ord.Status = 'In Lavorazione';
+        update ord;
+		
+		Test.startTest();
+        
+		List<Order> orders = orderQr.getRecordsByAccountIdCopContrattoNonFirmato(acc);
 
 		Test.stopTest();
 
@@ -625,4 +644,15 @@ public class HDT_QR_OrderTst{
 		System.assertEquals(1, orders.size(), 'Order not found');
 		System.assertNotEquals(null, orders, 'Order not found');
 	}
+
+	@isTest
+	static void getOrdersByParentTst()
+	{
+		List<Order> parentOrder = [Select Id FROM Order WHERE ParentOrder__c = NULL];
+		Test.startTest();
+			Map<String, List<String>> result = HDT_QR_Order.getOrdersByParent(new Set<String>{parentOrder[0].Id});
+		Test.stopTest();
+		System.assertEquals(true, !result.isEmpty(), 'Order not found');
+	}
+
 }

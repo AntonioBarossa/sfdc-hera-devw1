@@ -5,19 +5,36 @@ public with sharing class HDT_WS_InboundSolTst {
     static void setup(){
 
         HDT_UTL_DataFactoryTst.pClickCasePhase();
-
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
-        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
-        List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, false);
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(2, true, accList[0].id);
+        List<AccountContactRelation> accContRelations = new List<AccountContactRelation>();
+        for (AccountContactRelation accContRelation : [SELECT id FROM AccountContactRelation WITH SECURITY_ENFORCED]){
+            accContRelation.Roles = 'Other';
+            accContRelations.add(accContRelation);
+        }
+        accContRelations[1].Roles = 'Titolare';
+        update accContRelations;
+        List<Pricebook2> pb = HDT_UTL_DataFactoryTst.createPricebook(1,true);
+        List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(2, false);
         productList[0].Name = 'Analisi Consumi';
-        productList[0].Family = 'Offerta commerciale';
-        productList[0].ProductCode = 'codeTest';
+        productList[0].Family = 'VAS Fatturabili';
+        productList[0].ProductCode = 'VAS_AS_HERA';
+
+        productList[1].Name = 'Prezzo Netto';
+        productList[1].Family = 'Offerta commerciale';
+        productList[1].ProductCode = 'PRZ_NTT';
         insert productList;
 
-        Product2 prod = [SELECT Id FROM Product2 LIMIT 1];
 
+        productList  = [SELECT Id FROM Product2];
+        Product2 prodOffer = [SELECT Id FROM Product2 where Family = 'Offerta commerciale'];
+        pb = [SELECT Id from Pricebook2 WHERE isStandard = false LIMIT 1];
+        Pricebook2 pbStandard = [SELECT Id from Pricebook2 WHERE isStandard = true LIMIT 1];
+        List<PricebookEntry> pbe = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, pb[0].Id,pbStandard.Id);
+        SBQQ__ProductOption__c po = HDT_UTL_DataFactoryTst.createProductOption(productList[0].Id,productList[1].Id,true);
         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,false, accList[0].Id);
         billingProfileList[0].InvoicingStreetName__c = 'Roma';
         billingProfileList[0].InvoicingStreetNumber__c = '15';
@@ -40,18 +57,21 @@ public with sharing class HDT_WS_InboundSolTst {
         HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
         String rtName =  constantsUtl.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA;
         String rtId = constantsUtl.CASE_RECORDTYPEID_MOROSITA;
+        String rtIdOrder = constantsUtl.ORDER_RECORDTYPEID_VAS;
+        String rtOrderName = constantsUtl.ORDER_RECORDTYPE_DEVELOPERNAME_VAS;
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Comunicazione verso Heroku', 'Bozza', rtIdOrder, rtOrderName,'A','','','');
 
         SBQQ__Subscription__c subs = new SBQQ__Subscription__c(
             SBQQ__Contract__c = contr.Id, 
-            SBQQ__Product__c = prod.Id, 
-            SBQQ__Quantity__c = 10.2, 
+            SBQQ__Product__c = prodOffer.Id, 
+            SBQQ__Quantity__c = 1, 
             SBQQ__Account__c = accList[0].Id,
             SBQQ__NetPrice__c = 100.2,
             SBQQ__SubscriptionEndDate__c = Date.Today());
         insert subs;
 
-        SBQQ__ProductOption__c prodOption = new SBQQ__ProductOption__c();
+        /*SBQQ__ProductOption__c prodOption = new SBQQ__ProductOption__c();
         prodOption.SBQQ__ConfiguredSKU__c = prod.Id;
         prodOption.SBQQ__OptionalSKU__c = prod.Id;
         prodOption.SBQQ__Number__c = 1;
@@ -60,7 +80,7 @@ public with sharing class HDT_WS_InboundSolTst {
         prodOption.SBQQ__Selected__c = false;
         prodOption.SBQQ__Feature__c = null;
         prodOption.SBQQ__Type__c = 'Component';
-        insert prodOption;
+        insert prodOption;*/
     }
 
     @IsTest
@@ -92,12 +112,12 @@ public with sharing class HDT_WS_InboundSolTst {
     }
 
     @IsTest
-    static void testGETCallWithoutPermission(){
+    static void testGetCallWithoutPermission(){
         
         //setup user without permissions
         String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
         // This code runs as the system user
-        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
+        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User' or Name='Utente standard'];
         User u = new User(
             Alias = 'standt', Email='standarduser@testorg.com', EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
             LocaleSidKey='en_US', ProfileId = p.Id,
@@ -165,10 +185,6 @@ public with sharing class HDT_WS_InboundSolTst {
     static void testDoPostInstallment(){
         
         Case cs = [SELECT Id, ContractAccountCode__c, DocumentNumber__c, BillNumber__c, AccountCode__c  FROM Case WITH SECURITY_ENFORCED LIMIT 1];
-
-        //debug
-        System.debug('CASE: ' + cs);
-        
         //mock
         HttpResponse httpRes = new HttpResponse();
         httpRes.setHeader('Content-Type', 'application/json');
@@ -238,6 +254,64 @@ public with sharing class HDT_WS_InboundSolTst {
         
     }
 
+    /*@IsTest
+    static void testAnalisiConsumiFirstCall(){
+        Account acc = [SELECT Id from Account limit 1];
+        Id titolareId;
+        Id contactId;
+        for (AccountContactRelation accContRel : [SELECT ContactId,Roles FROM AccountContactRelation WHERE AccountId = :acc.Id]){
+             if ('Titolare'.equalsIgnoreCase(accContRel.Roles)){
+                titolareId = accContRel.ContactId;
+             }else {
+                contactId = accContRel.ContactId;
+             }
+        }
+        BillingProfile__c bill = [SELECT Id,ContractAccountCode__c from BillingProfile__c limit 1];
+        Contract contr = [SELECT Id,SAPContractCode__c from Contract LIMIT 1];
+
+        //mock
+        HttpResponse httpRes = new HttpResponse();
+        httpRes.setHeader('Content-Type', 'application/json');
+        httpRes.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"testata":{"esito":"OK"},"posizioni":[{"campo":"IMPOSTE","valore":"200008867681"},{"campo":"STAMPADEL501GAS","valore":"200008867681"},{"campo":"ACCISE","valore":"200008867681"},{"campo":"CA","valore":"200008867681"},{"campo":"PRESSIONE","valore":"200008867681"},{"campo":"CALIBRO1","valore":"200008867681"},{"campo":"DESCRFATTURACOLL","valore":"200008867681"},{"campo":"OPZIONE","valore":"200008867681"},{"campo":"MOTIVOBLOCCOCALCOLO","valore":"200008867681"},{"campo":"ANNOFABBRCONT","valore":"2021"},{"campo":"DATACESSAZIONE","valore":"20210930"}]}}');
+        httpRes.setStatusCode(200);
+        httpRes.setStatus('OK');
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_InboundSolTstMock(httpRes));
+        //test
+        Test.startTest();
+
+        //setup for test
+        RestRequest req = new RestRequest(); 
+		RestResponse res = new RestResponse();
+
+        String reqString = '{ "method":"analisiConsumi", "accountId":"'+ acc.Id +'", "contactId":"'+ contactId +'", "integrationId":"Integ_1", "source":"Web","contractAccount":"'+ bill.ContractAccountCode__c +'" }';
+        req.requestURI = 'services/apexrest/SolInboundServices';
+		req.httpMethod = 'POST';
+		req.requestBody = Blob.valueOf(reqString);  
+
+		RestContext.request = req;
+		RestContext.response = res;
+
+        HDT_WS_InboundSol.doPost();
+        res = RestContext.response;
+        //assertions
+        System.assertNotEquals(null, res, 'res == null');
+        Order ord = [SELECT Id,OrderNumber,Contact__c FROM Order where Sale__c != null limit 1];
+        //System.assert(titolareId != ord.Contact__c,'Contatto settato non corretto');
+        Order ord2 = [SELECT Id,OrderNumber FROM Order where Sale__c = null];
+        delete ord2;
+        reqString = '{ "numeroOccupanti":"1", "superficie":"40", "tipologiaAbitazione":"Appartamento", "proprietario":"Si","method":"analisiConsumi", "accountId":"'+ acc.Id +'", "contactId":"'+ contactId +'", "integrationId":"Integ_1", "serviceRequest":"'+ ord.OrderNumber +'","contractNumber":"'+ contr.SAPContractCode__c +'" }';
+        req.requestURI = 'services/apexrest/SolInboundServices';
+		req.httpMethod = 'POST';
+		req.requestBody = Blob.valueOf(reqString);  
+
+		RestContext.request = req;
+		RestContext.response = res;
+
+        HDT_WS_InboundSol.doPost();
+        res = RestContext.response;
+        Test.stopTest();
+    }*/
+    
     public class HDT_WS_InboundSolTstMock implements HttpCalloutMock{
 
         HttpResponse response = new HttpResponse();

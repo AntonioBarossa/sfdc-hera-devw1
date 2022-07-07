@@ -136,7 +136,7 @@ export default class LookupLwc extends LightningElement {
     inblur() {
         console.log("# inblur #");
         // eslint-disable-next-line @lwc/lwc/no-async-operation
-        this.blurTimeout = setTimeout(() =>  {this.boxClass = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-has-focus'}, 300);
+        this.blurTimeout = setTimeout(() =>  {this.boxClass = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-has-focus'}, 100);
     }
 
     onSelect(event) {
@@ -147,7 +147,7 @@ export default class LookupLwc extends LightningElement {
         //let key = this.uniqueKey;
         console.log("# selectedId: " + selectedObj.id + ' # name: ' + selectedObj.name + ' # code: ' + selectedObj.code);
         const valueSelectedEvent = new CustomEvent('valueselect', {
-            detail: { selectedId: selectedObj.id, code: selectedObj.code, name: selectedObj.name }
+            detail: { selectedId: selectedObj.id, code: selectedObj.code, name: selectedObj.name}
         });
         this.dispatchEvent(valueSelectedEvent);
 

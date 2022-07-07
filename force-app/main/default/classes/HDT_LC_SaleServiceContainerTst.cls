@@ -10,7 +10,16 @@ public with sharing class HDT_LC_SaleServiceContainerTst{
 	@testSetup
 	static void setup(){
 
+		HDT_UTL_DataFactoryTst.pClickOrderPhase();
+		HDT_UTL_DataFactoryTst.pClickInstance();
+
 		Id rtServPoint=constants.SERVICEPOINT_RECORDTYPEID_PELETRICCO;
+
+		City__c city=HDT_UTL_DataFactoryTst.createCity()[0];
+        city.Name = 'PESARO';
+        city.Province__c = 'PU';
+        city.ServiceGas__c = true;
+        update city;
 
 		List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 		List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].id, 'Attiva');
@@ -18,12 +27,14 @@ public with sharing class HDT_LC_SaleServiceContainerTst{
 		servpoints[0].SupplyProvince__c='AQ';
 		servpoints[0].CommoditySector__c='Energia Elettrica';
 		servpoints[0].SupplyType__c='Domestico';
+		servpoints[0].SupplyCity__c='PESARO';
 
 		servpoints[1].SupplyProvince__c='AQ';
 		servpoints[1].ServicePointCode__c='testServicePointCode2';
 		servpoints[1].RecordTypeId=rtServPoint;
 		servpoints[1].CommoditySector__c='Energia Elettrica';
 		servpoints[1].SupplyType__c='Non Domestico';
+		servpoints[1].SupplyCity__c='PESARO';
 		insert servpoints;
 
 		List<Contract> contracts=HDT_UTL_DataFactoryTst.createContract(1, false, accounts[0].id);
@@ -76,11 +87,11 @@ public with sharing class HDT_LC_SaleServiceContainerTst{
 			                            WHERE ServicePointCode__c='testServicePointCode'];
 
 
-			ServicePoint__c tServPoint2=[SELECT Id, ServicePointCode__c, RecordType.DeveloperName, SupplyType__c, Account__c, SupplyProvince__c, SupplyTypeTemp__c
+			ServicePoint__c tServPoint2=[SELECT Id, ServicePointCode__c, SupplyCity__c, CommoditySector__c, RecordType.DeveloperName, SupplyType__c, Account__c, SupplyProvince__c, SupplyTypeTemp__c
 			                             FROM ServicePoint__c
 			                             WHERE ServicePointCode__c='testServicePointCode2'];
 
-			Map<String, Boolean> tcreateSale=HDT_LC_SaleServiceContainer.createSaleServiceItemTile(tServPoint2, tSale, tServPoint);
+			Map<String, Boolean> tcreateSale=HDT_LC_SaleServiceContainer.createSaleServiceItemTile(tServPoint2, tSale, tServPoint.SupplyType__c);
 
 			System.debug('tcreateSale = '+tcreateSale);
 
@@ -113,5 +124,15 @@ public with sharing class HDT_LC_SaleServiceContainerTst{
 		System.assertEquals('testUpdate', tSale2.Name, 'Sale not Updated');
 		System.assertNotEquals('testSaleName0', tSale2.Name, 'updateSale did not work correctly');
 		Test.stopTest();
+	}
+
+	@isTest
+	static void siebelLoadingActivityTst()
+	{
+		List<Order> orderList = [SELECT Id, AccountId FROM Order];
+		Test.startTest();
+			String result = HDT_LC_SaleServiceContainer.siebelLoadingActivity(orderList[0].Id, orderList[0].AccountId, 'Order');
+		Test.stopTest();
+		System.assertEquals(true, String.isNotBlank(result), 'Activity Non Creata');
 	}
 }

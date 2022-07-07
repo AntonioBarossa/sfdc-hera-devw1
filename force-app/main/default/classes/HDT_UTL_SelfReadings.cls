@@ -119,7 +119,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
 
         Case c = new Case();
         Reading__c r = new Reading__c();
-        Boolean isGas = request.commodity.equals('Gas');
+        Boolean isGas = request.commodity.equals('Gas') || request.commodity.equals('G');
 
         if (String.isNotBlank(request.id)) {
             c.Id = request.id;
@@ -169,7 +169,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
                 HDT_UTL_DatabaseService.upsertSObject(c); // necessario per doppia transizione di fase.
                 String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
                 c.Description = nowDateFormat + ': '  + request.outcomeDescription;
-                c.Phase__c = 'KO Definitivo';
+                c.Phase__c = 'Annullato';
                 c.Status = 'Closed';
             }
             when else {
@@ -293,25 +293,26 @@ public inherited sharing class HDT_UTL_SelfReadings {
         } 
     }
 
-    public static Map<String,Boolean> isAutomaticDiscard(Set<String> errorCodes) {
+    public static Map<String,DiscardAnnullmentRule__c> isAutomaticDiscard(Set<String> errorCodes) {
         if (errorCodes == null) {
             return null;
         }
 
-        Map<String, Boolean> isAutomaticDiscardMap = new Map<String, Boolean>();
+        Map<String, DiscardAnnullmentRule__c> isAutomaticDiscardMap = new Map<String, DiscardAnnullmentRule__c>();
 
         HDT_QR_SelfReadings queryHandler = new HDT_QR_SelfReadings();
         List<DiscardAnnullmentRule__c> configs = queryHandler.getDiscardConfigurations(errorCodes);
 
         if (configs.isEmpty()) {
-            return null;
+            return new Map<String,DiscardAnnullmentRule__c>();
         }
 
         for (DiscardAnnullmentRule__c conf : configs) {
             if(String.isNotBlank(conf.DiscardCode__c)){
-                isAutomaticDiscardMap.put(conf.DiscardCode__c, conf.IsActive__c);
-            }else {
-                isAutomaticDiscardMap.put(conf.ControllingValue__c, conf.IsActive__c);
+                isAutomaticDiscardMap.put(conf.DiscardCode__c, conf);
+            }
+            if(String.isNotBlank(conf.ControllingValue__c)){
+                isAutomaticDiscardMap.put(conf.ControllingValue__c.toLowerCase(), conf);
             }
         }
 

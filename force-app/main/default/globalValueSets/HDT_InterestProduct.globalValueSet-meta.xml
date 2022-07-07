@@ -56,6 +56,11 @@
         <label>Hera Contawatt Lavoro</label>
     </customValue>
     <customValue>
+        <fullName>Hera E-Bike Business</fullName>
+        <default>false</default>
+        <label>Hera E-Bike Business</label>
+    </customValue>
+    <customValue>
         <fullName>Hera EtàPiù Dual</fullName>
         <default>false</default>
         <label>Hera EtàPiù Dual</label>
@@ -79,6 +84,11 @@
         <fullName>Hera Fotovoltaico Business</fullName>
         <default>false</default>
         <label>Hera Fotovoltaico Business</label>
+    </customValue>
+    <customValue>
+        <fullName>Hera Fotovoltaico Kit fai da te</fullName>
+        <default>false</default>
+        <label>Hera Fotovoltaico Kit fai da te</label>
     </customValue>
     <customValue>
         <fullName>Hera Impronta Zero Dual</fullName>
@@ -126,6 +136,11 @@
         <label>Hera No Problem</label>
     </customValue>
     <customValue>
+        <fullName>Hera No Problem Acqua</fullName>
+        <default>false</default>
+        <label>Hera No Problem Acqua</label>
+    </customValue>
+    <customValue>
         <fullName>Hera No Problem Lavoro</fullName>
         <default>false</default>
         <label>Hera No Problem Lavoro</label>
@@ -171,6 +186,31 @@
         <label>Hera Placet Variabile Lavoro Luce</label>
     </customValue>
     <customValue>
+        <fullName>Hera Ricarica Business</fullName>
+        <default>false</default>
+        <label>Hera Ricarica Business</label>
+    </customValue>
+    <customValue>
+        <fullName>Hera Ricarica Privata</fullName>
+        <default>false</default>
+        <label>Hera Ricarica Privata</label>
+    </customValue>
+	<customValue>
+        <fullName>Hera Ricarica Pubblica</fullName>
+        <default>false</default>
+        <label>Hera Ricarica Pubblica</label>
+    </customValue>
+	<customValue>
+        <fullName>Hera Sanifica Aria</fullName>
+        <default>false</default>
+        <label>Hera Sanifica Aria</label>
+    </customValue>
+	<customValue>
+        <fullName>Hera Sanifica Aria Business</fullName>
+        <default>false</default>
+        <label>Hera Sanifica Aria Business</label>
+    </customValue>
+    <customValue>
         <fullName>Hera Scaldacqua</fullName>
         <default>false</default>
         <label>Hera Scaldacqua</label>
@@ -184,6 +224,26 @@
         <fullName>Hera Thermo</fullName>
         <default>false</default>
         <label>Hera Thermo</label>
+    </customValue>
+    <customValue>
+        <fullName>Noleggio Auto Elettrica</fullName>
+        <default>false</default>
+        <label>Noleggio Auto Elettrica</label>
+    </customValue>
+    <customValue>
+        <fullName>Offerta Gas</fullName>
+        <default>false</default>
+        <label>Offerta Gas</label>
+    </customValue>
+	<customValue>
+        <fullName>Offerte Luce</fullName>
+        <default>false</default>
+        <label>Offerte Luce</label>
+    </customValue>
+	<customValue>
+        <fullName>Offerte Luce e Gas</fullName>
+        <default>false</default>
+        <label>Offerte Luce e Gas</label>
     </customValue>
     <customValue>
         <fullName>Prezzo Netto Special Dual</fullName>

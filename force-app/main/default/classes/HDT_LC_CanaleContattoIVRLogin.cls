@@ -15,7 +15,52 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
     
     @AuraEnabled
     public static String checkContractualEnvelope(String orderId,String username,String password ){
-        if(orderId == checkLogin(username,password).id){
+        String result = '';
+        List<Order> childOrderList = new List<Order>();
+        List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> platformEvents = new List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>();
+        Order parentOrder = new Order();
+        HDT_WRP_ContractConfirmation checkConfirmation = checkContractConfirmation(username,password);
+        if(checkConfirmation.checkContract)
+        {
+            result = 'Validato';
+        }
+        else
+        {
+            parentOrder.Id = orderId;
+            parentOrder.MethodSignedAccepted__c = 'web assistito';
+            parentOrder.SignedDate__c = System.today();
+            platformEvents.add(new HDT_PEV_VoltureChangeManagerUpdateSObj__e(SerializedSobj__c=JSON.serialize(parentOrder)));
+            childOrderList = checkConfirmation.childOrders;
+            for(Order childOrder : childOrderList)
+            {
+                Order childOrd = new Order();
+                childOrd.Id = childOrder.Id;
+                String phase = childOrder.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_VAS') && (childOrder.VasSubtype__c == null || (childOrder.VasSubtype__c != null && !childOrder.VasSubtype__c.equalsIgnoreCase('Analisi Consumi')))
+                    ? 'Comunicazione Motore VAS'
+                    : 'Comunicazione verso Heroku';
+                childOrd.Phase__c = phase;
+                //childOrd.Phase__c = 'Comunicazione verso Heroku';
+                childOrd.SignedDate__c = System.today();
+                childOrd.ConfirmCustomerContract__c = 'Web';
+                platformEvents.add(new HDT_PEV_VoltureChangeManagerUpdateSObj__e(SerializedSobj__c=JSON.serialize(childOrd)));
+            }
+            List<Database.SaveResult> srList = Eventbus.publish(platformEvents);   
+            for(Database.SaveResult sr : srList)
+            {
+                if(sr.isSuccess())
+                {
+                    result = 'success';
+                }
+                else 
+                {
+                    result = 'Errore';
+                    break;
+                }
+            }
+        }
+        return result;
+
+        /*if(orderId == checkLogin(username,password).id){
             try {
                 System.debug('It\'s inside the method checkContractualEnvelope');
                 //  ConsumptionCode__c consumptionCode = consumptionCodeQr.getRecordById(consumptionCodeId);
@@ -36,34 +81,51 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
         }
         else{
             return 'Errore';
+        }*/
+    }
+
+    private static HDT_WRP_ContractConfirmation checkContractConfirmation(String username, String password)
+    {
+        Order checkOrder = orderQr.getOrderByUsernamePassword(username,password)[0];
+        return new HDT_WRP_ContractConfirmation(checkOrder.MethodSignedAccepted__c != null && checkOrder.MethodSignedAccepted__c.equalsIgnoreCase('web assistito'),
+            checkOrder.Orders__r);
+    }
+    private class HDT_WRP_ContractConfirmation
+    {
+        public Boolean checkContract;
+        public List<Order> childOrders;
+
+        public HDT_WRP_ContractConfirmation(Boolean checkContract, List<Order> childOrders)
+        {
+            this.checkContract = checkContract;
+            this.childOrders = childOrders;
         }
+
     }
             
     @AuraEnabled
-    public static map<String,String> checkListenVO(String orderId,String username,String password){
+    public static map<String,String> checkListenVo(String orderId,String username,String password){
         map<String,String> mapReturn = new Map<String,String>();
+        List<wrts_prcgvr__Activity__c> voActivity = new List<wrts_prcgvr__Activity__c>();
         try {
-                Order ord = checkLogin(username,password);
-                if(ord.id == orderId){
-                    String[] s = ord.UniqueAutentication__c.split('_');
-                    if(s.size() == 2 && s[0] != null && s[1] != null){
-                        mapReturn.put('ecid',s[0]);
-                        mapReturn.put('token',s[1]);
-                        return mapReturn;
-                    }
-                    else{
-                        mapReturn.put('res','NonPossibile');
-                        return mapReturn;
-                    }
-                }
-                else{
-                    mapReturn.put('res','NonPossibile');
-                    return mapReturn;
-                }
+            voActivity = [SELECT Id, 
+            RecordingLink__c 
+            FROM wrts_prcgvr__Activity__c 
+            WHERE Type__c = 'Validazione Vocal Order'
+            AND Order__c = :orderId
+            WITH SECURITY_ENFORCED];
+            if(!voActivity.isEmpty()){
+                mapReturn.put('res',voActivity[0].RecordingLink__c);
+                return mapReturn;
             }
-            catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            else{
+                mapReturn.put('res','NonPossibile');
+                return mapReturn;
             }
+        }
+        catch (Exception e) {
+        throw new AuraHandledException(e.getMessage());
+        }
   
     }
     @AuraEnabled
@@ -146,33 +208,38 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
     //Order parentOrd = orderQr.getRecordById(parentOrder);
     Order childOrder = orderQr.getRecordById(child);
     Order parentOrd = orderQr.getRecordById(childOrder.parentOrder__c);
-    System.debug('********:2User');
-    System.debug('********:2User:' + parentOrd.Sale__r.Channel__c);
-    System.debug('********:2User:' + parentOrd.SignatureMethod__c);
-    System.debug('********:2User:' + parentOrd.Account.category__c);
-    System.debug('********:2User:' + parentOrd.Username__c);
-    if (parentOrd.Account.category__c == 'Famiglie' && parentOrd.Sale__r.Channel__c == 'Teleselling Outbound' && parentOrd.SignatureMethod__c == 'Vocal Order' && parentOrd.Username__c == null){
-      System.debug('********:3User2');
+    
+    if (/*parentOrd.Account.category__c == 'Famiglie' && parentOrd.Sale__r.Channel__c == 'Teleselling Outbound' &&*/ parentOrd.SignatureMethod__c == 'Vocal Order' && parentOrd.Username__c == null){
+      
       String podCode = childOrder.ServicePoint__r.ServicePointCode__c;
       Integer lengthOfPodCode = podCode.length();
-      System.debug('********:3User3');
+      
       Integer startingCharacter = lengthOfPodCode - 8;
       String partOne = podCode.substring(startingCharacter,lengthOfPodCode);
       String thirdPosition = partOne.substring(2,3);
-      System.debug('********:3User4');
+      
       String sixthPosition = partOne.substring(5,6);
       Integer ninthPosition = 9 - Integer.valueof(thirdPosition);
       Integer tenthPosition = 9 - Integer.valueof(sixthPosition);
-      System.debug('********:3User5');
+      
       String username = partOne + String.valueOf(ninthPosition) + String.valueOf(tenthPosition);
-
-      Date birthDate = (Date)childOrder.Account.BirthDate__c;  
+      String contactFiscalCode = childOrder.Contact__c != null? childOrder.Contact__r.FiscalCode__c:'';
+      String accountFiscalCode = childOrder.Account.FiscalCode__c;
+      Date birthDate;
+      if(String.isNotBlank(accountFiscalCode) && accountFiscalCode.isAlphanumeric()){
+        birthDate = HDT_UTL_CheckFiscalCodeTaxNumber.getBirthDayFromCode(accountFiscalCode);
+      }else if(String.isNotBlank(contactFiscalCode) && contactFiscalCode.isAlphanumeric()) {
+        birthDate = HDT_UTL_CheckFiscalCodeTaxNumber.getBirthDayFromCode(contactFiscalCode);
+      }else {
+        birthDate = Date.today();
+      }
+      //Date birthDate = (Date)childOrder.Account.BirthDate__c != null?(Date)childOrder.Account.BirthDate__c:HDT_UTL_CheckFiscalCodeTaxNumber.getBirthDayFromCode(childOrder.Account.FiscalCode__c);  
       String year = String.valueOf(birthDate.year());
-      System.debug('********:3User6');
+      
       String month = birthDate.month() > 9 ? String.valueOf(birthDate.month()) : '0'+String.valueOf(birthDate.month());
       String day = birthDate.day() > 9 ? String.valueOf(birthDate.day()) : '0'+String.valueOf(birthDate.day());
       String password = day + month + year.substring(2,4);
-      System.debug('********:4User');
+      
 
       String ecid = parentOrd.Sale__r.Ecid__c;
       //text to encrypt
@@ -183,7 +250,6 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
       //encrypted string
       String encodedCipherText = EncodingUtil.base64Encode(cipherText);
 
-
       Order newOrder = new Order();
       newOrder.Id = childOrder.parentOrder__c;
       newOrder.UniqueCredentials__c = username + '_' + password;
@@ -192,7 +258,6 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
       newOrder.Password__c = password;
       orderSrv.updateRecord(newOrder);
     }
-      
 }
 
 

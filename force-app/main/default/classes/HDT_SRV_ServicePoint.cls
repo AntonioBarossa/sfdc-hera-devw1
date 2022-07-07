@@ -63,10 +63,13 @@ public inherited sharing class HDT_SRV_ServicePoint {
         checkReadAccess('ServicePointCode__c');
         List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordByCode(servicePoint.ServicePointCode__c, 'ServicePointCode__c');
 
-        if (!existingServicePoint.isEmpty()) {
+        if (!existingServicePoint.isEmpty() && (servicePoint.PlugPresence__c == null ||(servicePoint.PlugPresence__c != null && servicePoint.PlugPresence__c == 'Si'))) {
             throw new AuraHandledException('Codice POD/PDR duplicato');
         } else {
 
+            // if(servicePoint.PlugPresence__c == 'No'){
+            //     servicePoint.ServicePointCode__c = 'IT001E56897542';
+            // }
             List<String> fields = helperMethods.getObjAttrList(servicePoint);
             checkCreateAccess(String.join(fields, ','));
 

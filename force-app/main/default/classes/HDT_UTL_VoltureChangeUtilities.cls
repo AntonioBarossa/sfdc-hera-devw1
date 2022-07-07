@@ -10,14 +10,14 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
     @TestVisible
     private static String communicationPhase = 'Comunicazione verso Heroku';
     @TestVisible
-    private static Integer btLimit = 1;
+    private static Integer btLimit = 1000;
     @TestVisible
-    private static Integer mtLimit = 35;
+    private static Integer mtLimit = 30000;
     /**@frpanico 12/11/2021
      * field not used but can be used if other threshold are included (e.g. AAT)
      */
     @TestVisible
-    private static Integer atLimit = 35;
+    private static Integer atLimit = 150000;
     @TestVisible
     private static Decimal lowerThreshold = 10.0;
     @TestVisible
@@ -80,8 +80,8 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
     @TestVisible
     private String getTension(Integer tensionNumberValue)
     {
-        return tensionNumberValue > 0 && tensionNumberValue <= btLimit ? 'BT' /* If Tension value lower than bt limit : BT */ 
-            : (btLimit < tensionNumberValue && tensionNumberValue <= mtLimit)
+        return tensionNumberValue > 0 && tensionNumberValue < btLimit ? 'BT' /* If Tension value lower than bt limit : BT */ 
+            : (btLimit <= tensionNumberValue && tensionNumberValue < mtLimit)
                 ? 'MT' /* If tension value between btLimit and mtLimit : MT */
                 : tensionNumberValue > mtLimit 
                     ? 'AT' : ''; /* If thension value greater than mtLimit: AT */
@@ -190,16 +190,18 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
      */
     public Map<String,Object> checkRates(Map<String,Object> currentRates, Map<String,Object> toUpdateRates)
     {   
+
+        String fieldAliquotaAccise =  String.valueOf(currentRates.get('Commodity__c')).equalsIgnoreCase('Gas') ? 'ExciseGAS__c' : 'ExciseEle__c';
         Map<String, Object> resultMap = new Map<String,Object>();
         /* Rate Declarations */
         String aliquotaIva = String.isNotEmpty((String)toUpdateRates.get('VAT__c')) ? (String)toUpdateRates.get('VAT__c') : (String)currentRates.get('VAT__c');
-        String aliquotaAccise = String.isNotEmpty((String)toUpdateRates.get('ExciseEle__c')) ? (String)toUpdateRates.get('ExciseEle__c') : (String)currentRates.get('ExciseEle__c');
+        String aliquotaAccise = String.isNotEmpty((String)toUpdateRates.get(fieldAliquotaAccise)) ? (String)toUpdateRates.get(fieldAliquotaAccise) : (String)currentRates.get(fieldAliquotaAccise);
         String addizionaleRegionale = String.valueOf(currentRates.get('RegionalAdditional__c'));
         /* If one of the fields are empty, empty all fields */
         if(String.isEmpty(aliquotaIva) || String.isEmpty(aliquotaAccise) || String.isEmpty(addizionaleRegionale))
         {
             resultMap.put('VAT__c', '');
-            resultMap.put('ExciseEle__c', '');
+            resultMap.put(fieldAliquotaAccise, '');
             resultMap.put('ExciseRate__c', 0);
             resultMap.put('RegionalAdditional__c', 0);
         }
@@ -207,7 +209,7 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
         else
         {
             resultMap.put('VAT__c', aliquotaIva);
-            resultMap.put('ExciseEle__c', aliquotaAccise);
+            resultMap.put(fieldAliquotaAccise, aliquotaAccise);
             resultMap.put('ExciseRate__c', voltureChangeQr.getExciseTranscode(aliquotaAccise)[0].Excise__c);
             resultMap.put('RegionalAdditional__c', Decimal.valueOf(addizionaleRegionale));
         }
@@ -239,5 +241,11 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
         }
         
         return result;
+    }
+
+    public Date convertDdMmYyyy(String ddmmyyyy)
+    {
+        List<String> listToConvert = ddmmyyyy.split('/');
+        return Date.newInstance(Integer.valueOf(listToConvert[2]), Integer.valueOf(listToConvert[1]), Integer.valueOf(listToConvert[0]));
     }
 }

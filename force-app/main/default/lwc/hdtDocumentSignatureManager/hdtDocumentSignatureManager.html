@@ -7,14 +7,14 @@
         <div class="slds-col slds-size_1-of-3">
             <lightning-combobox name="modalitaFirma" label="Modalità di firma" value={signMode} placeholder="Seleziona una Modalità" onchange={handleChangeSignMode}
                 options={modalitaFirma} read-only={disableSignModeInternal} data-id="modalitaFirma" required></lightning-combobox>
-            <lightning-input type="email" data-id="email" required={emailRequired} label="Email invio documentazione" value={email} disabled={disableinput} pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" message-when-pattern-mismatch="Inserire un indirizzo e-mail valido."></lightning-input>
+            <lightning-input type="email" data-id="email" required={emailRequired} label="Email invio documentazione" value={email} disabled={disableinput} pattern = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" message-when-pattern-mismatch="Inserire un indirizzo e-mail valido."></lightning-input>
         </div>
         <div class="slds-col slds-size_1-of-8 slds-grow-none">
         </div>
         <div class="slds-col slds-size_1-of-3">
             <lightning-combobox name="modalitaInvio" label="Modalità di invio documentazione" value={sendMode}
                 placeholder="Seleziona una Modalità" options={modalitaInvio} onchange={handleChange}
-                disabled={disableinput} data-id="modalitaSpedizione" required></lightning-combobox>
+                disabled={disableinput} data-id="modalitaSpedizione" required={requireSendMode}></lightning-combobox>
             <lightning-input type="tel" disabled={disableinput} required={phoneRequired} label="Cellulare invio OTP" data-id="telefono" name="phone3" value={phone} pattern="[0-9]{9,10}" message-when-pattern-mismatch="Il cellulare deve contenere 9 o 10 cifre.">
             </lightning-input>
 
@@ -57,6 +57,25 @@
                 </lightning-layout>
             </div>
         </div>
+    </template>
+    <template if:true={showModalContact}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_small">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    Attenzione!
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium">
+                    {contactPointInfo.message}
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={handleCloseModalContact} title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={createContactPoint} title="OK">OK</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
     </template>
     <!--
     <div class="slds-m-top_medium slds-m-bottom_x-large">

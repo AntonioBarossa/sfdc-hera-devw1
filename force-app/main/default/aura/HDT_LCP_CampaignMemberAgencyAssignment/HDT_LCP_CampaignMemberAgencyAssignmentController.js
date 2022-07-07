@@ -13,9 +13,9 @@
         console.log(errmsg);
         var toastEvent = $A.get("e.force:showToast");
         toastEvent.setParams({
-            title: 'Error',
+            title: 'Attenzione',
             message: errmsg,
-            type: 'error',
+            type: 'warning',
             mode: 'sticky'
         });
         toastEvent.fire();

@@ -31,10 +31,16 @@
                             <value>Account.Scheda_Cliente</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Account.HDT_VasOrders</value>
+                            <value>Account.HDT_VasPracticesView</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Global.EscalationCmp</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>ChangeOwnerOne</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.AssignAccountToMe</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -82,6 +88,18 @@
                                     <rightValue>HDT_RT_Distributore</rightValue>
                                 </criteria>
                             </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>ChangeOwnerOne</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Account.HDT_InfoTracking</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.Scheda_Cliente</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.AssignAccountToMe</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -982,15 +1000,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>forceChatter:recordFeedContainer</componentName>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-aec3fe32-4787-4711-9fa8-3b7fc8c9b3e1</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-f8fe99ff-dbb3-4b6d-9a02-6c7309fac0a7</value>
@@ -1015,19 +1024,6 @@
                 <componentInstanceProperties>
                     <name>title</name>
                     <value>Standard.Tab.activity</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-aec3fe32-4787-4711-9fa8-3b7fc8c9b3e1</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Standard.Tab.collaborate</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
             </componentInstance>
@@ -1060,6 +1056,17 @@
                     <value>Facet-ec448755-6754-49f4-bd5a-e4f48249737b</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>activityId</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>recordId</name>
+                </componentInstanceProperties>
+                <componentName>hdtActivityTrace</componentName>
             </componentInstance>
         </itemInstances>
         <name>rightsidebar</name>

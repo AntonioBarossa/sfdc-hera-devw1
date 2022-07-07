@@ -19,6 +19,91 @@
                 <default>false</default>
                 <label>Subentro</label>
             </value>
+            <value>
+                <fullName>Disattivazioni</fullName>
+                <default>false</default>
+                <label>Disattivazioni</label>
+            </value>
+            <value>
+                <fullName>Morosita</fullName>
+                <default>false</default>
+                <label>Morosità</label>
+            </value>
+            <value>
+                <fullName>VolturaTecnica</fullName>
+                <default>false</default>
+                <label>Voltura Tecnica</label>
+            </value>
+            <value>
+                <fullName>ModificheAnagrafiche</fullName>
+                <default>false</default>
+                <label>Modifiche Anagrafiche</label>
+            </value>
+            <value>
+                <fullName>Variazioni</fullName>
+                <default>false</default>
+                <label>Variazioni</label>
+            </value>
+            <value>
+                <fullName>SubentroSuGdMChiuso</fullName>
+                <default>false</default>
+                <label>Subentro su Gdm Chiuso</label>
+            </value>
+            <value>
+                <fullName>Voltura</fullName>
+                <default>false</default>
+                <label>Voltura</label>
+            </value>
+            <value>
+                <fullName>Tariffe e Sconti</fullName>
+                <default>false</default>
+                <label>Tariffe e Sconti</label>
+            </value>
+            <value>
+                <fullName>CambioUso</fullName>
+                <default>false</default>
+                <label>Cambio Uso</label>
+            </value>
+            <value>
+                <fullName>CambioOfferta</fullName>
+                <default>false</default>
+                <label>Cambio offerta</label>
+            </value>
+            <value>
+                <fullName>MUC</fullName>
+                <default>false</default>
+                <label>MUC</label>
+            </value>
+            <value>
+                <fullName>CaricamentoCGC</fullName>
+                <default>false</default>
+                <label>Caricamento CGC</label>
+            </value>
+            <value>
+                <fullName>VAS</fullName>
+                <default>false</default>
+                <label>VAS</label>
+            </value>
+            <value>
+                <fullName>RilavorazioneScarti</fullName>
+                <default>false</default>
+                <label>RilavorazioneScarti</label>
+            </value>
+            <value>
+                <fullName>Lead</fullName>
+                <default>false</default>
+                <label>Lead</label>
+            </value>
+            <value>
+                <fullName>PrimaAttivazione</fullName>
+                <default>false</default>
+                <label>Prima Attivazione</label>
+            </value>
+            <value>
+                <fullName>AllineamentoAnagrafica</fullName>
+                <default>false</default>
+                <label>Allineamento Anagrafica</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

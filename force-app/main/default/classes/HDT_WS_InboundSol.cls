@@ -21,6 +21,9 @@ global with sharing class HDT_WS_InboundSol {
             when 'installment'{
                 HDT_SRV_GenericSolHandler.handleInstallment(caseId);
             }
+            when 'analisiConsumi'{
+                HDT_SRV_GenericSolHandler.handleAnalisiConsumi(bodyMap);
+            }
             when else {
                 HDT_SRV_GenericSolHandler.dataEnrichment(caseId);
             }

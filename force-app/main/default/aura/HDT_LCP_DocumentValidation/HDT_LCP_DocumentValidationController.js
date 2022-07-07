@@ -53,10 +53,10 @@
 
     handleOnload: function(component, event, helper) {
         let order = {};
-        // let CILegalRepresentative = component.find('CILegalRepresentative').get('v.value');
-        // if (CILegalRepresentative == null) {
-        //     component.set('v.CILegalRepresentative', false);
-        // }
+        let CILegalRepresentative = component.find('CILegalRepresentative').get('v.value');
+        if (CILegalRepresentative == null) {
+            component.set('v.CILegalRepresentative', false);
+        }
         //EVERIS PER VOLTURA
         let CIAccoutn = component.find('CIAccoutn').get('v.value');
          if (CIAccoutn == null) {
@@ -93,7 +93,7 @@
             component.set('v.DocumentPackage', false);
         }
 
-        if (QuickQuote || ChamberCommerceRegistration || Instance326 || DocumentLow80 || AutorizationVolturaThirdTrader || DocumentPackage /*Everis*/|| CIAccoutn/*Everis*/) {
+        if (QuickQuote || ChamberCommerceRegistration || Instance326 || DocumentLow80 || AutorizationVolturaThirdTrader || DocumentPackage /*Everis*/|| CIAccoutn/*Everis*/ || CILegalRepresentative) {
             component.set('v.formValid', true);
         } else {
             component.set('v.formValid', false);
@@ -123,7 +123,7 @@
         button.set('v.disabled',true);
         //component.find("editForm").submit();
         let order = {};
-        // let CILegalRepresentative = component.find('CILegalRepresentative').get('v.value');
+        let CILegalRepresentative = component.find('CILegalRepresentative').get('v.value');
         //Everis
         let CIAccoutn = component.find('CIAccoutn').get('v.value');
         //Everis
@@ -143,7 +143,7 @@
         if (checkArray.includes('Non Validato')) {
             component.set("v.notValid", true);
         } else {
-            // order.CILegalRepresentative__c = CILegalRepresentative;
+            order.CILegalRepresentative__c = CILegalRepresentative;
             order.CIAccoutn__c = CIAccoutn;
             order.QuickQuote__c = QuickQuote;
             order.ChamberCommerceRegistration__c = ChamberCommerceRegistration;
@@ -284,6 +284,10 @@
                 if(element.pageReference.type === 'standard__recordPage'){
                     
                     if(element.pageReference.attributes.recordId === orderId){
+                        parentId = element.tabId;
+                    }
+                    else if(element.pageReference.attributes.recordId === accountId)
+                    {
                         parentId = element.tabId;
                     }
                 }

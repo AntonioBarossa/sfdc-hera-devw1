@@ -409,7 +409,7 @@
         <choiceText>--None--</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue/>
+            <stringValue></stringValue>
         </value>
     </choices>
     <choices>
@@ -1837,15 +1837,15 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>quoteType</name>
-                <value>
-                    <stringValue>Rapido</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>processType</name>
                 <value>
                     <stringValue>RICH_RATEIZZAZIONE</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>source</name>
+                <value>
+                    <elementReference>CaseInput.Origin</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

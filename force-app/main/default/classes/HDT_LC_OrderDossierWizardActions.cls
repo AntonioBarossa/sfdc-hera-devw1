@@ -8,6 +8,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    public static HDT_WRP_CreateActivityVocalOrder wrpActivityVo = new HDT_WRP_CreateActivityVocalOrder();
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -15,8 +16,26 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     * @description Handle "stampa" action
     * @param Order orderParent
     */
+
+    /* Il Metodo Save viene chiamato nelle casistiche in cui non si esegue la Stampa Documentale */
     @AuraEnabled
     public static void save(Order orderParent){ 
+
+        updateCommodityWithConsumptionAnalisi(orderParent.Id);
+
+        /**@frpanico 2022-04-29
+         * Aggiunta gestione del contratto gia firmato
+         */
+        if(orderParent.SignatureMethod__c.equalsIgnoreCase('Contratto già firmato'))
+        {
+            Order parentOrderToUpdate = new Order();
+            parentOrderToUpdate.Id = orderParent.Id;
+            parentOrderToUpdate.Phase__c = 'Documentazione Gestita';
+            parentOrderToUpdate.Status = 'Completed';
+            HDT_UTL_DatabaseService.updateSObject(parentOrderToUpdate);
+            return;
+        }
+
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         Map<Id, Order> mapChildOrders = new Map<Id, Order>(childOrders);
@@ -107,6 +126,31 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     @AuraEnabled
     public static String createActivityVocalOrder(Order orderParent){
 
+        //Aggiornamento/Esitazione CampaignMember
+         Boolean isCommunity = HDT_LC_SellingWizardController.checkCommunityLogin();
+         
+        Order ord = [SELECT Id, Sale__r.Campaign__c, Sale__r.SalesContact__c, Sale__r.CampaignMemberId__c FROM Order WHERE Id =: orderParent.Id WITH SECURITY_ENFORCED LIMIT 1];
+        Boolean campaignPresent = ord.Sale__r.Campaign__c != null;
+        wrpActivityVo.isCommunity = isCommunity == true && campaignPresent == true;
+
+        if(ord.Sale__r.CampaignMemberId__c != null){
+            // CampaignMember cm = [SELECT Id, Campaign.PositiveOutcomeDefaultStatus__c 
+            //                         FROM CampaignMember 
+            //                         WHERE CampaignId =: ord.Sale__r.Campaign__c 
+            //                         AND ContactId =: ord.Sale__r.SalesContact__c WITH SECURITY_ENFORCED LIMIT 1];
+            CampaignMember cm = [SELECT Id, Campaign.PositiveOutcomeDefaultStatus__c 
+            FROM CampaignMember 
+            WHERE Id =: ord.Sale__r.CampaignMemberId__c WITH SECURITY_ENFORCED LIMIT 1];
+            
+            System.debug('ord.Sale__r.CampaignMemberId__c --> '+ord.Sale__r.CampaignMemberId__c);
+            System.debug('cm --> '+cm.Id);
+            String myStatus = cm.Campaign.PositiveOutcomeDefaultStatus__c;
+            System.debug('PositiveOutcomeDefaultStatus__c --> '+myStatus);
+            CampaignMember campaignMember = HDT_LC_CampaignsController.updateCampaignMemberStatus(cm.Id, myStatus);
+            System.debug('campaignMember Status -->'+campaignMember.Status);
+            wrpActivityVo.campaignMemberStatus = myStatus;
+        }
+
         List<Order> ordersToUpdate = new List<Order>();
         
         Order orderToUpdate = new Order(
@@ -123,27 +167,35 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             ordersToUpdate.add(orderToUpdate );
             orderSrv.updateRecords(ordersToUpdate);
         }
-        return orderToUpdate.Phase__c;
+        wrpActivityVo.orderPhase = orderToUpdate.Phase__c;
+        
+        return JSON.serialize(wrpActivityVo);
     }
 
+    /* Viene chiamato quando si esegue la stampa documentale */
     @AuraEnabled
     public static void save2(Order orderParent,boolean isPlicoSend){ 
 
+        updateCommodityWithConsumptionAnalisi(orderParent.Id);
+
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
-        
+        Boolean isOnlyAmend = false;
+        for (Order childOrder : childOrders) {
+            if (childOrder.ProcessType__c != null && !childOrder.ProcessType__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS')) {
+                isOnlyAmend = false;
+                break;
+            }else {
+                isOnlyAmend = true;
+            }
+        }
         Order orderToUpdate = new Order(
             Id = orderParent.Id
         );
-
-          //fix CC Generazione Credential LG MB
-        //  orderToUpdate = HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate);
-        // if (orderParent.ContractSigned__c == false) {
-        //     orderToUpdate.Phase__c = 'Documentazione da inviare';
-        // } else {
-                // LG Ripristino logica 18/09 FF
-        System.debug('********LOL:' + orderParent);
-        if(orderParent.Phase__c == 'In Lavorazione'){
+        if(isOnlyAmend){
+            orderToUpdate.Phase__c = 'Documentazione Gestita';
+            orderToUpdate.Status = 'Completed';
+        }else if(orderParent.Phase__c == 'In Lavorazione' || orderParent.Phase__c.equalsIgnoreCase('Comunicazione EngageOne KO')){
             if (orderParent.ContractSigned__c == false) {
                 orderToUpdate.Phase__c = 'Documentazione da inviare';
             } else{
@@ -151,7 +203,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 //   orderToUpdate.Phase__c = 'Plico da inviare'; 
             }
         }
-        else if(orderParent.Phase__c == 'Registrazione  da validare'){
+        else if(orderParent.Phase__c == 'Registrazione validata'){
             orderToUpdate.Phase__c = 'Documentazione Gestita';
             orderToUpdate.status = 'Completed';
         }
@@ -182,15 +234,39 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 ordersToUpdate.add(
                     new Order(
                         Id = childOrd.Id,
-                        Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Documentazione Validata' : (checkRequiredDocs(childOrd) ? 'Documentazione Validata': 'In attesa validazione')
+                        Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Comunicazione verso Heroku' : (checkRequiredDocs(childOrd) ? 'Comunicazione verso Heroku': 'In attesa validazione')
                     )
                 );
             }
         }
-        
+
+        //update CampaignMember Status From Stampa
+        /**@fvitiell 21/02/2022
+         * Implementato e commentato, utile laddove dovesse servire
+         * aggiornare alla pressione del tasto Stampa del Wizard
+         */
+        /*List<String> myCampaignListIds = new List<String>();
+        for (Order myChildOrder : childOrders){
+            Campaign myCampaign = new Campaign(
+                Id = myChildOrder.Campaign__c
+            );
+            myCampaignListIds.add(myChildOrder.Campaign__c);
+        }
+        List<CampaignMember> myCampaignMemberList = [Select id, Campaign.PositiveOutcomeDefaultStatus__c from CampaignMember where CampaignId IN :myCampaignListIds WITH SECURITY_ENFORCED];
+        for(myCampaignMember : myCampaignMemberList){
+            String status = myCampaignMember.Campaign.PositiveOutcomeDefaultStatus__c;
+            String CampaignMemberId = myCampaignMember.Id;
+            HDT_LC_CampaignsController.updateCampaignMemberStatusFromStampa(CampaignMemberId, status);
+        }*/
+    
         ordersToUpdate.add(orderToUpdate);
 
         //update child orders
+        /**@frpanico 04/02/2022
+         * Commentato in quanto la conferma cliente va successivamente
+         * Alla validazione documenti
+         */
+        /*
         for (Order childOrder : childOrders) {
             if (childOrder.ComfortCallDaysDue__c != null) {
                 ordersToUpdate.add(new Order(
@@ -199,6 +275,9 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 ));
             }
         }
+        */
+
+
 
         orderSrv.updateRecords(ordersToUpdate);
 
@@ -305,6 +384,49 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         return result || orderParent.Status == 'Completed';
     }
+    /**
+    * @author NTTDATA
+    * @date 11/03/2022
+    * @description Check if is Only Aggiunta Bonus
+    * @param String orderParentId
+    * @return Boolean
+    */
+    @AuraEnabled
+    public static Boolean isOnlyAmend(Order orderParent){
+        Boolean result = false;
+        
+        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
+        
+        for (Order childOrder : childOrders) {
+            System.debug('PrcessType ' + childOrder.ProcessType__c);
+            if ((childOrder.ProcessType__c != null && childOrder.ProcessType__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS')) || childOrder.Type.equalsIgnoreCase('Amendment')) {
+                result = true;
+            }else {
+                result = false;
+                break;
+            }
+        }
+
+        return result;
+    }
+    /*@frpanico 08/02/2022
+    * Aggiunta gestione Annullamento
+    * Per poter annullare gli order non devono essere in default
+     */
+    @AuraEnabled
+    public static Boolean isCancelDisabled(Order parentOrder){
+        Boolean result = false;
+        List<Order> childOrders = orderQr.getChildOrdersByParentId(parentOrder.Id);
+        for(Order childOrder : childOrders)
+        {
+            if(childOrder.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_Default'))
+            {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
 
     
     @AuraEnabled(cacheable=true)
@@ -322,6 +444,168 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         }
         return activeValue;
+    }
+
+    public class HDT_WRP_CreateActivityVocalOrder{
+        public String orderPhase {get; set;}
+        public String campaignMemberStatus {get; set;}
+        public Boolean isCommunity {get; set;}
+    }
+
+    @AuraEnabled
+    public static String seekFraud(String recordId, Order orderParent){
+        //initialization the result for no fraud, then search for fraud condition
+        Map<String,Object> result = new Map<String,Object>();
+        Boolean isFraud = false;
+        String message = 'Nessuna frode trovata.';
+
+        Order parentOrder = new Order();
+        List<String> processList = new List<String>();
+
+        List<Order> orderList =[SELECT Account.Category__c, ParentOrder__c, PhoneNumber__c, ShippingMail__c, Contact__r.HomePhone, Contact__r.Phone, Contact__r.Email, ProcessType__c, Channel__c, CustomerCategory__c
+                                FROM Order WHERE Id=:recordId OR ParentOrder__c = :recordId WITH SECURITY_ENFORCED];
+        
+        for(Order singleOrder : orderList)
+        {
+            if(singleOrder.ParentOrder__c == null)
+            {
+                parentOrder = singleOrder;
+            }
+            else
+            {
+                processList.add(singleOrder.ProcessType__c);
+            }
+        }
+
+        if(!orderList.isEmpty()){
+            List<AmministrazioneFrodi__c> ammFrodiList = [SELECT BpNumber__c FROM AmministrazioneFrodi__c WHERE (Processo__c IN :processList AND CanaleVendita__c=: parentOrder.Channel__c AND CategoriaCliente__c=: parentOrder.Account.Category__c) WITH SECURITY_ENFORCED ];
+            
+            if( ammFrodiList != null && !ammFrodiList.isEmpty() ){
+                integer maxCount = maxInFraud(orderList[0]);
+                if( /* mmFrodiList[0].BpNumber__c != null && */ maxCount >= ammFrodiList[0].BpNumber__c ){
+                    //Annullamento con causale: phase annullato + causale .txt + update
+                    if(orderParent != null){
+                        for (Order ord : orderList) {
+                            ord.phase__c = 'Annullato';
+                            ord.Status = 'Annullato';
+                            ord.CancellationReason__c = 'Annullato per possibile frode';
+                        }
+                        HDT_UTL_DatabaseService.updateSObject(orderList);
+                    }else{
+                        Order ord = new Order();
+                        ord.Id = orderList[0].Id;
+                        ord.phase__c = 'Annullato';
+                        ord.CancellationReason__c = 'Annullato per possibile frode';
+                        HDT_UTL_DatabaseService.updateSObject(ord);
+                    }
+                    system.debug( 'Ordini interessati annullati' );
+                    isFraud = true;
+                    message = 'Possibile frode in corso, tutti gli ordini correlati verranno annullati.';
+                }
+            }
+        }
+        result.put('isFraud', (Object)isFraud);
+        result.put('message', (Object)message);
+        return JSON.serialize(result);
+    }
+
+    public static integer maxInFraud(Order order){
+        integer maxCount = 0;
+        //telefono fisso
+        if( order.Contact__r.HomePhone != null ){
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointPhone WHERE TelephoneNumber=:order.Contact__r.HomePhone WITH SECURITY_ENFORCED GROUP BY TelephoneNumber ];
+            maxCount = swapMax(maxCount, count );
+        }
+        //cell
+        if( order.PhoneNumber__c != null ){
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointPhone WHERE TelephoneNumber=:order.PhoneNumber__c WITH SECURITY_ENFORCED GROUP BY TelephoneNumber ];
+            maxCount = swapMax(maxCount, count );
+        }else if( order.Contact__r.Phone != null ){
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointPhone WHERE TelephoneNumber=:order.Contact__r.Phone WITH SECURITY_ENFORCED GROUP BY TelephoneNumber ];
+            maxCount = swapMax(maxCount, count );
+        }
+        //email
+        if( order.ShippingMail__c != null ){
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.ShippingMail__c WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
+            maxCount = swapMax(maxCount, count );
+        }else if( order.Contact__r.Email != null ){
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.Contact__r.Email WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
+            maxCount = swapMax(maxCount, count );
+        }
+        return maxCount;
+    }
+    
+    public static integer swapMax(integer maxCount, AggregateResult[] count ){
+        if(count.size()> 0 && count[0].get('expr0') != null){
+            maxCount = maxCount < (integer)count[0].get('expr0')? (integer)count[0].get('expr0') : maxCount;
+        }
+        return maxCount;
+    }
+
+
+    public static void updateCommodityWithConsumptionAnalisi(String orderParentId)
+    {
+        List<OrderItem> orderItems = [SELECT Id,
+        OwnerAC__c,
+        DwellingType__c,
+        OccupantsNumber__c,
+        Surface__c,
+        Product2.Family,
+        SBQQ__QuoteLine__c,
+        Order.ServicePointCode__c,
+        Order.VasSubtype__c
+        FROM OrderItem
+        WHERE Order.ParentOrder__c = :orderParentId
+        WITH SECURITY_ENFORCED];
+
+        List<SObject> sobjToUpdate = new List<SObject>();
+
+        Map<String, Map<String,OrderItem>> podOrderItemMap = new Map<String, Map<String,OrderItem>>();
+        /* Build the map that groups orderItems for ServicePointCode of the related order */
+        for(OrderItem item : orderItems)
+        {
+            if(!podOrderItemMap.containsKey(item.Order.ServicePointCode__c))
+            {
+                podOrderItemMap.put(item.Order.ServicePointCode__c, new Map<String,OrderItem>());
+            }
+            if(item.Product2.Family != null && item.Product2.Family.equalsIgnoreCase('Offerta commerciale'))
+            {
+                podOrderItemMap.get(item.Order.ServicePointCode__c).put('offertaCommerciale',item);
+            }
+            if(item.Product2.Family != null && item.Product2.Family.equalsIgnoreCase('VAS Fatturabili') && item.Order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi'))
+            {
+                podOrderItemMap.get(item.Order.ServicePointCode__c).put('analisiConsumi',item);
+            }
+        }
+        /* Write on the commodity OrderItem/QuoteLine
+        Consumption Analysis fields 
+        */
+        for(String key : podOrderItemMap.keySet())
+        {
+            if(podOrderItemMap.get(key).get('analisiConsumi') == null)
+            {
+                continue;
+            }
+            OrderItem offertaCommerciale = new OrderItem(Id = (String) (podOrderItemMap.get(key).get('offertaCommerciale')).get('Id'));
+            SBQQ__QuoteLine__c offertaCommQl = new SBQQ__QuoteLine__c(Id =(String) (podOrderItemMap.get(key).get('offertaCommerciale')).get('SBQQ__QuoteLine__c'));
+            offertaCommerciale.OwnerAC__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('OwnerAC__c');
+            offertaCommerciale.DwellingType__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('DwellingType__c');
+            offertaCommerciale.OccupantsNumber__c = (Decimal) (podOrderItemMap.get(key).get('analisiConsumi')).get('OccupantsNumber__c');
+            offertaCommerciale.Surface__c = (Decimal) (podOrderItemMap.get(key).get('analisiConsumi')).get('Surface__c');
+            offertaCommQl.OwnerAC__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('OwnerAC__c');
+            offertaCommQl.DwellingType__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('DwellingType__c');
+            offertaCommQl.OccupantsNumber__c = (Decimal) (podOrderItemMap.get(key).get('analisiConsumi')).get('OccupantsNumber__c');
+            offertaCommQl.Surface__c = (Decimal) (podOrderItemMap.get(key).get('analisiConsumi')).get('Surface__c');
+
+            sobjToUpdate.add(offertaCommerciale);
+            sobjToUpdate.add(offertaCommQl);
+        }
+
+        if(!sobjToUpdate.isEmpty())
+        {
+            HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
+        }
+
     }
 
 }

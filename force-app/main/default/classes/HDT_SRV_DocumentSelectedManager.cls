@@ -63,6 +63,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
         List<HDT_WRP_DocumentSelectedResponse> responseList = new List<HDT_WRP_DocumentSelectedResponse>();
         
         try {
+            HDT_QR_Case qrCase = new HDT_QR_Case();
             HDT_QR_BillingProfile bpQueryHandler = new HDT_QR_BillingProfile();
             String queryString = 'SELECT Id,Context__c,DocumentSelected__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].recordId+'\'';
             String queryObject = 'AccountStatementFilter__c';
@@ -82,6 +83,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             }
 
             Case caseRecord = new Case();
+            Case caseCommitted;
             
             Date dataEmissione = formatDate((String) primolivello.get('dataEmissione'));
             Date dataScadenza = formatDate((String) primolivello.get('dataScadenza'));
@@ -91,7 +93,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             
             String contractCode = (String) secondoLivello.get('contratto') != null? (String) secondoLivello.get('contratto'):(String) primolivello.get('contratto');
             String tipoDocumento = (String) secondoLivello.get('testoDettaglio');
-            
+            String processType = '';
             String contoContrattuale = (String) primolivello.get('contoContrattuale');
             BillingProfile__c billingProfile = bpQueryHandler.getRecordByContractAccount(contoContrattuale);
             if (billingProfile != null) {
@@ -110,7 +112,8 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             
             caseRecord.Id = inputs[0].caseId;
             //caseRecord.ReadType__c = (String) secondoLivello.get('importo'); --> Richiamare WS ad hoc
-            
+            caseCommitted = qrCase.getRecordById(inputs[0].caseId);
+            processType = caseCommitted != null? caseCommitted.Type:'';
             response.caseRecord = caseRecord;
             response.contractCode = contractCode;
             response.tipoDocumento = tipoDocumento;
@@ -135,11 +138,16 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     singleDocument.Type__c = (String) primolivello.get('tipoDocumento');
                     singleDocument.IssueDate__c = dataEmissione;
                     singleDocument.ExpirationDate__c = dataScadenza;
-                    singleDocument.Amount__c = totaleCopertina != null? totaleCopertina:importo;
+                    if(processType.equalsIgnoreCase('Piano Rateizzazione') && Double.valueOf(primolivello.get('residuo')) == 0){
+                        singleDocument.Amount__c = importo;
+                    }else {
+                        singleDocument.Amount__c = totaleCopertina != null? totaleCopertina:importo;
+                    }
                     singleDocument.DocumentResidue__c = Double.valueOf(primolivello.get('residuo'));
                     singleDocument.Extension__c = (String) primolivello.get('dilazione');
                     singleDocument.PaymentMode__c = (String) primolivello.get('modalitaPagamento');
                     singleDocument.TvFeeResidual__c = calculateRaiFee(secondoLivelloList);
+                    singleDocument.RaiFeeAmount__c = calculateRaiFeeAmount(secondoLivelloList);
                     singleDocument.IssuingCompany__c = (String) primolivello.get('societa');
                     singleDocument.ContractualAccount__c = (String) primolivello.get('contoContrattuale');
                     singleDocument.TotalCommunicationPayment__c = totaleCopertina != null? totaleCopertina:importo;
@@ -377,7 +385,36 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
         String yyyy = listString[2];
         return Date.valueOf(yyyy+'-'+mm+'-'+gg);
     }
-    
+    /**@frpanico 2022-06-05
+     * Calcola l'importo del canone rai
+     * Indipendentemente se e' stato pareggiato
+     * o meno
+     */
+    @TestVisible
+    private static Double calculateRaiFeeAmount(List<Object> secondoLivelloList)
+    {
+        if(secondoLivelloList==null || secondoLivelloList.size()<=0) {
+            return null;
+        }
+        try
+        {
+            Double raiFee = 0;
+            for(Object singleRecord : secondoLivelloList){
+                Map<String, Object> secondolivello = (Map<String, Object>) singleRecord;
+                Double importo = Double.valueOf(secondolivello.get('importo'));
+                String tipoDocumento = (String) secondolivello.get('tipoDocumento');
+                if(tipoDocumento.equalsIgnoreCase('VR')){
+                    raiFee += importo;
+                }
+            }
+            return raiFee;
+        }
+        catch(Exception ex)
+        {
+            System.debug(LoggingLevel.DEBUG, 'Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage());
+            return null;
+        }
+    }
     @TestVisible
     private static Double calculateRaiFee(List<Object> secondoLivelloList){
         if(secondoLivelloList==null || secondoLivelloList.size()<=0) {
@@ -426,7 +463,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
     
     
     public static List<SObject> getDocumentsSelected(Id caseId){
-        String queryString = 'SELECT Id,TotalCommunicationPayment__c,DocumentNumber__c, TvFeeResidual__c, DocumentResidue__c, Bill__c, Type__c, IssueDate__c,ExpirationDate__c,Amount__c,Residue__c,PaymentMode__c,IssuingCompany__c,ContractualAccount__c FROM DocumentSelected__c WHERE Case__c = \''+caseId+'\'';
+        String queryString = 'SELECT Id,RaiFeeAmount__c,TotalCommunicationPayment__c,DocumentNumber__c, TvFeeResidual__c, DocumentResidue__c, Bill__c, Type__c, IssueDate__c,ExpirationDate__c,Amount__c,Residue__c,PaymentMode__c,IssuingCompany__c,ContractualAccount__c FROM DocumentSelected__c WHERE Case__c = \''+caseId+'\'';
         String objectName = 'DocumentSelected__c';
         List<SObject> documentSelected = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
         return documentSelected;

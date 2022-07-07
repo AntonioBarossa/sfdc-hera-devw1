@@ -1,6 +1,6 @@
 /**
 * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
-* @date 14/12/2020
+* @date 14/12/2020updateCampaignMembersStatus
 * @description Apex controller for hdtSaleActions.js component
 * @history Keltin Mesonjesi – 14/12/2020 – Created class
 */
@@ -16,6 +16,8 @@ public inherited sharing class HDT_LC_SaleActions {
     private static HDT_SRV_QuoteLineGroup quoteLineGroupSrv = new HDT_SRV_QuoteLineGroup();
     private static HDT_SRV_QuoteProcess quoteProcessSrv = new HDT_SRV_QuoteProcess();
     private static HDT_QR_QuoteProcess quoteProcessQr = new HDT_QR_QuoteProcess();
+    private static HDT_QR_AccountContactRelation accountContactRelationQr = new HDT_QR_AccountContactRelation();
+    private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -121,9 +123,26 @@ public inherited sharing class HDT_LC_SaleActions {
         quoteSrv.checkReadAccess('SBQQ__Status__c,SBQQ__Ordered__c,SBQQ__LineItemsGrouped__c,SBQQ__OrderByQuoteLineGroup__c');
         List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsForSaleSaveEvent(sale.Id); //quotes that have a status of not rejected
 
+        /**@frpanico check for activities
+         * Caricamento Manuale Siebel
+        */
+        Boolean ordered = true;
+        Integer currentStep = 4;
+        if(sale.isTransition__c)
+        {
+            String regex = '^D[0-9] - .*';
+            Pattern regexPattern = Pattern.compile(regex);
+            List<Sale__c> transitionSale = [SELECT Id, IsTransition__c, Account__c, Account__r.CustomerMarking__c FROM Sale__c WHERE Id = :sale.Id WITH SECURITY_ENFORCED];
+            if(!transitionSale.isEmpty() && regexPattern.matcher(transitionSale[0].Account__r.CustomerMarking__c).matches())
+            {
+                ordered = false;
+                currentStep = 50;
+                HDT_LC_SaleServiceContainer.siebelLoadingActivity(transitionSale[0].Id, transitionSale[0].Account__c, 'Sale__c');
+            }
+        }
         for (SBQQ__Quote__c quote : quoteList) {
             quote.SBQQ__Status__c = 'Chiusa';
-            quote.SBQQ__Ordered__c = true;
+            quote.SBQQ__Ordered__c = ordered;
             quote.SBQQ__LineItemsGrouped__c = true;
             quote.SBQQ__OrderByQuoteLineGroup__c = true;
             quote.CancellationReason__c = null;
@@ -133,7 +152,7 @@ public inherited sharing class HDT_LC_SaleActions {
         system.debug('quoteList: ' + quoteList);
 
         //4 - Update Sale
-        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Attiva', CampaignEleggibilityGroup__c = campaignElegibilityGroup);
+        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Attiva', CampaignEleggibilityGroup__c = campaignElegibilityGroup, isTransition__c = sale.isTransition__c, CurrentStep__c = currentStep);
 
         //5 - SBQQ__QuoteLineGroup__c
         //Creazione di un QuoteLineGroup per ogni QuoteLine principale.
@@ -200,6 +219,18 @@ public inherited sharing class HDT_LC_SaleActions {
             quoteLinesListToUpdate.add(quoteLineToUpdate);
         }
         //if(sale.Id=='a3I3N00000042c6UAA') throw new AuraHandledException('Mio test');
+        if(!String.isBlank(campaignMemberId)){
+            CampaignMember cm = new CampaignMember();
+            cm.Id = campaignMemberId;
+            saleToUpdate.CampaignMemberId__c = campaignMemberId;
+            saleToUpdate.Campaign__c = [SELECT Id, CampaignId FROM CampaignMember WHERE Id =: campaignMemberId WITH SECURITY_ENFORCED LIMIT 1].CampaignId;
+        }
+
+        system.debug('***salesTransition ->: ' + saleToUpdate.isTransition__c);
+        if(saleToUpdate.isTransition__c!= null && saleToUpdate.isTransition__c){
+            Account account = new Account(Id = sale.Account__c, Segment__c = 'ZCOD-DA CODIFICARE');
+            accountSrv.updateRecord(account);
+        }
 
         //7 - Execute actions
         opportunitySrv.updateRecords(opps);
@@ -208,9 +239,16 @@ public inherited sharing class HDT_LC_SaleActions {
         quoteSrv.updateRecords(quoteList);
 
         //update campaignMember Status
-        if (campaignMemberId != null) {
-            HDT_LC_CampaignsController.updateCampaignMemberStatus(campaignMemberId, 'Positivo');
-        }
+        // if (string.isNotBlank(campaignMemberId)) {
+        //     CampaignMember myCampaignMember = [select id, Campaign.PositiveOutcomeDefaultStatus__c  from CampaignMember where Id = :campaignMemberId WITH SECURITY_ENFORCED];   
+        //     String myStatus = myCampaignMember.Campaign.PositiveOutcomeDefaultStatus__c;
+        //     system.debug('CampaignMember-MyStatus --> '+ myStatus);
+        //     HDT_LC_CampaignsController.updateCampaignMemberStatus(campaignMemberId, myStatus);
+        // }
+
+        
+
+        
 
         //update campaignMember siblings Status a 'Non Proposto Auto'
         List<String> accountIds = new List<String>();
@@ -230,7 +268,15 @@ public inherited sharing class HDT_LC_SaleActions {
          * In ogni caso, se l'account non ha il Codice Cliente
          * viene chiamato il servizio di Crea BP/CA
          */
-        
+        Boolean searchToUse = false;
+        for(SBQQ__Quote__c q : quoteList){
+            if(!q.SBQQ__Pricebook__r.Name.equalsIgnoreCase('Vas Standalone')){
+                searchToUse = true;
+                break;
+            }
+        }
+
+        System.enqueueJob(new HDT_QBL_BpCaRequest( accountContactRelationQr.getCreateBpCa( accountIds[0] ), sale.Id, searchToUse ) );
 
     }
 

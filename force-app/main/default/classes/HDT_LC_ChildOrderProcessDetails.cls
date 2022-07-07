@@ -59,7 +59,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
     @AuraEnabled
     @SuppressWarnings('PMD.AvoidDeeplyNestedIfStmts')
-    public static void updateProcessStep(Order order,
+    public static void updateProcessStep(SObject order,
         //INIZIO SVILUPPI EVERIS 
         Boolean isVolture,
         Boolean isRetroactive,
@@ -67,100 +67,80 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         Boolean isUpdateStep,
         Date readingDate){
         //FINE SVILUPPI EVERIS
-
+        
         System.debug('updateProcessStep: ' + order);
         System.debug('isVolture: '+isVolture);
+        
+        if(order.getSObjectType().getDescribe().getName() == 'Order')
+        {
+            Order orderToUpdate = (Order) order;
 
-        Order currentOrder = new Order();
-            
-        /* Query the currentOrder */
-        currentOrder = voltureChangeQr.getOrderInfosById(order.Id)[0];
-        //INIZIO SVILUPPI EVERIS CHECK VOLTURA
-        if(isVolture != null && isVolture == true){
-            // Order oldOrder = orderQr.getRecordById(order.Id);
-            //@frpanico check "Cambio contatore non registrato"
-            if(order.NotRegisteredMeterCase__c != null && order.NotRegisteredMeterCase__c == true)
+            Order currentOrder = new Order();
+
+            /* Query the currentOrder */
+            currentOrder = voltureChangeQr.getOrderInfosById(order.Id)[0];
+                    
+            Map<string,Object> inputs = new Map<string,Object>();
+            inputs.put('orderNew',orderToUpdate);
+            inputs.put('currentOrder',currentOrder);
+            inputs.put('isVolture',isVolture);
+            inputs.put('isRetroactive',isRetroactive);
+            inputs.put('isReading',isReading);
+            inputs.put('isUpdateStep',isUpdateStep);
+            inputs.put('readingDate',readingDate);
+
+            //INIZIO SVILUPPI EVERIS CHECK VOLTURA
+            if(isVolture != null && isVolture == true)
             {
-                if(caseQr.getChageNonRegMeterByOrder(order.Id).size() == 0)
-                {                
-                    throw new AuraHandledException('Necessario completare un Case di \'Cambio Contatore Non Registrato\'');
+                HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck checks = HDT_UTL_VoltureChangeManager.processCheck(inputs);
+                if(checks.result != 'OK'){
+                    throw new AuraHandledException(checks.message);
+                }else{
+                    orderToUpdate = (Order)checks.sobj;
+                }
+
+            }
+            if(orderToUpdate.TemporaryConnectionStartDate__c != null 
+            && orderToUpdate.TemporaryConnectionEndDate__c != null
+            && orderToUpdate.TemporaryConnectionEndDate__c <= orderToUpdate.TemporaryConnectionStartDate__c)
+            {
+                throw new AuraHandledException('La data fine connessione temporanea non puo essere precedente alla data inizio!');
+            }
+
+            if((currentOrder.RecordType.DeveloperName == 'HDT_RT_ScontiBonus' || (currentOrder.VasSubtype__c != null && currentOrder.VasSubtype__c.equalsIgnoreCase('Analisi Consumi')))&& orderToUpdate.EffectiveDate__c != null )
+            {
+                if(((String)currentOrder.get('NumeratorGroup__c')).equalsIgnoreCase('ELPVEDM') && orderToUpdate.EffectiveDate__c.day() != 1)
+                {
+                    throw new AuraHandledException('La data decorrenza deve essere popolata con il primo giorno del mese');
                 }
             }
-            //@frpanico check "Tipo Voltura"
-            if(order.VoltureType__c != null && String.isBlank(order.VoltureType__c))
-            {
-                throw new AuraHandledException('Valorizzare campi obbligatori');
-            }
-            /* Check Tipo Voltura "In Continuita"/"Recupero" ammesso solo se marcatura entrante/uscente e' "Persona Fisica"/"Persona Giuridica" */
-            if(order.VoltureType__c != null && order.VoltureType__c.equalsIgnoreCase('In Continuità'))
-            {
-                if(currentOrder.PreviousCustomer__r.Account.CustomerMarking__c != currentOrder.Account.CustomerMarking__c || !currentOrder.Account.CustomerMarking__c.containsIgnoreCase('Persona Fisica'))
-                {
-                    throw new AuraHandledException('Per Voltura \"' + order.VoltureType__c + '\", entrambi i clienti (uscente ed entrante) devono essere \"Persone Fisiche\"');
-                }
-            }
-            else if(order.VoltureType__c != null && order.VoltureType__c.equalsIgnoreCase('Incorporazione societaria'))
-            {
-                if(currentOrder.PreviousCustomer__r.Account.RecordType.DeveloperName != currentOrder.Account.RecordType.DeveloperName
-                    || !currentOrder.Account.RecordType.DeveloperName.containsIgnoreCase('HDT_RT_Business'))
-                {
-                    throw new AuraHandledException('Per Voltura \"' + order.VoltureType__c + '\", entrambi i clienti (uscente ed entrante) devono essere \"Persone Giuridiche\"');
-                }
-            }
-            //@frpanico check "Data Decorrenza"
-            /**@frpanico 12/11/2021
-             * Update check VoltureType "Recupero" the date has been changed to 2015/08/31
-             */
-            if(order.EffectiveDate__c != null)
-            {
-                if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
-                {
-                    if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva')))
-                    {
-                        throw new AuraHandledException('Impossibile inserire una data inferiore a 3 gg lavorativi');
-                    }
-                    else if(order.VoltureType__c != null && order.VoltureType__c == 'Recupero' && order.EffectiveDate__c > Date.newInstance(2015, 08, 31))
-                    {
-                        throw new AuraHandledException('Per Voltura di tipo \"Recupero\" è necessario inserire una data antecedente al 31/08/2015');
-                    }
-                    else
-                    {    
-                        order.RetroactiveDate__c = order.EffectiveDate__c;
-                        order.Subprocess__c = 'Retroattiva';
-                    }
-                } 
-                else 
-                {
-                    order.RetroactiveDate__c = null;
-                    order.Subprocess__c = 'Standard';
-                }
-            } 
-            //@frpanico check "Voltura con Autolettura"
-            if(isReading != null && isReading == true && isRetroactive != null && isRetroactive == false)
-            {
-                order.Subprocess__c = 'Con Autolettura';
-            }
-            //@frpanico valorizzazione "Data Lettura"
-            if(readingDate != null && (isReading != null && isReading == true))
-            {
-                order.ReadingCustomerDate__c = readingDate;
-            }
+            exeChecks(orderToUpdate);
+
+            orderSrv.updateRecord(orderToUpdate);
         }
-        //FINE SVILUPPI EVERIS CHECK VOLTURA 
-
-        // Date tempStart = order.TemporaryConnectionStartDate__c;
-        // Date tempEnd = order.TemporaryConnectionEndDate__c;
-        // Boolean tempDate = tempEnd < tempStart;
-
-        if(order.TemporaryConnectionStartDate__c != null 
-        && order.TemporaryConnectionEndDate__c != null
-        && order.TemporaryConnectionEndDate__c < order.TemporaryConnectionStartDate__c){
-            throw new AuraHandledException('La data fine connessione temporanea non puo essere precedente alla data inizio!');
+        if(order.getSObjectType().getDescribe().getName() == 'OrderItem')
+        {
+            OrderItem ordItem = (OrderItem) order;
+            Order orderToUpdate = new Order();
+            Decimal step = Decimal.valueOf(String.valueOf(ordItem.Description));
+            List<SObject> sobjListToUpdate = new List<SObject>();
+            System.debug('OrderItem: ' + JSON.serialize(ordItem));
+            List<OrderItem> currentOrderItem = [SELECT OwnerAC__c, DwellingType__c, OccupantsNumber__c, Surface__c,SBQQ__QuoteLine__c FROM OrderItem WHERE Id = :ordItem.Id WITH SECURITY_ENFORCED];
+            SBQQ__QuoteLine__c quoteLine = new SBQQ__QuoteLine__c();
+            quoteLine.Id = currentOrderItem[0].SBQQ__QuoteLine__c;
+            quoteLine.OwnerAC__c = ordItem.OwnerAC__c != null ? ordItem.OwnerAC__c : currentOrderItem[0].OwnerAC__c;
+            quoteLine.DwellingType__c = ordItem.DwellingType__c != null ? ordItem.DwellingType__c : currentOrderItem[0].DwellingType__c;
+            quoteLine.OccupantsNumber__c = ordItem.OccupantsNumber__c != null ? ordItem.OccupantsNumber__c : currentOrderItem[0].OccupantsNumber__c;
+            quoteLine.Surface__c = ordItem.Surface__c != null ? ordItem.Surface__c : currentOrderItem[0].Surface__c;
+            orderToUpdate.Id = ordItem.OrderId;
+            orderToUpdate.Step__c = step;
+            ordItem.Description = '';
+            sobjListToUpdate.add(orderToUpdate);
+            sobjListToUpdate.add(ordItem);
+            sobjListToUpdate.add(quoteLine);
+            HDT_UTL_DatabaseService.updateSObject(sobjListToUpdate);
         }
-
-        exeChecks(order);
-
-        orderSrv.updateRecord(order);
+        
     }
 
     /* Wrapper Method */
@@ -221,10 +201,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     public static HDT_WRP_QuoteType getQuoteTypeMtd(Order ord){
         system.debug(ord);
         HDT_WRP_QuoteType wrp = new HDT_WRP_QuoteType();
+        String recordTypeDevName = Schema.getGlobalDescribe().get('Order').getDescribe().getRecordTypeInfosById().get((String)ord.get('RecordTypeId')).getDeveloperName();
         try {
             List<QuoteManagement__c> metas;
 
-            if(ord.recordType.DeveloperName=='HDT_RT_ConnessioneConAttivazione'){
+            if(recordTypeDevName=='HDT_RT_ConnessioneConAttivazione'){
                 //ConnessioneConAttivazione
                 metas= [SELECT QuoteType__c, OperationCode__c FROM QuoteManagement__c WHERE CausalCode__c=:ord.ProcessCode__c AND Operation_type__c='HDT_RT_ConnessioneConAttivazione' WITH SECURITY_ENFORCED] ;
                 wrp.quoteType= metas[0].QuoteType__c; 
@@ -237,39 +218,39 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             Decimal power = ord.PowerRequested__c != null ? ord.PowerRequested__c : ord.PowerAvailable__c;
             String powerRange=HDT_UTL_QuoteManagement.getRangeValue(power);
 
-            Boolean isDispatcherInMtd= HDT_UTL_QuoteManagement.checkLocalDispatcher(ord.ServicePoint__r.Distributor__r.Name);
+            Boolean isDispatcherInMtd= HDT_UTL_QuoteManagement.checkLocalDispatcher(ord.DistributorFormula__c);
             String distributor = isDispatcherInMtd ? 'InRete' : 'ExtraRete';
                             
 
- /*           system.debug('RequestPhase '+ord.RequestPhase__c);
-            system.debug('ConnectionType__c '+ord.ConnectionType__c);
-            system.debug('ProcessCode__c '+ord.ProcessCode__c);
-            system.debug('VendDistr__c '+distributor);
-            system.debug('PowerRequested__c '+ord.PowerRequested__c);
-            system.debug('PowerAvailable__c '+ ord.PowerAvailable__c);
-            system.debug('VoltageLevel__c '+ ord.VoltageLevel__c);
-            system.debug('PowerCommitted__c '+ ord.PowerCommitted__c);
-            system.debug('EnergyUseCase__c '+ord.UseTypeEnergy__c);
-            system.debug('PowerRange__c '+powerRange);
-            system.debug('ComparePowReq__c '+checkPrPc);
-            system.debug('RT '+ord.recordType.DeveloperName); */
+            system.debug(LoggingLevel.DEBUG,'RequestPhase '+ord.RequestPhase__c);
+            system.debug(LoggingLevel.DEBUG,'ConnectionType__c '+ord.ConnectionType__c);
+            system.debug(LoggingLevel.DEBUG,'ProcessCode__c '+ord.ProcessCode__c);
+            system.debug(LoggingLevel.DEBUG,'VendDistr__c '+distributor);
+            system.debug(LoggingLevel.DEBUG,'PowerRequested__c '+ord.PowerRequested__c);
+            system.debug(LoggingLevel.DEBUG,'PowerAvailable__c '+ ord.PowerAvailable__c);
+            system.debug(LoggingLevel.DEBUG,'VoltageLevel__c '+ ord.VoltageLevel__c);
+            system.debug(LoggingLevel.DEBUG,'PowerCommitted__c '+ ord.PowerCommitted__c);
+            system.debug(LoggingLevel.DEBUG,'EnergyUseCase__c '+ord.UseTypeEnergy__c);
+            system.debug(LoggingLevel.DEBUG,'PowerRange__c '+powerRange);
+            system.debug(LoggingLevel.DEBUG,'ComparePowReq__c '+checkPrPc);
+            system.debug(LoggingLevel.DEBUG,'RT '+recordTypeDevName);
 
-            if(ord.recordType.DeveloperName=='HDT_RT_TemporaneaNuovaAtt'){
+            if(recordTypeDevName=='HDT_RT_TemporaneaNuovaAtt'){
                 system.debug('if1 ok');
                 metas = [SELECT QuoteType__c, OperationCode__c FROM QuoteManagement__c 
                     WHERE CausalCode__c=:ord.ProcessCode__c AND VendDist__c =:distributor AND VoltageRequired__c =:ord.VoltageLevel__c
                         AND ( EnergyUseType__c= :ord.UseTypeEnergy__c OR EnergyUseType__c='')
-                        AND PowerRequired__c=:powerRange AND (ComparePotRi__c=:checkPrPc OR ComparePotRi__c='') AND Operation_type__c =:ord.recordType.DeveloperName
+                        AND PowerRequired__c=:powerRange AND (ComparePotRi__c=:checkPrPc OR ComparePotRi__c='') AND Operation_type__c =:recordTypeDevName
                     WITH SECURITY_ENFORCED
                     ORDER BY EnergyUseType__c NULLS LAST
                 ];
-            }else if(ord.recordType.DeveloperName=='HDT_RT_AttivazioneConModifica'){
+            }else if(recordTypeDevName=='HDT_RT_AttivazioneConModifica'){
                 system.debug('if2 ok');
                 metas = [SELECT QuoteType__c, OperationCode__c FROM QuoteManagement__c 
                     WHERE RequestedPhase__c =:ord.RequestPhase__c AND ConnectionType__c=:ord.ConnectionType__c 
                         AND CausalCode__c=:ord.ProcessCode__c AND VendDist__c =:distributor AND VoltageRequired__c =:ord.VoltageLevel__c
                         AND ( EnergyUseType__c= :ord.UseTypeEnergy__c OR EnergyUseType__c='')
-                        AND PowerRequired__c=:powerRange AND (ComparePotRi__c=:checkPrPc OR ComparePotRi__c= '' ) AND Operation_type__c =:ord.recordType.DeveloperName
+                        AND PowerRequired__c=:powerRange AND (ComparePotRi__c=:checkPrPc OR ComparePotRi__c= '' ) AND Operation_type__c =:recordTypeDevName
                     WITH SECURITY_ENFORCED
                     ORDER BY EnergyUseType__c NULLS LAST
                 ];
@@ -356,5 +337,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
         return ord;
     }
-    //EVERIS
+    
+    @AuraEnabled
+    public static boolean isPreventivo(Order ord){
+        
+        boolean result;
+        List<Order> ords = [SELECT QuotationType__c FROM Order WHERE Id =:ord.Id WITH SECURITY_ENFORCED];
+        return result = ( !ords.isEmpty() && ords[0].QuotationType__c != null && !String.isBlank(ords[0].QuotationType__c) )? true:false;
+
+    }
+
 }

@@ -82,11 +82,11 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
             {
                 label:'E-Mail',
                 value:'E-Mail'
-            },
+            }/*,
             {
                 label:'SMS',
                 value:'SMS'
-            }
+            }*/
         ];
 
         if (this.loginChannel != null && this.loginChannel !== undefined && this.loginChannel.localeCompare('Sportello')===0){
@@ -236,6 +236,7 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
         //const sendMode = 'Sportello'; // La documentazione anticipata non deve essere spedita da Postel, quindi forziamo sendMode = Sportello.
         let sendMode = this.isLawEighty ? this.modalitaInvio : 'Sportello'
         let tipoPlico = this.isLawEighty ? '' : this.tipoPlico
+        this.showSpinner = true;
         var formParams = {
             sendMode : sendMode,
             mode : 'Print',
@@ -247,8 +248,10 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
             context: this.context,
             formParams: JSON.stringify(formParams)
         }).then(result => {
+            this.showSpinner = false;
             this.closeModal();
         }).catch(error => {
+            this.showSpinner = false;
             this.showToast('Errore nell\'invio del documento al cliente.');
             console.error(error);
         });
@@ -317,8 +320,9 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
             byteArrays.push(byteArray);
         }
 
-        const blob = new Blob(byteArrays, { type: 'application/pdf' });
+        let blob = new Blob(byteArrays, { type: 'application/pdf' });
         const blobURL = URL.createObjectURL(blob);
+        console.log('URL >>> ' + blobURL);
         this[NavigationMixin.Navigate](
             {
                 type: 'standard__webPage',

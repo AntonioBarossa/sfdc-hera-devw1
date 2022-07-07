@@ -25,6 +25,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Variabili_Contratto</name>
+        <label>Assegna Variabili Contratto</label>
+        <locationX>1476</locationX>
+        <locationY>1002</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Contract__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>OrderContractId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaValori_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaDataDecorrenza</name>
         <label>AssegnaDataDecorrenza</label>
         <locationX>1602</locationX>
@@ -164,8 +180,8 @@
     <assignments>
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
-        <locationX>1479</locationX>
-        <locationY>1082</locationY>
+        <locationX>1426</locationX>
+        <locationY>1157</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Order__c</assignToReference>
             <operator>Assign</operator>
@@ -877,7 +893,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>AssegnaDataDecorrenza</targetReference>
+                <targetReference>AssegnaValori_0</targetReference>
             </connector>
             <label>Nullo</label>
         </rules>
@@ -1325,7 +1341,7 @@
         <locationY>887</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AssegnaValori_0</targetReference>
+            <targetReference>Assegna_Variabili_Contratto</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>

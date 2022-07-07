@@ -164,6 +164,94 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return accList;
 	}
 
+	public static List<Account> createAccountDistributore(Integer amount, Boolean doInsert, String companyOwner, String customerMarking, String category){
+
+		List<Account> accList=new List<Account>();
+
+		Id rt=utlConstants.ACCOUNT_RECORDTYPEID_DISTRIBUTORE;
+
+		for (Integer i=0; i<amount; i++){
+			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+			Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			Decimal result = numCustomerCode + i;
+			String stringResult = String.valueOf(result);
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+
+			Account acc=new Account();
+
+			acc.RecordTypeId=rt;
+			acc.Name='test account'+i;
+			acc.CompanyOwner__c=companyOwner;
+			acc.CustomerMarking__c=customerMarking;
+			acc.Category__C=category;
+			acc.BillingCityCode__c='Roma';
+			acc.BillingStreetName__c='via roma';
+			acc.BillingStreetNumber__c='55';
+			acc.LastName__c='test account'+i;
+			acc.BillingIsAddressVerified__c=true;
+			
+			if(String.isNotBlank(customerMarking) && (customerMarking.containsIgnoreCase('Condominio') || customerMarking.containsIgnoreCase('Associazione'))) {
+				acc.FiscalCode__c='SXSRLA45H28H5' + String.valueOf(500 + i);
+			} else {
+				acc.VATNumber__c='12345678' + String.valueOf(100 + i);
+			}
+
+			//@frpanico 06/08 added Customer Code
+			//** [START MOD 2021-08-20] @Author:Luca Belometti @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+			// OLD VALUE → acc.CustomerCode__c='1003616210';
+        	acc.IsWrongFiscalData__c = false;
+			acc.CustomerCode__c = stringResult;
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+
+			System.debug('Distribution account created in Data Factory ' + acc);
+			accList.add(acc);
+
+		}
+
+		if (doInsert){
+
+			insert accList;
+		}
+
+		return accList;
+	}
+
+	/*
+		@Author:        Edoardo Zanatta (edoardo.zanatta.st@everis.nttdata.com)
+		CreatedDate:    27/04/2022
+	*/
+
+	public static List<Account> createSimpleAccountDistributore(Integer amount, Boolean doInsert, String companyOwner, String customerMarking, String category){
+
+		List<Account> accList=new List<Account>();
+
+		Id rt=utlConstants.ACCOUNT_RECORDTYPEID_DISTRIBUTORE;
+
+		for (Integer i=0; i<amount; i++){
+
+			Account acc = new Account();
+
+			acc.RecordTypeId=rt;
+			acc.Name='HERA S.P.A.-10R0000000';
+			acc.CompanyOwner__c=companyOwner;
+			acc.CustomerMarking__c=customerMarking;
+			acc.Category__C=category;
+			
+			accList.add(acc);
+		}
+
+		if(doInsert){
+			insert accList;
+		}
+
+		return accList;
+
+	}
+
 	public static List<Account> createAccountResidenziale(Integer amount, Boolean doInsert, String companyOwner, String customerMarking, String category){
 
 		List<Account> accList=new List<Account>();
@@ -914,6 +1002,24 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return productList;
 	}
 
+	public static SBQQ__ProductOption__c createProductOption(Id productId, Id parentProductId, Boolean doInsert){
+
+		SBQQ__ProductOption__c productOption =new SBQQ__ProductOption__c();
+		productOption.SBQQ__ConfiguredSKU__c = parentProductId;
+		productOption.SBQQ__OptionalSKU__c = productId;
+		productOption.SBQQ__Number__c = 1;
+        productOption.SBQQ__Quantity__c = null;
+        productOption.SBQQ__QuantityEditable__c = false;
+        productOption.SBQQ__Selected__c = false;
+        productOption.SBQQ__Feature__c = null;
+        productOption.SBQQ__Type__c = 'Related Product';
+		if (doInsert){
+
+			insert productOption;
+		}
+		return productOption;
+	}
+
 	public static List<PricebookEntry> createPricebookEntry(List<Product2> productList, Boolean doInsert, Id pricebookId){
 
 		List<PricebookEntry> pricebookEntries=new List<PricebookEntry>();
@@ -928,6 +1034,22 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			insert pricebookEntries;
 		}
 
+		return pricebookEntries;
+	}
+
+	public static List<PricebookEntry> createPricebookEntry(List<Product2> productList, Boolean doInsert, Id pricebookId, Id priceBookStandard){
+		List<PricebookEntry> pricebookEntries=new List<PricebookEntry>();		
+		for (Product2 product:productList){
+			pricebookEntries.add(new PricebookEntry(Product2Id=product.Id, Pricebook2Id=priceBookStandard, UseStandardPrice=false, UnitPrice=0, IsActive=true));
+		}
+
+		for (Product2 product:productList){
+			pricebookEntries.add(new PricebookEntry(Product2Id=product.Id, Pricebook2Id=pricebookId, UseStandardPrice=false, UnitPrice=0, IsActive=true));
+		}
+
+		if (doInsert){
+			insert pricebookEntries;
+		}
 		return pricebookEntries;
 	}
 
@@ -1200,7 +1322,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			pricebook.Name='Test Price Book'+i;
 			pricebook.IsActive=true;
-
 			pricebookList.add(pricebook);
 		}
 
@@ -1444,8 +1565,11 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 	public static User createInternalUser(String profileId, Boolean doInsert){
-
-		User internalUser=new User(Alias='crmuser', FirstName='FirstName', LastName='LastName', Email='crmuser@test.com', EmailEncodingKey='UTF-8', LanguageLocaleKey='it', LocaleSidKey='it', ProfileId=profileId, TimeZoneSidKey='Europe/Rome', UserName='crmuser@test.com'+DateTime.now().getTime());
+        String orgId 		= UserInfo.getOrganizationId();
+		Integer randomInt 	= Integer.valueOf(math.rint(math.random()*100000));
+        String dateString 	= ''+DateTime.now().getTime();
+        String uniqueName 	= orgId + dateString + randomInt + '@test' + orgId + '.org';
+		User internalUser=new User(Alias='crmuser', FirstName='FirstName', LastName='LastName', Email='crmuser@test.com', EmailEncodingKey='UTF-8', LanguageLocaleKey='it', LocaleSidKey='it', ProfileId=profileId, TimeZoneSidKey='Europe/Rome', UserName=uniqueName);
 		if (doInsert){
 
 			insert internalUser;
@@ -3313,4 +3437,58 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return sdList;
 	}
 
+	public static List<QuoteManagement__c> createQuoteManagement(Integer amount, Boolean doInsert, String commodity){
+
+		List<QuoteManagement__c> menageQuoteList = new List<QuoteManagement__c>();
+
+		for(Integer i=0; i<amount; i++){
+
+			QuoteManagement__c menageQuote = new QuoteManagement__c();
+			menageQuote.Commodity__c = commodity;
+			menageQuoteList.add(menageQuote);
+		}
+
+		if(doInsert){
+			insert menageQuoteList;
+		}
+		return menageQuoteList;
+	}
+
+	//@Author Davide Viola - 29/06/2022
+	@SuppressWarnings('PMD.ExcessiveParameterList')
+	public static List<SBQQ__ConfigurationAttribute__c> createConfigurationAttribute(Integer amount, Boolean doInsert, String targetField, String prodId){
+
+		List<SBQQ__ConfigurationAttribute__c> configAttribList = new List<SBQQ__ConfigurationAttribute__c>();
+
+		for(Integer i=0; i<amount; i++){
+
+			SBQQ__ConfigurationAttribute__c configAttrib = new SBQQ__ConfigurationAttribute__c();
+			configAttrib.SBQQ__TargetField__c = targetField;
+			configAttrib.SBQQ__Product__c = prodId;
+			configAttribList.add(configAttrib);
+		}
+
+		if(doInsert){
+			insert configAttribList;
+		}
+		return configAttribList;
+	}
+
+	//@Author Davide Viola - 29/06/2022
+	public static List<EligibilityCriteria__c> createEligibilityCriteria(Integer amount, Boolean doInsert, String prodId){
+
+		List<EligibilityCriteria__c> eligibCriteriaList = new List<EligibilityCriteria__c>();
+
+		for(Integer i=0; i<amount; i++){
+
+			EligibilityCriteria__c eligibCriteria = new EligibilityCriteria__c();
+			eligibCriteria.Product__c = prodId;
+			eligibCriteriaList.add(eligibCriteria);
+		}
+
+		if(doInsert){
+			insert eligibCriteriaList;
+		}
+		return eligibCriteriaList;
+	}
 }

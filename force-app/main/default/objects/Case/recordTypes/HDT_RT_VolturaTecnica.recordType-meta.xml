@@ -181,10 +181,10 @@
             <fullName>Bolletta per e-mail</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>Bolletta per e-mail %2B Carta</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>Cartaceo</fullName>
             <default>false</default>
@@ -270,7 +270,59 @@
     <picklistValues>
         <picklist>CaliberAvailable__c</picklist>
         <values>
+            <fullName>100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>100 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>230 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>400 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Biorario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Monorario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Orario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elettronico</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G1%2C6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1%2C6 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -278,7 +330,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G10 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G100 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G100 Turbina</fullName>
             <default>false</default>
         </values>
         <values>
@@ -286,7 +350,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G1000 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1000 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G16</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G16 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -294,7 +370,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G160 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G1600</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1600 Pistoni rot%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -306,7 +398,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G2%2C5 pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G25 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -314,7 +414,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G250 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250G Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -322,7 +438,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G40 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G40 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G400 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G400 Turbina</fullName>
             <default>false</default>
         </values>
         <values>
@@ -330,7 +462,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G4000 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -338,7 +478,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G65 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G650</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G650 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G650 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6500</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -554,7 +718,15 @@
     <picklistValues>
         <picklist>CancellationReason__c</picklist>
         <values>
+            <fullName>Registrazione non conforme</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato per no conferma cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento per dati discordanti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6080,7 +6252,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Falso procurato</fullName>
+            <fullName>Falso procuratore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6268,7 +6440,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Prelivo abusivo</fullName>
+            <fullName>Prelievo abusivo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7163,7 +7335,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Recesso su Richesta Cliente</fullName>
+            <fullName>Recesso su Richiesta Cliente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7803,6 +7975,10 @@
         </values>
         <values>
             <fullName>Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa Data Decorrenza</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8492,7 +8668,7 @@
     <picklistValues>
         <picklist>SendMode__c</picklist>
         <values>
-            <fullName>E-mail</fullName>
+            <fullName>E-Mail</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10244,7 +10420,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Importi per consumi risalenti a più di due anni</fullName>
+            <fullName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10595,7 +10771,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Recesso su Richesta Cliente</fullName>
+            <fullName>Recesso su Richiesta Cliente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10874,17 +11050,6 @@
         </values>
         <values>
             <fullName>013-Uso Condizionam%2E%2BRiscald%2E</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>UseChangeCharge__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -22,6 +22,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     verifyFieldsAddressDisabled= true;
     disableVerifIndiButton = true;
     disableLocalita= false;
+    showSpinner = false;
     @api recordtype;
     @api headertoshow;
     @api checkBoxFieldValue = false;
@@ -89,6 +90,14 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api processtype;
     disableAll=false;
     
+    @api openFromFlow = false;
+    @track disableConfirmButton
+
+    handleConfirmVerification()
+    {
+        const closureEvent = new CustomEvent('closemodal');
+        this.dispatchEvent(closureEvent);
+    }
 
     get options() {
         return [
@@ -335,47 +344,49 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
         
     }
     handleSelectedValue(event) {
-    console.log('handleSelectedValue - event ' +JSON.stringify(event.detail));
-    console.log('handleSelectedValue - rowtosend****' + JSON.stringify(this.rowToSend));
-    this.template.querySelector('c-hdt-selection-address-response').closeForm();
-    if(event.detail['city1'] != null){
-        this.comune=event.detail['city1'];
-        this.theRecord['Comune']= event.detail['city1'];
-    }
-    if(event.detail['cityCode'] != null){
-        this.codcomunesap=event.detail['cityCode'];
-        this.theRecord['Codice Comune SAP']= event.detail['cityCode'];
-    }
-    if(event.detail['region'] != null){
-        this.provincia=event.detail['region'];
-        this.theRecord['Provincia']= event.detail['region'];
-    }
-    if(event.detail['street'] != null){
-        this.via=event.detail['street'];
-        this.theRecord['Via']= event.detail['Via'];
-    }
-    if(event.detail['streetCode'] != null){
-        console.log('entra in streetCode ' + JSON.stringify(event.detail['streetCode']));
-        this.codstradariosap=event.detail['streetCode'];
-        this.theRecord['codStradarioSAP']= event.detail['streetCode'];
-    }
-    if(event.detail['cityPName'] != null){
-        console.log('entra in Localita ' + JSON.stringify(event.detail['cityPName']));
-        this.localita=event.detail['cityPName'];
-        this.theRecord['Localita']= event.detail['cityPName'];
-    }
-    if(event.detail['cityPCode'] != null){
-        console.log('entra in Localita ' + JSON.stringify(event.detail['cityPCode']));
-        this.codicelocalita=event.detail['cityPCode'];
-        this.theRecord['Codice Localita']= event.detail['cityPCode'];
-    }
-    if(this.codcomunesap != null && this.codstradariosap != null && this.civico != null){
-        this.disableVerifIndiButton = false;
-    }
-    else{
-        this.disableVerifIndiButton = true;
-    }
-    console.log('handleSelectedValue theRecord : ' + JSON.stringify(this.theRecord));
+        console.log('handleSelectedValue - event ' +JSON.stringify(event.detail));
+        console.log('handleSelectedValue - rowtosend****' + JSON.stringify(this.rowToSend));
+        this.template.querySelector('c-hdt-selection-address-response').closeForm();
+        if(event.detail['city1'] != null){
+            this.comune=event.detail['city1'];
+            this.theRecord['Comune']= event.detail['city1'];
+        }
+        if(event.detail['cityCode'] != null){
+            this.codcomunesap=event.detail['cityCode'];
+            this.theRecord['Codice Comune SAP']= event.detail['cityCode'];
+        }
+        if(event.detail['region'] != null){
+            this.provincia=event.detail['region'];
+            this.theRecord['Provincia']= event.detail['region'];
+        }
+        if(event.detail['street'] != null){
+            this.via=event.detail['street'];
+            this.theRecord['Via']= event.detail['Via'];
+        }
+        if(event.detail['streetCode'] != null){
+            console.log('entra in streetCode ' + JSON.stringify(event.detail['streetCode']));
+            this.codstradariosap=event.detail['streetCode'];
+            this.theRecord['codStradarioSAP']= event.detail['streetCode'];
+        }
+        if(event.detail['cityPName'] != null){
+            console.log('entra in Localita ' + JSON.stringify(event.detail['cityPName']));
+            this.localita=event.detail['cityPName'];
+            this.theRecord['Localita']= event.detail['cityPName'];
+        }
+        if(event.detail['cityPCode'] != null){
+            console.log('entra in Localita ' + JSON.stringify(event.detail['cityPCode']));
+            this.codicelocalita=event.detail['cityPCode'];
+            this.theRecord['Codice Localita']= event.detail['cityPCode'];
+        }
+        if(this.codcomunesap != null && this.codstradariosap != null && this.civico != null){
+            this.disableVerifIndiButton = false;
+            this.disableConfirmButton = !this.disableVerifIndiButton;
+        }
+        else{
+            this.disableVerifIndiButton = true;
+            this.disableConfirmButton = !this.disableVerifIndiButton;
+        }
+        console.log('handleSelectedValue theRecord : ' + JSON.stringify(this.theRecord));
 
     }
 
@@ -419,6 +430,13 @@ handleAddressFromAccount()
             this.theRecord['Codice Via Stradario SAP']= data['Codice Via Stradario SAP'];
             this.theRecord['Flag Verificato']= true;
             this.theRecord['Indirizzo Estero']=false;
+            if(this.codstradariosap != undefined && this.codstradariosap != ''){
+                this.handleAddressVerification();
+            }else{
+                this.flagverificato=false;
+                this.theRecord['Flag Verificato']= false;
+                this.alert('Indirizzo da verificare','Attenzione! Indirizzo non censito sullo stradario SAP, inserisci una nuova Via','warn');
+            }
             
 
         }
@@ -554,6 +572,7 @@ handleAddressValuesIfSap(servicepointretrieveddata){
                // this.IndEstero = data[10] !== undefined ? data[10] : false;
 
                 this.disableVerifIndiButton= false;
+                this.disableConfirmButton = !this.disableVerifIndiButton;
                 data=[];
          }
          if(dataFornitura!= undefined){
@@ -571,6 +590,7 @@ handleAddressValuesIfSap(servicepointretrieveddata){
            // this.IndEstero = dataFornitura[10] !== undefined ? dataFornitura[10] : false;
 
             this.disableVerifIndiButton= false;
+            this.disableConfirmButton = !this.disableVerifIndiButton;
             dataFornitura=[];
          }
 
@@ -588,7 +608,14 @@ handleAddressValuesIfSap(servicepointretrieveddata){
             this.theRecord['IndirizzoEstero'] = this.IndEstero;
            // this.theRecord['Flag Verificato'] = this.FlagVerificato;
            this.theRecord['Flag Verificato'] = true;
-            
+           if(this.codstradariosap != undefined && this.codstradariosap != ''){
+                this.handleAddressVerification();
+            }else{
+                this.flagverificato=false;
+                this.theRecord['Flag Verificato']= true;
+                this.alert('Indirizzo da verificare','Attenzione! Indirizzo non censito sullo stradario SAP, inserisci una nuova Via','warn');
+            } 
+           
 
         this.preloading = false;
         console.log(' THERECORD**************'+JSON.stringify(this.theRecord));
@@ -794,31 +821,31 @@ handleAddressValuesIfSap(servicepointretrieveddata){
                     console.log('****count searchkey : '+  JSON.stringify(searchkey));
                     dataForTableForn ='';
                     console.log('****element INDIRIZZOFORNITURA: '+  JSON.stringify(element));
-                    if(element.comune != undefined){
+                    if(element.comune !== undefined && element.comune !== null && element.comune !== ''){
                         dataForTableForn += element.comune + ',';
                     }
-                    if(element.via != undefined){
+                    if(element.via !== undefined && element.via !== null && element.via !== ''){
                         dataForTableForn += element.via + ',';
                     }
-                    if(element.civico != undefined){
+                    if(element.civico !== undefined && element.civico !== null && element.civico !== ''){
                         dataForTableForn += element.civico + ',';
                     }
-                    if(element.provincia != undefined){
+                    if(element.provincia !== undefined && element.provincia !== null && element.provincia !== ''){
                         dataForTableForn += element.provincia+ ',';
                     }
-                    if(element.estensCivico != undefined){
+                    if(element.estensCivico !== undefined && element.estensCivico !== null){
                         dataForTableForn += element.estensCivico + ',';
                     }
-                    if(element.stato != undefined){
+                    if(element.stato !== undefined && element.stato !== null && element.stato !== ''){
                         dataForTableForn += element.stato + ',';
                     }
-                    if(element.cap != undefined){
+                    if(element.cap !== undefined && element.cap !== null && element.cap !== ''){
                         dataForTableForn += element.cap + ',';
                     }
-                    if(element.codiceComuneSAP != undefined){
+                    if(element.codiceComuneSAP !== undefined && element.codiceComuneSAP !== null && element.codiceComuneSAP !== ''){
                         dataForTableForn += element.codiceComuneSAP + ',';
                     }
-                    if(element.codiceViaStradarioSAP != undefined){
+                    if(element.codiceViaStradarioSAP !== undefined && element.codiceViaStradarioSAP !== null && element.codiceViaStradarioSAP !== ''){
                         dataForTableForn += element.codiceViaStradarioSAP;
                     }
 
@@ -1071,9 +1098,11 @@ handleAddressValues(servicepointretrieveddata){
             break;
             case 'AbilitaVerifica':
                 this.disableVerifIndiButton = servicepointretrieveddata[key];
+                this.disableConfirmButton = !this.disableVerifIndiButton;
             break;
             case 'abilitaVerifica':
                 this.disableVerifIndiButton = servicepointretrieveddata[key];
+                this.disableConfirmButton = !this.disableVerifIndiButton;
             break;
             case 'Localita':
 
@@ -1310,44 +1339,44 @@ handleChangeIndirizz(event){
     }else{
 
     
-    if((event.target.value.length==5 && event.target.name =='Via')){
-        getAddressInd({street:event.target.value,cityCode:this.codcomunesap}).then(data =>
-            {
-                console.log("******HOLAHOLA:" + JSON.stringify(data));
-                if(data['statusCode'] == 200 && data['prestazione'].length > 0){
-                    console.log("Sucessoooooooooooo:" + JSON.stringify(data));
-                    this.herokuAddressServiceData = data['prestazione'];
-                    this.headertoshow = 'Via';
-                    this.booleanForm=false;
-                    this.booleanForm=true;
+        if((event.target.value.length==5 && event.target.name =='Via')){
+            getAddressInd({street:event.target.value,cityCode:this.codcomunesap}).then(data =>
+                {
+                    console.log("******HOLAHOLA:" + JSON.stringify(data));
+                    if(data['statusCode'] == 200 && data['prestazione'].length > 0){
+                        console.log("Sucess:" + JSON.stringify(data));
+                        this.herokuAddressServiceData = data['prestazione'];
+                        this.headertoshow = 'Via';
+                        this.booleanForm=false;
+                        this.booleanForm=true;
 
-                    this.template.querySelector('c-hdt-selection-address-response').openedForm2();
-                    this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Via');
-                }
-                else{
-                    let event2;
-                    if(data['statusCode'] != 200){
-                        event2 = new ShowToastEvent({
-                            title: 'Errore',
-                            variant: 'error',
-                            message: "errore di connessione, riprovare o contattare l'amministratore"
-                        });
-                        
+                        this.template.querySelector('c-hdt-selection-address-response').openedForm2();
+                        this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Via');
                     }
                     else{
-                        event2 = new ShowToastEvent({
-                            title: 'Errore',
-                            variant: 'error',
-                            message: 'Non sono presenti Indirizzi corrispondenti ai caratteri inseriti . Digitare nuovamente per effettuare una nuova ricerca.',
-                        });
+                        let event2;
+                        if(data['statusCode'] != 200){
+                            event2 = new ShowToastEvent({
+                                title: 'Errore',
+                                variant: 'error',
+                                message: "errore di connessione, riprovare o contattare l'amministratore"
+                            });
+                            
+                        }
+                        else{
+                            event2 = new ShowToastEvent({
+                                title: 'Errore',
+                                variant: 'error',
+                                message: 'Non sono presenti Indirizzi corrispondenti ai caratteri inseriti . Digitare nuovamente per effettuare una nuova ricerca.',
+                            });
+                        }
+                        this.dispatchEvent(event2);
                     }
-                    this.dispatchEvent(event2);
-                }
-                
-    
-    
-        });
-    }
+                    
+        
+        
+            });
+        }
     }
     
 
@@ -1452,9 +1481,11 @@ handleTextChange(event){
         console.log('wrapaddressobject -handleTextChange ********************'+ JSON.stringify(this.wrapaddressobject));
         if(this.codcomunesap != null && this.codstradariosap != null && this.civico != null){
             this.disableVerifIndiButton = false;
+            this.disableConfirmButton = !this.disableVerifIndiButton;
         }
         else{
             this.disableVerifIndiButton = true;
+            this.disableConfirmButton = !this.disableVerifIndiButton;
         }
     
 }
@@ -1462,7 +1493,7 @@ handleTextChange(event){
 @api
     handleAddressFields(){
         console.log('saveAddressField - wrapaddressobject START '+ JSON.stringify(this.theRecord));
-        if(this.theRecord['Indirizzo Estero'] == undefined){
+        if(this.theRecord['Indirizzo Estero'] === undefined){
             this.theRecord['Indirizzo Estero'] = false;
         }
         return this.theRecord;
@@ -1541,7 +1572,8 @@ disabledverifyFieldsAddressDisabled(){
 
         console.log('connectedCallback indirizzo estero : ' + JSON.stringify(this.IndEstero));
         this.disableFieldByIndEstero();
-        if(this.processtype !== undefined && this.processtype!= null && this.processtype!=''){
+        if(this.processtype !== undefined && this.processtype!= null && this.processtype!='' && this.processtype!=='Reclamo Scritto/Rich. Info' && !this.processtype.localeCompare('Venditori') === -1){
+            console.log('Entering if with processtype >>> ' + this.processtype);
             this.disableAll=true;
             this.disableCodComuneSap=true;
             this.disableCap=true;
@@ -1708,13 +1740,19 @@ disabledverifyFieldsAddressDisabled(){
      * Verify address
      */
     handleAddressVerification(){
-
-        getAddressRev({modality:'S',cityCode:this.codcomunesap,streetCode:this.codstradariosap,houseNumCode:this.civico}).then(data =>
+        this.showSpinner = true;
+        console.log('*** spinner '  +this.showSpinner );
+        console.log('## this.codcomunesap: ' + this.codcomunesap + ' ##this.codstradariosap: ' +this.codstradariosap + ' ##this.civico: '+ this.civico );
+        var city = this.codcomunesap;
+        var istat = this.codstradariosap;
+        city = city.replace(/\s/g, '');
+        istat = istat.replace(/\s/g, '');
+        getAddressRev({modality:'S',cityCode:city,streetCode:istat,houseNumCode:this.civico}).then(data =>
             {
-                
+                this.showSpinner = true;
                 console.log("******:" + JSON.stringify(data));
                 if(data['statusCode'] == 200 && data['prestazione'].length > 0){
-                    console.log("Successoooooooooooo:" + JSON.stringify(data));
+                    console.log("Success:" + JSON.stringify(data));
                     this.comune = data['prestazione'][0].city1;
                     this.codcomunesap = data['prestazione'][0].cityCode;
                     this.codstradariosap = data['prestazione'][0].streetCode;
@@ -1735,14 +1773,17 @@ disabledverifyFieldsAddressDisabled(){
                     this.theRecord['Codice Comune SAP']= data['prestazione'][0].cityCode;
                     this.theRecord['Codice Via Stradario SAP']= data['prestazione'][0].streetCode;
                     this.theRecord['Flag Verificato'] = true;
-                 
+                    
+                    this.disableConfirmButton = false;
+
                     this.dispEvent(true);
-               
+                    this.showSpinner = false;
                 }
                 else{
-                    console.log("ErrorrrrrreeeeeeeeeEeee:" + JSON.stringify(data));
+                    console.log("Error:" + JSON.stringify(data));
                     this.dispEvent(false);
-
+                    this.showSpinner = false;
+                    this.alert('Indirizzo da verificare','Attenzione! Indirizzo non censito sullo stradario SAP, inserisci una nuova Via','warn');
                 }
                 
     
@@ -1752,7 +1793,7 @@ disabledverifyFieldsAddressDisabled(){
             this.theRecord['Stato']=='ITALIA';
             this.stato='ITALIA';
         }
-
+        
 
       //  this.hasAddressBeenVerified = true;
         

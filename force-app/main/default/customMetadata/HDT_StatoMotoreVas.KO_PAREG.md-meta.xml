@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>OrderPhase__c</field>
-        <value xsi:type="xsd:string">Motore VAS KO</value>
+        <value xsi:type="xsd:string">Comunicazione verso Motore VAS KO</value>
     </values>
     <values>
         <field>OrderStatus__c</field>

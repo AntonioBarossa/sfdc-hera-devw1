@@ -1,25 +1,24 @@
+@SuppressWarnings('PMD.CyclomaticComplexity, PMD.NcssMethodCount')
 public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObject>, Database.Stateful {
+
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
     private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
-
     public List<Order> ordersToUpdate = new List<Order>();
-    public List<wrts_prcgvr__Activity__c> callActivities = new List<wrts_prcgvr__Activity__c>();
+    public Map<String, List<String>> parentToChildOrderMap = new Map<String, List<String>>();
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        system.debug('HDT_BA_QualityCall - Start');
-        String query = 'SELECT Id,IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
+
+        String query = 'SELECT Id, OrderNumber, IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c FROM Order '+
+        'Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\',\'Credit Check KO\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND VasSubtype__c != \'Analisi Consumi\'';
         return Database.getQueryLocator(query);
     }
 
     public void execute(Database.BatchableContext bc, List<Order> orders){
 
-        system.debug('>>orders: ' + orders);
-        system.debug('>>orders count: ' + orders.size());
-
         List<String> notCancelNonBillable = new List<String>{
             'Completata',
             'Comunicazione verso Motore VAS OK',
-            'Accettato Motore VAS',
+            'Accettato Motore Vas',
             'Comunicazione verso Motore VAS'
         };
 
@@ -30,53 +29,58 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         };
 
         RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
-
         List<wrts_prcgvr__Activity__c> activityVas = new List<wrts_prcgvr__Activity__c>();
-
-        Map<String,wrts_prcgvr__Activity__c> mapActivitiesParent = new Map<String,wrts_prcgvr__Activity__c>(); //in order not to get duplicate activities associated to same Parent Order
-
-        // List<CampaignMember> campaignMembersInsert = new List<CampaignMember>();
-        // Set<CampaignMember> campaignMembersUpdateAdd = new Set<CampaignMember>();
+        List<wrts_prcgvr__Activity__c> callActivities = new List<wrts_prcgvr__Activity__c>();
+        Map<String,wrts_prcgvr__Activity__c> mapActivitiesParent = new Map<String,wrts_prcgvr__Activity__c>();
         Map<Id,CampaignMember> campaignMembersUpdate = new Map<Id,CampaignMember>();
-
         Map<String,Order> orderMap = new Map<String,Order>();
         Map<String,wrts_prcgvr__Activity__c> orderActivityMap = new Map<String,wrts_prcgvr__Activity__c>();
 
         Date dueDate = Date.today();
 
         Set<String> orderIdsSet = new Set<String>();
+        Set<String> orderAccountCompanyOwnersSet = new Set<String>();
         for (Order order : orders) {
             orderIdsSet.add(order.Id);
             if (order.ParentOrder__c != null) {
                 orderIdsSet.add(order.ParentOrder__c);
             }
-        }
-        
+            
+            orderAccountCompanyOwnersSet.add(order.Account.CompanyOwner__c);
+        }        
 
         List<String> ordersIdsList = new List<String>();
         ordersIdsList.addAll(orderIdsSet);
         
         List<wrts_prcgvr__Activity__c> activitiesAssigned = HDT_QR_ActivityCustom.getRecordByOrderListAndQuality(ordersIdsList);
-        system.debug('>> activitiesAssigned: ' + activitiesAssigned);
-        system.debug('>> activitiesAssigned size: ' + activitiesAssigned.size());
+        List<wrts_prcgvr__Activity__c> activitiesToClose = new List<wrts_prcgvr__Activity__c>();
+        Map<String, wrts_prcgvr__Activity__c> orderToActivityMap = new Map<String, wrts_prcgvr__Activity__c>();
         Set<Id> ordersAlreadyAssigned = new Set<Id>();
         for (wrts_prcgvr__Activity__c activityAssigned : activitiesAssigned) {
             ordersAlreadyAssigned.add(activityAssigned.Order__c);
         }
+        for(wrts_prcgvr__Activity__c activity : activitiesAssigned){
+            orderToActivityMap.put(activity.Order__c, activity);
+        }
 
-        system.debug('>> ordersAlreadyAssigned: ' + ordersAlreadyAssigned);
-        system.debug('>> ordersAlreadyAssigned size: ' + ordersAlreadyAssigned.size());
+        Map<String, List<OrderItem>> orderToItemMap = new Map<String, List<OrderItem>>();
+        for(OrderItem item : HDT_QR_OrderItem.getItemFromOrderIdList(ordersIdsList)){
+            if(orderToItemMap.get(item.OrderId) != null){
+                orderToItemMap.get(item.OrderId).add(item);
+            }
+            else {
+                orderToItemMap.put(item.OrderId, new List<OrderItem>());
+                orderToItemMap.get(item.OrderId).add(item);
+            }
+        }
 
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
-
         String comfortQualityQueId = [Select id,name from group where developername = 'HDT_QUE_ComfortQuality' limit 1].id;
-
         List<ComfortQualityCall__c> docValidList = HDT_QR_ComfortQualityCall.getRecordsWithDocumentValidationAndQualityEnabled();
 
         for (Order ord : orders) {
 
             Date startDate = ord.WizardCompletedDate__c;
-            system.debug('>>>startDate before: ' + ord.Id + ' <:> ' + startDate);
 
             for (ComfortQualityCall__c cqc : docValidList) {
                 if (
@@ -91,27 +95,38 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 }
             }
 
-            system.debug('>>>startDate after: ' + ord.Id + ' <:> ' + startDate);
-
-            if (startDate.daysBetween(dueDate) > 50) { //check number of days passed after being signed as quality
+            if (startDate != null && startDate.daysBetween(dueDate) > 50) {
                 
                 Order ordToUpd = new Order(Id = ord.Id);
 
-                if ((ord.ActivityQualityToBeCanceled__c || isMonitoringList.contains(ord.AgencyCode__c))
-                    && (ord.IsVAS__c && !notCancelNonBillable.contains(ord.Phase__c) && !notCancelBillable.contains(ord.Phase__c))) {
+                if (isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c && !notCancelNonBillable.contains(ord.Phase__c) && !notCancelBillable.contains(ord.Phase__c)) {
                     ordToUpd.Phase__c = 'Annullato';
                     ordToUpd.Status = 'Activated';
-                } else {
+                }
+                else if(!notCancelNonBillable.contains(ord.Phase__c) && !notCancelBillable.contains(ord.Phase__c)) {
                     ordToUpd.QualityCall__c = false;
+                    if(orderToItemMap.get(ord.Id) != null){
+                        for(OrderItem item : orderToItemMap.get(ord.Id)){
+                            if(item.Product2.CancelableQC__c){
+                                ordToUpd.Phase__c = 'Annullato';
+                                ordToUpd.Status = 'Activated';
+                                break;
+                            }
+                        }
+                    }
+                }
+                //DV: VADO A CREARMI UNA MAPPA DI TUTTI GLI ORDINI VECCHI, CORRELATI AL PARENT
+                if(parentToChildOrderMap.get(ord.ParentOrder__c) != null){
+                    parentToChildOrderMap.get(ord.ParentOrder__c).add(ord.OrderNumber);
+                }
+                else {
+                    parentToChildOrderMap.put(ord.ParentOrder__c, new List<String>());
+                    parentToChildOrderMap.get(ord.ParentOrder__c).add(ord.OrderNumber);
                 }
 
-                if ((ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c))
-                    || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))) {
+                if ((ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))) {
                     
                     String ordIdToAssoc = ord.Id;
-
-                    system.debug('Keltin test last1: ' + ord.ParentOrder__c);
-                    system.debug('Keltin test last2: ' + ordersAlreadyAssigned.contains(ord.ParentOrder__c));
 
                     if(ordersAlreadyAssigned.contains(ord.ParentOrder__c)){
                         ordIdToAssoc = ord.ParentOrder__c;
@@ -122,97 +137,107 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                         Order__c = ordIdToAssoc,
                         wrts_prcgvr__Description__c = 'Non è stato possibile procedere all’annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS'
                     ));
-                }
-                
+                }                
                 ordersToUpdate.add(ordToUpd);
-            } else {
-
-                system.debug('>> ordersAlreadyAssigned contains: ' + ord.Id + ' -> ' + ordersAlreadyAssigned.contains(ord.Id));
+            }
+            else {
 
                 if (!ordersAlreadyAssigned.contains(ord.Id) && (ord.ParentOrder__c != null && !ordersAlreadyAssigned.contains(ord.ParentOrder__c))) {
-                    // if (dueDate.daysBetween(ord.WizardCompletedDate__c) > 50) { //check number of days passed after being signed as quality
-                    //     ordersToUpdate.add(new Order(
-                    //         Id = ord.Id,
-                    //         QualityCall__c = false
-                    //     ));
-                    // } else {
-                        orderMap.put(ord.Id, ord);
+                    orderMap.put(ord.Id, ord);
         
-                        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
-                                RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
-                                // Account__c = ord.AccountId, //should not be shown on Account related activities
-                                Type__c = 'Quality Call',
-                                wrts_prcgvr__Status__c = 'Creata',
-                                OwnerId = comfortQualityQueId,
-                                ActivatedDate__c = ord.ActivatedDate,
-                                LoginChannel__c = ord.LoginChannel__c
-                        );
-        
-                        if (ord.QualityCallUnique__c) {
-                            activity.Order__c = ord.ParentOrder__c;
-                            mapActivitiesParent.put(ord.ParentOrder__c, activity);
-                        } else {
-                            activity.Order__c = ord.Id;
-                            callActivities.add(activity);
-                        }
-        
-                        orderActivityMap.put(ord.id, activity);
-                    // }
+                    wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
+                        RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
+                        Type__c = 'Quality Call',
+                        wrts_prcgvr__Status__c = 'Aperta',
+                        OwnerId = comfortQualityQueId,
+                        ActivatedDate__c = ord.ActivatedDate,
+                        LoginChannel__c = ord.LoginChannel__c
+                    );
+    
+                    if (ord.QualityCallUnique__c) {
+                        activity.Order__c = ord.ParentOrder__c;
+                        mapActivitiesParent.put(ord.ParentOrder__c, activity);
+                    }
+                    else {
+                        activity.Order__c = ord.Id;
+                        callActivities.add(activity);
+                    }    
+                    orderActivityMap.put(ord.id, activity);
                 }
+            }
+        }
 
+        //Dv: applico logica dei 50gg -> se tutti gli ordini su un ordine parent (esclusi gli ordini di analisi consumi) sono stati messi in annullato, e sul parent e' presente un'activity di 
+        //quality call, la vado a chiudere. 
+        //Vado a controllare se ci sono ordini annullati perche' superati i 50gg
+        if(!parentToChildOrderMap.keySet().isEmpty()){
+            //Mi vado a prendere tutti gli ordini correlati ai parent censiti e le relative activities
+            Map<String, List<String>> allChildByParent = HDT_QR_Order.getOrdersByParent(parentToChildOrderMap.keySet());
+            Map<String, wrts_prcgvr__Activity__c> parentQualCallMap = HDT_QR_ActivityCustom.getQualCallByParentOrder(parentToChildOrderMap.keySet());
+            //Controllo che ci siano attività da chiudere
+            if(!parentQualCallMap.keySet().isEmpty()){
+                for(String parent : parentQualCallMap.keySet()){
+                    Boolean allCanceled = true;
+                    //Per ogni parent vado a controllare che tutti i suoi figli stiano passando in annullato
+                    for(String child : allChildByParent.get(parent)){
+                        if(!parentToChildOrderMap.get(parent).contains(child)){
+                            allCanceled = false;
+                            break;
+                        }
+                    }
+                    if(allCanceled && parentQualCallMap.get(parent) != null){
+                        //Devo andare a controllare se sul Parent Order è presente una QualityCall aperta. Nel caso, vado a chiuderla.
+                        wrts_prcgvr__Activity__c actToClose = parentQualCallMap.get(parent);
+                        actToClose.wrts_prcgvr__Status__c = 'Chiusa';
+                        activitiesToClose.add(actToClose);
+                    }
+                }
             }
         }
 
         callActivities.addAll(mapActivitiesParent.values());
-        system.debug('>> ordersToUpdate before: ' + ordersToUpdate);
 
         if (!ordersToUpdate.isEmpty()) {
             update ordersToUpdate;
         }
-        system.debug('>> ordersToUpdate after: ' + ordersToUpdate);
-
-        system.debug('>> callActivities before: ' + callActivities);
-        system.debug('>> callActivities before size: ' + callActivities.size());
-
         if (!callActivities.isEmpty()) {
             insert callActivities;
         }
+        if(activitiesToClose.size() > 0){
+            update activitiesToClose;
+        }
 
-        system.debug('>> callActivities after: ' + callActivities);
-
-        List<String> commissioningCampaignList = new List<String>();
         List<String> contactList = new List<String>();
         for (Order orderCm : orderMap.values()) {
             if ( orderCm.Contact__c != null) {
-                // commissioningCampaignList.add(orderCm.CommissioningCampaign__c);
                 contactList.add(orderCm.Contact__c);
             }
         }
-        system.debug('>> commissioningCampaignList: ' + commissioningCampaignList);
-        system.debug('>> contactList: ' + contactList);
 
-        List<Campaign> qualityCampaign = HDT_QR_Campaign.getCampaignIds('Quality Campaign');
+        Map<String, Campaign> compOwnerToCampMap = new Map<String, Campaign>();
+        compOwnerToCampMap = HDT_QR_Campaign.getCampaignByCompOwner('Quality Call', orderAccountCompanyOwnersSet);
 
         List<CampaignMember> campaignMembersBulk = new List<CampaignMember>();
-        if (!qualityCampaign.isEmpty() && !contactList.isEmpty()) {
-            campaignMembersBulk = campaignMemberQr.getCampaignMemberByCampaingAndContactInBulk(new List<String>{qualityCampaign[0].Id}, contactList);
-            system.debug('>> campaignMembersBulk: ' + campaignMembersBulk);
+        if (compOwnerToCampMap != null && !contactList.isEmpty()) {
+            List<String> campaignIdList = new List<String>();
+            for(Campaign c : compOwnerToCampMap.values()){
+                campaignIdList.add(c.Id);
+            }
+            campaignMembersBulk = campaignMemberQr.getCampaignMemberByCampaingAndContactInBulk(campaignIdList, contactList);
         }
-
-        system.debug('>> orderActivityMap.keySet: ' + orderActivityMap.keySet());
-
 
         Map<Id,CampaignMember> notDuplicatedCampToIns = new Map<Id,CampaignMember>();
 
         for (String ordId : orderActivityMap.keySet()) {
-            if ( orderMap.get(ordId).Contact__c != null && !qualityCampaign.isEmpty()) {
+            String compOwner = orderMap.get(ordId).Account.CompanyOwner__c;
+            if (orderMap.get(ordId).Contact__c != null && compOwnerToCampMap.get(compOwner) != null) {
 
                 Boolean isCmAlready = false;
                 String cmAlreadyId = null;
 
                 if (!campaignMembersBulk.isEmpty()) {
                     for (CampaignMember cmAlready : campaignMembersBulk) {
-                        if (cmAlready.CampaignId == qualityCampaign[0].Id 
+                        if (cmAlready.CampaignId == compOwnerToCampMap.get(compOwner).Id 
                             && cmAlready.ContactId == orderMap.get(ordId).Contact__c) {
                             isCmAlready = true;
                             cmAlreadyId = cmAlready.Id;
@@ -228,50 +253,40 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                             RelatedActivity__c = orderActivityMap.get(ordId).Id
                         ));
                     }
-
-                } else {
+                }
+                else {
                     if (orderActivityMap.get(ordId).Id != null) {
-                        // campaignMembersInsert.add(new CampaignMember(
-                        //     ContactId = orderMap.get(ordId).Contact__c,
-                        //     CampaignId = qualityCampaign[0].Id,
-                        //     PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
-                        //     RelatedActivity__c = orderActivityMap.get(ordId).Id
-                        // ));
 
                         notDuplicatedCampToIns.put(orderMap.get(ordId).Contact__c, new CampaignMember(
                             ContactId = orderMap.get(ordId).Contact__c,
-                            CampaignId = qualityCampaign[0].Id,
+                            CampaignId = compOwnerToCampMap.get(compOwner).Id ,
                             PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
-                            RelatedActivity__c = orderActivityMap.get(ordId).Id
+                            RelatedActivity__c = orderActivityMap.get(ordId).Id,
+                            NumberingValidityStartDate__c = System.today(),
+                            NumberingValidityEndDate__c = System.today().addDays(30),
+                            ExcludeFub__c = 'Si',
+                            GenericField1__c = orderMap.get(ordId).AccountId
                         ));
                     }
                 }
             }
         }
 
-
         List<CampaignMember> campNotDuplicateList = notDuplicatedCampToIns.values();
-        system.debug('>>campNotDuplicateList: ' + campNotDuplicateList);
-
 
         if(!campNotDuplicateList.isEmpty()) {
             insert notDuplicatedCampToIns.values();
         }
-
-        // campaignMembersUpdateAdd.addAll(campaignMembersUpdate);
-        // campaignMembersUpdate.addAll(campaignMembersUpdateAdd);
-        // system.debug('>>campaignMembersUpdate set: ' + campaignMembersUpdateAdd);
-        system.debug('>>campaignMembersUpdate: ' + campaignMembersUpdate.values());
         if(!campaignMembersUpdate.isEmpty()){
             update campaignMembersUpdate.values();
         }
-
         if (!activityVas.isEmpty()) {
             insert activityVas;
         }
-
     }
+
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public void finish(Database.BatchableContext bc){
-        system.debug('HDT_BA_QualityCall - end');
+        System.debug(LoggingLevel.DEBUG, 'HDT_BA_QualityCall - END');
     }
 }

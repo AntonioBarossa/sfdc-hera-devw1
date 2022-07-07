@@ -44,11 +44,12 @@ public inherited sharing class HDT_UTL_Dependencies {
             }
             if(orders.size()>0){
                 try{
-                    List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Order__c, Order__r.isTransition__c, Order__r.RecordTypeId, Order__r.OrderReference__c, Order__r.ContractReference__c, Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c, Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
+                    List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Order__c, Order__r.isTransition__c,Order__r.VASSubtype__c, Order__r.RecordTypeId, Order__r.OrderReference__c, Order__r.ContractReference__c, Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c, Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
                                     FROM ServiceRequest__c 
                                     WHERE Order__r.ID IN: orders.keySet()
                                     WITH SECURITY_ENFORCED];
                     for(ServiceRequest__c sr : srs){
+                        Boolean isAnaConsTransition = orders.get(sr.Order__c).VasSubtype__c != null && orders.get(sr.Order__c).VasSubtype__c == 'Analisi Consumi' && orders.get(sr.Order__c).isTransition__c ? true:false;
                         sr.NextPhase__c = orders.get(sr.Order__c).Phase__c;
                         incomingProcesses.add(sr);
                     }
@@ -90,13 +91,32 @@ public inherited sharing class HDT_UTL_Dependencies {
     
                 if(tipology.equalsIgnoreCase(TIPOLOGY_SALES)){
                     for(Order order : (List<Order>)processesToUpdate.get('order')){
+                        String oldPhase = ((Order)newSObjectMap.get(order.ID)).Phase__c;
                         ((Order)newSObjectMap.get(order.ID)).Status = STATUS_SEQUENZIALIZZATO;
                         ((Order)newSObjectMap.get(order.ID)).Phase__c = PHASE_SEQUENZIALIZZATO;
+                        /**@frpanico 2022-03-11
+                         * Aggiunta scrittura PhaseStory__c 
+                         * per tracciare passaggio di fase
+                         */
+                        DateTime nowDateTime = DateTime.now();
+                        ((Order)newSObjectMap.get(order.ID)).PhaseStory__c = !String.isBlank(((Order)newSObjectMap.get(order.ID)).PhaseStory__c)
+                        ? oldPhase+'@@'+PHASE_SEQUENZIALIZZATO+'@@'+nowDateTime.getTime()+'@@A||'+((Order)newSObjectMap.get(order.ID)).PhaseStory__c
+                        : oldPhase+'@@'+PHASE_SEQUENZIALIZZATO+'@@'+nowDateTime.getTime()+'@@A||';
                     }
                 }else  if(tipology.equalsIgnoreCase(TIPOLOGY_POSTSALES)){
                     for(Case casePr : (List<Case>)processesToUpdate.get('case')){
+                        String oldPhase = ((Case)newSObjectMap.get(casePr.ID)).Phase__c;
                         ((Case)newSObjectMap.get(casePr.ID)).Status = STATUS_SEQUENZIALIZZATO;
                         ((Case)newSObjectMap.get(casePr.ID)).Phase__c = PHASE_SEQUENZIALIZZATO;
+                        /**@frpanico 2022-03-11
+                         * Aggiunta scrittura PhaseStory__c 
+                         * per tracciare passaggio di fase
+                         */
+                        DateTime nowDateTime = DateTime.now();
+                        ((Case)newSObjectMap.get(casePr.ID)).PhaseStory__c = !String.isBlank(((Case)newSObjectMap.get(casePr.ID)).PhaseStory__c)
+                        ? oldPhase+'@@'+PHASE_SEQUENZIALIZZATO+'@@'+nowDateTime.getTime()+'@@A||'+((Case)newSObjectMap.get(casePr.ID)).PhaseStory__c
+                        : oldPhase+'@@'+PHASE_SEQUENZIALIZZATO+'@@'+nowDateTime.getTime()+'@@A||';
+
                     }
                 }
             }
@@ -173,16 +193,18 @@ public inherited sharing class HDT_UTL_Dependencies {
             List<String> matchValueBillings = new List<String>();
             List<String> matches = new List<String>();
 
-            String incomingServicePoint = '';
+            Map<String,String> incomingServicePoint = new Map<String, String>();
 
             for(ServiceRequest__c sr : incomingProcesses){
+                String singleIncomingServicePoint = '';
                 if(dependenciesMap.containsKey(sr.ProcessType__c)){
                     for(List<String> blockingMatches : dependenciesMap.get(sr.ProcessType__c)){
                         String blockingMatch = blockingMatches.get(1);
                         if(blockingMatch.equalsIgnoreCase(MATCH_SERVICE_POINT)){
-                            incomingServicePoint = (String)sr.ServicePointCode__c==null?(String)sr.Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c:(String)sr.ServicePointCode__c;
-                            incomingServicePoint = incomingServicePoint==null?(String)sr.Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c:incomingServicePoint;
-                            matchValueServicePoints.add(incomingServicePoint);
+                            singleIncomingServicePoint = (String)sr.ServicePointCode__c==null?(String)sr.Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c:(String)sr.ServicePointCode__c;
+                            singleIncomingServicePoint = singleIncomingServicePoint==null?(String)sr.Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c:singleIncomingServicePoint;
+                            incomingServicePoint.put(sr.Id, singleIncomingServicePoint);
+                            matchValueServicePoints.add(incomingServicePoint.get(sr.Id));
                         }else if(blockingMatch.equalsIgnoreCase(MATCH_ACCOUNT)){
                             matchValueAccounts.add(sr.Account__c);
                         }else if(blockingMatch.equalsIgnoreCase(MATCH_BILLING)){
@@ -232,7 +254,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                                 String blockingServicePoint = (String)srBlocking.ServicePointCode__c==null?(String)srBlocking.Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c:(String)srBlocking.ServicePointCode__c;
                                 blockingServicePoint = blockingServicePoint==null?(String)srBlocking.Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c:blockingServicePoint;
                                 
-                                if(incomingServicePoint.equalsIgnoreCase(blockingServicePoint)){
+                                if((incomingServicePoint.get(sr.Id)).equalsIgnoreCase(blockingServicePoint)){
                                     match = true;
                                 }
                             }else if(account){
@@ -254,17 +276,19 @@ public inherited sharing class HDT_UTL_Dependencies {
                                     casesToBeUpdated.add(caseToUpdate);
                                 }
                             }else if(sr.Type__c.equalsIgnoreCase(TIPOLOGY_SALES)){
-                                Order orderToUpdate = new Order(ID=sr.Order__c,RecordTypeId=sr.Order__r.RecordTypeId,isTransition__c=sr.Order__r.isTransition__c,OrderReference__c=sr.Order__r.OrderReference__c,ContractReference__c=sr.Order__r.ContractReference__c);
+                                Order orderToUpdate = new Order(ID=sr.Order__c,RecordTypeId=sr.Order__r.RecordTypeId,isTransition__c=sr.Order__r.isTransition__c,OrderReference__c=sr.Order__r.OrderReference__c,ContractReference__c=sr.Order__r.ContractReference__c,VASSubtype__c = sr.Order__r.VASSubtype__c);
                                 orderToUpdate.Status = STATUS_SEQUENZIALIZZATO;
                                 orderToUpdate.Phase__c = PHASE_SEQUENZIALIZZATO;
                                 String orderRecordType = orderToUpdate.RecordTypeId;
-                                if(orderRecordType.equalsIgnoreCase(rtVas) && (orderToUpdate.OrderReference__c == null) /*&& orderToUpdate.ContractReference__c == null)*/ && !(orderToUpdate.isTransition__c && srBlocking.Order__r.isTransition__c)){
+                                if(orderRecordType.equalsIgnoreCase(rtVas) && (orderToUpdate.OrderReference__c == null) && (orderToUpdate.VASSubtype__c == null || (orderToUpdate.VASSubtype__c != null && !orderToUpdate.VASSubtype__c.equalsIgnoreCase('Analisi Consumi'))) /*&& orderToUpdate.ContractReference__c == null)*/ && !(orderToUpdate.isTransition__c && srBlocking.Order__r.isTransition__c)){
                                     valueToUpdate = false;
                                 }
                                 
                                 if(valueToUpdate){
                                     ordersToBeUpdated.add(orderToUpdate);
                                 }
+                                Boolean isAnalisiConsumi = (String)sr.getSobject('Order__r').get('VasSubtype__c') != null && ((String)sr.getSobject('Order__r').get('VasSubtype__c')).equalsIgnoreCase('Analisi Consumi')  && (Boolean)sr.getSobject('Order__r').get('isTransition__c') == true;
+                                sr.NextPhase__c = isAnalisiConsumi ? 'Completata' : sr.NextPhase__c;
                             }
                             sr.DependOn__c = srBlocking.ID;
                             sr.Status__c = STATUS_SEQUENZIALIZZATO;

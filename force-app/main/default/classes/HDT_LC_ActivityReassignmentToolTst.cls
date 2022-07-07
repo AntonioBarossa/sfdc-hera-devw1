@@ -35,14 +35,24 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
 
             Queue__c queue = new Queue__c(
                 Name = 'coda1',
-                Group__c = 'gruppo1',
-                Agency__c = 'agenzia1'
+                WorkGroup__c = Schema.getGlobalDescribe().get('Queue__c').getDescribe().fields.getMap().get('WorkGroup__c').getDescribe().getPicklistValues()[0].getValue(),
+                Agency2__c = Schema.getGlobalDescribe().get('Queue__c').getDescribe().fields.getMap().get('Agency2__c').getDescribe().getPicklistValues()[0].getValue()
             );
+
             insert queue;
+
+            Queue__c queueSecond = new Queue__c(
+                Name = 'FirstName 1',
+                Group__c = 'gruppo1',
+                Agency__c = 'agenzia1',
+                WorkGroup__c = 'HC_CDO_OM',
+                Agency2__c = 'Hera Comm'
+            );
+            insert queueSecond;
 
         }
 
-        // HDT_UTL_DataFactoryTst.assignPermissionSet(currentUser, 'HDT_OmniSupervisorPermissionSet', true);
+        HDT_UTL_DataFactoryTst.assignPermissionSet(currentUser, 'HDT_OmniSupervisor', true);
 
         Id profileId = HDT_UTL_DataFactoryTst.getProfileId(constantsUtl.HERA_STANDARD_USER_NAME);
         User user = HDT_UTL_DataFactoryTst.createInternalUser(profileId, false);
@@ -76,9 +86,10 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
     private static void getWorkGroups() {
         Test.startTest();
 
-        List<Map<String,String>> returnedValue = HDT_LC_ActivityReassignmentTool.getWorkGroups('gruppo');
-        System.assertEquals('gruppo1', returnedValue[0].get('name'), 'NOME GRUPPO DI LAVORO ERRATO');
-        System.assertEquals('agenzia1', returnedValue[0].get('agency'), 'AGENZIA GRUPPO DI LAVORO ERRATA');
+        Queue__c queue = [SELECT Id, Agency2__c, WorkGroup__c FROM Queue__c LIMIT 1];
+        List<Map<String,String>> returnedValue = HDT_LC_ActivityReassignmentTool.getWorkGroups(queue.WorkGroup__c);
+        System.assertEquals(queue.WorkGroup__c, returnedValue[0].get('name'), 'NOME GRUPPO DI LAVORO ERRATO');
+        System.assertEquals(queue.Agency2__c, returnedValue[0].get('agency'), 'AGENZIA GRUPPO DI LAVORO ERRATA');
 
         Test.stopTest();
     }
@@ -109,7 +120,7 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
     private static void reassignActivity() {
         Test.startTest();
 
-        Queue__c queue = [SELECT Id FROM Queue__c];
+        Queue__c queue = [SELECT Id FROM Queue__c LIMIT 1];
         User user = [SELECT Id FROM User WHERE Name = 'FirstName 1'];
         wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE ParentActivity__c != null LIMIT 1];
         
@@ -120,6 +131,17 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
         String result2 = HDT_LC_ActivityReassignmentTool.reassignActivity(new List<String>{activity.Id}, user.Id, queue.Id, 'workGroup', 'MATCH SRL');
 
         System.assertEquals(true, String.isBlank(result2), 'String was supposed to be empty');
+
+        Test.stopTest();
+    }
+
+    @isTest
+    private static void refreshPage() {
+        Test.startTest();
+
+        wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c LIMIT 1];
+        Boolean returnedValue = HDT_LC_ActivityReassignmentTool.refreshPage(activity.Id);
+        System.assertEquals(false, returnedValue, 'ERRORE: ' + returnedValue);
 
         Test.stopTest();
     }

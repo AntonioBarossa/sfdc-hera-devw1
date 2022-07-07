@@ -51,7 +51,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignBillingProfileFields(Order orderToUpdate, String billingProfileId){
 
-        billingProfileSrv.checkReadAccess('IbanCountry__c,CreateContractAccount__c,SendCertifiedEmailConsentDate__c,SubjectCode__c,InvoiceCertifiedEmailAddress__c,ElectronicInvoicingMethod__c,XMLType__c,CIG__c,CUP__c,IbanIsForeign__c,IbanCIN_IBAN__c,IbanABI__c,IbanCAB__c,IbanCodeNumber__c,BankAccountSignatoryFiscalCode__c,BankAccountSignatoryFirstName__c,BankAccountSignatoryLastName__c,BillSendingMethod__c,PaymentMethod__c,InvoicingCity__c,InvoicingCountry__c,InvoicingProvince__c,InvoicingStreetName__c,InvoicingStreetNumber__c,InvoicingPostalCode__c,InvoicingCityCode__c,InvoiceEmailAddress__c');
+        billingProfileSrv.checkReadAccess('ContractAccountCode__c,IbanCountry__c,CreateContractAccount__c,SendCertifiedEmailConsentDate__c,SubjectCode__c,InvoiceCertifiedEmailAddress__c,ElectronicInvoicingMethod__c,XMLType__c,CIG__c,CUP__c,IbanIsForeign__c,IbanCIN_IBAN__c,IbanABI__c,IbanCAB__c,IbanCodeNumber__c,BankAccountSignatoryFiscalCode__c,BankAccountSignatoryFirstName__c,BankAccountSignatoryLastName__c,BillSendingMethod__c,PaymentMethod__c,InvoicingCity__c,InvoicingCountry__c,InvoicingProvince__c,InvoicingStreetName__c,InvoicingStreetNumber__c,InvoicingPostalCode__c,InvoicingCityCode__c,InvoiceEmailAddress__c');
         BillingProfile__c billingProfile = billingProfileQr.getRecordById(billingProfileId);
 
         orderToUpdate.SubjectCode__c = billingProfile.SubjectCode__c;
@@ -86,6 +86,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.SendCertifiedEmailConsentDate__c = billingProfile.SendCertifiedEmailConsentDate__c;
         orderToUpdate.CreateContractAccount__c = billingProfile.CreateContractAccount__c;
         orderToUpdate.IbanCountry__c = billingProfile.IbanCountry__c;
+        orderToUpdate.ContractAccountCode__c = billingProfile.ContractAccountCode__c;
     }
 
     private static void alignServicePointFields(Order orderToUpdate, String servicePointId) {
@@ -150,8 +151,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                     'ALTRO' => 'Altro'
                         };
 
-        servicePointSrv.checkReadAccess('CommoditySector__c,IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,SupplyTypeTemp__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyStreetNumberExtension__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
-        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'SwitchOutDate__c,SupplyStreetNumberExtension__c,SupplyTypeTemp__c,exciseEle__c,ExciseGas__c,Vat__c,CommoditySector__c,IsRemoteManaged__c,MeterType__c,SwitchInWinback__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,ImplantTypeTemp__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,Pressure__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c,MeterStatus__c');
+        servicePointSrv.checkReadAccess('NumeratorGroup__c,CommoditySector__c,IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,SupplyTypeTemp__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyStreetNumberExtension__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'SupplyStreetName__c,isSTG__c,NumeratorGroup__c,SwitchOutDate__c,SupplyStreetNumberExtension__c,SupplyTypeTemp__c,exciseEle__c,ExciseGas__c,Vat__c,CommoditySector__c,IsRemoteManaged__c,MeterType__c,SwitchInWinback__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,ImplantTypeTemp__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,Pressure__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c,MeterStatus__c');
 
         ServicePoint__c servicePoint = servicePointList[0];
         
@@ -209,7 +210,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.RemiCode__c = servicePoint.RemiCode__c;
         orderToUpdate.VATNumberUdb__c = servicePoint.VATNumberUdb__c;
         orderToUpdate.SupplyCity__c = servicePoint.SupplyCity__c;
-        orderToUpdate.SupplyStreetName__c = servicePoint.SupplyStreet__c;
+        orderToUpdate.SupplyStreetName__c = servicePoint.SupplyStreet__c != null ?  servicePoint.SupplyStreet__c : servicePoint.SupplyStreetName__c;
         orderToUpdate.SupplyStreetNumber__c = servicePoint.SupplyStreetNumber__c;
         orderToUpdate.SupplyStreetNumberExtension__c = servicePoint.SupplyStreetNumberExtension__c;
         orderToUpdate.SupplyPlace__c = servicePoint.SupplyPlace__c;
@@ -229,8 +230,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.SelfCertificationConnection__c = '02';
         orderToUpdate.RequestOption__c = calculateRequestedOption(servicePoint.ImplantTypeTemp__c, servicePoint.PowerContractual__c);
         orderToUpdate.MeterClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.MeterClass__c : null;
-        orderToUpdate.WithdrawalClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? (servicePoint.WithdrawalClass__c != null ? servicePoint.WithdrawalClass__c : '001-7 giorni') : null;
-        orderToUpdate.SupplyType__c = servicePoint.SupplyTypeTemp__c;
+        orderToUpdate.Caliber__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.MeterClass__c : null;
+        orderToUpdate.WithdrawalClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? (servicePoint.WithdrawalClass__c != null ? servicePoint.WithdrawalClass__c : '001 - 7 giorni') : null;
+        orderToUpdate.SupplyType__c = servicePoint.SupplyTypeTemp__c != null ? servicePoint.SupplyTypeTemp__c : servicePoint.SupplyType__c;
         //orderToUpdate.EffectiveDate__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_SwitchIn' ? Date.newInstance(2021, 06, 01) : Date.today(); //to do: with switch in calculation logic
         orderToUpdate.DistributorCode__c = servicePoint.Distributor__r.Code__c;
         orderToUpdate.PressureLevel__c = servicePoint.PressureLevel__c;
@@ -245,6 +247,13 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.Commodity__c = servicePoint.CommoditySector__c;
         orderToUpdate.Pressure__c = servicePoint.Pressure__c;
         mixedData.servicePointStatus=servicePoint.MeterStatus__c;
+        /**@frpanico 2022-03-15
+         * Aggiunta valorizzazione
+         * NumeratorGroup__c
+         * per ScontiBonus
+         */
+        orderToUpdate.NumeratorGroup__c = servicePoint.NumeratorGroup__c;
+        orderToUpdate.isSTG__c = servicePoint.isSTG__c;
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId, Order orderOld){
@@ -266,6 +275,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                     // 26/08/2021 - gabriele.rota@webresults.it - Calcolo IVA
                     orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
                 }
+                /**@frpanico 2022-04-05
+                 * Valorizzazione codice Ateco
+                 * Valido solo per W1
+                 */
+                orderToUpdate.AtecoCode__c = 'K74878';
+                orderToUpdate.HerAteco__c = 'K74878';
 
             } else if(account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                 orderToUpdate.CustomerName__c = account.FirstName__c;
@@ -340,6 +355,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }
     }
 
+    //metodo non corretto. In caso di multi offerta o vas standalone riporta su tutti gli order l'offerta della prima quoteLine parent.
+    //sostituito con metodo alignPrimaryOrderProduct
     private static void alignPrimaryProduct(Order orderToUpdate, String quoteId) {
 
         quoteLineSrv.checkReadAccess('SBQQ__Product__r.ProductCode,SBQQ__Product__r.Version__c');
@@ -353,7 +370,22 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.VasServiceActivationDate__c = quoteLineList[0].DelayEffectiveDate__c;
             orderToUpdate.CommercialProductLink__c = quoteLineList[0].SBQQ__Product__c;//gabriele.rota@webresults.it - 01/10/2021
         }
-
+    }
+    private static void alignPrimaryOrderProduct(Order orderToUpdate) {
+        List<OrderItem> orderItemList = orderItemQr.getMainItem(orderToUpdate.Id);
+        if(!orderItemList.isEmpty()){
+            if(orderItemList[0].Product2.Family.equalsIgnoreCase('Offerta commerciale')){
+                orderToUpdate.CommercialProductCode__c = orderItemList[0].Product2.ProductCode;
+            }  
+            else{
+                orderToUpdate.CommercialProductCode__c = orderItemList[0].Product2.DescriptionSAP__c;
+            }
+            orderToUpdate.CommercialProductVersion__c = orderItemList[0].Product2.Version__c;
+            orderToUpdate.CommercialProduct__c = orderItemList[0].Product2.Name;
+            orderToUpdate.VasServiceActivationDate__c = orderItemList[0].DelayEffectiveDate__c;
+            orderToUpdate.CommercialProductLink__c = orderItemList[0].Product2Id;
+        }
+        
     }
 
     private static void alignQuote(Order orderToUpdate, String quoteId, Order order) {
@@ -401,35 +433,36 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         if((originalOrder.ServicePoint__c != null && !sconti.contains(mainItems[0].Product2.Family)) || mainItems.isEmpty()){
             return;
         }
-        system.debug('ivaste 1');
         if(!sconti.contains(mainItems[0].Product2.Family)){
-            system.debug('ivaste 1 '+mainItems[0].Product2.ProductCode);//only for vas
+            
+            
             orderToUpdate.CommercialProductCode__c = mainItems[0].Product2.ProductCode;
             orderToUpdate.CommercialProductVersion__c = mainItems[0].Product2.Version__c;
             orderToUpdate.CommercialProduct__c = mainItems[0].Product2.DescriptionSAP__c;
-        
+
             orderToUpdate.isVas__c= mainItems[0].Product2.Family.startsWith('VAS');
             orderToUpdate.VASType__c=orderToUpdate.isVas__c? mainItems[0].Product2.Family : '';
             orderToUpdate.VASSubtype__c=orderToUpdate.isVas__c? mainItems[0].Product2.Name.abbreviate(30) : '';
             orderToUpdate.VASBillingMode__c= mainItems[0].VASBillingMode__c;
             Id idToFilter = mainItems[0]?.SBQQ__QuoteLine__r?.ServicePointLinkItem__r?.ServicePoint__c;
-            system.debug('ivaste 2 '+idToFilter);
             idToFilter= idToFilter!=null? idToFilter : mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c;
-            system.debug('ivaste 3'+idToFilter);
-            if(orderToUpdate.isVas__c && originalOrder.OrderReference__c==null && idToFilter!=null){
+            if(orderToUpdate.isVas__c && originalOrder.OrderReference__c==null && originalOrder.SBQQ__Quote__r.SBQQ__Type__c != 'Amendment' && idToFilter!=null){
                 //fai il match con l'orderItem di tipo pod che ha lo stesso quote
                 List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, idToFilter);
                 if(!orderItemsPod.isEmpty()){
                     orderToUpdate.OrderReference__c=orderItemsPod[0].OrderId;
                     orderToUpdate.ServicePointCode__c=orderItemsPod[0].Order?.ServicePoint__r?.ServicePointCode__c;
+                    orderToUpdate.ServicePoint__c = orderItemsPod[0].Order?.ServicePoint__c;
                 }
             }else if(originalOrder.OrderReference__c!=null || originalOrder.ContractReference__c!=null){
                 Sobject reference = originalOrder.OrderReference__c!=null? (Sobject) originalOrder.OrderReference__r : (Sobject) originalOrder.ContractReference__r;
                 orderToUpdate.ServicePointCode__c=(String) reference.getSObject('ServicePoint__r')?.get('ServicePointCode__c');
+                orderToUpdate.ServicePoint__c = (String) reference.get('ServicePoint__c');
             }
         }
         
         if(sconti.contains(mainItems[0].Product2.Family)){
+            HDT_UTL_Sales.handleContractVariation(orderToUpdate,originalOrder);
             //only for Amend Bonus
             List<OrderItem> billableVas = orderToUpdate.isVas__c? null : orderItemQr.getAnalisiConsumi(orderToUpdate.id);
             if(billableVas?.size() > 0){
@@ -442,6 +475,53 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 orderToUpdate.BillingProfile__c=mixedData.billProf;
                 alignBillingProfileFields(orderToUpdate, orderToUpdate.BillingProfile__c);
             }
+            /* @frpanico 01/03/2022 */
+            /* Get Service Point from the quoteLine */
+            /* not amendment */
+
+            List<SBQQ__Quote__c> quotes = [SELECT ContractReference__c,
+            ContractReference__r.ServicePoint__c,
+            ContractReference__r.ServicePoint__r.ServicePointCode__c,
+            OrderReference__c,
+            OrderReference__r.ServicePoint__c,
+            OrderReference__r.ServicePoint__r.ServicePointCode__c
+            FROM SBQQ__Quote__c
+            WHERE Id = :originalOrder.SBQQ__Quote__c
+            WITH SECURITY_ENFORCED];
+
+            if(!quotes.isEmpty())
+            {
+
+                SObject reference = quotes[0].ContractReference__c != null ? (SObject) quotes[0].ContractReference__r : quotes[0].OrderReference__c != null ? (SObject) quotes[0].OrderReference__r : null;
+                if(reference != null)
+                {
+                    orderToUpdate.ServicePointCode__c=(String) reference.getSObject('ServicePoint__r')?.get('ServicePointCode__c');
+                    orderToUpdate.ServicePoint__c = (String) reference.get('ServicePoint__c');
+                }
+                else{
+                
+                
+                    List<SBQQ__QuoteLine__c> quoteLine = [SELECT ServicePoint__c 
+                        FROM SBQQ__QuoteLine__c 
+                        WHERE SBQQ__Quote__c = :originalOrder.SBQQ__Quote__c
+                        AND SBQQ__ProductFamily__c NOT IN ('VAS Fatturabili')
+                        AND ServicePoint__c != null 
+                        WITH SECURITY_ENFORCED];
+                    
+                    if(!quoteLine.isEmpty())
+                    {
+                        System.debug(LoggingLevel.DEBUG, '# QuoteLine > ' + JSON.serialize(quoteLine));
+                        if(quoteLine[0].ServicePoint__c != null)
+                        {
+                            orderToUpdate.ServicePoint__c = quoteLine[0].ServicePoint__c;
+                        }
+                    }
+                }
+            }
+        }
+        if(orderToUpdate.ServicePoint__c != null)
+        {
+            alignServicePointFields(orderToUpdate, orderToUpdate.ServicePoint__c);
         }
     }
 
@@ -515,7 +595,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         alignSaleFields(orderToUpdate, order.Sale__c);
 
         if(order.SBQQ__Quote__c != null) {
-            alignPrimaryProduct(orderToUpdate, order.SBQQ__Quote__c);
+            //alignPrimaryProduct(orderToUpdate, order.SBQQ__Quote__c);
+            alignPrimaryOrderProduct(orderToUpdate);
             alignQuote(orderToUpdate, order.SBQQ__Quote__c, order);
         }
 

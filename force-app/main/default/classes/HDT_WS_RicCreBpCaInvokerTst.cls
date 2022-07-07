@@ -12,7 +12,7 @@ public class HDT_WS_RicCreBpCaInvokerTst {
     @TestSetup
     static void makedata(){
 
-       HDT_UTL_DataFactoryTst.createWebServiceConfiguration('BP_CA', 'testUser', 'method', 'end');
+       HDT_UTL_DataFactoryTst.createWebServiceConfiguration('BP_CA', 'Callout:MulesoftBasePath/customer-data/billing-profile', 'method', 'end');
        HDT_UTL_DataFactoryTst.createWebServiceCredential('FirstName LastName', 'pass321', 'myUser');
         
 

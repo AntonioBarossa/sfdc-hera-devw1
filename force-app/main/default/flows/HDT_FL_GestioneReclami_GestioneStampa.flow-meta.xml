@@ -10,6 +10,7 @@
         <connector>
             <targetReference>Indennizzo_Confermato</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>accountId</name>
             <value>
@@ -52,6 +53,7 @@
         <connector>
             <targetReference>LoopToUpdateInRIspostaInviata</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>currentCase</name>
             <value>
@@ -69,6 +71,7 @@
             <name>childCases</name>
         </outputParameters>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>AggiornaFase</name>
         <label>AggiornaFase</label>
@@ -310,6 +313,62 @@
                 <stringValue>Chiusa</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.ActivityEndTime__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.ClosedByUsername__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Username</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.wrts_prcgvr__IsClosed__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.UserCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.UserCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.ClosingCreatorGroup__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.CreatorGroup__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.ClosingUserChannel__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.LoginChannel__c</elementReference>
+            </value>
+        </assignmentItems>
+        <!--assignmentItems>
+            <assignToReference>ActivityToLoop.Place__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Station__c</elementReference>
+            </value>
+        </assignmentItems-->
         <connector>
             <targetReference>Assegna_a_Collection</targetReference>
         </connector>
@@ -529,6 +588,21 @@
             </connector>
             <label>Completata - Indennizzo</label>
         </rules>
+        <rules>
+            <name>Completata_Rich_Info</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CaseToLoop.FirstLevelComplaintClassification__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Richiesta di informazioni</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaFase_0</targetReference>
+            </connector>
+            <label>Completata - Rich Info.</label>
+        </rules>
     </decisions>
     <decisions>
         <name>ToLoop_0</name>
@@ -649,6 +723,7 @@
         <connector>
             <targetReference>AssegnaActivityToLoop</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Case__c</field>
             <operator>EqualTo</operator>
@@ -657,10 +732,10 @@
             </value>
         </filters>
         <filters>
-            <field>wrts_prcgvr__Description__c</field>
-            <operator>Contains</operator>
+            <field>wrts_prcgvr__Status__c</field>
+            <operator>EqualTo</operator>
             <value>
-                <stringValue>Pratica in gestione</stringValue>
+                <stringValue>Aperta</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -676,6 +751,7 @@
         <connector>
             <targetReference>CreateActivity</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
             <operator>EqualTo</operator>
@@ -696,6 +772,7 @@
         <connector>
             <targetReference>Screen_Documentale</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -716,6 +793,7 @@
         <connector>
             <targetReference>AssegnaCase</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -736,6 +814,7 @@
         <connector>
             <targetReference>CountContentDocumentLinkAfter</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>LinkedEntityId</field>
             <operator>EqualTo</operator>
@@ -756,6 +835,7 @@
         <connector>
             <targetReference>AssignSize</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>LinkedEntityId</field>
             <operator>EqualTo</operator>
@@ -776,6 +856,7 @@
         <connector>
             <targetReference>GetContentDocumentLinkInput</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -800,11 +881,14 @@
     <recordUpdates>
         <name>AggiornaActivityCollection</name>
         <label>AggiornaActivityCollection</label>
-        <locationX>1247</locationX>
-        <locationY>2099</locationY>
+        <locationX>1095</locationX>
+        <locationY>2173</locationY>
         <connector>
             <targetReference>AggiornaCases</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>AggiornaCases</targetReference>
+        </faultConnector>
         <inputReference>ActivityCollection</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -820,8 +904,8 @@
     <recordUpdates>
         <name>AggiornaCases</name>
         <label>AggiornaCases</label>
-        <locationX>1248</locationX>
-        <locationY>2207</locationY>
+        <locationX>1103</locationX>
+        <locationY>2376</locationY>
         <inputReference>CaseCollection</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -890,6 +974,13 @@
                     <elementReference>GetInputCase.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -939,6 +1030,13 @@
                     <elementReference>GetInputCase.ComplaintEntryChannel__c</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>

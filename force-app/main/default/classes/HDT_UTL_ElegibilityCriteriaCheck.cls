@@ -70,13 +70,16 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
         for (Integer i = 0; i < recordList.size(); i++) {
             Contract c = (Contract) recordList[i];
             List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
-            String productId = subscriptions[0].SBQQ__Product__c;
-            productIds.add(productId);
+            if(!subscriptions.isEmpty())
+            {
+                String productId = subscriptions[0].SBQQ__Product__c;
+                productIds.add(productId);
+            }
         }
 
         // Query oggetto criteri eleggibilità
         objectName = 'EligibilityCriteria__c';
-        queryFields = 'Id,BillSendingMethod__c,UseCategory__c,ResidentDeliveryAddress__c,PowerRangeMax__c';
+        queryFields = 'Id, BillSendingMethod__c, UseCategory__c, ResidentDeliveryAddress__c, PowerRangeMax__c, PaymentMode__c';
         queryString = 'SELECT ' + queryFields;
         fromString = ' FROM '+ objectName;
         whereString = ' WHERE Product__c IN :productIds';
@@ -89,67 +92,91 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
             recordList = Database.query(queryString);
         }
 
-        if (recordList.isEmpty()){
+        if (recordList.isEmpty() && !caseRecord.Type.equalsIgnoreCase('Variazione Anagrafica Cliente')){
             outputList.add(output);
             return outputList;
         }
 
-        for (Integer i = 0; i < recordList.size(); i++) {
-            EligibilityCriteria__c criteria = (EligibilityCriteria__c) recordList[i];
+        // Query oggetto Configuration Attribute
+        List<SBQQ__ConfigurationAttribute__c> confAttribList = new List<SBQQ__ConfigurationAttribute__c>();
+        objectName = 'SBQQ__ConfigurationAttribute__c';
+        queryFields = 'Id, SBQQ__ShownValues__c, SBQQ__TargetField__c';
+        queryString = 'SELECT ' + queryFields;
+        fromString = ' FROM '+ objectName;
+        whereString = ' WHERE SBQQ__Product__c IN :productIds AND SBQQ__TargetField__c = \'SendingBillMode__c\' ';
+        queryString = queryString + fromString + whereString; 
+        System.debug(LoggingLevel.DEBUG, 'Configuration Attribute query: ' + queryString);
 
-            switch on caseRecord.Type {
-                when 'Modifica Tariffa Residente/Non Residente' {
-                    String caseValue = caseRecord.Resident__c ? 'Si' : 'No';
-                    if (caseValue != criteria.ResidentDeliveryAddress__c) {
-                        output.abortProcess = true;
-                        output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con la variazione del campo Residente. Per poter procedere è necessario eseguire un cambio offerta.';
-                        outputList.add(output);
-                        return outputList;
-                    }
-                }
-                when 'Marcatura/Uso PdR' {
-                    if (criteria.UseCategory__c != null && !criteria.UseCategory__c.contains(caseRecord.UseCategory__c)) {
-                        output.abortProcess = true;
-                        output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con la variazione del campo Tipologia Uso. Per poter procedere è necessario eseguire un cambio offerta.';
-                        outputList.add(output);
-                        return outputList;
-                    }
-                }
-                when 'Variazione Anagrafica Cliente' {
-                    if (caseRecord.BillSendingMethod__c != criteria.BillSendingMethod__c) {
-                        output.abortProcess = true;
-                        output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con la variazione del campo Modalità Invio Bolletta. Per poter procedere è necessario eseguire un cambio offerta.';
-                        outputList.add(output);
-                        return outputList;
-                    }
-                }
-                when 'Variazione Potenza' {
-                    if (criteria.PowerRangeMax__c > 0 && caseRecord.PowerRequested__c > criteria.PowerRangeMax__c) {
-                        output.abortProcess = true;
-                        output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con l\'aumento di potenza richiesto. Per poter procedere è necessario eseguire un cambio offerta.';
-                        outputList.add(output);
-                        return outputList;
-                    }
-                }
-                when 'Richiesta Domiciliazione' {
-                    if (criteria.PaymentMode__c != 'RID') {
-                        output.abortProcess = true;
-                        output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con l\'attivazione della Domiciliazione. Per poter procedere è necessario eseguire un cambio offerta.';
-                        outputList.add(output);
-                        return outputList;
-                    }
-                }
-                when 'Revoca Domiciliazione' {
-                    if (criteria.PaymentMode__c == 'RID') {
-                        output.abortProcess = true;
-                        output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con la revoca della Domiciliazione. Per poter procedere è necessario eseguire un cambio offerta.';
-                        outputList.add(output);
-                        return outputList;
-                    }
-                }
-            }
+        objtype = Schema.getGlobalDescribe().get(objectName);
+        objRes = objtype.getDescribe(); 
+        if (objRes.isAccessible()) {
+            confAttribList = Database.query(queryString);
         }
 
+        if (confAttribList.isEmpty() && caseRecord.Type.equalsIgnoreCase('Variazione Anagrafica Cliente')){
+            outputList.add(output);
+            return outputList;
+        }
+
+        if(caseRecord.Type.equalsIgnoreCase('Variazione Anagrafica Cliente')){
+            SBQQ__ConfigurationAttribute__c configAttrib = new SBQQ__ConfigurationAttribute__c();
+            configAttrib = confAttribList[0];
+            if (configAttrib.SBQQ__ShownValues__c != null && !configAttrib.SBQQ__ShownValues__c.contains(caseRecord.BillSendingMethod__c)) {
+                output.abortProcess = true;
+                output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con la variazione del campo Modalità Invio Bolletta. Per poter procedere è necessario eseguire un cambio offerta.';
+                outputList.add(output);
+                return outputList;
+            }
+        }
+        else {
+            for (Integer i = 0; i < recordList.size(); i++) {
+                EligibilityCriteria__c criteria = (EligibilityCriteria__c) recordList[i];
+    
+                switch on caseRecord.Type {
+                    when 'Modifica Tariffa Residente/Non Residente' {
+                        String caseValue = caseRecord.Resident__c ? 'Si' : 'No';
+                        if (caseValue != criteria.ResidentDeliveryAddress__c) {
+                            output.abortProcess = true;
+                            output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con la variazione del campo Residente. Per poter procedere è necessario eseguire un cambio offerta.';
+                            outputList.add(output);
+                            return outputList;
+                        }
+                    }
+                    when 'Marcatura/Uso PdR' {
+                        if (criteria.UseCategory__c != null && !criteria.UseCategory__c.contains(caseRecord.UseCategory__c)) {
+                            output.abortProcess = true;
+                            output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con la variazione del campo Tipologia Uso. Per poter procedere è necessario eseguire un cambio offerta.';
+                            outputList.add(output);
+                            return outputList;
+                        }
+                    }
+                    when 'Variazione Potenza' {
+                        if (criteria.PowerRangeMax__c > 0 && caseRecord.PowerRequested__c > criteria.PowerRangeMax__c) {
+                            output.abortProcess = true;
+                            output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con l\'aumento di potenza richiesto. Per poter procedere è necessario eseguire un cambio offerta.';
+                            outputList.add(output);
+                            return outputList;
+                        }
+                    }
+                    when 'Richiesta Domiciliazione' {
+                        if (criteria.PaymentMode__c != 'RID') {
+                            output.abortProcess = true;
+                            output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con l\'attivazione della Domiciliazione. Per poter procedere è necessario eseguire un cambio offerta.';
+                            outputList.add(output);
+                            return outputList;
+                        }
+                    }
+                    when 'Revoca Domiciliazione' {
+                        if (criteria.PaymentMode__c == 'RID') {
+                            output.abortProcess = true;
+                            output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con la revoca della Domiciliazione. Per poter procedere è necessario eseguire un cambio offerta.';
+                            outputList.add(output);
+                            return outputList;
+                        }
+                    }
+                }
+            }            
+        }
         outputList.add(output);
         return outputList;
     }
@@ -162,7 +189,6 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
     public class HDT_WRP_ElegibilityCriteriaCheckOutput {
         @InvocableVariable
         public Boolean abortProcess;    // Indica se il processo deve essere interrotto poichè sta modificando un criterio di elegibilità.
-
         @InvocableVariable
         public String abortProcessWarning; // Indica il motivo per cui il processo deve essere interrotto.
     }

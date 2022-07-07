@@ -1,0 +1,1316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WorkGroup__c</fullName>
+    <externalId>false</externalId>
+    <label>Gruppo di Lavoro</label>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>CDO_PPT_DISCO</fullName>
+                <default>false</default>
+                <label>CDO_PPT_DISCO</label>
+            </value>
+            <value>
+                <fullName>CDO_PPT_QMMUI_MISURE</fullName>
+                <default>false</default>
+                <label>CDO_PPT_QMMUI_MISURE</label>
+            </value>
+            <value>
+                <fullName>CDO_PPT_QMMUI_MUI</fullName>
+                <default>false</default>
+                <label>CDO_PPT_QMMUI_MUI</label>
+            </value>
+            <value>
+                <fullName>DCAFC_CM_ADR</fullName>
+                <default>false</default>
+                <label>DCAFC_CM_ADR</label>
+            </value>
+            <value>
+                <fullName>DCAFC_CM_Cessioni</fullName>
+                <default>false</default>
+                <label>DCAFC_CM_Cessioni</label>
+            </value>
+            <value>
+                <fullName>DCAFC_CM_Sospensioni_Morosità</fullName>
+                <default>false</default>
+                <label>DCAFC_CM_Sospensioni_Morosità</label>
+            </value>
+            <value>
+                <fullName>ESTENERGY_BACK</fullName>
+                <default>false</default>
+                <label>ESTENERGY_BACK</label>
+            </value>
+            <value>
+                <fullName>ESTENERGY_ESCALATION</fullName>
+                <default>false</default>
+                <label>ESTENERGY_ESCALATION</label>
+            </value>
+            <value>
+                <fullName>ESTENERGY_FRONT</fullName>
+                <default>false</default>
+                <label>ESTENERGY_FRONT</label>
+            </value>
+            <value>
+                <fullName>HC_CDO_OM</fullName>
+                <default>false</default>
+                <label>HC_CDO_OM</label>
+            </value>
+            <value>
+                <fullName>HC_CDO_OM_Attivazioni_HC</fullName>
+                <default>false</default>
+                <label>HC_CDO_OM_Attivazioni_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CDO_OM_Attivazioni_Service A</fullName>
+                <default>false</default>
+                <label>HC_CDO_OM_Attivazioni_Service A</label>
+            </value>
+            <value>
+                <fullName>HC_CDO_OM_Attivazioni_Service B</fullName>
+                <default>false</default>
+                <label>HC_CDO_OM_Attivazioni_Service B</label>
+            </value>
+            <value>
+                <fullName>HC_CDO_OM_OUT</fullName>
+                <default>false</default>
+                <label>HC_CDO_OM_OUT</label>
+            </value>
+            <value>
+                <fullName>HC_CDO_SMS_Escalation</fullName>
+                <default>false</default>
+                <label>HC_CDO_SMS_Escalation</label>
+            </value>
+            <value>
+                <fullName>HC_CREDITO_BUSINESS_AREA AFFIDAMENTI</fullName>
+                <default>false</default>
+                <label>HC_CREDITO_BUSINESS_AREA AFFIDAMENTI</label>
+            </value>
+            <value>
+                <fullName>HC_CREDITO_BUSINESS_ AREA TAGLI</fullName>
+                <default>false</default>
+                <label>HC_CREDITO_BUSINESS_ AREA TAGLI</label>
+            </value>
+            <value>
+                <fullName>HC_CREDITO_BUSINESS_ SUPPORTO LEGALE</fullName>
+                <default>false</default>
+                <label>HC_CREDITO_BUSINESS_ SUPPORTO LEGALE</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_AGGOP_STAFF</fullName>
+                <default>false</default>
+                <label>HC_CRM_AGGOP_STAFF</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_CC_CMD</fullName>
+                <default>false</default>
+                <label>HC_CRM_CC_CMD</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_CC_CMD_TL</fullName>
+                <default>false</default>
+                <label>HC_CRM_CC_CMD_TL</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_CC_CV_qualità</fullName>
+                <default>false</default>
+                <label>HC_CRM_CC_CV_qualità</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_CC_CV_TL</fullName>
+                <default>false</default>
+                <label>HC_CRM_CC_CV_TL</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_CC_KN_TL</fullName>
+                <default>false</default>
+                <label>HC_CRM_CC_KN_TL</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_CC_KNVK_TL</fullName>
+                <default>false</default>
+                <label>HC_CRM_CC_KNVK_TL</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_CC_LT_TL</fullName>
+                <default>false</default>
+                <label>HC_CRM_CC_LT_TL</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_CC_VK_TL</fullName>
+                <default>false</default>
+                <label>HC_CRM_CC_VK_TL</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_Escalation_CC_CV_qualità</fullName>
+                <default>false</default>
+                <label>HC_CRM_Escalation_CC_CV_qualità</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_Escalation_CC_CV_TL</fullName>
+                <default>false</default>
+                <label>HC_CRM_Escalation_CC_CV_TL</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_Escalation_CC_KNVK_TL</fullName>
+                <default>false</default>
+                <label>HC_CRM_Escalation_CC_KNVK_TL</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_Escalation_CC_LT_TL</fullName>
+                <default>false</default>
+                <label>HC_CRM_Escalation_CC_LT_TL</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_Escalation_HD</fullName>
+                <default>false</default>
+                <label>HC_CRM_Escalation_HD</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_Quality_CC</fullName>
+                <default>false</default>
+                <label>HC_CRM_Quality_CC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Annullamento_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Annullamento_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Annullamento_Koine</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Annullamento_Koine</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Appuntamenti_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Appuntamenti_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Appuntamenti_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Appuntamenti_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Attivazioni_Front_Covisian</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Attivazioni_Front_Covisian</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Attivazioni Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Attivazioni Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Attivazioni HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Attivazioni HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Attivazioni Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Attivazioni Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Autolettura_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Autolettura_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Autolettura_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Autolettura_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Cross_Front_Covisian</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Cross_Front_Covisian</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Cross_Front_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Cross_Front_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Disattivazioni_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Disattivazioni_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Disattivazioni_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Disattivazioni_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Escalation_Covisian</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Escalation_Covisian</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Escalation_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Escalation_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_HEROKU_CONSERVICE</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_HEROKU_CONSERVICE</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_HEROKU_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_HEROKU_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_ModificheAnag_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_ModificheAnag_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_ModificheAnag_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_ModificheAnag_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Preventivi_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Preventivi_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Preventivi_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Preventivi_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Verifiche_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Verifiche_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Verifiche_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Verifiche_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Voltura_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Voltura_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Voltura_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Voltura_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_Morosità_PV_CONSERVICE</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_Morosità_PV_CONSERVICE</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Campagne HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Campagne HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Fatturazione Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Fatturazione Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Fatturazione HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Fatturazione HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Fatturazione Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Fatturazione Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Morosità_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Morosità_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Notifiche_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Notifiche_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Pagamenti_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Pagamenti_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Pagamenti_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Pagamenti_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Pagamenti_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Pagamenti_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Reclami_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Reclami_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Reclami_LIN</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Reclami_LIN</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Variazioni_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Variazioni_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Variazioni_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Variazioni_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Annullamento_Koine</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Annullamento_Koine</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Appuntamenti_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Appuntamenti_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Appuntamenti_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Appuntamenti_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Attivazioni_Front_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Attivazioni_Front_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Attivazioni Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Attivazioni Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Attivazioni HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Attivazioni HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Attivazioni Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Attivazioni Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Autolettura_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Autolettura_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Autolettura_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Autolettura_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Cross_Front_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Cross_Front_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Cross_Front_KN</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Cross_Front_KN</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Disattivazioni_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Disattivazioni_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Disattivazioni_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Disattivazioni_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Escalation_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Escalation_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Escalation_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Escalation_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_HEROKU_CONSERVICE</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_HEROKU_CONSERVICE</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_HEROKU_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_HEROKU_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_ModificheAnag_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_ModificheAnag_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_ModificheAnag_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_ModificheAnag_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Preventivi_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Preventivi_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Preventivi_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Preventivi_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Verifiche_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Verifiche_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Verifiche_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Verifiche_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Voltura_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Voltura_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Voltura_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Voltura_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Campagne HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Campagne HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Fatturazione Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Fatturazione Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Fatturazione HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Fatturazione HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Fatturazione Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Fatturazione Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Morosità_CONSERVICE</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Morosità_CONSERVICE</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Morosità_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Morosità_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Notifiche_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Notifiche_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Pagamenti_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Pagamenti_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Pagamenti_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Pagamenti_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Pagamenti_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Pagamenti_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Reclami_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Reclami_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Reclami_LIN</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Reclami_LIN</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Variazioni_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Variazioni_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Variazioni_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Variazioni_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_PTA_SD singola_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_PTA_SD singola_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSREG_Bonus Sociale Energy</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSREG_Bonus Sociale Energy</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSREG_Bonus Sociale Energy_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSREG_Bonus Sociale Energy_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSREG_Canone Rai</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSREG_Canone Rai</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MICO_Miglioramento Continuo</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MICO_Miglioramento Continuo</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Accise_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Accise_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Accise_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Accise_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Appuntamenti_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Appuntamenti_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Bonif Anagr da DAFC_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Bonif Anagr da DAFC_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Bonif Anagr da DAFC_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Bonif Anagr da DAFC_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Com Pag_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Com Pag_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Contratti_Preventivi_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Contratti_Preventivi_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Contratti_Preventivi_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Contratti_Preventivi_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Disattivazioni_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Disattivazioni_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Disattivazioni_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Disattivazioni_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Doc_Contratti_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Doc_Contratti_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Doppi pagamenti/incassi/Rimborso_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Doppi pagamenti/incassi/Rimborso_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Doppi pagamenti/incassi/Rimborso_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Doppi pagamenti/incassi/Rimborso_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Escalation_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Escalation_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Fatturazione</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Fatturazione</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Fatturazione_Service A</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Fatturazione_Service A</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Fatturazione_Service B</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Fatturazione_Service B</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Fatturazione Elettronica_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Fatturazione Elettronica_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Fatturazione Elettronica_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Fatturazione Elettronica_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Mod Anag_Scarti Heroku_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Mod Anag_Scarti Heroku_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Modifiche Anagrafiche_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Modifiche Anagrafiche_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Modifiche Anagrafiche_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Modifiche Anagrafiche_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Morosità_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Morosità_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Morosità_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Morosità_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Pagamenti scarti Heroku _Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Pagamenti scarti Heroku _Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Paperless_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Paperless_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Paperless_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Paperless_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Piano Rateizzazione_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Piano Rateizzazione_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Piano Rateizzazione_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Piano Rateizzazione_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Preventivi_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Preventivi_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Preventivi_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Preventivi_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Rettifica Consumi_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Rettifica Consumi_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Rettifica Consumi_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Rettifica Consumi_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Rettifica Consumi_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Rettifica Consumi_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Rich Parere_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Rich Parere_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Rit a Fatt Bim_Men_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Rit a Fatt Bim_Men_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Rit a Fatt Bim_Men_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Rit a Fatt Bim_Men_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Scarto Documentale_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Scarto Documentale_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Testo Contratto in Bolletta_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Testo Contratto in Bolletta_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Testo Contratto in Bolletta_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Testo Contratto in Bolletta_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Unif/Sep BP-CA-Bolletta_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Unif/Sep BP-CA-Bolletta_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Unif/Sep BP-CA-Bolletta_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Unif/Sep BP-CA-Bolletta_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Variazioni_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Variazioni_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Variazioni_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Variazioni_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Verifiche_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Verifiche_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Verifiche_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Verifiche_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CRBO_Copia bolletta/bollettino_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRBO_Copia bolletta/bollettino_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CRBO_Copia bolletta/bollettino_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRBO_Copia bolletta/bollettino_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CRBO_Protocollo_Contratti_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRBO_Protocollo_Contratti_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CRBO_Protocollo_Contratti_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRBO_Protocollo_Contratti_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CRBO_Protocollo_Disatt e Variaz_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRBO_Protocollo_Disatt e Variaz_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CRBO_Protocollo_Fatt e Pag_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRBO_Protocollo_Fatt e Pag_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CRBO_Protocollo_Fatt e Pag_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRBO_Protocollo_Fatt e Pag_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CRBO_Protocollo_Preventivi_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRBO_Protocollo_Preventivi_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CRBO_Protocollo_Smart_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRBO_Protocollo_Smart_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CRBO_Protocollo Morosità_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRBO_Protocollo Morosità_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CRBO_Protocollo Morosità_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRBO_Protocollo Morosità_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CRBO_Richiesta domiciliazione_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRBO_Richiesta domiciliazione_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CRBO_Richiesta domiciliazione_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRBO_Richiesta domiciliazione_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Annullamento contratti_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Annullamento contratti_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Annullamento contratti_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Annullamento contratti_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Comportamento Venditori_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Comportamento Venditori_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Comportamento Venditori_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Comportamento Venditori_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Contratto non richiesto_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Contratto non richiesto_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Contratto non richiesto_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Contratto non richiesto_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Credit Check_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Credit Check_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Credit Check_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Credit Check_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Escalation_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Escalation_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_M01_M02 Esiti KO_CVMC_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_M01_M02 Esiti KO_CVMC_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_M01_M02 Esiti KO_CVMC_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_M01_M02 Esiti KO_CVMC_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Protocollo_Reclami_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Protocollo_Reclami_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Protocollo_Reclami_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Protocollo_Reclami_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Protocollo VAS_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Protocollo VAS_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Protocollo VAS_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Protocollo VAS_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Recessi_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Recessi_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Recessi_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Recessi_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Reclami_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Reclami_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Reclami_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Reclami_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Rich Parere_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Rich Parere_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_VAS_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_VAS_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_VAS_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_VAS_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Verifica titolarità POD/PDR_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Verifica titolarità POD/PDR_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMC_Verifica titolarità POD/PDR_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMC_Verifica titolarità POD/PDR_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMCONTR_Attivazioni_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMCONTR_Attivazioni_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMCONTR_Attivazioni_Service A</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMCONTR_Attivazioni_Service A</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMCONTR_Attivazioni_Service B</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMCONTR_Attivazioni_Service B</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Autoletture_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Autoletture_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Errore di fatturazione_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Errore di fatturazione_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Errore di fatturazione_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Errore di fatturazione_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Escalation_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Escalation_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Inversione del contatore_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Inversione del contatore_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_M01_M02 Esiti KO_CVMPV_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_M01_M02 Esiti KO_CVMPV_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_M01_M02 Esiti KO_CVMPV_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_M01_M02 Esiti KO_CVMPV_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Prescrizione Fatture_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Prescrizione Fatture_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Prescrizione Fatture_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Prescrizione Fatture_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Protocollo_Reclami_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Protocollo_Reclami_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Protocollo_Reclami_Linetec</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Protocollo_Reclami_Linetec</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Reclami_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Reclami_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Rich Parere_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Rich Parere_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Ricostruzione Consumi_Attesa Cli_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Ricostruzione Consumi_Attesa Cli_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Ricostruzione Consumi_Gestione_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Ricostruzione Consumi_Gestione_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Ricostruzione Consumi_Monitoraggio_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Ricostruzione Consumi_Monitoraggio_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Ricostruzione Consumi_Scarti Heroku_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Ricostruzione Consumi_Scarti Heroku_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Soll Emissione Bolletta_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Soll Emissione Bolletta_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CVMPV_Soll Emissione Bolletta_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CVMPV_Soll Emissione Bolletta_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_POM_Protocollo da gestire</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_POM_Protocollo da gestire</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_POM_Protocollo VAS_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_POM_Protocollo VAS_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_STS_Annullamento prestazioni_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_STS_Annullamento prestazioni_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_STS_Annullamento prestazioni_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_STS_Annullamento prestazioni_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_STS_Appuntamenti Contratti_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_STS_Appuntamenti Contratti_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_STS_Contratti_Energy_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_STS_Contratti_Energy_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_STS_Contratti_Energy_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_STS_Contratti_Energy_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_STS_Escalation_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_STS_Escalation_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_RESC_Esercizio Sistemi Clienti</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_RESC_Esercizio Sistemi Clienti</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_RESC_Reporting</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_RESC_Reporting</label>
+            </value>
+            <value>
+                <fullName>HC_VenditaMM</fullName>
+                <default>false</default>
+                <label>HC_VenditaMM</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Contattare il cliente</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Contattare il cliente</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Disattivazioni</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Disattivazioni</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Escalation</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Escalation</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Fatturazione</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Fatturazione</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Morosità</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Morosità</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Pagamenti</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Pagamenti</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Preventivi</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Preventivi</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Protocollo</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Protocollo</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Reclami</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Reclami</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Variazioni</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Variazioni</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Verifiche</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Verifiche</label>
+            </value>
+            <value>
+                <fullName>HCM_CON_Fatturazione</fullName>
+                <default>false</default>
+                <label>HCM_CON_Fatturazione</label>
+            </value>
+            <value>
+                <fullName>HCM_CON_Protocollo</fullName>
+                <default>false</default>
+                <label>HCM_CON_Protocollo</label>
+            </value>
+            <value>
+                <fullName>HCM_DISCO_ Appuntamenti</fullName>
+                <default>false</default>
+                <label>HCM_DISCO_ Appuntamenti</label>
+            </value>
+            <value>
+                <fullName>HCM_DISCO_Escalation</fullName>
+                <default>false</default>
+                <label>HCM_DISCO_Escalation</label>
+            </value>
+            <value>
+                <fullName>HCM_DISCO_Heroku</fullName>
+                <default>false</default>
+                <label>HCM_DISCO_Heroku</label>
+            </value>
+            <value>
+                <fullName>HCM_DISCO_Notifiche</fullName>
+                <default>false</default>
+                <label>HCM_DISCO_Notifiche</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Fatturazione</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Fatturazione</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Modifiche anagrafiche</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Modifiche anagrafiche</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Pagamenti</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Pagamenti</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Variazioni</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Variazioni</label>
+            </value>
+            <value>
+                <fullName>HS_DAFC_Tesoreria_Verifica comportamento banca</fullName>
+                <default>false</default>
+                <label>HS_DAFC_Tesoreria_Verifica comportamento banca</label>
+            </value>
+            <value>
+                <fullName>HS_DAFC_Tesoreria_Verifica rimborsi clienti</fullName>
+                <default>false</default>
+                <label>HS_DAFC_Tesoreria_Verifica rimborsi clienti</label>
+            </value>
+            <value>
+                <fullName>HS_DCSC_FI_GS_Verifiche Layout bollette</fullName>
+                <default>false</default>
+                <label>HS_DCSC_FI_GS_Verifiche Layout bollette</label>
+            </value>
+            <value>
+                <fullName>HS_DCSC_FI_IS_Verifiche Pagamenti</fullName>
+                <default>false</default>
+                <label>HS_DCSC_FI_IS_Verifiche Pagamenti</label>
+            </value>
+            <value>
+                <fullName>HS_DCSC_FI_RBMF_Verifiche Documentale</fullName>
+                <default>false</default>
+                <label>HS_DCSC_FI_RBMF_Verifiche Documentale</label>
+            </value>
+            <value>
+                <fullName>HS_DCSC_FI_Verifiche Fatturazione</fullName>
+                <default>false</default>
+                <label>HS_DCSC_FI_Verifiche Fatturazione</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1057,6 +1057,10 @@
             <fullName>Salvaguardia</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Tutele Graduali</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SBQQ__CoTerminationEvent__c</picklist>
@@ -1148,6 +1152,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Corporate_GDA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Corporate_IC</fullName>
             <default>false</default>
         </values>
@@ -1188,6 +1196,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HCNE_Coporate_GDA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HCNE_Corporate_SME</fullName>
             <default>false</default>
         </values>
@@ -1213,6 +1225,10 @@
         </values>
         <values>
             <fullName>Mui_No SV_Enti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MUI_STG</fullName>
             <default>false</default>
         </values>
         <values>

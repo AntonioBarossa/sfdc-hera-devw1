@@ -85,6 +85,19 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
     }
 
     public List<Case> getAutoletturaBozzaCase(){
+
+        String whereConditionFieldValue1 = 'Autolettura';
+        String queryString = 'SELECT id, Type__c, NumberOfDays__c FROM CS_DaysToExpiration__c where Type__c = \'' + String.escapeSingleQuotes(whereConditionFieldValue1) + '\'';
+        SObject mySobj = database.query(queryString);
+
+        if(mySobj == null)
+        {
+            return new List<Case>();
+        }
+
+        Integer numberOfDays = Integer.valueOf(((CS_DaysToExpiration__c) mySobj).NumberOfDays__c);
+        Date limitDate = (System.today()).addDays(- numberOfDays);
+
         return [SELECT Id,
         Type,
         Phase__c,
@@ -99,11 +112,25 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         FROM Case
         WHERE Phase__c = :this.bozzaCase
         AND Cluster__c = : this.autoletturaCase
+        AND CreatedDate < :limitDate
         WITH SECURITY_ENFORCED
         ];
     }
 
     public List<Case> getPostSalesBozzaCase(){
+
+        String whereConditionFieldValue2 = 'PostSales';
+        String queryString = 'SELECT id, Type__c, NumberOfDays__c FROM CS_DaysToExpiration__c where Type__c = \'' + String.escapeSingleQuotes(whereConditionFieldValue2) + '\'';
+        SObject mySobj = database.query(queryString);
+
+        if(mySobj == null)
+        {
+            return new List<Case>();
+        }
+
+        Integer numberOfDays = Integer.valueOf(((CS_DaysToExpiration__c) mySobj).NumberOfDays__c);
+        Date limitDate = (System.today()).addDays(- numberOfDays);
+
         return [SELECT Id,
         Type,
         Phase__c,
@@ -118,6 +145,70 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         FROM Case
         WHERE Phase__c = :this.bozzaCase
         AND Cluster__c != : this.autoletturaCase
+        AND CreatedDate < :limitDate
+        WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Case> getCaseVolturaTecnica(){
+        
+        return [SELECT Id,
+        AccountId,
+        Cluster__c,
+        CompanyOwner__c,
+        ContactId,
+        Contract__c,
+        CreatorGroup__c,
+        DistributorNote__c,
+        Origin,
+        Order__c,
+        Phase__c,
+        RecordTypeId,
+        ServicePoint__c,
+        Station__c,
+        Type,
+        PhoneNumber__c,
+        Email__c,
+        SuspensionDays__c,
+        EffectiveDate__c,
+        SuspensionDate__c,
+        BillingProfile__c,
+        SupplyCity__c,
+        SupplyCityCode__c,
+        SupplyCountry__c,
+        SupplyPostalCode__c,
+        SupplyProvince__c,
+        SupplyStreetName__c,
+        SupplyStreetNumber__c,
+        InvoicingCity__c,
+        InvoicingCityCode__c,
+        InvoicingCountry__c,
+        InvoicingPostalCode__c,
+        InvoicingProvince__c,
+        InvoicingStreetName__c,
+        InvoicingStreetNumber__c,
+        BillingCity__c,
+        BillingCityCode__c,
+        BillingCountry__c,
+        BillingPostalCode__c,
+        BillingProvince__c,
+        BillingStreetName__c,
+        BillingStreetNumber__c,
+        SalesCompany__c,
+        SalesCompanyCode__c,
+        DistributorCode__c,
+        Taxes__c,
+        TaxRate__c,
+        Resident__c,
+        Market__c,
+        SupplyType__c,
+        AnnualConsumption__c,
+        CaliberAvailable__c,
+        CausalCode__c
+        FROM Case
+        WHERE Type = 'Voltura Tecnica'
+        AND Phase__c = 'In attesa Data Decorrenza'
+        AND SuspensionDate__c <= :this.todayDate
         WITH SECURITY_ENFORCED
         ];
     }

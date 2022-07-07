@@ -35,17 +35,39 @@ public inherited sharing class HDT_UTL_NotifVasHelper {
                 }
             }
             when 'Case' {
-                List<Order> orders = orderQr.getRecordByOrderNumber(sObjectKey);
+                List<Order> orders = orderQr.getRecordByVasPracticeCode(sObjectKey);
                 if (!orders.isEmpty()) {
                     sObjMap.put('Order', orders.get(0));
 
                     Id orderId = orders.get(0).Id;
 
-                    List<Case> cases = [SELECT Asset.Id, Subscription__r.Id FROM Case
+                    List<Case> cases = [SELECT Id, Asset.Id, Subscription__r.Id FROM Case
                         WHERE RecordType.DeveloperName='HDT_RT_PostSalesVAS' AND Type='Disattivazione VAS'
-                        AND (Asset.SBQQ__OrderProduct__r.OrderId=:orderId OR Subscription__r.SBQQ__Contract__r.SBQQ__Order__c=:orderId) AND Status NOT IN ('Closed', 'Bozza')
+                        AND (Asset.SBQQ__OrderProduct__r.OrderId=:orderId OR Subscription__r.SBQQ__OrderProduct__r.OrderId=:orderId OR Order__c = :orderId) AND Status NOT IN ('Closed', 'Bozza')
                         WITH SECURITY_ENFORCED LIMIT 1];
 
+                    if (!cases.isEmpty()) {
+                        sObjMap.put('Case', cases.get(0));
+
+                        if (cases.get(0).getSobject('Asset')!=null) {
+                            sObjMap.put('Asset', cases.get(0).Asset);
+                        }
+                        if (cases.get(0).getSobject('Subscription__r')!=null) {
+                            sObjMap.put('SBQQ__Subscription__c', cases.get(0).Subscription__r);
+                        }
+                    }
+                }
+                /**@frpanico 2022-04-29
+                 * Ricerca subscription
+                 * con codice servizio
+                 */
+                else
+                {
+                    List<Case> cases = [SELECT Id, Asset.Id, Subscription__r.Id FROM Case
+                    WHERE RecordType.DeveloperName='HDT_RT_PostSalesVAS' AND Type='Disattivazione VAS'
+                    AND Subscription__r.VasPracticeCode__c = :sObjectKey
+                    AND Status NOT IN ('Closed', 'Bozza')
+                    WITH SECURITY_ENFORCED LIMIT 1];
                     if (!cases.isEmpty()) {
                         sObjMap.put('Case', cases.get(0));
 
@@ -190,6 +212,9 @@ public inherited sharing class HDT_UTL_NotifVasHelper {
             if (String.isNotBlank(statusMapping.OrderStatus__c)) {
                 currentOrder.Status = statusMapping.OrderStatus__c;
             }
+            if ('Completata'.equalsIgnoreCase(currentOrder.Phase__c)){
+                HDT_UTL_Scarti.closeActivityOnCompletedFromNotify(new Set<Id>{currentOrder.Id});
+            }
         }
     }
 
@@ -209,6 +234,9 @@ public inherited sharing class HDT_UTL_NotifVasHelper {
             if (String.isNotBlank(statusMapping.CaseStatus__c)) {
                 currentCase.Status = statusMapping.CaseStatus__c;
             }
+            if ('Completata'.equalsIgnoreCase(currentCase.Phase__c)){
+                HDT_UTL_Scarti.closeActivityOnCompletedFromNotify(new Set<Id>{currentCase.Id});
+            }
         }
     }
 
@@ -221,9 +249,24 @@ public inherited sharing class HDT_UTL_NotifVasHelper {
     private static void mapAssetStatus(HDT_StatoMotoreVas__mdt statusMapping, Map<String,SObject> sObjMap) {
         if (sObjMap.containsKey('Asset')) {
             Asset currentAsset = (Asset)sObjMap.get('Asset');
-            if (String.isNotBlank(statusMapping.AssetStatus__c)) {
-                currentAsset.DigitalAssetStatus = statusMapping.AssetStatus__c;
+            Case currentCase = (Case)sObjMap.get('Case');
+            /* Get Assets in bundle */
+            List<Asset> bundle = [SELECT DigitalAssetStatus,UsageEndDate FROM Asset WHERE SBQQ__RootAsset__c = :currentAsset.Id WITH SECURITY_ENFORCED];
+            bundle.add(currentAsset);
+            for(Asset singleAsset : bundle)
+            {
+                if (String.isNotBlank(statusMapping.AssetStatus__c)) {
+                    singleAsset.DigitalAssetStatus = statusMapping.AssetStatus__c;
+                    /**@frpanico 16/02/2022
+                     * Aggiunto UsageEndDate
+                     */
+                    if(currentCase.TerminationDate__c != null)
+                    {
+                        singleAsset.UsageEndDate = currentCase.TerminationDate__c;
+                    }
+                }
             }
+            HDT_UTL_DatabaseService.updateSObject(bundle);
         }
     }
 }

@@ -23,6 +23,10 @@
         <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
+        <field>Process_Type__c</field>
+        <value xsi:type="xsd:string">Segnalazioni VAS</value>
+    </values>
+    <values>
         <field>Reporting_Category__c</field>
         <value xsi:type="xsd:string">Errore di fatturazione</value>
     </values>

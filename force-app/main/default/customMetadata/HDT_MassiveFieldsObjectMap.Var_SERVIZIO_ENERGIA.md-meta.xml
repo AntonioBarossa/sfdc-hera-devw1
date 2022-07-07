@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>SERVIZIO_ENERGIA</label>
+    <protected>false</protected>
+    <values>
+        <field>labelField__c</field>
+        <value xsi:type="xsd:string">SERVIZIO_ENERGIA</value>
+    </values>
+    <values>
+        <field>nameField__c</field>
+        <value xsi:type="xsd:string">ServiceEnergy__c</value>
+    </values>
+    <values>
+        <field>objectType__c</field>
+        <value xsi:type="xsd:string">Case</value>
+    </values>
+    <values>
+        <field>processType__c</field>
+        <value xsi:type="xsd:string">Modifica Portale SOL Gestione Energia</value>
+    </values>
+</CustomMetadata>

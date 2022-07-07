@@ -5,8 +5,17 @@
     <description>Relazione con l’oggetto Account</description>
     <externalId>false</externalId>
     <label>Agenzia</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Account.RecordType.DeveloperName</field>
+            <operation>equals</operation>
+            <value>HDT_RT_Partner</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>Assegnazioni Campaign Member Item</relationshipLabel>
+    <relationshipLabel>Assegnazioni Campaign Member Item (%)</relationshipLabel>
     <relationshipName>Assegnazioni_Campaign_Member_Item</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>

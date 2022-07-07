@@ -49,12 +49,12 @@ public class HDT_LC_OrderDossierWizardActionsTst{
 
 	@isTest static void testSave1(){
 
-		Order ord = [SELECT Id, Phase__c, ContractSigned__c FROM Order LIMIT 1];
+		Order ord = [SELECT Id, Phase__c, ContractSigned__c, SignatureMethod__c FROM Order LIMIT 1];
         Id ordId = ord.id;
         
 		HDT_LC_OrderDossierWizardActions.save(ord);
         
-        ord = [SELECT Id, Phase__c, ContractSigned__c FROM Order WHERE Id =: ordId];
+        ord = [SELECT Id, Phase__c, ContractSigned__c, SignatureMethod__c FROM Order WHERE Id =: ordId];
         
         System.assertEquals('Documentazione da validare', ord.Phase__c, 'save did not work correctly');
 		System.assertNotEquals('Bozza', ord.Phase__c, 'save did not work correctly');
@@ -62,14 +62,14 @@ public class HDT_LC_OrderDossierWizardActionsTst{
     
     @isTest static void testSave1False(){
 
-		Order ord = [SELECT Id, Phase__c, ContractSigned__c FROM Order LIMIT 1];
+		Order ord = [SELECT Id, Phase__c, ContractSigned__c, SignatureMethod__c FROM Order LIMIT 1];
         Id ordId = ord.id;
         
         ord.ContractSigned__c = false;
         
 		HDT_LC_OrderDossierWizardActions.save(ord);
         
-        ord = [SELECT Id, Phase__c, ContractSigned__c FROM Order WHERE Id =: ordId];
+        ord = [SELECT Id, Phase__c, ContractSigned__c, SignatureMethod__c FROM Order WHERE Id =: ordId];
         
         System.assertEquals('Documentazione da inviare', ord.Phase__c, 'save did not work correctly');
 		System.assertNotEquals('Bozza', ord.Phase__c, 'save did not work correctly');
@@ -97,16 +97,30 @@ public class HDT_LC_OrderDossierWizardActionsTst{
         ord.SignatureMethod__c ='Vocal Order';
         ord.Phase__c = 'In Lavorazione';
         ord.ContractSigned__c = false;
+		String phaseContent = '';
         
         String phase = HDT_LC_OrderDossierWizardActions.createActivityVocalOrder(ord);
-        
-        System.assertEquals('Documentazione da inviare', phase, 'save did not work correctly');
+        if(phase.contains('Documentazione da inviare')){
+			phaseContent = 'Documentazione da inviare';
+		}
+		else {
+			phaseContent = '';
+		}
+
+        System.assertEquals('Documentazione da inviare', phaseContent, 'save did not work correctly');
 		System.assertNotEquals('Bozza', phase, 'save did not work correctly');
         
         ord.ContractSigned__c = true;
         phase = HDT_LC_OrderDossierWizardActions.createActivityVocalOrder(ord);
         
-        System.assertEquals('Documentazione da validare', phase, 'save did not work correctly');
+		if(phase.contains('Documentazione da validare')){
+			phaseContent = 'Documentazione da validare';
+		}
+		else {
+			phaseContent = '';
+		}
+
+        System.assertEquals('Documentazione da validare', phaseContent, 'save did not work correctly');
 		System.assertNotEquals('Bozza', phase, 'save did not work correctly');
         
     }

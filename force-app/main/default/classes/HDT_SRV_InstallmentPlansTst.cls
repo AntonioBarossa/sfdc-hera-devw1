@@ -204,7 +204,7 @@ public with sharing class HDT_SRV_InstallmentPlansTst {
 
         HttpResponse response = new HttpResponse();
         response.setHeader('Content-Type', 'application/json');
-        response.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"contoContrattuale":"200010530499","classeConto":"Z001","codiceCliente":"1002732959","societa":"HeraCommS.p.A.","dataEmissione":"31/08/2021","dataScadenza":"20/01/2022","podPdr":"IT001E56328467","importo":"0.0","residuo":"17.0","modalitaPagamento":"bollettinopostale","documento":"500002727012","bloccoAlSollecito":"B-PG-BLOCCOAVVISORICEVUTODALCL.AVVENUTOPAG","tipoDocumento":"RATE","contratto":"3020211479","settoreMerceologico":"Energiaelettrica","tipoTransazione":"EC1","idPrimoLivelloSAP":"00000000000000000000000000000000000000000000000001","oraIncassoRealTime":"00:00:00","loginId":"0-1","secondoLivelloInformativoF2":[]}}');
+        response.setBody('{"status":"success","response":{"esito":"OK"},"correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"contoContrattuale":"200010530499","classeConto":"Z001","codiceCliente":"1002732959","societa":"HeraCommS.p.A.","dataEmissione":"31/08/2021","dataScadenza":"20/01/2022","podPdr":"IT001E56328467","importo":"0.0","residuo":"17.0","modalitaPagamento":"bollettinopostale","documento":"500002727012","bloccoAlSollecito":"B-PG-BLOCCOAVVISORICEVUTODALCL.AVVENUTOPAG","tipoDocumento":"RATE","contratto":"3020211479","settoreMerceologico":"Energiaelettrica","tipoTransazione":"EC1","idPrimoLivelloSAP":"00000000000000000000000000000000000000000000000001","oraIncassoRealTime":"00:00:00","loginId":"0-1","secondoLivelloInformativoF2":[]}}');
         response.setStatusCode(200);
         response.setStatus('OK');
         
@@ -213,8 +213,8 @@ public with sharing class HDT_SRV_InstallmentPlansTst {
         HDT_UTL_CreatePaymentsRequestBody crb = new HDT_UTL_CreatePaymentsRequestBody();
         crb.handleResponse(cs.Id, 'Blocco Sollecito/Interessi', null, response);
 
-        Case updatedCase = [SELECT Id, TecnicalPhase__c FROM Case WHERE Id =: cs.Id];
-        System.assertEquals('Completata', updatedCase.TecnicalPhase__c, 'TecnicalPhase__c != Completata');
+        Case updatedCase = [SELECT Id, Phase__c FROM Case WHERE Id =: cs.Id];
+        System.assertEquals('Completata', updatedCase.Phase__c, 'Phase__c != Completata');
 
         Test.stopTest();
         
@@ -278,7 +278,7 @@ public with sharing class HDT_SRV_InstallmentPlansTst {
 
         HttpResponse response = new HttpResponse();
         response.setHeader('Content-Type', 'application/json');
-        response.setBody('{"status":"failed","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","errorDetails":[{"code":"HTTP:INTERNAL_SERVER_ERROR","message":"HTTPPOSTonresource\'http://isuprq.service.intra:8002/sap/bc/srt/rfc/sap/zurvmc_ws_estratto_letture/150/zurvmc_ws_estratto_letture/zurvmc_ws_estratto_letture\'failed:internalservererror(500).","additionalInfo":"HTTPPOSTonresource\'http://isuprq.service.intra:8002/sap/bc/srt/rfc/sap/zurvmc_ws_estratto_letture/150/zurvmc_ws_estratto_letture/zurvmc_ws_estratto_letture\'failed:internalservererror(500)."}],"data":{}}');
+        response.setBody('{"status":"failed","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","errorDetails":[{"code":"HTTP:INTERNAL_SERVER_ERROR","message":"HTTPPOSTonresource\'http://isuprq.service.intra:8002/sap/bc/srt/rfc/sap/zurvmc_ws_estratto_letture/150/zurvmc_ws_estratto_letture/zurvmc_ws_estratto_letture\'failed:internalservererror(500).","additionalInfo":"HTTPPOSTonresource\'http://isuprq.service.intra:8002/sap/bc/srt/rfc/sap/zurvmc_ws_estratto_letture/150/zurvmc_ws_estratto_letture/zurvmc_ws_estratto_letture\'failed:internalservererror(500)."}],"response":{"esito":"KO"},"data":{}}');
         response.setStatusCode(200);
         response.setStatus('OK');
         

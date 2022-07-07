@@ -8,10 +8,14 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         String rtId = constantsUtl.CASE_RECORDTYPEID_MOROSITA;
         HDT_UTL_DataFactoryTst.pClickCasePhase();
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
+        servPointList[0].ServicePointCode__c = 'IT001E46371811';
+        insert servPointList;
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
         ordList[0].DistributorPracticeCode__c = 'A00000000288_DL';
+        ordList[0].ProcessType__c = 'Subentro Ele';
         ordList[0].ServicePoint__c = servPointList[0].Id;
+        
         insert ordList;
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         AccountContactRelation accountContactRel = HDT_UTL_DataFactoryTst.createAccountContactRelation(true, accList[1].Id,contactList[0].Id);
@@ -39,6 +43,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         wrts_prcgvr__ActivityTemplate__c actTemplate2 = new wrts_prcgvr__ActivityTemplate__c();
         actTemplate2.Name = 'Eseguire Gestione Manuale SAP';
         actTemplate2.wrts_prcgvr__Subject__c = 'Eseguire Gestione Manuale SAP';
+        actTemplate2.wrts_prcgvr__ObjectType__c = 'Case';
 
         actTempList.add(actTemplate1);
         actTempList.add(actTemplate2);
@@ -303,16 +308,77 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.Phase__c, 'Phase__c != Comunicazione verso Heroku OK');
     }
     @isTest
-    static void handleInboundRequestTst()
+    static void handleInboundRequestRichTst()
+    {
+        //Declaration
+        HDT_SRV_HerokuPostSalesManager herokuSrv = new HDT_SRV_HerokuPostSalesManager();
+        //HDT_WRP_MrrResponse.HDT_WRP_Object responseObj = new HDT_WRP_MrrResponse.HDT_WRP_Object();
+        HDT_WRP_MrrResponse.HDT_WRP_Object responseObjPass = new HDT_WRP_MrrResponse.HDT_WRP_Object();
+        //HDT_WRP_MrrRequest notifEs = new HDT_WRP_MrrRequest();
+        HDT_WRP_MrrRequest richPass = new HDT_WRP_MrrRequest();
+        HDT_WRP_MrrRequest richPassDis = new HDT_WRP_MrrRequest();
+        HDT_WRP_MrrRequest richPassVol = new HDT_WRP_MrrRequest();
+        //HDT_WRP_MrrRequest richKo = new HDT_WRP_MrrRequest();
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        Integer statusCode;
+        RestContext.request = req;
+        RestContext.response = res;
+        //Entity Query
+        AccountContactRelation testAccount = [SELECT Account.CustomerCode__c,AccountId, ContactId, Roles FROM AccountContactRelation WHERE Roles = 'Titolare' LIMIT 1];
+        ServicePoint__c testSp = [SELECT Name,ServicePointCode__c FROM ServicePoint__c LIMIT 1];
+        Contract testContract = [SELECT SAPContractCode__c FROM Contract WHERE AccountId = :testAccount.AccountId];
+        BillingProfile__c testBillingProfile = [SELECT ContractAccountCode__c FROM BillingProfile__c LIMIT 1];
+        Case testCase = [SELECT CaseNumber, Phase__c, Type FROM Case WHERE Type = 'Sollecito Emissione Bolletta' LIMIT 1];
+        //Update ServicePoint Commodity
+        testSp.CommoditySector__c = 'Energia Elettrica';
+        update testSp; 
+        testContract.ServicePoint__c = testSp.Id;
+        testContract.Status = 'Attivo';
+        testContract.EndDate = Date.valueOf('2121-05-12');
+        update testContract;
+
+        //Create Requests
+        //String notifEsString = HDT_UTL_DataFactoryTst.notifEsReq('postsales',testCase.Id, 'Comunicazione verso Heroku OK','esito_intermedio');
+        String richPassString = HDT_UTL_DataFactoryTst.richPassReq(testSp.ServicePointCode__c, testAccount.Account.CustomerCode__c, testBillingProfile.ContractAccountCode__c, testContract.SAPContractCode__c, 'Morosita', 'Sospensione Fornitura', '', 'Da PGM', '20220102', testCase.CaseNumber, '');
+        //String notifEsKo = HDT_UTL_DataFactoryTst.notifEsReq('postsales',testCase.Id, 'Completata','esito_finale');
+        String richPassDisattivazioni = HDT_UTL_DataFactoryTst.richPassReq(testSp.ServicePointCode__c, testAccount.Account.CustomerCode__c, testBillingProfile.ContractAccountCode__c, testContract.SAPContractCode__c, '', 'Recesso per Altri Motivi', 'Disattivazioni', 'Da PGM', '2022-01-02', '', '');
+        String richPassVolture = HDT_UTL_DataFactoryTst.richPassReq(testSp.ServicePointCode__c, testAccount.Account.CustomerCode__c, testBillingProfile.ContractAccountCode__c, testContract.SAPContractCode__c, '', 'Voltura Tecnica', 'Volture', 'Da PGM', '2022-01-02', '', '');
+
+        //notifEs = (HDT_WRP_MrrRequest) JSON.deserialize(notifEsString, HDT_WRP_MrrRequest.class);
+        //richKo  = (HDT_WRP_MrrRequest) JSON.deserialize(notifEsKo, HDT_WRP_MrrRequest.class);
+        richPass = (HDT_WRP_MrrRequest) JSON.deserialize(richPassString, HDT_WRP_MrrRequest.class);
+        richPassDis = (HDT_WRP_MrrRequest) JSON.deserialize(richPassDisattivazioni, HDT_WRP_MrrRequest.class);
+        richPassVol = (HDT_WRP_MrrRequest) JSON.deserialize(richPassVolture, HDT_WRP_MrrRequest.class);
+
+        //SetMock
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
+        //Test
+        Test.startTest();
+        //responseObj = herokuSrv.handleInboundRequest(notifEs.requests[0]);
+        //responseObj = herokuSrv.handleInboundRequest(richKo.requests[0]);
+        responseObjPass = herokuSrv.handleInboundRequest(richPass.requests[0]);
+        responseObjPass = herokuSrv.handleInboundRequest(richPassDis.requests[0]);
+        responseObjPass = herokuSrv.handleInboundRequest(richPassVol.requests[0]);
+        statusCode = res.statusCode;
+        Test.stopTest();
+        //Assertions
+        List<Case> richPassCase = [SELECT CaseNumber, Phase__c, Type FROM Case WHERE Type != :testCase.Type];
+        System.assertEquals(200, statusCode, 'statusCode != 200');
+        System.assertEquals(5, richPassCase.size(), 'richPassCase.size() != 5');
+    }
+    
+    @isTest
+    static void handleInboundRequestNotifTst()
     {
         //Declaration
         HDT_SRV_HerokuPostSalesManager herokuSrv = new HDT_SRV_HerokuPostSalesManager();
         HDT_WRP_MrrResponse.HDT_WRP_Object responseObj = new HDT_WRP_MrrResponse.HDT_WRP_Object();
-        HDT_WRP_MrrResponse.HDT_WRP_Object responseObjPass = new HDT_WRP_MrrResponse.HDT_WRP_Object();
+        //HDT_WRP_MrrResponse.HDT_WRP_Object responseObjPass = new HDT_WRP_MrrResponse.HDT_WRP_Object();
         HDT_WRP_MrrRequest notifEs = new HDT_WRP_MrrRequest();
-        HDT_WRP_MrrRequest richPass = new HDT_WRP_MrrRequest();
-        HDT_WRP_MrrRequest richPassDis = new HDT_WRP_MrrRequest();
-        HDT_WRP_MrrRequest richPassVol = new HDT_WRP_MrrRequest();
+        //HDT_WRP_MrrRequest richPass = new HDT_WRP_MrrRequest();
+        //HDT_WRP_MrrRequest richPassDis = new HDT_WRP_MrrRequest();
+        //HDT_WRP_MrrRequest richPassVol = new HDT_WRP_MrrRequest();
         HDT_WRP_MrrRequest richKo = new HDT_WRP_MrrRequest();
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
@@ -335,16 +401,16 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
 
         //Create Requests
         String notifEsString = HDT_UTL_DataFactoryTst.notifEsReq('postsales',testCase.Id, 'Comunicazione verso Heroku OK','esito_intermedio');
-        String richPassString = HDT_UTL_DataFactoryTst.richPassReq(testSp.ServicePointCode__c, testAccount.Account.CustomerCode__c, testBillingProfile.ContractAccountCode__c, testContract.SAPContractCode__c, 'Morosita', 'Sospensione Fornitura', '', 'Da PGM', '20220102', testCase.CaseNumber, '');
+        //String richPassString = HDT_UTL_DataFactoryTst.richPassReq(testSp.ServicePointCode__c, testAccount.Account.CustomerCode__c, testBillingProfile.ContractAccountCode__c, testContract.SAPContractCode__c, 'Morosita', 'Sospensione Fornitura', '', 'Da PGM', '20220102', testCase.CaseNumber, '');
         String notifEsKo = HDT_UTL_DataFactoryTst.notifEsReq('postsales',testCase.Id, 'Completata','esito_finale');
-        String richPassDisattivazioni = HDT_UTL_DataFactoryTst.richPassReq(testSp.ServicePointCode__c, testAccount.Account.CustomerCode__c, testBillingProfile.ContractAccountCode__c, testContract.SAPContractCode__c, '', 'Recesso per Altri Motivi', 'Disattivazioni', 'Da PGM', '2022-01-02', '', '');
-        String richPassVolture = HDT_UTL_DataFactoryTst.richPassReq(testSp.ServicePointCode__c, testAccount.Account.CustomerCode__c, testBillingProfile.ContractAccountCode__c, testContract.SAPContractCode__c, '', 'Voltura Tecnica', 'Volture', 'Da PGM', '2022-01-02', '', '');
+        //String richPassDisattivazioni = HDT_UTL_DataFactoryTst.richPassReq(testSp.ServicePointCode__c, testAccount.Account.CustomerCode__c, testBillingProfile.ContractAccountCode__c, testContract.SAPContractCode__c, '', 'Recesso per Altri Motivi', 'Disattivazioni', 'Da PGM', '2022-01-02', '', '');
+        //String richPassVolture = HDT_UTL_DataFactoryTst.richPassReq(testSp.ServicePointCode__c, testAccount.Account.CustomerCode__c, testBillingProfile.ContractAccountCode__c, testContract.SAPContractCode__c, '', 'Voltura Tecnica', 'Volture', 'Da PGM', '2022-01-02', '', '');
 
         notifEs = (HDT_WRP_MrrRequest) JSON.deserialize(notifEsString, HDT_WRP_MrrRequest.class);
         richKo  = (HDT_WRP_MrrRequest) JSON.deserialize(notifEsKo, HDT_WRP_MrrRequest.class);
-        richPass = (HDT_WRP_MrrRequest) JSON.deserialize(richPassString, HDT_WRP_MrrRequest.class);
-        richPassDis = (HDT_WRP_MrrRequest) JSON.deserialize(richPassDisattivazioni, HDT_WRP_MrrRequest.class);
-        richPassVol = (HDT_WRP_MrrRequest) JSON.deserialize(richPassVolture, HDT_WRP_MrrRequest.class);
+        //richPass = (HDT_WRP_MrrRequest) JSON.deserialize(richPassString, HDT_WRP_MrrRequest.class);
+        //richPassDis = (HDT_WRP_MrrRequest) JSON.deserialize(richPassDisattivazioni, HDT_WRP_MrrRequest.class);
+        //richPassVol = (HDT_WRP_MrrRequest) JSON.deserialize(richPassVolture, HDT_WRP_MrrRequest.class);
 
         //SetMock
         Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
@@ -352,16 +418,16 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         Test.startTest();
         responseObj = herokuSrv.handleInboundRequest(notifEs.requests[0]);
         responseObj = herokuSrv.handleInboundRequest(richKo.requests[0]);
-        responseObjPass = herokuSrv.handleInboundRequest(richPass.requests[0]);
-        responseObjPass = herokuSrv.handleInboundRequest(richPassDis.requests[0]);
-        responseObjPass = herokuSrv.handleInboundRequest(richPassVol.requests[0]);
+        //responseObjPass = herokuSrv.handleInboundRequest(richPass.requests[0]);
+        //responseObjPass = herokuSrv.handleInboundRequest(richPassDis.requests[0]);
+        //responseObjPass = herokuSrv.handleInboundRequest(richPassVol.requests[0]);
         statusCode = res.statusCode;
         Test.stopTest();
         //Assertions
         List<Case> richPassCase = [SELECT CaseNumber, Phase__c, Type FROM Case WHERE Type != :testCase.Type];
         System.assertEquals(200, statusCode, 'statusCode != 200');
-        System.assertEquals(5, richPassCase.size(), 'richPassCase.size() != 5');
-    }   
+        System.assertEquals(2, richPassCase.size(), 'richPassCase.size() != 2');
+    }
 
     @isTest
     static void handleInboundRequestWithoutSfKey()
@@ -428,7 +494,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         testContract.Status = 'Attivo';
         update testContract;
         //Create Requests
-        String notifEsString = HDT_UTL_DataFactoryTst.notifEsFullReq('postsales', testCase.CaseNumber, '3010147771', 'A01', testSp.Id, 'A00000000288_DL', '23423424', '23423424', '', '', testCase.Id, 'Comunicazione verso Heroku OK', 'aggiornaRCU');
+        String notifEsString = HDT_UTL_DataFactoryTst.notifEsFullReq('postsales', testCase.CaseNumber, '3010147771', 'A01', 'IT001E46371811', 'A00000000288_DL', '23423424', '23423424', '', '', testCase.Id, 'Comunicazione verso Heroku OK', 'aggiornaRCU');
         notifEs = (HDT_WRP_MrrRequest) JSON.deserialize(notifEsString, HDT_WRP_MrrRequest.class);
         //SetMock
         Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
@@ -439,7 +505,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         //Assertions
         Case testCaseUpd = [SELECT Id, CaseNumber, Phase__c, Type FROM Case WHERE Type = 'Allineamento Anagrafica' LIMIT 1];
         System.assertEquals('Da Inviare', testCaseUpd.Phase__c, 'Phase__c != Da Inviare');
-    }  
+    }
 
     @isTest
     static void handleInboundFullRequest()
@@ -543,7 +609,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         
         Test.startTest();
 
-        String result = HDT_UTL_HerokuPostSalesManager.getAsyncJobByJobItem('test');
+        /*String result = HDT_UTL_HerokuPostSalesManager.getAsyncJobByJobItem('test');
         System.assertEquals('OK', result, 'result != OK');
 
         wrts_prcgvr__AsyncJob__c asyncJob = [SELECT wrts_prcgvr__Status__c, wrts_prcgvr__Details__c FROM wrts_prcgvr__AsyncJob__c LIMIT 1];
@@ -559,7 +625,13 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         update asyncJob2;
 
         String result3 = HDT_UTL_HerokuPostSalesManager.getAsyncJobByJobItem('test');
-        System.assertEquals('KO', result3, 'result != KO');
+        System.assertEquals('KO', result3, 'result != KO');*/
+
+        List<Case> myCaseList = [Select Id, Phase__c from Case LIMIT 1];
+        myCaseList[0].Phase__c = 'Bozza';
+        String result1 = HDT_UTL_HerokuPostSalesManager.getAsyncJobByJobItem(myCaseList[0].Id);
+        System.assertEquals('OK', result1, 'result != OK');
+
 
         Test.stopTest();
         
@@ -588,7 +660,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
     static void handlePassiveCancellationSecondCase(){
 
         Case currentCase = [SELECT Id, Phase__c, Cluster__c FROM Case WITH SECURITY_ENFORCED LIMIT 1];
-        
+
         Test.startTest();
 
         HDT_UTL_HerokuPostSalesManager hpsm = new HDT_UTL_HerokuPostSalesManager();

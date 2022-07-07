@@ -28,6 +28,12 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
        // List<Lead> leadToCheck = new List<Lead>();
         //Map<String,String> leadDomain = new Map<String,String>();
         for(Lead l : listNew){
+            if(String.isNotBlank(l.FirstName)){
+                l.FirstName = l.FirstName.toUpperCase();
+            }
+            if(String.isNotBlank(l.LastName)){
+                l.LastName= l.LastName.toUpperCase();
+            }
             if(l.email != null){
                 String s = l.email.split('@')[1];
                 if(mapResBlacklist.get(s.toUpperCase()) != null){
@@ -42,7 +48,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         else{
                             l.company = l.firstname + ' '  + l.lastname; 
                         }
-                        }
+                    }
                 }
             }
             else{
@@ -98,10 +104,14 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     if (l.ConvertedAccountId != null) {
                         accountIdList.add(l.ConvertedAccountId);
                         mapAccountLead.put(l.ConvertedAccountId,l);
-                        String leadName = l.FirstName + ' ' + l.LastName;
-                        Account acc = accountQr.getRecordById(l.ConvertedAccountId, 'Name');
+                        Account acc = accountQr.getRecordById(l.ConvertedAccountId, 'Name, CreatedDate');
                         Contact con = contactQr.getRecordById(l.ConvertedContactId);
-                        if(leadName == acc.Name && leadName != con.Name){
+
+                        Datetime dateToCheck = l.LastModifiedDate?.addSeconds(-30);
+                        Boolean isAccountJustCreated = (dateToCheck == null)? false : dateToCheck < acc.CreatedDate; 
+                        Boolean isContactJustCreated = (dateToCheck == null)? false : dateToCheck < con.CreatedDate; 
+                        
+                        if(isAccountJustCreated && !isContactJustCreated){
                             l.addError('Non è possibile creare un nuovo Account e selezionare un Contact già esistente!');
                         }
                   	}  
@@ -119,12 +129,14 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 for(Account a : accounts){
                     accId.add(a.id);
                     if(mapAccountLead.get(a.id) != null){
+                        Lead leadConverted = mapAccountLead.get(a.id);
+                        a.OriginLeadId__c = leadConverted.Id;
+                        a.ConvertedDate__c = System.Date.today();
+
                         String lastName = (a.LastName__c != null && a.LastName__c != '' ? a.LastName__c : a.Name);
                         if ( a.LastName__c==null) {
                             if(r.id == a.recordtypeid){
-
                                 Lead li = mapAccountLead.get(a.id);
-                               // a.FirstName__c = li.FirstName;
                             
                                 a.LastName__c = li.Company;
                                 a.Name=li.Company;
@@ -132,8 +144,6 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                                 a.Description= li.Description;
                                 Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone=mapAccountLead.get(a.id).Phone, Email=mapAccountLead.get(a.id).email ,MobilePhone= mapAccountLead.get(a.id).MobilePhone, Fax= a.FAX__c);
                                 conList.add(contact);
-                                accToUpdate.add(a);
-
                             }
                             else{       
                                 Lead li = mapAccountLead.get(a.id);
@@ -143,15 +153,25 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                                 a.Description= li.Description;
                                 String expectedNewName = String.isBlank(a.FirstName__c) ? a.LastName__c : a.FirstName__c + ' ' + a.LastName__c;
                                 a.Name=expectedNewName;
-                                accToUpdate.add(a);
                             }
                         }
+                        accToUpdate.add(a);
                     }     
                 }
                 if (accToUpdate.size()>0) {
                     //accountSRV.updateRecordsWithCheck(accToUpdate);
                     listToUpdate.addAll(accToUpdate);// HRAWRM-802 21/10/2021
                    // update accToUpdate;
+                }
+                /**@frpanico 2022-03-11
+                 * Predefault ruolo Titolare
+                 * Quando viene convertito lead
+                 */
+                if(accounts.size() == 1)
+                {
+                    List<AccountContactRelation> listAccCon= accoContRelQr.getContactsByAccountWithRoles(accounts[0].Id);
+                    listAccCon[0].Roles = 'Titolare';
+                    update(listAccCon[0]);
                 }
                 if (conList.size()>0) {
                     //contactSrv.createRecords(conList);
@@ -243,6 +263,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     }
                 }
                 if (String.isNotBlank(l.FiscalCode__c) && mapOld.get(l.Id)!=null && (mapOld.get(l.Id).FiscalCode__c!=l.FiscalCode__c)     ) {
+                    l.FiscalCode__c = l.FiscalCode__c.toUpperCase();
                     setFiscalCodes.add(l.FiscalCode__c);
                     leadToCheck.add(l);
                 }

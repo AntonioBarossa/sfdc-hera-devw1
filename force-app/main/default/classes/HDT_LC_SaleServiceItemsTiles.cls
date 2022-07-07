@@ -48,10 +48,20 @@ public inherited sharing class HDT_LC_SaleServiceItemsTiles {
      * @description Delete single tile
      * @param String opportunityId
      */
+    /**@frpanico 03/02/2022
+     * Aggiunto update IsTransition__c = false sul Sale__c
+     * Ottimizzate DML statements
+     */
     @AuraEnabled
     public static void deleteTile(String opportunityId, String cancellationReason){
 
+        List<SObject> sobjsToUpdate = new List<SObject>();
+        Sale__c sale = new Sale__c();
+
         Opportunity opp = opportunityQuery.getRecordById(opportunityId);
+
+        sale.Id = opp.Sale__c;
+        sale.IsTransition__c = false;
 
         SBQQ__Quote__c quoteToUpdate = new SBQQ__Quote__c(
             Id = opp.SBQQ__PrimaryQuote__c,
@@ -72,9 +82,16 @@ public inherited sharing class HDT_LC_SaleServiceItemsTiles {
             StageName = 'Closed Lost'
         );
         
+        sobjsToUpdate.add(quoteToUpdate);
+        sobjsToUpdate.add(oppToUpdate);
+        sobjsToUpdate.add(sale);
+
+        HDT_UTL_DatabaseService.updateSObject(sobjsToUpdate);
+
+        /*
         quoteSrv.updateRecord(quoteToUpdate);
         opportunityService.updateRecord(oppToUpdate);
-
+        */
     }
 
 }

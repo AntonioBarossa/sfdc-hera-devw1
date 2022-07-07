@@ -30,8 +30,22 @@
         if (checkBeforeDml(sObjectList, DmlOperation.DML_UPDATE)) {
             return false;
         }
-        /*List<Database.SaveResult> updateResult =*/ Database.update(sObjectList, true);
+        /*List<Database.SaveResult> updateResult =*/ 
+        unableToLockRowManagement(sObjectList,0);
         return true;
+    }
+
+    private static void unableToLockRowManagement(List<SObject> sObjectList, Integer updateNumber) {
+        try{
+            Database.update(sObjectList, true);
+        }catch(Exception ex){
+            if (ex.getMessage().contains('UNABLE_TO_LOCK_ROW') && updateNumber < 5){
+                updateNumber++;
+                unableToLockRowManagement(sObjectList,updateNumber);
+            }else{
+                throw ex;
+            }
+        }
     }
 
     public static Boolean upsertSObject(SObject sObj) {
@@ -89,7 +103,7 @@
         return (Limits.getDMLRows() + recordsNumber) > Limits.getLimitDMLRows();
     }
 
-    private static Boolean checkBeforeDml(List<SObject> sObjectList, DmlOperation operation) {
+    public static Boolean checkBeforeDml(List<SObject> sObjectList, DmlOperation operation) {
         if (sObjectList.isEmpty()) {
             return true;
         }
@@ -151,7 +165,7 @@
         return false;
     }
 
-    enum DmlOperation {
+    public enum DmlOperation {
         DML_INSERT,
         DML_UPDATE,
         DML_UPSERT,

@@ -81,9 +81,17 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         // COD_SERVIZIO e COD_PRESTAZIONE sono obbligatori insieme
         String codiceServizio = herokuWrapper.requestMap.get('COD_SERVIZIO');
         String codicePrestazione = herokuWrapper.requestMap.get('COD_PRESTAZIONE');
-        if (codicePrestazione == null || codiceServizio == null) {
-            System.debug(LoggingLevel.DEBUG, 'codicePrestazione o codiceServizio non valorizzato');
+        // if (codicePrestazione == null || codiceServizio == null) {
+        //     System.debug(LoggingLevel.DEBUG, 'codicePrestazione o codiceServizio non valorizzato');
+        //     return anagAlignCase;
+        // }
+        if (codiceServizio == null) {
+            System.debug(LoggingLevel.DEBUG, 'codiceServizio non valorizzato');
             return anagAlignCase;
+        }
+
+        if(codiceServizio != null && codicePrestazione == null && codiceServizio == 'A02'){
+            codicePrestazione = codiceServizio;
         }
 
         System.debug(LoggingLevel.DEBUG, 'Gestione Allineamento Anagrafica da richiesta passiva Heroku');
@@ -96,14 +104,14 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         HDT_QR_AnagAlignment queryHandlerOrder = new HDT_QR_AnagAlignment();
         switch on codicePrestazione {
-            when 'A01', 'A40','A02', 'A03', 'S01', 'S02' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
+            when 'A01', 'A40', 'A03', 'S01', 'S02','A10' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
                 Order triggerOrder = null;
-                if (!String.isBlank(codicePraticaDistributore)) {
+                /*if (!String.isBlank(codicePraticaDistributore)) {
                     triggerOrder = queryHandlerOrder.findOrderByDistributorPracticeCode(codicePraticaDistributore);
-                } else {
-                    String processType = getProcessTypeFromCodPrestazione(codicePrestazione);
-                    triggerOrder = queryHandlerOrder.findOrderByTypeAndServicePointCode(processType, codicePresa);
-                }
+                } else {*/
+                    Set<String> processTypeSet = getProcessTypeFromCodPrestazione(codicePrestazione);
+                    triggerOrder = queryHandlerOrder.findOrderByTypeAndServicePointCode(processTypeSet, codicePresa);
+                //}
 
                 if (triggerOrder != null) {
                     anagAlignCase = createAnagAlignmentCase(triggerOrder);
@@ -112,7 +120,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
                     anagAlignCase.Excises__c = transcodeExcises(triggerOrder);
                     anagAlignCase.RegionalAdditional__c = queryHandlerOrder.findRegionalAdditional(triggerOrder.ExciseGAS__c, triggerOrder.SupplyPlace__c, getRegion(triggerOrder.SupplyState__c));
-                    anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+                    if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
+                        anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+                    }
 
                     System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
                     anagAlignCase.Phase__c = 'Da Inviare';
@@ -133,8 +143,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 updateAnagAlignmentCaseCustomerData(anagAlignCase);
                 anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
                 anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
-                anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
-
+                if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
+                    anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+                }
                 for (String field : dataEnrichmentFields) {
                     anagAlignCase.put(field, tempCase.get(field));
                 }
@@ -157,7 +168,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 updateAnagAlignmentCaseCustomerData(anagAlignCase);
                 anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
                 anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
-                anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+                if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
+                    anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+                }
 
                 for (String field : dataEnrichmentFields) {
                     anagAlignCase.put(field, tempCase.get(field));
@@ -173,6 +186,49 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     ricostruzioneConsumiCase.put(field, tempCase.get(field));
                 }
                 HDT_UTL_DatabaseService.updateSObject(ricostruzioneConsumiCase);
+            }
+            when 'A02'{
+                System.debug(LoggingLevel.DEBUG, 'ENTRATO IN A02');
+                Case reqCase = new Case();
+                HDT_SRV_Case caseSrv = new HDT_SRV_Case();
+                String codiceFlusso = herokuWrapper.requestMap.get('COD_FLUSSO');
+                Id sospensioneRiattivazione = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_SospensioneRiattivazione').getRecordTypeId();
+                ServicePoint__c servicePoint = [SELECT Id, Name, Account__c FROM ServicePoint__c WHERE Name =: codicePresa WITH SECURITY_ENFORCED LIMIT 1];
+                Account account = [SELECT Id, CompanyOwner__c FROM Account WHERE Id =: servicePoint.Account__c WITH SECURITY_ENFORCED LIMIT 1];
+                AccountContactRelation accContRel = [SELECT Id, AccountId, ContactId FROM AccountContactRelation WHERE AccountId =: account.Id AND Roles = 'Titolare' WITH SECURITY_ENFORCED LIMIT 1];
+                Contact contact = [SELECT Id, MobilePhone, Email FROM Contact WHERE Id =: accContRel.ContactId WITH SECURITY_ENFORCED LIMIT 1];
+                Contract contract = [SELECT Id, SAPContractCode__c FROM Contract WHERE ServicePoint__c =: servicePoint.Id AND AccountId =: accContRel.AccountId AND Status = 'Attivo' WITH SECURITY_ENFORCED LIMIT 1];
+                try{
+                    reqCase = HDT_UTL_HerokuPostSalesManager.dataEnrichment(codicePresa, contract.SAPContractCode__c, reqCase);
+                }
+                catch(Exception ex){
+                    System.debug(LoggingLevel.DEBUG, 'Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
+                }
+                reqCase.RecordTypeId = sospensioneRiattivazione;
+                reqCase.AccountId = account.Id;
+                reqCase.ServicePoint__c = servicePoint.Id;
+                reqCase.Contract__c = contract.Id;
+                reqCase.ContactId = contact.Id;
+                reqCase.PhoneNumber__c = contact.MobilePhone;
+                reqCase.Email__c = contact.Email;
+                reqCase.CompanyOwner__c = account.CompanyOwner__c;
+                reqCase.Cluster__c = 'Notifiche';
+                reqCase.Origin = 'Da PGM';
+                reqCase.Phase__c = 'Bozza';
+                if(codiceFlusso == '0150'){
+                    reqCase.Type = 'Sospensione a seguito di potenziale pericolo';
+                }
+                else if(codiceFlusso == '0151'){
+                    reqCase.Type = 'Riattivazione a seguito di cessato pericolo';
+                }
+                caseSrv.createRecord(reqCase);//Da chiedere a Francesco se va bene
+                Case caseToUpdate = new Case();
+                caseToUpdate.Id = reqCase.Id;
+                caseToUpdate.Phase__c = 'In Lavorazione SAP';
+                caseSrv.updateRecord(caseToUpdate);//Da chiedere a Francesco se va bene
+
+                anagAlignCase = caseToUpdate;
+
             }
         }
 
@@ -544,8 +600,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             anagAlignCase.VATNumber__c = caseAccount.VATNumber__c;
             anagAlignCase.FiscalCode__c = caseAccount.FiscalCode__c;
             Contact caseContact = contactsMap.get(anagAlignCase.ContactId);
-            anagAlignCase.Mobile__c = caseContact.MobilePhone != null ? caseContact.MobilePhone : caseContact.Phone;
-
+            if(caseContact!=null){
+                anagAlignCase.Mobile__c = caseContact.MobilePhone != null ? caseContact.MobilePhone : caseContact.Phone;
+            }
             anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
             anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
 
@@ -556,24 +613,31 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         return anagAlignCases;
     }
-
-    private static String getProcessTypeFromCodPrestazione(String codicePrestazione) {
-        String processType = '';
+    /**
+     * A01 --> Subentro su GdM chiuso - Prima Attivazione
+     * A02 --> Non è gestita
+     * A03 --> Prima attivazione con modifica	
+     * A40 --> Subentro su GdM chiuso - Prima Attivazione
+     * S01 --> Subentro su GdM chiuso
+     * S02 --> Subentro su GdM chiuso
+     */
+    private static Set<String> getProcessTypeFromCodPrestazione(String codicePrestazione) {
+        Set<String> processTypeString = new Set<String>();
 
         switch on codicePrestazione {
-            when 'A01' {
-                processType = 'Prima Attivazione Ele'; // TODO adeguare
+            when 'A01','A40','A10' {
+                processTypeString.add('Subentro su GdM chiuso');
+                processTypeString.add('Prima Attivazione');
             }
-            when else {
-                // TODO
-                /**@frpanico 15/10/2021
-                 * Risoluzione "Avoid empty block statements"
-                 */
-                processType = '';
+            when 'A03'{
+                processTypeString.add('Prima attivazione con modifica');
+            }
+            when 'S01','S02'{
+                processTypeString.add('Subentro su GdM chiuso');
             }
         }
 
-        return processType;
+        return processTypeString;
     }
 
     /**

@@ -52,7 +52,7 @@ public with sharing class HDT_LC_CampaignSurvey {
         } else {
             surveys = null;
         }
-        return surveys != null ? surveys[0] : null;
+        return (surveys != null && !surveys.isEmpty()) ? surveys[0] : null;
     }
 
     @AuraEnabled

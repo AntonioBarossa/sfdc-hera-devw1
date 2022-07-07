@@ -44,4 +44,59 @@ public with sharing class HDT_WRP_VoltureChangeManager {
         public String description;
         public List<HDT_WRP_Object> objects;
     }
+
+    /**@frpanico 01/02/2022
+     * Wrapper for Process Check
+     */
+    public class HDT_WRP_ProcessCheck
+    {
+        public String result;
+        public String message;
+        public SObject sobj;
+
+        public HDT_WRP_ProcessCheck(String result, String message, SObject sobj)
+        {
+            this.result = result;
+            this.message = message;
+            this.sobj = sobj;
+        }
+    }
+
+    public class HDT_WRP_BodyCall
+    {
+        public String rds;
+        public String rdo;
+        public String pod;
+        public String contratto;
+        public String prestazione;
+        public String causale;
+        public String tipologia;
+    }
+
+    public class HDT_WRP_Prestazione
+    {        
+        public String rds ='';
+        public String rdo ='';
+        public String pod ='';
+        public String contratto ='';
+        public String tipoAttivita ='';
+        public String note ='';
+    }
+
+    public class HDT_WRP_Response
+    {
+        public String status ='';
+        public String correlationId ='';
+        public String timestamp ='';
+        public HDT_WRP_Prestazione prestazione; 
+
+        public HDT_WRP_Response( Map<String, Object> mapResponseBody )
+        {
+            this.status  = (String) mapResponseBody.get('status');
+            this.correlationId = (String) mapResponseBody.get('correlationId');
+            this.timestamp = (String) mapResponseBody.get('timestamp');
+            this.prestazione = (HDT_WRP_Prestazione)JSON.deserialize(JSON.serialize((Map<String, Object>)mapResponseBody.get('prestazione')),HDT_WRP_Prestazione.class);
+        }
+    }
+
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_statuses</fullName>
+    <columns>StatusName__c</columns>
+    <columns>MasterLabel</columns>
+    <columns>DeveloperName</columns>
+    <columns>OutcomeCategory__c</columns>
+    <columns>OutcomeType__c</columns>
+    <columns>Category__c</columns>
+    <columns>Channel__c</columns>
+    <columns>Default__c</columns>
+    <columns>HasResponded__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All statuses</label>
+    <language>en_US</language>
+</ListView>

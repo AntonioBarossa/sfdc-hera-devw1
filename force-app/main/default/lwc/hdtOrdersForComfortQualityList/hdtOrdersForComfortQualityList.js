@@ -1,5 +1,6 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import isUserOwner from '@salesforce/apex/HDT_LC_OrdersForComfortQualityList.checkOwner';
 import getTableData from '@salesforce/apex/HDT_LC_OrdersForComfortQualityList.getTableData';
 import confirmContract from '@salesforce/apex/HDT_LC_OrdersForComfortQualityList.confirmContract';
 import cancelContract from '@salesforce/apex/HDT_LC_OrdersForComfortQualityList.cancelContract';
@@ -7,12 +8,14 @@ import cancelContract from '@salesforce/apex/HDT_LC_OrdersForComfortQualityList.
 export default class HdtOrdersForComfortQualityList extends LightningElement {
     
     @api activityId;
-    ordersList = [];
+    @track ordersList = [];
     activity;
     order;
     action;
-    loading = false;
+    @track loading = false;
     isDialogVisible = false;
+    isNotOwner = false;
+    @track showTable = false;
 
     get columnsTable(){
         return [
@@ -21,10 +24,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
              sortable: "false",
              label: 'Numero Ordine',
              typeAttributes: {
-                 label: {
-                     fieldName: 'OrderNumber' 
-                     // whatever field contains the actual label of the link
-                 },
+                 label: { fieldName: 'OrderNumber' }, // whatever field contains the actual label of the link
                  target: '_parent', 
                  tooltip: 'Open order page'
              }},
@@ -34,21 +34,21 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
             // {label: 'Phase', fieldName: 'Phase__c', type: 'text'},
             // {label: 'Tipologia', fieldName: 'recordtypename', type: 'text'},
             {type:  'button',typeAttributes:{
-                    iconName: {fieldName: 'confirmIcon'},
-                    label: {fieldName: 'confirmText'}, 
-                    name: 'confirmContract', 
-                    title: 'Conferma contratto',
-                    value: 'confirmContract',
-                    disabled: {fieldName :'disabledActionButton'}
+                                    iconName: {fieldName: 'confirmIcon'},
+                                    label: {fieldName: 'confirmText'}, 
+                                    name: 'confirmContract', 
+                                    title: 'Conferma contratto',
+                                    value: 'confirmContract',
+                                    disabled: {fieldName :'disabledActionButton'}
                 }
             },
             {type:  'button',typeAttributes:{
-                iconName: {fieldName: 'cancelIcon'},
-                label: {fieldName: 'cancelText'}, 
-                name: 'cancelContract', 
-                title: 'Annulla contratto',
-                value: 'cancelContract',
-                disabled: {fieldName :'disabledActionButton'}
+                                    iconName: {fieldName: 'cancelIcon'},
+                                    label: {fieldName: 'cancelText'}, 
+                                    name: 'cancelContract', 
+                                    title: 'Annulla contratto',
+                                    value: 'cancelContract',
+                                    disabled: {fieldName :'disabledActionButton'}
              }
             }
         ];
@@ -67,49 +67,55 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
         getTableData({activityId: this.activityId}).then(data =>{
 
             console.log('getTableData: ' + JSON.stringify(data));
-
+            console.log('Size Data: ' + data.length);
             this.loading = false;
-            
-            this.ordersList = data;
-
-            if (data[0].Order__c != undefined) {
-                this.ordersList.forEach(el => {
-                    el.Id = el.Order__c;
-                    el.CustomerName__c = '/lightning/r/Order/' + el.Order__c + '/view';
-                    el.Status = el.Order__r.Status;
-                    el.Phase__c = el.Order__r.Phase__c;
-                    el.recordtypename = el.Order__r.RecordType.Name;
-                    el.OrderNumber = el.Order__r.OrderNumber;
-                    el.DateComfortCall__c = el.Order__r.DateComfortCall__c;
-                    el.disabledActionButton = el.Order__r.ConfirmCustomerContract__c !== undefined || el.Order__r.CancellationReason__c !== undefined;
-                    el.confirmText = el.Order__r.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Conferma contratto';
-                    el.cancelText = el.Order__r.CancellationReason__c !== undefined ? 'Annullato' : 'Annulla contratto';
-                    el.confirmIcon = el.Order__r.ConfirmCustomerContract__c !== undefined ? '' : 'utility:edit';
-                    el.cancelIcon = el.Order__r.CancellationReason__c !== undefined ? '' : 'utility:edit';
-                    el.StatusEsito =  (el.Order__r.ConfirmCustomerContract__c !== undefined || el.Order__r.CancellationReason__c !== undefined) ? (el.Order__r.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Annullato') : 'In attesa';
-                    el.CommercialProduct__c = el.Order__r.CommercialProduct__c;
-                });
-            } else {
-                this.ordersList.forEach(el => {
-                    el.Id = el.Id;
-                    el.CustomerName__c = '/lightning/r/Order/' + el.Id + '/view';
-                    el.Status = el.Status;
-                    el.Phase__c = el.Phase__c;
-                    el.recordtypename = el.RecordType.Name;
-                    el.OrderNumber = el.OrderNumber;
-                    el.DateComfortCall__c = el.DateComfortCall__c;
-                    el.disabledActionButton = el.ConfirmCustomerContract__c !== undefined || el.CancellationReason__c !== undefined;
-                    el.confirmText = el.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Conferma contratto';
-                    el.cancelText = el.CancellationReason__c !== undefined ? 'Annullato' : 'Annulla contratto';
-                    el.confirmIcon = el.ConfirmCustomerContract__c !== undefined ? '' : 'utility:edit';
-                    el.cancelIcon = el.CancellationReason__c !== undefined ? '' : 'utility:edit';
-                    el.StatusEsito =  (el.ConfirmCustomerContract__c !== undefined || el.CancellationReason__c !== undefined) ? (el.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Annullato') : 'In attesa';
-                    el.CommercialProduct__c = el.CommercialProduct__c;
-                });
+            if(data.length > 0){
+                this.ordersList = data;
+                this.showTable = true;
+                if (data[0].Order__c != undefined) {
+                    this.ordersList.forEach(el => {
+                        el.Id = el.Order__c;
+                        el.CustomerName__c = '/lightning/r/Order/' + el.Order__c + '/view';
+                        el.Status = el.Order__r.Status;
+                        el.Phase__c = el.Order__r.Phase__c;
+                        el.recordtypename = el.Order__r.RecordType.Name;
+                        el.OrderNumber = el.Order__r.OrderNumber;
+                        el.DateComfortCall__c = el.Order__r.DateComfortCall__c;
+                        el.disabledActionButton = el.Order__r.ConfirmCustomerContract__c !== undefined || el.Order__r.CancellationReason__c !== undefined;
+                        el.confirmText = el.Order__r.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Conferma contratto';
+                        el.cancelText = el.Order__r.CancellationReason__c !== undefined ? 'Annullato' : 'Annulla contratto';
+                        el.confirmIcon = el.Order__r.ConfirmCustomerContract__c !== undefined ? 'utility:edit' : 'utility:edit';
+                        el.cancelIcon = el.Order__r.CancellationReason__c !== undefined ? 'utility:edit' : 'utility:edit';
+                        el.StatusEsito =  (el.Order__r.ConfirmCustomerContract__c !== undefined || el.Order__r.CancellationReason__c !== undefined) ? (el.Order__r.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Annullato') : 'In attesa';
+                        el.CommercialProduct__c = (el.Order__r.VasSubtype__c !== undefined && el.Order__r.VasSubtype__c === 'Analisi Consumi')  ?  el.Order__r.VasSubtype__c : el.CommercialProduct__c;
+                    });
+                } else {
+                    this.ordersList.forEach(el => {
+                        el.Id = el.Id;
+                        el.CustomerName__c = '/lightning/r/Order/' + el.Id + '/view';
+                        el.Status = el.Status;
+                        el.Phase__c = el.Phase__c;
+                        el.recordtypename = el.RecordType.Name;
+                        el.OrderNumber = el.OrderNumber;
+                        el.DateComfortCall__c = el.DateComfortCall__c;
+                        el.disabledActionButton = el.ConfirmCustomerContract__c !== undefined || el.CancellationReason__c !== undefined;
+                        el.confirmText = el.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Conferma contratto';
+                        el.cancelText = el.CancellationReason__c !== undefined ? 'Annullato' : 'Annulla contratto';
+                        el.confirmIcon = el.ConfirmCustomerContract__c !== undefined ? 'utility:edit' : 'utility:edit';
+                        el.cancelIcon = el.CancellationReason__c !== undefined ? 'utility:edit' : 'utility:edit';
+                        el.StatusEsito =  (el.ConfirmCustomerContract__c !== undefined || el.CancellationReason__c !== undefined) ? (el.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Annullato') : 'In attesa';
+                        el.CommercialProduct__c = (el.VasSubtype__c !== undefined && el.VasSubtype__c === 'Analisi Consumi')  ?  el.VasSubtype__c : el.CommercialProduct__c;
+                    });
+                }
             }
-
-            
-
+            else {
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Nessun Ordine da Esitare',
+                    message: 'Non sono presenti Ordini da Esitare.',
+                    variant: 'warning'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            }
         }).catch(error => {
             this.loaded = true;
             const toastErrorMessage = new ShowToastEvent({
@@ -136,7 +142,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
     confirmContractAction(type){
         this.loading = true;
         confirmContract({ordId: this.orderId, activityId: this.activityId, type: type}).then(data =>{
-
+            
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
                 message: 'Contratto confermato con successo',
@@ -176,7 +182,6 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
         this.loading = true;
         cancelContract({ordId: this.orderId, activityId: this.activityId, causal: cancellationReason}).then(data =>{
             this.loading = false;
-
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
                 message: 'Contratto annullato con successo',
@@ -219,6 +224,15 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
 
         let type = row.DateComfortCall__c !== undefined ? 'Comfort' : 'Quality';
 
+        //disable button
+        /* let tmp = [...this.ordersList];
+        tmp.forEach(ord =>{
+            if( ord.Id === row.Id ){
+                ord.disabledActionButton = false;
+            }
+        });
+        this.ordersList = [...tmp]; */
+
         console.log('call type: ' + type);
         console.log('comfort/quality action: ' + this.action);
 
@@ -232,14 +246,13 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
                 this.cancelContractAction('Annullato per no conferma cliente');
             }
         }
-
+        this.showTable=false;
+        this.setTableData();
     }
 
     handleDialogResponse(event){
         if(event.detail.status == true){
-
             this.cancelContractAction(event.detail.choice);
-
         } else {
             this.isDialogVisible = false;
         }
@@ -247,6 +260,15 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
 
     connectedCallback(){
         console.log('acticityId: ' + this.activityId);
-        this.setTableData();
+        this.loading = true;
+        isUserOwner({activityId: this.activityId}).then(data =>{
+            console.log('@@@@Data ' + JSON.stringify(data));
+            if (data === 'OK'){
+                this.setTableData();
+            }else if (data === 'KO'){
+                this.loading = false;
+                this.isNotOwner = true;
+            }
+        });
     }
 }

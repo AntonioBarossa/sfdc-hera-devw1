@@ -53,7 +53,7 @@
         <name>activityTabContent</name>
         <type>Facet</type>
     </flexiPageRegions>
-    <flexiPageRegions>
+    <!--<flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentName>forceChatter:recordFeedContainer</componentName>
@@ -62,7 +62,7 @@
         <mode>Replace</mode>
         <name>feedTabContent</name>
         <type>Facet</type>
-    </flexiPageRegions>
+    </flexiPageRegions>-->
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>

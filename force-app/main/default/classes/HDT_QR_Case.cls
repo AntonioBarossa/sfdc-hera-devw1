@@ -40,7 +40,10 @@ public inherited sharing class HDT_QR_Case {
             PODPDRFormula__c,
             Phase__c,
             Type,
+            Distributor__r.Name,
+            Commodity__c,
             SalesCompanyCode__c,
+            CausalCode__c,
             RecordType.DeveloperName
             FROM Case
             where Id = :Id
@@ -132,11 +135,19 @@ public inherited sharing class HDT_QR_Case {
     /*****Sviluppo per Campagne */
 
     public List<Case> getRecordCreatedYesterdayDifferentBy(String cluster){
-        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c != : cluster AND createddate = Yesterday WITH SECURITY_ENFORCED];
+        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,MacroTopic__c,SalesCompany__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c != : cluster AND createddate = Yesterday WITH SECURITY_ENFORCED];
+    }
+
+    public List<Case> getRecordCreatedInRequestedDateDifferentBy(String cluster, Datetime startDt, Datetime endDt){
+        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,MacroTopic__c,SalesCompany__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c != : cluster AND CreatedDate >=:startDt and CreatedDate <: endDt WITH SECURITY_ENFORCED];
     }
 
     public List<Case> getRecordCreatedLastWeekEqualsBy(String cluster){
-        return [Select Case.MotivatedResponseSendMode__c,Case.ParentId,Case.CorrectionRight__c,ServicePoint__r.SupplyCity__c,Case.ServicePoint__c,Case.IndemnityConfirmed__c,Case.CustomerRequestNumberDay__c,Case.Subprocess__c,Case.IsReiteration__c,Case.Status,Account.CustomerCode__c,Case.SupplyType__c,Case.ClosedDate,Case.CustomerRequestDate__c,Case.CompanyOwner__c,id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c = : cluster AND CreatedDate = LAST_N_DAYS:7 WITH SECURITY_ENFORCED]; // aggiunti campi alla query
+        return [Select Case.MotivatedResponseSendMode__c, Case.ParentId,Case.CorrectionRight__c,ServicePoint__r.SupplyCity__c,Case.ServicePoint__c,Case.IndemnityConfirmed__c,Case.CustomerRequestNumberDay__c,Case.Subprocess__c,Case.IsReiteration__c,Case.Status,Account.CustomerCode__c,Case.SupplyType__c,Case.ClosedDate,Case.CustomerRequestDate__c,Case.CompanyOwner__c,id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c, SupplyCityCode__c, ServicePoint__r.SupplyProvince__c from Case where cluster__c = : cluster AND CreatedDate = LAST_N_DAYS:7 WITH SECURITY_ENFORCED]; // aggiunti campi alla query
+    }
+
+    public List<Case> getRecordCreatedInRequestedDate(String cluster, Datetime startDt, Datetime endDt){
+        return [Select Case.MotivatedResponseSendMode__c, Case.ParentId,Case.CorrectionRight__c,ServicePoint__r.SupplyCity__c,Case.ServicePoint__c,Case.IndemnityConfirmed__c,Case.CustomerRequestNumberDay__c,Case.Subprocess__c,Case.IsReiteration__c,Case.Status,Account.CustomerCode__c,Case.SupplyType__c,Case.ClosedDate,Case.CustomerRequestDate__c,Case.CompanyOwner__c,id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c, SupplyCityCode__c, ServicePoint__r.SupplyProvince__c from Case where cluster__c = : cluster AND CreatedDate >=: startDt AND CreatedDate <:endDt WITH SECURITY_ENFORCED];
     }
 
     public List<Case> getCaseModificaContratti(String podPdr){
@@ -172,7 +183,8 @@ public inherited sharing class HDT_QR_Case {
             wrts_prcgvr__Status__c,
             wrts_prcgvr__ActivityTemplate__r.Name
             FROM wrts_prcgvr__Activity__c
-            WHERE (wrts_prcgvr__Status__c != 'Chiusa' OR wrts_prcgvr__Status__c != 'Annullata')
+            WHERE (wrts_prcgvr__Status__c != 'Chiusa' AND wrts_prcgvr__Status__c != 'Annullata')
+            AND wrts_prcgvr__IsClosed__c = false
             AND Case__c IN :caseIds
             WITH SECURITY_ENFORCED
             ];

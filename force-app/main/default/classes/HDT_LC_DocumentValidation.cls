@@ -17,7 +17,7 @@ public inherited sharing class HDT_LC_DocumentValidation {
     @AuraEnabled
     public static Boolean isValidPhase(String recordId){
         Order ord = orderQr.getRecordById(recordId);
-        return ('Da Inviare'.equalsIgnoreCase(ord.phase__c) || 'In Attesa Validazione'.equalsIgnoreCase(ord.phase__c) || 'Documentazione da validare'.equalsIgnoreCase(ord.Phase__c));
+        return ('Credit Check KO'.equalsIgnoreCase(ord.phase__c) || /*'Attesa Credit Check'.equalsIgnoreCase(ord.phase__c) ||*/'Da Inviare'.equalsIgnoreCase(ord.phase__c) || 'In Attesa Validazione'.equalsIgnoreCase(ord.phase__c) || 'Documentazione da validare'.equalsIgnoreCase(ord.Phase__c));
     }
     
     /**
@@ -26,10 +26,15 @@ public inherited sharing class HDT_LC_DocumentValidation {
     */
     @AuraEnabled
     public static void saveValidation(Order ord){
-        System.debug('**************:'+ord);
         // quelli mostrati ( non null) tutti validati -----> phase --->  Documentazione Validata
    		Boolean check = false;
-        if( /*Aggiunta carta identita*/ord.CIAccoutn__c != null || ord.QuickQuote__c != null || ord.ChamberCommerceRegistration__c != null || ord.Instance326__c != null || ord.DocumentLow80__c != null || ord.AutorizationVolturaThirdTrader__c != null)
+        if( /*Aggiunta carta identita*/ord.CIAccoutn__c != null 
+            || ord.QuickQuote__c != null 
+            || ord.ChamberCommerceRegistration__c != null 
+            || ord.Instance326__c != null 
+            || ord.DocumentLow80__c != null 
+            || ord.AutorizationVolturaThirdTrader__c != null
+            || ord.CILegalRepresentative__c != null)
         {
            	check = true;
             //Per voltura
@@ -55,22 +60,16 @@ public inherited sharing class HDT_LC_DocumentValidation {
             if(ord.DocumentPackage__c != null && !'Validato'.EqualsIgnoreCase(ord.DocumentPackage__c)){
                 check = false;
             }
+            if(ord.CILegalRepresentative__c != null && !'Validato'.equalsIgnoreCase(ord.CILegalRepresentative__c))
+            {
+                check = false;
+            }
             
         }
         if(check){
 
             Order orderRetrive = orderQr.getRecordById(ord.Id);
-            if('Documentazione Gestita'.EqualsIgnoreCase(orderRetrive.ParentOrder__r.Phase__c)){
-                if(orderRetrive.RecordType.DeveloperName == 'HDT_RT_Voltura'){
-                    ord.Phase__c = 'Documentazione Validata';
-                } else {
-                //    if(){
-                 //       ord.Phase__c = 'Comunicazione verso Heroku';
-                 //   }else{
-                        ord.Phase__c = 'Documentazione Validata';
-                 //   }
-                }
-            } else {
+            if (!'Credit Check KO'.equalsIgnoreCase(orderRetrive.Phase__c) /*&& !'Attesa Credit Check'.equalsIgnoreCase(orderRetrieve.Phase__c)*/){
                 ord.Phase__c = 'Documentazione Validata';
             }
 
@@ -79,7 +78,6 @@ public inherited sharing class HDT_LC_DocumentValidation {
             }
 
         }
-        System.debug('************:'+ord);
         orderSrv.updateRecord(ord);
         //update ord;
         //return true;

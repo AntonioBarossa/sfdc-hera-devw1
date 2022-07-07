@@ -34,6 +34,11 @@
                 <default>false</default>
                 <label>In continuità_si_addebito</label>
             </value>
+            <value>
+                <fullName>In continuità_no_addebito</fullName>
+                <default>false</default>
+                <label>In continuità_no_addebito</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

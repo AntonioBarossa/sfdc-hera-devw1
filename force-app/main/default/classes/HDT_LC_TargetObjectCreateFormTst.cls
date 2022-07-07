@@ -27,11 +27,18 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
             HDT_UTL_DataFactoryTst.createWebServiceConfiguration('TransitorioWinback', 'end', 'method', 'testUser');
             HDT_UTL_DataFactoryTst.createWebServiceCredential('testUser', '12345', 'usernameTest');
 
+            City__c city = new City__c();
+            city.Name = 'CHIETI';
+            city.Province__c = 'CH';
+            insert city;
+
             List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'Reseller', 'GENESI-Altro', 'Reseller - Gruppo');
             
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
             spList[0].Name = 'servicepointTest';
             spList[0].SwitchInWinback__c = false;
+            spList[0].SupplyCity__c = city.Name;
+            spList[0].CommoditySector__c = 'Gas';
             insert spList;
 
             List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, true, acc[0].Id, 'Bozza');
@@ -110,12 +117,16 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
 
             Sale__c sale = [SELECT Id FROM Sale__c WHERE Status__c = 'Bozza'];
 
+            City__c city = [SELECT Name, Province__c FROM City__c WITH SECURITY_ENFORCED LIMIT 1];
+
             ServicePoint__c testSp = new ServicePoint__c(
                 Name='ServicePointName',
 			    ServicePointCode__c='KING',
-                MeterStatus__c = 'Bozza'
+                MeterStatus__c = 'Bozza',
+                SupplyCity__c = city.Name,
+                CommoditySector__c = 'Gas'
             );
- 
+
             String serializedServicePoint = JSON.serialize(testSp, true);
 
             ServicePoint__c targetTest = HDT_LC_TargetObjectCreateForm.createServicePoinString(serializedServicePoint, sale);
@@ -160,6 +171,7 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
 
         System.runAs(u){
 
+            City__c city = [SELECT Name, Province__c FROM City__c WITH SECURITY_ENFORCED LIMIT 1];
             //Second Test passing sap as false
             ServicePoint__c testSpoint = new ServicePoint__c(
                 Name='ServicePointName',
@@ -170,7 +182,7 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
                 PowerRequested__c = 5.0,
                 PowerContractual__c = 5.0,
                 RecordTypeId = constants.SERVICEPOINT_RECORDTYPEID_PELETRICCO,
-                SupplyCity__c = 'Palermo',
+                SupplyCity__c = city.Name,
                 MarketOrigin__c = 'Libero'
             );
             insert testSpoint;
@@ -208,11 +220,11 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
 
         System.runAs(u){
 
-            DistributorPointCode__c dpc = [SELECT Id, PointCode__c, Commodity__c FROM DistributorPointCode__c WHERE Commodity__c = 'Gold'];
+            DistributorPointCode__c dpc = [SELECT Id, PointCode__c, Commodity__c, City__c FROM DistributorPointCode__c WHERE Commodity__c = 'Gold'];
 
             Test.startTest();
 
-            List<DistributorPointCode__c> targetTest = HDT_LC_TargetObjectCreateForm.getDistributorPointCode(dpc.PointCode__c, dpc.Commodity__c);
+            List<DistributorPointCode__c> targetTest = HDT_LC_TargetObjectCreateForm.getDistributorPointCode(dpc.PointCode__c, dpc.Commodity__c, dpc.City__c, 'Si');
 
             System.assertEquals(dpc.PointCode__c, targetTest[0].PointCode__c, 'ServicePoint matches');
             System.assertNotEquals(null, targetTest[0].PointCode__c, 'ServicePoint does not match');
@@ -228,6 +240,8 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
 
         System.runAs(u){
 
+            City__c city = [SELECT Name, Province__c FROM City__c WITH SECURITY_ENFORCED LIMIT 1];
+
             ServicePoint__c testSpoint = new ServicePoint__c(
                 Name='ServicePointName',
 			    ServicePointCode__c='NOVE',
@@ -237,7 +251,7 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
                 PowerRequested__c = 5.0,
                 PowerContractual__c = 5.0,
                 RecordTypeId = constants.SERVICEPOINT_RECORDTYPEID_PELETRICCO,
-                SupplyCity__c = 'Palermo',
+                SupplyCity__c = city.Name,
                 MarketOrigin__c = 'Libero'
             );
 
@@ -265,7 +279,7 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
         
             ServicePoint__c sp = [SELECT Id, ServicePointCode__c,  MeterStatus__c, CommoditySector__c,
                                     PlugPresence__c, PowerRequested__c, PowerContractual__c, RecordTypeId,
-                                    SupplyCity__c, MarketOrigin__c, ImplantType__c, SupplyType__c
+                                    SupplyCity__c, MarketOrigin__c, ImplantType__c, SupplyType__c, isReseller__c
                                   FROM ServicePoint__c
                                   WHERE Name = 'servicepointTest'];
 

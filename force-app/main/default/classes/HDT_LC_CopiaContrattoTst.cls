@@ -22,7 +22,8 @@ public with sharing class HDT_LC_CopiaContrattoTst{
 			String orderId = constants.ORDER_RECORDTYPEID_DEFAULT;
 			HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione', 'Bozza', caseId, 'HDT_RT_Morosita');
 			HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'In Lavorazione', caseId, 'HDT_RT_Morosita');
-			HDT_UTL_DataFactoryTst.newPhaseTransition('n Lavorazione', 'Bozza', orderId, 'HDT_RT_Default');
+			HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione', 'Bozza', orderId, 'HDT_RT_Default');
+			HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita','Bozza',constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
 
 			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 			List<Individual> individuals=HDT_UTL_DataFactoryTst.createIndividual(1, true);
@@ -35,7 +36,7 @@ public with sharing class HDT_LC_CopiaContrattoTst{
 			List<ServicePoint__c> servPoints=HDT_UTL_DataFactoryTst.createServicePoint(1, true);
 			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].Id, 'Attiva');
 			List<Contract> contracts=HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].Id);
-			List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, accounts[0].Id, 'Bozza');
+			List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(2, true, accounts[0].Id, 'Bozza');
 			HDT_UTL_DataFactoryTst.createChildOrder(1, true, accounts[0].Id, sales, orders[0].Id, contacts[0].Id);
 			List<Case> cases=HDT_UTL_DataFactoryTst.createCase(1, false, accounts[0].Id, contacts[0].Id, servPoints[0].Id, contracts[0].Id, orders[0].Id);
 			cases[0].Channel__c='testChannel';
@@ -72,12 +73,16 @@ public with sharing class HDT_LC_CopiaContrattoTst{
 			                        WHERE Name='test account0'
 			                        LIMIT 1];
 
-			List<Order> tOrder=[SELECT Id, Name
+			List<Order> tOrder=[SELECT Id, Name, AccountId
 			                        FROM Order
-			                        WHERE Name='testOrderName0'
-			                        LIMIT 1];
-
+			                        WHERE AccountId != null
+			                        ];
+					
 			tOrder[0].Status = 'In Lavorazione';
+			tOrder[1].Status = 'In Lavorazione';
+			tOrder[1].recordTypeId = constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+			tOrder[1].Phase__c = 'Documentazione Gestita';
+			tOrder[1].Channel__c = 'Sportello';
 			update tOrder;
 			List<Order> getAccOrder=HDT_LC_CopiaContratto.getAccountOrder(tAccount[0].Id, 'Copia contratto firmato');
 			HDT_LC_CopiaContratto.getAccountOrder(tAccount[0].Id, 'Copia contratto non firmato');

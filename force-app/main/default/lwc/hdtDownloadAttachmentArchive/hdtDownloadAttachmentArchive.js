@@ -1,11 +1,12 @@
 import { track, LightningElement, api, wire } from 'lwc';
 import getUrlNameDocumentLink from '@salesforce/apex/HDT_LC_DownloadAttachmentArchive.getUrlNameDocumentLink';
 import getExtensionFile from '@salesforce/apex/HDT_LC_DownloadAttachmentArchive.getExtensionFile';
+import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';  //Modifica>>> marco.arci@webresults.it 22/09/21
-export default class Fdt_Alessio_test extends LightningElement {
+export default class Fdt_Alessio_test extends NavigationMixin(LightningElement) {
     @track searchKey= '';
     @track fileName= '';
-    @track base_url = 'https://archiviazione.azurewebsites.net/sbldownload/';
+    @track base_url = '';
     @track extension = false;       //Modifica 12/10/21 marco.arci@webresults.it true= cliccabile, false= non cliccabile
     
     @api recordId;
@@ -15,16 +16,32 @@ export default class Fdt_Alessio_test extends LightningElement {
         getUrlNameDocumentLink({rId:this.recordId})
         .then(r=>{
             console.log('-----log_first then', r);
-            this.searchKey = r.NOME_FILE_DOWNLOAD__c;
-            this.fileName= r.FILE_NAME__c +'.'+ r.FILE_EXT__c;
-            let url = this.base_url + this.searchKey;
-            console.log(url);
+            console.log('-----fileExist? ', r.fileExist);
+            if('true' == r.fileExist){
+                this.base_url = r.endpoint + '/sbldownload/';
+                this.searchKey = r.NOME_FILE_DOWNLOAD__c;
+                this.fileName= r.FILE_NAME__c +'.'+ r.FILE_EXT__c;
+                let url = this.base_url+this.searchKey;
+                //let url = r.endpoint+'/sbldownload/'+this.searchKey;
+                console.log(url);
+
+                this[NavigationMixin.Navigate]({
+                    "type": "standard__webPage",
+                    "attributes": {
+                        "url": url
+                    }
+                });
+            } else {
+                this.showToast('Attenzione!', 'Allegato NON presente', null, 'warning','dismissable');
+            }
             let data = { method: 'GET',
-                            Accept:'*/*',
+                             Accept:'*/*',
                             cache: 'no-cache',
                             mode:'cors'
                         }
+                    
             //START Modifica>>> marco.arci@webresults.it 10/11/21
+            /*
             fetch(url,data)
                 .then(response => {
                     console.log(response.status);
@@ -89,6 +106,7 @@ export default class Fdt_Alessio_test extends LightningElement {
                     console.error(error);
                     this.showToast('Attenzione!', 'Allegato NON presente', null, 'warning','dismissable');
                 })
+                */
                 //END Modifica>>> marco.arci@webresults.it 10/11/21
         })
     }

@@ -3,12 +3,12 @@
     <actionCalls>
         <name>Close_Discard_Activity</name>
         <label>Chiudi Activity Scarto</label>
-        <locationX>1700</locationX>
+        <locationX>1788</locationX>
         <locationY>3062</locationY>
         <actionName>HDT_LC_EditScartiComplessi</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Update_Status_0_0_0_0</targetReference>
+            <targetReference>Init_Case_Per_Risottomissione</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -41,7 +41,7 @@
     <actionCalls>
         <name>Submit_Request_0</name>
         <label>Submit Request</label>
-        <locationX>1678</locationX>
+        <locationX>1766</locationX>
         <locationY>2150</locationY>
         <actionName>HDT_SRV_BpCaVariationFacade</actionName>
         <actionType>apex</actionType>
@@ -61,7 +61,7 @@
     <assignments>
         <name>Assegna_Dati_Recapito</name>
         <label>Assegna Dati Recapito</label>
-        <locationX>795</locationX>
+        <locationX>861</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>ModInvioBollValue</assignToReference>
@@ -105,7 +105,7 @@
     <assignments>
         <name>Assegna_Dati_Recapito_0</name>
         <label>Assegna Dati Recapito</label>
-        <locationX>1059</locationX>
+        <locationX>1125</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>ModInvioBollValue</assignToReference>
@@ -149,7 +149,7 @@
     <assignments>
         <name>Assegna_Dati_Recapito_0_0</name>
         <label>Assegna Dati Recapito</label>
-        <locationX>1323</locationX>
+        <locationX>1389</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>ModInvioBollValue</assignToReference>
@@ -193,7 +193,7 @@
     <assignments>
         <name>Assegna_Dati_Recapito_0_0_0</name>
         <label>Assegna Dati Recapito</label>
-        <locationX>1851</locationX>
+        <locationX>1917</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>ModInvioBollValue</assignToReference>
@@ -244,7 +244,7 @@
     <assignments>
         <name>Assegna_Dati_Recapito_0_0_0_0</name>
         <label>Assegna Dati Recapito</label>
-        <locationX>1587</locationX>
+        <locationX>1653</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>ModInvioBollValue</assignToReference>
@@ -327,7 +327,7 @@
     <assignments>
         <name>Assegna_Output_0</name>
         <label>Assegna Output</label>
-        <locationX>1832</locationX>
+        <locationX>1920</locationX>
         <locationY>1910</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
@@ -366,7 +366,7 @@
     <assignments>
         <name>Assegna_Phase_KO_SAP_0</name>
         <label>Assegna Phase KO SAP</label>
-        <locationX>1546</locationX>
+        <locationX>1634</locationX>
         <locationY>2390</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
@@ -389,7 +389,7 @@
     <assignments>
         <name>Assegna_Process_Type</name>
         <label>Assegna Process Type</label>
-        <locationX>795</locationX>
+        <locationX>861</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -405,7 +405,7 @@
     <assignments>
         <name>Assegna_Process_Type_0</name>
         <label>Assegna Process Type</label>
-        <locationX>1059</locationX>
+        <locationX>1125</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -421,7 +421,7 @@
     <assignments>
         <name>Assegna_Process_Type_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>1851</locationX>
+        <locationX>1917</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -444,7 +444,7 @@
     <assignments>
         <name>Assegna_Process_Type_0_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>1323</locationX>
+        <locationX>1389</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -460,7 +460,7 @@
     <assignments>
         <name>Assegna_Process_Type_0_0_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>1587</locationX>
+        <locationX>1653</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -515,6 +515,13 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.NotPerformedBefore__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato_0.NotPerformedBefore__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Status_0_0</targetReference>
         </connector>
@@ -522,7 +529,7 @@
     <assignments>
         <name>AssegnazioniDaServicePoint</name>
         <label>Assegnazioni da ServicePoint</label>
-        <locationX>1323</locationX>
+        <locationX>1389</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.SupplyType__c</assignToReference>
@@ -547,6 +554,29 @@
         </assignmentItems>
         <connector>
             <targetReference>AggiornaCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Init_Case_Per_Risottomissione</name>
+        <label>Init Case Per Risottomissione</label>
+        <locationX>1788</locationX>
+        <locationY>3182</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.HerokuPracticeCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.DistributorPracticeCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Status_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -586,7 +616,7 @@
     <assignments>
         <name>sendMA3</name>
         <label>sendMA3</label>
-        <locationX>1191</locationX>
+        <locationX>1257</locationX>
         <locationY>1454</locationY>
         <assignmentItems>
             <assignToReference>sendMA3Flag</assignToReference>
@@ -602,7 +632,7 @@
     <decisions>
         <name>Check_Rilavorazione_Scarto</name>
         <label>Rilavorazione Scarto?</label>
-        <locationX>1832</locationX>
+        <locationX>1920</locationX>
         <locationY>2942</locationY>
         <defaultConnector>
             <targetReference>Update_Status_0_0_0_0</targetReference>
@@ -631,7 +661,7 @@
         <locationX>644</locationX>
         <locationY>3638</locationY>
         <defaultConnector>
-            <targetReference>AssegnaValori_0</targetReference>
+            <targetReference>Get_Case_Aggiornato_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>NO</defaultConnectorLabel>
         <rules>
@@ -703,7 +733,7 @@
     <decisions>
         <name>Esito_Callout_0</name>
         <label>Esito Callout</label>
-        <locationX>1678</locationX>
+        <locationX>1766</locationX>
         <locationY>2270</locationY>
         <defaultConnector>
             <targetReference>Check_Rilavorazione_Scarto</targetReference>
@@ -744,6 +774,13 @@
                     <dateValue>4000-12-31</dateValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Chiusura Contatore</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_FT_0</targetReference>
             </connector>
@@ -753,7 +790,7 @@
     <decisions>
         <name>Il_Case_in_Bozza_0</name>
         <label>Il Case è in Bozza?</label>
-        <locationX>1323</locationX>
+        <locationX>1389</locationX>
         <locationY>1670</locationY>
         <defaultConnector>
             <targetReference>Case_Layout_0</targetReference>
@@ -803,7 +840,7 @@
     <decisions>
         <name>inviaMA3_0</name>
         <label>inviaMA3?</label>
-        <locationX>1832</locationX>
+        <locationX>1920</locationX>
         <locationY>2030</locationY>
         <defaultConnector>
             <targetReference>Check_Rilavorazione_Scarto</targetReference>
@@ -828,7 +865,7 @@
     <decisions>
         <name>Modifica_Dati_di_recapito</name>
         <label>Modifica Dati di recapito?</label>
-        <locationX>1323</locationX>
+        <locationX>1389</locationX>
         <locationY>1334</locationY>
         <defaultConnector>
             <targetReference>Il_Case_in_Bozza_0</targetReference>
@@ -895,7 +932,7 @@
     <decisions>
         <name>Quale_Processo</name>
         <label>Quale Processo?</label>
-        <locationX>1323</locationX>
+        <locationX>1389</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Assegna_Process_Type_0_0</targetReference>
@@ -972,7 +1009,7 @@
     <decisions>
         <name>Salva_In_Bozza_o_Conferma</name>
         <label>Salva In Bozza o Conferma</label>
-        <locationX>814</locationX>
+        <locationX>858</locationX>
         <locationY>1910</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -1179,9 +1216,30 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Case_Aggiornato_0</name>
+        <label>Get_Case_Aggiornato</label>
+        <locationX>842</locationX>
+        <locationY>3758</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssegnaValori_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>1323</locationX>
+        <locationX>1389</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1202,7 +1260,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <recordLookups>
         <name>GetRecordTypeVotiveModena</name>
         <label>GetRecordTypeVotiveModena</label>
-        <locationX>1851</locationX>
+        <locationX>1917</locationX>
         <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1230,7 +1288,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <recordUpdates>
         <name>Aggiorna_Cluster_per_Votive</name>
         <label>Aggiorna Cluster per Votive</label>
-        <locationX>1851</locationX>
+        <locationX>1917</locationX>
         <locationY>1118</locationY>
         <connector>
             <targetReference>Modifica_Dati_di_recapito</targetReference>
@@ -1240,7 +1298,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>Aggiorna Case</label>
-        <locationX>1323</locationX>
+        <locationX>1389</locationX>
         <locationY>398</locationY>
         <connector>
             <targetReference>Quale_Processo</targetReference>
@@ -1260,8 +1318,8 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <recordUpdates>
         <name>Update_Status_0_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
-        <locationX>1832</locationX>
-        <locationY>3278</locationY>
+        <locationX>1920</locationX>
+        <locationY>3398</locationY>
         <connector>
             <targetReference>Loading_Spinner_screen_0</targetReference>
         </connector>
@@ -1277,14 +1335,14 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <recordUpdates>
         <name>Update_Status_0_0_0_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
-        <locationX>1546</locationX>
+        <locationX>1634</locationX>
         <locationY>2510</locationY>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
     <screens>
         <name>Case_Layout</name>
         <label>Case Layout</label>
-        <locationX>814</locationX>
+        <locationX>858</locationX>
         <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1395,7 +1453,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <screens>
         <name>Case_Layout_0</name>
         <label>Case Layout</label>
-        <locationX>1832</locationX>
+        <locationX>1920</locationX>
         <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1488,7 +1546,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <screens>
         <name>Case_Layout_0_0</name>
         <label>Case Layout</label>
-        <locationX>795</locationX>
+        <locationX>861</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1533,7 +1591,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <screens>
         <name>Case_Layout_0_0_0</name>
         <label>Case Layout</label>
-        <locationX>1059</locationX>
+        <locationX>1125</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1578,7 +1636,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <screens>
         <name>Case_Layout_0_0_0_0</name>
         <label>Case Layout</label>
-        <locationX>1323</locationX>
+        <locationX>1389</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1623,7 +1681,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <screens>
         <name>Case_Layout_0_0_0_0_0</name>
         <label>Case Layout</label>
-        <locationX>1851</locationX>
+        <locationX>1917</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1668,7 +1726,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <screens>
         <name>Case_Layout_0_0_0_0_0_0</name>
         <label>Case Layout</label>
-        <locationX>1587</locationX>
+        <locationX>1653</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1744,8 +1802,8 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <screens>
         <name>Loading_Spinner_screen_0</name>
         <label>Loading Spinner screen</label>
-        <locationX>1832</locationX>
-        <locationY>3398</locationY>
+        <locationX>1920</locationX>
+        <locationY>3518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1773,7 +1831,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1197</locationX>
+        <locationX>1263</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
@@ -1783,7 +1841,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <subflows>
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
-        <locationX>1018</locationX>
+        <locationX>1106</locationX>
         <locationY>2030</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>

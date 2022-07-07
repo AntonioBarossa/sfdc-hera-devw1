@@ -160,51 +160,90 @@ public with sharing class HDT_UTL_Sales {
      */
     public static Boolean isTransitionVas(String city, Sale__c sale)
     {
-        Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
-        List<City__c> listCity = HDT_QR_City.getRecordByComune(city);
-        if(listCity != null && !listCity.isEmpty() && listCity[0].Province__c != null)
-        {
-            String province = listCity[0].Province__c;
-            if(((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' 
-            || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) 
-            ||(!stabbedData.contains(province)))){
-                Sale__c s = new Sale__c(Id=sale.Id);
-                s.isTransition__c=true;
-                saleSrv.updateRecord(s);
-                return true;
-            }else{
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
-    }
+        //Nuova Versione - HRADTR_GV 01/04/2022
 
-    public static Boolean isTransition(ServicePoint__c sp, Sale__c sale){
-        List<ServicePoint__c> reseller = [SELECT isReseller__c, SupplyProvince__c FROM ServicePoint__c WHERE Id=:sp.Id WITH SECURITY_ENFORCED ];
-        Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
-        if(reseller[0].isReseller__c || ((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(reseller[0].SupplyProvince__c)))){
+        HDT_UTL_CalculateTransition calcTransition = new HDT_UTL_CalculateTransition(city, sale);
+        Boolean result = calcTransition.calculateTransition();
+        if(result){
             Sale__c s = new Sale__c(Id=sale.Id);
             s.isTransition__c=true;
             saleSrv.updateRecord(s);
-            return true;
-        }else{
-            return false;
         }
+
+        return result;
+
+        //Vecchia Versione
+        // Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+        // List<City__c> listCity = HDT_QR_City.getRecordByComune(city);
+        // if(listCity != null && !listCity.isEmpty() && listCity[0].Province__c != null)
+        // {
+        //     String province = listCity[0].Province__c;
+        //     if(((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' 
+        //     || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) 
+        //     ||(!stabbedData.contains(province)))){
+        //         Sale__c s = new Sale__c(Id=sale.Id);
+        //         s.isTransition__c=true;
+        //         saleSrv.updateRecord(s);
+        //         return true;
+        //     }else{
+        //         return false;
+        //     }
+        // }
+        // else
+        // {
+        //     return false;
+        // }
+    }
+
+    public static Boolean isTransition(ServicePoint__c sp, Sale__c sale){
+        
+        // Nuova Versione - HRADTR_GV 01/04/2022
+
+         HDT_UTL_CalculateTransition calcTransition = new HDT_UTL_CalculateTransition(sp, sale);
+         Boolean result = calcTransition.calculateTransition();
+         if(result){
+             Sale__c s = new Sale__c(Id=sale.Id);
+             s.isTransition__c=true;
+             saleSrv.updateRecord(s);
+         }
+ 
+         return result;
+
+        // Vecchia Versione
+        // List<ServicePoint__c> reseller = [SELECT isReseller__c, SupplyProvince__c FROM ServicePoint__c WHERE Id=:sp.Id WITH SECURITY_ENFORCED ];
+        // Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+        // if(reseller[0].isReseller__c || ((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(reseller[0].SupplyProvince__c)))){
+        //     Sale__c s = new Sale__c(Id=sale.Id);
+        //     s.isTransition__c=true;
+        //     saleSrv.updateRecord(s);
+        //     return true;
+        // }else{
+        //     return false;
+        // }
     }
     public static Boolean isTransitionNoUp(ServicePoint__c sp, Sale__c sale){
-        //List<ServicePoint__c> reseller = [SELECT isReseller__c, SupplyProvince__c FROM ServicePoint__c WHERE Id=:sp.Id WITH SECURITY_ENFORCED ];
-        Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
-        if(sp.isReseller__c || ((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(sp.SupplyProvince__c)))){
+
+        // Nuova Versione - HRADTR_GV 01/04/2022
+
+        HDT_UTL_CalculateTransition calcTransition = new HDT_UTL_CalculateTransition(sp, sale);
+        Boolean result = calcTransition.calculateTransition();
+        if(result){
             Sale__c s = new Sale__c(Id=sale.Id);
             s.isTransition__c=true;
-           // saleSrv.updateRecord(s);
-            return true;
-        }else{
-            return false;
         }
+
+        return result;
+
+        // //List<ServicePoint__c> reseller = [SELECT isReseller__c, SupplyProvince__c FROM ServicePoint__c WHERE Id=:sp.Id WITH SECURITY_ENFORCED ];
+        // Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+        // if(sp.isReseller__c || ((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(sp.SupplyProvince__c)))){
+        //     Sale__c s = new Sale__c(Id=sale.Id);
+        //     s.isTransition__c=true;
+        //    // saleSrv.updateRecord(s);
+        //     return true;
+        // }else{
+        //     return false;
+        // }
     }
     public static Boolean isTransitionNoUp(Sale__c sale){
 
@@ -233,12 +272,17 @@ public with sharing class HDT_UTL_Sales {
         for(Order ord : orderNew){
             if(ord.RecordType.DeveloperName == 'HDT_RT_OrderDossier'){ //&& ord.TecnicalPhase__c != null){
                 if(ord.phase__c == 'Documentazione da inviare'){
-                    if(ord.Sale__r.Channel__c == 'Teleselling Outbound' && ord.SignatureMethod__c == 'Vocal Order'){
+                    if((ord.Sale__r.Channel__c == 'Teleselling Outbound'  /*|| ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono'*/) && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Registrazione  da validare';
                         listActivityToCreate.add(instanceActVocalOrd(ord.accountid,ord.id,rt));
                         childToUpdate.add(ord);
                     }
-                    else if(ord.Sale__r.Channel__c == 'Teleselling Outbound' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
+                    else if((ord.Sale__r.Channel__c == 'Telefono' || ord.Sale__r.Channel__c == 'Teleselling Inbound') && ord.SignatureMethod__c == 'Vocal Order')
+                    {
+                        ord.Phase__c = 'Registrazione Validata';
+                        childToUpdate.add(ord);
+                    }
+                    else if((ord.Sale__r.Channel__c == 'Teleselling Outbound' || ord.Sale__r.Channel__c == 'Teleselling Inbound') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
                         ord.Phase__c = 'Documentazione da Firmare';
                         childToUpdate.add(ord);
                     }
@@ -254,13 +298,13 @@ public with sharing class HDT_UTL_Sales {
                         childToUpdate.add(ord);
                         //tutti i figli per cui crearla
                         //orderParentToActivityDocument.add(ord.id);
-                        listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
+                        //listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
-                    else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
+                    /*else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Documentazione Gestita';
                       //  ord.status = 'Activated';
                         childToUpdate.add(ord);
-                    } 
+                    }*/
                 /* else if(ord.Sale__r.Channel__c = 'Web' && ord.SignatureMethod__c == 'Vocal Order'){
                         
                     }*/
@@ -275,13 +319,13 @@ public with sharing class HDT_UTL_Sales {
                     else if((ord.Sale__r.Channel__c == 'HC Point') && ord.SignatureMethod__c == 'Cartacea' ){
                         ord.Phase__c = 'Documentazione da Firmare';
                         childToUpdate.add(ord);
-                        listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
+                        //listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
                     else if((ord.Sale__r.Channel__c == 'Sportello') && ord.SignatureMethod__c == 'Cartacea' ){
                         ord.Phase__c = 'Documentazione da Firmare';
                        // ord.status = 'Activated';
                         childToUpdate.add(ord);
-                        listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
+                        //listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
                     else if(ord.Sale__r.Channel__c == 'Vendita Condomini' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
                         ord.Phase__c = 'Documentazione da Firmare';
@@ -298,7 +342,7 @@ public with sharing class HDT_UTL_Sales {
                     }*/
                 }
                 else if(ord.phase__c == 'Documentazione da firmare'){
-                    if(ord.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
+                    if(ord.DocumentalPhase__c != null && ord.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
                         if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' )){
                             //ord.TecnicalPhase__c = 'Documentazione da Validare';
                             listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
@@ -330,16 +374,21 @@ public with sharing class HDT_UTL_Sales {
     public static Order validationActivityPhaseTransition(Order ord){
         List<wrts_prcgvr__Activity__c> listActivityToCreate = new List<wrts_prcgvr__Activity__c>();
         List<Order> childToUpdate = new List<Order>();
-        Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
+        Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
       //  List<String> orderParentToActivityDocument = new List<String>();
             if(ord.RecordType.DeveloperName == 'HDT_RT_OrderDossier'){ //&& ord.TecnicalPhase__c != null){
                 if(ord.phase__c == 'Documentazione da inviare'){
-                    if(ord.Sale__r.Channel__c == 'Teleselling Outbound' && ord.SignatureMethod__c == 'Vocal Order'){
+                    if((ord.Sale__r.Channel__c == 'Teleselling Outbound'  /*|| ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono'*/) && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Registrazione  da validare';
                         listActivityToCreate.add(instanceActVocalOrd(ord.accountid,ord.id,rt));
                         childToUpdate.add(ord);
                     }
-                    else if(ord.Sale__r.Channel__c == 'Teleselling Outbound' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
+                    else if((ord.Sale__r.Channel__c == 'Telefono' || ord.Sale__r.Channel__c == 'Teleselling Inbound') && ord.SignatureMethod__c == 'Vocal Order')
+                    {
+                        ord.Phase__c = 'Registrazione Validata';
+                        childToUpdate.add(ord);
+                    }
+                    else if((ord.Sale__r.Channel__c == 'Teleselling Outbound' || ord.Sale__r.Channel__c == 'Teleselling Inbound') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
                         ord.Phase__c = 'Documentazione da Firmare';
                         childToUpdate.add(ord);
                     }
@@ -357,11 +406,11 @@ public with sharing class HDT_UTL_Sales {
                         //orderParentToActivityDocument.add(ord.id);
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
-                    else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
+                    /*else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Documentazione Gestita';
                         //ord.status = 'Activated';
                         childToUpdate.add(ord);
-                    }
+                    }*/
                 /* else if(ord.Sale__r.Channel__c = 'Web' && ord.SignatureMethod__c == 'Vocal Order'){
                         
                     }*/
@@ -425,11 +474,106 @@ public with sharing class HDT_UTL_Sales {
         return ord;
     }
 
-    public static wrts_prcgvr__Activity__c instanceActVocalOrd(String accountid,String orderid,id recordtypeid){
-        return new wrts_prcgvr__Activity__c(account__c = accountid,wrts_prcgvr__Status__c= 'Aperta',order__c = orderid,type__c='Validazione Vocal Order',recordtypeid=recordtypeid, RecordingLink__c='https://herapresfdc.cloudando.com/ctreplay/externalView/search?filter={"filter":{"ecid":"saashrapp|1|123|17"},"sort":{"startTs":-1},"index":0}');
+    public static wrts_prcgvr__Activity__c instanceActVocalOrd(String accountId, String orderId, Id recordtypeId) {
+        String link;
+        try {
+            link = [SELECT Id, RecordingLink__c FROM wrts_prcgvr__Activity__c WHERE CreatedById =: UserInfo.getUserId() AND Type__c = 'Chiamata outbound' WITH SECURITY_ENFORCED ORDER BY CreatedDate DESC  LIMIT 1].RecordingLink__c;
+        } catch (Exception e) {
+            link = 'ERRORE - ATTIVITA CHIAMATA OUTBOUND NON TROVATA';
+        }
+        if(String.isBlank(link)) {
+            link = 'ERRORE - NESSUN LINK REGISTRAZIONE NELL\'ATTIVITA DI CHIAMATA OUTBOUND';
+        }
+        return new wrts_prcgvr__Activity__c(
+            account__c = accountId,
+            wrts_prcgvr__Status__c = 'Aperta',
+            order__c = orderId,
+            type__c = 'Validazione Vocal Order',
+            recordtypeid = recordtypeId, 
+            RecordingLink__c = link
+        );
     }
+
     public static wrts_prcgvr__Activity__c instanceActValidazioneDocumentale(String accountid,String orderid,id recordtypeid){
         return new wrts_prcgvr__Activity__c(account__c = accountid,wrts_prcgvr__Status__c= 'Aperta',wrts_prcgvr__IsRequired__c=true,order__c = orderid,type__c='Validazione Documentale',recordtypeid=recordtypeid);
     }
 
+    public static void handleContractVariation(Order order){
+        String processType = '';
+        String contractId = '';
+        String servicePointId = '';
+        String parentOrderId = '';
+        HDT_QR_Contract qrContract = new HDT_QR_Contract();
+        HDT_QR_OrderItem qrOrderItems = new HDT_QR_OrderItem();
+        try{
+                    
+
+            if(order != null){
+                processType = order.ProcessType__c;
+                if(String.isNotBlank(processType) && processType.contains('Aggiunta Sconti o Bonus VAS')){
+                    contractId = order.ContractReference__c;
+                    servicePointId = order.ServicePoint__c;
+                    parentOrderId = order.ParentOrder__c;
+                
+                    if(String.isNotBlank(contractId)){
+                        SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractId);
+                        if(subscription != null){
+                            order.CommercialProduct__c = subscription.SBQQ__ProductName__c;
+                            order.CommercialProductCode__c = subscription.ProductCode__c;
+                            order.CommercialProductVersion__c = subscription.VersionFormula__c;
+                        }
+                    }else if(String.isNotBlank(servicePointId) && String.isNotBlank(parentOrderId)) {
+                        //Get offer from OrderItem Activation
+                        OrderItem orderItem = qrOrderItems.getOfferActivationItem(parentOrderId,servicePointId);
+                        if(orderItem != null){
+                            order.CommercialProduct__c = orderItem.Product2.Name;
+                            order.CommercialProductCode__c = orderItem.Product2.ProductCode;
+                            order.CommercialProductVersion__c = orderItem.Product2.Version__c;            
+                        }
+                    }
+                }
+            }
+        }catch(Exception ex){
+            System.debug(LoggingLevel.DEBUG, ex.getMessage());
+        }
+    }
+    public static void handleContractVariation(Order order,Order orderOriginal){
+        String processType = '';
+        String contractId = '';
+        String servicePointId = '';
+        String parentOrderId = '';
+        HDT_QR_Contract qrContract = new HDT_QR_Contract();
+        HDT_QR_OrderItem qrOrderItems = new HDT_QR_OrderItem();
+        try{
+                    
+
+            if(orderOriginal != null){
+                processType = orderOriginal.ProcessType__c;
+                //if(String.isNotBlank(processType) && processType.contains('Aggiunta Sconti o Bonus VAS')){
+                    contractId = orderOriginal.ContractReference__c;
+                    servicePointId = orderOriginal.ServicePoint__c;
+                    parentOrderId = orderOriginal.ParentOrder__c;
+                
+                    if(String.isNotBlank(contractId)){
+                        SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractId);
+                        if(subscription != null){
+                            order.CommercialProduct__c = subscription.SBQQ__ProductName__c;
+                            order.CommercialProductCode__c = subscription.ProductCode__c;
+                            order.CommercialProductVersion__c = subscription.VersionFormula__c;
+                        }
+                    }else if(String.isNotBlank(servicePointId) && String.isNotBlank(parentOrderId)) {
+                        //Get offer from OrderItem Activation
+                        OrderItem orderItem = qrOrderItems.getOfferActivationItem(parentOrderId,servicePointId);
+                        if(orderItem != null){
+                            order.CommercialProduct__c = orderItem.Product2.Name;
+                            order.CommercialProductCode__c = orderItem.Product2.ProductCode;
+                            order.CommercialProductVersion__c = orderItem.Product2.Version__c;            
+                        }
+                    }
+                //}
+            }
+        }catch(Exception ex){
+            System.debug(LoggingLevel.DEBUG, ex.getMessage());
+        }
+    }
 }

@@ -5,7 +5,7 @@
 # Salesforce cache
 .sfdx/
 .localdevserver/
-
+.sf/
 .github/
 assets/
 .github/*
@@ -45,4 +45,7 @@ $RECYCLE.BIN/
 launch.json
 
 # Folder that stores test class results
-./apexTestResults
+.apexTestResults/
+
+.sf/
+.sf/*

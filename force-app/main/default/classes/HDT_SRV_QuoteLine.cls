@@ -59,7 +59,11 @@ public inherited sharing class HDT_SRV_QuoteLine {
     * @param objectsList
     * @return List<SBQQ__QuoteLine__c>
     */
-    public List<SBQQ__QuoteLine__c> createRecords(List<SBQQ__QuoteLine__c> objectsList){
+
+    /**@frpanico 17/02/2022
+     * Metodo deprecato in quanto non utilizzato
+     */
+    /*public List<SBQQ__QuoteLine__c> createRecords(List<SBQQ__QuoteLine__c> objectsList){
 
         for (SBQQ__QuoteLine__c quoteLine : objectsList) {
             List<String> fields = helperMethods.getObjAttrList(quoteLine);
@@ -69,7 +73,7 @@ public inherited sharing class HDT_SRV_QuoteLine {
         HDT_UTL_DatabaseService.insertSObject(objectsList);
 
         return objectsList;
-    }
+    }*/
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)

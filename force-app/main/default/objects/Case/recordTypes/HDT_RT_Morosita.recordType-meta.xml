@@ -181,10 +181,10 @@
             <fullName>Bolletta per e-mail</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>Bolletta per e-mail %2B Carta</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>Cartaceo</fullName>
             <default>false</default>
@@ -553,6 +553,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>CancellationReason__c</picklist>
+        <values>
+            <fullName>Registrazione non conforme</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Annullato per no conferma cliente</fullName>
             <default>false</default>
@@ -2132,7 +2136,7 @@
             <fullName>Rilevanza continuità serv%2E GAS</fullName>
             <default>false</default>
         </values>
-        <!--<values>
+        <values>
             <fullName>Sempre ap%2E - Elettromedicale</fullName>
             <default>false</default>
         </values>
@@ -2147,7 +2151,7 @@
         <values>
             <fullName>Sempre ap%2E - Pubblica utilita</fullName>
             <default>false</default>
-        </values> -->
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>DisplacementDistance__c</picklist>
@@ -6093,7 +6097,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Falso procurato</fullName>
+            <fullName>Falso procuratore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6281,7 +6285,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Prelivo abusivo</fullName>
+            <fullName>Prelievo abusivo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7176,7 +7180,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Recesso su Richesta Cliente</fullName>
+            <fullName>Recesso su Richiesta Cliente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7764,6 +7768,18 @@
         </values>
         <values>
             <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Ricezione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8569,7 +8585,7 @@
     <picklistValues>
         <picklist>SendMode__c</picklist>
         <values>
-            <fullName>E-mail</fullName>
+            <fullName>E-Mail</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10305,7 +10321,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Importi per consumi risalenti a più di due anni</fullName>
+            <fullName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10656,7 +10672,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Recesso su Richesta Cliente</fullName>
+            <fullName>Recesso su Richiesta Cliente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10935,17 +10951,6 @@
         </values>
         <values>
             <fullName>013-Uso Condizionam%2E%2BRiscald%2E</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>UseChangeCharge__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>

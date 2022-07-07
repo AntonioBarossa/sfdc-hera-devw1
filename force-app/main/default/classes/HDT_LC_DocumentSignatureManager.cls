@@ -9,6 +9,7 @@ public with sharing class HDT_LC_DocumentSignatureManager {
     public static void sendDocumentFile(String recordId,String context,String formParams){
         HDT_SRV_DocumentalManagementFacade.sendDocumentAsync(recordId, context,formParams);
         HDT_SRV_DocumentalManagementFacade.checkEnvelopeForDiscard(recordId, formParams);
+        HDT_UTL_Scarti.closeDocumentalManagementActivity(formParams);
     }
 
     @AuraEnabled
@@ -56,6 +57,12 @@ public with sharing class HDT_LC_DocumentSignatureManager {
     @AuraEnabled
     public static string resendDocusignEnvelope(String recordId){
         String serializedOutput = HDT_SRV_DocumentalManagementFacade.resendDocusignEnvelope(recordId);
+        return serializedOutput;
+    }
+
+    @AuraEnabled
+    public static string handleContactPoint(String email, String phone, String contactId, String mode){
+        String serializedOutput = HDT_SRV_DocumentalManagementFacade.handleContactPoint(email, phone, contactId, mode);
         return serializedOutput;
     }
 }

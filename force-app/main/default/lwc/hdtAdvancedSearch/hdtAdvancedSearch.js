@@ -96,20 +96,20 @@ export default class HdtAdvancedSearch extends LightningElement {
 
                         if(statusSplit.length > 1 && statusSplit.length < 3){
                 
-                            this.additionalfilter= ' AND (MeterStatus__c =\''+statusSplit[0]+'\''+'OR MeterStatus__c = \''+statusSplit[1]+'\')';
+                            this.additionalfilter= ' AND (MeterStatus__c =\''+statusSplit[0]+'\''+'OR MeterStatus__c = \''+statusSplit[1]+'\''+ 'OR MeterStatus__c = \'\')';
                             console.log('entra in lenght==1 ');
                         
                     }
                     else if(statusSplit.length > 2){
                         
-                        this.additionalfilter= ' AND (MeterStatus__c =\''+statusSplit[0]+'\''+'OR MeterStatus__c = \''+statusSplit[1]+'\''+'OR MeterStatus__c = \''+statusSplit[2]+'\')';
+                        this.additionalfilter= ' AND (MeterStatus__c =\''+statusSplit[0]+'\''+'OR MeterStatus__c = \''+statusSplit[1]+'\''+'OR MeterStatus__c = \''+statusSplit[2]+'\''+ 'OR MeterStatus__c = \'\')';
                         console.log('entra in lenght>2 si');
                     
                         }
                     else if(statusSplit.length > 0)
                     {
             
-                            this.additionalfilter= 'AND MeterStatus__c =\''+data.StatoFornitura__c+'\''; 
+                            this.additionalfilter= 'AND (MeterStatus__c =\''+data.StatoFornitura__c+'\''+ 'OR MeterStatus__c = \'\')'; 
                     }
                     }
                     
@@ -394,7 +394,7 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     searchInSAP(){
         
-        this.callApi(this.searchInputValue).then(() => {
+        this.callApi(this.searchInputValue, 'searchSap').then(() => {
             this.preloading = true;
             this.closeModal();
             if(this.serviceRequestId == null || (this.serviceRequestId != null && !this.isIncompatible)){
@@ -407,16 +407,24 @@ export default class HdtAdvancedSearch extends LightningElement {
         });
     }
 
-    callApi(event){
+    callApi(event, isFrom){
         return new Promise((resolve) => {
             this.preloading = true;
             this.isRicercainSAP= true;
             this.searchInputValue = event;
+            console.log('#Length Event >>> ' + this.searchInputValue.length);
+            let contractCode = this.searchInputValue.length >= 14 ? '' : this.searchInputValue;
+            let servicePointCode = this.searchInputValue.length >= 14 ? this.searchInputValue : '';
             this.dispatchEvent(new CustomEvent('ricercainsap', {
                 detail: this.isRicercainSAP
-            })); 
-            callService({contratto:'', pod:this.searchInputValue}).then(data =>{                
-                if(data.statusCode=='200'){
+            }));
+            callService({contratto:contractCode, pod:servicePointCode}).then(data =>{                
+                if(data.statusCode=='200' || this.postSales === true){
+                    if(data.statusCode != '200')
+                    {
+                        resolve();
+                        return;
+                    }
                     this.responseArriccData = data;
                     extractDataFromArriccDataServiceWithExistingSp({sp:'',response:data}).then(datas =>{
                         let sp = datas;
@@ -433,8 +441,13 @@ export default class HdtAdvancedSearch extends LightningElement {
                     });
                 }
                 else{
-                    this.alert('Errore','Il dato ricercato non è stato trovato in SAP, Modificare i parametri di ricerca o procedere alla creazione manuale.','error');
-                    this.preloading = false;
+                    if(this.postSales || isFrom == 'searchSap'){
+                        this.alert('Errore','Il dato ricercato non è stato trovato in SAP, Modificare i parametri di ricerca o procedere alla creazione manuale.','error');
+                        this.preloading = false;
+                    }
+                    else{
+                        resolve();
+                    }
                 }
             });
         });
@@ -584,7 +597,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.preloading = true;
         let servPoint = this.rowToSend;
         let pointCode = servPoint['Codice Punto'];
-        this.callApi(pointCode).then(() => {
+        this.callApi(pointCode, 'confirm').then(() => {
             this.preloading = true;
             this.closeModal();
             if(this.serviceRequestId == null || (this.serviceRequestId != null && !this.isIncompatible)){

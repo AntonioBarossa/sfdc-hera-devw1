@@ -2,9 +2,6 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>SBQQ__Amend_Assets</customButtons>
     <customButtons>SBQQ__Renew_Assets</customButtons>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
     <excludeButtons>SendEmail</excludeButtons>
     <excludeButtons>XClean</excludeButtons>
@@ -53,6 +50,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CompanyOwner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>RegulatedMarketSelfCertification__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -172,16 +173,6 @@
             <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Account.cmor</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>8</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Account.socialBonus</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>9</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>HDT_SendSms</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
@@ -192,14 +183,29 @@
             <sortOrder>5</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>Account.raiFee</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Account.HDT_PrintAccount</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Account.raiFee</actionName>
+            <actionName>Account.cmor</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
+            <sortOrder>8</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Account.socialBonus</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>9</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ChangeOwnerOne</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>10</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -242,15 +248,15 @@
     </relatedLists>
     <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>ProcessType__c</fields>
         <fields>ParentOrder__c</fields>
-        <fields>ORDERS.CREATED_DATE</fields>
         <fields>ORDERS.STATUS</fields>
         <fields>Phase__c</fields>
+        <fields>ORDERS.CREATED_DATE</fields>
         <fields>Sale__c</fields>
         <fields>Channel__c</fields>
         <fields>CREATEDBY_USER.ALIAS</fields>
         <fields>ServicePointCodeFormula__c</fields>
-        <fields>ProcessType__c</fields>
         <relatedList>RelatedOrderList</relatedList>
         <sortField>ORDERS.ORDER_NUMBER</sortField>
         <sortOrder>Desc</sortOrder>
@@ -264,6 +270,8 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <customButtons>CreaattivitamanualeActivity</customButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>CREATED_DATE</fields>
         <fields>wrts_prcgvr__Status__c</fields>
@@ -320,12 +328,14 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>AlertType__c</fields>
-        <fields>AlertConfiguration__c</fields>
         <fields>IsActive__c</fields>
         <fields>IsEmailChannelActive__c</fields>
         <fields>IsSmsChannelActive__c</fields>
         <fields>IsPushChannelActive__c</fields>
         <fields>IsSolChannelActive__c</fields>
+        <fields>Mobile__c</fields>
+        <fields>ActivationDate__c</fields>
+        <fields>InactivationDate__c</fields>
         <relatedList>AlertAccountConfiguration__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -369,13 +379,10 @@
     </relatedLists>
     <relatedLists>
         <fields>ASSET.NAME</fields>
+        <fields>ASSET.DIGITAL_ASSET_STATUS</fields>
         <fields>VasPracticeCode__c</fields>
-        <fields>ASSET.SERIAL_NUMBER</fields>
         <fields>ASSET.INSTALL_DATE</fields>
         <fields>ASSET.QUANTITY</fields>
-        <fields>CONTACT.NAME</fields>
-        <fields>ASSET.STATUS</fields>
-        <fields>ASSET.IS_COMPETITOR_PRODUCT</fields>
         <relatedList>RelatedAssetList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -392,11 +399,11 @@
         <fields>Cluster__c</fields>
         <fields>CASES.TYPE</fields>
         <fields>Subprocess__c</fields>
+        <fields>Phase__c</fields>
+        <fields>CASES.ORIGIN</fields>
+        <fields>CASES.CLOSED_DATE</fields>
         <fields>MacroTopic__c</fields>
         <fields>InformationDetail__c</fields>
-        <fields>Phase__c</fields>
-        <fields>ComplaintEntryChannel__c</fields>
-        <fields>CASES.CLOSED_DATE</fields>
         <relatedList>RelatedCaseList</relatedList>
         <sortField>CASES.CREATED_DATE_DATE_ONLY</sortField>
         <sortOrder>Desc</sortOrder>
@@ -443,6 +450,7 @@
         <fields>CaseID__c</fields>
         <fields>OrderID__c</fields>
         <fields>et4ae5__Contact_ID__c</fields>
+        <fields>et4ae5__NumberOfUniqueClicks__c</fields>
         <relatedList>et4ae5__IndividualEmailResult__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -453,6 +461,7 @@
         <fields>OrderID__c</fields>
         <fields>ContactID__c</fields>
         <fields>Sent__c</fields>
+        <fields>ActionDateTime__c</fields>
         <relatedList>SMSTracking__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -462,6 +471,10 @@
         <fields>CaseID__c</fields>
         <fields>OrderID__c</fields>
         <fields>ContactID__c</fields>
+        <fields>MessageName__c</fields>
+        <fields>DateTimeSend__c</fields>
+        <fields>OpenDate__c</fields>
+        <fields>Status__c</fields>
         <relatedList>PushTracking__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -540,7 +553,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1j000002So66</masterLabel>
+        <masterLabel>00h3N000002MyGI</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

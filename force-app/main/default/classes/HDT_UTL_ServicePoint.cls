@@ -12,10 +12,10 @@ public with sharing class HDT_UTL_ServicePoint {
     private static HDT_SRV_ServicePoint serviceSrv = new HDT_SRV_ServicePoint();
     
     @AuraEnabled
-    public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response ){
+    public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response){
         
         ServicePoint__c spNew = new ServicePoint__c();
-        if(sp!= null){
+        if(sp != null){
             spNew = sp;
         }
         
@@ -26,7 +26,19 @@ public with sharing class HDT_UTL_ServicePoint {
                 mapRes.put(r.campo.toUpperCase(),r.valore);
             }            
         }
-        
+
+        if(mapRes.get('DEFINIZIONEOFFERTA')!=null && mapRes.get('DEFINIZIONEOFFERTA').containsIgnoreCase('STG_') ){
+            spNew.isSTG__c = true;
+        }
+        /**@frpanico 2022-03-15
+         * Aggiunto campo
+         * GRUPPONUMERATORE
+         * Per processo Sconti e Bonus
+         */
+        if(mapRes.get('GRUPPONUMERATORE')!=null)
+        {
+            spNew.NumeratorGroup__c = mapRes.get('GRUPPONUMERATORE');
+        }
         if(mapRes.get('IMPOSTE')!=null){
             if(mapRes.get('DESCRCOMM')=='Gas'){
                 spNew.ExciseGas__c  = mapRes.get('IMPOSTE') != null ? mapRes.get('IMPOSTE') : 'ALTRO';                
@@ -45,8 +57,10 @@ public with sharing class HDT_UTL_ServicePoint {
             else if(mapRes.get('STATODEVICE')== 'I'){
                 spNew.MeterStatus__c  ='Inattivo' ;
             }
-            else{
+            else if(!String.isBlank(mapRes.get('STATODEVICE'))){
                 spNew.MeterStatus__c  = 'Bozza';
+            }else{
+                spNew.MeterStatus__c  = 'Inattivo';
             }
         }
         if(mapRes.get('PRESSIONE')!=null && !String.isBlank(mapRes.get('PRESSIONE'))){
@@ -116,7 +130,20 @@ public with sharing class HDT_UTL_ServicePoint {
         }
         if(mapRes.get('DISTRIBUTORE')!=null && !String.isBlank(mapRes.get('DISTRIBUTORE'))){
             Account a = accountQr.getAccountByDistributorKey(mapRes.get('DISTRIBUTORE'));
-            spNew.Distributor__c = a.id;
+            spNew.Distributor__c = a.Id != null ? a.Id : ((sp != null && sp.Distributor__c != null) ? sp.Distributor__c : null);
+        }
+        /**@frpanico 2022-05-27
+         * Aggiunta gestione campo VENDITORE
+         */
+        if(mapRes.get('VENDITORE')!=null && !String.isBlank(mapRes.get('VENDITORE')))
+        {
+            String codiceVenditore = (String)mapRes.get('VENDITORE');
+            List<HDT_MatriceSocietaVendita__mdt> salesCompanies = [SELECT SellerCompany__c FROM HDT_MatriceSocietaVendita__mdt WHERE SalesCompanyCode__c = :codiceVenditore WITH SECURITY_ENFORCED];
+            if(!salesCompanies.isEmpty())
+            {
+                spNew.Vendor__c = salesCompanies[0].SellerCompany__c;
+            }
+            spNew.SalesCompanyCode__c = codiceVenditore;
         }
         if(mapRes.get('POD')!=null && !String.isBlank(mapRes.get('POD'))){
             spNew.ServicePointCode__c   = mapRes.get('POD');
@@ -147,6 +174,21 @@ public with sharing class HDT_UTL_ServicePoint {
         else{
             spNew.isReseller__c = false;
         }
+        /**@frpanico 2022-04-08
+         * Aggiunta gestione Stato Contratto SAP
+         * Da DATACESSAZIONE
+         */
+        if(mapRes.get('DATACESSAZIONE') !=null && !String.isBlank(mapRes.get('DATACESSAZIONE')))
+        {
+            if(mapRes.get('DATACESSAZIONE') == '99991231' || Date.valueOf(mapRes.get('DATACESSAZIONE').substring(0,4)+'-'+mapRes.get('DATACESSAZIONE').substring(4,6)+'-'+mapRes.get('DATACESSAZIONE').substring(6,8)) > System.today())
+            {
+                spNew.SapContractStatus__c = 'Attivo';
+            }
+            else
+            {
+                spNew.SapContractStatus__c = 'Cessato';
+            }
+        }
         if(mapRes.get('DATACESSAZIONE')!=null && !String.isBlank(mapRes.get('DATACESSAZIONE'))){
             if(mapRes.get('DATACESSAZIONE') != '99991231' && mapRes.get('DATACESSAZIONE').length()== 8 ){
                 Date d = Date.valueOf(mapRes.get('DATACESSAZIONE').substring(0,4)+'-'+mapRes.get('DATACESSAZIONE').substring(4,6)+'-'+mapRes.get('DATACESSAZIONE').substring(6,8));
@@ -173,13 +215,16 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.ImplantType__c = dataEnrich.getPicklistValue('ServicePoint__c', 'ImplantType__c', mapRes.get('TIPOIMPIANTO'));
         }
         if(mapRes.get('CONSUMOCAPDR')!=null && !String.isBlank(mapRes.get('CONSUMOCAPDR'))){            
-            spNew.AnnualConsumption__c = integer.valueOf(mapRes.get('CONSUMOCAPDR'));
+            spNew.AnnualConsumption__c = integer.valueOf(Decimal.valueOf(mapRes.get('CONSUMOCAPDR')));
         }
         if(mapRes.get('CONSUMOANNUOEE')!=null && !String.isBlank(mapRes.get('CONSUMOANNUOEE'))){         
-            spNew.AnnualConsumption__c = integer.valueOf(mapRes.get('CONSUMOANNUOEE'));
+            spNew.AnnualConsumption__c = integer.valueOf(Decimal.valueOf(mapRes.get('CONSUMOANNUOEE')));
         }
         if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
             String mercato = mapRes.get('MERCATO').substring(0,1) + mapRes.get('MERCATO').substring(1,mapRes.get('MERCATO').length()).toLowerCase();
+            Boolean isStg = mapRes.get('DEFINIZIONEOFFERTA')!=null && mapRes.get('DEFINIZIONEOFFERTA').containsIgnoreCase('STG_')? true:false;
+            mercato = mercato.equalsIgnoreCase('Tutela')?'Regolamentato':mercato;
+            mercato = isStg ? 'Regolamentato':mercato;
             spNew.MarketOrigin__c = mercato;
         }
         if(mapRes.get('FLAGTELEGESTIBILE')!=null && !String.isBlank(mapRes.get('FLAGTELEGESTIBILE'))){            
@@ -264,7 +309,7 @@ public with sharing class HDT_UTL_ServicePoint {
         String accCategory = inputFields.get('accCategory');
 
         if(servizio.equalsIgnoreCase('Energia Elettrica')){
-            tipoFornitura = tipoImpianto.equalsIgnoreCase('13A0-Usi di Abitazione BT') ? 'Domestico' : 'Non Domestico';
+            tipoFornitura = tipoImpianto != null && tipoImpianto.equalsIgnoreCase('13A0-Usi di Abitazione BT') ? 'Domestico' : 'Non Domestico';
         }
         else {
             String fields = 'Id, SupplyType__c';
@@ -282,10 +327,10 @@ public with sharing class HDT_UTL_ServicePoint {
     }
     
     @AuraEnabled
-    public static List<String> objectToList(HDT_WRP_AddressObject Wrap){
+    public static List<String> objectToList(HDT_WRP_AddressObject wrap){
         
         List<String> listFields = new List<String>();
-        String stringWrap = JSON.serialize(Wrap);
+        String stringWrap = JSON.serialize(wrap);
         listFields = (List<String>)JSON.deserializeUntyped(stringWrap);
         
         return listFields;        
@@ -354,8 +399,8 @@ public with sharing class HDT_UTL_ServicePoint {
     
     public static void blockblankonfield(List<ServicePoint__c> oldList , List<ServicePoint__c> newList){
         Map<String,ServicePoint__c> oldMap = new Map<String,Servicepoint__c>();
-        for(ServicePoint__c srvO : oldList){
-            oldMap.put(srvO.id,srvO);
+        for(ServicePoint__c srvOld : oldList){
+            oldMap.put(srvOld.id,srvOld);
         }
         for(ServicePoint__c srv : newList){
             if(srv.SupplyType__c == null || srv.ImplantType__c == null){ 
@@ -424,5 +469,15 @@ public with sharing class HDT_UTL_ServicePoint {
             }
         }
         return h;
+    }
+
+    public static Boolean checkTaxesCoerence (String tipoFornitura, String accise){
+
+        if((tipoFornitura == 'Domestico' && accise == 'Imposta usi domestici') || (tipoFornitura == 'Non Domestico' && accise != 'Imposta usi domestici')){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

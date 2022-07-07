@@ -50,9 +50,8 @@ public with sharing class HDT_WS_DocumentalInboundIntegrationTst {
         //assertions
         Case updatedCase = [SELECT Id, Phase__c FROM Case LIMIT 1];
         System.assertEquals('Preventivo accettato', updatedCase.Phase__c, 'Phase__c != Preventivo accettato');
-        DocumentalActivity__c docAct = [SELECT Id FROM DocumentalActivity__c WHERE ActivityType__c = 'Documentazione completa' LIMIT 1];
-        System.assertNotEquals(null, docAct, 'docAct == null');
-        
+        /*DocumentalActivity__c docAct = [SELECT Id FROM DocumentalActivity__c WHERE ActivityType__c = 'Documentazione completa' LIMIT 1];
+        System.assertNotEquals(null, docAct, 'docAct == null');*/        
         Test.stopTest();
         
     }

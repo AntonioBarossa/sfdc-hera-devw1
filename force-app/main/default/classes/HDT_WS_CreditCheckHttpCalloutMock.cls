@@ -13,7 +13,7 @@ public class HDT_WS_CreditCheckHttpCalloutMock implements HttpCalloutMock {
         response.setHeader('Content-Type', 'application/json');
         response.setBody(JSON.serialize(
             new Map<String,Object>{
-                'status'=>'status',
+                'status'=>'failed',
                 'result'=>new Map<String,Object>{
                         'applicationGuid'=>'applicationGuid',
                         'applicationId'=>'applicationId',
@@ -39,6 +39,7 @@ public class HDT_WS_CreditCheckHttpCalloutMock implements HttpCalloutMock {
                     new Map<String,Object>{
                         'code'=>'code',
                         'message'=>new Map<String,String>{
+                            'error_code'=>'code',
                             'message1'=>'message1',
                             'message2'=>'message2'
                         },

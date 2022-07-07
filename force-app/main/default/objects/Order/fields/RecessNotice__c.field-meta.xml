@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>RecessNotice__c</fullName>
     <externalId>false</externalId>
-    <label>Preavviso di recesso</label>
+    <label>Mesi Preavviso recesso</label>
     <precision>2</precision>
     <required>false</required>
     <scale>0</scale>

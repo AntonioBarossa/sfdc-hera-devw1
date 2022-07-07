@@ -6,7 +6,7 @@
  * @last modified by  : gabriele.rota@webresults.it
 **/
 public with sharing class HDT_SRV_ServiceTwentySix {
-
+    private static final String REQUEST_PATH = '/activations/catalog-attributes'; 
     /**
     * @description Send Service 26 callout
     * @author gabriele.rota@webresults.it | 2021-07-12 
@@ -16,7 +16,7 @@ public with sharing class HDT_SRV_ServiceTwentySix {
     public static HDT_WS_ArrichmentDataEntityResponse callService26(Id orderId) {
         HDT_UTL_ServiceTwentySix reqClass = new HDT_UTL_ServiceTwentySix();
         HDT_UTL_ServiceTwentySix.HDT_WRP_DtoServiceTwentySix req = reqClass.startProcess(orderId);
-        HDT_WS_ArrichmentDataEntityResponse res = (HDT_WS_ArrichmentDataEntityResponse) HDT_WS_HTTPServiceCall.sendRequest('VAS.Service26', req, HDT_WS_ArrichmentDataEntityResponse.class);
+        HDT_WS_ArrichmentDataEntityResponse res = (HDT_WS_ArrichmentDataEntityResponse) HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH,'POST', req, HDT_WS_ArrichmentDataEntityResponse.class);
         insertCalloutLog('CALLOUT-Service26', req, res);
         return res;
     }

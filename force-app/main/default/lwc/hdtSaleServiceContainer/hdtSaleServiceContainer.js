@@ -61,25 +61,26 @@ export default class hdtSaleServiceContainer extends LightningElement {
     }
 
     handleConfirmServicePointEvent(event){
-        console.log('hdtSaleServiceContainer - handleConfirmServicePointEvent: ', JSON.stringify(event.detail.newServicePoint));
 
+        this.loading = true;
         if(event.detail.newServicePoint !== undefined) {
             this.servicePoint = event.detail.newServicePoint;
-        } else {
+        }
+        else {
             this.servicePoint = event.detail;
         }
 
-        let oldServicePoint = {};
+        let oldSupplyType = '';
 
-        if(event.detail.oldServicePoint !== undefined) {
-            oldServicePoint = event.detail.oldServicePoint;
+        if(event.detail.oldSupplyType !== undefined) {
+            oldSupplyType = event.detail.oldSupplyType;
         }
 
-        createSaleServiceItemTile({servicePoint:this.servicePoint, sale:this.saleRecord, oldServicePoint: oldServicePoint}).then(data =>{
+        createSaleServiceItemTile({servicePoint:this.servicePoint, sale:this.saleRecord, oldSupplyType: oldSupplyType}).then(data =>{
 
             this.refreshTileData();
             this.dispatchEvent(new CustomEvent('newtile'));
-            if(data.isTransition){
+            if(data.isTransition && data.message === false){
                 const toastWarning = new ShowToastEvent({
                     title: 'Warning',
                     message: 'E stato creato un caso transitorio!',
@@ -87,7 +88,17 @@ export default class hdtSaleServiceContainer extends LightningElement {
                 });
                 this.dispatchEvent(toastWarning);
     
-            }else{
+            }
+            else if(data.isTransition && data.message === true)
+            {
+                const toastWarning = new ShowToastEvent({
+                    title: 'Warning',
+                    message: 'E stato creato un caso transitorio! Verrà creata un\'activity di tracciamento per il caricamento della vendita in Siebel',
+                    variant: 'warning'
+                });
+                this.dispatchEvent(toastWarning);
+            }
+            else{
                 const toastSuccessMessage = new ShowToastEvent({
                     title: 'Successo',
                     message: 'Service Point confermato con successo',
@@ -98,8 +109,10 @@ export default class hdtSaleServiceContainer extends LightningElement {
 
             }
 
+            this.loading = false;
             
         }).catch(error => {
+            this.loading = false;
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: error.body.message,

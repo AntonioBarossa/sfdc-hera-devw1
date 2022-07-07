@@ -1,8 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>categoryAssigment_0</name>
+        <label>categoryAssigment</label>
+        <locationX>182</locationX>
+        <locationY>278</locationY>
+        <assignmentItems>
+            <assignToReference>categoryAssigmentVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>checkIfAzienda</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Offerta</name>
+        <label>Offerta</label>
+        <locationX>270</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>OffertaSingola</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LoopOrdiniOfferta.CommercialProductLink__r.OfferteVocalOrder__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Offerte</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LoopOrdiniOfferta.CommercialProductLink__r.OfferteVocalOrder__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LoopOrdiniOfferta</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>OffertaVas</name>
+        <label>OffertaVas</label>
+        <locationX>270</locationX>
+        <locationY>854</locationY>
+        <assignmentItems>
+            <assignToReference>OfferteVas</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LoopOrdiniOffertaVas.ProcessType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OffertaSingolaVas</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LoopOrdiniOffertaVas.ProcessType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LoopOrdiniOffertaVas</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>checkIfAzienda</name>
+        <label>checkIfAzienda</label>
+        <locationX>182</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>LoopOrdiniOffertaVas</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isAzienda</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>categoryAssigmentVariable</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Famiglie</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>getInfoLegaleRappresentate_0</targetReference>
+            </connector>
+            <label>isAzienda</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>SalesCompanyFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(ISPICKVAL({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c} , &quot;Hera Comm S.p.A&quot;), &quot;HERA COMM, SOCIETÀ DI VENDITA DI ENERGIA ELETTRICA E GAS, CON SEDE A IMOLA, IN VIA MOLINO ROSSO 8&quot;, 
+ IF(ISPICKVAL({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c} , &quot;Hera Comm Marche&quot;), &quot;HERA COMM MARCHE, SOCIETÀ DI VENDITA GAS CON SEDE A URBINO, VIA SASSO 120 E DI HERA COMM CON SEDE A IMOLA, VIA MOLINO ROSSO 8&quot;, 
+  IF(ISPICKVAL({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c} , &quot;EstEnergy S.p.A&quot;), &quot;ESTENERGY SOCIETÀ DI VENDITA DI ENERGIA ELETTRICA E GAS, CON SEDE A TRIESTE, IN VIA DEI RETTORI 1&quot;, &quot;HERA COMM, SOCIETÀ DI VENDITA DI ENERGIA ELETTRICA E GAS, CON SEDE A IMOLA, IN VIA MOLINO ROSSO 8&quot;)))</expression>
+    </formulas>
     <interviewLabel>HDL FL VO Script - Mini VO {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDL FL VO Script - Mini VO</label>
+    <loops>
+        <name>LoopOrdiniOfferta</name>
+        <label>LoopOrdiniOfferta</label>
+        <locationX>182</locationX>
+        <locationY>1070</locationY>
+        <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Offerta</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Get_Sales_Contact</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>LoopOrdiniOffertaVas</name>
+        <label>LoopOrdiniOffertaVas</label>
+        <locationX>182</locationX>
+        <locationY>734</locationY>
+        <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVasOutput</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>OffertaVas</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>LoopOrdiniOfferta</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -22,24 +144,155 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_Sales_Contact</name>
+        <label>Get Sales Contact</label>
+        <locationX>182</locationX>
+        <locationY>1406</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>MinoVO_text1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Sale__r.SalesContact__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contact</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getInfoLegaleRappresentate_0</name>
+        <label>getInfoLegaleRappresentate</label>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>LoopOrdiniOffertaVas</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Legale rappresentante</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>AccountContactRelation</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <screens>
         <name>MinoVO_text1</name>
         <label>MinoVO_text1</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>182</locationX>
+        <locationY>1526</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>MinoVO_text2</name>
-            <fieldText>&lt;p&gt;Operatore: Chiamo DA_INSERIRE. Nell&apos;ambito di questa telefonata ho raccolto il suo interesse a ricevere una nostra proposta contrattuale personalizzata relativa all&apos;offerta {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.CommercialProduct__c} nel rispetto delle disposizione di cui al Codice del Consumo e di cui al Codice di Condotta Commerciale per la vendita di energia elettrica e di gas, di cui può prendere visione sul sito www.autorita.energia.it.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Operatore: Mi conferma che Lei è il Sig./ra {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.LastName__c} &lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.FirstName__c} &lt;/span&gt;&lt;/p&gt;&lt;p&gt;ed il suo codice fiscale è {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.FiscalCode__c}.&lt;/p&gt;&lt;p&gt;Cliente: Confermo&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Operatore: Mi autorizza e quindi conferma che desidera ricevere la nostra proposta , comprensiva della documentazione contrattuale a mezzo mail all&apos;indirizzo {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.PrimaryEmail__c} (oppure SMS al numero numero {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.MobilePhone__c})&lt;/p&gt;&lt;p&gt;Cliente: Confermo&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Operatore: Bene Sig./ra {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.LastName__c} &lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.FirstName__c} &lt;/span&gt;abbiamo terminato la registrazione, in breve tempo riceverà tutta la documentazione contrattuale che, se lo riterrà, potrà sottoscrivere attraverso il codice che le invieremo via sms.&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Operatore: Prima di terminare mi conferma che oggi è il {!$Flow.CurrentDate}&lt;/p&gt;&lt;p&gt;Cliente: Confermo&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Operatore: Grazie Sig./ra arrivederci&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[INIZIO REGISTRAZIONE]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Operatore: Chiamo per conto di {!SalesCompanyFormula}. Nell&apos;ambito di questa telefonata ho raccolto il suo interesse a ricevere una nostra proposta contrattuale personalizzata relativa all&apos;offerta/e {!Offerte} nel rispetto delle disposizione di cui al Codice del Consumo e di cui al Codice di Condotta Commerciale per la vendita di energia elettrica e di gas, di cui può prendere visione sul sito www.autorita.energia.it.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Offerte</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>MinoVO_text6</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[INIZIO REGISTRAZIONE]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Operatore: Chiamo per conto di {!SalesCompanyFormula}. Nell&apos;ambito di questa telefonata ho raccolto il suo interesse a ricevere una nostra proposta contrattuale personalizzata relativa all&apos;offerta/e {!OfferteVas} nel rispetto delle disposizione di cui al Codice del Consumo e di cui al Codice di Condotta Commerciale per la vendita di energia elettrica e di gas, di cui può prendere visione sul sito www.autorita.energia.it.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OfferteVas</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Offerte</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>MinoVO_text3</name>
+            <fieldText>&lt;p&gt;Operatore: Mi conferma che Lei è il Sig./ra &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!getInfoLegaleRappresentate_0.Contact.FirstName}   {!getInfoLegaleRappresentate_0.Contact.LastName}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;ed il suo codice fiscale è {!getInfoLegaleRappresentate_0.Contact.FiscalCode__c} e che le utenze verranno intestate a {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Name} con partita iva {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.VATNumber__c}?&lt;/p&gt;&lt;p&gt;Cliente: Confermo&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>categoryAssigmentVariable</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Famiglie</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>MinoVO_text3_1</name>
+            <fieldText>&lt;p&gt;[Se l’interlocutore NON è il legale rappresentante]&amp;nbsp;&lt;/p&gt;&lt;p&gt;Operatore: Mi conferma di essere autorizzato dal legale rappresentante a ricevere la nostra proposta?&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Cliente: Confermo&lt;/p&gt;&lt;p&gt;Operatore: Mi conferma che nome, cognome e codice fiscale del legale rappresentante sono {!getInfoLegaleRappresentate_0.Contact.FirstName}, &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!getInfoLegaleRappresentate_0.Contact.LastName}, &lt;/span&gt; {!getInfoLegaleRappresentate_0.Contact.FiscalCode__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;Cliente: Confermo&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>categoryAssigmentVariable</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Famiglie</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>MinoVO_text4</name>
+            <fieldText>&lt;p&gt;Operatore: Mi conferma che Lei è il Sig./ra {!Get_Sales_Contact.Name}&lt;/p&gt;&lt;p&gt;ed il suo codice fiscale è {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;Cliente: Confermo&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>categoryAssigmentVariable</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Famiglie</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>MinoVO_text5</name>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Operatore: Mi autorizza e quindi conferma che desidera ricevere la nostra proposta , comprensiva della documentazione contrattuale a mezzo mail all&apos;indirizzo {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.ShippingMail__c}(oppure SMS al numero numero {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.PhoneNumber__c})&lt;/p&gt;&lt;p&gt;Cliente: Confermo&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Operatore: Bene Sig./ra&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!Get_Sales_Contact.Name} &lt;/span&gt;&lt;/p&gt;&lt;p&gt;abbiamo terminato la registrazione, in breve tempo riceverà tutta la documentazione contrattuale che, se lo riterrà, potrà sottoscrivere attraverso il codice che le invieremo via sms.&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Operatore: Prima di terminare mi conferma che oggi è il {!$Flow.CurrentDate}&lt;/p&gt;&lt;p&gt;Cliente: Confermo&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Operatore: Grazie Sig./ra arrivederci&lt;/p&gt;&lt;p&gt;&lt;b&gt;[FINE REGISTRAZIONE]&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>HDT_FL_Script_Gestione_Ordini</targetReference>
@@ -49,26 +302,33 @@
     <subflows>
         <name>HDT_FL_Script_Gestione_Ordini</name>
         <label>HDT_FL_Script_Gestione_Ordini</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <connector>
-            <targetReference>MinoVO_text1</targetReference>
+            <targetReference>categoryAssigment_0</targetReference>
         </connector>
         <flowName>HDT_FL_Script_Gestione_Ordini</flowName>
-        <inputAssignments>
-            <name>idOrdinePadreInput</name>
-            <value>
-                <elementReference>idOrdinePadreInput</elementReference>
-            </value>
-        </inputAssignments>
         <inputAssignments>
             <name>famigliaProdottoOffertaInput</name>
             <value>
                 <elementReference>offertaInput</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>idOrdinePadreInput</name>
+            <value>
+                <elementReference>idOrdinePadreInput</elementReference>
+            </value>
+        </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <name>categoryAssigmentVariable</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <name>idOrdinePadreInput</name>
         <dataType>String</dataType>
@@ -81,6 +341,34 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>OffertaSingola</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>OffertaSingolaVas</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Offerte</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>OfferteVas</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

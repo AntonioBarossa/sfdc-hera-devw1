@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.CyclomaticComplexity')
 public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseValidationInterface {
 
     HDT_QR_CaseValidations caseValidationQr = new HDT_QR_CaseValidations();
@@ -15,6 +16,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         String caseType = currentCase.Type;
         String subprocess = currentCase.Subprocess__c;
+        String cluster = currentCase.Cluster__c;
 
         String result;
 
@@ -98,15 +100,20 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         
         }else if(caseType == 'Proroga Conn Temp')
         {
-            result = validateEndDate(fields);
+            Date currentEndDate = currentCase.TemporaryConnectionEndDate__c;
+            result = validateEndDate(fields, currentEndDate, currentCase);
         
         }else if(caseType == 'Promessa di Pagamento Ente')
         {
             result = validatePromessaDiPagamentoENte(currentCase);
-        
+           
+        }else if(cluster.equalsIgnoreCase('Attivazioni'))
+        {
+            result = validateAttivazioniPostSales(fields);
+
         }else {
 
-        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
         }
 
@@ -268,6 +275,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         }else if(caseType == 'Richiesta Domiciliazione' || caseType == 'Attivazione Click&Pay' || caseType == 'Variazione Domiciliazione')
         {
             String fiscalCode =  getFieldValue(fields, 'BankAccountSignatoryFiscalCode__c');
+            String lastName = getFieldValue(fields, 'BankAccountSignatoryLastName__c');
+            String firstName = getFieldValue(fields, 'BankAccountSignatoryFirstName__c');
             String beneficiaryType = getFieldValue(fields, 'AccountholderTypeBeneficiary__c');
             BillingProfile__c billingProfile = caseValidationQr.getBillingProfileInfo(currentCase.BillingProfile__c);
             String reason = getFieldValue(fields, 'Reason__c');
@@ -279,6 +288,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 if(!String.isEmpty(outcome))
                 {
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', outcome));
+                }
+                if(!HDT_UTL_CalculateFiscalCode.checkFirstLastNameFromFiscalCode(fiscalCode, firstName, lastName))
+                {
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Codice Fiscale non coerente con i dati inseriti'));
                 }
                 else
                 {
@@ -689,7 +702,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         && (getFieldValue(fields, 'CompliantOriginEmail__c') == null || getFieldValue(fields, 'CompliantOriginEmail__c') == '')){
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire indirizzo Email provenienza reclamo'));
-        }else if(delegateName != null && delegateName != ''){
+        /*}else if(delegateName != null && delegateName != ''){
             
             attachedDocument = caseValidationQr.getDocumentByCaseId(recordId); 
             
@@ -702,8 +715,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
                  
             }
-       
-        } else if((getFieldValue(fields,'FithLevelComplaintClassification__c') == null || getFieldValue(fields,'FithLevelComplaintClassification__c') == '')
+        */
+        }else if((getFieldValue(fields,'FithLevelComplaintClassification__c') == null || getFieldValue(fields,'FithLevelComplaintClassification__c') == '')
         && (getFieldValue(fields, 'SoldBy__c') != null && getFieldValue(fields, 'SoldBy__c') != '')){
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Venduto Da non deve essere valorizzato se 5° Livello non é valorizzato'));
@@ -800,6 +813,13 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 {
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
                         'Se Categoria Disalimentabilità è "01- App. medico terapeutiche" bisogna valorizzare a SI "Autocert. di acq. da cliente cert. ASL"'));
+                }
+                else if(String.isNotBlank(disconnectableCategory) 
+                && !disconnectableCategory.equalsIgnoreCase('01- App. medico terapeutiche')
+                && !disconnectableCategory.equalsIgnoreCase('02- Pubblica utilità'))
+                {
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
+                    'Impossibile selezionare valori differenti da "01- App. medico terapeutiche" o "02- Pubblica utilità" per Categoria Disalimentabilità'));
                 }
                 else {
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
@@ -942,7 +962,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
-        }else if(caseType == 'Cambio contatore non registrato'){
+        /*}else if(caseType == 'Cambio contatore non registrato'){
 
             String reading = getFieldValue(fields, 'Reading__c');
 
@@ -954,7 +974,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
-            }
+            }*/
         }else if(caseType == 'Modifica Layout di dettaglio'){
 
             Boolean detail = Boolean.valueOf(getFieldValue(fields, 'ElementDetail__c'));
@@ -1133,10 +1153,47 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     public string validatePreventivi(string fields, Case currentCase)
     {
         String result;
+        String supplyType = getFieldValue(fields, 'SupplyType__c');
+        String taxes = getFieldValue(fields, 'Taxes__c');
+        String servicePointType = getFieldValue(fields, 'ServicePointType__c');
         if(currentCase.Type.equalsIgnoreCase('Nuovo Impianto') || currentCase.Type.equalsIgnoreCase('Aggiunta Attacco')){
             if(currentCase.ShipmentAddressAssign__c == null){
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Indirizzo di Fornitura'));
-            } else {
+            } 
+            else if(currentCase.Commodity__c == null){
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Servizio mancante'));
+            }
+            else if(currentCase.Commodity__c != null){
+                if(currentCase.Commodity__c == 'Gas' && 
+                (String.isNotBlank(supplyType))
+                ){
+                    String taxesFormatted = taxes.substringBetween('(Cod. ',')');
+                    List<FieldCoerenceServicePoint__c> coerenceList = [SELECT Id, 
+                                                                              AccountCategory__c, 
+                                                                              UseCategory__c, 
+                                                                              Commodity__c, 
+                                                                              SupplyType__c, 
+                                                                              ImplantType__c, 
+                                                                              IsActive__c, 
+                                                                              Taxes__c 
+                                                                        FROM FieldCoerenceServicePoint__c
+                                                                        WHERE Commodity__c =: currentCase.Commodity__c AND
+                                                                              SupplyType__c =: supplyType AND
+                                                                              ImplantType__c =: servicePointType AND
+                                                                              (Taxes__c =: taxesFormatted OR Taxes__c = null) AND
+                                                                              AccountCategory__c = 'Famiglie' WITH SECURITY_ENFORCED];
+                    //Boolean isCoerence = HDT_SRV_FieldCoerenceServicePoint.checkCoerence(inputFieldMap);
+                    if(coerenceList.isEmpty()){
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Assenza coerenza campi'));
+                    }
+                    else{
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+                    }
+                }else{
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+                }
+            }            
+            else {
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
             }
         }
@@ -1187,20 +1244,48 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return result;
     }
 
-    public String validateEndDate(String fields){
+    public String validateEndDate(String fields, Date currentEndDate, Case currentCase){
 
-        String startDateString = getFieldValue(fields, 'TemporaryConnectionStartDate__c');
         String endDateString = getFieldValue(fields, 'TemporaryConnectionEndDate__c');
 
         String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
-        Date startDate = Date.valueOf(startDateString);
         Date endDate = Date.valueOf(endDateString);
 
-        if ( startDate <= System.today() || endDate <= startDate) {
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario che la data finale sia successiva alla data iniziale.'));
+        List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+
+        if ( currentEndDate > endDate) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario che la data fine connessione temporanea sia successiva a quella già esistente sul contratto.'));
+        }
+        if(attachedDocument.size() == 0)
+        {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire allegati'));
         }
 
+        return result;
+    }
+
+    public String validateAttivazioniPostSales(String fields)
+    {
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        String fiscalCode = getFieldValue(fields, 'DeceasedFiscalCode__c');
+        String firstName = getFieldValue(fields, 'DeceasedName__c');
+        String lastName = getFieldValue(fields, 'DeceasedSurname__c');
+        Date deceasedDate = getFieldValue(fields, 'DeceasedDate__c') != null ? Date.valueOf(getFieldValue(fields, 'DeceasedDate__c')) : null;
+        String outcome = validateFiscalCode(fiscalCode);
+        if(deceasedDate != null && deceasedDate > System.today())
+        {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile inserire una data decesso nel futuro'));
+        }
+        if(!String.isBlank(outcome))
+        {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', outcome));
+        }
+        if(!HDT_UTL_CalculateFiscalCode.checkFirstLastNameFromFiscalCode(fiscalCode, firstName, lastName))
+        {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Codice Fiscale non coerente con i dati inseriti'));
+        }
+        
         return result;
     }
 

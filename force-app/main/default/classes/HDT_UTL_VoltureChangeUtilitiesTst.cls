@@ -127,7 +127,7 @@ public with sharing class HDT_UTL_VoltureChangeUtilitiesTst {
         Test.startTest();
         String result = voltureChangeUtilities.getTension(String.valueOf(HDT_UTL_VoltureChangeUtilities.btLimit));
         Test.stopTest();
-        System.assertEquals('BT', result, 'Livello Tensione BT non calcolato correttamente');
+        System.assertEquals('MT', result, 'Livello Tensione BT non calcolato correttamente');
     }
 
     
@@ -137,7 +137,7 @@ public with sharing class HDT_UTL_VoltureChangeUtilitiesTst {
         Test.startTest();
         String result = voltureChangeUtilities.getTension(String.valueOf(HDT_UTL_VoltureChangeUtilities.mtLimit));
         Test.stopTest();
-        System.assertEquals('MT', result, 'Livello Tensione MT non calcolato correttamente');
+        System.assertEquals('', result, 'Livello Tensione MT non calcolato correttamente');
     }
 
     
@@ -232,6 +232,7 @@ public with sharing class HDT_UTL_VoltureChangeUtilitiesTst {
         Map<String, Object> currentRates = new Map<String,Object>
         {
             'VAT__c' => '',
+			'Commodity__c'=>'Gas',
             'ExciseEle__c' => ''
         };
         Map<String, Object> toUpdateRates = new Map<String, Object>
@@ -255,19 +256,19 @@ public with sharing class HDT_UTL_VoltureChangeUtilitiesTst {
         {
             'VAT__c' => 'Iva 22% (Cod. 02)',
             'ExciseEle__c' => 'Imposta usi domestici',
-            'RegionalAdditional__c' => 12.0
+            'RegionalAdditional__c' => 12.0,
+			'Commodity__c'=>'Ele'
         };
         Map<String, Object> toUpdateRates = new Map<String, Object>
         {
             'VAT__c' => '',
-            'ExciseEle__c' => ''
-            
+            'ExciseEle__c' => ''            
         };
-
         
         Test.startTest();
         Map<String,Object> resultMap = voltureChangeUtilities.checkRates(currentRates, toUpdateRates);
         Test.stopTest();
+        system.debug('KRIST: '+(Decimal)resultMap.get('RegionalAdditional__c'));
 
         System.assert( (Decimal)resultMap.get('RegionalAdditional__c') > 0,'Mappa non calcolata correttamente');
     }

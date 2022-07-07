@@ -20,4 +20,8 @@
         <masterLabel>In Lavorazione</masterLabel>
         <translation><!-- In Lavorazione --></translation>
     </valueTranslation>
+    <valueTranslation>
+        <masterLabel>Sequenzializzato</masterLabel>
+        <translation><!-- Sequenzializzato --></translation>
+    </valueTranslation>
 </StandardValueSetTranslation>

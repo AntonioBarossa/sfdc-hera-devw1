@@ -98,62 +98,80 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
         if(response != null){
 
-            HDT_WRP_MinWrapper minWrapper = (HDT_WRP_MinWrapper) JSON.deserialize(response.getBody(), HDT_WRP_MinWrapper.class);
+            if(process == 'Blocco Sollecito/Interessi')
+            {
+                HDT_WRP_BloccoSollecito bloccoSollecitoResponse = (HDT_WRP_BloccoSollecito) JSON.deserialize(response.getBody(), HDT_WRP_BloccoSollecito.class);
+                if(bloccoSollecitoResponse.response != null && bloccoSollecitoResponse.response.esito.equalsIgnoreCase('KO'))
+                {
+                    caseToUpdate.TecnicalPhase__c = 'Esito KO da SAP';
+                }
+                else 
+                {
+                    caseToUpdate.Phase__c = 'Completata';    
+                }
+            }   
+            else
+            {
 
-            switch on minWrapper.status{
+                HDT_WRP_MinWrapper minWrapper = (HDT_WRP_MinWrapper) JSON.deserialize(response.getBody(), HDT_WRP_MinWrapper.class);
 
-                when 'success'{
+                switch on minWrapper.status{
 
-                    HDT_WRP_SuccessResponse successResponse = 
-                        (HDT_WRP_SuccessResponse) JSON.deserialize(response.getBody(), HDT_WRP_SuccessResponse.class);
+                    when 'success'{
 
-                    System.debug(LoggingLevel.DEBUG, 'WS_Payments successResponse--> ' + successResponse);
+                        HDT_WRP_SuccessResponse successResponse = 
+                            (HDT_WRP_SuccessResponse) JSON.deserialize(response.getBody(), HDT_WRP_SuccessResponse.class);
 
-                    phase = handleSuccessResponse(successResponse, recordId, process, depositMode);
+                        System.debug(LoggingLevel.DEBUG, 'WS_Payments successResponse--> ' + successResponse);
 
-                    if(successResponse.data != null){
-                        if(successResponse.data.numeroBollettino != null){
+                        phase = handleSuccessResponse(successResponse, recordId, process, depositMode);
+                        String note = '';
+                        if(successResponse.data != null){
+                            if(successResponse.data.numeroBollettino != null){
 
-                            caseToUpdate.PaperlessCode__c = successResponse.data.numeroBollettino;
+                                caseToUpdate.PaperlessCode__c = successResponse.data.numeroBollettino;
+                            }
+                            note = successResponse.data.note;
+                        }
+                        if(phase != null){
+
+                            caseToUpdate.TecnicalPhase__c = phase;
 
                         }
+                        if (String.isNotBlank(note) && ('Esito KO da SAP'.equalsIgnoreCase(phase)||'Paperless Non Generato'.equalsIgnoreCase(phase))){
+                            caseToUpdate.DiscardDescription__c = note;
+                        }
+
+                        // if(process == 'Comunicazione Pagamento'
+                        // || process == 'Piano Rateizzazione'
+                        // || process == 'Paperless'){
+                        //     caseToUpdate.Phase__c = 'Inviata a SAP';
+                        // }
+                        
+                    }   
+                    when else{ 
+
+                        HDT_WRP_ErrorResponse errorResponse = 
+                            (HDT_WRP_ErrorResponse) JSON.deserialize(response.getBody(), HDT_WRP_ErrorResponse.class);
+
+                        System.debug(LoggingLevel.DEBUG, 'WS_Payments errorResponse--> ' + errorResponse);
+                        if(process == 'Comunicazione Pagamento'
+                        || process == 'Piano Rateizzazione'
+                        || process == 'Paperless'
+                        || process == 'Blocco Sollecito/Interessi'){
+                            caseToUpdate.TecnicalPhase__c = process == 'Paperless'
+                            ? 'Paperless Non Generato'
+                            : 'Esito KO da SAP';
+                        }
+                        //createActivity(recordId, errorResponse.errorDetails[0].message, 'Esito KO da SAP');
+                        // if(caseToUpdate.Description != null){
+                        //     caseToUpdate.Description += '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
+                        // }else{
+                        //     caseToUpdate.Description  = '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
+                        // }
+
                     }
-                    if(phase != null){
-
-                        caseToUpdate.TecnicalPhase__c = phase;
-
-                    }
-
-                    // if(process == 'Comunicazione Pagamento'
-                    // || process == 'Piano Rateizzazione'
-                    // || process == 'Paperless'){
-                    //     caseToUpdate.Phase__c = 'Inviata a SAP';
-                    // }
-                    
-                }   
-                when else{ 
-
-                    HDT_WRP_ErrorResponse errorResponse = 
-                        (HDT_WRP_ErrorResponse) JSON.deserialize(response.getBody(), HDT_WRP_ErrorResponse.class);
-
-                    System.debug(LoggingLevel.DEBUG, 'WS_Payments errorResponse--> ' + errorResponse);
-                    if(process == 'Comunicazione Pagamento'
-                    || process == 'Piano Rateizzazione'
-                    || process == 'Paperless'
-                    || process == 'Blocco Sollecito/Interessi'){
-                        caseToUpdate.TecnicalPhase__c = process == 'Paperless'
-                        ? 'Paperless Non Generato'
-                        : 'Esito KO da SAP';
-                    }
-                    //createActivity(recordId, errorResponse.errorDetails[0].message, 'Esito KO da SAP');
-                    // if(caseToUpdate.Description != null){
-                    //     caseToUpdate.Description += '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
-                    // }else{
-                    //     caseToUpdate.Description  = '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
-                    // }
-
                 }
-
             }
 
         } else {
@@ -306,6 +324,19 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         public String correlationId;
         public String timestamp;
 
+    }
+
+    public class HDT_WRP_BloccoSollecito
+    {
+        public String status;
+        public String correlationId;
+        public String timestamp;
+        public HDT_WRP_Response response;
+    }
+
+    public class HDT_WRP_Response
+    {
+        public String esito;
     }
 
     public class HDT_WRP_SuccessResponse{

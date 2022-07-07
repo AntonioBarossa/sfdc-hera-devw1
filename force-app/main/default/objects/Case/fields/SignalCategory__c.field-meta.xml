@@ -37,6 +37,16 @@
                 <default>false</default>
                 <label>Noleggio</label>
             </value>
+            <value>
+                <fullName>Hera Ricarica Business</fullName>
+                <default>false</default>
+                <label>Hera Ricarica Business</label>
+            </value>
+            <value>
+                <fullName>Hera Ricarica Privata</fullName>
+                <default>false</default>
+                <label>Hera Ricarica Privata</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

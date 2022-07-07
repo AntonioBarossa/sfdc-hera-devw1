@@ -480,9 +480,11 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         let companyOwner= this.template.querySelector('[data-id="companyOwner"]');
         let phonePrefix= this.template.querySelector('[data-id="phonePrefix"]');
         let mobilePhonePrefix= this.template.querySelector('[data-id="mobilePhonePrefix"]');
-        let companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
-        let customerTypeValue=this.template.querySelector('[data-id="customerType"]').value;
+        // let companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
+        
+        let customerTypeValue=this.template.querySelector('[data-id="ClienteFinale"]').value===null?this.template.querySelector('[data-id="customerType"]').value:this.template.querySelector('[data-id="ClienteFinale"]').value;
 
+        console.log('customerTypeValue --> '+customerTypeValue);
 
         // let address =this.template.querySelector('[data-id="address"]');
         // let location =this.template.querySelector('[data-id="location"]');
@@ -508,8 +510,47 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         this.birthPlace= this.template.querySelector('[data-id="birthPlace"]').value;
         this.spinner= true;
         var messageError= "Completare tutti i campi obbligatori !";
-        var mailFormat = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+        var mailFormat = /^(?:[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[A-Za-z0-9-]*[A-Za-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
         var dataAccount;
+        //var vatNumberValid = this.checkVATNumberMethod(vatNumber.value);
+
+        
+
+
+        //CAMPI IN UPPERCASE
+        let businessNameToUC = '';
+        let fiscalCodeToUC = '';
+        let firstNameToUC = '';
+        let lastNameToUC = '';
+        let personFiscalCodeToUC = '';
+        let birthPlaceToUC = '';
+        let firstIndividualNameToUC = '';
+        let lastIndividualNameToUC = '';
+        if(businessName.value != null && businessName.value != undefined && businessName.value != '')
+            businessNameToUC = businessName.value.toUpperCase();
+        if(fiscalCode.value != null && fiscalCode.value != undefined && fiscalCode.value != '')
+            fiscalCodeToUC = fiscalCode.value.toUpperCase();
+        if(firstName.value != null && firstName.value != undefined && firstName.value != '')
+            firstNameToUC = firstName.value.toUpperCase();
+        if(lastName.value != null && lastName.value != undefined && lastName.value != '')
+            lastNameToUC = lastName.value.toUpperCase();
+        if(this.personFiscalCode.value != null && this.personFiscalCode.value != undefined && this.personFiscalCode.value != '')
+            personFiscalCodeToUC = this.personFiscalCode.value.toUpperCase();
+        if(this.birthPlace != null && this.birthPlace != undefined && this.birthPlace != '')
+            birthPlaceToUC = this.birthPlace.toUpperCase();
+        if(firstIndividualName.value != null && firstIndividualName.value != undefined && firstIndividualName.value != '')
+            firstIndividualNameToUC = firstIndividualName.value.toUpperCase();
+        if(lastIndividualName.value != null && lastIndividualName.value != undefined && lastIndividualName.value != '')
+            lastIndividualNameToUC = lastIndividualName.value.toUpperCase();
+        console.log('businessNameToUC --> '+businessNameToUC);
+        console.log('fiscalCodeToUC --> '+fiscalCodeToUC);
+        console.log('firstNameToUC --> '+firstNameToUC);
+        console.log('lastNameToUC --> '+lastNameToUC);
+        console.log('personFiscalCodeToUC --> '+personFiscalCodeToUC);
+        console.log('birthPlaceToUC --> '+birthPlaceToUC);
+        console.log('firstIndividualNameToUC --> '+firstIndividualNameToUC);
+        console.log('lastIndividualNameToUC --> '+lastIndividualNameToUC);
+
         if ((this.markingValue.includes("Condominio")||this.markingValue.includes('Associazione')) && (fiscalCode.value== undefined||fiscalCode.value.trim()=='')) {
           
             if(!fiscalCode.reportValidity()){
@@ -531,6 +572,15 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 isValidated=false;
                 messageError=" La Partita Iva deve essere lunga 11 cifre!";
             }
+            //Check P.IVA Valido.
+/*             if(vatNumberValid == false){
+                isValidated=false;
+                messageError=" La Partita Iva non è valida!";
+            }
+            else if(vatNumberValid == null){
+                isValidated=false;
+                messageError="Errore imprevisto nella Partita IVA!";
+            } */
         }
         if(!this.personFiscalCode.reportValidity()){
             isValidated=false;
@@ -586,6 +636,11 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             }
         }
 
+        // if(this.birthPlace == undefined || this.birthPlace == ''){
+        //     isValidated = false;
+        //     messageError=" Inserire il comune di nascita!";
+        // }
+
         console.log("LOG4");
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
             if(mobilePhone.value.length<9 || mobilePhone.value.length > 10){
@@ -597,6 +652,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             if(mobilephoneNumber.value.length<9 || mobilephoneNumber.value.length > 10){
                 isValidated=false;
                 messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre!";
+            }            
+            if( String(mobilephoneNumber.value).charAt(0)!='3' ){
+                isValidated=false;
+                messageError=" Il numero di cellulare deve iniziare con il numero 3!";
             }
         }
         if(!(contactPhoneNumber.value=== undefined || contactPhoneNumber.value.trim()==='')){
@@ -702,19 +761,21 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         if(this.birthPlace === undefined || this.birthPlace.trim()===''){
                            // this.birthPlace= fiscData.birthPlace;
                            this.birthPlace=fiscData[keyCode].birthPlace;//HRDTR-00_HRAWRM-761 28/09/2021
+                           birthPlaceToUC = this.birthPlace.toUpperCase();
 
                         }
                         console.log("LOG13:");
                         console.log("LOG13:" + businessName.value);
+                        
                         dataAccount={
-                            "businessName" : businessName.value,
+                            "businessName" : businessNameToUC,
                             "vatNumber" : vatNumber.value,
-                            "fiscalCode" : fiscalCode.value.replace(/ /g,""),
+                            "fiscalCode" : fiscalCodeToUC.replace(/ /g,""),
                           //  "legalForm" : legalForm.value,
                             "customerMarking" : customerMarking.value,
                             "category" : category.value,
-                            "firstIndividualName" : firstIndividualName.value,
-                            "lastIndividualName" : lastIndividualName.value,
+                            "firstIndividualName" : firstIndividualNameToUC,
+                            "lastIndividualName" : lastIndividualNameToUC,
                             "prefixPhoneNumber" : prefixPhoneNumber.value,
                             "prefixMobilePhoneNumber" : prefixMobilePhoneNumber.value,
                             "mobilephoneNumber" : mobilephoneNumber.value,
@@ -722,12 +783,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             "email" : email.value,
                             "electronicMail" : electronicMail.value,
                             "numberFax" : numberFax.value,
-                            "firstName" : firstName.value,
+                            "firstName" : firstNameToUC,
                             "gender" : this.gender,
-                            "lastName" : lastName.value,
+                            "lastName" : lastNameToUC,
                             "birthDate" : this.birthDate,
-                            "birthplace": this.birthPlace,
-                            "personFiscalCode" : this.personFiscalCode.value.replace(/ /g,""),
+                            "birthplace": birthPlaceToUC,
+                            "personFiscalCode" : personFiscalCodeToUC.replace(/ /g,""),
                             "role" : role.value,
                             "mobilePhone" : mobilePhone.value,
                             "contactEmail" : contactEmail.value,
@@ -738,10 +799,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             "profession" : profession.value,
                             "recordTypeId" : this.RecordTypeId,
                             "companyOwner" : companyOwner.value,
-                            "company":companyValue.value,
+                            // "company":companyValue.value,
                             "phonePrefix" : phonePrefix.value ,
                             "mobilePhonePrefix" : mobilePhonePrefix.value,
-                            "customerTypeValue": customerTypeValue,
+                            "customerTypeValue": customerTypeValue
                         };
                         console.log("LOG14");
                         insertAccount({
@@ -796,19 +857,20 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 }else{
                     var prova = this.personFiscalCode.value;//.replace(/ /g,"");
                     console.log("LOG12:" + prova);
+                        
                     getFromFiscalCode2({
                         fiscalCodes : prova
                     }).then((response) => {
                     console.log("LOG16");
                     dataAccount={
-                        "businessName" : businessName.value,
+                        "businessName" : businessNameToUC,
                         "vatNumber" : vatNumber.value,
-                        "fiscalCode" : fiscalCode.value.replace(/ /g,""),
+                        "fiscalCode" : fiscalCodeToUC.replace(/ /g,""),
                       //  "legalForm" : legalForm.value,
                         "customerMarking" : customerMarking.value,
                         "category" : category.value,
-                        "firstIndividualName" : firstIndividualName.value,
-                        "lastIndividualName" : lastIndividualName.value,
+                        "firstIndividualName" : firstIndividualNameToUC,
+                        "lastIndividualName" : lastIndividualNameToUC,
                         "phoneNumber" : phoneNumber.value,
                         "email" : email.value,
                         "electronicMail" : electronicMail.value,
@@ -816,12 +878,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         "prefixPhoneNumber" : prefixPhoneNumber.value,
                         "prefixMobilePhoneNumber" : prefixMobilePhoneNumber.value,
                         "mobilephoneNumber" : mobilephoneNumber.value,
-                        "firstName" : firstName.value,
+                        "firstName" : firstNameToUC,
                         "gender" : this.gender,
-                        "lastName" : lastName.value,
+                        "lastName" : lastNameToUC,
                         "birthDate" : this.birthDate,
-                        "birthplace": this.birthPlace,
-                        "personFiscalCode" : this.personFiscalCode.value.replace(/ /g,""),
+                        "birthplace": birthPlaceToUC,
+                        "personFiscalCode" : personFiscalCodeToUC.replace(/ /g,""),
                         "role" : role.value,
                         "mobilePhone" : mobilePhone.value,
                         "contactEmail" : contactEmail.value,
@@ -834,10 +896,11 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         "companyOwner" : companyOwner.value ,
                         "phonePrefix" : phonePrefix.value ,
                         "mobilePhonePrefix" : mobilePhonePrefix.value,
-                        "company":companyValue.value,
-                        "customerTypeValue": customerTypeValue.value,
-
+                        // "company":companyValue.value,
+                        "customerTypeValue": customerTypeValue
                     };
+                    
+                    console.log('customerTypeValue --> '+customerTypeValue);
                     console.log("*******DOP");
                     console.log("LOG17");
                     insertAccount({
@@ -942,6 +1005,40 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         this.dispatchEvent(event);
     }    
     //HRAWRM-933 End 08/11/2021
+    //commented 26/05/2022
+    /* checkVATNumberMethod(vatNumberToCheck){
+
+        const numeriPari = [];
+        const numeriDispari = [];
+        let countDispari = 0;
+        let countPari = 0;
+        let countResult = 0;
+        const vatNumberList = vatNumberToCheck.split('');
+        for(let indexPari = 1; indexPari<vatNumberList.length; indexPari = indexPari+2){
+            numeriPari.push(vatNumberList[indexPari]);
+        }
+        for(let indexDispari = 0; indexDispari<vatNumberList.length; indexDispari = indexDispari+2){
+            numeriDispari.push(vatNumberList[indexDispari]);
+        }
+        numeriDispari.forEach((sDispari) => {
+            countDispari = countDispari + parseInt(sDispari);
+        });
+        numeriPari.forEach((sPari) => {
+            let tmpPari = 0;
+            tmpPari = parseInt(sPari) * 2;
+            if(tmpPari > 9){
+                tmpPari = tmpPari - 9;
+            }
+            countPari = countPari + tmpPari;
+        });
+        countResult = countDispari + countPari;
+        if(countResult % 10 == 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    } */
 
     
 }

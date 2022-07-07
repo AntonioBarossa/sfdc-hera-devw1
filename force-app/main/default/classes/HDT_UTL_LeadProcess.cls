@@ -18,8 +18,7 @@ public with sharing class HDT_UTL_LeadProcess {
         Map<String,String> mapRequestFields = new Map<String,String>();
         Id leadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('HDT_RT_Main').getRecordTypeId();
        // System.debug('PROVA WSFORM');
-        if (request.objects.get(0).fields.get(0) != null) {
-            
+       if (request != null && request.objects != null && request.objects.get(0) != null && request.objects.get(0).fields.get(0) != null) {            
             for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
                 if(mapRequestFields.get(field.name) == null){
                     mapRequestFields.put(field.name,field.value);
@@ -126,7 +125,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                    // System.debug('PROVA WSFORM7');
-                    Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
+                    Account ac= acQr.getAccountByName(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
                     String macroactivity= null;
@@ -143,12 +142,10 @@ public with sharing class HDT_UTL_LeadProcess {
                         macroactivity= campaign[0].MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                     }
                     
-                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id,phonenumber__c = mapRequestFields.get('CELLULARE'));
+                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     
                     cmSrv.createRecord(cm);
-                    if(macroactivity != null && macroactivity != '' && newLead.ContactDate__c != null ){
-                        HDT_WS_InvioNumerazioni.callService(macroactivity, l.MobilePhone);
-                    }
+
                     responseField.fieldType = 'TEXT';
                     responseField.name = 'ESITO';
                     responseField.value = 'OK';
@@ -204,8 +201,7 @@ public with sharing class HDT_UTL_LeadProcess {
         Id leadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('HDT_RT_Main').getRecordTypeId();
 
         Map<String,String> mapRequestFields = new Map<String,String>();
-        if (request.objects.get(0).fields.get(0) != null) {
-            
+        if (request != null && request.objects != null && request.objects.get(0) != null && request.objects.get(0).fields.get(0) != null) {            
             for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
                 if(mapRequestFields.get(field.name) == null){
                     mapRequestFields.put(field.name,field.value);
@@ -303,7 +299,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                     
-                    Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
+                    Account ac= acQr.getAccountByName(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
                     String macroactivity= null;
@@ -320,11 +316,9 @@ public with sharing class HDT_UTL_LeadProcess {
                         campaignId = campaign[0].Id;
                         macroactivity= campaign[0].MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                     }
-                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id);
+                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     cmSrv.createRecord(cm);
-                    if(macroactivity != null && macroactivity != '' && newLead.ContactDate__c != null){
-                        HDT_WS_InvioNumerazioni.callService(macroactivity, l.MobilePhone);
-                    }                    
+
                     responseField.fieldType = 'TEXT';
                     responseField.name = 'ESITO';
                     responseField.value = 'OK';
@@ -380,8 +374,7 @@ public with sharing class HDT_UTL_LeadProcess {
 
         Map<String,String> mapRequestFields = new Map<String,String>();
         
-        if (request.objects.get(0).fields.get(0) != null) {
-            
+        if (request != null && request.objects != null && request.objects.get(0) != null && request.objects.get(0).fields.get(0) != null) {            
             for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
                 if(mapRequestFields.get(field.name) == null){
                     mapRequestFields.put(field.name,field.value);
@@ -479,7 +472,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                     
-                    Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
+                    Account ac= acQr.getAccountByName(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
                     String macroactivity= null;
@@ -497,16 +490,14 @@ public with sharing class HDT_UTL_LeadProcess {
                         macroactivity= campaign[0].MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                         
                     }
-                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id);
+                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     cmSrv.createRecord(cm);
-                    if(macroactivity != null && macroactivity != '' && newLead.ContactDate__c != null ){
-                        HDT_WS_InvioNumerazioni.callService(macroactivity, l.MobilePhone);
-                    }      
+
                     if(mapRequestFields.get('FILE') != null && mapRequestFields.get('FILE') != ''){
                         //ContentDocumentLink cdl = new ContentDocumentLink();
                         HDT_QR_ContentVersion conDocQr = new HDT_QR_ContentVersion();
                         ContentVersion cvdl = conDocQr.getRecordById(mapRequestFields.get('FILE'));
-                        cdlSrv.createRecord(l.id,cvdl.contentDocumentId,'C');
+                        cdlSrv.createRecord(l.id,cvdl.contentDocumentId,'I');
                     }              
                     
                     responseField.fieldType = 'TEXT';
@@ -562,8 +553,7 @@ public with sharing class HDT_UTL_LeadProcess {
 
         Map<String,String> mapRequestFields = new Map<String,String>();
         
-        if (request.objects.get(0).fields.get(0) != null) {
-            
+        if (request != null && request.objects != null && request.objects.get(0) != null && request.objects.get(0).fields.get(0) != null) {            
             for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
                 if(mapRequestFields.get(field.name) == null){
                     mapRequestFields.put(field.name,field.value);
@@ -674,7 +664,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                     
-                    Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
+                    Account ac= acQr.getAccountByName(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
                     String macroactivity= null;
@@ -691,12 +681,9 @@ public with sharing class HDT_UTL_LeadProcess {
                         campaignId = campaign[0].Id;
                         macroactivity= campaign[0].MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                     }
-                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id);
+                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     cmSrv.createRecord(cm);
-                    if(macroactivity != null && macroactivity != '' && newLead.ContactDate__c != null){
-                        HDT_WS_InvioNumerazioni.callService(macroactivity, l.MobilePhone);
-                    }
-                    
+
                     responseField.fieldType = 'TEXT';
                     responseField.name = 'ESITO';
                     responseField.value = 'OK';
@@ -753,8 +740,7 @@ public with sharing class HDT_UTL_LeadProcess {
 
         Map<String,String> mapRequestFields = new Map<String,String>();
         
-        if (request.objects.get(0).fields.get(0) != null) {
-            
+        if (request != null && request.objects != null && request.objects.get(0) != null && request.objects.get(0).fields.get(0) != null) {            
             for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
                 if(mapRequestFields.get(field.name) == null){
                     mapRequestFields.put(field.name,field.value);
@@ -871,7 +857,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                     
-                    Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
+                    Account ac= acQr.getAccountByName(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
                     String macroactivity= null;
@@ -888,11 +874,9 @@ public with sharing class HDT_UTL_LeadProcess {
                         campaignId = campaign[0].Id;
                         macroactivity= campaign[0].MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                     }
-                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id);
+                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     cmSrv.createRecord(cm);
-                    if(macroactivity != null && macroactivity != ''){
-                        HDT_WS_InvioNumerazioni.callService(macroactivity, l.MobilePhone);
-                    }                    
+
                     responseField.fieldType = 'TEXT';
                     responseField.name = 'ESITO';
                     responseField.value = 'OK';

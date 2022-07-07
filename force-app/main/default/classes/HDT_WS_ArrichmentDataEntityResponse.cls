@@ -2,13 +2,13 @@ public class HDT_WS_ArrichmentDataEntityResponse extends HDT_WS_Response {
     @AuraEnabled public String status{get;set;}
     @AuraEnabled public String correlationId{get;set;}
     @AuraEnabled public String timestamp{get;set;}
-    @AuraEnabled public HDT_WRP_dataResponseObject data{get;set;}
+    @AuraEnabled public HDT_WRP_DataResponseObject data{get;set;}
    // @AuraEnabled public List<HDT_WRP_posizioniResponseObject> posizioni{get;set;}
-    @AuraEnabled public List<HDT_WRP_errorResponseObject> errorDetails{get;set;}
+    @AuraEnabled public List<HDT_WRP_ErrorResponseObject> errorDetails{get;set;}
 
     public HDT_WS_ArrichmentDataEntityResponse(){
-       this.data =  new HDT_WRP_dataResponseObject();
-       this.errorDetails = new List<HDT_WRP_errorResponseObject>();
+       this.data =  new HDT_WRP_DataResponseObject();
+       this.errorDetails = new List<HDT_WRP_ErrorResponseObject>();
     }
     
     public class HDT_WRP_DataResponseObject{

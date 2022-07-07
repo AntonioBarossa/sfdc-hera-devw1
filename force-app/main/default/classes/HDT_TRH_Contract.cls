@@ -35,6 +35,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
         // system.debug('START HDT_TRH_Contract beforeUpdate');
         // HDT_UTL_ContractProcess.orderCompletataPhaseManagement(Trigger.new);
         // system.debug('END HDT_TRH_Contract beforeUpdate');
+        HDT_UTL_GlobaMigrationKey.setGlobalMigrationKey(Trigger.new, Trigger.oldMap);
         HDT_QR_Order qrOrder = new HDT_QR_Order();
         List<id> listOrderId = new List<id>();
         List<Contract> listContract = new List<Contract>();
@@ -66,8 +67,16 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                         tempContract.SapContractCode__c = mapOrder.get(tempContract.SBQQ__Order__c).SapContractCode__c ; //HRAWRM-638  17/09/2021
                         tempContract.Pricebook2Id = mapOrder.get(tempContract.SBQQ__Order__c).SBQQ__Quote__r.SBQQ__PriceBook__c;
                         tempContract.SBQQ__AmendmentPricebookId__c = mapOrder.get(tempContract.SBQQ__Order__c).SBQQ__Quote__r.SBQQ__PriceBook__c;
-                        tempContract.CommercialProduct__c = mapOrder.get(tempContract.SBQQ__Order__c).CommercialProduct__c ;  //08/09/2021 HRAWRM-251 
-
+                        tempContract.CommercialProduct__c = mapOrder.get(tempContract.SBQQ__Order__c).CommercialProduct__c ;  //08/09/2021 HRAWRM-251
+                        /*@frpanico 14/02/2022
+                        * Aggiunta scrittura della EndDate
+                        * Nel caso di Temporanea - Nuova Attivazione
+                        */ 
+                        if( mapOrder.get(tempContract.SBQQ__Order__c) != null && ((String)mapOrder.get(tempContract.SBQQ__Order__c).get('ProcessType__c')).equalsIgnoreCase('Temporanea - Nuova Attivazione')
+                            && String.isNotBlank(String.valueOf(mapOrder.get(tempContract.SBQQ__Order__c).get('TemporaryConnectionEndDate__c'))))
+                            {
+                                tempContract.EndDate = (Date) mapOrder.get(tempContract.SBQQ__Order__c).get('TemporaryConnectionEndDate__c');
+                            }
                     }
                 }
             }
@@ -91,14 +100,19 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
     public override void afterUpdate() {
         HDT_UTL_ActiveServicesKpi.run(Trigger.newMap, Trigger.oldMap);
         Map<Id, ServicePoint__c> spToActivate = new Map<Id, ServicePoint__c>();
+        Set<Id> contractsForSieXiv = new Set<Id>();
         for(Contract c : (List<Contract>)Trigger.new){
             if(c.status=='Attivo' && c.ServicePoint__c!=null && Trigger.oldMap.get(c.id).get('ServicePoint__c')==null){
                 spToActivate.put(c.ServicePoint__c, new ServicePoint__c(Id=c.ServicePoint__c, MeterStatus__c='Attivo'));
+                contractsForSieXiv.add(c.Id);
             }
         }
         if(!spToActivate.isEmpty()){
             HDT_UTL_DatabaseService.updateSObject(spToActivate.values());
+            HDT_SRV_SieXiv sie = new HDT_SRV_SieXiv();
+            sie.initSIE(contractsForSieXiv);
         }
+
 
        /*list<Contract> newContracts = (List<Contract>) Trigger.New;
        Set<Id> orderToContract = new Set<Id>();

@@ -13,9 +13,10 @@ public inherited sharing class HDT_LC_CalculateEstimatedCost {
             Id = order.Id,
             EstimateAmount__c = order.EstimateAmount__c,
             PowerQuote__c = order.PowerQuote__c,
-            AdministrativeBurden__c = order.AdministrativeBurden__c,
+            AdministrativeBurden__c = order.AdministrativeBurden__c.setScale(2),
             EstimatedVAT__c = order.EstimatedVAT__c,
             ValidityDateEstimate__c = order.ValidityDateEstimate__c,
+            VariableAmount__c = (order.EstimateAmount__c - order.AdministrativeBurden__c).setScale(2),
             OperationCode__c = Order.OperationCode__c,
             QuotationType__c = order.QuotationType__c
         ));
@@ -48,13 +49,24 @@ public inherited sharing class HDT_LC_CalculateEstimatedCost {
     }
 	@TestVisible
     private static void getFixedQuotes(Order ord, HDT_WRP_ExtimatedCost wrp){
-        String searchKey = (new Set<String>{'Domestico', 'A-Domestico'}.contains(ord.SupplyType__c)) ? 'Domestico' : 'Non Domestico';
+        String supplyType = [SELECT SupplyType__c FROM Order WHERE Id = :ord.Id WITH SECURITY_ENFORCED LIMIT 1].SupplyType__c;
+        String searchKey = (new Set<String>{'Domestico', 'A-Domestico'}.contains(supplyType)) ? 'Domestico' : 'Non Domestico';
         HDT_CalcoloPreventivi__mdt fixedQuotes = [SELECT VAT__c, DistributorFixedQuote__c, PowerQuote__c, SellerFixedQuote__c FROM HDT_CalcoloPreventivi__mdt WHERE Type__c=:searchKey WITH SECURITY_ENFORCED];
         wrp.fixedQuotes=fixedQuotes;
         Decimal variableAmount =  fixedQuotes.PowerQuote__c*((ord.PowerRequested__c*(ord.PowerAvailable__c>30?1.0:1.1))-ord.PowerAvailable__c);
-        wrp.estimatedAmount=(variableAmount+fixedQuotes.DistributorFixedQuote__c+fixedQuotes.SellerFixedQuote__c)*(1+(fixedQuotes.VAT__c/100));
+        wrp.estimatedAmount=(variableAmount+fixedQuotes.DistributorFixedQuote__c+fixedQuotes.SellerFixedQuote__c);
         wrp.estimatedAmount=wrp.estimatedAmount.setScale(2);
         return;
+    }
+
+    public Map<String,Decimal> getAmounts(String supplyType, Decimal estimatedAmount)
+    {
+        Map<String,Decimal> resultMap = new Map<String,Decimal>();
+        String searchKey = (new Set<String>{'Domestico', 'A-Domestico'}.contains(supplyType)) ? 'Domestico' : 'Non Domestico';
+        HDT_CalcoloPreventivi__mdt fixedQuotes = [SELECT VAT__c, DistributorFixedQuote__c, PowerQuote__c, SellerFixedQuote__c FROM HDT_CalcoloPreventivi__mdt WHERE Type__c=:searchKey WITH SECURITY_ENFORCED];
+        resultMap.put('fixedAmount',(fixedQuotes.DistributorFixedQuote__c + fixedQuotes.SellerFixedQuote__c).setScale(2));
+        resultMap.put('variableAmount',(estimatedAmount - (resultMap.get('fixedAmount'))).setScale(2));
+        return resultMap;
     }
 
     public class HDT_WRP_ExtimatedCost{

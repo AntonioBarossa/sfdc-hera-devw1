@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Data_Decesso</fullName>
+    <active>false</active>
+    <errorConditionFormula>IF(DeceasedDate__c&gt; TODAY(), TRUE,FALSE)</errorConditionFormula>
+    <errorDisplayField>DeceasedDate__c</errorDisplayField>
+    <errorMessage>Attenzione! Non è possibile inserire una data nel futuro.</errorMessage>
+</ValidationRule>

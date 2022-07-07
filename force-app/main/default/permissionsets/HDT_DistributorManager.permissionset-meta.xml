@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>HDT_DistributorManager</label>
+    <license>Salesforce</license>
+    <recordTypeVisibilities>
+        <recordType>Account.HDT_RT_Distributore</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

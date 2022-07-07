@@ -1846,13 +1846,19 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
-            <name>hdtSpinnerFlow</name>
-            <extensionName>c:hdtSpinnerFlow</extensionName>
+            <name>SpinnerScreenComponent</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>recordId</name>
                 <value>
                     <elementReference>Query_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

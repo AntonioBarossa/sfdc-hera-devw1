@@ -230,12 +230,17 @@ public class HDT_QR_HerokuPostSalesManagerTst {
 
     @IsTest
     static void getAsyncJobByJobItem(){
-        
-        Test.startTest();
-        
+                
         HDT_QR_HerokuPostSalesManager hpsm = new HDT_QR_HerokuPostSalesManager();
-        wrts_prcgvr__AsyncJob__c returnedJob = hpsm.getAsyncJobByJobItem('test');
+        wrts_prcgvr__AsyncJob__c asyJob = [SELECT Id, wrts_prcgvr__JobItem__c, wrts_prcgvr__Status__c FROM wrts_prcgvr__AsyncJob__c LIMIT 1];
+        asyJob.wrts_prcgvr__Status__c = 'Chiusa';
+        update asyJob;
+        System.debug('input>>>'+asyJob);
 
+        Test.startTest();
+
+        wrts_prcgvr__AsyncJob__c returnedJob = hpsm.getAsyncJobByJobItem(asyJob.wrts_prcgvr__JobItem__c);
+        System.debug('output>>>'+returnedJob);
         System.assertNotEquals(null, returnedJob, 'returnedJob = null');
 
         Test.stopTest();

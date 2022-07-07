@@ -21,8 +21,8 @@ export default class HdtSelfReadingRegister extends LightningElement {
     registerObjEle = [
         {id: 1, name: "readingType", label:"Tipo Lettura ", type: "text", value: null, disabled:true, visible:false},
         {id: 2, name: "readingDate", label:"Data Ultima Lettura ", type: "date", value: null, disabled:true, visible:true},
-        {id: 3, name: "readingOldValue", label:"Ultima Lettura ", type: "number", value: null, disabled:true, visible:true},
-        {id: 4, name: "readingValue", label:"Nuova Lettura ", type: "number", value: null, disabled:false, visible:true},
+        {id: 3, name: "readingOldValue", label:"Ultima Lettura ", type: "number", step:"0",value: null, disabled:true, visible:true},
+        {id: 4, name: "readingValue", label:"Nuova Lettura ", type: "number", step:"0",value: null, disabled:false, visible:true},
         {id: 5, name: "readingBand", label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
         {id: 6, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:true},
         {id: 7, name: "readingUnit", label:"Unita di Misura", type: "text", value: null, disabled:true, visible:false},
@@ -60,6 +60,11 @@ export default class HdtSelfReadingRegister extends LightningElement {
             for(let i=0; i<Object.keys(this.registerObj).length; ++i){
 
                 this.registerObj[i].label += 'F' + this.rowObj.headerIndex;
+                console.log('### ' + this.rowObj.headerText + ' ' + this.registerObj[i].name);
+                if(this.rowObj.headerText === 'Potenza' &&  (this.registerObj[i].name === 'readingValue' || this.registerObj[i].name === 'readingOldValue')){
+                    console.log('###change step');
+                    this.registerObj[i].step = "0.001";
+                }
 
             }
         } else if(this.commodity === 'Gas'){
@@ -137,14 +142,16 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         console.log('Gestione lettura: ' + JSON.stringify(readingObj));
         console.log('rowObj: ' + JSON.stringify(this.rowObj));
+        console.log('Object length >>> ' + readingObj.length);
 
         if (this.commodity === 'Energia Elettrica') {
             this.isVisible = (this.rowObj.id <= readingObj.length);
             var indexSerialNumberEle = this.registerObj.findIndex(p => p.name === 'readingSerialNumber');
             this.registerObj[indexSerialNumberEle].disabled = !this.isProcessReading;
         } else if (this.commodity === 'Gas') {
-            this.isVisible = (this.rowObj.id === 'Meter' || (this.rowObj.id === 'Corrector' && readingObj.length === 2));
+            this.isVisible = (this.rowObj.id === 'Meter' || (this.rowObj.id === 'Corrector' && readingObj.length >= 2));
         }
+        console.log('IsVisible >>> ' + this.isVisible);
 
         
         // Per l'autolettura da processo la matricola deve poter essere inseribile da operatore.
@@ -220,7 +227,8 @@ export default class HdtSelfReadingRegister extends LightningElement {
     handleSave(readingCustomerDate){
 
         try {
-            if (!this.isProcessReading) {
+            if (!this.isProcessReading){
+                console.log('#RegisterObj >>> ' + JSON.stringify(this.registerObj));
                 this.registerObj.forEach(element => {
                     if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
                         this.advanceError = 'Impossibile procedere: Nuova Lettura deve essere valorizzata.';
@@ -237,8 +245,8 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
             const oldValue = parseInt(this.registerObj[this.registerObj.findIndex(p => p.name === 'readingOldValue')].value);
             const newValue = parseInt(this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value);
-
-            if (this.allowSmallerReading === false && newValue < oldValue) {
+            console.log(newValue + ' ' + ' ' + this.rowObj.headerText);
+            if (this.allowSmallerReading === false && newValue < oldValue && this.rowObj.headerText != 'Potenza') {
                 this.advanceError = 'Impossibile inserire una lettura inferiore alla precedente.';
             }
     
@@ -299,7 +307,8 @@ export default class HdtSelfReadingRegister extends LightningElement {
             const newReading = event.target.value;
 
             // Mostriamo l'errore solo dopo che l'operatore inserisce almeno lo stesso numero di cifre della vecchia lettura. 
-            if(this.allowSmallerReading === false && newReading.length >= previousReading.length && parseInt(newReading) < parseInt(previousReading)){
+            console.log(newReading + ' ' + previousReading +' ' + this.rowObj.headerText);
+            if(this.allowSmallerReading === false && newReading.length >= previousReading.length && parseInt(newReading) < parseInt(previousReading) && this.rowObj.headerText != 'Potenza'){
 
                 this.advanceError = 'Impossibile inserire lettura inferiore all\'ultima lettura';
 

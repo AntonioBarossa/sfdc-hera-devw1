@@ -18,7 +18,7 @@
         <field>EnergyUseCase__c</field>
         <value xsi:nil="true"/>
     </values>
-    <values>
+    <values> 
         <field>OperationCode__c</field>
         <value xsi:type="xsd:int">02</value>
     </values>
