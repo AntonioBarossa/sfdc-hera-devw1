@@ -31756,19 +31756,19 @@
         <readable>false</readable>
     </fieldPermissions>
 <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>ServicePoint__c.BrandLogo__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
 <fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.BuildingCode__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
 <fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.Company__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
 <fieldPermissions>
         <editable>true</editable>
