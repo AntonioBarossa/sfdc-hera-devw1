@@ -41,7 +41,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>DocumentPaymentMethod__c</field>
+                <field>DiscardDescription__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
