@@ -355,7 +355,7 @@
                 <label>Assistenza sociale (ente)</label>
             </value>
             <value>
-                <fullName>Assistenza sociale</fullName>
+                <fullName>Assistenza Sociale</fullName>
                 <default>false</default>
                 <label>Assistenza Sociale (DEPRECATO)</label>
             </value>
