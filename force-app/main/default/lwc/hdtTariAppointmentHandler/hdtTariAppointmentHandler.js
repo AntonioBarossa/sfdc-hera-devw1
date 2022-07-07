@@ -94,13 +94,13 @@ export default class HdtTariAppointmentHandler extends LightningElement{
                     method : 'handleSearch',
                     searchType : 'FirstSearch'
                 };
-                break;
+            break;
             case 'viewDate':
                 this.params ={
                     method : 'handleView',
                     searchType : 'View'
                 };
-                break;
+            break;
             case 'cancelDate':
                 showAgenda=false;
                 this.updatePhase();
