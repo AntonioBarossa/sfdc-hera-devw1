@@ -293,6 +293,23 @@ public inherited sharing class HDT_UTL_Case {
         }
     }
 
-
-
+    public static List<ServiceRequest__c> createServiceRequestFromCases(List<Case> caseList)
+    {
+        List<ServiceRequest__c> serviceRequestList = new List<ServiceRequest__c>();
+        String processType = 'Allineamento anagrafica';
+        String status = 'Bozza';
+        String type = 'Case';
+        for(Case singleCase : caseList)
+        {
+            ServiceRequest__c srRequest = new ServiceRequest__c();
+            srRequest.Case__c = singleCase.Id;
+            srRequest.CommoditySector__c = singleCase.CommodityFormula__c;
+            srRequest.ProcessType__c = processType;
+            srRequest.ServicePointCode__c = singleCase.PODPDRFormula__c;
+            srRequest.Status__c = status;
+            srRequest.Type__c = type;
+            serviceRequestList.add(srRequest);
+        }
+        return serviceRequestList;
+    }
 }
