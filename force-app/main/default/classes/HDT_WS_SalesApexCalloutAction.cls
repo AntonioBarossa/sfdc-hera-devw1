@@ -192,9 +192,11 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
                                         }
                                         when 'Amm. Precheck KO SII' {
-                                            ord.PrecheckReasonSII__c = fieldValueResponse.get('DES_ERR_ES');
+                                            ord.PrecheckReasonSII__c = fieldValueResponse.get('TESTO_ERRR');
                                             ord.CausalCode__c = fieldValueResponse.get('CODERR_ES');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            ord.DiscardReason__c = (String.isNotBlank(ord.PrecheckReasonSII__c) && String.isNotBlank(ord.CausalCode__c))? ord.CausalCode__c+' - '+ord.PrecheckReasonSII__c 
+                                                : (String.isBlank(ord.CausalCode__c))? ord.PrecheckReasonSII__c : ord.CausalCode__c;
                                             if(fieldValueResponse.get('CODERR_ES') == '003' || fieldValueResponse.get('CODERR_ES') == '103'){
                                                 ord.IsTechnicalTransfer__c = true;
                                             }
