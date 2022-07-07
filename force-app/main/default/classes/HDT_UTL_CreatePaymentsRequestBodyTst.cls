@@ -6,6 +6,8 @@ public with sharing class HDT_UTL_CreatePaymentsRequestBodyTst
     @TestSetup
     static void setup()
     {
+        HDT_UTL_DataFactoryTst.pClickInstance();
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
@@ -62,6 +64,40 @@ public with sharing class HDT_UTL_CreatePaymentsRequestBodyTst
         Test.stopTest();
         caseList = [SELECT Id, PaperlessCode__c FROM Case];
         System.assertEquals(true, String.isNotBlank(caseList[0].PaperlessCode__c), 'Response non gestita');
+    }
+    @isTest
+    static void handleResponseFailedTst()
+    {
+        List<Case> caseList = [SELECT Id FROM Case];
+        HttpResponse response = new HttpResponse();
+        response.setBody('{"status":"failed", "correlationId":"asiodj0adjsaosija","timestamp": "1092390809", "errorDetails":[{"code":"100","message":"error", "additionalInfo": "error"}]}');
+        String process = 'Comunicazione Pagamento';
+        String depositMode = '';
+        Test.startTest();
+            utlPayments.handleResponse(caseList[0].Id, process, depositMode, response);
+        Test.stopTest();
+        caseList = [SELECT Id, TecnicalPhase__c FROM Case];
+        System.assertEquals(true, String.isNotBlank(caseList[0].TecnicalPhase__c), 'Response non gestita');
+    }
+    @IsTest
+    static void handleResponseNullTst()
+    {
+        List<Case> caseList = [SELECT Id FROM Case];
+        String process = 'Comunicazione Pagamento';
+        String depositMode = '';
+        Test.startTest();
+            utlPayments.handleResponse(caseList[0].Id, process, depositMode, null);
+        Test.stopTest();
+        caseList = [SELECT Id, Description FROM Case];
+        System.assertEquals(true, String.isNotBlank(caseList[0].Description), 'Response non gestita');
+    }
+    @IsTest
+    static void addBusinessDaysTst()
+    {
+        Test.startTest();
+            Date testDate = utlPayments.addBusinessDay(System.today(), 3);
+        Test.stopTest();
+        System.assertEquals(true, testDate > System.today(), 'Data non calcolata correttamente');
     }
 
 }
