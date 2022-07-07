@@ -3,9 +3,10 @@
     <fullName>NumberOfFamilyMembers__c</fullName>
     <externalId>false</externalId>
     <label>Numero componenti nucleo familiare</label>
-    <length>2</length>
-    <required>false</required>
+    <precision>10</precision>
+    <required>true</required>
+    <scale>0</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>
