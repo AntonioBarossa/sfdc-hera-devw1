@@ -2,7 +2,10 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_VR_Protocollo</fullName>
     <active>true</active>
-    <errorConditionFormula>AND(RecordType.DeveloperName = &apos;HDT_RT_RegisterActivity&apos;, 
-						 NOT($Permission.HDT_CP_ProtocolManualActivities))</errorConditionFormula>
+    <errorConditionFormula>AND(
+	RecordType.DeveloperName = &apos;HDT_RT_RegisterActivity&apos;,
+	NOT($Permission.HDT_CP_ProtocolManualActivities),
+	ISNEW()
+)</errorConditionFormula>
     <errorMessage>Non hai permessi di modificare questo tipo di activity</errorMessage>
 </ValidationRule>

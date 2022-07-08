@@ -5860,6 +5860,30 @@
     <picklistValues>
         <picklist>FourthLevelComplaintClassification__c</picklist>
         <values>
+            <fullName>Evoluzioni automatiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PdR errato sulla fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>POD errato sulla fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimborsi - assegno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimborsi - mancato accredito/doppio pagamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>cambio contatore gestito in ritardo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>APP - Accessibilità canale</fullName>
             <default>false</default>
         </values>

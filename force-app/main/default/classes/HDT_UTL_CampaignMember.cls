@@ -181,6 +181,8 @@ public with sharing class HDT_UTL_CampaignMember {
     @SuppressWarnings('PMD.ApexCRUDViolation, PMD.NcssMethodCount')
     public static void checkTipoEsito(List<CampaignMember> newCampMembList, Map<Id, CampaignMember> campMembOldMap){
 
+        /* 
+        fix Too Many SQL
         Set<String> ordIdSet = new Set<String>();
         Set<String> actIdSet = new Set<String>();
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
@@ -188,14 +190,20 @@ public with sharing class HDT_UTL_CampaignMember {
         Map<String, Order> actToOrderIdMap = new Map<String, Order>();
         Map<String, List<Order>> orderToChildMap = new Map<String, List<Order>>();
         Map<String, List<String>> actToOrdersToCancelMap = new Map<String, List<String>>();
-        HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
+        HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom(); */
 
-        for(CampaignMember campMemb : newCampMembList){
-            if(campMemb.RelatedActivity__c != null){
-                actIdSet.add(campMemb.RelatedActivity__c);
-            }
+        Set<Id> filteredNewCampaignMembList = new Set<Id>();
+
+        // Modificata per Apex CPU time limit exceeded for(CampaignMember campMemb : newCampMembList){
+        for(CampaignMember campMemb : [SELECT Id, HasResponded, RelatedActivity__c, ResultType__c FROM CampaignMember WHERE HasResponded = true AND RelatedActivity__c != null AND ResultType__c = 'Macchina' AND Id IN : newCampMembList WITH SECURITY_ENFORCED]){
+            filteredNewCampaignMembList.add(campMemb.Id);
         }
 
+        if (!filteredNewCampaignMembList.isEmpty()){
+            System.scheduleBatch(new HDT_BA_CampaignMemberManaged(filteredNewCampaignMembList), 'ManagedCampaignMember'+String.valueOf(Datetime.now().getTime()), 1);
+        }
+        /* 
+        Logica spostata nel batch a causa del Too Many SQL
         if(actIdSet.size() > 0) {
             for(wrts_prcgvr__Activity__c act : HDT_QR_Activity.getActivityFromIdList(actIdSet)){
                 if(act.Order__c != null){
@@ -217,7 +225,7 @@ public with sharing class HDT_UTL_CampaignMember {
             }
         }
 
-        for(CampaignMember member : newCampMembList){
+        for(CampaignMember member : filteredNewCampaignMembList){
             if(member.ResultType__c == 'Macchina' && member.HasResponded==true && member.RelatedActivity__c != null){ //&& member.ResultType__c != campMembOldMap.get(member.Id).ResultType__c 
                 if(actToOrderIdMap.get(member.RelatedActivity__c) != null && isMonitoringList.contains(actToOrderIdMap.get(member.RelatedActivity__c).AgencyCode__c)){
                     if(!actToOrderIdMap.get(member.RelatedActivity__c).RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_OrderDossier')){
@@ -245,7 +253,7 @@ public with sharing class HDT_UTL_CampaignMember {
 
         if(actToCancelList.size() > 0){
             activitySrv.updateRecords(actToCancelList);
-        }
+        } */
     }
 
     public static void cancelContract(Map<String, List<String>> actToOrdersToCancelMap){

@@ -138,13 +138,13 @@
                 <elementReference>$User.UserCompany__c</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
+        <!--assignmentItems>
             <assignToReference>getActivity.Place__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>$User.Station__c</elementReference>
             </value>
-        </assignmentItems>
+        </assignmentItems-->
         <assignmentItems>
             <assignToReference>getActivity.WorkGroup__c</assignToReference>
             <operator>Assign</operator>

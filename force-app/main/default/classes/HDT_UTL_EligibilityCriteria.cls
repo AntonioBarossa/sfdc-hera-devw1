@@ -123,6 +123,15 @@ public inherited sharing class HDT_UTL_EligibilityCriteria {
 
             List<EligibleMunicipality__c> eligibleMunicipality;
             String supplyCity = String.valueOf(quote.SupplyCity__c);
+
+            /* montors fix - convert old city code  - START
+             * to restore previous code comment lines 130-131
+            */
+            System.debug('---> supplyCity: ' + supplyCity);
+            supplyCity = convertSupplyCityCode(supplyCity);
+            System.debug('---> supplyCity: ' + supplyCity);
+            /* montors fix - convert old city code - END*/
+
             eligibleMunicipality = HDT_QR_SearchPlug.findEligibleMunicipality(idToFilterByMunicipalities, statusList, familyList, supplyCity.replaceFirst('^0+', ''));
 
             for(EligibleMunicipality__c e : eligibleMunicipality){
@@ -202,11 +211,13 @@ public inherited sharing class HDT_UTL_EligibilityCriteria {
             return true;
         }
 
-        if(quoteLogin.contains(loginGroupName)){
+        return quoteLogin != null && quoteLogin.contains(loginGroupName);
+
+        /*if(quoteLogin != null && quoteLogin.contains(loginGroupName)){
             return true;
         } else {
             return false;
-        }
+        }*/
 
     }
 
@@ -301,6 +312,42 @@ public inherited sharing class HDT_UTL_EligibilityCriteria {
             System.debug(LoggingLevel.DEBUG, '>>> Exception: ' + ex.getMessage());
             return false;
         }
+    }
+
+    @TestVisible 
+    private static String convertSupplyCityCode(String codeToSearch){
+        try {
+            HDT_QR_StaticResource staticResourceQr = new HDT_QR_StaticResource();
+            List<StaticResource> staticResources = staticResourceQr.getRecordByName('ConvertOldCityCode');
+    
+            List<HDT_WRP_CodeMap> convertList = (List<HDT_WRP_CodeMap>)JSON.deserialize(staticResources.get(0).Body.toString(), List<HDT_WRP_CodeMap>.class);
+    
+            String supplyCity = codeToSearch.replaceFirst('^0+', '');
+            String newValue = '';
+    
+            for(HDT_WRP_CodeMap obj : convertList){
+                if(obj.oldValue.equalsIgnoreCase(supplyCity)){
+                    newValue = String.valueOf(obj.newValue);
+                    break;
+                }
+            }
+    
+            if(String.isNotEmpty(newValue)){
+                return newValue;
+            } else {
+                return codeToSearch;
+            }
+    
+        } catch (Exception e){
+            System.debug('>>> ERROR on convertSupplyCityCode: ' + e.getMessage() + String.valueOf(e.getLineNumber()));
+            return codeToSearch;
+        }
+    
+    }
+
+    public class HDT_WRP_CodeMap {
+        public String oldValue;
+        public String newValue;
     }
 
 }

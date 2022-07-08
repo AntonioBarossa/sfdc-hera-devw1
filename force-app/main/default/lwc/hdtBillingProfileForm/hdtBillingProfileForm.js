@@ -720,7 +720,8 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
 
         if (this.template.querySelector("[data-id='SignatoryType__c']") !== null 
-            && this.template.querySelector("[data-id='SignatoryType__c']").value === '') {
+            && (this.template.querySelector("[data-id='SignatoryType__c']").value === '' || this.template.querySelector("[data-id='SignatoryType__c']").value === undefined)
+            ) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Tipo Sottoscrittore, ');
         }
 

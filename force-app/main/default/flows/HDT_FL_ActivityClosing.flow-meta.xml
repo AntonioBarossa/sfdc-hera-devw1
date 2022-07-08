@@ -101,13 +101,13 @@
                 <elementReference>$User.LoginChannel__c</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
+        <!--assignmentItems>
             <assignToReference>activity.Place__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>$User.Station__c</elementReference>
             </value>
-        </assignmentItems>
+        </assignmentItems-->
         <connector>
             <targetReference>Get_Activity</targetReference>
         </connector>

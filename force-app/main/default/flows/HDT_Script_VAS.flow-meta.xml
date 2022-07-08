@@ -404,7 +404,7 @@
     <assignments>
         <name>aumentaContatoreLampada_AZ</name>
         <label>aumentaContatoreLampada_AZ</label>
-        <locationX>19498</locationX>
+        <locationX>20906</locationX>
         <locationY>1694</locationY>
         <assignmentItems>
             <assignToReference>counterLampadadiRicarica_0_0</assignToReference>
@@ -574,7 +574,7 @@
     <assignments>
         <name>aumentaContatoreSanificatore_AZ</name>
         <label>aumentaContatoreSanificatore_AZ</label>
-        <locationX>19234</locationX>
+        <locationX>20642</locationX>
         <locationY>1694</locationY>
         <assignmentItems>
             <assignToReference>counterSanificatore_0_0</assignToReference>
@@ -712,6 +712,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>countNormalWallbox_0</name>
+        <label>countNormalWallbox</label>
+        <locationX>18970</locationX>
+        <locationY>1934</locationY>
+        <assignmentItems>
+            <assignToReference>NormalWallboxCounter</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>checkForInstallazione_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>countTermostatiConInstallazione</name>
         <label>countTermostatiConInstallazione</label>
         <locationX>1018</locationX>
@@ -792,9 +808,25 @@
         </connector>
     </assignments>
     <assignments>
+        <name>countWallboxRfid_0</name>
+        <label>countWallboxRfid</label>
+        <locationX>18442</locationX>
+        <locationY>1934</locationY>
+        <assignmentItems>
+            <assignToReference>WallboxRfidCounter</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>checkForInstallazione_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>isNewClientAssigment</name>
         <label>isNewClientAssigment</label>
-        <locationX>13712</locationX>
+        <locationX>14592</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>isNewClient</assignToReference>
@@ -810,7 +842,7 @@
     <assignments>
         <name>isOldClientAssignment</name>
         <label>isOldClientAssignment</label>
-        <locationX>13976</locationX>
+        <locationX>14856</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>isNewClient</assignToReference>
@@ -826,7 +858,7 @@
     <assignments>
         <name>outputVasTypeAssignment</name>
         <label>outputVasTypeAssignment</label>
-        <locationX>13844</locationX>
+        <locationX>14724</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>outputVasType</assignToReference>
@@ -856,6 +888,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>setInstallazioneWallbox_0</name>
+        <label>setInstallazioneWallbox</label>
+        <locationX>18838</locationX>
+        <locationY>2366</locationY>
+        <assignmentItems>
+            <assignToReference>hasInstallazioneWallbox</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_1_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>setKitMontaggioATerra</name>
         <label>setKitMontaggioATerra</label>
         <locationX>4010</locationX>
@@ -869,6 +917,22 @@
         </assignmentItems>
         <connector>
             <targetReference>checkForInstallazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>setKitMontaggioATerra_0</name>
+        <label>setKitMontaggioATerra</label>
+        <locationX>18706</locationX>
+        <locationY>1934</locationY>
+        <assignmentItems>
+            <assignToReference>hasKitMontaggioTerra</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>checkForInstallazione_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -906,7 +970,7 @@
     <decisions>
         <name>Canale</name>
         <label>Canale</label>
-        <locationX>9114</locationX>
+        <locationX>9466</locationX>
         <locationY>1334</locationY>
         <defaultConnector>
             <targetReference>Tipo_VAS_0_0</targetReference>
@@ -938,7 +1002,7 @@
     <decisions>
         <name>Categoria</name>
         <label>Categoria</label>
-        <locationX>13844</locationX>
+        <locationX>14724</locationX>
         <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>Tipo_VAS_0</targetReference>
@@ -1409,11 +1473,39 @@
             <name>hasInstallazione_1</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>ForEachOrderProduct_1.Product2.ProductCode</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>ForEachOrderProduct_1.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>INSTALLAZIONE STANDARD</stringValue>
+                </rightValue>
             </conditions>
             <connector>
                 <targetReference>setInstallazioneWallbox</targetReference>
+            </connector>
+            <label>hasInstallazione</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>checkForInstallazione_0</name>
+        <label>checkForInstallazione</label>
+        <locationX>18970</locationX>
+        <locationY>2246</locationY>
+        <defaultConnector>
+            <targetReference>ForEachOrderProduct_1_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>noInstallazione</defaultConnectorLabel>
+        <rules>
+            <name>hasInstallazione_1_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_1_0.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>INSTALLAZIONE STANDARD</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>setInstallazioneWallbox_0</targetReference>
             </connector>
             <label>hasInstallazione</label>
         </rules>
@@ -1461,7 +1553,7 @@
     <decisions>
         <name>checklampadadiRicarica_AZ</name>
         <label>checklampadadiRicarica_AZ</label>
-        <locationX>19498</locationX>
+        <locationX>20906</locationX>
         <locationY>1574</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct4_0_0</targetReference>
@@ -1708,6 +1800,46 @@
         </rules>
     </decisions>
     <decisions>
+        <name>hasRFID_0</name>
+        <label>hasRFID</label>
+        <locationX>18706</locationX>
+        <locationY>1814</locationY>
+        <defaultConnector>
+            <targetReference>countNormalWallbox_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>foundStandardWallbox</defaultConnectorLabel>
+        <rules>
+            <name>foundRFID_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_1_0.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>RFID</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>countWallboxRfid_0</targetReference>
+            </connector>
+            <label>foundRFID</label>
+        </rules>
+        <rules>
+            <name>foundKitMontaggioATerra_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_1_0.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>KIT MONTAGGIO A TERRA WALL</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>setKitMontaggioATerra_0</targetReference>
+            </connector>
+            <label>foundKitMontaggioATerra</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>hasWallbox</name>
         <label>hasWallbox</label>
         <locationX>4274</locationX>
@@ -1740,10 +1872,42 @@
         </rules>
     </decisions>
     <decisions>
+        <name>hasWallbox_0</name>
+        <label>hasWallbox</label>
+        <locationX>18970</locationX>
+        <locationY>1694</locationY>
+        <defaultConnector>
+            <targetReference>checkForInstallazione_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>noWallbox</defaultConnectorLabel>
+        <rules>
+            <name>wallboxFound_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_1_0.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>WALLBOX</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_1_0.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>WALL BOX</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>hasRFID_0</targetReference>
+            </connector>
+            <label>wallboxFound</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>isVas</name>
         <label>isVas</label>
-        <locationX>13470</locationX>
-        <locationY>2462</locationY>
+        <locationX>14174</locationX>
+        <locationY>2894</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
@@ -1786,7 +1950,7 @@
     <decisions>
         <name>Nuovo_o_Vecchio_Cliente</name>
         <label>Nuovo o Vecchio Cliente</label>
-        <locationX>13844</locationX>
+        <locationX>14724</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>isOldClientAssignment</targetReference>
@@ -2013,7 +2177,7 @@
     <decisions>
         <name>Tipo_VAS_0</name>
         <label>Tipo VAS</label>
-        <locationX>18574</locationX>
+        <locationX>19982</locationX>
         <locationY>1334</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -2110,7 +2274,7 @@
     <decisions>
         <name>Tipo_VAS_0_0</name>
         <label>Tipo VAS</label>
-        <locationX>13470</locationX>
+        <locationX>14174</locationX>
         <locationY>1454</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -2268,7 +2432,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>HERA FV KIT FAIDATE</stringValue>
                 </rightValue>
@@ -2277,6 +2441,21 @@
                 <targetReference>Screen_HERA_FOTOVOLTAICO_F_OUT</targetReference>
             </connector>
             <label>HERA FOTOVOLTAICO</label>
+        </rules>
+        <rules>
+            <name>HERA_RICARICA_PRIVATA</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>HERA RICARICA PRIVATA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ForEachOrderProduct_1_0</targetReference>
+            </connector>
+            <label>HERA RICARICA PRIVATA</label>
         </rules>
     </decisions>
     <formulas>
@@ -2361,6 +2540,16 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
 )</expression>
     </formulas>
     <formulas>
+        <name>LuceAndGasFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(BEGINS({!GetOrder.ServicePointCodeFormula__c}, &quot;IT&quot;), &quot;Luce&quot;, &quot;Gas&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>PodPdrFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(BEGINS({!GetOrder.ServicePointCodeFormula__c},&quot;IT&quot;),&quot;POD&quot;,&quot;PDR&quot;)</expression>
+    </formulas>
+    <formulas>
         <name>prezzoTotaleTermostatiConInstallazione</name>
         <dataType>Number</dataType>
         <expression>{!termostatiConInstallazioneCounter}*258</expression>
@@ -2431,7 +2620,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct4_0_0</name>
         <label>ForEachOrderProduct4_0_0</label>
-        <locationX>19146</locationX>
+        <locationX>20554</locationX>
         <locationY>1454</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -2482,6 +2671,20 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Screen_HERA_RICARICA_PRIVATA_Inbound</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>ForEachOrderProduct_1_0</name>
+        <label>ForEachOrderProduct</label>
+        <locationX>18354</locationX>
+        <locationY>1574</locationY>
+        <collectionReference>GetOrderProducts_0</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>hasWallbox_0</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Screen_HERA_RICARICA_PRIVATA_Outbound</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
@@ -2591,7 +2794,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <description>Vado a cercare se ci sono contratti attivi o cessati sull&apos;Account per capire se si tratta di un Nuovo Cliente o uno Vecchio</description>
         <name>GetAccountContracts</name>
         <label>GetAccountContracts</label>
-        <locationX>13844</locationX>
+        <locationX>14724</locationX>
         <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2626,7 +2829,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <recordLookups>
         <name>GetChildOrder</name>
         <label>GetChildOrder</label>
-        <locationX>13844</locationX>
+        <locationX>14724</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2647,7 +2850,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <recordLookups>
         <name>GetOrder</name>
         <label>GetOrder</label>
-        <locationX>13844</locationX>
+        <locationX>14724</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2668,7 +2871,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <recordLookups>
         <name>GetOrderProducts_0</name>
         <label>GetOrderProducts</label>
-        <locationX>13844</locationX>
+        <locationX>14724</locationX>
         <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2696,13 +2899,13 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <recordLookups>
         <name>GetVasOrderItem</name>
         <label>GetVasOrderItem</label>
-        <locationX>13844</locationX>
+        <locationX>14724</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>outputVasTypeAssignment</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>2 AND (1 OR 3)</filterLogic>
         <filters>
             <field>ProductCode__c</field>
             <operator>Contains</operator>
@@ -2717,6 +2920,13 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                 <elementReference>GetOrder.Id</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>ProductName__c</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>GetOrder.CommercialProductLink__r.Name</elementReference>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>OrderItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -2724,7 +2934,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_Conferma_Adesione_Aziende</name>
         <label>Screen Conferma Adesione Aziende</label>
-        <locationX>18574</locationX>
+        <locationX>19982</locationX>
         <locationY>2222</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3424,8 +3634,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_Conferma_Adesione_Famiglie_Outbound</name>
         <label>Screen Conferma Adesione Famiglie Outbound</label>
-        <locationX>13338</locationX>
-        <locationY>2582</locationY>
+        <locationX>14042</locationX>
+        <locationY>3014</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3900,7 +4110,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_CALDAIA_SICURA_Aziende</name>
         <label>Screen HERA CALDAIA SICURA Aziende</label>
-        <locationX>18266</locationX>
+        <locationX>19674</locationX>
         <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4017,7 +4227,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_CONTAWATT_Aziende</name>
         <label>Screen HERA CONTAWATT Aziende</label>
-        <locationX>17474</locationX>
+        <locationX>18882</locationX>
         <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4193,7 +4403,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_EBIKE_Generico_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[HERA E-BIKE]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA E-BIKE&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;﻿&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4235,7 +4445,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_EBIKE_Generico_1</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[Condizioni economiche e di acquisto Hera E-Bike]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’E-Bike scelta è la {!collectionTipoEbike}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;b&gt;&amp;nbsp;&lt;/b&gt;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto della E-Bike è:&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera E-Bike&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’E-Bike scelta è la {!collectionTipoEbike}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto della E-Bike è:&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4626,8 +4836,58 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
+            <name>E_BIKE_RATE_INB</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in 24 rate mensili in bolletta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>A-Rate fisse</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>E_BIKE_UNICA_INB</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in un’unica soluzione?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>C-Fattura SD</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>E_BIKE_SHIPPINGADDRESS_INB</name>
+            <fieldText>&lt;p&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>E_BIKE_PHONE_INB</name>
+            <fieldText>&lt;p&gt;Mi conferma che il suo numero di telefono è {!GetOrder.Contact__r.MobilePhone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.Contact__r.MobilePhone</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>HERA_EBIKE_Generico_0_1</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il metodo di pagamento richiesto è  {!GetOrder.VASBillingMode__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il suo numero di telefono è {!GetOrder.Account.MobilePhone__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;L’E-Bike verrà consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o la non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;L’E-Bike verrà consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o la non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4653,56 +4913,17 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>A-Rate fisse</stringValue>
+                        <stringValue>C-Fattura SD</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>HERA_EBIKE_CON_POD_0_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [POD] del contratto di fornitura al quale è associato il presente contratto e {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto e {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetOrder.ServicePointCodeFormula__c</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetOrder.ServicePoint__r.CommoditySector__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Energia Elettrica</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_EBIKE_CON_PDR_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [PDR] del contratto di fornitura al quale è associato il presente contratto e {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetOrder.ServicePointCodeFormula__c</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetOrder.ServicePoint__r.CommoditySector__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Gas</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>HERA_EBIKE_Generico_2</name>
@@ -4725,7 +4946,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_EBIKE_Generico_1_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[HERA E-BIKE]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera E-Bike per l’acquisto di biciclette di ultima generazione a pedalata assistita equipaggiate con un motore elettrico. Assieme all’offerta è inoltre inclusa gratuitamente per 12 mesi la Polizza Assistenza E-Bike per assistenza tecnica in caso di guasto oppure assistenza medica in caso di incidente. &lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;[Condizioni economiche e di acquisto Hera E-Bike]&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’E-Bike scelta è la &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!collectionTipoEbike}&lt;/span&gt;?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il costo di acquisto della E-Bike è:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA E-BIKE&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera E-Bike per l’acquisto di biciclette di ultima generazione a pedalata assistita equipaggiate con un motore elettrico. Assieme all’offerta è inoltre inclusa gratuitamente per 12 mesi la Polizza Assistenza E-Bike per assistenza tecnica in caso di guasto oppure assistenza medica in caso di incidente.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera E-Bike&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’E-Bike scelta è la &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!collectionTipoEbike}&lt;/span&gt;?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il costo di acquisto della E-Bike è:&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4856,8 +5077,58 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
+            <name>E_BIKE_RATE_OUT</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in 24 rate mensili in bolletta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>A-Rate fisse</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>E_BIKE_UNICA_OUT</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in un’unica soluzione?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>C-Fattura SD</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>E_BIKE_SHIPPING_ADDRESS_OUT</name>
+            <fieldText>&lt;p&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>E_BIKE_PHONE_OUT</name>
+            <fieldText>&lt;p&gt;Mi conferma che il suo numero di telefono è {!GetOrder.Contact__r.MobilePhone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.Contact__r.MobilePhone</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>HERA_EBIKE_Generico_1_3</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il metodo di pagamento richiesto è  {!GetOrder.VASBillingMode__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il suo numero di telefono è {!GetOrder.Account.MobilePhone__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;L’E-Bike verrà consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o la non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;L’E-Bike verrà consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o la non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4883,16 +5154,16 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>A-Rate fisse</stringValue>
+                        <stringValue>C-Fattura SD</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>HERA_EBIKE_CON_POD_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [POD] del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4901,35 +5172,6 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetOrder.ServicePoint__r.CommoditySector__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Energia Elettrica</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_EBIKE_CON_PDR_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [PDR] del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetOrder.ServicePointCodeFormula__c</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetOrder.ServicePoint__r.CommoditySector__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4945,7 +5187,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_FOTOVOLTAICO_Aziende</name>
         <label>Screen HERA FOTOVOLTAICO Aziende</label>
-        <locationX>19410</locationX>
+        <locationX>20818</locationX>
         <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4960,7 +5202,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_CALDAIA_SICURA_Generico_2_1_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è&amp;nbsp;{!GetOrder.&lt;span style=&quot;color: rgb(36, 36, 36); font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Web&amp;quot;, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt;ShippingAddressFormula__c&lt;/span&gt;}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il suo numero di telefono&amp;nbsp;è &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!GetOrder.Account.Phone}?&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il codice POD/PDR del contratto di fornitura al quale è associato il presente contratto è &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!GetOrder.ServicePointCodeFormula__c}&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al moment della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali visi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è&amp;nbsp;{!GetOrder.&lt;span style=&quot;background-color: rgb(255, 255, 255); font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Web&amp;quot;, sans-serif; color: rgb(36, 36, 36);&quot;&gt;ShippingAddressFormula__c&lt;/span&gt;}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il suo numero di telefono&amp;nbsp;è &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!GetOrder.Account.Phone}?&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!GetOrder.ServicePointCodeFormula__c}&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al moment della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali visi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -5014,47 +5256,97 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_CALDAIA_SICURA_Generico_2_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[HERA FOTOVOLTAICO - KIT FAI DA TE]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Foto Voltaico - Kit Fai da Te per l&apos;acquisto di un micro impianto fotovoltaico.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;[Condizioni economiche e di acquisto Hera Fotovoltaico - Kit Fai da Te]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto di un micro impianto fotovoltaico è pari a 549€, comprensivo di spese di spedizione e di Iva, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le ricordo che l’installazione dovrà avvenire secondo la normativa ARERA n. 315/2020/R/ee, successive integrazioni e nel rispetto delle norme tecniche di settore.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA FOTOVOLTAICO - KIT FAI DA TE&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Foto Voltaico - Kit Fai da Te per l&apos;acquisto di un micro impianto fotovoltaico.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera Fotovoltaico - Kit Fai da Te&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto di un micro impianto fotovoltaico è pari a 549€, comprensivo di spese di spedizione e di Iva, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le ricordo che l’installazione dovrà avvenire secondo la normativa ARERA n. 315/2020/R/ee, successive integrazioni e nel rispetto delle norme tecniche di settore.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>HERA_CALDAIA_SICURA_Generico_2_1_0_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è&amp;nbsp;{!GetOrder.&lt;span style=&quot;color: rgb(36, 36, 36); font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Web&amp;quot;, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt;ShippingAddressFormula__c&lt;/span&gt;}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il suo numero di telefono&amp;nbsp;è &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!GetOrder.Account.Phone}?&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il codice POD/PDR del contratto di fornitura al quale è associato il presente contratto è &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!GetOrder.ServicePointCodeFormula__c}&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al moment della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali visi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <name>FOTOVOLTAICO_SHIPPINGADDRESS_INB</name>
+            <fieldText>&lt;p&gt;Mi conferma che l’indirizzo di recapito del prodotto è&amp;nbsp;{!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Payment_Rate_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che vuole pagare con rateizzazione in bolletta?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Riceverà una fattura che non dovrà pagare. L’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura gas associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
+            <name>FOTOVOLTAICO_PHONE_INB</name>
+            <fieldText>&lt;p&gt;Mi conferma che il suo numero di telefono&amp;nbsp;è &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!GetOrder.Contact__r.MobilePhone}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
+                    <leftValueReference>GetOrder.Contact__r.MobilePhone</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_CALDAIA_SICURA_Generico_2_1_0_0</name>
+            <fieldText>&lt;p&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!GetOrder.ServicePointCodeFormula__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al moment della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali visi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>FOTOVOLTAICO_RATE_INB</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in 24 rate mensili in bolletta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Rate</stringValue>
+                        <stringValue>A-Rate fisse</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Payment_Rate_0</name>
+            <fieldText>&lt;p&gt;Riceverà una fattura che non dovrà pagare. L’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura gas associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>A-Rate fisse</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>FOTOVOLTAICO_UNICA_INB</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in un’unica soluzione?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>C-Fattura SD</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Payment_Not_Rate_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che vuole pagare  in un’unica soluzione?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Riceverà una fattura relativa al corrispettivo che dovrà essere pagata. Per usufruire delle detrazioni fiscali in materia dovrà pagarla con apposito bonifico bancario o postale.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Riceverà una fattura relativa al corrispettivo che dovrà essere pagata. Per usufruire delle detrazioni fiscali in materia dovrà pagarla con apposito bonifico bancario o postale.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Rate</stringValue>
+                        <stringValue>C-Fattura SD</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Garanzia_0</name>
-            <fieldText>&lt;p&gt;[Garanzia del prodotto]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni micro impianto fotovoltaico è coperto da garanzia di 120 mesi.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Garanzia del prodotto&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni micro impianto fotovoltaico è coperto da garanzia di 120 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -5073,47 +5365,97 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_CALDAIA_SICURA_Generico_2_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[HERA FOTOVOLTAICO - KIT FAI DA TE]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Foto Voltaico - Kit Fai da Te per l&apos;acquisto di un micro impianto fotovoltaico.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;[Condizioni economiche e di acquisto Hera Fotovoltaico - Kit Fai da Te]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto di un micro impianto fotovoltaico è pari a 549€, comprensivo di spese di spedizione e di Iva, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le ricordo che l’installazione dovrà avvenire secondo la normativa ARERA n. 315/2020/R/ee, successive integrazioni e nel rispetto delle norme tecniche di settore.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA FOTOVOLTAICO - KIT FAI DA TE&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Foto Voltaico - Kit Fai da Te per l&apos;acquisto di un micro impianto fotovoltaico.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera Fotovoltaico - Kit Fai da Te&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto di un micro impianto fotovoltaico è pari a 549€, comprensivo di spese di spedizione e di Iva, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le ricordo che l’installazione dovrà avvenire secondo la normativa ARERA n. 315/2020/R/ee, successive integrazioni e nel rispetto delle norme tecniche di settore.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>HERA_CALDAIA_SICURA_Generico_2_1_0_0_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è&amp;nbsp;{!GetOrder.&lt;span style=&quot;color: rgb(36, 36, 36); font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Web&amp;quot;, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt;ShippingAddressFormula__c&lt;/span&gt;}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il suo numero di telefono&amp;nbsp;è &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!GetOrder.Account.Phone}?&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che il codice POD/PDR del contratto di fornitura al quale è associato il presente contratto è &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!GetOrder.ServicePointCodeFormula__c}&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al moment della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali visi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <name>FOTOVOLTAICO_SHIPPINGADDRESS_OUT</name>
+            <fieldText>&lt;p&gt;Mi conferma che l’indirizzo di recapito del prodotto è&amp;nbsp;{!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Payment_Rate_0_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che vuole pagare con rateizzazione in bolletta?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Riceverà una fattura che non dovrà pagare. L’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura gas associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
+            <name>FOTOVOLTAICO_PHONE_OUT</name>
+            <fieldText>&lt;p&gt;Mi conferma che il suo numero di telefono&amp;nbsp;è &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!GetOrder.Contact__r.MobilePhone}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
+                    <leftValueReference>GetOrder.Contact__r.MobilePhone</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_CALDAIA_SICURA_Generico_2_1_0_0_0</name>
+            <fieldText>&lt;p&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!GetOrder.ServicePointCodeFormula__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al moment della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali visi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>FOTOVOLTAICO_RATE_OUT</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in 24 rate mensili in bolletta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Rate</stringValue>
+                        <stringValue>A-Rate fisse</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Payment_Rate_0_0</name>
+            <fieldText>&lt;p&gt;Riceverà una fattura che non dovrà pagare. L’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura gas associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>A-Rate fisse</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>FOTOVOLTAICO_UNICA_OUT</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in un’unica soluzione?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>C-Fattura SD</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Payment_Not_Rate_0_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che vuole pagare  in un’unica soluzione?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Riceverà una fattura relativa al corrispettivo che dovrà essere pagata. Per usufruire delle detrazioni fiscali in materia dovrà pagarla con apposito bonifico bancario o postale.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Riceverà una fattura relativa al corrispettivo che dovrà essere pagata. Per usufruire delle detrazioni fiscali in materia dovrà pagarla con apposito bonifico bancario o postale.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Rate</stringValue>
+                        <stringValue>C-Fattura SD</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Garanzia_0_0</name>
-            <fieldText>&lt;p&gt;[Garanzia del prodotto]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni micro impianto fotovoltaico è coperto da garanzia di 120 mesi.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Garanzia del prodotto&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni micro impianto fotovoltaico è coperto da garanzia di 120 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -5177,7 +5519,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_1_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 1 abbinati alla fornitura?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto è quindi di {!totaleAcquitoKit1HeraLed} €.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 1 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquitoKit1HeraLed} €.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5199,7 +5541,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_2_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 2 abbinati alla fornitura?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto [Luce/Gas] è quindi di {!totaleAcquistoKit2HeraLed} €.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 2 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLed} €.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5251,7 +5593,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_CON_POD_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [POD/PDR] del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5406,7 +5748,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_1_ACQUISTO_MULTIPLO_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 1 abbinati alla fornitura]?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 1 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5420,8 +5762,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
-            <name>HERA_LED_KIT_1_TOTALE_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto è quindi di {!totaleAcquistoKit1HeraLedPromo} €.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>HERA_LED_KIT_1_TOTALE_NO_PROMO_1</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedNoPromo} €.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -5450,7 +5792,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_1_TOTALE_NO_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto è quindi di {!totaleAcquistoKit1HeraLedNoPromo} €.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedNoPromo} €.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
@@ -5479,7 +5821,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_2_ACQUISTO_MULTIPLO_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 2 abbinati alla fornitura?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 2 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5494,7 +5836,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_2_TOTALE_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto [Luce/Gas] è quindi di {!totaleAcquistoKit2HeraLedPromo} €.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedPromo} €.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -5523,7 +5865,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_2_TOTALE_NO_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto è quindi di {!totaleAcquistoKit2HeraLedNoPromo} €.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedNoPromo} €.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
@@ -5582,7 +5924,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_CON_POD_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [POD/PDR] del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c} ?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c} ?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5616,13 +5958,63 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_MONOPATTINO_ELETTRICO_Generico_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[HERA MONOPATTINO ELETTRICO]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;•	Le proponiamo l’offerta “Hera MONOPATTINO” per l’acquisto di un monopattino elettrico. Assieme all’offerta è inoltre inclusa gratuitamente per 12 mesi la Polizza Assistenza MONOPATTINO per assistenza tecnica in caso di guasto oppure assistenza medica in caso di incidente.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA MONOPATTINO ELETTRICO&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;﻿•	Le proponiamo l’offerta “Hera MONOPATTINO” per l’acquisto di un monopattino elettrico. Assieme all’offerta è inoltre inclusa gratuitamente per 12 mesi la Polizza Assistenza MONOPATTINO per assistenza tecnica in caso di guasto oppure assistenza medica in caso di incidente.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>HERA_MONOPATTINO_ELETTRICO_Generico_1</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[Condizioni economiche e di acquisto Hera MONOPATTINO]&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che il Monopattino scelto è il {!collectionHeraMonopattinoElettrico}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto di Hera MONOPATTINO è 549 €&amp;nbsp;IVA inclusa.&lt;/p&gt;&lt;p&gt;Mi conferma che acquista {!counterMonopattinoElettrico} HERA MONOPATTINO?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale è quindi di {!totaleCostoMonopattiniElettrici} € IVA inclusa.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}  ,   {!GetOrder.Contact__r.MobilePhone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice [POD/PDR] del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il Monopattino elettrico verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o la non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che vuole pagare con {!GetOrder.PaymentMode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera MONOPATTINO&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che il Monopattino scelto è il {!collectionHeraMonopattinoElettrico}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto di Hera MONOPATTINO è 549 €&amp;nbsp;IVA inclusa.&lt;/p&gt;&lt;p&gt;Mi conferma che acquista {!counterMonopattinoElettrico} HERA MONOPATTINO?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale è quindi di {!totaleCostoMonopattiniElettrici} € IVA inclusa.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>MONOPATTINO_PHONE_INB</name>
+            <fieldText>&lt;p&gt;Mi conferma che il suo numero di telefono è {!GetOrder.Contact__r.MobilePhone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;span style=&quot;background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255)); color: var(--lwc-colorTextWeak,rgb(68, 68, 68)); font-size: var(--lwc-fontSize3,0.8125rem); font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Helvetica, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;);&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.Contact__r.MobilePhone</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>MONOPATTINO_GENERIC</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il Monopattino elettrico verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o la non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>HERA_MONOPATTINO_ELETTRICO_Rate</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il metodo di pagamento richiesto è in 24 rate mensili in bolletta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>A-Rate fisse</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_MONOPATTINO_ELETTRICO_UNICA</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in un’unica soluzione?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>C-Fattura SD</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>HERA_MONOPATTINO_ELETTRICO_Rate_0</name>
@@ -5631,10 +6023,10 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Rate</stringValue>
+                        <stringValue>A-Rate fisse</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -5644,15 +6036,20 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <fieldText>&lt;p&gt;Riceverà una fattura relativa al corrispettivo che dovrà essere pagata.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>NOT(1)</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Rate</stringValue>
+                        <stringValue>C-Fattura SD</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
+        </fields>
+        <fields>
+            <name>MONOPATTINO_GARANZIA</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Garanzia del prodotto&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Il Monopattino ha una garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -5670,13 +6067,63 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_MONOPATTINO_ELETTRICO_Generico_0_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[HERA MONOPATTINO ELETTRICO]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;•	Le proponiamo l’offerta “Hera MONOPATTINO” per l’acquisto di un monopattino elettrico. Assieme all’offerta è inoltre inclusa gratuitamente per 12 mesi la Polizza Assistenza MONOPATTINO per assistenza tecnica in caso di guasto oppure assistenza medica in caso di incidente.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA MONOPATTINO ELETTRICO&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;﻿•	Le proponiamo l’offerta “Hera MONOPATTINO” per l’acquisto di un monopattino elettrico. Assieme all’offerta è inoltre inclusa gratuitamente per 12 mesi la Polizza Assistenza MONOPATTINO per assistenza tecnica in caso di guasto oppure assistenza medica in caso di incidente.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>HERA_MONOPATTINO_ELETTRICO_Generico_1_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[Condizioni economiche e di acquisto Hera MONOPATTINO]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che il Monopattino scelto è il {!collectionHeraMonopattinoElettrico_0}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto di Hera MONOPATTINO è 549 €&amp;nbsp;IVA inclusa.&lt;/p&gt;&lt;p&gt;Mi conferma che acquista {!counterMonopattinoElettrico_0} HERA MONOPATTINO?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale è quindi è di {!totaleCostoMonopattiniElettrici1} € IVA inclusa.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice [POD/PDR] del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il Monopattino elettrico verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o la non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che vuole pagare con {!GetOrder.PaymentMode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera MONOPATTINO&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che il Monopattino scelto è il {!collectionHeraMonopattinoElettrico_0}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto di Hera MONOPATTINO è 549 €&amp;nbsp;IVA inclusa.&lt;/p&gt;&lt;p&gt;Mi conferma che acquista {!counterMonopattinoElettrico_0} HERA MONOPATTINO?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale è quindi è di {!totaleCostoMonopattiniElettrici1} € IVA inclusa.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>MONOPATTINO_MOBILE_PHONE</name>
+            <fieldText>&lt;p&gt;Mi conferma che il suo numero di telefono è {!GetOrder.Contact__r.MobilePhone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;span style=&quot;background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255)); color: var(--lwc-colorTextWeak,rgb(68, 68, 68)); font-size: var(--lwc-fontSize3,0.8125rem); font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Helvetica, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;);&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.Contact__r.MobilePhone</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_MONOPATTINO_ELETTRICO_Generico_1_1</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il Monopattino elettrico verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o la non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>MONOPATTINO_RATE_OUT</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in 24 rate mensili in bolletta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>A-Rate fisse</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>MONOPATTINO_UNICA_OUT</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in un’unica soluzione?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>C-Fattura SD</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>HERA_MONOPATTINO_ELETTRICO_Rate_0_0</name>
@@ -5685,10 +6132,10 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Rate</stringValue>
+                        <stringValue>A-Rate fisse</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -5698,15 +6145,20 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <fieldText>&lt;p&gt;Riceverà una fattura relativa al corrispettivo che dovrà essere pagata.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>NOT(1)</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Rate</stringValue>
+                        <stringValue>C-Fattura SD</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
+        </fields>
+        <fields>
+            <name>GARANZIA_MONOPATTINO_OUT</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Garanzia del prodotto&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Il Monopattino ha una garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -5729,7 +6181,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_ACQUA_CON_POD_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [POD/PDR] del contratto di fornitura al quale è associato il presente contratto e {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto e {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5768,7 +6220,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_ACQUA_CON_POD_1_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [POD/PDR] del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5792,7 +6244,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_GAS_Aziende</name>
         <label>Screen HERA NO PROBLEM GAS Aziende</label>
-        <locationX>18002</locationX>
+        <locationX>19410</locationX>
         <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -5954,7 +6406,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_LUCE_Aziende</name>
         <label>Screen HERA NO PROBLEM LUCE Aziende</label>
-        <locationX>17738</locationX>
+        <locationX>19146</locationX>
         <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -6126,7 +6578,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_RICARICA_PRIVATA_Generico_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[HERA RICARICA PRIVATA]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Ricarica Privata per l’acquisto di Wall Box, i dispositivi di ricarica per veicoli elettrici.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;b&gt;[Condizioni economiche e di acquisto HERA RICARICA PRIVATA]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA RICARICA PRIVATA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Ricarica Privata per l’acquisto di Wall Box, i dispositivi di ricarica per veicoli elettrici.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto HERA RICARICA PRIVATA&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -6370,8 +6822,38 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_RICARICA_PRIVATA_Generico_4</name>
-            <fieldText>&lt;p&gt;Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che vuole pagare con {!GetVasOrderItem.PaymentMode__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>RIVARICA_PRIVATA_RATE</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in 24 rate mensili in bolletta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>A-Rate fisse</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>RICARICA_PRIVATA_UNICA</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in un’unica soluzione?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>C-Fattura SD</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>HERA_RICARICA_PRIVATA_PAG_RAT_0</name>
@@ -6380,10 +6862,10 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Rate</stringValue>
+                        <stringValue>A-Rate fisse</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -6395,24 +6877,17 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Rate</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
+                        <stringValue>C-Fattura SD</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>HERA_RICARICA_PRIVATA_CON_POD_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [POD/PDR] del contratto di fornitura al quale è associato il presente contratto e {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto e {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6427,6 +6902,349 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_RICARICA_PRIVATA_Generico_0_5</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;[Garanzia del prodotto]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;﻿Ogni Wall Box è coperta da garanzia di 48 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_HERA_RICARICA_PRIVATA_Outbound</name>
+        <label>Screen HERA RICARICA PRIVATA Outbound</label>
+        <locationX>18354</locationX>
+        <locationY>2678</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>isVas</targetReference>
+        </connector>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_Generico_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;[HERA RICARICA PRIVATA]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Ricarica Privata per l’acquisto di Wall Box, i dispositivi di ricarica per veicoli elettrici.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;b&gt;[Condizioni economiche e di acquisto HERA RICARICA PRIVATA]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_NO_RFID_0_0</name>
+            <fieldText>&lt;p&gt;Il costo di acquisto di una Wall Bax con una presa da 7,4 kW con Smart charging è 1.549, in promozione a 1.399 €.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NormalWallboxCounter</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_RFID_0_0</name>
+            <fieldText>&lt;p&gt;Il costo di acquisto di una Wall Bax con una presa da 7,4 kW con Smart charging e Lettore RFID Card è di 1.749, in promozione a 1.599 €.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>WallboxRfidCounter</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_STANDARD_INST_0_0</name>
+            <fieldText>&lt;p&gt;Il costo di acquisto del Servizio di Installazione Standard è 399 €.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>hasInstallazioneWallbox</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_GROUND_WALLBOX_0_0</name>
+            <fieldText>&lt;p&gt;Il costo di acquisto del Kit per montaggio a terra della Wall box è 199€&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>hasKitMontaggioTerra</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_Generico_1_0</name>
+            <fieldText>&lt;p&gt;Tutti i costi sono già comprensivi di IVA.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_STANDARD_INST_1_0</name>
+            <fieldText>&lt;p&gt;Mi conferma che:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;l’impianto elettrico è a norma ed ha una potenza contrattuale non superiore a 6 kW&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>hasInstallazioneWallbox</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_ABITAZIONE_PRIV_0_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;la superfice dell’abitazione è inferiore a 400 mq&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.SupplyType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Domestico</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>hasInstallazioneWallbox</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_ABITAZIONE_PROD_0_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;la superfice dei locali è inferiore a 200 mq&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.SupplyType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Domestico</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>hasInstallazioneWallbox</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_INST_0_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;il punto di installazione dista al massimo 5 metri dal quadro elettrico&lt;/li&gt;&lt;li&gt;non sono necessarie opere civili (es. fori nei muri)&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>hasInstallazioneWallbox</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_Generico_2_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Se il tecnico che verrà ad installare la Wall Box verificherà l’assenza di uno di questi requisiti, quantificherà eventuali costi aggiuntivi.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_WALLBOX_NO_INST_0_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!totalNumberWallBox} Wall Box?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>hasInstallazioneWallbox</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_WALLBOX_STANDARD_INST_0_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!totalNumberWallBox} &lt;/span&gt;Wall Box e del relativo Servizio di installazione Standard?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>hasInstallazioneWallbox</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_TotaleNoRFID_0_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallboxNoRfid} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NormalWallboxCounter</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_TotaleRfid_0_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo totale del Contratto è quindi di {!costoTotaleWallboxRfid} €.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>WallboxRfidCounter</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_Generico_3_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_NO_STANDARD_INST_0_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>hasInstallazioneWallbox</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_STANDARD_INST_2_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Il Prodotto verrà consegnato entro 45 giorni lavorativi dalla conclusione del Contratto dal tecnico che la contatterà per concordare giorno e ora dell’installazione.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>hasInstallazioneWallbox</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_Generico_4_0</name>
+            <fieldText>&lt;p&gt;Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>RICARICA_PRIVATA_RATE_OUT</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in 24 rate mensili in bolletta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>A-Rate fisse</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>RICARICA_PRIVATA_UNICA_OUT</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in un’unica soluzione?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>C-Fattura SD</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_PAG_RAT_0_0</name>
+            <fieldText>&lt;p&gt;Riceverà una fattura che non dovrà pagare. L’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>A-Rate fisse</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_PAG_UNICA_SOL_0_0</name>
+            <fieldText>&lt;p&gt;Riceverà una fattura relativa al corrispettivo che dovrà essere pagata. Per usufruire delle detrazioni fiscali in materia dovrà pagarla con apposito bonifico bancario o postale.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>C-Fattura SD</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_CON_POD_0_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto e {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.ServicePointCodeFormula__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_RICARICA_PRIVATA_Generico_0_5_0</name>
             <fieldText>&lt;p&gt;&lt;b&gt;[Garanzia del prodotto]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;﻿Ogni Wall Box è coperta da garanzia di 48 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
@@ -6507,7 +7325,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_RICARICA_PUBBLICA_CON_POD_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice POD/PDR del contratto di fornitura al quale è associato il servizio di Ricarica Pubblica {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il servizio di Ricarica Pubblica {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6526,7 +7344,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_SANIFICA_ARIA_Aziende</name>
         <label>Screen HERA SANIFICA ARIA Aziende</label>
-        <locationX>19146</locationX>
+        <locationX>20554</locationX>
         <locationY>2006</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -6668,7 +7486,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_SANIFICA_ARIA_Body_1_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -6823,8 +7641,28 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
+            <name>SANIFICARIA_SHIPPINGADDRESS_INB</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>SANIFICARIA_PHONE_INB</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Contact__r.MobilePhone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.Contact__r.MobilePhone</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>HERA_SANIFICA_ARIA_Body_1</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -6848,7 +7686,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_SANIFICA_ARIA_Dispositivo_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[HERA SANIFICA ARIA]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA SANIFICA ARIA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6870,7 +7708,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_SANIFICA_ARIA_Dispositivo_0_0_1</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[Condizioni economiche e di acquisto Hera Sanifica Aria]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Il costo di acquisto del sanificatore è 279 €, comprensivo di spese di spedizione e di IVA, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera Sanifica Aria&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il costo di acquisto del sanificatore è 279 €, comprensivo di spese di spedizione e di IVA, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6892,7 +7730,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_SANIFICA_ARIA_Accessorio_0_0_1_0</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;[HERA SANIFICA ARIA]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di un accessorio relativo al sanificatore (Lampada di ricarica).&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;HERA SANIFICA ARIA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di un accessorio relativo al sanificatore (Lampada di ricarica).&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6914,7 +7752,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_SANIFICA_ARIA_Accessorio_0_1_1_0</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;[Condizioni economiche e di acquisto Hera Sanifica Aria]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo della Lampada di ricarica è pari a 49,90€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Condizioni economiche e di acquisto Hera Sanifica Aria&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo della Lampada di ricarica è pari a 49,90€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6936,7 +7774,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_SANIFICA_ARIA_Accessorio_0_0_1_1</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;[HERA SANIFICA ARIA]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di due accessori relativi al sanificatore (Lampade di ricarica).&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;HERA SANIFICA ARIA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di due accessori relativi al sanificatore (Lampade di ricarica).&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6958,7 +7796,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_SANIFICA_ARIA_Accessorio_0_1_1_1</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;[Condizioni economiche e di acquisto Hera Sanifica Aria]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo di due Lampade di ricarica è pari a 99,80€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Condizioni economiche e di acquisto Hera Sanifica Aria&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo di due Lampade di ricarica è pari a 99,80€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6979,13 +7817,33 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
+            <name>SANIFICARIA_SHIPPINGADDRESS</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>SANIFICARIA_PHONE</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Contact__r.MobilePhone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.Contact__r.MobilePhone</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>HERA_SANIFICA_ARIA_Body_1_0</name>
-            <fieldText>&lt;p&gt; •	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>HERA_SANIFICA_ARIA_Garanzia_1_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Ogni sanificatore è coperto da garanzia di 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Garanzia del prodotto&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Ogni sanificatore è coperto da garanzia di 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -7004,7 +7862,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_THERMO_Generico_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[HERA THERMO]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Thermo per l’acquisto di un termostato Smart Netatmo.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;b&gt;[Condizioni economiche e di acquisto Hera Thermo]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma di avere un riscaldamento autonomo, una connessione internet wifi flat ed uno smartphone compatibile con l’APP Netatmo?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA THERMO&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Thermo per l’acquisto di un termostato Smart Netatmo.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera Thermo&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma di avere un riscaldamento autonomo, una connessione internet wifi flat ed uno smartphone compatibile con l’APP Netatmo?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -7039,8 +7897,38 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_THERMO_Generico_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo di per le spese di spedizione è di 15 €.&lt;/li&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Se ha acquistato anche il servizio di installazione, la consegna avverrà invece da parte del tecnico che la contatterà per concordare giorno e ora dell’installazione. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/li&gt;&lt;li&gt;Mi conferma che vuole pagare con {!GetVasOrderItem.PaymentMode__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo di per le spese di spedizione è di 15 €.&lt;/li&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Se ha acquistato anche il servizio di installazione, la consegna avverrà invece da parte del tecnico che la contatterà per concordare giorno e ora dell’installazione. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>THERMO_INB_RATE</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in 24 rate mensili in bolletta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>A-Rate fisse</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>THERMO_INB_UNICA</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in un’unica soluzione?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>C-Fattura SD</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>HERA_THERMO_PAG_RATE_1</name>
@@ -7049,10 +7937,10 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Rate</stringValue>
+                        <stringValue>A-Rate fisse</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -7064,24 +7952,17 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Rate</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
+                        <stringValue>C-Fattura SD</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>HERA_THERMO_PAG_CON_POD_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [POD/PDR] del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -7125,7 +8006,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_THERMO_Generico_1_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[HERA THERMO]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta all’offerta Hera Thermo per l’acquisto di un termostato Smart Netatmo.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;b&gt;[Condizioni economiche e di acquisto Hera Thermo]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma di avere un riscaldamento autonomo, una connessione internet wifi flat ed uno smartphone compatibile con l’APP Netatmo?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA THERMO&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta all’offerta Hera Thermo per l’acquisto di un termostato Smart Netatmo.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera Thermo&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma di avere un riscaldamento autonomo, una connessione internet wifi flat ed uno smartphone compatibile con l’APP Netatmo?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -7364,8 +8245,38 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_THERMO_Generico_1_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo per le spese di spedizione è di 15 €, IVA compresa.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Se ha acquistato anche il servizio di installazione, la consegna avverrà invece da parte del tecnico che la contatterà per concordare giorno e ora dell’installazione.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che vuole pagare con {!GetVasOrderItem.PaymentMode__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Il corrispettivo per le spese di spedizione è di 15 €, IVA compresa.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Se ha acquistato anche il servizio di installazione, la consegna avverrà invece da parte del tecnico che la contatterà per concordare giorno e ora dell’installazione.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>THERMO_RATE_OUT</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in 24 rate mensili in bolletta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>A-Rate fisse</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>THERMO_UNICA_OUT</name>
+            <fieldText>&lt;p&gt;Mi conferma che il metodo di pagamento richiesto è in un’unica soluzione?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>C-Fattura SD</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>HERA_THERMO_PAG_RATE_1_1</name>
@@ -7374,10 +8285,10 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Rate</stringValue>
+                        <stringValue>A-Rate fisse</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -7389,24 +8300,17 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>GetOrder.VASBillingMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Rate</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetOrder.PaymentMode__c</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
+                        <stringValue>C-Fattura SD</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>HERA_THERMO_CON_POD_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [POD/PDR] del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -7428,7 +8332,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>13718</locationX>
+        <locationX>14598</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetOrder</targetReference>
