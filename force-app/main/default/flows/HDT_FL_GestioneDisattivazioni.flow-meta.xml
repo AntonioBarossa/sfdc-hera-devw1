@@ -555,6 +555,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaValori_0_0</name>
+        <label>AssegnaValori</label>
+        <locationX>1964</locationX>
+        <locationY>4430</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.NotPerformedBefore__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato_0_0.NotPerformedBefore__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Status_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnazioniDaServicePoint</name>
         <label>Assegnazioni da ServicePoint</label>
         <locationX>1411</locationX>
@@ -638,7 +654,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Status_0_0_0_0</targetReference>
+            <targetReference>AssegnaValori_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -672,7 +688,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Status_0_0_0_0</targetReference>
+            <targetReference>AssegnaValori_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1099,7 +1115,7 @@
         <locationX>1964</locationX>
         <locationY>3758</locationY>
         <defaultConnector>
-            <targetReference>Update_Status_0_0_0_0</targetReference>
+            <targetReference>Get_Case_Aggiornato_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1431,6 +1447,27 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Case_Aggiornato_0_0</name>
+        <label>Get_Case_Aggiornato</label>
+        <locationX>2162</locationX>
+        <locationY>3878</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssegnaValori_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
         <locationX>1411</locationX>
@@ -1632,7 +1669,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>Update_Status_0_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>1964</locationX>
-        <locationY>4430</locationY>
+        <locationY>4550</locationY>
         <connector>
             <targetReference>Loading_Spinner_screen_0</targetReference>
         </connector>
@@ -2116,7 +2153,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>Loading_Spinner_screen_0</name>
         <label>Loading Spinner screen</label>
         <locationX>1964</locationX>
-        <locationY>4550</locationY>
+        <locationY>4670</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
