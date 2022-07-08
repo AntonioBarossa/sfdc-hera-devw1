@@ -386,7 +386,7 @@ public with sharing class HDT_UTL_Account {
                     isAmministratore = true;
                 }
                 break;
-            }else if( accountContactRel.Roles == 'Titolare' ){
+            }else if( accountContactRel.Roles == 'Titolare' || accountContactRel.Roles == 'Familiare'){
                 //if AccountId not in the list yet, insert
                 if( !accountContactMap.containsKey('Account')){
                     accountContactMap = generateAccountContact(accountContactRel);
