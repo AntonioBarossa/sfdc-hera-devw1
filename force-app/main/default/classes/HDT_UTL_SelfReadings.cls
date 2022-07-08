@@ -152,7 +152,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
         c.Type = String.isNotBlank(request.type) ? request.type : 'Autolettura da cliente';
         c.IntegrationId__c = request.integrationId;
         c.MeterCode__c = request.serialNumber;
-        c.ReadingDate__c = request.readingDate;
+        c.ReadingDate__c = request.readingDate != null ? request.readingDate : System.today();
         c.DistributorCode__c = inputContract.ServicePoint__r.Distributor__r.Code__c;
         c.SalesCompanyCode__c = isGas ? '10V0000160' : '13V0000000'; // TODO WAVE 2: adeguare con le altre company in ambito.
 
@@ -188,7 +188,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
         r.Mru__c = request.readings.mru;
         r.SendTo__c = request.readings.sendTo;
         r.Name = 'Lettura ' + Datetime.now().format('dd/MM/y HH:mm:ss');
-        r.ReadingDate__c = request.readingDate != null ? request.readingDate : request.readings.date1;
+        r.ReadingDate__c = request.readingDate != null ? request.readingDate : request.readings.date1 != null ? request.readings.date1 : System.today();
         if (isGas) {
             r.CaseGas__c = c.Id;
             r.RecordTypeId = rtQueryHandler.getRecordTypeIdByName('HDT_RT_LetturaGas');

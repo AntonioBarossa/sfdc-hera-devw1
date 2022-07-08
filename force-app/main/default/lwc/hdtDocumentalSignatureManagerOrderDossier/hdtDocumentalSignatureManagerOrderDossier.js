@@ -666,26 +666,15 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         }catch(e){
             console.error(e);
         }
-        const channel = this.orderRecord.fields.Channel__c.value;
-        const isSportello = channel && channel.localeCompare('Sportello') === 0;
         const isCartacea = signModeInit && signModeInit.localeCompare(signModeCartacea) === 0;
-        this.isVisibleSignedDate = ((isSportello && isCartacea) || signModeInit && signModeInit.localeCompare(signModeFirmato) === 0);
+        this.isVisibleSignedDate = (isCartacea || signModeInit && signModeInit.localeCompare(signModeFirmato) === 0);
         if(signModeInit && signModeInit.localeCompare(signModeFirmato) === 0){
             this.isRelatedPracticeVisible = true;
         }
         else{
             this.isRelatedPracticeVisible = false;
         }
-        
-        // if(this.orderRecord.fields.SignatureMethod__c.value == 'Contratto già firmato'){
-        //     console.log('ENTRATO IN CONTRATTO GIA FIRMATO');
-        //     this.isRelatedPracticeVisible = true;
-        // }
-        // else{
-        //     console.log('ENTRATO IN DIVERSO DA CONTRATTO GIA FIRMATO');
-        //     console.log('this.orderRecord.fields.SignatureMethod__c.value --> '+this.orderRecord.fields.SignatureMethod__c.value);
-        //     this.isRelatedPracticeVisible = false;
-        // }
+
         if (!this.isVisibleSignedDate){
             this.actualSignedDate = null;
         }else{

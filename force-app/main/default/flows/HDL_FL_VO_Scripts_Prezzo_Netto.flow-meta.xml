@@ -2226,7 +2226,7 @@
                     <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Sostenibili</stringValue>
+                        <stringValue>Soluzioni Sostenibili</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -2234,13 +2234,6 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Prezzo Netto Natura Casa</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>VAS</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2276,14 +2269,7 @@
                     <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Sostenibili</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>VAS</stringValue>
+                        <stringValue>Soluzioni Sostenibili</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2450,14 +2436,7 @@
                     <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Sostenibili</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>VAS</stringValue>
+                        <stringValue>Soluzioni Sostenibili</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>

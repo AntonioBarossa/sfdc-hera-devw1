@@ -10,14 +10,14 @@
             <assignToReference>AssignNomi_E_Famiglie_Bonus</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>BonusLoop.ProductName__c</elementReference>
+                <stringValue> </stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>AssignNomi_E_Famiglie_Bonus</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>BonusLoop.ProductFamily__c</elementReference>
+                <elementReference>BonusLoop.ProductName__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -56,14 +56,14 @@
             <assignToReference>AssignNomi_E_Famiglie_Promozioni</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>PromozioniLoop.ProductName__c</elementReference>
+                <stringValue> </stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>AssignNomi_E_Famiglie_Promozioni</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>PromozioniLoop.ProductFamily__c</elementReference>
+                <elementReference>PromozioniLoop.ProductName__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
