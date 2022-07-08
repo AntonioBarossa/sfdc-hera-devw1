@@ -57,7 +57,10 @@ public class HDT_WRP_AccountStatement {
 
     public class HDT_WRP_ColumnDetail {
         @AuraEnabled public String type;
-        @AuraEnabled public Boolean isAmount;
+        // montors fix 07/07/2022
+        //@AuraEnabled public Boolean isAmount;
+        @AuraEnabled public Decimal totAmountStored;
+        @AuraEnabled public Decimal totAmount;
     }
 
     //public class HDT_WRP_ResponseObj {
