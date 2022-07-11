@@ -1,4 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
+import { FlowNavigationNextEvent } from 'lightning/flowSupport';
 import handleSearch from '@salesforce/apex/HDT_LC_CheckAssessments.handleSearch';
 
 const columns = [ { label: 'Nr. Atto', fieldName: 'NrAtto',  sortable: "true"}, //OK
@@ -70,7 +71,8 @@ export default class HdtCheckAssessments extends LightningElement {
                     slots = data.data;
                     this.data = [];
                     if(slots.length == 0){
-
+                        const navigateNextElement = new FlowNavigationNextEvent();
+                        this.dispatchEvent(navigateNextElement);
                     }
                     else{
                         slots.forEach(element => {
