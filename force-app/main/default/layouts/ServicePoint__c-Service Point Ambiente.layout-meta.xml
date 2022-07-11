@@ -11,12 +11,28 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>AuthorizedNotToConfer__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SubscriberCustomerCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AreaDeclaredTARI__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NumberOfFamilyMembers__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SingleInstallmentOperating__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SingleInstallmentValidityDate__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -25,8 +41,8 @@
                 <field>CommoditySector__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NumberOfFamilyMembers__c</field>
+                <behavior>Required</behavior>
+                <field>NumberOfTARIMembers__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
