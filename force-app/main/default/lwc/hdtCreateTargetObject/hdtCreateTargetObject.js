@@ -8,6 +8,7 @@ import getCustomSettingFieldsRequiredAmbiente from '@salesforce/apex/HDT_QR_Serv
 
 export default class hdtCreateTargetObject extends LightningElement {
     @api accountid;
+    @api customercode;
     @api targetobject;
     @api selectedservicepoint;
     @api sale;
