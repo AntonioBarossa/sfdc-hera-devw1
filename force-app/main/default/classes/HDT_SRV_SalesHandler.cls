@@ -329,7 +329,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     }
                                 }
                                 when 'Amm. Precheck KO SII' {
-                                    ord.PrecheckReasonSII__c = mapRequestFields.get('DES_ERR_ES');
+                                    ord.PrecheckReasonSII__c = mapRequestFields.get('TESTO_ERRR');
                                     ord.CausalCode__c = mapRequestFields.get('CODERR_ES');
                                     ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
