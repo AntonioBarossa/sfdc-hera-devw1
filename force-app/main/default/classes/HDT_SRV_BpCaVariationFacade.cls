@@ -4,6 +4,8 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
     global Object execute(Object args) {
 
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
+        response.success = true;
+        response.message = 'OK';
         /*
             @Author: Davide Viola - 19/10/2021
             Description: PMD -> Commentate variabili non utilizzate.
@@ -17,7 +19,7 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
         Map<String,Object> argsMap = (Map<String,Object>) args;
         SObject obj = (SObject) argsMap.get('sender');
         Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
-
+        Boolean okFromSap = true;
         try{
             recordId = (String) obj.get('Id');
             HDT_WRP_GenericSapIntegration sapIntegration = new HDT_WRP_GenericSapIntegration();
@@ -32,9 +34,11 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
                     if (tipoAttivita != null && !tipoAttivita.equals('Pratica gestita')){ // ==> tipoAttivita = Errore cons. eBSM ==> riportiamo l'errore nell'activity.
                         System.debug(LoggingLevel.DEBUG, 'Creazione activity Errore Lavorazione SAP');
                         HDT_UTL_Case.createActivity(recordId,(String)data.get('commenti'),'Esito KO da SAP','Esito KO da SAP');
-
+                        okFromSap = false;
+                        /*
                         response.success = false;
                         response.message = 'KO';
+                        */
                     } else {
                         System.debug(LoggingLevel.DEBUG, 'Response OK: commento da SAP: ' + (String)data.get('commenti'));
                         response.success = true;
@@ -56,12 +60,7 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
         Case caseToUpdate = new Case();
         caseToUpdate.Id = recordId;
         caseToUpdate.SendDate__c = Date.today();
-
-        if (response.success) {
-            caseToUpdate.TecnicalPhase__c = 'Esito OK da SAP';
-        } else {
-            caseToUpdate.TecnicalPhase__c = 'Errore Lavorazione SAP';
-        }
+        caseToUpdate.TecnicalPhase__c = okFromSap ? 'Esito OK da SAP' : 'Errore Lavorazione SAP';
 
         // String serializedCase = JSON.serialize(caseToUpdate);
         // updateFuture(serializedCase);

@@ -1063,12 +1063,18 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     private String validateVerificaTitolarita(Case currentCase) {
 
+        /**@frpanico 2022-07-08
+         * TK 904342C
+         * Rimuovere obbligatorieta allegato
+         */
+        
+        /*
         List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
 
         if(attachedDocument.size() == 0){
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
         }
-            
+        */    
         return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
     }
 
