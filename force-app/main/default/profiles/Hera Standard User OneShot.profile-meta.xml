@@ -30,11 +30,11 @@
         <default>false</default>
         <visible>false</visible>
     </applicationVisibilities>
-    <applicationVisibilities>
+    <!-- <applicationVisibilities>
         <application>standard__AppLauncher</application>
         <default>false</default>
         <visible>false</visible>
-    </applicationVisibilities>
+    </applicationVisibilities> -->
     <applicationVisibilities>
         <application>standard__Chatter</application>
         <default>false</default>
@@ -36455,6 +36455,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Macro</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>standard-OmniSupervisor</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
