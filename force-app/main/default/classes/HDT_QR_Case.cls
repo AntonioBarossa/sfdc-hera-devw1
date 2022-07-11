@@ -208,6 +208,20 @@ public inherited sharing class HDT_QR_Case {
         ];
     }
 
+    public List<Case> getServicePointCaseWinBack(String servicePointId, String servicePointCode){
+        return [
+        SELECT 
+        Id,
+        Phase__c,
+        DistributorName__c
+        FROM Case
+        WHERE (ServicePoint__c = :servicePointId OR ServicePointCode__c = :servicePointCode)
+        AND (Type = 'Switch Out SII' OR Type = 'Switch Out dal SII')
+        AND Status = 'In Lavorazione'
+        WITH SECURITY_ENFORCED
+        ];
+    }
+
     public Case getNonReqContrCase(String relatedCase){
         Case nonReqContr = new Case();
         try{

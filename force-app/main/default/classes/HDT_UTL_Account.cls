@@ -386,7 +386,7 @@ public with sharing class HDT_UTL_Account {
                     isAmministratore = true;
                 }
                 break;
-            }else if( accountContactRel.Roles == 'Titolare' ){
+            }else if( accountContactRel.Roles == 'Titolare' || accountContactRel.Roles == 'Familiare'){
                 //if AccountId not in the list yet, insert
                 if( !accountContactMap.containsKey('Account')){
                     accountContactMap = generateAccountContact(accountContactRel);
@@ -440,7 +440,7 @@ public with sharing class HDT_UTL_Account {
         //HRADTR_GV Modifiche 03/02/2022 - Fine
 
     }
-
+    @TestVisible
     private static Account checkCustomerMarking( Account acc , string saleId)
     {
         //Modifiche HRADTR_GV 03/02/2022 - Inizio
@@ -525,7 +525,7 @@ public with sharing class HDT_UTL_Account {
         accountContactMap.put('Contact',newContact);
         return accountContactMap;
     }
-
+    @TestVisible
     private static Contact registerAmmCondominio(Contact cont, Boolean archive)
     {
         Contact contactReturn = new Contact();
