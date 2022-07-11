@@ -82,22 +82,6 @@
                 <behavior>Edit</behavior>
                 <field>NotDomesticHousingUnit__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>AgriculturalNotDomesticHousingUnit__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>CommercialNotDomesticHousingUnit__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>IndustrialNotDomesticHousingUnit__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ZootechnicalNotDomesticHousingUnit__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
