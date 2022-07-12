@@ -64,7 +64,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Segnalazione TARI</label>
+        <label>Segnalazione</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
