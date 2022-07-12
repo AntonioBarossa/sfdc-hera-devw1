@@ -16,8 +16,10 @@ public with sharing class HDT_UTL_PaperProcessing {
                 ppToBatch.add(pp.id);
             }
         }
-        HDT_BA_PaperCampaignClosing ppBatch = new HDT_BA_PaperCampaignClosing(ppToBatch);
-        Database.executeBatch(ppBatch);
+        if(!ppToBatch.isEmpty()){ //TestCam
+            HDT_BA_PaperCampaignClosing ppBatch = new HDT_BA_PaperCampaignClosing(ppToBatch);
+            Database.executeBatch(ppBatch);
+        }
     }
 
 
@@ -100,9 +102,11 @@ public with sharing class HDT_UTL_PaperProcessing {
                 pp.status__c = 'In Corso';
             }
         }
-        //execute batch
-        HDT_BA_PaperProcessing ppBatch = new HDT_BA_PaperProcessing(ppToBatch);
-        Database.executeBatch(ppBatch, 500);
+        if(!ppToBatch.isEmpty()){ //testCam
+            //execute batch
+            HDT_BA_PaperProcessing ppBatch = new HDT_BA_PaperProcessing(ppToBatch);
+            Database.executeBatch(ppBatch, 500);
+        }
         HDT_SRV_PaperProcessing.updateRecords(newPaper);
     }
 

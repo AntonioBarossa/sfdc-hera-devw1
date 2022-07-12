@@ -74,7 +74,7 @@ public with sharing class HDT_UTL_CreditCheck {
             
             List<HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail> l = new List<HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail>();
             l.add(iwd);
-
+            String separator =  String.isBlank(o.Account?.CustomerCode__c)? ',':' ';
             req.sistema = 'eEnergy';
             req.caso = 'Transazionale';
             req.crmEntity = 'Order';
@@ -85,7 +85,7 @@ public with sharing class HDT_UTL_CreditCheck {
             req.userId = o.CreatedById;
             req.jobTitle = o.ChannelTransCode__c;
             req.internalCustomerId = o.Account?.CustomerCode__c;
-            req.companyName = String.isNotBlank(o.Account?.FirstName__c)? o.Account.FirstName__c+' '+o.Account.LastName__c : o.Account?.LastName__c;
+            req.companyName = String.isNotBlank(o.Account?.FirstName__c)? o.Account.FirstName__c+separator+o.Account.LastName__c : o.Account?.LastName__c;
             req.externalCustomerId = String.isNotBlank(o.Account?.FiscalCode__c)? o.Account.FiscalCode__c : o.Account?.VATNumber__c;
             req.secondaryCustomerId = o.Account?.VATNumber__c;
             req.bpClass =  bpClass;
@@ -148,11 +148,20 @@ public with sharing class HDT_UTL_CreditCheck {
         }
     }
 
+    public static Boolean managedErrorCode(String errorCode){
+        List<HDT_CreditCheckExcludedCode__mdt> codiceErroriGestiti = HDT_QR_GenericQuery.getGenericRecords('Label', 'HDT_CreditCheckExcludedCode__mdt', 'ErrorCode__c = \''+errorCode+ '\' AND IsActive__c = true');
+        return !codiceErroriGestiti.isEmpty();
+    }
+
     public class HDT_WRP_DataForUpdate{
         public String orderId;
         public String outcome;
         public String outcomeDescription;
         public Boolean outcoming;
+
+        public Boolean isEmpty(){
+            return String.isEmpty(this.orderId);
+        }
     }
     
 }

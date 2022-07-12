@@ -25,18 +25,27 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             srRequest.Order__c = String.valueOf(servReq.get('order'));
             srRequest.CommoditySector__c = String.valueOf(servReq.get('commoditySector'));
             srRequest.Type__c = String.valueOf(servReq.get('type'));
+            if(srRequest.Type__c.equalsIgnoreCase('Case'))
+            {
+                List<ServicePoint__c> sp = [SELECT Id FROM ServicePoint__c WHERE ServicePointCode__c = :srRequest.ServicePointCode__c WITH SECURITY_ENFORCED];
+                if(!sp.isEmpty())
+                {
+                    servReq.put('servicePoint', sp[0].Id);
+                }
+            }
             if(servReq.get('servicePoint') != null){
                 srRequest.ServicePoint__c = String.valueOf(servReq.get('servicePoint'));
             }else{
                 srRequest.Account__c = String.valueOf(servReq.get('account'));
                 srRequest.BillingProfile__c = String.valueOf(servReq.get('billingProfile'));
             }
-            if(servReq.get('isBillableVas')!=null && !(String.valueOf(servReq.get('processType')).containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))){
+            if( servReq.get('processType') != null && servReq.get('isBillableVas')!=null && !(String.valueOf(servReq.get('processType')).containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))){
                 Boolean isBillableVas=Boolean.valueOf(servReq.get('isBillableVas'));
                 String searchVas = isBillableVas? 'Vas Billabile' : 'Vas Non Billabile';
                 servReq.put('processType', searchVas);
             }
-            if(String.valueOf(servReq.get('processType')).containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))
+            if( servReq.get('processType') != null && String.valueOf(servReq.get('processType')).containsIgnoreCase('Aggiunta Sconti o Bonus VAS') || 
+                (String.isNotBlank(srRequest.ServicePointCode__c) && srRequest.ServicePointCode__c.equalsIgnoreCase('PODPROVVISORIO')))
             {
                 srRequest.Account__c = String.valueOf(servReq.get('account'));
             }

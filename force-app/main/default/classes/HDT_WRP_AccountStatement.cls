@@ -130,6 +130,8 @@ public class HDT_WRP_AccountStatement {
         public String contratto;
         public String loginId;
         public String stepSollecito;
+        // not in webService, only for internal techinal purpose
+        public String originLwc;
     }
 
     public class HDT_WRP_Tabs {

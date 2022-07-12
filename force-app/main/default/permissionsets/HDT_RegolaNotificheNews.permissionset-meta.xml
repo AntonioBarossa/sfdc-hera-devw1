@@ -31,4 +31,8 @@
         <object>NewsNotificationCenter__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <tabSettings>
+        <tab>NewsNotificationCenter__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

@@ -181,6 +181,17 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>activityId</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>recordId</name>
+                </componentInstanceProperties>
+                <componentName>hdtActivityTrace</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>parentFieldApiName</name>
                     <value>Case.Id</value>
                 </componentInstanceProperties>
@@ -678,7 +689,7 @@
                         <valueListItems>
                             <value>CustomButton.Case.HDT_Annullamento</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND (6 OR (7 AND 8))</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.NotCancellable__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -703,6 +714,21 @@
                                     <leftValue>{!Record.Phase__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Esito KO da SII</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.FlyingRequest__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.FlyingRequest__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_AnnullamentoPraticheInVolo}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

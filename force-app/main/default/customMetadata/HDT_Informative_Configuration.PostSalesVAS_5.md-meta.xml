@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Cluster__c</field>
-        <value xsi:type="xsd:string">PostSales VAS</value>
+        <value xsi:type="xsd:string">VAS</value>
     </values>
     <values>
         <field>Commodity__c</field>
@@ -96,6 +96,10 @@
     </values>
     <values>
         <field>ServicePoint__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>notBilledList__c</field>
         <value xsi:type="xsd:boolean">false</value>
     </values>
 </CustomMetadata>

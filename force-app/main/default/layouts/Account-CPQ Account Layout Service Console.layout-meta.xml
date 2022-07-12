@@ -2,9 +2,6 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>SBQQ__Amend_Assets</customButtons>
     <customButtons>SBQQ__Renew_Assets</customButtons>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
     <excludeButtons>SendEmail</excludeButtons>
     <excludeButtons>XClean</excludeButtons>
@@ -53,6 +50,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CompanyOwner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>RegulatedMarketSelfCertification__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -182,14 +183,14 @@
             <sortOrder>5</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Account.HDT_PrintAccount</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Account.raiFee</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Account.HDT_PrintAccount</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Account.cmor</actionName>
@@ -449,6 +450,7 @@
         <fields>CaseID__c</fields>
         <fields>OrderID__c</fields>
         <fields>et4ae5__Contact_ID__c</fields>
+        <fields>et4ae5__NumberOfUniqueClicks__c</fields>
         <relatedList>et4ae5__IndividualEmailResult__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -459,6 +461,7 @@
         <fields>OrderID__c</fields>
         <fields>ContactID__c</fields>
         <fields>Sent__c</fields>
+        <fields>ActionDateTime__c</fields>
         <relatedList>SMSTracking__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -468,6 +471,10 @@
         <fields>CaseID__c</fields>
         <fields>OrderID__c</fields>
         <fields>ContactID__c</fields>
+        <fields>MessageName__c</fields>
+        <fields>DateTimeSend__c</fields>
+        <fields>OpenDate__c</fields>
+        <fields>Status__c</fields>
         <relatedList>PushTracking__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -546,7 +553,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1j000002So66</masterLabel>
+        <masterLabel>00h3N000002MyGI</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -175,6 +175,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String result = response.deliverPackageResponse.result;
 		String cluster = '';
 		String quotationType = '';
+		Boolean isMassive = false;
+		String signatureMethod = '';
+		if(context.equalsIgnoreCase('Order')){
+			isMassive = (Boolean) processRecord.get('isMassive__c');
+		}
 		if(result == '000'){
 			if(archive != 'Y'){
 				processRecord.put('DocumentalPhase__c','Preview');
@@ -203,9 +208,18 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 						}
 					}
 				}
+				if(isMassive){
+					signatureMethod = (String) processRecord.get('SignatureMethod__c');
+					if(!signatureMethod.equalsIgnoreCase('Contratto già firmato')){
+						processRecord.put('Phase__c', 'Documentazione da inviare');
+					}
+				}
 			}
 		}else {
 			processRecord.put('DocumentalPhase__c','Errore composizione');
+			if(isMassive){
+				processRecord.put('Phase__c', 'Comunicazione EngageOne KO');
+			}
 		}
 		return HDT_UTL_DatabaseService.updateSObject(processRecord);
 	}
@@ -218,7 +232,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String queryString = 'SELECT ';
 		switch on context {
 			when 'Order','DocumentazioneAnticipata' {
-				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,ShippingMail__c,SignMode__c,DocumentalPhase__c,Cluster__c';
+				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,ShippingMail__c,SignMode__c,DocumentalPhase__c,Cluster__c,Phase__c,isMassive__c,SignatureMethod__c';
 				fromString = 'Order';
 				whereString = ' OrderNumber = \''+requestId + '\'';
 			}
@@ -916,13 +930,20 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		if (docusignData == null || childOrder == null) {
 			return r;
 		}
+		String supplyType = childOrder.SupplyType__c;
+		String destinazioneUso = '';
+		if(String.isNotBlank(supplyType) && (supplyType.equalsIgnoreCase('Domestico') || supplyType.equalsIgnoreCase('A-Domestico'))) {
+			destinazioneUso = '1';
+		}else {
+			destinazioneUso = '2';
+		}
 
 		//codice_offerta;
 		r.OfferCode__c = childOrder.OrderNumber;
 		// impianto
 		r.ServicePoint__c = childOrder.ServicePoint__c;
 		// destinazione_uso
-		// r.DestinationUsage__c = ???? TODO: da dove prendere la destinazione d'uso? non sembra esserci nel modulo, nè sull'order nè sul service point.
+		r.DestinationUsage__c = destinazioneUso;
 		// dt_ini_contratto;
 		r.StartDate__c = childOrder.EffectiveDate__c;
 		// codice_assenza_dati_catastali; 

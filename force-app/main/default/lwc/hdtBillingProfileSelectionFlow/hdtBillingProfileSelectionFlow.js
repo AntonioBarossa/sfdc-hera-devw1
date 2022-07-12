@@ -13,12 +13,14 @@ export default class HdtBillingProfileSelectionFlow extends LightningElement {
     @api cancelCase = false;
     //@frpanico 13/09 added variable to skip required selection (process "BP/CA errata categoria")
     @api nonReqSelection = false;
+    @api enableNew = false;
 
 
     @track queryParams;
     @track maxRow;
     @track showSelector;
     @track columns;
+    @track showModal = false;
 
     getConfiguration(){
         getConfiguration({
@@ -56,6 +58,16 @@ export default class HdtBillingProfileSelectionFlow extends LightningElement {
 
     handleRecordSelection(event){
         this.results = event.detail.selectedRows[0].Id;
+    }
+    handleNewBilling(event){
+        console.log('event received' + event.detail);
+        this.results = event.detail;
+        this.handleNext();
+        //this.handleShowModal();
+    }
+
+    handleShowModal(){
+        this.showModal = !this.showModal;
     }
    
     handleNext(event){

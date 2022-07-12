@@ -19,6 +19,7 @@ import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';import get
 import SIGNED_FIELD from '@salesforce/schema/Order.ContractSigned__c';
 //Il seguente campo è stato utilizzato per tracciare l'ultimo SignatureMethod inviato a docusign.
 import OLDSIGN_FIELD from '@salesforce/schema/Order.SignMode__c';
+import CHANNEL_FIELD from '@salesforce/schema/Order.Channel__c';
 import isOnlyAmend from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.isOnlyAmend';
 // TOOLBAR STUFF
 import { loadScript } from 'lightning/platformResourceLoader';
@@ -32,6 +33,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     isPreviewForbidden = false;
     currentStep = 2;
     loading = false;
+    channel = '';
     signatureMethod = '';
     isSaveButtonDisabled = false;
     isCancelButtonDisabled = false;
@@ -46,7 +48,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     isCommunity=false;
 
     get disablePrintButtonFunction() {
-        return this.isPrintButtonDisabled  || (this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare'));
+        return this.isPrintButtonDisabled  || (this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare' && (this.channel !== null && this.channel == 'Teleselling Outbound')));
     }
 
     get disablePreviewButton(){
@@ -56,7 +58,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     @wire(getPicklistValue,{objectApiName: 'Order', fieldApiName: 'SignMode__c'})
     activeValue;
 
-    @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD,OLDSIGN_FIELD] })
+    @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD,OLDSIGN_FIELD, CHANNEL_FIELD] })
     wiredParentOrder({ error, data }) {
         if (error) {
             let message = 'Unknown error';
@@ -76,9 +78,11 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             this.parentOrder = data;
             //var signed = this.parentOrder.fields.ContractSigned__c.value;
             this.signatureMethod = data.fields.SignatureMethod__c.value;
+            this.channel = data.fields.Channel__c.value;
             // 28/12/2021: commentata logica che disabilita il component documentale, poichè deve sempre essere visibile nel wizard.
             //this.enableDocumental = !signed;
             console.log('### Signature method >>> ' + this.signatureMethod)
+            console.log('### ParentOrder Channel >>> ' + this.channel);
             this.enableDocumental = this.signatureMethod !== 'Contratto già firmato'
         }
     }
@@ -128,7 +132,8 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
 
     handleModalPreview(){
         this.isPreviewForbidden = true;
-        if( this.isFraud ){
+
+        /*if( this.isFraud ){
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
                 message: 'Possibile frode in corso, tutti gli ordini correlati verranno annullati.',
@@ -137,25 +142,54 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             this.dispatchEvent(toastSuccessMessage);
         }else{
             console.log('Nessuna Frode in corso');
-        }
-        isCommunity().then(result => {
-            this.isCommunity = result;
-            getCachedUuid().then(uuid => {
-                if(this.isCommunity && uuid) {
-                    this.isPreviewForbidden = false;
-                    this.isModalOpen = true;
-                } else {
-                    this.handlePreview();
-                }
-            }).catch(error =>{
-                console.error(error);
-                this.isPreviewForbidden = false;
-            });
-        }).catch(error => {
+        }*/
+        console.log('### Start Fraud ###');
+        this.loading = true;
+        seekFraud({recordId: this.recordId, orderParent: this.orderParentRecord}).then(result =>{
+            console.log('### Fraud Result >>> ' + result);
             this.loading = false;
-            console.error(error);
-            this.isPreviewForbidden = false;
-        });
+
+            var resultParsed = JSON.parse(result);
+            console.log('### Is Fraud >>> ' + resultParsed.isFraud);
+            this.isFraud = resultParsed.isFraud;
+
+            if(this.isFraud)
+            {
+                const toastSuccessMessage = new ShowToastEvent({
+                    title: 'Attenzione!',
+                    message: 'Possibile frode in corso, tutti gli ordini correlati verranno annullati.',
+                    variant: 'warning'
+                });
+                this.dispatchEvent(toastSuccessMessage);
+                this.dispatchEvent(new CustomEvent('redirecttoorderrecordpage'));
+                return;
+            }
+            else
+            {
+
+                isCommunity().then(result => {
+                    this.isCommunity = result;
+                    getCachedUuid().then(uuid => {
+                        if(this.isCommunity && uuid) {
+                            this.isPreviewForbidden = false;
+                            this.isModalOpen = true;
+                        } else {
+                            this.handlePreview();
+                        }
+                    }).catch(error =>{
+                        console.error(error);
+                        this.isPreviewForbidden = false;
+                    });
+                }).catch(error => {
+                    this.loading = false;
+                    console.error(error);
+                    this.isPreviewForbidden = false;
+                });
+            }
+        })
+        .catch(error => {
+            console.log('#FRAUD_ERROR >>> ' + JSON.stringify(error));
+        })
         
     }
 
@@ -193,6 +227,14 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                     formParams: JSON.stringify(formParams)
                 }).then(result => {
                     var resultParsed = JSON.parse(result);
+                    if(resultParsed.status === 'sizeLimit')
+                    {
+                        this.showMessage('Attenzione',resultParsed.message,'warning');
+                        this.previewExecuted = true;
+                        this.isPrintButtonDisabled = false;
+                        this.loading = false;
+                        return;
+                    }
                     if(resultParsed.code === '200' || resultParsed.code === '201'){
                         if(resultParsed.result === '000'){
                             var base64 = resultParsed.base64;
@@ -230,7 +272,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                         this.loading = false;
                         this.showMessage('Attenzione','Errore nella composizione del plico','error');
                     }
-                    if(this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare')){
+                    if(this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare' && (this.channel !== null && this.channel == 'Telefono Outbound'))){
                         const toastSuccessMessage = new ShowToastEvent({
                             title: 'Successo',
                             message: 'Ordine sottomesso, in attesa validazione',
@@ -476,7 +518,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         this.getIsOnlyAmend();
         this.getCancelButtonStatus();
         this.getActivityVocalOrder();
-        this.getFraud();
+        //this.getFraud();
     }
 
     getActivityVocalOrder(){

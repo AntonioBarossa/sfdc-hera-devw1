@@ -41,39 +41,43 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             Map<String,Object> templateReturn = (Map<String,Object>)templateEngine.applyTemplate(objTemp);
             wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = (wrts_prcgvr.MRR_1_0.MultiRequest)templateReturn.get('multirequest');
             multirequestObj.requests[0].header.fields = headerAttributetoAdd;
-        
+            System.debug(multirequestObj.requests[0]);
             Integer count = 0;
             List<Integer> indexOfObjectToRemove = new List<Integer>();
             Map<Integer,Integer> indexOffieldToRemove = new Map<Integer,Integer>();
-            for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
-                if(w.objectType == 'OrderItem'){
-                    boolean find = false;
-                    Integer k = 0;
-                    for( wrts_prcgvr.MRR_1_0.Field f : w.fields){
-                        if(f.name == 'Fam_Prod'){
-                            if(f.value != null && f.value != '' && f.value== 'Offerta commerciale' ){
-                                find = true;
-                                indexOffieldToRemove.put(count,k);
-                                break;
-                            }
-                            else{
-                                indexOffieldToRemove.put(count,k);
+            /**Rimozione OrderItems non necessaria per Analisi consumi */
+            String vasType = (String)obj.get('VASType__c');
+            if(String.isBlank(vasType) || !vasType.equalsIgnoreCase('VAS Fatturabili'))
+            {
+                for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
+                    if(w.objectType == 'OrderItem'){
+                        boolean find = false;
+                        Integer k = 0;
+                        for( wrts_prcgvr.MRR_1_0.Field f : w.fields){
+                            if(f.name.equalsIgnoreCase('Fam_Prod')){
+                                if(f.value != null && f.value != '' && f.value== 'Offerta commerciale' ){
+                                    find = true;
+                                    //indexOffieldToRemove.put(count,k);
+                                    break;
+                                }
+                                else{
+                                    indexOffieldToRemove.put(count,k);
+                                }
                             }
                         }
+                        if(!find){
+                            indexOfObjectToRemove.add(count);
+                        }
                     }
-                    if(!find){
-                        indexOfObjectToRemove.add(count);
-                    }
+                    count++;
                 }
-                count++;
+                // for(integer i : indexOffieldToRemove.keyset()){
+                //     multirequestObj.requests[0].objects[i].fields.remove(indexOffieldToRemove.get(i));
+                // }
+                for (integer i = indexOfObjectToRemove.size() - 1 ; i >= 0 ; i--) {
+                    multirequestObj.requests[0].objects.remove(indexOfObjectToRemove[i]);
+                }
             }
-            for(integer i : indexOffieldToRemove.keyset()){
-                multirequestObj.requests[0].objects[i].fields.remove(indexOffieldToRemove.get(i));
-            }
-            for (integer i = indexOfObjectToRemove.size() - 1 ; i >= 0 ; i--) {
-                multirequestObj.requests[0].objects.remove(indexOfObjectToRemove[i]);
-            }
-
             Map<String,Object> inputClientFunction = new Map<String,Object>();
             inputClientFunction.put('endpoint',endpoint);
             inputClientFunction.put('timeout',60000);
@@ -256,7 +260,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                             ord.description = fieldValueResponse.get('errorMessage');
                             if(fieldValueResponse.get('errorMessage').contains('Venditore')){
                                 wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c();
-                                act.Type__c = 'Venditore Non Definito';
+                                act.Type__c = 'Caricamento Manuale Siebel';
+                                act.DiscardCategory__c = 'Manuale';
                                 act.RecordTypeId = Schema.getGlobalDescribe().get('wrts_prcgvr__Activity__c').getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
                                 act.Order__c = ord.Id;
                                 act.Account__c = ord.AccountId;

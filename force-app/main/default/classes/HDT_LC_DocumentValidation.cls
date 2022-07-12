@@ -28,7 +28,13 @@ public inherited sharing class HDT_LC_DocumentValidation {
     public static void saveValidation(Order ord){
         // quelli mostrati ( non null) tutti validati -----> phase --->  Documentazione Validata
    		Boolean check = false;
-        if( /*Aggiunta carta identita*/ord.CIAccoutn__c != null || ord.QuickQuote__c != null || ord.ChamberCommerceRegistration__c != null || ord.Instance326__c != null || ord.DocumentLow80__c != null || ord.AutorizationVolturaThirdTrader__c != null)
+        if( /*Aggiunta carta identita*/ord.CIAccoutn__c != null 
+            || ord.QuickQuote__c != null 
+            || ord.ChamberCommerceRegistration__c != null 
+            || ord.Instance326__c != null 
+            || ord.DocumentLow80__c != null 
+            || ord.AutorizationVolturaThirdTrader__c != null
+            || ord.CILegalRepresentative__c != null)
         {
            	check = true;
             //Per voltura
@@ -52,6 +58,10 @@ public inherited sharing class HDT_LC_DocumentValidation {
                 check = false;
             }
             if(ord.DocumentPackage__c != null && !'Validato'.EqualsIgnoreCase(ord.DocumentPackage__c)){
+                check = false;
+            }
+            if(ord.CILegalRepresentative__c != null && !'Validato'.equalsIgnoreCase(ord.CILegalRepresentative__c))
+            {
                 check = false;
             }
             

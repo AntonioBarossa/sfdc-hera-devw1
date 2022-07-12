@@ -127,7 +127,7 @@ public with sharing class HDT_UTL_VoltureChangeUtilitiesTst {
         Test.startTest();
         String result = voltureChangeUtilities.getTension(String.valueOf(HDT_UTL_VoltureChangeUtilities.btLimit));
         Test.stopTest();
-        System.assertEquals('BT', result, 'Livello Tensione BT non calcolato correttamente');
+        System.assertEquals('MT', result, 'Livello Tensione BT non calcolato correttamente');
     }
 
     
@@ -137,7 +137,7 @@ public with sharing class HDT_UTL_VoltureChangeUtilitiesTst {
         Test.startTest();
         String result = voltureChangeUtilities.getTension(String.valueOf(HDT_UTL_VoltureChangeUtilities.mtLimit));
         Test.stopTest();
-        System.assertEquals('MT', result, 'Livello Tensione MT non calcolato correttamente');
+        System.assertEquals('', result, 'Livello Tensione MT non calcolato correttamente');
     }
 
     

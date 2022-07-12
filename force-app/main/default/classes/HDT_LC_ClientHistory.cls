@@ -9,7 +9,7 @@ public with sharing class HDT_LC_ClientHistory {
     private static  Map<String, List<String>> mappingRoleToMarcatura = new Map<String, List<String>>{
         'HDT_BackOffice' => new List<String>{},
         'HDT_FrontOffice_AAAEBT' => new List<String>{'AAS Persona fisica','AAS Ditta individuale','AAS Azienda','AAS Parti comuni','AAS Condominio','AAS Associazione'},
-        'HDT_FrontOffice_HERA_COMM' => new List<String>{'Persona fisica','Ditta individuale','Azienda','Parti comuni','Condominio','Associazione'},
+        'HDT_FrontOffice_HERA_COMM' => new List<String>{'D1 - Persona fisica', 'D2 - Ditta individuale', 'D3 - Azienda', 'D4 - Parti comuni', 'D5 - Condominio', 'D6 - Associazione', 'D7 - BP Doppio'},
         'HDT_FrontOffice_MMS' => new List<String>{'MMS Persona fisica','MMS Ditta individuale','MMS Azienda','MMS Parti comuni','MMS Condominio','MMS Associazione'}
     };
 
@@ -61,14 +61,16 @@ public with sharing class HDT_LC_ClientHistory {
     */
     public static List<String> getMarkingsFromRole(){
         String uRoleId = UserInfo.getUserRoleId();
-
-        if (!Schema.sObjectType.UserRole.fields.DeveloperName.isAccessible()){
-            return null;
+        if(uRoleId != null){
+            if (!Schema.sObjectType.UserRole.fields.DeveloperName.isAccessible()){
+                return null;
+            }
+    
+            String roleDevName = [SELECT DeveloperName FROM UserRole  WHERE Id = :uRoleId LIMIT 1].DeveloperName;
+            
+            return mappingRoleToMarcatura.get(roleDevName);
         }
-
-        String roleDevName = [SELECT DeveloperName FROM UserRole  WHERE Id = :uRoleId LIMIT 1].DeveloperName;
-        
-        return mappingRoleToMarcatura.get(roleDevName);
+        else return null;
     }
     
     @AuraEnabled
