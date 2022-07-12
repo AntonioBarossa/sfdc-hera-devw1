@@ -1,3 +1,4 @@
+<!-- sldsValidatorIgnore -->
 <template>
     <lightning-card title="Informazioni Generali">
         <template if:true={saleRecord}>
@@ -177,6 +178,16 @@
                                 </div>
                             </template>
                         </template>
+                    </template>
+                    <template if:true={showpage2}>
+                        <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
+                        <lightning-input  name="enter-search" type="search" label="Filter Agent" onchange={searchAgentTable} class="searchInput"></lightning-input>
+                        <lightning-layout-item padding="around-medium" size="3"></lightning-layout-item>
+                        <div style="height: 14rem;">
+                            <lightning-datatable key-field="Id" data={tableDataAgent} columns={completeListcolumnsAgent}
+                                max-row-selection=1 onrowselection={getSelectedFromCompleteListAgent}>
+                            </lightning-datatable>
+                        </div>
                         <template if:true={showPaginationButtons2}>
                             <div class="slds-grid slds-grid_align-center">
                                 <div class="slds-col">
@@ -203,20 +214,6 @@
                             </div>
                         </template>
                     </template>
-                    <template if:true={showpage2}>
-                        <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..."
-                                size="small"></lightning-spinner>
-                            <lightning-input  name="enter-search" type="search"
-                                label="Filter Agent" onchange={searchAgentTable} class="searchInput">
-                            </lightning-input>
-                            <lightning-layout-item padding="around-medium" size="3">
-                            </lightning-layout-item>
-                        <lightning-datatable key-field="Id" data={tableDataAgent} columns={completeListcolumnsAgent}
-                            max-row-selection=1 onrowselection={getSelectedFromCompleteListAgent}>
-                        </lightning-datatable>
-
-                    </template>
-
                 </div>
                 <footer class="slds-modal__footer">
                     <lightning-button disabled={disabledBack} onclick={handleBackPage} label="Indietro" variant="brand"

@@ -192,10 +192,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             /**@frpanico 04/02/2022
              * Aggiunta gestione per
              * Comfort Call
+             * Inserito caso transitorio
              */
             if(order.Phase__c != oldOrder.Phase__c
             && oldOrder.Phase__c == 'Documentazione validata' 
-            && (order.Phase__c == 'Comunicazione Verso Heroku' || order.Phase__c == 'Comunicazione Motore VAS')
+            && (order.Phase__c == 'Comunicazione Verso Heroku' || order.Phase__c == 'Comunicazione Motore VAS' || order.Phase__c == 'Esportazione VS Siebel')
             && order.ComfortCallDaysDue__c != null
             )
             {
@@ -206,8 +207,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
             /**@frpanico 07/03/2022
              * Aggiunta comfort per voltura
+             * Inserito caso transitorio
              */
-            if(order.Phase__c != oldOrder.Phase__c && order.ProcessType__c == 'Voltura' && oldOrder.Phase__c == 'In attesa validazione' && (order.Phase__c == 'Documentazione Validata') && order.ComfortCallDaysDue__c != null )
+            if(order.Phase__c != oldOrder.Phase__c && order.ProcessType__c == 'Voltura' && oldOrder.Phase__c == 'In attesa validazione' && (order.Phase__c == 'Documentazione Validata' || order.Phase__c == 'Esportazione VS Siebel') && order.ComfortCallDaysDue__c != null )
             {
                 String newPhase = 'In attesa conferma cliente';
                 DateTime nowDateTime = DateTime.now();
