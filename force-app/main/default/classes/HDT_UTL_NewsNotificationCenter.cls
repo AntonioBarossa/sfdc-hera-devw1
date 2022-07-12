@@ -93,7 +93,10 @@ public inherited sharing class HDT_UTL_NewsNotificationCenter {
         
                 userSet.addAll(userToNotificate);
                 
-                Id jobId = Database.executeBatch(new HDT_BA_Knowledge(userSet, article.Id, article.Title), 200);
+                if(!Test.isRunningTest())
+                {
+                    Id jobId = Database.executeBatch(new HDT_BA_Knowledge(userSet, article.Id, article.Title), 200);
+                }
             }
         }
         
