@@ -19,28 +19,6 @@
 },
 {
 
-&quot;FieldName&quot;:&quot;DeclarationDate__c&quot;,
-
-&quot;Required&quot;:true,
-
-&quot;ReadOnly&quot;:false,
-
-&quot;Column&quot;:2
-
-},
-{
-
-&quot;FieldName&quot;:&quot;EffectiveDate__c&quot;,
-
-&quot;Required&quot;:true,
-
-&quot;ReadOnly&quot;:false,
-
-&quot;Column&quot;:2
-
-},
-{
-
 &quot;FieldName&quot;:&quot;SubscriberType__c&quot;,
 
 &quot;Required&quot;:true,
@@ -54,49 +32,16 @@
 
 &quot;FieldName&quot;:&quot;SubscriptionPlace__c&quot;,
 
-&quot;Required&quot;:true,
+&quot;Required&quot;:false,
 
 &quot;ReadOnly&quot;:false,
 
-&quot;Column&quot;:1
+&quot;Column&quot;:2
 
 },
 {
 
 &quot;FieldName&quot;:&quot;ModuleFromContributor__c&quot;,
-
-&quot;Required&quot;:true,
-
-&quot;ReadOnly&quot;:false,
-
-&quot;Column&quot;:1
-
-},
-{
-
-&quot;FieldName&quot;:&quot;CalculationBlock__c&quot;,
-
-&quot;Required&quot;:false,
-
-&quot;ReadOnly&quot;:false,
-
-&quot;Column&quot;:1
-
-},
-{
-
-&quot;FieldName&quot;:&quot;CustomerRepentanceRefusal__c&quot;,
-
-&quot;Required&quot;:false,
-
-&quot;ReadOnly&quot;:false,
-
-&quot;Column&quot;:1
-
-},
-{
-
-&quot;FieldName&quot;:&quot;AdditionalAttachments__c&quot;,
 
 &quot;Required&quot;:false,
 

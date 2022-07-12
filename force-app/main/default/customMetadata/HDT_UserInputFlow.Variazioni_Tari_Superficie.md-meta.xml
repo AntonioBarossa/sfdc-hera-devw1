@@ -19,40 +19,7 @@
 },
 {
 
-&quot;FieldName&quot;:&quot;DeclarationDate__c&quot;,
-
-&quot;Required&quot;:true,
-
-&quot;ReadOnly&quot;:false,
-
-&quot;Column&quot;:2
-
-},
-{
-
-&quot;FieldName&quot;:&quot;EffectiveDate__c&quot;,
-
-&quot;Required&quot;:true,
-
-&quot;ReadOnly&quot;:false,
-
-&quot;Column&quot;:2
-
-},
-{
-
 &quot;FieldName&quot;:&quot;SubscriberType__c&quot;,
-
-&quot;Required&quot;:true,
-
-&quot;ReadOnly&quot;:false,
-
-&quot;Column&quot;:1
-
-},
-{
-
-&quot;FieldName&quot;:&quot;SubscriptionPlace__c&quot;,
 
 &quot;Required&quot;:true,
 
@@ -74,31 +41,9 @@
 },
 {
 
-&quot;FieldName&quot;:&quot;CalculationBlock__c&quot;,
+&quot;FieldName&quot;:&quot;Surface__c&quot;,
 
 &quot;Required&quot;:false,
-
-&quot;ReadOnly&quot;:false,
-
-&quot;Column&quot;:1
-
-},
-{
-
-&quot;FieldName&quot;:&quot;CustomerRepentanceRefusal__c&quot;,
-
-&quot;Required&quot;:false,
-
-&quot;ReadOnly&quot;:false,
-
-&quot;Column&quot;:1
-
-},
-{
-
-&quot;FieldName&quot;:&quot;DeclaredArea__c&quot;,
-
-&quot;Required&quot;:true,
 
 &quot;ReadOnly&quot;:false,
 
@@ -107,7 +52,7 @@
 },
 {
 
-&quot;FieldName&quot;:&quot;AdditionalAttachments__c&quot;,
+&quot;FieldName&quot;:&quot;SubscriptionPlace__c&quot;,
 
 &quot;Required&quot;:false,
 
