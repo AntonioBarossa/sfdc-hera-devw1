@@ -17,11 +17,6 @@
                 <label>Sospensione Fornitura</label>
             </value>
             <value>
-                <fullName>Processo non trovato</fullName>
-                <default>false</default>
-                <label>Processo non trovato</label>
-            </value>
-            <value>
                 <fullName>Riattivazione Fornitura</fullName>
                 <default>false</default>
                 <label>Riattivazione Fornitura</label>
@@ -107,6 +102,11 @@
                 <label>Voltura</label>
             </value>
             <value>
+                <fullName>Voltura con Autolettura</fullName>
+                <default>false</default>
+                <label>Voltura con Autolettura</label>
+            </value>
+            <value>
                 <fullName>Connessione con Attivazione</fullName>
                 <default>false</default>
                 <label>Connessione con Attivazione</label>
@@ -117,14 +117,19 @@
                 <label>Proroga Temporanea</label>
             </value>
             <value>
-                <fullName>Riattivazione non morose</fullName>
+                <fullName>Riattivazione Fornitura non morosa</fullName>
                 <default>false</default>
-                <label>Riattivazione non morose</label>
+                <label>Riattivazione Fornitura non morosa</label>
             </value>
             <value>
                 <fullName>Subentro Gas</fullName>
                 <default>false</default>
                 <label>Subentro Gas</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione con modifica</fullName>
+                <default>false</default>
+                <label>Prima Attivazione con modifica</label>
             </value>
             <value>
                 <fullName>Prima Attivazione Ele</fullName>

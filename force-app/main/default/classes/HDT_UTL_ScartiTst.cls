@@ -125,6 +125,7 @@ public class HDT_UTL_ScartiTst {
             rules[0].ProcessField__c = 'ProcessType__c';
             rules[0].ProcessValue__c = 'Connessione con Attivazione';
             rules[0].DiscardNoteReliability__c='Alta';
+            rules[0].IsActive__c = true;
             insert rules;
             
             List<DiscardAnnullmentRule__c> rulesCase = HDT_UTL_DataFactoryTst.createDiscardAnnullmentRule(1,false,'Case');
@@ -134,6 +135,7 @@ public class HDT_UTL_ScartiTst {
             rulesCase[0].ProcessField__c = 'Type';
             rulesCase[0].ProcessValue__c = 'Consegna copia chiave GdM';
             rulesCase[0].DiscardNoteReliability__c='Alta';
+            rulesCase[0].IsActive__c = true;
             insert rulesCase;
             
             List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(4,false,accId);
@@ -880,6 +882,28 @@ public class HDT_UTL_ScartiTst {
         System.assertEquals('code', mrRequest.requests[0].code, 'handleMRRInboundRequest did not work correctly');
         System.assertNotEquals(null, mrRequest.requests, 'handleMRRInboundRequest did not work correctly');
         
+    }
+
+    @IsTest
+    public static void testCloseActivityOnCompleted(){
+        String debugString = 'method - closeActivityOnCompleted ';
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Completata','Bozza',constants.ORDER_RECORDTYPEID_VOLTURA,constants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
+        Order ord = [SELECT id FROM Order LIMIT 1];
+        Account acc = [SELECT id FROM Account LIMIT 1];
+        List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acc.Id);
+        activities[0].Order__c = ord.id;
+        activities[0].wrts_prcgvr__Status__c = 'Aperta';
+        activities[0].DiscardCategory__c = 'Tracciatura';
+        insert activities;  
+        activities = [SELECT id FROM wrts_prcgvr__Activity__c WHERE Order__c = :ord.Id AND wrts_prcgvr__Status__c = 'Aperta'];
+        Integer preOpenActivities = activities.size();
+        ord.Phase__c = 'Completata';
+        ord.RecordTypeId = constants.ORDER_RECORDTYPEID_VOLTURA;
+        Test.startTest();
+         update ord;
+        Test.stopTest();
+        activities = [SELECT id FROM wrts_prcgvr__Activity__c WHERE Order__c = :ord.Id AND wrts_prcgvr__Status__c = 'Aperta'];
+        System.assertEquals(1, preOpenActivities-activities.size(), debugString + 'Non si è chiusa l\'attività di tracciatura');
     }
     
 }

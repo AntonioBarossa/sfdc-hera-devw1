@@ -2,8 +2,11 @@
     doInit : function(component, event, helper) {
         var recordid = component.get("v.pageReference").state.c__recordid;
         var tab = component.get("v.pageReference").state.c__tab;
+        var defaultRequestObj = component.get("v.pageReference").state.c__defaultRequestObj;
         component.set('v.recordid', recordid);
         component.set('v.tab', tab);
+        //component.set('v.defaultRequestObj', '{"servizio":"10","contratto":"3025603142"}');
+        component.set('v.defaultRequestObj', defaultRequestObj);
         helper.getEnclosingTabId(component, event, helper);
     },
 

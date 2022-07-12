@@ -7,70 +7,85 @@
  */
 @isTest
 public class HDT_LC_FormAccountResidenzialeTst{
+
+    private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
+
 	@TestSetup
 	static void setup(){
         
-        HDT_UTL_DataFactoryTst.createWebServiceConfiguration('BP_CA','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
+        User internaluser = HDT_UTL_DataFactoryTst.createInternalUser(HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME), true);
+        HDT_UTL_DataFactoryTst.assignPermissionSet(internaluser, 'HDT_Archive', true);
 
-		List<Account> accList=HDT_UTL_DataFactoryTst.createAccountResidenziale(1, false, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
-		accList[0].FirstName__c='test';
-		accList[0].BillingCityCode__c='RO';       
-		insert accList;
-
-		List<Contact> conList=HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
-
-		System.debug('SETUPaccList = '+accList);
-		System.debug('SETUPconList = '+conList);
+        System.runAs(internaluser){
         
-        List<City__c> cities = HDT_UTL_DataFactoryTst.createCity();
-        
+            HDT_UTL_DataFactoryTst.createWebServiceConfiguration('BP_CA','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
+
+            List<Account> accList=HDT_UTL_DataFactoryTst.createAccountResidenziale(1, false, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
+            accList[0].FirstName__c='test';
+            accList[0].BillingCityCode__c='RO';       
+            insert accList;
+
+            List<Contact> conList=HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
+
+            System.debug('SETUPaccList = '+accList);
+            System.debug('SETUPconList = '+conList);
+            
+            List<City__c> cities = HDT_UTL_DataFactoryTst.createCity();
+
+        }
 	}
 
 	@isTest
 	static void testinsertAccount(){
 
+        User u = [SELECT Id FROM User WHERE Alias = 'crmuser' LIMIT 1];
+
 		Test.startTest();
 
-		List<Account> accList=HDT_UTL_DataFactoryTst.createAccountResidenziale(1, false, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
-		accList[0].FirstName__c='testInsertAccount';
+            System.runAs(u){
 
-        List<City__c> cities = HDT_UTL_DataFactoryTst.createCity();
+                List<Account> accList=HDT_UTL_DataFactoryTst.createAccountResidenziale(1, false, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
+                accList[0].FirstName__c='testInsertAccount';
 
-        Map<String, String> dataAccount=new Map<String, String>{
-                    'firstName'=>accList[0].FirstName__c, 
-                    'recordTypeId'=>accList[0].RecordTypeId,
-                    'customerMarking'=>accList[0].CustomerMarking__c, 
-                    'category'=>accList[0].Category__c, 
-                    'companyOwner'=>accList[0].CompanyOwner__c, 
-                    'name'=>accList[0].Name,
-                    'lastName'=>accList[0].LastName__c, 
-                    'role' => 'admin',
-                    'birthplace'=>cities[0].Name,
-                    'birthDate'=>String.valueof(system.today())
-                    };
+                List<City__c> cities = HDT_UTL_DataFactoryTst.createCity();
 
-        Map<String, String> infoData = new Map<String, String>();
-        infoData.put('lastName'     , dataAccount.get('lastName')   );
-        infoData.put('firstName'    , dataAccount.get('firstName')  );
-        infoData.put('birthDate'    , dataAccount.get('birthDate')  );
-        infoData.put('birthPlace'   , dataAccount.get('birthplace') );
-        infoData.put('gender'       , dataAccount.get('gender')     );
+                Map<String, String> dataAccount=new Map<String, String>{
+                            'firstName'=>accList[0].FirstName__c, 
+                            'recordTypeId'=>accList[0].RecordTypeId,
+                            'customerMarking'=>accList[0].CustomerMarking__c, 
+                            'category'=>accList[0].Category__c, 
+                            'companyOwner'=>accList[0].CompanyOwner__c, 
+                            'name'=>accList[0].Name,
+                            'lastName'=>accList[0].LastName__c, 
+                            'role' => 'admin',
+                            'birthplace'=>cities[0].Name,
+                            'birthDate'=>String.valueof(system.today())
+                            };
 
-        dataAccount.put('fiscalCode',HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoData));
-        System.debug('fiscalCode>>> ' + dataAccount.get('fiscalCode') );
+                Map<String, String> infoData = new Map<String, String>();
+                infoData.put('lastName'     , dataAccount.get('lastName')   );
+                infoData.put('firstName'    , dataAccount.get('firstName')  );
+                infoData.put('birthDate'    , dataAccount.get('birthDate')  );
+                infoData.put('birthPlace'   , dataAccount.get('birthplace') );
+                infoData.put('gender'       , dataAccount.get('gender')     );
 
-        Map<String, String> accountAddress=new Map<String, String>{
-                'billingCity'=>'Roma',
-                'billingStreetName__c'=>accList[0].BillingStreetName__c,
-                'billingCityCode__c'=>accList[0].BillingCityCode__c,
-                'billingStreetNumber__c'=>'21',
-                'BillingIsAddressVerified__c'=>'true'
-                };
+                dataAccount.put('fiscalCode',HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoData));
+                System.debug('fiscalCode>>> ' + dataAccount.get('fiscalCode') );
 
-		Account accTest=HDT_LC_FormAccountResidenziale.insertAccount(dataAccount, accountAddress);
+                Map<String, String> accountAddress=new Map<String, String>{
+                        'billingCity'=>'Roma',
+                        'billingStreetName__c'=>accList[0].BillingStreetName__c,
+                        'billingCityCode__c'=>accList[0].BillingCityCode__c,
+                        'billingStreetNumber__c'=>'21',
+                        'BillingIsAddressVerified__c'=>'true'
+                        };
 
-		System.assertEquals(HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoData), accTest.FiscalCode__c, 'Account Fiscal Code is wrong');
-		System.assertNotEquals(null, accTest.FiscalCode__c, 'insertAccount did not work correctly');
+                Account accTest=HDT_LC_FormAccountResidenziale.insertAccount(dataAccount, accountAddress);
+
+                System.assertEquals(HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoData), accTest.FiscalCode__c, 'Account Fiscal Code is wrong');
+                System.assertNotEquals(null, accTest.FiscalCode__c, 'insertAccount did not work correctly');
+
+            }
 
 		Test.stopTest();
 	}
@@ -120,10 +135,17 @@ public class HDT_LC_FormAccountResidenzialeTst{
             'ShippingIsAddressVerified__c'=>'true',
             'ShippingCity'=>'Springfield'
         };
+
+        User u = [SELECT Id FROM User WHERE Alias = 'crmuser' LIMIT 1];
+        Account accTest;
                     
 		Test.startTest();
+
+            System.runAs(u) {
             
-		    Account accTest=HDT_LC_FormAccountResidenziale.insertAccount(dataAccount, accountAddress, accountAddresRes);
+		        accTest=HDT_LC_FormAccountResidenziale.insertAccount(dataAccount, accountAddress, accountAddresRes);
+
+            }
         
         Test.stopTest();
 

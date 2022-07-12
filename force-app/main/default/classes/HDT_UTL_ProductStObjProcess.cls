@@ -308,7 +308,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
             return resp;
         }
 
-        if(startDate <= Date.today()){
+        if(startDate < Date.today()){//<= fix 24/06/2022
             resp.add('KO');
             resp.add(Label.HDT_ErrorOnDateDiff1);
             return resp;

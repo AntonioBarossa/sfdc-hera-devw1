@@ -3,9 +3,12 @@ import getServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getS
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getCustomSettingFieldsRequiredEle from '@salesforce/apex/HDT_QR_ServicePoint.getCustomSettingFieldsRequiredEle';
 import getCustomSettingFieldsRequiredGas from '@salesforce/apex/HDT_QR_ServicePoint.getCustomSettingFieldsRequiredGas';
+import getCustomSettingFieldsRequiredAcqua from '@salesforce/apex/HDT_QR_ServicePoint.getCustomSettingFieldsRequiredAcqua';
+import getCustomSettingFieldsRequiredAmbiente from '@salesforce/apex/HDT_QR_ServicePoint.getCustomSettingFieldsRequiredAmbiente';
 
 export default class hdtCreateTargetObject extends LightningElement {
     @api accountid;
+    @api customercode;
     @api targetobject;
     @api selectedservicepoint;
     @api sale;
@@ -37,6 +40,12 @@ export default class hdtCreateTargetObject extends LightningElement {
         });
         getCustomSettingFieldsRequiredGas().then(data=>{
             this.rowSplitGas = data.FieldRequiredGas__c.split(",");
+        });
+        getCustomSettingFieldsRequiredAcqua().then(data=>{
+            this.rowSplitAcqua = data.FieldRequiredWater__c.split(",");
+        });
+        getCustomSettingFieldsRequiredAmbiente().then(data=>{
+            this.rowSplitAmbiente = data.FieldRequiredWaste__c.split(",");
         });
     }
     

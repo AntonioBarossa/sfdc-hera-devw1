@@ -11,7 +11,7 @@ public class HDT_SRV_CampaignTst{
 
 		Id profileId=[SELECT Id
 		              FROM Profile
-		              WHERE Name='Marketing User'].Id;
+		              WHERE Name='Marketing User' or Name='Utente Marketing'].Id;
 
 		new User(Alias='crmuser', FirstName='FirstName', LastName='LastName', Email='crmuser@test.com', EmailEncodingKey='UTF-8', LanguageLocaleKey='it', LocaleSidKey='it', ProfileId=profileId, TimeZoneSidKey='Europe/Rome', UserName='herauser@test.com'+DateTime.now().getTime(), UserPermissionsMarketingUser=true, IsActive=true);
 	}

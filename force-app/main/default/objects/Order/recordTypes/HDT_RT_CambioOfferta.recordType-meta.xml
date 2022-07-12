@@ -1822,7 +1822,7 @@
     <picklistValues>
         <picklist>DocSendingMethod__c</picklist>
         <values>
-            <fullName>E-mail</fullName>
+            <fullName>E-Mail</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2731,6 +2731,10 @@
         </values>
         <values>
             <fullName>Contratto già firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accettato Digitalmente</fullName>
             <default>false</default>
         </values>
     </picklistValues>

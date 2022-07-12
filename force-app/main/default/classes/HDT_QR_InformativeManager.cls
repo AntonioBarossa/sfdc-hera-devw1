@@ -86,7 +86,8 @@ public with sharing class HDT_QR_InformativeManager {
                     ContractId,
                     Subprocess__c,
                     Cluster__c,
-                    ProcessType__c
+                    ProcessType__c,
+                    Process__c
                     FROM Order
                     WHERE Id = :recordId
                     WITH SECURITY_ENFORCED
