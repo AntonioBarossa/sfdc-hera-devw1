@@ -38543,6 +38543,10 @@
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>DistributorPointCode__c</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Interaction__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
