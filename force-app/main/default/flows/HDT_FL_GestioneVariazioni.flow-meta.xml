@@ -5254,10 +5254,10 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Gestione_Variazioni_Tari</name>
         <label>Gestione Variazioni Tari</label>
         <locationX>3383</locationX>
-        <locationY>467</locationY>
+        <locationY>466</locationY>
         <flowName>HDT_FL_GestioneVariazioniTari</flowName>
         <inputAssignments>
-            <name>caseId</name>
+            <name>InputCase</name>
             <value>
                 <elementReference>InputCase</elementReference>
             </value>
