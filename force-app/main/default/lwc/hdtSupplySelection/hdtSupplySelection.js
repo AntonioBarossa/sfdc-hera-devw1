@@ -6,6 +6,7 @@ import getContractFromRow from '@salesforce/apex/HDT_QR_Contract.getContractFrom
 export default class hdtSupplySelection extends LightningElement {
     @api processType;
     @api accountId;
+    @api customercode;
     @api targetObject;
     @api addititionalParam;
     @api saleRecord;

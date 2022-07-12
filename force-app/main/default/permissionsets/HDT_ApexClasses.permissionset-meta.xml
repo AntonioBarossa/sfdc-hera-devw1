@@ -33,6 +33,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_BA_HandleSelfReadingRequest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_CreditCheckSales</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -42,6 +46,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_BA_CheckCompatibilitySales</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_BA_CampaignMemberManaged</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -550,6 +558,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_LC_AccountDataEnrichmentTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_AccountReAssignToMe</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
