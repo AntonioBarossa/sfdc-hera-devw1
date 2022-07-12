@@ -103,23 +103,23 @@
 
                 <lightning-layout-item size="12" padding="around-medium">
                     <lightning-layout horizontal-align="end">
-                        <lightning-layout-item padding="horizontal-small">
-                            <!-- <div class="slds-text-align_center"> -->
+                        <lightning-layout-item>
+                            <div class="slds-m-horizontal_xxx-small slds-text-align_center">
                                 <lightning-button variant="success" icon-name="utility:success" disabled={disableSalva} label="Salva" title="Salva" type="submit"></lightning-button>
-                            <!-- </div> -->
+                            </div>
                         </lightning-layout-item>
                         <template if:true={_showEdit}>
-                            <lightning-layout-item padding="horizontal-small">
-                                <!-- <div class="slds-text-align_center"> -->
+                            <lightning-layout-item>
+                                <div class="slds-m-horizontal_xxx-small slds-text-align_center">
                                     <lightning-button variant="brand-outline" icon-name="utility:edit" disabled={disableModifica} label="Modifica" title="Modifica" onclick={handleModificaClick}></lightning-button>
-                                <!-- </div> -->
+                                </div>
                             </lightning-layout-item>
                         </template>
                         <template if:true={_showDelete}>
-                            <lightning-layout-item padding="horizontal-small">
-                                <!-- <div class="slds-text-align_center"> -->
+                            <lightning-layout-item>
+                                <div class="slds-m-horizontal_xxx-small slds-text-align_center">
                                     <lightning-button variant="destructive" icon-name="utility:delete" disabled={_readonly} label="Elimina" title="Elimina" onclick={handleEliminaClick}></lightning-button>
-                                <!-- </div> -->
+                                </div>
                             </lightning-layout-item>
                         </template>
                     </lightning-layout>

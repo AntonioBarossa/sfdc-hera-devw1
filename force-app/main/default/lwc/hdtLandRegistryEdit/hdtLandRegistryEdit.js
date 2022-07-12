@@ -8,6 +8,9 @@ import getCadastralCategories from '@salesforce/apex/HDT_UTL_LandRegistry.getCad
 import getCities from '@salesforce/apex/HDT_UTL_LandRegistry.getCities';
 
 const RT_NAME = 'Dati Catastali TARI';
+const FORM_LOAD_TO_DO = 'TO_DO';
+const FORM_LOAD_ALMOST_DONE = 'ALMOST_DONE';
+const FORM_LOAD_DONE = 'DONE';
 
 export default class HdtLandRegistryEdit extends LightningElement {
     @wire(getObjectInfo, { objectApiName: LNDRGS_OBJ })
@@ -18,8 +21,9 @@ export default class HdtLandRegistryEdit extends LightningElement {
     }
     set recordId(newValue){
         if(this._recordId != newValue){
+            this.formLoaded = FORM_LOAD_TO_DO;
+            if(this._recordId == null) this.firstLoad = true;
             this._recordId = newValue;
-            this.setFieldLoaded(true, false);
         }
     }
     @api servicePointId;
@@ -47,6 +51,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
     // showForm = false;
     showSpinner = false;
     firstLoad = true;
+    formLoaded;
 
     cadastralCategories = [];
     cityTechnicalData = [];
@@ -65,23 +70,6 @@ export default class HdtLandRegistryEdit extends LightningElement {
     _showEdit;
     _showDelete;
 
-    fieldsCmpLoaded = {
-        CodeMissingRegistryData__c : false,
-        DestinationUsage__c : false,
-        RegistryCity__c : false,
-        RegistryCityCode__c : false,
-        LegalCity__c : false,
-        Province__c : false,
-        UnitType__c : false,
-        UrbanSection__c : false,
-        Sheet__c : false,
-        ParticleSheet__c : false,
-        Subaltern__c : false,
-        RegistryCategory__c : false,
-        RegistrySurface__c : false,
-        Title__c : false
-    };
-
     connectedCallback(){
         this.call_getCadastralCategories();
         this.call_getCities();
@@ -94,8 +82,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
     handleFieldChange(event) {
         console.log("### handleFieldChange", event.target.name, event.target.fieldName);
         const source = event.target.name ? event.target.name : event.target.fieldName;
-        if(this.getFieldLoaded(false, source)){
-            this.disableSalva=false;
+        if(this.formLoaded == FORM_LOAD_DONE){
             if(source == "CodeMissingRegistryData__c") {
                 if(event.detail.value == "") this._required = this.required == false ? false : true;
                 else{
@@ -157,8 +144,19 @@ export default class HdtLandRegistryEdit extends LightningElement {
             if(source == "RegistryCategory__c") {
                 this.cadastralCategoryValue = event.target.value;
             }
+            //controllo se abilitare o meno il salva in base ai campi required
+            this.disableSalva = false;
+            if(this._required){
+                let inputList = this.template.querySelectorAll('lightning-input-field');
+                inputList.forEach(input => {
+                    if(input.fieldName != "CodeMissingRegistryData__c" && ( input.value == null || input.value == "")) this.disableSalva = true;
+                });
+                inputList = this.template.querySelectorAll('lightning-combobox');
+                inputList.forEach(input => {
+                    if(input.value == null || input.value == "") this.disableSalva = true
+                });
+            }
         }
-        else this.setFieldLoaded(false, true, source);
     }
 
     handleModificaClick(){
@@ -166,16 +164,27 @@ export default class HdtLandRegistryEdit extends LightningElement {
     }
 
     handleEliminaClick(){
+        this.showSpinner = true;
         let recordId = this._recordId;
         this._recordId = null;
         deleteRecord(recordId)
-            .then(() => { this.throwDeletionEvent() })
-            .catch(error => { console.error("### handleEliminaClick Errore", error) });
+            .then(() => { 
+                this.throwDeletionEvent() 
+            })
+            .catch(error => {
+                console.error("### handleEliminaClick Errore", error);
+            })
+            .finally(() => {
+                this.showSpinner = false;
+            });
+
     }
 
     handleFormLoad(event){
         console.log("### handleFormLoad", JSON.stringify(event.detail.records));
+        this.modify = true; // => presetto il form come modificabile, poi lo disabilito se ci sono le condizioni
         if(this._recordId){
+            this.modify = false;
             if(event.detail.records[this._recordId]){
                 this.disableElimina = false;
                 this.registryCityValue = event.detail.records[this._recordId].fields.RegistryCity__c.value;
@@ -186,7 +195,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
             }
         }
         else{
-            this.setFieldLoaded(true, true); // => non aspetto il change dei campi perchè saranno vuoti dato che è nuovo
+            this.formLoaded = FORM_LOAD_DONE;
             this.disableElimina = true;
             this.registryCityValue = null;
             this.registryCityCodeValue = null;
@@ -195,15 +204,28 @@ export default class HdtLandRegistryEdit extends LightningElement {
             this.cadastralCategoryValue = null;
         }
         if(this.firstLoad){
-            this.setFieldLoaded(true, true);
+            this.formLoaded = FORM_LOAD_DONE;
             this.firstLoad = false;
         }
-        if(!this.showEdit) this.modify = true;
+        else{
+            switch (this.formLoaded) {
+                case FORM_LOAD_ALMOST_DONE:
+                    this.formLoaded = FORM_LOAD_DONE;
+                    break;
+                case FORM_LOAD_TO_DO:
+                    this.formLoaded = FORM_LOAD_ALMOST_DONE;
+                    break;
+                default:
+                    console.log("### handleFormLoad status", this.formLoaded);
+            }
+        }
+        if(!this._showEdit) this.modify = true;
         let inputList = this.template.querySelectorAll('lightning-input-field');
         inputList.forEach(input => { 
-            if( "CodeMissingRegistryData__c" == input.fieldName ) 
+            if( "CodeMissingRegistryData__c" == input.fieldName ){
                 if([ null, "" ].includes(input.value)) this._required = this.required == false ? false : true;
                 else this._required = false;
+            }
         });
     }
 
@@ -227,7 +249,6 @@ export default class HdtLandRegistryEdit extends LightningElement {
         this.dispatchEvent(evt);
         this.throwSuccessEvent();
         this.showSpinner = false;
-        this.dispatchEvent(new CloseActionScreenEvent());
     }
 
     handleFormError(event){
@@ -283,25 +304,5 @@ export default class HdtLandRegistryEdit extends LightningElement {
     throwDeletionEvent(){
         const evt = new CustomEvent("deletion", { detail:  {rowId: this._recordId} });
         this.dispatchEvent(evt);
-    }
-
-    getFieldLoaded(all, key){
-        let loaded = true;
-        if(!all) loaded = this.fieldsCmpLoaded[key];
-        else{
-            Object.keys(this.fieldsCmpLoaded).forEach(key => {
-                if(!this.fieldsCmpLoaded[key]) loaded = false;
-            });
-        }
-        return loaded;
-    }
-
-    setFieldLoaded(all, value, key){
-        if(all){
-            Object.keys(this.fieldsCmpLoaded).forEach(key => {
-                this.fieldsCmpLoaded[key] = value;
-            });
-        }
-        else this.fieldsCmpLoaded[key] = value;
     }
 }

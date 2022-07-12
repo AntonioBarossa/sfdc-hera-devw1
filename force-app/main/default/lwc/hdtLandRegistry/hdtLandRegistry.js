@@ -72,6 +72,10 @@ export default class HdtLandRegistry extends LightningElement {
                     this.showTable=true;
                     this.throwSelectionEvent();
                 }
+                else{
+                    this.selectedLandRegistryId = null;
+                    this._selectedLandRegistryId = null;
+                }
                 this.showSpinner = false;
             });
     }
@@ -95,8 +99,8 @@ export default class HdtLandRegistry extends LightningElement {
     }
     
     handleEditDeletion(){
-        this.selectedLandRegistryId = null;
-        this._selectedLandRegistryId = null;
+        // this.selectedLandRegistryId = null;
+        // this._selectedLandRegistryId = null;
         this.call_retrieveLandRegistryTable();
     }
 

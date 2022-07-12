@@ -22,12 +22,15 @@
                         </lightning-datatable>
                     </template>
                     <template if:false={showTable}>
-                        <div class="slds-text-heading_small">NON SONO PRESENTI RECORDS</div>
+                        
+                        <div class="slds-m-horizontal_xxx-small slds-text-align_center slds-text-heading_small">
+                            Non sono presenti dati catastali per questo punto di fornitura.
+                        </div>
                     </template>
                 </div>
-
+                
                 <div class="slds-size_1-of-1 slds-box_x-small slds-text-align_center">
-                    <lightning-button variant="brand" icon-name="utility:record_create" disabled={_readonly} label="Nuovo" title="Nuovo" onclick={handleNuovoClick}></lightning-button>
+                    </br><lightning-button variant="brand" icon-name="utility:record_create" disabled={_readonly} label="Nuovo" title="Nuovo" onclick={handleNuovoClick}></lightning-button>
                 </div>
                 
             </div>
