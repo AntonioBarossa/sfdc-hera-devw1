@@ -83,13 +83,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
             Date startDate = ord.WizardCompletedDate__c;
 
             for (ComfortQualityCall__c cqc : docValidList) {
-                if (
-                    'Documentazione Validata'.equalsIgnoreCase(ord.Phase__c)
-                    && cqc.Process__c == ord.RecordType.DeveloperName
-                    && cqc.Channel__c == ord.Channel__c
-                    && cqc.CustomerType__c == ord.CustomerCategory__c
-                    && cqc.QualitySignatureMethod__c == ord.SignatureMethod__c
-                ) {
+                if ( 'Documentazione Validata'.equalsIgnoreCase(ord.Phase__c) && cqc.Process__c == ord.RecordType.DeveloperName && cqc.Channel__c == ord.Channel__c && cqc.CustomerType__c == ord.CustomerCategory__c && cqc.QualitySignatureMethod__c == ord.SignatureMethod__c ) {
                     startDate = HDT_UTL_Utils.exctrPhaseTransDateFromStory(ord.PhaseStory__c, 'Documentazione Validata');
                     break;
                 }
@@ -139,8 +133,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     ));
                 }                
                 ordersToUpdate.add(ordToUpd);
-            }
-            else {
+            } else {
 
                 if (!ordersAlreadyAssigned.contains(ord.Id) && (ord.ParentOrder__c != null && !ordersAlreadyAssigned.contains(ord.ParentOrder__c))) {
                     orderMap.put(ord.Id, ord);
@@ -157,8 +150,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     if (ord.QualityCallUnique__c) {
                         activity.Order__c = ord.ParentOrder__c;
                         mapActivitiesParent.put(ord.ParentOrder__c, activity);
-                    }
-                    else {
+                    } else {
                         activity.Order__c = ord.Id;
                         callActivities.add(activity);
                     }    
@@ -253,21 +245,17 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                             RelatedActivity__c = orderActivityMap.get(ordId).Id
                         ));
                     }
-                }
-                else {
-                    if (orderActivityMap.get(ordId).Id != null) {
-
-                        notDuplicatedCampToIns.put(orderMap.get(ordId).Contact__c, new CampaignMember(
-                            ContactId = orderMap.get(ordId).Contact__c,
-                            CampaignId = compOwnerToCampMap.get(compOwner).Id ,
-                            PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
-                            RelatedActivity__c = orderActivityMap.get(ordId).Id,
-                            NumberingValidityStartDate__c = System.today(),
-                            NumberingValidityEndDate__c = System.today().addDays(30),
-                            ExcludeFub__c = 'Si',
-                            GenericField1__c = orderMap.get(ordId).AccountId
-                        ));
-                    }
+                } else if (orderActivityMap.get(ordId).Id != null) {
+                    notDuplicatedCampToIns.put(orderMap.get(ordId).Contact__c, new CampaignMember(
+                        ContactId = orderMap.get(ordId).Contact__c,
+                        CampaignId = compOwnerToCampMap.get(compOwner).Id ,
+                        PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
+                        RelatedActivity__c = orderActivityMap.get(ordId).Id,
+                        NumberingValidityStartDate__c = System.today(),
+                        NumberingValidityEndDate__c = System.today().addDays(30),
+                        ExcludeFub__c = 'Si',
+                        GenericField1__c = orderMap.get(ordId).AccountId
+                    ));
                 }
             }
         }
