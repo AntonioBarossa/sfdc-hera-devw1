@@ -32,7 +32,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Variazione indirizzo di fornitura tari</value>
+        <value xsi:type="xsd:string">VarIndFornituraTari</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
