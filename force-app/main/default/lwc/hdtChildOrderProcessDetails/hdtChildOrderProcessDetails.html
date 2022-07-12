@@ -76,6 +76,14 @@
                                     </template>
                                 </template>
 
+
+                                <template if:true={section.hasDatiCatastali}>
+                                    <c-hdt-land-registry 
+                                    service-point-id={order.ServicePoint__c}
+                                    pre-selected-land-registry-id={order.LandRegistry__c}
+                                    ></c-hdt-land-registry>
+                                </template>
+
                                 <template if:true={section.isReading}>
 
                                     <c-hdt-self-reading commodity={order.ServicePoint__r.CommoditySector__c}

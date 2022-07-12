@@ -354,7 +354,8 @@ public inherited sharing class HDT_QR_Order {
             Contact__r.Phone,
             Contact__r.MobilePhone,
             Qualita__c,
-            Subprocess__c
+            Subprocess__c,
+            LandRegistry__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
