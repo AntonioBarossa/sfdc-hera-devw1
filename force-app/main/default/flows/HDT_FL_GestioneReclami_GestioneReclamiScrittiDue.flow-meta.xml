@@ -36,8 +36,8 @@
     <assignments>
         <name>Assegna_Process_Type</name>
         <label>Assegna Process Type</label>
-        <locationX>850</locationX>
-        <locationY>3014</locationY>
+        <locationX>916</locationX>
+        <locationY>3134</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -52,7 +52,7 @@
     <assignments>
         <name>Assegna_Process_Type_0</name>
         <label>Assegna Process Type</label>
-        <locationX>1378</locationX>
+        <locationX>1444</locationX>
         <locationY>3014</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -68,13 +68,29 @@
     <assignments>
         <name>Assegna_Process_Type_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>1114</locationX>
+        <locationX>1180</locationX>
         <locationY>3014</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Rettifica Seconda Classificazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Seconda_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Process_Type_0_0_0_0</name>
+        <label>Assegna Process Type</label>
+        <locationX>652</locationX>
+        <locationY>3134</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reclamo Scritto Seconda Classificazione Tari</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -147,7 +163,7 @@
         <name>AssegnaValori_2</name>
         <label>AssegnaValori</label>
         <locationX>960</locationX>
-        <locationY>4046</locationY>
+        <locationY>4262</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -236,7 +252,7 @@
     <decisions>
         <name>Avanzamento</name>
         <label>Avanzamento</label>
-        <locationX>1378</locationX>
+        <locationX>1411</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione</targetReference>
@@ -301,7 +317,7 @@
         <name>Avanzamento_0_0</name>
         <label>Avanzamento</label>
         <locationX>1114</locationX>
-        <locationY>3350</locationY>
+        <locationY>3566</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0_0_0</targetReference>
         </defaultConnector>
@@ -333,7 +349,7 @@
         <name>Blocco_Sollecito_0</name>
         <label>Blocco Sollecito? (Fixare al completamento della build DM)</label>
         <locationX>960</locationX>
-        <locationY>3590</locationY>
+        <locationY>3806</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_2</targetReference>
         </defaultConnector>
@@ -412,6 +428,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>checkRecordType</name>
+        <label>checkRecordType</label>
+        <locationX>784</locationX>
+        <locationY>3014</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Process_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>processTari</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCaseAggiornato.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_ReclamiScrittiTARI</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Process_Type_0_0_0_0</targetReference>
+            </connector>
+            <label>processTari</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Diritto_Rettifica</name>
         <label>Diritto Rettifica?</label>
         <locationX>1114</locationX>
@@ -481,7 +522,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Process_Type</targetReference>
+                <targetReference>checkRecordType</targetReference>
             </connector>
             <label>Reclamo Scritto</label>
         </rules>
@@ -597,7 +638,7 @@
         <name>Crea_Activity_Blocco_Sollecito</name>
         <label>Crea Activity Blocco Sollecito</label>
         <locationX>828</locationX>
-        <locationY>3830</locationY>
+        <locationY>4046</locationY>
         <connector>
             <targetReference>AssegnaValori_2</targetReference>
         </connector>
@@ -720,7 +761,7 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>1378</locationX>
+        <locationX>1411</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -742,7 +783,7 @@
         <name>GetActivityBloccoSollecito</name>
         <label>Get Activity Blocco Sollecito</label>
         <locationX>828</locationX>
-        <locationY>3710</locationY>
+        <locationY>3926</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Activity_Blocco_Sollecito</targetReference>
@@ -770,7 +811,7 @@
         <name>GetCaseAggiornatoSecondaClassificazione</name>
         <label>GetCaseAggiornatoSecondaClassificazione</label>
         <locationX>960</locationX>
-        <locationY>3470</locationY>
+        <locationY>3686</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Blocco_Sollecito_0</targetReference>
@@ -833,7 +874,7 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>960</locationX>
-        <locationY>4166</locationY>
+        <locationY>4382</locationY>
         <inputReference>GetCaseAggiornatoSecondaClassificazione</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -879,7 +920,7 @@
     <screens>
         <name>Controllo_Classificazione</name>
         <label>Controllo Classificazione</label>
-        <locationX>1378</locationX>
+        <locationX>1411</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1173,7 +1214,7 @@
         <name>Screen_Seconda_Classificazione</name>
         <label>Screen Seconda Classificazione</label>
         <locationX>1114</locationX>
-        <locationY>3230</locationY>
+        <locationY>3446</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1275,7 +1316,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1252</locationX>
+        <locationX>1285</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
@@ -1285,7 +1326,7 @@
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>1642</locationX>
+        <locationX>1708</locationX>
         <locationY>518</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -1361,7 +1402,7 @@
         <name>Annulla_Prestazione_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>1268</locationX>
-        <locationY>3470</locationY>
+        <locationY>3686</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
