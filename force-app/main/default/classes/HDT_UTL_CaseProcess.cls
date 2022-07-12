@@ -393,7 +393,11 @@ public with sharing class HDT_UTL_CaseProcess {
                 system.debug('@@@ Case SupplyCity__c:'+fieldsMap.get('SupplyCity__c'));
                 system.debug('@@@ Case SupplyStreetName__c:'+fieldsMap.get('SupplyStreetName__c'));
             }
+<<<<<<< HEAD
             //querare tabella 'dato tecnico comunale' con chiave i comuni del case e verificare se il flag di gestione è attivo
+=======
+	    //querare tabella 'dato tecnico comunale' con chiave i comuni del case e verificare se il flag di gestione è attivo
+>>>>>>> 49676b0dcc661086dafffe9df55648c6217fd3f9
             // o se la data odierna rientra nel range tra 'data da' e 'data cutover',
             //con il risultato modificare la lista fieldsMap.get('SupplyCity__c') lasciando quelli trovati e togliendo quelli non trovati nella tabella
             List<Contract> relatedContracts = [SELECT Id, AccountId, BillingCity, BillingStreet
