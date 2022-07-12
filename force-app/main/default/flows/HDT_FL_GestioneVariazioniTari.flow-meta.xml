@@ -4,8 +4,8 @@
     <assignments>
         <name>Assegna_punto_fornitura_0</name>
         <label>Assegna punto fornitura</label>
-        <locationX>534</locationX>
-        <locationY>878</locationY>
+        <locationX>622</locationX>
+        <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>getAfterForm_0.SupplyType__c</assignToReference>
             <operator>Assign</operator>
@@ -14,14 +14,37 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AssignNewAddress</targetReference>
+            <targetReference>AnnullamentoSreenIndirizzo</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignAttachments</name>
+        <label>assignAttachments</label>
+        <locationX>3358</locationX>
+        <locationY>5522</locationY>
+        <assignmentItems>
+            <assignToReference>getAfterSecondForm.AttachmentsStringTARI__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>componentAttachment.required</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSecondForm.AdditionalAttachments__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>componentAttachment.additional</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateAttachments</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>assignLandRegistry</name>
         <label>assignLandRegistry</label>
-        <locationX>1975</locationX>
-        <locationY>3938</locationY>
+        <locationX>2866</locationX>
+        <locationY>3698</locationY>
         <assignmentItems>
             <assignToReference>getPreLandRegistry.LandRegistry__c</assignToReference>
             <operator>Assign</operator>
@@ -36,8 +59,8 @@
     <assignments>
         <name>assignmentPostForm</name>
         <label>assignmentPostForm</label>
-        <locationX>1909</locationX>
-        <locationY>4610</locationY>
+        <locationX>2976</locationX>
+        <locationY>4490</locationY>
         <assignmentItems>
             <assignToReference>tryGet.FirstName__c</assignToReference>
             <operator>Assign</operator>
@@ -80,11 +103,14 @@
     <assignments>
         <name>AssignmentPreForm</name>
         <label>AssignmentPreForm</label>
-        <locationX>1788</locationX>
-        <locationY>2978</locationY>
+        <locationX>2470</locationX>
+        <locationY>2642</locationY>
         <assignmentItems>
             <assignToReference>getAfterAddress.SubscriberType__c</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterAddress.SubscriberType__c</elementReference>
+            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getAfterAddress.DeclarationDate__c</assignToReference>
@@ -116,74 +142,9 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssignNewAddress</name>
-        <label>AssignNewAddress</label>
-        <locationX>534</locationX>
-        <locationY>998</locationY>
-        <assignmentItems>
-            <assignToReference>getAfterForm_0.SupplyCity__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingCity__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>getAfterForm_0.SupplyPostalCode__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingPostalCode__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>getAfterForm_0.SupplyCountry__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingCountry__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>getAfterForm_0.SupplyProvince__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingProvince__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>getAfterForm_0.SupplyStreetName__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingStreetName__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>getAfterForm_0.SupplyStreetNumber__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingStreetNumber__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>getAfterForm_0.SupplyStreetNumberExtension__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingStreetNumberExtension__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>getAfterForm_0.SupplyPlace__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingPlace__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>updateAddress</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>AssignNewAddress_0</name>
         <label>AssignNewAddress</label>
-        <locationX>1722</locationX>
+        <locationX>2316</locationX>
         <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>getAfterSubprocess.SupplyCity__c</assignToReference>
@@ -246,10 +207,304 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssignNewAddress_0_0</name>
+        <label>AssignNewAddress</label>
+        <locationX>622</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>getCase.SupplyCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc_0.theCase.InvoicingCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCase.SupplyPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc_0.theCase.InvoicingPostalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCase.SupplyCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc_0.theCase.InvoicingCountry__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCase.SupplyProvince__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc_0.theCase.InvoicingProvince__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCase.SupplyStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc_0.theCase.InvoicingStreetName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCase.SupplyStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc_0.theCase.InvoicingStreetNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCase.SupplyStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc_0.theCase.InvoicingStreetNumberExtension__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCase.SupplyPlace__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc_0.theCase.InvoicingPlace__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateAddress_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignNewAddress_0_0_0</name>
+        <label>AssignNewAddress</label>
+        <locationX>2580</locationX>
+        <locationY>1118</locationY>
+        <assignmentItems>
+            <assignToReference>getAfterSubprocess.SupplyCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterSubprocess.ServicePoint__r.SupplyCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSubprocess.SupplyPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterSubprocess.ServicePoint__r.SupplyPostalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSubprocess.SupplyCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterSubprocess.ServicePoint__r.SupplyCountry__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSubprocess.SupplyProvince__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterSubprocess.ServicePoint__r.SupplyProvince__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSubprocess.SupplyStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterSubprocess.ServicePoint__r.SupplyStreetName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSubprocess.SupplyStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterSubprocess.ServicePoint__r.SupplyStreetNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSubprocess.SupplyStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterSubprocess.ServicePoint__r.SupplyStreetNumberExtension__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSubprocess.SupplyPlace__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterSubprocess.ServicePoint__r.SupplyPlace__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateAddress_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignNumeroPersoneConcatenazione_0_0_0_0_0_0</name>
+        <label>AssignNumeroPersoneConcatenazione</label>
+        <locationX>2989</locationX>
+        <locationY>6242</locationY>
+        <assignmentItems>
+            <assignToReference>numeroPersoneConcatenazione</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterSecondForm.CohabitantsNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ConcatenazioneLogic_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignNumeroPersoneConcatenazione_0_0_0_0_0_0_0</name>
+        <label>AssignNumeroPersoneConcatenazione</label>
+        <locationX>3253</locationX>
+        <locationY>6242</locationY>
+        <assignmentItems>
+            <assignToReference>numeroPersoneConcatenazione</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterSecondForm.ResidentMembers__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ConcatenazioneLogic_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignNumeroPersoneConcatenazione_0_0_0_0_0_0_0_0</name>
+        <label>AssignNumeroPersoneConcatenazione</label>
+        <locationX>3517</locationX>
+        <locationY>6242</locationY>
+        <assignmentItems>
+            <assignToReference>numeroPersoneConcatenazione</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterSecondForm.NotResidentMembers__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ConcatenazioneLogic_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignParams</name>
+        <label>assignParams</label>
+        <locationX>3358</locationX>
+        <locationY>5282</locationY>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.accountType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tryGet.Account.Type</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.city</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tryGet.SupplyCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.cluster</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tryGet.Cluster__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.contactChannel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tryGet.Channel__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.processType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tryGet.Type</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.subProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tryGet.Subprocess__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.SubscriberType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tryGet.SubscriberType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GestioneAllegati_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignParams_0</name>
+        <label>assignParams</label>
+        <locationX>1106</locationX>
+        <locationY>1478</locationY>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.accountType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterForm_0.Account.Type</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.city</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterForm_0.SupplyCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.cluster</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterForm_0.Cluster__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.contactChannel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterForm_0.Channel__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.processType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterForm_0.Type</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.subProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterForm_0.Subprocess__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.SubscriberType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterForm_0.SubscriberType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>gestioneAllegatiVIF</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>assignPhaseStatus</name>
         <label>assignPhaseStatus</label>
-        <locationX>1018</locationX>
-        <locationY>1718</locationY>
+        <locationX>1194</locationX>
+        <locationY>1958</locationY>
         <assignmentItems>
             <assignToReference>getAfterForm_0.Status</assignToReference>
             <operator>Assign</operator>
@@ -269,124 +524,207 @@
         </connector>
     </assignments>
     <assignments>
-        <name>assignPorcessTypeContr</name>
-        <label>assignPorcessTypeContr</label>
-        <locationX>1920</locationX>
-        <locationY>2030</locationY>
+        <name>assignProcessTypeToSubFlow</name>
+        <label>assignProcessTypeToSubFlow</label>
+        <locationX>264</locationX>
+        <locationY>10094</locationY>
         <assignmentItems>
-            <assignToReference>processTypeForm</assignToReference>
+            <assignToReference>processToCancellation</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getAfterAddress.Subprocess__c</elementReference>
+                <stringValue>Modifica dati contrattuali</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>WhichType</targetReference>
+            <targetReference>flowAnnullamento</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>assignProcessType</name>
-        <label>assignProcessType</label>
-        <locationX>1656</locationX>
-        <locationY>2030</locationY>
+        <name>assignProcessTypeToSubFlow_0</name>
+        <label>assignProcessTypeToSubFlow</label>
+        <locationX>528</locationX>
+        <locationY>10094</locationY>
         <assignmentItems>
-            <assignToReference>processType</assignToReference>
+            <assignToReference>processToCancellation</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getAfterAddress.Subprocess__c</elementReference>
+                <stringValue>Modifica post accertamento</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>assignProcessTypePost</targetReference>
+            <targetReference>flowAnnullamento</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>assignProcessTypePost</name>
-        <label>assignProcessTypePost</label>
-        <locationX>1656</locationX>
-        <locationY>2150</locationY>
+        <name>assignProcessTypeToSubFlow_0_0</name>
+        <label>assignProcessTypeToSubFlow</label>
+        <locationX>792</locationX>
+        <locationY>10094</locationY>
         <assignmentItems>
-            <assignToReference>processTypeForm</assignToReference>
+            <assignToReference>processToCancellation</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>generationProcessTypeGetForm</elementReference>
+                <stringValue>Variazione indirizzo di fornitura tari</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>WhichType</targetReference>
+            <targetReference>flowAnnullamento</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>assignStringConcatenazione_0</name>
+        <name>assignRavvedimentoOutput_0</name>
+        <label>assignRavvedimentoOutput</label>
+        <locationX>3748</locationX>
+        <locationY>7346</locationY>
+        <assignmentItems>
+            <assignToReference>getAfterSecondForm.BlockOnComputation__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>componentRavvedimentoOperoso_0.outputWrp.bloccoCalcolo</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSecondForm.EffectiveDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>componentRavvedimentoOperoso_0.outputWrp.dateDecorrenza</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSecondForm.DeclarationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>componentRavvedimentoOperoso_0.outputWrp.dateDichiarazione</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSecondForm.CustomerRepentanceRefusal__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>componentRavvedimentoOperoso_0.outputWrp.declineSupport</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSecondForm.OnerousReviewableStartDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>componentRavvedimentoOperoso_0.outputWrp.dateX</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSecondForm.OnerousUnreviewableStartDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>componentRavvedimentoOperoso_0.outputWrp.dateY</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Annullamento_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignStringConcatenazione_0_0</name>
         <label>assignStringConcatenazione</label>
-        <locationX>2500</locationX>
-        <locationY>5786</locationY>
+        <locationX>3517</locationX>
+        <locationY>6698</locationY>
         <assignmentItems>
-            <assignToReference>tryGet.Note__c</assignToReference>
+            <assignToReference>getAfterSecondForm.Note__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>concatenazioneLwc_0.resultString</elementReference>
+                <elementReference>concatenazioneLwc_0_0.resultString</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>checkRavvedimentoOperoso</targetReference>
+            <targetReference>Ravvedimento</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>ChangePhase</name>
         <label>ChangePhase</label>
-        <locationX>2511</locationX>
-        <locationY>6794</locationY>
+        <locationX>3919</locationX>
+        <locationY>8414</locationY>
         <assignmentItems>
-            <assignToReference>tryGet.Phase__c</assignToReference>
+            <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In attesa validazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateTryGet</targetReference>
+            <targetReference>updateafterSecondForm</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>ChangePhaseIntegrati</name>
-        <label>ChangePhaseIntegrati</label>
-        <locationX>3039</locationX>
-        <locationY>6914</locationY>
+        <name>ChangePhaseDocumentale</name>
+        <label>ChangePhaseDocumentale</label>
+        <locationX>4183</locationX>
+        <locationY>8534</locationY>
         <assignmentItems>
-            <assignToReference>tryGet.Phase__c</assignToReference>
+            <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Gestione documentale</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateafterSecondForm</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>ChangePhaseIntegrati_0</name>
+        <label>ChangePhaseIntegrati</label>
+        <locationX>4711</locationX>
+        <locationY>8654</locationY>
+        <assignmentItems>
+            <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Da Inviare</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateTryGet</targetReference>
+            <targetReference>updateafterSecondForm</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>ChangePhaseNonIntegrati</name>
+        <name>ChangePhaseNonIntegrati_0_0</name>
         <label>ChangePhaseNonIntegrati</label>
-        <locationX>2775</locationX>
-        <locationY>6914</locationY>
+        <locationX>4447</locationX>
+        <locationY>8654</locationY>
         <assignmentItems>
-            <assignToReference>tryGet.Phase__c</assignToReference>
+            <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateTryGet</targetReference>
+            <targetReference>updateafterSecondForm</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>ChangePhaseNonIntegrati_0_0_0</name>
+        <label>ChangePhaseNonIntegrati</label>
+        <locationX>3655</locationX>
+        <locationY>7958</locationY>
+        <assignmentItems>
+            <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateafterSecondForm</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>SurfaceFromNullToZero</name>
         <label>SurfaceFromNullToZero</label>
-        <locationX>2577</locationX>
-        <locationY>6458</locationY>
+        <locationX>4018</locationX>
+        <locationY>8078</locationY>
         <assignmentItems>
-            <assignToReference>tryGet.Surface__c</assignToReference>
+            <assignToReference>getAfterSecondForm.Surface__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <numberValue>0.0</numberValue>
@@ -469,16 +807,16 @@
         </value>
     </choices>
     <decisions>
-        <name>addressLogicPostAccertamento</name>
+        <name>addressLogicPostAccertamento_0</name>
         <label>addressLogicPostAccertamento</label>
-        <locationX>1788</locationX>
-        <locationY>878</locationY>
+        <locationX>2382</locationX>
+        <locationY>998</locationY>
         <defaultConnector>
-            <targetReference>getAfterAddress</targetReference>
+            <targetReference>AssignNewAddress_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>next steps</defaultConnectorLabel>
         <rules>
-            <name>logica_indirzzo</name>
+            <name>logica_indirzzo_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>getCase.Type</leftValueReference>
@@ -488,7 +826,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>getAfterSubprocess</targetReference>
+                <targetReference>Selezione_Indirizzo_0</targetReference>
             </connector>
             <label>logica indirzzo</label>
         </rules>
@@ -496,10 +834,10 @@
     <decisions>
         <name>Annullamento</name>
         <label>Annullamento</label>
-        <locationX>1535</locationX>
+        <locationX>1920</locationX>
         <locationY>758</locationY>
         <defaultConnector>
-            <targetReference>addressLogicPostAccertamento</targetReference>
+            <targetReference>getAfterSubprocess</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -513,18 +851,30 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>flowAnnullamento</targetReference>
+                <targetReference>processTypeAnnullamento</targetReference>
             </connector>
             <label>subFlowAnnullamento</label>
+        </rules>
+        <rules>
+            <name>Salva_In_Bozza</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditFormFlow.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Salva In Bozza</label>
         </rules>
     </decisions>
     <decisions>
         <name>Annullamento_0_0</name>
         <label>Annullamento</label>
-        <locationX>2041</locationX>
-        <locationY>5066</locationY>
+        <locationX>2866</locationX>
+        <locationY>5042</locationY>
         <defaultConnector>
-            <targetReference>GestioneAllegati_0_0</targetReference>
+            <targetReference>getAfterSecondForm</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -538,68 +888,30 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>flowAnnullamento</targetReference>
+                <targetReference>processTypeAnnullamento</targetReference>
             </connector>
             <label>subFlowAnnullamento</label>
         </rules>
-    </decisions>
-    <decisions>
-        <name>Annullamento_0_0_0_0</name>
-        <label>Annullamento</label>
-        <locationX>2274</locationX>
-        <locationY>5306</locationY>
-        <defaultConnector>
-            <targetReference>Modulo_prodotto_da_contribuente_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>subFlowAnnullamento_0_0_0_0</name>
+            <name>SalvaInBozza_3</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtFlowNavButtons_9_0_0.cancelCase</leftValueReference>
+                <leftValueReference>AgevolazioneFormLwc_0_0.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>flowAnnullamento</targetReference>
-            </connector>
-            <label>subFlowAnnullamento</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Annullamento_0_0_0_0_0</name>
-        <label>Annullamento</label>
-        <locationX>2478</locationX>
-        <locationY>6218</locationY>
-        <defaultConnector>
-            <targetReference>IsSurfaceNull</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>subFlowAnnullamento_0_0_0_0_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>hdtFlowNavButtons_11.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>flowAnnullamento</targetReference>
-            </connector>
-            <label>subFlowAnnullamento</label>
+            <label>SalvaInBozza</label>
         </rules>
     </decisions>
     <decisions>
         <name>Annullamento_0_0_0_0_0_0</name>
         <label>Annullamento</label>
-        <locationX>1634</locationX>
-        <locationY>2606</locationY>
+        <locationX>2228</locationX>
+        <locationY>2150</locationY>
         <defaultConnector>
-            <targetReference>AssignmentPreForm</targetReference>
+            <targetReference>Riapertura_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -613,7 +925,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>flowAnnullamento</targetReference>
+                <targetReference>processTypeAnnullamento</targetReference>
             </connector>
             <label>subFlowAnnullamento</label>
         </rules>
@@ -621,8 +933,8 @@
     <decisions>
         <name>Annullamento_0_0_0_0_0_0_0</name>
         <label>Annullamento</label>
-        <locationX>1788</locationX>
-        <locationY>3338</locationY>
+        <locationX>2382</locationX>
+        <locationY>3098</locationY>
         <defaultConnector>
             <targetReference>getPreLandRegistry</targetReference>
         </defaultConnector>
@@ -638,7 +950,94 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>flowAnnullamento</targetReference>
+                <targetReference>processTypeAnnullamento</targetReference>
+            </connector>
+            <label>subFlowAnnullamento</label>
+        </rules>
+        <rules>
+            <name>SalvaInBozza_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ScreenFormLwc.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>SalvaInBozza</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Annullamento_0_0_0_0_0_0_0_0</name>
+        <label>Annullamento</label>
+        <locationX>3748</locationX>
+        <locationY>7466</locationY>
+        <defaultConnector>
+            <targetReference>endStepWhichProcess</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>subFlowAnnullamento_0_0_0_0_0_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtFlowNavButtons_11_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>processTypeAnnullamento</targetReference>
+            </connector>
+            <label>subFlowAnnullamento</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Annullamento_0_0_0_0_0_0_0_0_0</name>
+        <label>Annullamento</label>
+        <locationX>3358</locationX>
+        <locationY>5762</locationY>
+        <defaultConnector>
+            <targetReference>LogicaDocumentale</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>subFlowAnnullamento_0_0_0_0_0_0_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtFlowNavButtons_9_0_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>processTypeAnnullamento</targetReference>
+            </connector>
+            <label>subFlowAnnullamento</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Annullamento_0_0_0_0_0_0_0_0_0_0</name>
+        <label>Annullamento</label>
+        <locationX>3385</locationX>
+        <locationY>6578</locationY>
+        <defaultConnector>
+            <targetReference>assignStringConcatenazione_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>subFlowAnnullamento_0_0_0_0_0_0_0_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtFlowNavButtons_10_0_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>processTypeAnnullamento</targetReference>
             </connector>
             <label>subFlowAnnullamento</label>
         </rules>
@@ -646,7 +1045,7 @@
     <decisions>
         <name>AnnullamentoSreenIndirizzo</name>
         <label>Annullamento</label>
-        <locationX>534</locationX>
+        <locationX>622</locationX>
         <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>changeCity_0</targetReference>
@@ -656,22 +1055,34 @@
             <name>AnnullamentoFromIndirizzo</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>fieldsFormVarIndirizzo.cancelCase</leftValueReference>
+                <leftValueReference>hdtflownavButtons.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>flowAnnullamento</targetReference>
+                <targetReference>processTypeAnnullamento</targetReference>
             </connector>
             <label>Annullamento</label>
+        </rules>
+        <rules>
+            <name>Salva_In_Bozza_VarIndForn</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtflownavButtons.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Salva In Bozza</label>
         </rules>
     </decisions>
     <decisions>
         <name>AnnullamentoSreenIndirizzo_0</name>
         <label>Annullamento</label>
-        <locationX>1590</locationX>
+        <locationX>2184</locationX>
         <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>AssignNewAddress_0</targetReference>
@@ -679,16 +1090,37 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>AnnullamentoFromIndirizzo_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 AND 4) OR (2 AND 3)</conditionLogic>
             <conditions>
-                <leftValueReference>hdtflownavButtons_13.cancelCase</leftValueReference>
+                <leftValueReference>newAddressLwc_0_0.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>addressForm.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>checkAddress</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>checkAddress</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>flowAnnullamento</targetReference>
+                <targetReference>processTypeAnnullamento</targetReference>
             </connector>
             <label>Annullamento</label>
         </rules>
@@ -696,8 +1128,8 @@
     <decisions>
         <name>AnnullamentoSreenIndirizzo_0_0</name>
         <label>Annullamento</label>
-        <locationX>930</locationX>
-        <locationY>1598</locationY>
+        <locationX>1106</locationX>
+        <locationY>1838</locationY>
         <defaultConnector>
             <targetReference>assignPhaseStatus</targetReference>
         </defaultConnector>
@@ -713,7 +1145,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>flowAnnullamento</targetReference>
+                <targetReference>processTypeAnnullamento</targetReference>
             </connector>
             <label>Annullamento</label>
         </rules>
@@ -721,8 +1153,8 @@
     <decisions>
         <name>AnnullamentoSreenIndirizzo_0_0_0</name>
         <label>Annullamento</label>
-        <locationX>1843</locationX>
-        <locationY>3818</locationY>
+        <locationX>2602</locationX>
+        <locationY>3578</locationY>
         <defaultConnector>
             <targetReference>assignLandRegistry</targetReference>
         </defaultConnector>
@@ -738,15 +1170,27 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>flowAnnullamento</targetReference>
+                <targetReference>processTypeAnnullamento</targetReference>
             </connector>
             <label>Annullamento</label>
+        </rules>
+        <rules>
+            <name>SalvaInBozza_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtflownavButtons_10.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>SalvaInBozza</label>
         </rules>
     </decisions>
     <decisions>
         <name>caseType</name>
         <label>caseType</label>
-        <locationX>1034</locationX>
+        <locationX>1271</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>SubprocessChoice</targetReference>
@@ -771,10 +1215,10 @@
     <decisions>
         <name>changeCity_0</name>
         <label>cambio comune</label>
-        <locationX>754</locationX>
+        <locationX>930</locationX>
         <locationY>1358</locationY>
         <defaultConnector>
-            <targetReference>gestioneAllegatiVIF</targetReference>
+            <targetReference>assignParams_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -794,63 +1238,95 @@
         </rules>
     </decisions>
     <decisions>
-        <name>ChoiceIntegration</name>
-        <label>ChoiceIntegration</label>
-        <locationX>2907</locationX>
-        <locationY>6794</locationY>
+        <name>checkModuleFromContributor_0</name>
+        <label>checkModuleFromContributor</label>
+        <locationX>4381</locationX>
+        <locationY>8414</locationY>
         <defaultConnector>
-            <targetReference>ChangePhaseIntegrati</targetReference>
+            <targetReference>ChoiceIntegration_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>In Lavorazione</defaultConnectorLabel>
+        <rules>
+            <name>Validazione_Documentale_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getAfterSecondForm.ModuleFromContributor__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getAfterSecondForm.RequestSource__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Da contribuente</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ChangePhaseDocumentale</targetReference>
+            </connector>
+            <label>Validazione Documentale</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>ChoiceIntegration_0</name>
+        <label>ChoiceIntegration</label>
+        <locationX>4579</locationX>
+        <locationY>8534</locationY>
+        <defaultConnector>
+            <targetReference>ChangePhaseIntegrati_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Flussi integrati</defaultConnectorLabel>
         <rules>
-            <name>FlussiNonIntegrati</name>
+            <name>FlussiNonIntegrati_0</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>tryGet.Type</leftValueReference>
+                <leftValueReference>getAfterSecondForm.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Modifica post accertamento</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.Subprocess__c</leftValueReference>
+                <leftValueReference>getAfterSecondForm.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Coabitazioni</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.Subprocess__c</leftValueReference>
+                <leftValueReference>getAfterSecondForm.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Componenti Residenti</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.Subprocess__c</leftValueReference>
+                <leftValueReference>getAfterSecondForm.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Dati Catastali</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>ChangePhaseNonIntegrati</targetReference>
+                <targetReference>ChangePhaseNonIntegrati_0_0</targetReference>
             </connector>
             <label>Flussi non integrati</label>
         </rules>
     </decisions>
     <decisions>
-        <name>ConcatenazionePreDocumentale_0</name>
+        <name>ConcatenazionePreDocumentale_0_0</name>
         <label>ConcatenazionePreDocumentale</label>
-        <locationX>2632</locationX>
-        <locationY>5546</locationY>
+        <locationX>3671</locationX>
+        <locationY>6002</locationY>
         <defaultConnector>
-            <targetReference>checkRavvedimentoOperoso</targetReference>
+            <targetReference>Ravvedimento</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>altri sottoprocessi</defaultConnectorLabel>
         <rules>
-            <name>ComponentiNonResidentiContrattuali_0</name>
-            <conditionLogic>and</conditionLogic>
+            <name>ComponentiNonResidentiContrattuali_0_0</name>
+            <conditionLogic>1 AND (2 OR 3 OR 4)</conditionLogic>
             <conditions>
                 <leftValueReference>tryGet.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -865,49 +1341,109 @@
                     <stringValue>Componenti non residenti</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>tryGet.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Componenti residenti</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>tryGet.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Coabitazioni</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>ConcatenazioneLogic_0</targetReference>
+                <targetReference>Quale_Campo_Numero_Persone_0_0</targetReference>
             </connector>
             <label>ComponentiNonResidentiContrattuali</label>
         </rules>
     </decisions>
     <decisions>
-        <name>generationProcessType</name>
-        <label>generationProcessType</label>
-        <locationX>1788</locationX>
-        <locationY>1910</locationY>
+        <name>endStepWhichProcess</name>
+        <label>endStepWhichProcess?</label>
+        <locationX>3902</locationX>
+        <locationY>7838</locationY>
         <defaultConnector>
-            <targetReference>assignPorcessTypeContr</targetReference>
+            <targetReference>IsSurfaceNull</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>non Modificare</defaultConnectorLabel>
+        <defaultConnectorLabel>Modifica dati contrattuali</defaultConnectorLabel>
         <rules>
-            <name>Modificare</name>
+            <name>Modifica_post_accertamento_end</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>getAfterAddress.Type</leftValueReference>
+                <leftValueReference>getAfterSecondForm.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Modifica post accertamento</stringValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>ChangePhaseNonIntegrati_0_0_0</targetReference>
+            </connector>
+            <label>Modifica post accertamento</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Generalit_popolate</name>
+        <label>Generalità popolate</label>
+        <locationX>2624</locationX>
+        <locationY>4370</locationY>
+        <defaultConnector>
+            <targetReference>QualitaSoggetto</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si_Generalita</name>
+            <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>getAfterAddress.Subprocess__c</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>tryGet.FirstName__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue>Agevolazione</stringValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>tryGet.LastName__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>tryGet.AlternativeAddress__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>tryGet.Birthday__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>tryGet.Birthcity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>assignProcessType</targetReference>
+                <targetReference>SecondFormDipendenti_0</targetReference>
             </connector>
-            <label>Modificare</label>
+            <label>Si</label>
         </rules>
     </decisions>
     <decisions>
         <name>IsSurfaceNull</name>
         <label>IsSurfaceNull</label>
-        <locationX>2709</locationX>
-        <locationY>6338</locationY>
+        <locationX>4150</locationX>
+        <locationY>7958</locationY>
         <defaultConnector>
             <targetReference>IstruttoriBackOffice</targetReference>
         </defaultConnector>
@@ -931,38 +1467,38 @@
     <decisions>
         <name>IstruttoriBackOffice</name>
         <label>IstruttoriBackOffice?</label>
-        <locationX>2709</locationX>
-        <locationY>6674</locationY>
+        <locationX>4150</locationX>
+        <locationY>8294</locationY>
         <defaultConnector>
-            <targetReference>ChoiceIntegration</targetReference>
+            <targetReference>checkModuleFromContributor_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>checkIstruttoriaBackoffice</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>tryGet.Type</leftValueReference>
+                <leftValueReference>getAfterSecondForm.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Modifica dati contrattuali</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.Subprocess__c</leftValueReference>
+                <leftValueReference>getAfterSecondForm.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Superficie</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.DeclaredArea__c</leftValueReference>
+                <leftValueReference>getAfterSecondForm.DeclaredArea__c</leftValueReference>
                 <operator>LessThan</operator>
                 <rightValue>
-                    <elementReference>tryGet.Surface__c</elementReference>
+                    <elementReference>getAfterSecondForm.Surface__c</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.Account.VATNumber__c</leftValueReference>
+                <leftValueReference>getAfterSecondForm.Account.VATNumber__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -975,42 +1511,149 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Modulo_prodotto_da_contribuente_0</name>
-        <label>Modulo prodotto da contribuente</label>
-        <locationX>2478</locationX>
-        <locationY>5426</locationY>
+        <name>LogicaDocumentale</name>
+        <label>LogicaDocumentale</label>
+        <locationX>3902</locationX>
+        <locationY>5882</locationY>
         <defaultConnector>
-            <targetReference>ConcatenazionePreDocumentale_0</targetReference>
+            <targetReference>Ravvedimento</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>checkModuloOk_0</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>tryGet.ModuleFromContributor__c</leftValueReference>
+                <leftValueReference>getAfterSecondForm.ModuleFromContributor__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.RequestSource__c</leftValueReference>
+                <leftValueReference>getAfterSecondForm.RequestSource__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>D’ufficio</stringValue>
+                    <stringValue>Da contribuente</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>checkRavvedimentoOperoso</targetReference>
+                <targetReference>ConcatenazionePreDocumentale_0_0</targetReference>
             </connector>
             <label>Si</label>
         </rules>
     </decisions>
     <decisions>
+        <name>processTypeAnnullamento</name>
+        <label>processTypeAnnullamento</label>
+        <locationX>660</locationX>
+        <locationY>9974</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Modifica_dati_contrattuali_choice</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica dati contrattuali</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>assignProcessTypeToSubFlow</targetReference>
+            </connector>
+            <label>Modifica dati  contrattuali</label>
+        </rules>
+        <rules>
+            <name>Modifica_post_accertamento_Choice</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica post accertamento</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>assignProcessTypeToSubFlow_0</targetReference>
+            </connector>
+            <label>Modifica post accertamento</label>
+        </rules>
+        <rules>
+            <name>Variazione_indirizzo_di_fornitura_Choice</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Variazione indirizzo di fornitura</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>assignProcessTypeToSubFlow_0_0</targetReference>
+            </connector>
+            <label>Variazione indirizzo di fornitura</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Quale_Campo_Numero_Persone_0_0</name>
+        <label>Quale Campo Numero Persone</label>
+        <locationX>3385</locationX>
+        <locationY>6122</locationY>
+        <defaultConnector>
+            <targetReference>ConcatenazioneLogic_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>coabitanti_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getAfterSecondForm.CohabitantsNumber__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignNumeroPersoneConcatenazione_0_0_0_0_0_0</targetReference>
+            </connector>
+            <label>coabitanti</label>
+        </rules>
+        <rules>
+            <name>comp_residenti_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getAfterSecondForm.ResidentMembers__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignNumeroPersoneConcatenazione_0_0_0_0_0_0_0</targetReference>
+            </connector>
+            <label>comp residenti</label>
+        </rules>
+        <rules>
+            <name>comp_non_residenti_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getAfterSecondForm.NotResidentMembers__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignNumeroPersoneConcatenazione_0_0_0_0_0_0_0_0</targetReference>
+            </connector>
+            <label>comp non residenti</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>QualitaSoggetto</name>
         <label>Qualità Soggetto Passivo?</label>
-        <locationX>2041</locationX>
-        <locationY>4490</locationY>
+        <locationX>3108</locationX>
+        <locationY>4370</locationY>
         <defaultConnector>
             <targetReference>SecondFormDipendenti_0</targetReference>
         </defaultConnector>
@@ -1032,9 +1675,84 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Ravvedimento</name>
+        <label>Ravvedimento?</label>
+        <locationX>3902</locationX>
+        <locationY>7106</locationY>
+        <defaultConnector>
+            <targetReference>endStepWhichProcess</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si_ravv</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getAfterSecondForm.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica dati contrattuali</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>checkRavvedimentoOperoso_0</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Riapertura_0</name>
+        <label>Riapertura?</label>
+        <locationX>2382</locationX>
+        <locationY>2522</locationY>
+        <defaultConnector>
+            <targetReference>AssignmentPreForm</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si_Riapertura_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ResumeFromDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ScreenForm</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Riapertura_0_0</name>
+        <label>Riapertura?</label>
+        <locationX>2866</locationX>
+        <locationY>4250</locationY>
+        <defaultConnector>
+            <targetReference>QualitaSoggetto</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si_Riapertura_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ResumeFromDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Generalit_popolate</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>showMessage</name>
         <label>showMessage</label>
-        <locationX>542</locationX>
+        <locationX>660</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>caseType</targetReference>
@@ -1059,8 +1777,8 @@
     <decisions>
         <name>subDatiCatastali</name>
         <label>subDatiCatastali</label>
-        <locationX>2041</locationX>
-        <locationY>3578</locationY>
+        <locationX>2866</locationX>
+        <locationY>3338</locationY>
         <defaultConnector>
             <targetReference>tryGet</targetReference>
         </defaultConnector>
@@ -1075,13 +1793,6 @@
                     <stringValue>Dati catastali</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>getPreLandRegistry.Type</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Modifica dati contrattuali</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>ScreenLandRegistry</targetReference>
             </connector>
@@ -1091,10 +1802,10 @@
     <decisions>
         <name>WhichType</name>
         <label>WhichType</label>
-        <locationX>1788</locationX>
-        <locationY>2366</locationY>
+        <locationX>2382</locationX>
+        <locationY>1910</locationY>
         <defaultConnector>
-            <targetReference>AssignmentPreForm</targetReference>
+            <targetReference>Riapertura_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Modifica post accertamento</defaultConnectorLabel>
         <rules>
@@ -1114,12 +1825,6 @@
         </rules>
     </decisions>
     <description>SubFlow chiamato da HDT_FL_GestioneVariazioni per la gestione dei processi di Variazioni Tari</description>
-    <formulas>
-        <description>generazione process type per prelevare il meta dato corretto per il form di compilazione</description>
-        <name>generationProcessTypeGetForm</name>
-        <dataType>String</dataType>
-        <expression>{!processType}&amp;&apos;Post&apos;</expression>
-    </formulas>
     <interviewLabel>HDT_FL_GestioneVariazioniTari {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GestioneVariazioniTari</label>
     <processMetadataValues>
@@ -1144,18 +1849,18 @@
     <recordLookups>
         <name>getAfterAddress</name>
         <label>getAfterAddress</label>
-        <locationX>1788</locationX>
+        <locationX>2382</locationX>
         <locationY>1790</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>generationProcessType</targetReference>
+            <targetReference>WhichType</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>caseId</elementReference>
+                <elementReference>InputCase</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -1165,8 +1870,8 @@
     <recordLookups>
         <name>getAfterForm_0</name>
         <label>getAfterForm</label>
-        <locationX>534</locationX>
-        <locationY>758</locationY>
+        <locationX>622</locationX>
+        <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_punto_fornitura_0</targetReference>
@@ -1176,7 +1881,28 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>caseId</elementReference>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getAfterSecondForm</name>
+        <label>getAfterSecondForm</label>
+        <locationX>3358</locationX>
+        <locationY>5162</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>assignParams</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -1186,18 +1912,18 @@
     <recordLookups>
         <name>getAfterSubprocess</name>
         <label>getAfterSubprocess</label>
-        <locationX>1590</locationX>
-        <locationY>998</locationY>
+        <locationX>2382</locationX>
+        <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Selezione_Indirizzo_0</targetReference>
+            <targetReference>addressLogicPostAccertamento_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>caseId</elementReference>
+                <elementReference>InputCase</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -1207,7 +1933,7 @@
     <recordLookups>
         <name>getCase</name>
         <label>getCase</label>
-        <locationX>542</locationX>
+        <locationX>660</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1218,7 +1944,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>caseId</elementReference>
+                <elementReference>InputCase</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -1228,7 +1954,7 @@
     <recordLookups>
         <name>getComuneNonAffidatario</name>
         <label>getComuneNonAffidatario</label>
-        <locationX>542</locationX>
+        <locationX>660</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1249,8 +1975,8 @@
     <recordLookups>
         <name>getPreLandRegistry</name>
         <label>getPreLandRegistry</label>
-        <locationX>2041</locationX>
-        <locationY>3458</locationY>
+        <locationX>2866</locationX>
+        <locationY>3218</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>subDatiCatastali</targetReference>
@@ -1260,7 +1986,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>caseId</elementReference>
+                <elementReference>InputCase</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -1270,18 +1996,18 @@
     <recordLookups>
         <name>tryGet</name>
         <label>tryGet</label>
-        <locationX>2041</locationX>
-        <locationY>4370</locationY>
+        <locationX>2866</locationX>
+        <locationY>4130</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>QualitaSoggetto</targetReference>
+            <targetReference>Riapertura_0_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>caseId</elementReference>
+                <elementReference>InputCase</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -1291,8 +2017,8 @@
     <recordUpdates>
         <name>commitPostForm</name>
         <label>commitPostForm</label>
-        <locationX>1909</locationX>
-        <locationY>4730</locationY>
+        <locationX>2976</locationX>
+        <locationY>4610</locationY>
         <connector>
             <targetReference>SecondFormDipendenti_0</targetReference>
         </connector>
@@ -1301,35 +2027,82 @@
     <recordUpdates>
         <name>finalUpdate</name>
         <label>finalUpdate</label>
-        <locationX>1018</locationX>
-        <locationY>1838</locationY>
-        <inputReference>getAfterForm_0</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>updateAddress</name>
-        <label>updateAddress</label>
-        <locationX>534</locationX>
-        <locationY>1118</locationY>
-        <connector>
-            <targetReference>AnnullamentoSreenIndirizzo</targetReference>
-        </connector>
+        <locationX>1194</locationX>
+        <locationY>2078</locationY>
         <inputReference>getAfterForm_0</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>updateAddress_0</name>
         <label>updateAddress</label>
-        <locationX>1722</locationX>
-        <locationY>1478</locationY>
+        <locationX>2382</locationX>
+        <locationY>1670</locationY>
         <connector>
             <targetReference>getAfterAddress</targetReference>
         </connector>
         <inputReference>getAfterSubprocess</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>updateAddress_0_0</name>
+        <label>updateAddress</label>
+        <locationX>622</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>getAfterForm_0</targetReference>
+        </connector>
+        <inputReference>getCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updateafterSecondForm</name>
+        <label>updateafterSecondForm</label>
+        <locationX>4150</locationX>
+        <locationY>9062</locationY>
+        <inputReference>getAfterSecondForm</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updateAttachments</name>
+        <label>updateAttachments</label>
+        <locationX>3358</locationX>
+        <locationY>5642</locationY>
+        <connector>
+            <targetReference>Annullamento_0_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+        <inputReference>getAfterSecondForm</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updateAttachments_0</name>
+        <label>updateAttachments</label>
+        <locationX>1106</locationX>
+        <locationY>1718</locationY>
+        <connector>
+            <targetReference>AnnullamentoSreenIndirizzo_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>AdditionalAttachments__c</field>
+            <value>
+                <elementReference>componentAttachment_VIF.additional</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AttachmentsStringTARI__c</field>
+            <value>
+                <elementReference>componentAttachment_VIF.required</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>updatePostLandRegistry</name>
         <label>updatePostLandRegistry</label>
-        <locationX>1975</locationX>
-        <locationY>4058</locationY>
+        <locationX>2866</locationX>
+        <locationY>3818</locationY>
         <connector>
             <targetReference>tryGet</targetReference>
         </connector>
@@ -1338,30 +2111,23 @@
     <recordUpdates>
         <name>updatePreForm</name>
         <label>updatePreForm</label>
-        <locationX>1788</locationX>
-        <locationY>3098</locationY>
+        <locationX>2470</locationX>
+        <locationY>2762</locationY>
         <connector>
             <targetReference>ScreenForm</targetReference>
         </connector>
         <inputReference>getAfterAddress</inputReference>
     </recordUpdates>
-    <recordUpdates>
-        <name>updateTryGet</name>
-        <label>updateTryGet</label>
-        <locationX>2709</locationX>
-        <locationY>7226</locationY>
-        <inputReference>tryGet</inputReference>
-    </recordUpdates>
     <screens>
         <name>alertChangeCity_0</name>
         <label>alertChangeCity</label>
-        <locationX>578</locationX>
+        <locationX>754</locationX>
         <locationY>1478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>flowAnnullamento</targetReference>
+            <targetReference>processTypeAnnullamento</targetReference>
         </connector>
         <fields>
             <name>screenAlertChangeCity_0</name>
@@ -1416,23 +2182,66 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>checkRavvedimentoOperoso</name>
+        <name>checkRavvedimentoOperoso_0</name>
         <label>checkRavvedimentoOperoso</label>
-        <locationX>2478</locationX>
-        <locationY>6098</locationY>
+        <locationX>3748</locationX>
+        <locationY>7226</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Annullamento_0_0_0_0_0</targetReference>
+            <targetReference>assignRavvedimentoOutput_0</targetReference>
         </connector>
         <fields>
-            <name>hdtCheckRavvedimentoOperoso</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(235, 236, 240); font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Oxygen, Ubuntu, &amp;quot;Fira Sans&amp;quot;, &amp;quot;Droid Sans&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, sans-serif; color: rgb(23, 43, 77);&quot;&gt;hdtCheckRavvedimentoOperoso&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>hdtCheckRavvedimentoOperoso_0</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!tryGet.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Sottoprocesso {!tryGet.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>hdtFlowNavButtons_11</name>
+            <name>componentRavvedimentoOperoso_0</name>
+            <extensionName>c:hdtActiveRepentant</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>city</name>
+                <value>
+                    <elementReference>getAfterSecondForm.SupplyCity__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sottotipo</name>
+                <value>
+                    <stringValue>Subentro</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>text_0</name>
+            <fieldText>&lt;p&gt;Ravvedimento operoso:&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://gerav.bingest.net/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;GE*RAV Gestione Ravvedimento Operoso&lt;/a&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtFlowNavButtons_11_0</name>
             <extensionName>c:hdtFlowNavigationButton</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -1444,7 +2253,7 @@
             <inputParameters>
                 <name>isDraft</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1471,6 +2280,12 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -1479,29 +2294,29 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>ConcatenazioneLogic_0</name>
+        <name>ConcatenazioneLogic_0_0</name>
         <label>ConcatenazioneLogic</label>
-        <locationX>2500</locationX>
-        <locationY>5666</locationY>
+        <locationX>3385</locationX>
+        <locationY>6458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>assignStringConcatenazione_0</targetReference>
+            <targetReference>Annullamento_0_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
         <fields>
-            <name>header_3</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getAfterAddress.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 18px; background-color: rgb(255, 255, 255);&quot;&gt;Sotto processo di {!getAfterAddress.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <name>header_3_0</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getAfterAddress.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Sottoprocesso {!getAfterAddress.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>concatenazioneLwc_0</name>
+            <name>concatenazioneLwc_0_0</name>
             <extensionName>c:hdtStringGenerationForDocument</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>caseId</name>
                 <value>
-                    <elementReference>caseId</elementReference>
+                    <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1519,7 +2334,19 @@
             <inputParameters>
                 <name>numComponenti</name>
                 <value>
-                    <elementReference>tryGet.NotResidentMembers__c</elementReference>
+                    <elementReference>numeroPersoneConcatenazione</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>comune</name>
+                <value>
+                    <elementReference>getAfterSecondForm.SupplyCity__c</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1527,7 +2354,7 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>hdtFlowNavButtons_10_0</name>
+            <name>hdtFlowNavButtons_10_0_0</name>
             <extensionName>c:hdtFlowNavigationButton</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -1539,7 +2366,7 @@
             <inputParameters>
                 <name>isDraft</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1566,6 +2393,12 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -1576,13 +2409,13 @@
     <screens>
         <name>GestioneAllegati_0_0</name>
         <label>GestioneAllegati</label>
-        <locationX>2274</locationX>
-        <locationY>5186</locationY>
+        <locationX>3358</locationX>
+        <locationY>5402</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Annullamento_0_0_0_0</targetReference>
+            <targetReference>assignAttachments</targetReference>
         </connector>
         <fields>
             <name>componentAttachment</name>
@@ -1591,7 +2424,25 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>caseId</elementReference>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>paramsWrap</name>
+                <value>
+                    <elementReference>paramsRequiredAttachments</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1617,7 +2468,7 @@
             <inputParameters>
                 <name>isPrevious</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1638,6 +2489,18 @@
                     <stringValue>Brand</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -1648,13 +2511,13 @@
     <screens>
         <name>gestioneAllegatiVIF</name>
         <label>gestioneAllegatiVIF</label>
-        <locationX>930</locationX>
-        <locationY>1478</locationY>
+        <locationX>1106</locationX>
+        <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>AnnullamentoSreenIndirizzo_0_0</targetReference>
+            <targetReference>updateAttachments_0</targetReference>
         </connector>
         <fields>
             <name>componentAttachment_VIF</name>
@@ -1663,7 +2526,13 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>caseId</elementReference>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1720,8 +2589,8 @@
     <screens>
         <name>ScreenForm</name>
         <label>ScreenForm</label>
-        <locationX>1788</locationX>
-        <locationY>3218</locationY>
+        <locationX>2382</locationX>
+        <locationY>2978</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1730,7 +2599,7 @@
         </connector>
         <fields>
             <name>headerForm</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getAfterAddress.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 18px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Sotto processo di {!getAfterAddress.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getAfterAddress.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Sottoprocesso {!getAfterAddress.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1740,7 +2609,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>processTypeForm</elementReference>
+                    <elementReference>getAfterAddress.Subprocess__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1770,13 +2639,13 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>caseId</elementReference>
+                    <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>previousButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1809,12 +2678,6 @@
                     <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
-            <inputParameters>
-                <name>labelPreviousButton</name>
-                <value>
-                    <stringValue>Indietro</stringValue>
-                </value>
-            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -1825,14 +2688,19 @@
     <screens>
         <name>ScreenLandRegistry</name>
         <label>ScreenLandRegistry</label>
-        <locationX>1843</locationX>
-        <locationY>3698</locationY>
+        <locationX>2602</locationX>
+        <locationY>3458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
             <targetReference>AnnullamentoSreenIndirizzo_0_0_0</targetReference>
         </connector>
+        <fields>
+            <name>headerLandRegistry</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getPreLandRegistry.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 18px; background-color: rgb(255, 255, 255);&quot;&gt;Sottoprocesso {!getPreLandRegistry.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Dati Catastali&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>componentLandRegistry</name>
             <extensionName>c:hdtLandRegistry</extensionName>
@@ -1858,7 +2726,7 @@
             <inputParameters>
                 <name>required</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>getAfterForm_0.ModuleFromContributor__c</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1908,7 +2776,7 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>caseId</elementReference>
+                    <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1933,7 +2801,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>flowAnnullamento</targetReference>
+            <targetReference>processTypeAnnullamento</targetReference>
         </connector>
         <fields>
             <name>showMessageNonAffidatari</name>
@@ -1990,8 +2858,8 @@
     <screens>
         <name>SecondFormDipendenti_0</name>
         <label>SecondFormDipendenti</label>
-        <locationX>2041</locationX>
-        <locationY>4946</locationY>
+        <locationX>2866</locationX>
+        <locationY>4922</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2000,7 +2868,7 @@
         </connector>
         <fields>
             <name>header_2</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getAfterAddress.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 18px; background-color: rgb(255, 255, 255);&quot;&gt;Sotto processo di {!getAfterAddress.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getAfterAddress.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Sottoprocesso {!getAfterAddress.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2034,7 +2902,7 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>caseId</elementReference>
+                    <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2052,7 +2920,7 @@
             <inputParameters>
                 <name>showReadOnly</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2076,7 +2944,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Conferma</stringValue>
+                    <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -2089,13 +2957,13 @@
     <screens>
         <name>Selezione_Indirizzo</name>
         <label>Selezione Indirizzo</label>
-        <locationX>534</locationX>
+        <locationX>622</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>getAfterForm_0</targetReference>
+            <targetReference>AssignNewAddress_0_0</targetReference>
         </connector>
         <fields>
             <name>attualeIndirizzo</name>
@@ -2135,7 +3003,7 @@
             <inputParameters>
                 <name>cancelButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2147,7 +3015,7 @@
             <inputParameters>
                 <name>draftButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2159,7 +3027,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Conferma</stringValue>
+                    <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2177,7 +3045,7 @@
             <inputParameters>
                 <name>saveButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2189,13 +3057,13 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>caseId</elementReference>
+                    <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Variazione indirizzo di fornitura tari</stringValue>
+                    <stringValue>VarIndFornituraTari</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2208,65 +3076,20 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Selezione_Indirizzo_0</name>
-        <label>Selezione Indirizzo</label>
-        <locationX>1590</locationX>
-        <locationY>1118</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>AnnullamentoSreenIndirizzo_0</targetReference>
-        </connector>
         <fields>
-            <name>attualeIndirizzo_0</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getAfterSubprocess.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 18px; background-color: rgb(255, 255, 255);&quot;&gt;Sotto processo di {!getAfterSubprocess.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>newAddressLwc_0_0</name>
-            <extensionName>c:hdtTargetObjectAddressForFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>theCase</name>
-                <value>
-                    <elementReference>getAfterSubprocess</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>hideNavigationButtons</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>cancelCase</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>hdtflownavButtons_13</name>
+            <name>hdtflownavButtons</name>
             <extensionName>c:hdtFlowNavigationButton</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>isCancel</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>isDraft</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2284,13 +3107,19 @@
             <inputParameters>
                 <name>nextVariant</name>
                 <value>
-                    <stringValue>Brand</stringValue>
+                    <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>caseId</elementReference>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2307,9 +3136,158 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Selezione_Indirizzo_0</name>
+        <label>Selezione Indirizzo</label>
+        <locationX>2184</locationX>
+        <locationY>1118</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>AnnullamentoSreenIndirizzo_0</targetReference>
+        </connector>
+        <fields>
+            <name>attualeIndirizzo_0</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getAfterSubprocess.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Sottoprocesso {!getAfterSubprocess.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>checkAddress</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <booleanValue>false</booleanValue>
+            </defaultValue>
+            <fieldText>Indirizzo non trovato</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>newAddressLwc_0_0</name>
+            <extensionName>c:hdtTargetObjectAddressForFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>theCase</name>
+                <value>
+                    <elementReference>getAfterSubprocess</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>hideNavigationButtons</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelCase</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>checkAddress</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>addressForm</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>addressForm</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>getAfterSubprocess.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>checkAddress</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>SubprocessChoice</name>
         <label>SubprocessChoice</label>
-        <locationX>1535</locationX>
+        <locationX>1920</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2330,7 +3308,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Surface</name>
-                    <fieldText>&lt;p&gt;Superficie: {!getCase.Surface__c}&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;Superficie: 80&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
@@ -2356,7 +3334,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>NumberOfPeople</name>
-                    <fieldText>&lt;p&gt;Numero abitanti: {!getCase.NumberOfPeople__c}&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;Numero abitanti: 3&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
@@ -2460,7 +3438,7 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>caseId</elementReference>
+                    <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2497,8 +3475,8 @@
     <screens>
         <name>verificaAccertamentiTari_0</name>
         <label>verificaAccertamentiTari</label>
-        <locationX>1634</locationX>
-        <locationY>2486</locationY>
+        <locationX>2228</locationX>
+        <locationY>2030</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2506,9 +3484,35 @@
             <targetReference>Annullamento_0_0_0_0_0_0</targetReference>
         </connector>
         <fields>
-            <name>hdtCheckAssessments_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(235, 236, 240); font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Oxygen, Ubuntu, &amp;quot;Fira Sans&amp;quot;, &amp;quot;Droid Sans&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, sans-serif; color: rgb(23, 43, 77);&quot;&gt;hdtCheckAssessments&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>headerVerifica</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getAfterAddress.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Sottoprocesso {!getAfterAddress.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Verifica accertamenti Ambiente&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>componentVerificaAccertamentiTari</name>
+            <extensionName>c:hdtCheckAssessments</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>fiscalCode</name>
+                <value>
+                    <elementReference>getAfterAddress.Account.FiscalCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>supplyCity</name>
+                <value>
+                    <elementReference>getAfterAddress.ServicePoint__r.SupplyCity__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>customerMarking</name>
+                <value>
+                    <elementReference>getAfterAddress.Account.CustomerMarking__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>hdtFlowNavButtons_1_0</name>
@@ -2523,7 +3527,7 @@
             <inputParameters>
                 <name>isDraft</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2558,7 +3562,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>416</locationX>
+        <locationX>534</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>getCase</targetReference>
@@ -2568,13 +3572,13 @@
     <subflows>
         <name>flowAnnullamento</name>
         <label>flowAnnullamento</label>
-        <locationX>542</locationX>
-        <locationY>8138</locationY>
+        <locationX>660</locationX>
+        <locationY>10310</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
             <value>
-                <elementReference>caseId</elementReference>
+                <elementReference>InputCase</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2586,7 +3590,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento prestazione</stringValue>
+                <elementReference>processToCancellation</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2597,25 +3601,47 @@
         </inputAssignments>
     </subflows>
     <variables>
-        <name>caseId</name>
+        <name>InputCase</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>processType</name>
+        <name>numeroPersoneConcatenazione</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>paramsRequiredAttachments</name>
+        <apexClass>HDT_LC_AttachmentManager</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>processToCancellation</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>processTypeForm</name>
-        <dataType>String</dataType>
+        <name>ResumeFromDraft</name>
+        <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>stringToDocument</name>
