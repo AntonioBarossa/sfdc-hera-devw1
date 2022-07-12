@@ -8,23 +8,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>No - Esente</fullName>
-                <default>false</default>
-                <label>No - Esente</label>
-            </value>
-            <value>
-                <fullName>Si - Paga</fullName>
-                <default>false</default>
-                <label>Si - Paga</label>
-            </value>
-            <value>
-                <fullName>Si - Ridotta</fullName>
-                <default>false</default>
-                <label>Si - Ridotta</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_BillingType</valueSetName>
     </valueSet>
 </CustomField>

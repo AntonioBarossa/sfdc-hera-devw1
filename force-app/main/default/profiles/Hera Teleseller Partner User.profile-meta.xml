@@ -693,7 +693,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>ServicePoint__c.HydrantMouthsNumberA__c</field>
+        <field>ServicePoint__c.PaySewer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
