@@ -53,7 +53,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Posizionamento Contenitore</value>
+        <value xsi:type="xsd:string">PosizionamentoContenitoreForm</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
