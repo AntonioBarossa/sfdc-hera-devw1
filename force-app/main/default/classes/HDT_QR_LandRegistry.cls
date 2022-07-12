@@ -14,7 +14,7 @@ public inherited sharing class HDT_QR_LandRegistry {
 	        FROM LandRegistry__c 
 	        WHERE ServicePoint__c IN :listId
 	        AND RecordTypeId = :rtIdTARI
-        ];
+            WITH SECURITY_ENFORCED];
         return ldRegistry;
     }
     public list<LandRegistry__c> getTARILandRegistryById(list<Id> listId) {
@@ -26,7 +26,7 @@ public inherited sharing class HDT_QR_LandRegistry {
 	        FROM LandRegistry__c 
 	        WHERE Id IN :listId
 	        AND RecordTypeId = :rtIdTARI
-        ];
+            WITH SECURITY_ENFORCED];
         return ldRegistry;
     }
 }
