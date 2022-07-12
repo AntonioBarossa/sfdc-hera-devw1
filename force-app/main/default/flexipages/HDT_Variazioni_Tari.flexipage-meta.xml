@@ -27,7 +27,6 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
-                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -53,7 +52,6 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -79,7 +77,6 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -105,7 +102,6 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -131,7 +127,6 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer4</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
@@ -164,7 +159,6 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer5</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -182,7 +176,6 @@
                     <value>Contact.UpdateContactCase</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
-                <identifier>console_relatedRecord</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -196,7 +189,6 @@
                     <value>AttachedContentDocuments</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer6</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -207,7 +199,6 @@
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
-                <identifier>force_detailPanel</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -233,7 +224,6 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer7</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -259,7 +249,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer8</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.CommodityFormula__c}</leftValue>
@@ -292,7 +281,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer9</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.CommodityFormula__c}</leftValue>
@@ -330,7 +318,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer10</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-4762fefa-be02-4fa2-86fb-6288bbdaddd4</name>
@@ -340,7 +327,6 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceChatter:recordFeedContainer</componentName>
-                <identifier>forceChatter_recordFeedContainer</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -371,7 +357,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer11</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -397,7 +382,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer12</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -423,7 +407,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer13</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-ebfe827d-ed44-456b-9783-f7eb1e49ff24</name>
@@ -439,13 +422,11 @@
                     <name>recordId</name>
                 </componentInstanceProperties>
                 <componentName>hdtDocumentalPhaseHistory</componentName>
-                <identifier>hdtDocumentalPhaseHistory</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>hdtDocusignQrCode</componentName>
-                <identifier>hdtDocusignQrCode</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -471,7 +452,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer14</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -497,7 +477,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer15</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -523,7 +502,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer16</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-2e2d42c1-634d-4b7a-82b1-3be5a1f955ab</name>
@@ -553,7 +531,6 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer17</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-9e22964d-fc98-4121-a529-9c3927629d93</name>
@@ -583,7 +560,6 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer18</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-655b0fb3-733b-494d-b9a3-1d6eca1d73ee</name>
@@ -605,7 +581,6 @@
                     <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>detailTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -619,7 +594,6 @@
                     <value>Standard.Tab.activity</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>activityTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -637,7 +611,6 @@
                     <value>Standard.Tab.feed</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>feedTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -651,7 +624,6 @@
                     <value>Comunicazioni</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>customTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -665,7 +637,6 @@
                     <value>Documentale</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>customTab2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -679,7 +650,6 @@
                     <value>Social Posts</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>customTab3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -693,7 +663,6 @@
                     <value>Case Correlati</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>customTab4</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -710,64 +679,49 @@
                             <value>Case.Catalogo_Servizi</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Case.HDT_CaseDocumentValidation</value>
+                            <value>CustomButton.Case.HDT_DynamicCancellation</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>In attesa validazione</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.ModuleFromContributor__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>false</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.RequestSource__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>D’ufficio</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>CustomButton.Case.HDT_Annullamento</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.NotCancellable__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>false</rightValue>
-                                </criteria>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Closed</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Ammissibilità KO</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Esito KO da DL</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Esito KO da SII</rightValue>
+                                    <leftValue>{!Record.NotCancellable__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Case.HDT_DataChange</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 5 AND (2 OR 3 OR 4)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>HDT_RT_VariazioniTari</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Subprocess__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Componenti non residenti</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Subprocess__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Superficie</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Subprocess__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>ISTAT/Ronchi</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Modifica dati contrattuali</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -788,54 +742,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Case.HDT_ResumeCommercialBonus</value>
-                            <visibilityRule>
-                                <booleanFilter>1 OR 2</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Type}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Contratti/Bonus Commerciale</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Type}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Documentale/Copia Contratto</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Case.HDT_ChangePriority</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>CustomButton.Case.Riprendi_Processo_Sales</value>
-                            <visibilityRule>
-                                <booleanFilter>(1 OR 2 OR 3) AND 4 AND 5</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Bozza</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Sospesa</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>In Lavorazione</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Type}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Contratti/Bonus Commerciale</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Type}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Documentale/Copia Contratto</rightValue>
-                                </criteria>
-                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Case.HDT_CreateDistributorApointment</value>
@@ -882,7 +789,6 @@
                     <value>4</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
-                <identifier>force_highlightsPanel2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -896,7 +802,6 @@
                     <value>--None--</value>
                 </componentInstanceProperties>
                 <componentName>wrts_prcgvr:PhaseChevronPathLtgCmp_1_0</componentName>
-                <identifier>wrts_prcgvr_PhaseChevronPathLtgCmp_1_0</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -906,7 +811,6 @@
                     <value>tabs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
-                <identifier>flexipage_tabset</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -917,7 +821,6 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceKnowledge:articleSearchDesktop</componentName>
-                <identifier>forceKnowledge_articleSearchDesktop</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-25b285f9-0c0a-4249-805c-7f5602032202</name>
@@ -939,7 +842,6 @@
                     <value>Standard.Tab.knowledge</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>knowledgeTab</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -962,13 +864,11 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>wrts_prcgvr:ProcessActionListLtgCmp_1_0</componentName>
-                <identifier>wrts_prcgvr_ProcessActionListLtgCmp_1_0</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>hdtAccountSelector</componentName>
-                <identifier>hdtAccountSelector</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Channel__c}</leftValue>
@@ -985,13 +885,11 @@
                     <value>rightSidebarTabs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
-                <identifier>flexipage_tabset2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>HDT_LCP_CaseTabManagement</componentName>
-                <identifier>HDT_LCP_CaseTabManagement</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
