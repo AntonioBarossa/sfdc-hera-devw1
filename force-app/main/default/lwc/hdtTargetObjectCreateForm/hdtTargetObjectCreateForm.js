@@ -851,6 +851,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.servicePointRetrievedData['SupplyCountry__c'] != this.theRecord['Stato']) {
                 this.servicePointRetrievedData['SupplyCountry__c'] = this.theRecord['Stato'];
             }
+            if(!this.servicePointRetrievedData['SupplyCountry__c']){
+                this.servicePointRetrievedData['SupplyCountry__c'] = 'ITALIA';
+            }
             if (this.servicePointRetrievedData['SupplyProvince__c'] != this.theRecord['Provincia']) {
                 this.servicePointRetrievedData['SupplyProvince__c'] = this.theRecord['Provincia'];
             }
@@ -892,6 +895,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             if (this.allSubmitedFields['SupplyCountry__c'] != this.theRecord['Stato']) {
                 this.allSubmitedFields['SupplyCountry__c'] = this.theRecord['Stato'];
+            }
+            if(!this.allSubmitedFields['SupplyCountry__c']){
+                this.allSubmitedFields['SupplyCountry__c'] = 'ITALIA';
             }
             if (this.allSubmitedFields['SupplyProvince__c'] != this.theRecord['Provincia']) {
                 this.allSubmitedFields['SupplyProvince__c'] = this.theRecord['Provincia'];
