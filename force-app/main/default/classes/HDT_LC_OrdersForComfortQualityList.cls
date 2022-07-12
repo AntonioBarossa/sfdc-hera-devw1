@@ -140,7 +140,10 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 throw new AuraHandledException('Non è possibile procedere all’annullamento, effettuare una richiesta di recesso');
             }
         }
-        else {
+        else
+        {
+            
+
             orderSrv.updateRecord(new Order(
                 Id = ordId,
                 Phase__c = 'Annullato',
