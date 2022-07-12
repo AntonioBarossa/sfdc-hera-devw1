@@ -12,7 +12,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     @api filterString = '';
     @api tabCode;
     @api accountId;
-    @api columns;// = columns;
+    @track columns;// = columns;
     @track selectedMenuItem;
     @track filterApplied = false;
     @track buttonList;
@@ -23,6 +23,21 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     bShowModal = false;
     fieldsToFilter = [];
     @api staticObj = {};
+    showTotalAmount = false;
+    totalAmountLabel = '';
+
+    get totalAmount(){
+        var tot = 0;
+        if(this.showTotalAmount){
+            if(this.accountdetailsToView != undefined){
+                this.accountdetailsToView.forEach(c => {
+                    tot += parseFloat(c["importo"]);
+                });
+                console.log('>>> tot ' + tot);     
+            }
+        }
+        return tot;
+    }
 
     get accountdetailsToView(){
         console.log('# accountdetails #');
@@ -70,6 +85,12 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
                     if(i.type === 'date'){
                         i.type = 'text';
                         i.dateAttribute = 'sortAsDate';
+                    }
+
+                    
+                    if(i.isAmountField){
+                        this.showTotalAmount = true;
+                        this.totalAmountLabel = i.label;
                     }
 
                 });
