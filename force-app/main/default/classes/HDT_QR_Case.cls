@@ -151,6 +151,7 @@ public inherited sharing class HDT_QR_Case {
     }
 
     public List<Case> getCaseModificaContratti(String podPdr){
+        if(String.isBlank(podPdr))return new List<Case>();
         return [Select Phase__c, CaseNumber from Case where ServicePointCode__c=:podPdr AND RecordType.DeveloperName='HDT_RT_GenericheAttivazioni' AND ServicePoint__c='' AND Type LIKE 'Modifica Contr Preattivazione%'  WITH SECURITY_ENFORCED ORDER BY Phase__c DESC ]; // aggiunti campi alla query
     }
 
