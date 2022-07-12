@@ -839,7 +839,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                    }
 
                    if(this.showSecondLevel){
-                    this.refreshSecondLevelToChild();
+                    //this.refreshSecondLevelToChild();
                    }
 
                    this.filterOn = false;
