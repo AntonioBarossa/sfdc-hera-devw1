@@ -708,4 +708,9 @@
         <default>false</default>
         <label>Associazione Utente Web</label>
     </standardValue>
+    <standardValue>
+        <fullName>Promessa di Pagamento Ente</fullName>
+        <default>false</default>
+        <label>Promessa di Pagamento Ente</label>
+    </standardValue>
 </StandardValueSet>
