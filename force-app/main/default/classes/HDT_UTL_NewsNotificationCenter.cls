@@ -92,8 +92,8 @@ public inherited sharing class HDT_UTL_NewsNotificationCenter {
                 userToNotificate = qrKb.getUserIdToNotificate(rolesToNotificate);
         
                 userSet.addAll(userToNotificate);
-        
-                result = fireNotification(article.Title, 'Una nuova News è stata pubblicata',article.Id, userSet);
+                
+                Id jobId = Database.executeBatch(new HDT_BA_Knowledge(userSet, article.Id, article.Title), 200);
             }
         }
         
