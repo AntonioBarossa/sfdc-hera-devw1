@@ -720,7 +720,8 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
 
         if (this.template.querySelector("[data-id='SignatoryType__c']") !== null 
-            && this.template.querySelector("[data-id='SignatoryType__c']").value === '') {
+            && (this.template.querySelector("[data-id='SignatoryType__c']").value === '' || this.template.querySelector("[data-id='SignatoryType__c']").value === undefined)
+            ) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Tipo Sottoscrittore, ');
         }
 
@@ -819,6 +820,9 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
         if(this.dataToSubmit['InvoicingCountry__c'] != this.wrapAddressObject['Stato']){
             this.dataToSubmit['InvoicingCountry__c'] = this.wrapAddressObject['Stato'];
+        }
+        if(!this.dataToSubmit['InvoicingCountry__c']){
+            this.dataToSubmit['InvoicingCountry__c'] = 'ITALIA';
         }
         if(this.dataToSubmit['InvoicingProvince__c'] != this.wrapAddressObject['Provincia']){
             this.dataToSubmit['InvoicingProvince__c'] = this.wrapAddressObject['Provincia'];
