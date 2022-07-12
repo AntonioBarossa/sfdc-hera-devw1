@@ -2361,10 +2361,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_QR_UserQueriesOriginal</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_QR_UserQueriesTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
