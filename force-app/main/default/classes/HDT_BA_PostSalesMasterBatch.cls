@@ -20,7 +20,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         scope.addAll(postsalesQr.getPostSalesBozzaCase());
         scope.addAll(postsalesQr.getCaseVolturaTecnica());
         scope.addAll(postsalesQr.getExpiredArticle());
-
+        scope.addAll(postsalesQr.getPostAccertamentoCase());
 
         return scope;
 
@@ -54,6 +54,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
         List<Case> myCurrentCaseList = new List<Case>();
         List<HDT_PEV_NonReqContract__e> eventsToPublish = new List<HDT_PEV_NonReqContract__e>();
+        List<Case> casesToCheck = new List<Case>();
 
         for(SObject sobj : scope){
 
@@ -152,7 +153,16 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                     System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
                                 }
                             }
-                        }               
+                        //START MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
+                        }else if('In Lavorazione'.equalsIgnoreCase(currentCase.Phase__c) && ('Cessazione post accertamento'.equalsIgnoreCase(currentCase.Type) || 'Modifica post accertamento'.equalsIgnoreCase(currentCase.Type))){
+                            casesToCheck.add(currentCase);
+                            system.debug('@@@@ currcase Type: '+currentCase.Type);
+                            //system.debug('@@@@ currcase AccountId: '+currentCase.AccountId);
+                            system.debug('@@@@ currcase AccountId: '+currentCase.Id);
+                            system.debug('@@@@ currcase AccountId: '+currentCase.Phase__c);
+
+                        }     
+                        //END MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
                     }
                     when Knowledge__kav article{
                         if(article.ExpirationDate__c != null){
@@ -167,22 +177,32 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                 continue;
             }
         }
-        if(!eventsToPublish.isEmpty()){
-            //EventBus.publish(eventsToPublish);
-            List<Database.SaveResult> srList = EventBus.publish(eventsToPublish);
-            for (Database.SaveResult sr : srList ) {
-                if (sr.isSuccess()) {
-                    System.debug(LoggingLevel.DEBUG, 'Successfully published events.');
-                } else {
-                    for (Database.Error err : sr.getErrors()) {
-                        System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+        try{
+            if(!eventsToPublish.isEmpty()){
+                //EventBus.publish(eventsToPublish);
+                List<Database.SaveResult> srList = EventBus.publish(eventsToPublish);
+                for (Database.SaveResult sr : srList ) {
+                    if (sr.isSuccess()) {
+                        System.debug(LoggingLevel.DEBUG, 'Successfully published events.');
+                    } else {
+                        for (Database.Error err : sr.getErrors()) {
+                            System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+                        }
                     }
                 }
+            }        
+            if(!myCurrentCaseList.isEmpty()){
+                HDT_UTL_DatabaseService.updateSObject(myCurrentCaseList);
             }
-        }        
-        if(!myCurrentCaseList.isEmpty()){
-            HDT_UTL_DatabaseService.updateSObject(myCurrentCaseList);
+        }catch(Exception e){
+            System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
         }
+        //START MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
+        if(!casesToCheck.isEmpty()){
+            system.debug('@@@: Start Logica Post Accertamento');
+            HDT_UTL_CaseProcess.createActivityFromContract(casesToCheck);
+        }
+        //END MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
     }
 
     /*
