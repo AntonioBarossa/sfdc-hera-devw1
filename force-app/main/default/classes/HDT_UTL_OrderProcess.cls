@@ -1090,6 +1090,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
                 catch(Exception e)
                 {
+                    if (String.isNotBlank(e.getMessage()) && e.getMessage().containsIgnoreCase('Questo utente non dispone dei permessi per l\'activity CreditCheckKO')){
+                        orderNew.addError('Non è possibile annullare l\'ordine perchè è presente un\'attività di credit check ancora aperta e non si dispone dei permessi per poterla lavorare.');
+                    }
                     System.debug(Logginglevel.Debug, 'Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
                 }
                 if(orderNew.ProcessType__c != null && 
