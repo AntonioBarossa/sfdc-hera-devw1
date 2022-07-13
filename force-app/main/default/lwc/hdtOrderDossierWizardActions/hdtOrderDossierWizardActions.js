@@ -490,9 +490,15 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         }).catch(error => {
             this.loading = false;
             console.log((error.body.message !== undefined) ? error.body.message : error.message);
+            let errorMessage;
+            try{
+                errorMessage = error.body.pageErrors[0].message;
+            }catch (e){
+                errorMessage = (error.body.message !== undefined) ? error.body.message : error.message;
+            }
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                message: errorMessage,
                 variant: 'error',
                 mode: 'sticky'
             });
@@ -506,7 +512,6 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
 
     handleDialogResponse(event){
         if(event.detail.status == true){
-
             this.callCancel(event.detail.choice);
 
         } else {
