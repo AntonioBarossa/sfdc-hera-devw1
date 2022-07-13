@@ -51,6 +51,20 @@
 },			
 {
 
+<<<<<<< HEAD
+=======
+&quot;FieldName&quot;:&quot;ShipmentAddressAssign__c&quot;,
+
+&quot;Required&quot;:false,
+
+&quot;ReadOnly&quot;:false,
+
+&quot;Column&quot;:1
+
+},
+{
+
+>>>>>>> 71ba981df8af43ed13f5c2d378385265af36c02a
 &quot;FieldName&quot;:&quot;ModuleFromContributor__c&quot;,
 
 &quot;Required&quot;:false,
@@ -60,6 +74,32 @@
 &quot;Column&quot;:1
 
 },
+<<<<<<< HEAD
+=======
+
+{
+
+&quot;FieldName&quot;:&quot;AttachmentsStringTARI__c&quot;,
+
+&quot;Required&quot;:true,
+
+&quot;ReadOnly&quot;:true,
+
+&quot;Column&quot;:1
+
+},
+{
+
+&quot;FieldName&quot;:&quot;AccountId&quot;,
+
+&quot;Required&quot;:true,
+
+&quot;ReadOnly&quot;:true,
+
+&quot;Column&quot;:2
+
+},
+>>>>>>> 71ba981df8af43ed13f5c2d378385265af36c02a
 {
 
 &quot;FieldName&quot;:&quot;TerminationReason__c&quot;,
@@ -73,11 +113,19 @@
 },			
 {
 
+<<<<<<< HEAD
 &quot;FieldName&quot;:&quot;AccountId&quot;,
 
 &quot;Required&quot;:true,
 
 &quot;ReadOnly&quot;:true,
+=======
+&quot;FieldName&quot;:&quot;CustomerRequestDate__c&quot;,
+
+&quot;Required&quot;:true,
+
+&quot;ReadOnly&quot;:false,
+>>>>>>> 71ba981df8af43ed13f5c2d378385265af36c02a
 
 &quot;Column&quot;:2
 
@@ -106,9 +154,15 @@
 },
 {
 
+<<<<<<< HEAD
 &quot;FieldName&quot;:&quot;CustomerRequestDate__c&quot;,
 
 &quot;Required&quot;:true,
+=======
+&quot;FieldName&quot;:&quot;AdditionalAttachments__c&quot;,
+
+&quot;Required&quot;:false,
+>>>>>>> 71ba981df8af43ed13f5c2d378385265af36c02a
 
 &quot;ReadOnly&quot;:false,
 
@@ -119,7 +173,11 @@
     </values>
     <values>
         <field>ProcessType__c</field>
+<<<<<<< HEAD
         <value xsi:type="xsd:string">CessazionePostForm</value>
+=======
+        <value xsi:type="xsd:string">Cessazione post accertamento</value>
+>>>>>>> 71ba981df8af43ed13f5c2d378385265af36c02a
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
@@ -127,6 +185,10 @@
     </values>
     <values>
         <field>ValidateClass__c</field>
+<<<<<<< HEAD
         <value xsi:type="xsd:string">HDT_UTL_CaseValidations</value>
+=======
+        <value xsi:nil="true"/>
+>>>>>>> 71ba981df8af43ed13f5c2d378385265af36c02a
     </values>
 </CustomMetadata>
