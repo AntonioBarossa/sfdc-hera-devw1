@@ -20,6 +20,7 @@ import searchModificaContratti from '@salesforce/apex/HDT_LC_AdvancedSearch.sear
 import ACCOUNT_RECORDTYPE_FIELD from '@salesforce/schema/Account.RecordTypeId';
 import Name from '@salesforce/schema/Account.Name';
 import CategoriaCliente from '@salesforce/schema/Account.Category__c';
+import ConfRuleConfimSelectBodyDelete from '@salesforce/label/c.ConfRuleConfimSelectBodyDelete';
 
 
 export default class HdtTargetObjectCreateForm extends LightningElement {
@@ -643,6 +644,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             
             //get data fields based on recordtype label
             if (this.recordtype.label != undefined) {
+                console.log('RecordType Label >>> ' + JSON.stringify(this.recordtype));
                 switch (this.recordtype.label) {
                     case 'Punto Elettrico':
                         this.fieldsDataRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldEle__c : (data.FieldEle__c == null || data.FieldEle__c == null ? data.FieldGeneric__c : data.FieldGeneric__c + ',' + data.FieldEle__c));
@@ -657,6 +659,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.customSettings = data;
             if (this.selectedservicepoint != undefined) {
 
+                console.log('### SELECTEDSERVICEPOINT >> ' + JSON.stringify(this.selectedservicepoint));
+                console.log('### Codice Punto >>> ' + this.selectedservicepoint['Codice Punto']);
+                console.log('### ServicePointCode__c >>> ' + this.selectedservicepoint[0]['ServicePointCode__c']);
+
                 this.fieldsDataRaw = 'RecordTypeId, RecordType.DeveloperName, ' + data.FieldEle__c + ', ' + data.FieldGas__c + ',' + data.FieldGeneric__c;
                 this.fieldsDataReqRaw = data.FieldRequiredEle__c + ', ' + data.FieldRequiredGas__c + ',' + data.Field_Required_Generic__c;
 
@@ -665,7 +671,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
                     this.handleCallServiceSap(this.selectedservicepoint);
                     this.servicePointRetrievedData = data[0];
-                    if (this.servicePointRetrievedData.RecordType.DeveloperName != undefined) {
+                    if (this.servicePointRetrievedData.CommoditySector__c != undefined) {
+                        console.log('### RECORDTYPE>>> ' + this.servicePointRetrievedData.CommoditySector__c);
                         switch (this.servicePointRetrievedData.RecordType.DeveloperName) {
                             case 'HDT_RT_Ele':
                                 this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldEle__c : (this.customSettings.FieldEle__c == null || this.customSettings.FieldEle__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldEle__c));
