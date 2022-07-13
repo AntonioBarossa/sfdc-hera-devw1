@@ -25924,7 +25924,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>ServicePoint__c.SupplyPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -31756,19 +31756,19 @@
         <readable>false</readable>
     </fieldPermissions>
 <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>ServicePoint__c.BrandLogo__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
 <fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.BuildingCode__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
 <fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.Company__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
 <fieldPermissions>
         <editable>true</editable>
@@ -32911,7 +32911,7 @@
         <layout>Knowledge__kav-Knowledge Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Lead-HDT_D2D_Layout</layout>
+        <layout>Lead-Acquisizione Lead Layout</layout>
         <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
     </layoutAssignments>
     <layoutAssignments>

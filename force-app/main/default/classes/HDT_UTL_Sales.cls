@@ -264,6 +264,11 @@ public with sharing class HDT_UTL_Sales {
         return !caseList.isEmpty();
     }
 
+    public static Boolean isWinback(String servicePointId, String servicePointCode){
+        List<Case> caseList = caseQr.getServicePointCaseWinBack(servicePointId, servicePointCode);
+        return !caseList.isEmpty();
+    }
+
     public static List<Order> validationActivityPhaseTransition(List<Order> orderNew){
         List<wrts_prcgvr__Activity__c> listActivityToCreate = new List<wrts_prcgvr__Activity__c>();
         List<Order> childToUpdate = new List<Order>();

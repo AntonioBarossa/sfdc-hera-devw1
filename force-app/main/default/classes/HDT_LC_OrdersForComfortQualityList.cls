@@ -140,12 +140,16 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 throw new AuraHandledException('Non è possibile procedere all’annullamento, effettuare una richiesta di recesso');
             }
         }
-        else {
+        else
+        {
+            String phase = (HDT_UTL_Order.checkCancellationPhase(new Set<String>{ordId})).get(ordId);
+            String status = phase.equalsIgnoreCase('Annullato') ? 'Annullato' : 'In Lavorazione';
             orderSrv.updateRecord(new Order(
                 Id = ordId,
-                Phase__c = 'Annullato',
+                Phase__c = phase,
                 CancellationReason__c = causal,
-                Status = 'Annullato'
+                CancellationRequestDate__c = System.today(),
+                Status = status
             ));
 
             wrts_prcgvr__Activity__c act = createActivityToClose(activityId);

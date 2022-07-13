@@ -287,14 +287,15 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                     console.log('ERROR 1');
                     this.loading = false;
                     const toastSuccessMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Errore nella procedura di creazione dell\'activity.',
-                        variant: 'error',
-                        mode: 'sticky'
+                        title: 'Attenzione!',
+                        message: 'La dimesione del plico è superiore al limite consentito per la preview. Procedere con l\'invio dei documenti al cliente',
+                        variant: 'warning',
+                        mode: 'pester'
                     });
                     this.dispatchEvent(toastSuccessMessage);
                     console.error(error);
-                    this.isPreviewForbidden = false;
+                    this.previewExecuted = true;
+                    this.isPrintButtonDisabled = false;
                 });
             }).catch(error => {
                 console.log('ERROR 2');

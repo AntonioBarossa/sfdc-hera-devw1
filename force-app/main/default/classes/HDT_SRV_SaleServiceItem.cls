@@ -253,7 +253,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         if(!servicePoint.SwitchInWinback__c){
             servicePointSrv.updateRecord(new ServicePoint__c(
                 Id = servicePoint.Id,
-                SwitchInWinback__c = HDT_UTL_Sales.isWinback(servicePoint.Id)
+                SwitchInWinback__c = HDT_UTL_Sales.isWinback(servicePoint.Id, servicePoint.ServicePointCode__c)
             ));
         }
         //winback check end
