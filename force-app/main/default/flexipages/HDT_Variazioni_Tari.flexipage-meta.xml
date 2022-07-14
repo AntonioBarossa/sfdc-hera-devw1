@@ -695,37 +695,6 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Case.HDT_DataChange</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 5 AND (2 OR 3 OR 4)</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>HDT_RT_VariazioniTari</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Subprocess__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Componenti non residenti</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Subprocess__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Superficie</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Subprocess__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>ISTAT/Ronchi</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Type}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Modifica dati contrattuali</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Global.EscalationCmp</value>
                             <visibilityRule>
                                 <booleanFilter>1 OR 2</booleanFilter>
