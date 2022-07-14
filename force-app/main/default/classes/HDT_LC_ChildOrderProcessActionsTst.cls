@@ -84,6 +84,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Sospeso','Bozza',utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Sospeso','Bozza',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita','Bozza',utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE);
             //HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Bozza',utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE);
@@ -1210,8 +1211,6 @@ public class HDT_LC_ChildOrderProcessActionsTst {
                 LIMIT 1];
 
             tOrder[0].MarketOrigin__c='Libero';
-            tOrder[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE;
-            tOrder2[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE;
             update tOrder;
             update tOrder2;
 		
