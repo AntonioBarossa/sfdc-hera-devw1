@@ -200,4 +200,11 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
 
         return hasCoerence;
     }
+
+    @AuraEnabled
+    public static string checkCoerenceServicePoint(Map<String, Object> servicePoint, Map<String, Object> inputFieldMap)
+    {
+        return JSON.serialize(HDT_SRV_FieldCoerenceServicePoint.checkCoerenceServicePoint(servicePoint, inputFieldMap));
+    }
+
 }
