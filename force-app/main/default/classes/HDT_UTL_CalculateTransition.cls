@@ -107,36 +107,29 @@ public with sharing class HDT_UTL_CalculateTransition {
             //    sale.Account__r.Category__c != 'Piccoli Condomini') || 
             //    (city.SDV__c == 'HC' && 
             //    (String)calculateTransitionMap.get('commodity') == 'Gas')){
-
+            
+            /** Check comune, punto reseller, categoria Account */
             if(stabbedData.contains(city.Province__c) &&
                (servicePoint == null || (servicePoint != null && !servicePoint.IsReseller__c)) && 
                sale.Account__r.CompanyOwner__c != 'Reseller' && 
                (sale.Account__r.Category__c == 'Famiglie' || 
                sale.Account__r.Category__c == 'Aziende Soho' || 
                sale.Account__r.Category__c == 'Piccoli Condomini')){
+                   /** Check se Gas HC --> Transitorio */
                    if((String)calculateTransitionMap.get('commodity') == 'Gas' && !markerConverted.isEmpty() && markerConverted != null && !(markerConverted[0] == 'D' && markerConverted[1].isNumeric())){
                         List<City__c> cityList = [SELECT Name, BelfioreCode__c, ProvinceName__c, Province__c, SDV__c, ServiceEle__c, ServiceGas__c 
                         FROM City__c WHERE Name =: (String)calculateTransitionMap.get('city') AND ServiceGas__c = true WITH SECURITY_ENFORCED];
                         if(cityList.isEmpty()){
-                            system.debug('TRANSITORIO 1');
                             return true;
                         }
-                        else{
-                            List<Order> ordList = [SELECT Id, isTransition__c, Status, AccountId FROM Order WHERE isTransition__c = true AND Status = 'In Lavorazione' AND AccountId =: sale.Account__c WITH SECURITY_ENFORCED];
-                            if(ordList.isEmpty()){
-                                system.debug('NON TRANSITORIO 1');
-                                return false;
-                            }
-                            else{
-                                system.debug('TRANSITORIO 2');
-                                return true;
-                            }
-                        }
                    }
-                   else{
-                        system.debug('NON TRANSITORIO 2');
-                       return false;
+                   /** Check se ci sono altri ordini a transitorio --> Transitorio */
+                   List<Order> ordList = [SELECT Id, isTransition__c, Status, AccountId FROM Order WHERE isTransition__c = true AND Status = 'In Lavorazione' AND AccountId =: sale.Account__c WITH SECURITY_ENFORCED];
+                   if(!ordList.isEmpty()){
+                       return true;
                    }
+                   /* Se vengono passati tutti i check --> Non transitorio */
+                   return false;
             }
             else{
                 system.debug('TRANSITORIO 3');
