@@ -135,6 +135,10 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 			List<Opportunity> opps=HDT_UTL_DataFactoryTst.createOpportunity(1, true);
 			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(7, true, accounts[0].Id, 'Attiva');
 			List<Pricebook2> pricebook=HDT_UTL_DataFactoryTst.createPricebook(1, true);
+            List<ServicePoint__c> sp = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
+            sp[0].RecordTypeId = utlConstants.SERVICEPOINT_RECORDTYPEID_GAS;
+            sp[0].CommoditySector__c = 'Gas';
+            insert sp;
 			List<Order> orders=HDT_UTL_DataFactoryTst.createOrderWithPricebook(7, false, accounts[0].Id, sales, pricebook[0].Id);
             
             
@@ -1296,6 +1300,56 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             System.assertEquals(tBilling[0].BankAgency__c, updatedName, 'Update fallito');
 
         Test.stopTest();
+        
+    }
+
+    @IsTest
+    static void voltureReadingTst()
+    {
+        List<Order> tOrder=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c, ParentOrder__r.Status,DocSendingMethod__c,RecordType.Name,NotRegisteredMeterCase__c,EffectiveDate__c,Commodity__c
+        FROM Order
+        WHERE Name = 'testOrderName1'
+        LIMIT 1];
+        tOrder[0].Subprocess__c = 'Con Autolettura';
+        List<ServicePoint__c> sp = [SELECT Id FROM ServicePoint__c];
+        tOrder[0].ServicePoint__c = sp[0].Id;
+        tOrder[0].SignatureMethod__c = 'Contratto già firmato';
+        tOrder[0].ExciseGas__c = 'Imposta Usi Domestici (Cod. G_ICD)';
+        tOrder[0].VAT__c = 'Iva 22% (Cod. 02)';
+        tOrder[0].RegionalAdditional__c = 2;
+        tOrder[0].Commodity__c = 'Gas';
+        tOrder[0].CustomerCategory__c = 'Famiglie';
+        tOrder[0].SupplyType__c = 'A-Domestico';
+        tOrder[0].ImplantType__c = '1004-Riscaldamento promiscuo';
+        tOrder[0].WithdrawalClass__c = '001 - 7 giorni';
+        tOrder[0].UseCategory__c = '007-Ris.Ind+Cottura+AcquaCalda';
+        update tOrder;
+
+        Reading__c reading = new Reading__c();
+        reading.OrderGas__c = tOrder[0].Id;
+        reading.ReadingValueMeter__c = 10;
+        reading.ReadingValueCorrector__c = 10;
+        reading.ReadingSerialNumberCorrector__c = 'test';
+        insert reading;
+
+        List<FieldCoerenceServicePoint__c> fieldCspList = HDT_UTL_DataFactoryTst.createFieldCoerenceServicePoint(1, false, 'GAS');
+        fieldCspList[0].AccountCategory__c = 'Famiglie';
+        fieldCspList[0].SupplyType__c = 'A-Domestico';
+        fieldCspList[0].ImplantType__c = '1004-Riscaldamento promiscuo';
+        fieldCspList[0].Taxes__c = 'G_ICD';
+        fieldCspList[0].UseCategory__c = '007-Ris.Ind+Cottura+AcquaCalda';
+        fieldCspList[0].WithdrawalClass__c = '001 - 7 giorni';
+        insert fieldCspList;
+
+        Test.startTest();
+            HDT_LC_ChildOrderProcessActions.save(tOrder[0], null);
+        Test.stopTest();
+        List<Order> orderList = [SELECT Id FROM Order WHERE Name = 'testOrderName1'];
+        System.assertEquals(true, !orderList.isEmpty(), 'Update fallito');
+
         
     }
 
