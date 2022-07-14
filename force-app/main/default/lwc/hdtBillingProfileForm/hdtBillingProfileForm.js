@@ -753,7 +753,12 @@ export default class hdtBillingProfileForm extends LightningElement {
             concatBillingErrorFields = concatBillingErrorFields.concat('Cognome sottoscrittore CC, ');
         }
         //check required fields end
-        
+        if (this.template.querySelector("[data-id='BillSendingMethod__c']") !== null 
+            && this.template.querySelector("[data-id='BillSendingMethod__c']").value != null && this.template.querySelector("[data-id='BillSendingMethod__c']").value != undefined) {
+                if(this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Fatturazione PA' && this.sale.Account__r.Category__c === 'Famiglie'){
+                    this.saveErrorMessage.push('Fatturazione PA non è un valore ammissibile per questa tipologia di cliente');
+                }
+        }
         //validate billing profile fields
         console.log('concatBillingErrorFields: ', concatBillingErrorFields);
         if (concatBillingErrorFields !== '') {
