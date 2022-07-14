@@ -172,7 +172,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             orders[0].RecordTypeId=orderSubentro;
 			orders[0].Username__c='test';
 			orders[0].Password__c='test1';
-			orders[0].NotRegisteredMeterCase__c=true;
+			orders[0].NotRegisteredMeterCase__c=false;
 			orders[0].EffectiveDate__c=date.today();
 			orders[0].PowerCommitted__c=2;
 			orders[0].ImplantType__c='13A0-Usi di Abitazione BT';
