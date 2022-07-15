@@ -308,6 +308,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
     }
 
+    handleSectionDiffDataToSubmitCollection(){
+        return;
+    }
+
     getConfirmedSteps(){
         this.confirmedSteps = this.availableStepsFirst.filter(section => (
         section.name !== 'reading'

@@ -2,7 +2,7 @@
   @description       : 
   @author            : Giacinto Florio
   @group             : 
-  @last modified on  : 30-06-2022
+  @last modified on  : 13-07-2022
   @last modified by  : Giacinto Florio
 -->
 <template>
@@ -54,7 +54,7 @@
                                                 <template for:each={section.data} for:item="field">
                                                     <template if:true={field.diffObjApi}>
                                                         <template if:false={field.isMockPicklist}>
-                                                            <lightning-input-field onchange={handleSectionDiffDataToSubmitCollection} key={field.apiname} if:true={field.typeVisibility} disabled={field.disabled} required={field.required} class="slds-size_1-of-4 fieldsData" data-id={field.apiname} data-name={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                                            <lightning-input-field onchange={handleSectionDataToSubmitCollection} key={field.apiname} if:true={field.typeVisibility} disabled={field.disabled} required={field.required} class="slds-size_1-of-4 fieldsData" data-id={field.apiname} data-name={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
                                                         </template>
                                                         <template if:true={field.isMockPicklist}>
                                                             <lightning-combobox
@@ -66,7 +66,7 @@
                                                                 value={field.value}
                                                                 placeholder="--None--"
                                                                 options={field.mockOptions}
-                                                                onchange={handleSectionDiffDataToSubmitCollection} >
+                                                                onchange={handleSectionDataToSubmitCollection} >
                                                             </lightning-combobox>
                                                         </template>
                                                     </template>
@@ -79,7 +79,8 @@
 
                                 <template if:true={section.hasDatiCatastali}>
                                     <c-hdt-land-registry 
-                                    service-point-id={order.ServicePoint__c}
+                                    required="true"
+                                    service-point-id={order.ServicePoint__r.Id}
                                     pre-selected-land-registry-id={order.LandRegistry__c}
                                     ></c-hdt-land-registry>
                                 </template>

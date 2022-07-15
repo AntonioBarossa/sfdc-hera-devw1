@@ -94,6 +94,7 @@ export default class HdtAttachmentManager extends LightningElement {
         };
     }
 
+    /*
     @api
     specificValidate(){
         let objectToReturn = null;
@@ -128,6 +129,7 @@ export default class HdtAttachmentManager extends LightningElement {
         }
         return objectToReturn;
     }
+    */
 
     subscribeMC() {
 		// recordId is populated on Record Pages, and this component
@@ -151,7 +153,9 @@ export default class HdtAttachmentManager extends LightningElement {
         console.log("event catched   "+this.eventButton);
         this.unsubscribeToMessageChannel();
         let message, isValid=true;
+        /*
         if('cancel' != this.eventButton){
+            
             if(this.numberOfFiles == 0){    //se non ci sono allegati, quale messaggio mostrare
                 var checkCustomValidate = this.specificValidate();
                 if(checkCustomValidate?.isValid == false){
@@ -161,7 +165,7 @@ export default class HdtAttachmentManager extends LightningElement {
                     isValid = false; 
                     message = 'Inserire gli allegati Obbligatori';
             
-        /*  }else if(this.additional?.length > 0 && this.numberOfFiles == 0){
+        ///  }else if(this.additional?.length > 0 && this.numberOfFiles == 0){
                 return { 
                         isValid: false, 
                         errorMessage: 'Inserire gli allegati descritti' 
@@ -171,10 +175,11 @@ export default class HdtAttachmentManager extends LightningElement {
                         isValid: false, 
                         errorMessage: 'Descrivere gli allegati inseriti nel campo "Allegati Aggiuntivi"' 
                         }; 
-        */
+        ///
                 }
             }
         }
+        */
 
         let outputAdditional = this.outputObject();
         if(this.interviewId){
@@ -185,8 +190,9 @@ export default class HdtAttachmentManager extends LightningElement {
             }
         }
 
-        return { isValid : isValid
-                ,errorMessage: message? message : null
+        return { 
+            isValid : isValid, 
+            errorMessage: message? message : null
         };
     }
 

@@ -137,5 +137,18 @@ public with sharing class HDT_LC_AttachmentManager {
         //return '';
     }
 
+    @AuraEnabled
+    public static SObject getRecordsToCheck(Id recordId){
+        SObject recordToCheck;
+        String nameObject = recordId.getSObjectType().getDescribe().getName();
+        if('Case'.equalsIgnoreCase(nameObject)){
+            recordToCheck = [SELECT Id, DeclaredArea__c, Type, subprocess__c, Surface__c, servicePoint__r.SupplyType__c
+                                        FROM Case
+                                        WHERE Id =: recordId
+                                        WITH SECURITY_ENFORCED];
+        }
+        return recordToCheck;
+    }
+
 
 }
