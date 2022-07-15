@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>NumberOfFamilyMembers__c</fullName>
+    <fullName>AtoReference__c</fullName>
     <externalId>false</externalId>
-    <label>Numero componenti nucleo familiare</label>
-    <precision>10</precision>
+    <label>ATO di riferimento</label>
+    <length>255</length>
     <required>false</required>
-    <scale>0</scale>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Number</type>
+    <type>Text</type>
     <unique>false</unique>
 </CustomField>

@@ -29,6 +29,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @api spNew;
     @api recordtype;
     @api accountid;
+    @api customercode;
     @api selectedservicepoint;
     @api wrapObjectInput = [];
     @api wrapAddressObject;
@@ -508,12 +509,35 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     )
                 }
 
+                else if (this.recordtype.label === 'Punto Idrico' && element == 'ATO__c') {
+
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: mapFieldReq.get(element),
+                            value: this.servicePointRetrievedData[element],
+                            disabled: true
+                        }
+                    )
+                }
+
                 else if(this.recordtype.label === 'Punto Idrico' && element === 'MarketOrigin__c' && this.allSubmitedFields['CommoditySector__c'] == 'Acqua'){
                     fieldsDataObject.push(
                         {
                             fieldname: element,
                             required: false,
                             value: 'Regolamentato',
+                            disabled: true
+                        }
+                    )
+                }
+
+                else if(this.recordtype.label === 'Punto Ambiente' && element === 'SubscriberCustomerCode__c'){
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: false,
+                            value: this.customercode,
                             disabled: true
                         }
                     )
@@ -738,7 +762,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     case 'Punto Ambiente':
                         this.fieldsDataRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldWaste__c : (data.FieldWaste__c == null || data.FieldWaste__c == null ? data.FieldGeneric__c : data.FieldGeneric__c + ',' + data.FieldWaste__c));
                         this.fieldsDataReqRaw = (data.Field_Required_Generic__c == null || data.Field_Required_Generic__c == undefined ? data.FieldRequiredWaste__c : (data.FieldRequiredWaste__c == null || data.FieldRequiredWaste__c == null ? data.Field_Required_Generic__c : data.Field_Required_Generic__c + ',' + data.FieldRequiredWaste__c));
-                }
+                    }
             }
 
             this.customSettings = data;
@@ -781,7 +805,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             case 'HDT_RT_Ambiente':
                                 this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldWaste__c : (this.customSettings.FieldWaste__c == null || this.customSettings.FieldWaste__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldWaste__c));
                                 this.fieldsDataReqRaw = (this.customSettings.Field_Required_Generic__c == null || this.customSettings.Field_Required_Generic__c == undefined ? this.customSettings.FieldRequiredWaste__c : (this.customSettings.FieldRequiredWaste__c == null || this.customSettings.FieldRequiredWaste__c == null ? this.customSettings.Field_Required_Generic__c : this.customSettings.Field_Required_Generic__c + ',' + this.customSettings.FieldRequiredWaste__c));
-                        }
+                            }
                     }
                     this.recordtype = {...recordtype};
                     this.manageFields();
@@ -839,7 +863,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 variant: 'error'
             });
             this.dispatchEvent(toastErrorMessage);
-        });
+        });  
     }
 
     @api
@@ -1148,7 +1172,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if ((this.allSubmitedFields['Distributor__c'] === undefined || this.allSubmitedFields['Distributor__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
             }
-            // mancano i campi da creare nostri e di WR
+            if (this.allSubmitedFields['AuthorizedNotToConfer__c'] === undefined || this.allSubmitedFields['AuthorizedNotToConfer__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Autorizzato a non conferire, ');
+            }
+            if ((this.allSubmitedFields['NumberOfFamilyMembers__c'] === undefined || this.allSubmitedFields['NumberOfFamilyMembers__c'] === '')) {
+                concatPointErrorFields = concatPointErrorFields.concat('Numero componenti nucleo familiare, ');
+            }
         }
         else {
 
@@ -1278,14 +1307,18 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         
         else if (this.allSubmitedFields['CommoditySector__c'] == 'Ambiente') {
 
-            // Inserire controlli Dati Catastali
             if (this.allSubmitedFields['CommoditySector__c'] === undefined || this.allSubmitedFields['CommoditySector__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Servizio, ');
             }
             if ((this.allSubmitedFields['Distributor__c'] === undefined || this.allSubmitedFields['Distributor__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
             }
-            // mancano i campi da creare nostri e di WR
+            if (this.allSubmitedFields['AuthorizedNotToConfer__c'] === undefined || this.allSubmitedFields['AuthorizedNotToConfer__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Autorizzato a non conferire, ');
+            }
+            if ((this.allSubmitedFields['NumberOfFamilyMembers__c'] === undefined || this.allSubmitedFields['NumberOfFamilyMembers__c'] === '')) {
+                concatPointErrorFields = concatPointErrorFields.concat('Numero componenti nucleo familiare, ');
+            }
         }
         else {
 
