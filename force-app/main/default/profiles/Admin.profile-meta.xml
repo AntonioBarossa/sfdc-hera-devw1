@@ -5517,11 +5517,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.BpToMerge__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.ClientType__c</field>
         <readable>true</readable>
     </fieldPermissions>
