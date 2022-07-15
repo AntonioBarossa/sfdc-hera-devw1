@@ -43,7 +43,7 @@
 
 &quot;FieldName&quot;:&quot;DeclaredArea__c&quot;,
 
-&quot;Required&quot;:false,
+&quot;Required&quot;:true,
 
 &quot;ReadOnly&quot;:false,
 
