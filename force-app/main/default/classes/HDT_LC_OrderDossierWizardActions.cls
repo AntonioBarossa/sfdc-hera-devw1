@@ -215,6 +215,15 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             orderToUpdate.Phase__c = 'Documentazione Gestita';
             orderToUpdate.status = 'Completed';
         }
+        /**@frpanico 2022-07-15
+        * Gestione Accettato Digitalmente
+        */
+        if(orderParent.SignatureMethod__c != null && orderParent.SignatureMethod__c.equalsIgnoreCase('Accettato Digitalmente'))
+        {
+            orderToUpdate.Phase__c = 'Documentazione Gestita';
+            orderToUpdate.Status = 'Completed';
+            orderToUpdate.SignedDate__c = date.today();
+        }
 
         //il campo SignMode è stato utilizzato per salvare il SignatureMethod dell'ultimo invio
         orderToUpdate.SignMode__c = orderParent.SignMode__c;
@@ -398,7 +407,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         
         for (Order childOrder : childOrders) {
-            System.debug('PrcessType ' + childOrder.ProcessType__c);
             if ((childOrder.ProcessType__c != null && childOrder.ProcessType__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS')) || childOrder.Type.equalsIgnoreCase('Amendment')) {
                 result = true;
             }else {
