@@ -8082,11 +8082,6 @@
 	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
-		<field>CityTechnicalData__c.AdministrativeCity__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
 		<field>CityTechnicalData__c.AttachmentString__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
@@ -21440,11 +21435,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__ProductOption__c.DaysNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SBQQ__ProductOption__c.EndDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
