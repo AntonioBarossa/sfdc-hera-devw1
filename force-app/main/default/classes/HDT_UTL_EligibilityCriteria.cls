@@ -38,22 +38,6 @@ public inherited sharing class HDT_UTL_EligibilityCriteria {
             
         }
 
-        //if(iAmSalesforceCpqAdmin()){
-        //    statusList.add(Label.HDT_InDevelopment);//'In Sviluppo'
-        //}
-
-        //if(checkIfIamAsuperUser(quote.SuperUser__c)){
-        //    //List<String> statusList = new List<String>{'Vendibile', 'Scaduta'};
-        //    statusList.add(Label.HDT_Expired);//'Scaduta
-        //    List<Product2> allAvailableProducts;
-        //    allAvailableProducts = HDT_QR_SearchPlug.getAllAvailableProducts(allAvailableProducts, familyList, statusList);
-
-        //    for(Product2 p : allAvailableProducts){
-        //        idList.add(p.Id);
-        //    }
-        //    return idList;
-        //}
-
         System.debug(LoggingLevel.DEBUG, '>>>>> statusList ' + statusList);
 
         //>>> FILTER - STEP 1 > FILTER ONLY Eligible Criteria...
@@ -75,14 +59,6 @@ public inherited sharing class HDT_UTL_EligibilityCriteria {
         //  - ResidentDeliveryAddress__c  - NewClient__c
         //  - LoginGroup__c
         Boolean age, consumptionRangeEe, consumptionRangeGas, powerRange, residentDeliveryAddress, newClient, login;
-
-        //loginGroupItemList = HDT_QR_SearchPlug.getLoginGroupItemByUser(UserInfo.getUserId());
-
-        //if(loginGroupItemList.size() > 0){
-        //    for(LoginGroupItem__c lgi : loginGroupItemList){
-        //        loginGroupSet.add(lgi.LoginGroup__c);
-        //    }
-        //}
 
         for(EligibilityCriteria__c criteria : filteredEligibleCriteria){
             
@@ -123,6 +99,15 @@ public inherited sharing class HDT_UTL_EligibilityCriteria {
 
             List<EligibleMunicipality__c> eligibleMunicipality;
             String supplyCity = String.valueOf(quote.SupplyCity__c);
+
+            /* montors fix - convert old city code  - START
+             * to restore previous code comment lines 130-131
+            */
+            System.debug('---> supplyCity: ' + supplyCity);
+            supplyCity = convertSupplyCityCode(supplyCity);
+            System.debug('---> supplyCity: ' + supplyCity);
+            /* montors fix - convert old city code - END*/
+
             eligibleMunicipality = HDT_QR_SearchPlug.findEligibleMunicipality(idToFilterByMunicipalities, statusList, familyList, supplyCity.replaceFirst('^0+', ''));
 
             for(EligibleMunicipality__c e : eligibleMunicipality){
@@ -140,21 +125,7 @@ public inherited sharing class HDT_UTL_EligibilityCriteria {
             if(p.EligibilitiesCriteria__r.size() == 0){
                 idList.add(p.Id);
             }
-        } 
-
-        /*if(!String.isEmpty(quote.SupplyCity__c)){
-            for(Product2 p : prodWithoutCriteria){
-                if(p.EligibilitiesCriteria__r.size() == 0){
-                    idList.add(p.Id);
-                }
-            }
-        } else {
-            for(Product2 p : prodWithoutCriteria){
-                if(p.EligibilitiesCriteria__r.size() == 0){
-                    idList.add(p.Id);
-                }
-            }            
-        }*/
+        }
         
         System.debug(LoggingLevel.DEBUG, '>>>> UFFICIAL LIST: ' + idList);
 
@@ -204,34 +175,12 @@ public inherited sharing class HDT_UTL_EligibilityCriteria {
 
         return quoteLogin != null && quoteLogin.contains(loginGroupName);
 
-        /*if(quoteLogin != null && quoteLogin.contains(loginGroupName)){
-            return true;
-        } else {
-            return false;
-        }*/
-
     }
-
-    //public static Boolean checkLoginGroup(Id loginGroupId){
-    //
-    //    if(String.isEmpty(loginGroupId)){
-    //        return true;
-    //    }
-    //
-    //    Integer userPresence = HDT_QR_SearchPlug.getUserForLoginGroup(UserInfo.getUserId(), loginGroupId);
-    //
-    //    if(userPresence == 0){
-    //        return false;
-    //    } else {
-    //        return true;
-    //    }
-    //}
 
     private static Boolean checkIfSaleIsEnabled(){
         HDT_EnableSaleForCPQ__mdt enableSaleForCpq = HDT_EnableSaleForCPQ__mdt.getInstance('cpq');
         System.debug('>>> sale is enabled? ' + enableSaleForCpq.Enabled__c);
         return enableSaleForCpq.Enabled__c;
-        //return false;
     }
 
     public static List<String> getFamilyList(SBQQ__Quote__c quote, Boolean saleIsEnabled){
@@ -303,6 +252,42 @@ public inherited sharing class HDT_UTL_EligibilityCriteria {
             System.debug(LoggingLevel.DEBUG, '>>> Exception: ' + ex.getMessage());
             return false;
         }
+    }
+
+    @TestVisible 
+    private static String convertSupplyCityCode(String codeToSearch){
+        try {
+            HDT_QR_StaticResource staticResourceQr = new HDT_QR_StaticResource();
+            List<StaticResource> staticResources = staticResourceQr.getRecordByName('ConvertOldCityCode');
+    
+            List<HDT_WRP_CodeMap> convertList = (List<HDT_WRP_CodeMap>)JSON.deserialize(staticResources.get(0).Body.toString(), List<HDT_WRP_CodeMap>.class);
+    
+            String supplyCity = codeToSearch.replaceFirst('^0+', '');
+            String newValue = '';
+    
+            for(HDT_WRP_CodeMap obj : convertList){
+                if(obj.oldValue.equalsIgnoreCase(supplyCity)){
+                    newValue = String.valueOf(obj.newValue);
+                    break;
+                }
+            }
+    
+            if(String.isNotEmpty(newValue)){
+                return newValue;
+            } else {
+                return codeToSearch;
+            }
+    
+        } catch (Exception e){
+            System.debug('>>> ERROR on convertSupplyCityCode: ' + e.getMessage() + String.valueOf(e.getLineNumber()));
+            return codeToSearch;
+        }
+    
+    }
+
+    public class HDT_WRP_CodeMap {
+        public String oldValue;
+        public String newValue;
     }
 
 }

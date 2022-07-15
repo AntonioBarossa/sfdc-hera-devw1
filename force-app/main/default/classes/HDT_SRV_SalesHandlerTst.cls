@@ -88,7 +88,30 @@ private class HDT_SRV_SalesHandlerTst {
         HDT_WRP_MrrRequest.HDT_WRP_Field field16=new HDT_WRP_MrrRequest.HDT_WRP_Field();
         field16.name='ANNOTAZIONI';
         field16.value='ok';//To throw List index out of bounds 
-
+        HDT_WRP_MrrRequest.HDT_WRP_Field field17=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field17.name='STATO_SOSP';
+        field17.value='ok';//To throw List index out of bounds 
+        HDT_WRP_MrrRequest.HDT_WRP_Field field18=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field18.name='DATE_SOSP';
+        field18.value='ok';//To throw List index out of bounds 
+        HDT_WRP_MrrRequest.HDT_WRP_Field field19=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field19.name='INDENNIZZO';
+        field19.value='ok';//To throw List index out of bounds 
+        HDT_WRP_MrrRequest.HDT_WRP_Field field20=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field20.name='DATE_SOST';
+        field20.value='ok';//To throw List index out of bounds 
+        HDT_WRP_MrrRequest.HDT_WRP_Field field21=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field21.name='DATA_SALVAGUARDIA';
+        field21.value='ok';//To throw List index out of bounds 
+        HDT_WRP_MrrRequest.HDT_WRP_Field field22=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field22.name='DATA_ULT_SOSP';
+        field22.value='ok';//To throw List index out of bounds 
+        HDT_WRP_MrrRequest.HDT_WRP_Field field23=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field23.name='DT_SOSP_ATT';
+        field23.value='ok';//To throw List index out of bounds
+        HDT_WRP_MrrRequest.HDT_WRP_Field field24=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field24.name='MERCATO_PROV';
+        field24.value='ok';//To throw List index out of bounds 
           
         List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList=new List<HDT_WRP_MrrRequest.HDT_WRP_Field> ();
         fieldList.add(field);
@@ -112,6 +135,14 @@ private class HDT_SRV_SalesHandlerTst {
         fieldList.add(field14);
         fieldList.add(field15);
         fieldList.add(field16);
+        fieldList.add(field17);
+        fieldList.add(field18);
+        fieldList.add(field19);
+        fieldList.add(field20);
+        fieldList.add(field21);
+        fieldList.add(field22);
+        fieldList.add(field23);
+        fieldList.add(field24);
         obj.fields=fieldList;
         List<HDT_WRP_MrrRequest.HDT_WRP_Object> objList=new List<HDT_WRP_MrrRequest.HDT_WRP_Object> ();
         objList.add(obj);
@@ -276,6 +307,13 @@ static void setup() {
       'ProcessType__c' =>'Cambio Uso',
       'Pricebook2Id' => pricebook.Id
     });
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_SwitchIn',new Map<String,Object>{
+      'AccountId'=>accountList[0].id,
+      'Phase__c'=>'Dati TIMOE ricevuti',     
+      'BillingProfile__c'=>billingProfileList[0].Id,
+      'ProcessType__c' =>'Prima Attivazione Fuori delibera',
+      'ServicePoint__c'=>servicePointList[0].Id
+    } )); 
     insert orders;
 
     HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderCompletata[0].id, servicePointList[0].id, product2List[0].Id, pricebookentryList[0].id);
@@ -552,6 +590,25 @@ static void moveOutTest()
     System.assertEquals('Cessato', contractList[0].Status, 'Move Out: Status non corretto');
     System.assertEquals(System.today(), contractList[0].EndDate, 'Move Out: EndDate non corretta');
 }
+
+@IsTest
+static void datiTimoeTst()
+{
+  Order datiTimoeOrder = [SELECT Id, Description FROM Order WHERE Phase__c = 'Dati TIMOE ricevuti' LIMIT 1];
+  Test.startTest();
+  try
+  {
+    new TestBuilderCallManageSalesProcessCategory(datiTimoeOrder,'Dati TIMOE ricevuti','NOTIF_ES',null); 
+  }
+  catch(Exception e)
+  {
+    System.assertEquals(true,e.getMessage().contains('List index out of bounds'),'Due to badvalue passed to updatedFrom ');
+  }
+  Test.stopTest();
+  datiTimoeOrder = [SELECT Id, Description FROM Order WHERE Phase__c = 'Dati TIMOE ricevuti' LIMIT 1];
+  System.assertEquals(true, String.isNotBlank(datiTimoeOrder.Description), 'Dati TIMOE: Fase non ricevuta correttamente');
+}
+
 @isTest
 static void coverageWithoutObjectsNOTIF_ES() {
 

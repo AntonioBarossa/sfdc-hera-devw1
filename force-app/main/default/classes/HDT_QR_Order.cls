@@ -1282,7 +1282,7 @@ public inherited sharing class HDT_QR_Order {
         FROM Order
         WHERE ParentOrder__c = :parentOrderId
         AND QualityCall__c = true
-        AND VasSubtype__c != 'Analisi Consumi'
+        AND (VasSubtype__c != 'Analisi Consumi' OR ComfortCallDaysDue__c != NULL)
         AND Phase__c NOT IN ('Completata','Annullato')
         WITH SECURITY_ENFORCED
         ];
