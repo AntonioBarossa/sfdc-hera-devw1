@@ -10,18 +10,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>true</sorted>
-            <value>
-                <fullName>Da contribuente</fullName>
-                <default>false</default>
-                <label>Da contribuente</label>
-            </value>
-            <value>
-                <fullName>D’ufficio</fullName>
-                <default>false</default>
-                <label>D’ufficio</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_RequestSource</valueSetName>
     </valueSet>
 </CustomField>

@@ -10,28 +10,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>true</sorted>
-            <value>
-                <fullName>Amministratore</fullName>
-                <default>false</default>
-                <label>Amministratore</label>
-            </value>
-            <value>
-                <fullName>Delegato del soggetto passivo</fullName>
-                <default>false</default>
-                <label>Delegato del soggetto passivo</label>
-            </value>
-            <value>
-                <fullName>Legale Rappresentante</fullName>
-                <default>false</default>
-                <label>Legale Rappresentante</label>
-            </value>
-            <value>
-                <fullName>Soggetto passivo</fullName>
-                <default>false</default>
-                <label>Soggetto passivo</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_SubscriberType</valueSetName>
     </valueSet>
 </CustomField>
