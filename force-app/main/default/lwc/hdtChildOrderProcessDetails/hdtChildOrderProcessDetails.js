@@ -611,7 +611,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
                 if(this.template.querySelector("[data-id='MandatoryAttachments__c']")?.value != ''){
                     if(!this.validateAttachment.isValid){
-                        this.showMessage('Errore', this.validateAttachment.errorMessage? this.validateAttachment.errorMessage : "Verificare gli allegati obbligatori prima di procedere", 'error');
+                        this.showMessage('Errore', "Verificare gli allegati obbligatori prima di procedere", 'error');
+                        this.validateAttachment.isValid = true;
                         return;
                     }
                 }
