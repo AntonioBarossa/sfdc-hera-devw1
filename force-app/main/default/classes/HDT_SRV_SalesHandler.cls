@@ -566,6 +566,14 @@ public with sharing class HDT_SRV_SalesHandler {
                                             if(ordRetrieved.ProcessType__c.containsIgnoreCase('Subentro') || (ordRetrieved.ProcessType__c.containsIgnoreCase('Voltura') && !ordRetrieved.PhaseStory__c.containsIgnoreCase('Voltura Rifiutata'))){
                                                 mapRequestFields.put('NuovoAccount',ordRetrieved.AccountId);
                                             }
+                                            if(ordRetrieved.SupplyType__c != null)
+                                            {
+                                                mapRequestFields.put('supplyType',ordRetrieved.SupplyType__c);
+                                            }
+                                            if(ordRetrieved.ImplantType__c != null)
+                                            {
+                                                mapRequestFields.put('implantType', ordRetrieved.ImplantType__c);
+                                            }
 
                                             HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
                                             utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
