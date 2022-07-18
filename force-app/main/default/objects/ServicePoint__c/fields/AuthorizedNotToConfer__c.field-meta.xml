@@ -3,7 +3,7 @@
     <fullName>AuthorizedNotToConfer__c</fullName>
     <externalId>false</externalId>
     <label>Autorizzato a non conferire</label>
-    <required>true</required>
+    <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

@@ -16,6 +16,8 @@ export default class hdtCreateTargetObject extends LightningElement {
     @api showCreateTargetObjectButton;
     @api rowSplitEle = [];
     @api rowSplitGas = [];
+    @api rowSplitAcqua = [];
+    @api rowSplitAmbiente = [];
     @api isricercainsap;
     @api processtype;
     @track recordType = {label:'',value: '', DeveloperName: ''};

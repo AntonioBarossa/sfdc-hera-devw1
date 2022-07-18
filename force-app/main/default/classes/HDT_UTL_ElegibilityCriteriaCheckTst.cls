@@ -93,6 +93,7 @@ public class HDT_UTL_ElegibilityCriteriaCheckTst {
         insert eligibCriteria;
 
         HDT_UTL_DataFactoryTst.createConfigurationAttribute(1, true, 'SendingBillMode__c', myProd.Id);
+        HDT_UTL_DataFactoryTst.createConfigurationAttribute(1, true, 'PaymentMode__c', myProd.Id);
     }
     
     @isTest
@@ -114,7 +115,7 @@ public class HDT_UTL_ElegibilityCriteriaCheckTst {
     @isTest
     public static void checkCriterioElegibilitaKoTest(){
         
-        SBQQ__ConfigurationAttribute__c configAttrib = [SELECT Id, SBQQ__ShownValues__c FROM SBQQ__ConfigurationAttribute__c WITH SECURITY_ENFORCED LIMIT 1];
+        SBQQ__ConfigurationAttribute__c configAttrib = [SELECT Id, SBQQ__ShownValues__c FROM SBQQ__ConfigurationAttribute__c WHERE SBQQ__TargetField__c = 'SendingBillMode__c' WITH SECURITY_ENFORCED LIMIT 1];
         configAttrib.SBQQ__ShownValues__c = 'Variazione non ammessa';
         update configAttrib;
         
@@ -200,9 +201,9 @@ public class HDT_UTL_ElegibilityCriteriaCheckTst {
     }
     
     @isTest
-    public static void abortRichiestaDomiciliazioneTest(){
+    public static void revocaDomiciliazioneOk(){
         
-        Case myCase = [SELECT Id FROM Case WHERE Type = 'Richiesta Domiciliazione' WITH SECURITY_ENFORCED LIMIT 1];
+        Case myCase = [SELECT Id FROM Case WHERE Type = 'Revoca Domiciliazione' WITH SECURITY_ENFORCED LIMIT 1];
 
         HDT_UTL_ElegibilityCriteriaCheck.HDT_WRP_ElegibilityCriteriaCheckInput input = new HDT_UTL_ElegibilityCriteriaCheck.HDT_WRP_ElegibilityCriteriaCheckInput();
         input.caseId = myCase.Id;
@@ -212,12 +213,7 @@ public class HDT_UTL_ElegibilityCriteriaCheckTst {
 
         outputList = HDT_UTL_ElegibilityCriteriaCheck.execute(inputList);
 
-        System.assertEquals(outputList[0].abortProcess, true, 'Processo Abortito dal Sistema');
-        System.assertEquals(
-            outputList[0].abortProcessWarning, 
-            'L\'offerta attiva sul contratto selezionato è incompatibile con l\'attivazione della Domiciliazione. Per poter procedere è necessario eseguire un cambio offerta.',
-            'Caso Richiesta Domiciliazione Abortita!'
-        );
+        System.assertEquals(outputList[0].abortProcess, null, 'Processo Abortito dal Sistema');
     }
     
     @isTest
@@ -225,9 +221,9 @@ public class HDT_UTL_ElegibilityCriteriaCheckTst {
         
         Case myCase = [SELECT Id FROM Case WHERE Type = 'Revoca Domiciliazione' WITH SECURITY_ENFORCED LIMIT 1];
 
-        EligibilityCriteria__c eligCrit = [SELECT Id, PaymentMode__c FROM EligibilityCriteria__c WITH SECURITY_ENFORCED LIMIT 1];
-        eligCrit.PaymentMode__c = 'RID';
-        update eligCrit;
+        SBQQ__ConfigurationAttribute__c configAttrib = [SELECT Id, SBQQ__ShownValues__c FROM SBQQ__ConfigurationAttribute__c WHERE SBQQ__TargetField__c = 'PaymentMode__c' WITH SECURITY_ENFORCED LIMIT 1];
+        configAttrib.SBQQ__ShownValues__c = 'Variazione non ammessa';
+        update configAttrib;
 
         HDT_UTL_ElegibilityCriteriaCheck.HDT_WRP_ElegibilityCriteriaCheckInput input = new HDT_UTL_ElegibilityCriteriaCheck.HDT_WRP_ElegibilityCriteriaCheckInput();
         input.caseId = myCase.Id;
