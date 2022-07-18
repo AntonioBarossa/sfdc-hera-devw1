@@ -27,5 +27,5 @@ public with sharing class HDT_UTL_LandRegistry {
     public static list<CityTechnicalData__c> getCities() {        
 	    list<CityTechnicalData__c> cities = [ SELECT Id, CadastralCity__c, CityCode__c, Province__c FROM CityTechnicalData__c WITH SECURITY_ENFORCED];
         return cities;
-    }
+    } 
 }

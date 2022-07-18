@@ -28,5 +28,5 @@ public inherited sharing class HDT_QR_LandRegistry {
 	        AND RecordTypeId = :rtIdTARI
             WITH SECURITY_ENFORCED];
         return ldRegistry;
-    }
+    } 
 }

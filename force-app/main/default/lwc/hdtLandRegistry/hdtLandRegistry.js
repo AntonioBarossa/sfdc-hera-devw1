@@ -111,5 +111,5 @@ export default class HdtLandRegistry extends LightningElement {
     
     closeAction(){
         this.dispatchEvent(new CloseActionScreenEvent());
-    }
+    } 
 }
