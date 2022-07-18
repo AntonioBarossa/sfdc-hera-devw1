@@ -5,25 +5,70 @@
         <name>Aggancia_Asset</name>
         <label>Aggancia Asset</label>
         <locationX>440</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>Case.AssetId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>SelezFornitura.recordId</elementReference>
+                <elementReference>selezioneFornitura.recordId</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Contract__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Asset.Contract__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.ServicePoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Asset.Contract__r.ServicePoint__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.CommercialProduct__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Asset.Product2.Family</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CausalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.BillingProfile__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Asset.Contract__r.BillingProfile__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Order__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Asset.SBQQ__OrderProduct__r.OrderId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Case_0</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Aggancia_Order</name>
         <label>Aggancia Order</label>
         <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Case.Order__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>SelezFornitura.recordId</elementReference>
+                <elementReference>selezioneFornitura.recordId</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -31,12 +76,12 @@
         <name>Aggancia_Sub_Contract_e_Order</name>
         <label>Aggancia Sub, Contract e Order</label>
         <locationX>704</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>Case.Subscription__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>SelezFornitura.recordId</elementReference>
+                <elementReference>selezioneFornitura.recordId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -64,7 +109,7 @@
             <assignToReference>Case.Commodity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Subscription.SBQQ__OrderProduct__r.Order.CommodityFormula__c</elementReference>
+                <elementReference>Get_Subscription.Service__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -74,12 +119,90 @@
                 <elementReference>Get_Subscription.SBQQ__Product__r.Family</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.ServicePoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.SBQQ__Contract__r.ServicePoint__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.BillingProfile__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.SBQQ__Contract__r.BillingProfile__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Surface__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.Surface__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.HouseOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.OwnerAC__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.HouseType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.DwellingType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.NumberOfPeople__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.OccupantsNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CausalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignOutput</name>
+        <label>AssignOutput</label>
+        <locationX>704</locationX>
+        <locationY>1358</locationY>
+        <assignmentItems>
+            <assignToReference>Case</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCaseAggiornato</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>AssignOutput_0</name>
+        <label>AssignOutput</label>
+        <locationX>440</locationX>
+        <locationY>1358</locationY>
+        <assignmentItems>
+            <assignToReference>Case</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCaseAggiornato_0</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Set_Causale_Disattivazione</name>
         <label>Set Causale Disattivazione</label>
         <locationX>440</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>Case.VasStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -116,6 +239,14 @@
         </value>
     </choices>
     <choices>
+        <name>Causal_BLOCCORINNOVO</name>
+        <choiceText>Blocco al Rinnovo</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>BLOCCO AL RINNOVO</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>Causal_CESS</name>
         <choiceText>&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Cessato (Cessazione di contratto energy)&lt;/span&gt;</choiceText>
         <dataType>String</dataType>
@@ -149,7 +280,7 @@
         <name>Which_sObject</name>
         <label>Which sObject?</label>
         <locationX>440</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Get_Subscription</targetReference>
         </defaultConnector>
@@ -158,7 +289,7 @@
             <name>Order</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>SelezFornitura.sObjectName</leftValueReference>
+                <leftValueReference>selezioneFornitura.sObjectName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Order</stringValue>
@@ -173,18 +304,28 @@
             <name>Asset</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>SelezFornitura.sObjectName</leftValueReference>
+                <leftValueReference>selezioneFornitura.sObjectName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Asset</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Aggancia_Asset</targetReference>
+                <targetReference>Get_Asset</targetReference>
             </connector>
             <label>Asset</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>CausalCode</name>
+        <dataType>String</dataType>
+        <expression>IF({!Get_Subscription.Service__c} = &quot;Energia Elettrica&quot;, &quot;VCE&quot;, &quot;VCG&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>groupOptionsFormula</name>
+        <dataType>String</dataType>
+        <expression>IF({!Causale_Disattivazione} = {!Causal_BLOCCORINNOVO}, &quot;SUBS_VAS_SERVIZIO_RENEW&quot;,&quot;ASSETS_ACTIVATED;SUBS_ANALISI_CONSUMI;SUBS_VAS_SERVIZIO&quot;)</expression>
+    </formulas>
     <formulas>
         <name>TerminationDateFormula</name>
         <dataType>Date</dataType>
@@ -211,11 +352,52 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_Case</name>
+        <label>Create Case</label>
+        <locationX>704</locationX>
+        <locationY>998</locationY>
+        <connector>
+            <targetReference>Arricchimento_Dati</targetReference>
+        </connector>
+        <inputReference>Case</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Case_0</name>
+        <label>Create Case</label>
+        <locationX>440</locationX>
+        <locationY>998</locationY>
+        <connector>
+            <targetReference>Arricchimento_Dati_0</targetReference>
+        </connector>
+        <inputReference>Case</inputReference>
+    </recordCreates>
+    <recordLookups>
+        <name>Get_Asset</name>
+        <label>Get Asset</label>
+        <locationX>440</locationX>
+        <locationY>758</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Aggancia_Asset</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>selezioneFornitura.recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Asset</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>Get_Subscription</name>
         <label>Get Subscription</label>
         <locationX>704</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Aggancia_Sub_Contract_e_Order</targetReference>
@@ -225,11 +407,53 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>SelezFornitura.recordId</elementReference>
+                <elementReference>selezioneFornitura.recordId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>SBQQ__Subscription__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetCaseAggiornato</name>
+        <label>GetCaseAggiornato</label>
+        <locationX>704</locationX>
+        <locationY>1238</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssignOutput</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetCaseAggiornato_0</name>
+        <label>GetCaseAggiornato</label>
+        <locationX>440</locationX>
+        <locationY>1238</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssignOutput_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
@@ -241,7 +465,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Set_Causale_Disattivazione</targetReference>
+            <targetReference>Screen_Selezione_Fornitura_0</targetReference>
         </connector>
         <fields>
             <name>Causale_Disattivazione</name>
@@ -249,25 +473,40 @@
             <choiceReferences>Causal_ANNULPERRECESSO</choiceReferences>
             <choiceReferences>Causal_ANNULPERRIPENS</choiceReferences>
             <choiceReferences>Causal_CESS</choiceReferences>
+            <choiceReferences>Causal_BLOCCORINNOVO</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Causale Disattivazione</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Selezione_Fornitura_0</name>
+        <label>Screen Selezione Fornitura</label>
+        <locationX>440</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Set_Causale_Disattivazione</targetReference>
+        </connector>
         <fields>
-            <name>SelezFornitura</name>
+            <name>selezioneFornitura</name>
             <extensionName>c:hdtSelezFornituraFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>accountId</name>
                 <value>
-                    <elementReference>AccountId</elementReference>
+                    <elementReference>Case.AccountId</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>groupOptions</name>
                 <value>
-                    <stringValue>ASSETS_ACTIVATED;SUBS_ANALISI_CONSUMI;SUBS_VAS_SERVIZIO</stringValue>
+                    <elementReference>groupOptionsFormula</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -275,7 +514,7 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
+        <showHeader>true</showHeader>
     </screens>
     <start>
         <locationX>50</locationX>
@@ -285,6 +524,62 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Arricchimento_Dati</name>
+        <label>Arricchimento Dati</label>
+        <locationX>704</locationX>
+        <locationY>1118</locationY>
+        <connector>
+            <targetReference>GetCaseAggiornato</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Case.Contract__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>Case.ServicePoint__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Arricchimento_Dati_0</name>
+        <label>Arricchimento Dati</label>
+        <locationX>440</locationX>
+        <locationY>1118</locationY>
+        <connector>
+            <targetReference>GetCaseAggiornato_0</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Case.Contract__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>Case.ServicePoint__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>AccountId</name>
         <dataType>String</dataType>

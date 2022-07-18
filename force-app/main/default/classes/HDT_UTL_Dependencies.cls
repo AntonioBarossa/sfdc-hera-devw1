@@ -49,6 +49,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                                     WHERE Order__r.ID IN: orders.keySet()
                                     WITH SECURITY_ENFORCED];
                     for(ServiceRequest__c sr : srs){
+                        Boolean isAnaConsTransition = orders.get(sr.Order__c).VasSubtype__c != null && orders.get(sr.Order__c).VasSubtype__c == 'Analisi Consumi' && orders.get(sr.Order__c).isTransition__c ? true:false;
                         sr.NextPhase__c = orders.get(sr.Order__c).Phase__c;
                         incomingProcesses.add(sr);
                     }
@@ -192,16 +193,18 @@ public inherited sharing class HDT_UTL_Dependencies {
             List<String> matchValueBillings = new List<String>();
             List<String> matches = new List<String>();
 
-            String incomingServicePoint = '';
+            Map<String,String> incomingServicePoint = new Map<String, String>();
 
             for(ServiceRequest__c sr : incomingProcesses){
+                String singleIncomingServicePoint = '';
                 if(dependenciesMap.containsKey(sr.ProcessType__c)){
                     for(List<String> blockingMatches : dependenciesMap.get(sr.ProcessType__c)){
                         String blockingMatch = blockingMatches.get(1);
                         if(blockingMatch.equalsIgnoreCase(MATCH_SERVICE_POINT)){
-                            incomingServicePoint = (String)sr.ServicePointCode__c==null?(String)sr.Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c:(String)sr.ServicePointCode__c;
-                            incomingServicePoint = incomingServicePoint==null?(String)sr.Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c:incomingServicePoint;
-                            matchValueServicePoints.add(incomingServicePoint);
+                            singleIncomingServicePoint = (String)sr.ServicePointCode__c==null?(String)sr.Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c:(String)sr.ServicePointCode__c;
+                            singleIncomingServicePoint = singleIncomingServicePoint==null?(String)sr.Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c:singleIncomingServicePoint;
+                            incomingServicePoint.put(sr.Id, singleIncomingServicePoint);
+                            matchValueServicePoints.add(incomingServicePoint.get(sr.Id));
                         }else if(blockingMatch.equalsIgnoreCase(MATCH_ACCOUNT)){
                             matchValueAccounts.add(sr.Account__c);
                         }else if(blockingMatch.equalsIgnoreCase(MATCH_BILLING)){
@@ -251,7 +254,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                                 String blockingServicePoint = (String)srBlocking.ServicePointCode__c==null?(String)srBlocking.Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c:(String)srBlocking.ServicePointCode__c;
                                 blockingServicePoint = blockingServicePoint==null?(String)srBlocking.Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c:blockingServicePoint;
                                 
-                                if(incomingServicePoint.equalsIgnoreCase(blockingServicePoint)){
+                                if((incomingServicePoint.get(sr.Id)).equalsIgnoreCase(blockingServicePoint)){
                                     match = true;
                                 }
                             }else if(account){
@@ -284,6 +287,8 @@ public inherited sharing class HDT_UTL_Dependencies {
                                 if(valueToUpdate){
                                     ordersToBeUpdated.add(orderToUpdate);
                                 }
+                                Boolean isAnalisiConsumi = (String)sr.getSobject('Order__r').get('VasSubtype__c') != null && ((String)sr.getSobject('Order__r').get('VasSubtype__c')).equalsIgnoreCase('Analisi Consumi')  && (Boolean)sr.getSobject('Order__r').get('isTransition__c') == true;
+                                sr.NextPhase__c = isAnalisiConsumi ? 'Completata' : sr.NextPhase__c;
                             }
                             sr.DependOn__c = srBlocking.ID;
                             sr.Status__c = STATUS_SEQUENZIALIZZATO;

@@ -610,6 +610,91 @@
                 <default>false</default>
                 <label>Aggiunta Sconti o Bonus VAS Gas</label>
             </value>
+            <value>
+                <fullName>Segnalazione VAS</fullName>
+                <default>false</default>
+                <label>Segnalazione VAS</label>
+            </value>
+            <value>
+                <fullName>Disattivazione VAS</fullName>
+                <default>false</default>
+                <label>Disattivazione VAS</label>
+            </value>
+            <value>
+                <fullName>Autoelettrica</fullName>
+                <default>false</default>
+                <label>Autoelettrica</label>
+            </value>
+            <value>
+                <fullName>HVAC</fullName>
+                <default>false</default>
+                <label>HVAC</label>
+            </value>
+            <value>
+                <fullName>Temporanea - Nuova Attivazione</fullName>
+                <default>false</default>
+                <label>Temporanea - Nuova Attivazione</label>
+            </value>
+            <value>
+                <fullName>Subentro</fullName>
+                <default>false</default>
+                <label>Subentro</label>
+            </value>
+            <value>
+                <fullName>Attivazione</fullName>
+                <default>false</default>
+                <label>Attivazione</label>
+            </value>
+            <value>
+                <fullName>Attivazione con Modifica</fullName>
+                <default>false</default>
+                <label>Attivazione con Modifica</label>
+            </value>
+            <value>
+                <fullName>Switch in</fullName>
+                <default>false</default>
+                <label>Switch in</label>
+            </value>
+            <value>
+                <fullName>Proroga Conn Temp</fullName>
+                <default>false</default>
+                <label>Proroga Conn Temp</label>
+            </value>
+            <value>
+                <fullName>Voltura Tecnica</fullName>
+                <default>false</default>
+                <label>Voltura Tecnica</label>
+            </value>
+            <value>
+                <fullName>Modifica Contratti Preattivazione</fullName>
+                <default>false</default>
+                <label>Modifica Contratti Preattivazione</label>
+            </value>
+            <value>
+                <fullName>Contratti/Bonus Commerciale</fullName>
+                <default>false</default>
+                <label>Contratti/Bonus Commerciale</label>
+            </value>
+            <value>
+                <fullName>VOTIVE Modena/Nuovo contratto</fullName>
+                <default>false</default>
+                <label>VOTIVE Modena/Nuovo contratto</label>
+            </value>
+            <value>
+                <fullName>VOTIVE Modena/Subentro</fullName>
+                <default>false</default>
+                <label>VOTIVE Modena/Subentro</label>
+            </value>
+            <value>
+                <fullName>VOTIVE Modena/Intervento Riattivazione luce</fullName>
+                <default>false</default>
+                <label>VOTIVE Modena/Intervento Riattivazione luce</label>
+            </value>
+            <value>
+                <fullName>Documentale/Copia Contratto</fullName>
+                <default>false</default>
+                <label>Documentale/Copia Contratto</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

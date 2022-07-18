@@ -51,8 +51,11 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
 
     private Map<Id, String> caseToProcess;//gonna update on finish method
 
+    private Set<String> assetVasCodeSet;
+
     public HDT_BA_VasSupplierTable(){
         this.caseToProcess=new Map<Id, String>();
+        this.assetVasCodeSet = new Set<String>();
     }
 
     /**
@@ -144,7 +147,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
     * @return List<SBQQ__Subscription__c> 
     **/
     private List<SBQQ__Subscription__c> getSubscriptions(Set<String> codes) {
-        return [SELECT VasPracticeCode__c, SBQQ__OrderProduct__r.OrderId FROM SBQQ__Subscription__c WHERE VasPracticeCode__c IN :codes WITH SECURITY_ENFORCED];
+        return [SELECT VasPracticeCode__c, SBQQ__OrderProduct__r.OrderId, SBQQ__Product__r.Family FROM SBQQ__Subscription__c WHERE VasPracticeCode__c IN :codes WITH SECURITY_ENFORCED];
     }
 
     /**
@@ -154,7 +157,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
     * @return List<Asset> 
     **/
     private List<Asset> getAssets(Set<String> codes) {
-        return [SELECT VasPracticeCode__c, SBQQ__OrderProduct__r.OrderId, AccountId FROM Asset WHERE VasPracticeCode__c IN :codes AND SBQQ__RootAsset__c=null WITH SECURITY_ENFORCED];
+        return [SELECT VasPracticeCode__c, SBQQ__OrderProduct__r.OrderId, Product2.Family, AccountId FROM Asset WHERE VasPracticeCode__c IN :codes AND SBQQ__RootAsset__c=null WITH SECURITY_ENFORCED];
     }
 
     /**
@@ -171,6 +174,10 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
             
             for (SObject target:targets) {
                 String code = (String)target.get('VasPracticeCode__c');
+                Id recordId = (Id)target.get('Id');
+                if (recordId.getSobjectType() == Schema.Asset.getSObjectType()){
+                    this.assetVasCodeSet.add(code);
+                }
                 VasSupplierTable__c vasRecord = vasRecordsMap.get(code);
                 Order orderToUpdate = new Order();
 
@@ -257,12 +264,14 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
                         }
                     }
                     when 'CONSEGNA/Installazione RIFIUTATA', 'INSTALLAZIONE FALLITA', 'RESO (PRODOTTO)', 'RIFIUTATO preventivamente' {
+                        String vasType = (String)record.getSObject('Product2')?.get('Family');
                         Case disattCase = new Case(AssetId=(Id) record.get('id'), RecordTypeId=rtCaseDisattVas);
                         disattCase.CancellationReason__c='Ripensamento da cliente';
                         disattCase.VasStatus__c='ANNUL PER RIPENS';
                         disattCase.Phase__c='Bozza';
                         disattCase.Type='Disattivazione VAS';
                         disattCase.AccountId=(ID) record.get('AccountId');
+                        disattCase.CommercialProduct__c = vasType;
                         casesDisattVas.add(disattCase);
                         //assetToAccountEsitiFornitore.put((Id) record.get('id'), (ID) record.get('AccountId'));
                     }when else{
@@ -272,9 +281,22 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
                         }
                     }
                 }
-            }
-            if (record.getSObjectType() == Schema.SBQQ__Subscription__c.getSObjectType()) {
+            }else if (record.getSObjectType() == Schema.SBQQ__Subscription__c.getSObjectType() && !this.assetVasCodeSet.contains(recordsPerCode.get(record))) {
                 subsToUpdate.add((SBQQ__Subscription__c)record);
+                String vasType = (String)record.getSObject('SBQQ__Product__r')?.get('Family');
+                if ('VAS Servizio'.equalsIgnoreCase(vasType)){
+                    switch on String.valueOf(record.get('VasSupplierStatus__c')){
+                        when 'TEL - CLT NON TROVATO', 'CLIENTE NON TROVATO', 'DA RICHIAMARE', 'KO FORNITORE', 'IN RIASSORTIMENTO', 'USCITA A VUOTO' {
+                            id sobjToRelateActivity = (ID) record.getSobject('SBQQ__OrderProduct__r')?.get('OrderId');
+                            if(sobjToRelateActivity!=null){
+                                //assetToAccountKoFornitore.put((Id) record.get('id'), (ID) record.get('AccountId'));
+                                assetToOrderKoFornitore.put((Id) record.get('id'), new HDT_WRP_Data(sobjToRelateActivity));
+                            }else{
+                                assetMigratedKoFornitore.put((Id) record.get('id'),  new HDT_WRP_Data((Id) record.get('AccountId'), String.valueOf(record.get('VasSupplierStatus__c'))));
+                            }
+                        }
+                    }
+                } 
             }
             if (record.getSObjectType() == Schema.Order.getSObjectType()) {
                 //ordersToUpdate.add((Order)record);
@@ -398,10 +420,15 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
         list<wrts_prcgvr__Activity__c> activities = getActivities(objectIds, templateName);
 
         for(wrts_prcgvr__Activity__c act : activities){
-            act.Asset__c = accToAssets.get((ID) act.wrts_prcgvr__ObjectId__c).remove(0);
+            Id recordId = accToAssets.get((ID) act.wrts_prcgvr__ObjectId__c).remove(0);
+            if (recordId.getSObjectType() == Schema.Asset.getSObjectType()){
+                act.Asset__c = recordId;
+            }else if (recordId.getSObjectType() == Schema.SBQQ__Subscription__c.getSObjectType()){
+                act.Subscription__c = recordId;
+            }
             act.recordTypeId=rtDefault!=null? rtDefault : act.recordTypeId;
             act.Account__c=((ID) act.wrts_prcgvr__ObjectId__c).getSobjectType().getDescribe().getName().equalsIgnoreCase('Account')? (ID) act.wrts_prcgvr__ObjectId__c : null;
-            String causaleScarto = assetToAccount.get(act.Asset__c).causaleScarto;
+            String causaleScarto = assetToAccount.get(recordId).causaleScarto;
             act.wrts_prcgvr__Description__c=String.isNotBlank(causaleScarto)? causaleScarto : null;//popola causale solo per asset migrati
         }
         return activities;

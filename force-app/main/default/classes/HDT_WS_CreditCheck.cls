@@ -13,7 +13,14 @@ public class HDT_WS_CreditCheck {
     public static HDT_WS_CreditCheckResponse callService(HDT_WS_CreditCheckRequest req){
         
         //HDT_WS_CreditCheckRequest req = (HDT_WS_CreditCheckRequest)json.deserialize(wrpVals, HDT_WS_CreditCheckRequest.class);
+        if(System.isBatch()){
+            req.userId = 'Caricatore.Massivo';
+        }else {
+            req.userId = UserInfo.getName()?.replace(' ','.');
+        }
         
+        //req.sistema = 'Standard'.equalsIgnoreCase(UserInfo.getUserType())? 'SFDC' : 'COMMUNITY';
+
         System.debug(LoggingLevel.DEBUG, 'HDT_WS_CreditCheck - HDT_WS_CreditCheckResponse - callService: req ----> ');
         if (String.isNotEmpty(req.bpClass) && req.bpClass.containsIgnoreCase('Marcatura nulla')){
             req.bpClass = '';
@@ -27,28 +34,39 @@ public class HDT_WS_CreditCheck {
         try{
             HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate orderData = new HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate();
             orderData.outcomeDescription = '';
-            if ('failed'.equalsIgnoreCase(res.status) && res.errorDetails != null) {
+            if ('failed'.equalsIgnoreCase(res?.status)) {
+                orderData.orderId = req.crmId;
                 Set<String> errorMessageList = new Set<String>();
-                for (HDT_WS_CreditCheckResponse.HDT_WRP_errorResponseObject item : res.errorDetails){
-                    if (!item.message.isEmpty()){
-                        for (String singleMessage : item.message.values()){
-                            if (String.isNotBlank(singleMessage)){
-                                errorMessageList.add(singleMessage);
+                Boolean isOk = false;
+                List<HDT_WS_CreditCheckResponse.HDT_WRP_errorResponseObject> items = res.errorDetails != null ? res.errorDetails : new List<HDT_WS_CreditCheckResponse.HDT_WRP_errorResponseObject>();
+                for (HDT_WS_CreditCheckResponse.HDT_WRP_errorResponseObject item : items){
+                    if (item != null && item.message != null && !item.message.isEmpty()){
+                        for (String keyMessage : item.message.keySet()){
+                            String message = String.isBlank(item.message.get(keyMessage))? '' : item.message.get(keyMessage);
+                            switch on keyMessage?.toUpperCase() {
+                                when  'ERROR_CODE'{
+                                    isOk = HDT_UTL_CreditCheck.managedErrorCode(message);
+                                }
+                                when else {
+                                    errorMessageList.add(message); 
+                                }
                             }
                         }
                     }
                 }
+                errorMessageList.remove('');
                 if (!errorMessageList.isEmpty()){
-                    orderData.outcomeDescription = 'KO Tecnico - ' + String.join((Iterable<String>)errorMessageList, ' \n');
-                    orderData.outcome = 'KO';
+                    String testMessage = String.join((Iterable<String>)errorMessageList, ' \n');
+                    orderData.outcomeDescription = (isOk) ? testMessage : 'KO Tecnico - ' + testMessage;
+                    orderData.outcome = (isOK)? 'OK' : 'KO';
                 }
-            }else if (String.isNotBlank(res.exceptionMessage)){
+            }else if (String.isNotBlank(res?.exceptionMessage)){
+                orderData.orderId = req.crmId;
                 orderData.outcomeDescription =  'KO Tecnico - ' + res.exceptionMessage;
                 orderData.outcome = 'KO';
             }
 
-            if ('KO'.equalsIgnoreCase(orderData.outcome)){
-                orderData.orderId = req.crmId;
+            if (!orderData.isEmpty()){
                 HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{orderData});
             }
         }catch(Exception e){

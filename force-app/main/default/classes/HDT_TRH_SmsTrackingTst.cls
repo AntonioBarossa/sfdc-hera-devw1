@@ -40,7 +40,9 @@ public with sharing class HDT_TRH_SmsTrackingTst{
 
 			Test.startTest();
 
-			SMSTracking__c track = HDT_UTL_DataFactoryTst.createSmsTracking(1, true, tContact[0].Id).get(0);
+			SMSTracking__c track = HDT_UTL_DataFactoryTst.createSmsTracking(1, false, tContact[0].Id).get(0);
+			track.MessageID__c = '23332323';
+			insert track;
 
 			Test.stopTest();
 

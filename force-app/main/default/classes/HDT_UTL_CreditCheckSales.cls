@@ -7,6 +7,7 @@ public inherited sharing class HDT_UTL_CreditCheckSales {
     private List<Id> parentOrderIdList;
     private Map<Id, Order> orderOffCommMap;
     private Map<Id, Order> orderAnalisiConsMap;
+    private String process;
 
     public HDT_UTL_CreditCheckSales() {
         System.debug(LoggingLevel.DEBUG, 'HDT_UTL_CreditCheckSales');
@@ -41,6 +42,7 @@ public inherited sharing class HDT_UTL_CreditCheckSales {
             
             processObject.requestItem = singleItem;
         }
+        this.process = requestItemList[0].MassiveLoaderRequest__r.ProcessType__c;
         processObjectList.add(processObject);
     }
 
@@ -109,16 +111,20 @@ public inherited sharing class HDT_UTL_CreditCheckSales {
                 processObject.requestItem.Result__c = orderToCheck.OrderNumber;
 
                 System.debug(LoggingLevel.DEBUG, '>>> createRequestFromOrderId');
-                creditCheckRequest = HDT_UTL_CreditCheck.createRequestFromOrderId(orderToCheck.Id);
-                creditCheckResponse = HDT_WS_CreditCheck.callService(creditCheckRequest);
+                if(!this.process.equalsIgnoreCase('CambioOfferta') && !this.process.equalsIgnoreCase('MUC') && !this.process.equalsIgnoreCase('CambioUso')){
+                    creditCheckRequest = HDT_UTL_CreditCheck.createRequestFromOrderId(orderToCheck.Id);
+                    creditCheckResponse = HDT_WS_CreditCheck.callService(creditCheckRequest);
 
-                if(creditCheckResponse.statusCode != 200 && creditCheckResponse.statusCode != 201){
-                    processObject.requestItem.Status__c = 'Errore';
-                    processObject.requestItem.StatusDescription__c = 'Errore nella chiamata al servizio di Credit Check';
-                    orderToCheck.Phase__c = 'Credit Check KO';
-                    //processObject.requestItem.Status__c = 'Chiuso';
-                    orderToUpdate.add(orderToCheck);
-                } else {
+                    if(creditCheckResponse.statusCode != 200 && creditCheckResponse.statusCode != 201){
+                        //processObject.requestItem.Status__c = 'Errore';
+                        //processObject.requestItem.StatuDsescription__c = 'Errore nella chiamata al servizio di Credit Check';
+                        orderToCheck.Phase__c = 'Credit Check KO';
+                        processObject.requestItem.Status__c = 'Chiuso';
+                        orderToUpdate.add(orderToCheck);
+                    } else {
+                        processObject.requestItem.Status__c = 'Chiuso';
+                    }
+                }else {
                     processObject.requestItem.Status__c = 'Chiuso';
                 }
 

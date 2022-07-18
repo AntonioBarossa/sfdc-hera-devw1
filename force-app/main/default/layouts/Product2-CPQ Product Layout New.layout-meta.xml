@@ -64,7 +64,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Caratteristiche offerta</label>
+        <label>Offerta 2G</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -79,6 +79,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>StartTimeSlot__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>VariableOrFixed__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -286,10 +290,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DurationVAS__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>PriceVASBilling__c</field>
             </layoutItems>
         </layoutColumns>
@@ -371,6 +371,14 @@
         <editHeading>true</editHeading>
         <label>VAS Servizio e VAS Prodotto</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DurationVAS__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>WaitingPeriod__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>FreeVas__c</field>

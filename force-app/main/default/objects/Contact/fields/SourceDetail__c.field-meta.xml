@@ -17,6 +17,11 @@
                 <label>ADSALA</label>
             </value>
             <value>
+                <fullName>ADSALSA</fullName>
+                <default>false</default>
+                <label>ADSALSA</label>
+            </value>
+            <value>
                 <fullName>ecc</fullName>
                 <default>false</default>
                 <label>ecc</label>

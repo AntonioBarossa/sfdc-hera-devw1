@@ -295,6 +295,61 @@
         <default>false</default>
         <label>50</label>
     </customValue>
+    <customValue>
+        <fullName>10 x 30 - 10 mc</fullName>
+        <default>false</default>
+        <label>10 x 30 - 10 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>20 x 40 - 16 mc</fullName>
+        <default>false</default>
+        <label>20 x 40 - 16 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>3 x 15 - 2.5 mc</fullName>
+        <default>false</default>
+        <label>3 x 15 - 2.5 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>30 x 50 - 30 mc</fullName>
+        <default>false</default>
+        <label>30 x 50 - 30 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>5 x 20 - 4 mc</fullName>
+        <default>false</default>
+        <label>5 x 20 - 4 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>7 x 25 - 6.3 mc</fullName>
+        <default>false</default>
+        <label>7 x 25 - 6.3 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>WV 100 - 100 mc</fullName>
+        <default>false</default>
+        <label>WV 100 - 100 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>WV 50 - 25 mc</fullName>
+        <default>false</default>
+        <label>WV 50 - 25 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>WV 65 - 50 mc</fullName>
+        <default>false</default>
+        <label>WV 65 - 50 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>WV 80 - 63 mc</fullName>
+        <default>false</default>
+        <label>WV 80 - 63 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>WV150 - 300 mc</fullName>
+        <default>false</default>
+        <label>WV150 - 300 mc</label>
+    </customValue>
     <description>Classe contatore (Calibro)</description>
     <masterLabel>Caliber</masterLabel>
     <sorted>false</sorted>

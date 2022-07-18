@@ -1,6 +1,6 @@
 public inherited sharing class HDT_QR_AmountQuote {
 
-
+    private static Set<String> verificationProcess = new Set<String>{'Consegna copia chiave GdM','Richiesta lettura cliente','Sost. contatore cliente','Verifica GDM','Verifica Tensione - Pressione'};
     public static List<AdminPriceQuote__c> queryAmount(String distributor, String city, String caliber, Boolean hasCorrector, String market, String commodity, String processType,String year){
          List<AdminPriceQuote__c> priceQuoteList =  [SELECT Amount__c FROM AdminPriceQuote__c 
                     WHERE
@@ -19,9 +19,10 @@ public inherited sharing class HDT_QR_AmountQuote {
         if(priceQuoteList.size()>0){
             return priceQuoteList;
         }else {
+            String name = verificationProcess.contains(processType) ? 'Default Verifiche' : 'Default';
             return [SELECT Amount__c FROM AdminPriceQuote__c 
             WHERE
-            Name = 'Default'
+            Name = :name
             WITH SECURITY_ENFORCED
             LIMIT 1
             ];
