@@ -3575,7 +3575,7 @@
             <targetReference>getCase</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>flowAnnullamento</name>
         <label>flowAnnullamento</label>
