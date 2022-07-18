@@ -15,11 +15,13 @@ public with sharing class HDT_LC_StringGenerationForDocument {
 
             result = [SELECT Id, Municipality__c, Process__c , Subprocess__c , Fixed_String__c 
                       FROM StaticStringForDocuments__c
-                      WHERE Process__c =:caseProcess AND Subprocess__c =:caseSubProcess AND Municipality__c =:comune];
+                      WHERE Process__c =:caseProcess AND Subprocess__c =:caseSubProcess AND Municipality__c =:comune]
+                      WITH SECURITY_ENFORCED;
 
             return  !result.isEmpty() ? result : [SELECT Id, Municipality__c, Process__c , Subprocess__c , Fixed_String__c 
                                                   FROM StaticStringForDocuments__c
-                                                  WHERE Process__c =:caseProcess AND Subprocess__c =:caseSubProcess AND Municipality__c =null ];
+                                                  WHERE Process__c =:caseProcess AND Subprocess__c =:caseSubProcess AND Municipality__c =null 
+                                                  WITH SECURITY_ENFORCED];
 
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
