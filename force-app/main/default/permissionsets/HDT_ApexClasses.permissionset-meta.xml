@@ -1585,10 +1585,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_QBL_InvioNumerazioni</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_QBL_RunBatch</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2198,10 +2194,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_ProcessSales</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_QR_ProcessSalesTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -3742,10 +3734,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_CheckCompatibilitySales</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_CheckCompatibilitySalesTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
