@@ -266,7 +266,7 @@ public with sharing class HDT_TRH_TaskTst {
         String result4 = myObjectToTest.doxeeTemplateCode('Ultimo Avviso (26)');
         System.assert('026'.equalsIgnoreCase(result4), 'Result4 non è 026');
         
-        String result5 = myObjectToTest.doxeeTemplateCode('ELSE');
+        String result5 = myObjectToTest.doxeeTemplateCode('0');
         System.assert('0'.equalsIgnoreCase(result5), 'Result6 non è 0');
         
     }

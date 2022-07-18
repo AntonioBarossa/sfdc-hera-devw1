@@ -520,10 +520,10 @@
             <fullName>Attivazioni</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Attivazioni - Generiche</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Autolettura</fullName>
             <default>false</default>
@@ -2802,6 +2802,14 @@
             <default>true</default>
         </values>
         <values>
+            <fullName>Protocollo - Reclami Contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Reclami Post Vendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Protocollo - Disattivazioni</fullName>
             <default>false</default>
         </values>
@@ -2825,10 +2833,10 @@
             <fullName>Protocollo - Preventivi</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>Protocollo - Reclami</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>Protocollo - VAS</fullName>
             <default>false</default>
@@ -2869,7 +2877,7 @@
         </values>
         <values>
             <fullName>3</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>

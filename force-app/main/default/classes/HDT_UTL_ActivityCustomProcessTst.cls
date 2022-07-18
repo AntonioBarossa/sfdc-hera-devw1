@@ -150,4 +150,15 @@ public class HDT_UTL_ActivityCustomProcessTst {
         System.assertEquals('new string', updatedActivity.CausalError__c, 'updateCreditCheckActivity did not work correctly');  
         System.assertNotEquals(null, updatedActivity.CausalError__c, 'updateCreditCheckActivity did not work correctly');      
     }
+
+
+
+
+    @isTest static void closeSobjectOnActivityClosing(){
+        List<wrts_prcgvr__Activity__c> newActList = new List<wrts_prcgvr__Activity__c>();
+         List<wrts_prcgvr__Activity__c> oldActList  = new List<wrts_prcgvr__Activity__c>();
+
+        HDT_UTL_ActivityCustomProcess.closeSobjectOnActivityClosing(newActList, oldActList);
+
+    }
 }

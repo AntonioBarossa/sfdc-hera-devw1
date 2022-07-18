@@ -29,16 +29,21 @@ export default class hdtBillingProfileForm extends LightningElement {
         let options = [
             { label: 'Pagatore Alternativo', value: 'Pagatore Alternativo' }
         ];
-
-        if (this.sale.Account__r.Category__c === 'Famiglie' 
-            || this.sale.Account__r.Category__c === 'Parti comuni'
-            || this.sale.Account__r.Category__c === 'Ditta individuale') {
+        if(this.sale != null){
+            if (this.sale.Account__r.Category__c === 'Famiglie' 
+                || this.sale.Account__r.Category__c === 'Parti comuni'
+                || this.sale.Account__r.Category__c === 'Ditta individuale') {
+                options.push({ label: 'Stesso Sottoscrittore', value: 'Stesso Sottoscrittore' });
+            } else if (this.sale.Account__r.Category__c !== 'Famiglie' 
+                        && this.sale.Account__r.Category__c !== 'Parti comuni'
+                        && this.sale.Account__r.Category__c !== 'Ditta individuale') {
+                options.push({ label: 'Legale Rappresentante', value: 'Legale Rappresentante' });
+            }
+        }else{
             options.push({ label: 'Stesso Sottoscrittore', value: 'Stesso Sottoscrittore' });
-        } else if (this.sale.Account__r.Category__c !== 'Famiglie' 
-                    && this.sale.Account__r.Category__c !== 'Parti comuni'
-                    && this.sale.Account__r.Category__c !== 'Ditta individuale') {
             options.push({ label: 'Legale Rappresentante', value: 'Legale Rappresentante' });
         }
+        
 
         return options;
     }
@@ -167,10 +172,12 @@ export default class hdtBillingProfileForm extends LightningElement {
                     switch (el) {
                         case 'ElectronicInvoicingMethod__c':
                             required = true;
-                            value = this.cloneObject.ElectronicInvoicingMethod__c ?? '';
+                            value = this.cloneObject.ElectronicInvoicingMethod__c ?? 'XML + carta/email';
+                            this.dataToSubmit['ElectronicInvoicingMethod__c'] = value;
                             break;
                         case 'XMLType__c':
                             value = this.cloneObject.XMLType__c ?? 'Sintetico';
+                            this.dataToSubmit['XMLType__c'] = value;
                             console.log('XMLType__c default: ', value);
                             break;
                         default:
@@ -713,7 +720,8 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
 
         if (this.template.querySelector("[data-id='SignatoryType__c']") !== null 
-            && this.template.querySelector("[data-id='SignatoryType__c']").value === '') {
+            && (this.template.querySelector("[data-id='SignatoryType__c']").value === '' || this.template.querySelector("[data-id='SignatoryType__c']").value === undefined)
+            ) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Tipo Sottoscrittore, ');
         }
 
@@ -745,7 +753,12 @@ export default class hdtBillingProfileForm extends LightningElement {
             concatBillingErrorFields = concatBillingErrorFields.concat('Cognome sottoscrittore CC, ');
         }
         //check required fields end
-        
+        if (this.template.querySelector("[data-id='BillSendingMethod__c']") !== null 
+            && this.template.querySelector("[data-id='BillSendingMethod__c']").value != null && this.template.querySelector("[data-id='BillSendingMethod__c']").value != undefined) {
+                if(this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Fatturazione PA' && this.sale.Account__r.Category__c === 'Famiglie'){
+                    this.saveErrorMessage.push('Fatturazione PA non è un valore ammissibile per questa tipologia di cliente');
+                }
+        }
         //validate billing profile fields
         console.log('concatBillingErrorFields: ', concatBillingErrorFields);
         if (concatBillingErrorFields !== '') {
@@ -812,6 +825,9 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
         if(this.dataToSubmit['InvoicingCountry__c'] != this.wrapAddressObject['Stato']){
             this.dataToSubmit['InvoicingCountry__c'] = this.wrapAddressObject['Stato'];
+        }
+        if(!this.dataToSubmit['InvoicingCountry__c']){
+            this.dataToSubmit['InvoicingCountry__c'] = 'ITALIA';
         }
         if(this.dataToSubmit['InvoicingProvince__c'] != this.wrapAddressObject['Provincia']){
             this.dataToSubmit['InvoicingProvince__c'] = this.wrapAddressObject['Provincia'];
@@ -945,6 +961,7 @@ export default class hdtBillingProfileForm extends LightningElement {
                 });
                 this.dispatchEvent(toastSuccessMessage);
                 this.dispatchEvent(new CustomEvent('newbillingprofile'));
+                this.dispatchEvent(new CustomEvent('newbillingprofilerecord',{detail:data.Id}));
                 this.handleCancelEvent();
                 
             }).catch(error => {

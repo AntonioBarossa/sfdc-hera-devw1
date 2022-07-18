@@ -620,7 +620,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
     getRequest(){ 
         var typeOfCommodity = 'ENERGIAELETTRICA';
-        let companyName = this.order.Account.FirstName__c? `${this.order.Account.FirstName__c} ${this.order.Account.LastName__c}` : this.order.Account.LastName__c;
+        let separator = this.order.Account.CustomerCode__c ? ' ' : ',';
+        let companyName = this.order.Account.FirstName__c? this.order.Account.FirstName__c+separator+this.order.Account.LastName__c : this.order.Account.LastName__c;
         let companyGroup;
         var secondaryCustomerId = null;
         var bpType = null;

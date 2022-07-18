@@ -1066,7 +1066,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             Decimal indemnityDueBillingCorrectionDecimal = String.isNotBlank(indemnityDueBillingCorrection) ? Decimal.valueOf(indemnityDueBillingCorrection) : 0;
             String correctionRight = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionRight__c', 0, inputs, formParams);
             String correctionDocumentEmissionDate = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionDocumentEmissionDay__c', 0, inputs, formParams);
-            Boolean expiredCorrection = indemnityDueBillingCorrection != null;
+            Boolean expiredCorrection = indemnityDueBillingCorrection != null && indemnityDueBillingCorrectionDecimal > 0;
 
             String[] record = new List<String>();
             record.add('00310');
@@ -1100,6 +1100,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         // Emissione rettifica non prevista, indennizzo per solo ritardo nella risposta
         if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight != 'Si') {
             boxType = '1';
+        }
+        // Casistica valore indennizzo 0
+        if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight != 'Si' && indemnityDueSendResponse == 0)
+        {
+            boxType = '';
         }
         // Emissione rettifica prevista ma non scaduta, indennizzo per solo ritardo nella risposta
         else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && !expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate)) {
@@ -1137,6 +1142,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         // Check finale se indennizzo già inviato in stesso anno
         if (!indemnityConfirmed && indemnityMotivation == 'Altro indennizzo stesso anno solare') {
             boxType = '6';
+        }
+
+        if(indemnityDueSendResponse == 0 && !expiredCorrection)
+        {
+            boxType = '';
         }
 
         System.debug(LoggingLevel.DEBUG, 'calculateIndemnityBox inputs: ' + complaintClassification + ', ' + indemnityConfirmed + ', ' + indemnityMotivation + ', ' + correctionRight + ', ' + expiredCorrection + ', ' + correctionDocumentEmissionDate + ', ' + indemnityDueSendResponse);
@@ -1180,8 +1190,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
         String orderId = HDT_UTL_DocumentalManagement.getValue('Order', 'Id', 0, inputs, formParams);
         Order orderData = HDT_QR_DocumentalConfiguration.getOrderPriceBook(orderId);
-        String priceBookName = orderData.SBQQ__Quote__r?.SBQQ__PriceBook__r?.Name;
-
+        String priceBookNameQuote = orderData.SBQQ__Quote__r?.SBQQ__PriceBook__r?.Name;
+        String priceBookNameOrder = orderData.Pricebook2.Name;
+        String priceBookName = String.isNotBlank(priceBookNameOrder)?priceBookNameOrder:priceBookNameQuote;
         if (String.isBlank(priceBookName)) {
             return '';
         }
@@ -1232,7 +1243,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
     // Restituisce la data nel formato richiesto da Engage1
     private static String getFormattedDate(Date dateToFormat) {
-        Datetime dt = dateToFormat;
+        Datetime dt;
+        if(dateToFormat != null){
+            dt = dateToFormat;
+        }else{
+            dt = date.Today();
+        }
         String formattedDate = dt.format('dd/MM/y');
         return formattedDate;
     }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ClientType__c</fullName>
+    <externalId>false</externalId>
+    <label>Tipo Cliente</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Alberghi Bar Ristoranti</fullName>
+                <default>false</default>
+                <label>Alberghi Bar Ristoranti</label>
+            </value>
+            <value>
+                <fullName>Bagnini</fullName>
+                <default>false</default>
+                <label>Bagnini</label>
+            </value>
+            <value>
+                <fullName>Cliente privato in suolo privato</fullName>
+                <default>false</default>
+                <label>Cliente privato in suolo privato</label>
+            </value>
+            <value>
+                <fullName>Cliente privato in suolo pubblico</fullName>
+                <default>false</default>
+                <label>Cliente privato in suolo pubblico</label>
+            </value>
+            <value>
+                <fullName>Ditte</fullName>
+                <default>false</default>
+                <label>Ditte</label>
+            </value>
+            <value>
+                <fullName>Enti Associazioni</fullName>
+                <default>false</default>
+                <label>Enti Associazioni</label>
+            </value>
+            <value>
+                <fullName>Scuole</fullName>
+                <default>false</default>
+                <label>Scuole</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

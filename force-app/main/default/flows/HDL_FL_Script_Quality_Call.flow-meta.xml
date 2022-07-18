@@ -156,12 +156,24 @@
     <decisions>
         <name>Risposta_Decision</name>
         <label>Risposta Decision</label>
-        <locationX>314</locationX>
+        <locationX>182</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Non_Confermo_Screen</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Confermo</defaultConnectorLabel>
+        <rules>
+            <name>Presa_Appuntamento</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RB_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>False_1</elementReference>
+                </rightValue>
+            </conditions>
+            <label>Presa Appuntamento</label>
+        </rules>
         <rules>
             <name>Confermo</name>
             <conditionLogic>and</conditionLogic>
@@ -217,7 +229,7 @@
     <recordLookups>
         <name>GetCampaignMember</name>
         <label>GetCampaignMember</label>
-        <locationX>314</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -238,7 +250,7 @@
     <recordLookups>
         <name>GetOrder</name>
         <label>GetOrder</label>
-        <locationX>314</locationX>
+        <locationX>182</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -334,9 +346,6 @@
         <fields>
             <name>NonConfermo_RB2</name>
             <choiceReferences>NonConfermo_RB2_Choice1</choiceReferences>
-            <choiceReferences>NonConfermo_RB2_Choice2</choiceReferences>
-            <choiceReferences>NonConfermo_RB2_Choice3</choiceReferences>
-            <choiceReferences>NonConfermo_RB2_Choice4</choiceReferences>
             <dataType>String</dataType>
             <fieldType>RadioButtons</fieldType>
             <isRequired>false</isRequired>
@@ -353,6 +362,9 @@
         </fields>
         <fields>
             <name>RB_NonConfermoScreen_2</name>
+            <choiceReferences>NonConfermo_RB2_Choice2</choiceReferences>
+            <choiceReferences>NonConfermo_RB2_Choice3</choiceReferences>
+            <choiceReferences>NonConfermo_RB2_Choice4</choiceReferences>
             <choiceReferences>NonConfermo_RB2_Choice5</choiceReferences>
             <choiceReferences>NonConfermo_RB2_Choice6</choiceReferences>
             <choiceReferences>NonConfermo_RB2_Choice7</choiceReferences>
@@ -382,7 +394,7 @@
     <screens>
         <name>Quality_Call</name>
         <label>Quality Call</label>
-        <locationX>314</locationX>
+        <locationX>182</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -437,6 +449,21 @@
                 </conditions>
             </visibilityRule>
         </fields>
+        <fields>
+            <name>PresaAppuntamento</name>
+            <fieldText>&lt;p&gt;Procedere con la presa appuntamento.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RB_1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>False_1</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -480,7 +507,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>188</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetCampaignMember</targetReference>

@@ -24,6 +24,7 @@ public with sharing class HDT_QR_InstallmentPlans {
             FROM RentProcessRule__c
             WHERE Category__c = :c.ClientCategory__c
             AND InstallmentPlanReason__c = :c.Reason__c
+            AND TypeInstallmentPlan__c =: c.TypeInstallmentPlan__c
             AND (ExistingInstallmentPlanUnpaidFrom__c <= :c.ExistingInstallmentsPlanNumber__c OR ExistingInstallmentPlanUnpaidFrom__c = null)
             AND (ExistingInstallmentPlanUnpaidTo__c >= :c.ExistingInstallmentsPlanNumber__c OR ExistingInstallmentPlanUnpaidTo__c = null)
             AND (AmountToPayInInstallmentsFrom__c <= :c.AmountToPayInInstallments__c OR AmountToPayInInstallmentsFrom__c = null)

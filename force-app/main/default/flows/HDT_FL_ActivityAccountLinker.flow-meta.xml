@@ -4,7 +4,7 @@
     <assignments>
         <name>account_counter_increase</name>
         <label>Contatore</label>
-        <locationX>479</locationX>
+        <locationX>347</locationX>
         <locationY>2615</locationY>
         <assignmentItems>
             <assignToReference>counter</assignToReference>
@@ -27,7 +27,7 @@
     <assignments>
         <name>assign_to_account</name>
         <label>Assegna a Account</label>
-        <locationX>259</locationX>
+        <locationX>127</locationX>
         <locationY>2951</locationY>
         <assignmentItems>
             <assignToReference>$Record.Account__c</assignToReference>
@@ -40,7 +40,7 @@
     <assignments>
         <name>assign_to_lead</name>
         <label>Assegna a Lead</label>
-        <locationX>787</locationX>
+        <locationX>919</locationX>
         <locationY>2831</locationY>
         <assignmentItems>
             <assignToReference>$Record.Lead__c</assignToReference>
@@ -76,7 +76,7 @@
     <assignments>
         <name>lead_counter_increase</name>
         <label>Contatore</label>
-        <locationX>1007</locationX>
+        <locationX>1139</locationX>
         <locationY>2495</locationY>
         <assignmentItems>
             <assignToReference>counter</assignToReference>
@@ -99,7 +99,7 @@
     <assignments>
         <name>link_activity_to_contact_by_fiscal_code</name>
         <label>Assegna Contatto a Activity</label>
-        <locationX>391</locationX>
+        <locationX>259</locationX>
         <locationY>2255</locationY>
         <assignmentItems>
             <assignToReference>$Record.Contact__c</assignToReference>
@@ -255,7 +255,7 @@
     <decisions>
         <name>single_account_found</name>
         <label>Account Univoco?</label>
-        <locationX>391</locationX>
+        <locationX>259</locationX>
         <locationY>2831</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -298,11 +298,23 @@
             </connector>
             <label>SI</label>
         </rules>
+        <rules>
+            <name>Multi_Record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>contact_counter</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <label>Multi Record</label>
+        </rules>
     </decisions>
     <decisions>
         <name>single_lead_found</name>
         <label>Lead Univoco?</label>
-        <locationX>919</locationX>
+        <locationX>1051</locationX>
         <locationY>2711</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -326,7 +338,7 @@
     <loops>
         <name>account_counter_loop</name>
         <label>Conta Account</label>
-        <locationX>391</locationX>
+        <locationX>259</locationX>
         <locationY>2495</locationY>
         <collectionReference>get_account_by_contact</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -354,7 +366,7 @@
     <loops>
         <name>lead_counter_loop</name>
         <label>Conta Lead</label>
-        <locationX>919</locationX>
+        <locationX>1051</locationX>
         <locationY>2375</locationY>
         <collectionReference>get_lead</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -409,7 +421,7 @@
     <recordLookups>
         <name>get_account_by_contact</name>
         <label>Account</label>
-        <locationX>391</locationX>
+        <locationX>259</locationX>
         <locationY>2375</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -548,7 +560,7 @@
     <recordLookups>
         <name>get_lead</name>
         <label>Lead</label>
-        <locationX>919</locationX>
+        <locationX>1051</locationX>
         <locationY>2255</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>

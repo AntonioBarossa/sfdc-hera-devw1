@@ -746,6 +746,10 @@
             <default>false</default>
         </values>
         <values>
+			<fullName>Hera E-Bike Business</fullName>
+			<default>false</default>
+		</values>
+        <values>
             <fullName>Hera EtàPiù Dual</fullName>
             <default>false</default>
         </values>
@@ -766,6 +770,10 @@
             <default>false</default>
         </values>
         <values>
+			<fullName>Hera Fotovoltaico Kit fai da te</fullName>
+			<default>false</default>
+		</values>
+		<values>
             <fullName>Hera Impronta Zero Dual</fullName>
             <default>false</default>
         </values>
@@ -806,6 +814,10 @@
             <default>false</default>
         </values>
         <values>
+			<fullName>Hera No Problem Acqua</fullName>
+			<default>false</default>
+		</values>
+        <values>
             <fullName>Hera No Problem Lavoro</fullName>
             <default>false</default>
         </values>
@@ -842,6 +854,26 @@
             <default>false</default>
         </values>
         <values>
+			<fullName>Hera Ricarica Business</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Hera Ricarica Privata</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Hera Ricarica Pubblica</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Hera Sanifica Aria</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Hera Sanifica Aria Business</fullName>
+			<default>false</default>
+		</values>
+        <values>
             <fullName>Hera Scaldacqua</fullName>
             <default>false</default>
         </values>
@@ -851,6 +883,22 @@
         </values>
         <values>
             <fullName>Hera Thermo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+			<fullName>Noleggio Auto Elettrica</fullName>
+			<default>false</default>
+		</values>
+		<values>
+            <fullName>Offerta Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerte Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerte Luce e Gas</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3005,7 +3053,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Mui_STG</fullName>
+            <fullName>MUI_STG</fullName>
             <default>false</default>
         </values>
         <values>

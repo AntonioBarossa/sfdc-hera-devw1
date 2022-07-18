@@ -8,6 +8,6 @@
         <plural>true</plural>
         <value>Matrice Data Adempimento</value>
     </caseValues>
-    <gender>Neuter</gender>
+    <gender>Feminine</gender>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

@@ -9,4 +9,8 @@ public with sharing class HDT_QR_RateCategory {
     public static List<RateCategory__c> getRateList(String commodity,String distributorCode,String productname,string typ){
         return [Select id,CalculatedValue__c,DistributorCode__c,operatore__c from rateCategory__c where Commodity__c = :commodity  AND ProductName__c = :productname AND Fornitura__c= :typ WITH SECURITY_ENFORCED];
     }
+
+    public static List<RateCategory__c> getAllRecords(){
+        return [select Id, CalculatedValue__c, Commodity__c, DistributorCode__c, ProductName__c, operatore__c, Fornitura__c, ExternalId__c from RateCategory__c];
+    }
 }

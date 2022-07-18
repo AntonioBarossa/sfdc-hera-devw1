@@ -43,6 +43,11 @@ public inherited sharing class HDT_LC_AccountStatementController {
         return serviceCatalogResponse;
     }
 
+    @AuraEnabled
+    public static String buildDefaultRequest(String activityId){
+        return HDT_LC_AccountStatementCtrlHelper.buildDefaultRequest(activityId);
+    }
+
     //@AuraEnabled
     //public static HDT_WRP_AccountStatement.HDT_WRP_ResponseObj operationBackend(String operation, List<String> idlist){
 

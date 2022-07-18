@@ -16,6 +16,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 	@AuraEnabled
 	public static Boolean isInBlacklist(String pod){
+		if(String.isBlank(pod))return false;
 		HDT_QR_Blacklist qrBlack = new HDT_QR_Blacklist();
 		Blacklist__c blacklist = qrBlack.getBlacklist(pod);
 		Boolean response = false;
@@ -67,6 +68,10 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 				wrapObject.Via= servicePoint.SupplyStreet__c  ;
 			}
+			if(servicePoint.SupplyStreetName__c !='' && servicePoint.SupplyStreetName__c != null){
+
+				wrapObject.Via= servicePoint.SupplyStreetName__c  ;
+			}
 			else{
 				
 				wrapObject.Via='';
@@ -113,17 +118,25 @@ public with sharing class HDT_LC_AdvancedSearch {
 				
 				wrapObject.Stato='';
 			}
-			if(servicePoint.SupplySAPStreetCode__c !='' && servicePoint.SupplySAPStreetCode__c != null){
+			// if(servicePoint.SupplySAPStreetCode__c !='' && servicePoint.SupplySAPStreetCode__c != null){
 				
-				wrapObject.CodiceViaStradarioSAP= servicePoint.SupplySAPStreetCode__c  ;
+			// 	wrapObject.CodiceViaStradarioSAP= servicePoint.SupplySAPStreetCode__c  ;
+			// }
+			if(servicePoint.SupplyStreetCode__c !='' && servicePoint.SupplyStreetCode__c != null){
+				
+				wrapObject.CodiceViaStradarioSAP= servicePoint.SupplyStreetCode__c  ;
 			}
 			else{
 				
 				wrapObject.CodiceViaStradarioSAP='';
 			}
-			if(servicePoint.SupplySAPCityCode__c !='' && servicePoint.SupplySAPCityCode__c != null){
+			// if(servicePoint.SupplySAPCityCode__c !='' && servicePoint.SupplySAPCityCode__c != null){
 				
-				wrapObject.CodiceComuneSAP=servicePoint.SupplySAPCityCode__c  ;
+			// 	wrapObject.CodiceComuneSAP=servicePoint.SupplySAPCityCode__c  ;
+			// }
+			if(servicePoint.SupplyCityCode__c !='' && servicePoint.SupplyCityCode__c != null){
+				
+				wrapObject.CodiceComuneSAP=servicePoint.SupplyCityCode__c  ;
 			}
 			else{
 				
