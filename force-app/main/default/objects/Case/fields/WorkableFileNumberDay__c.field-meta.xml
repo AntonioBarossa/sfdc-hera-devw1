@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>WorkableFileNumberDay__c</fullName>
     <externalId>false</externalId>
-    <formula>TODAY() -  ChangePhaseDate__c</formula>
+    <formula>IF(TEXT(Status) = &quot;Closed&quot;,DATEVALUE(ClosedDate) - ChangePhaseDate__c,TODAY() -  ChangePhaseDate__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>N° giorni pratica lavorabile</label>
     <precision>18</precision>

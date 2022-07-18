@@ -14,7 +14,7 @@ public inherited sharing class HDT_QR_AccountStatement {
     public static List<HDT_ColumnsSecondLevel__mdt> getColumnsSecondLevel(List<HDT_ColumnsSecondLevel__mdt> colSecList, String tabValue){
         colSecList = new List<HDT_ColumnsSecondLevel__mdt>();
         colSecList = [
-            SELECT MasterLabel, ColumnOrder__c, FieldName__c, InitialWidth__c, IsFilter__c, IsVisible__c, Sortable__c, FieldType__c	
+            SELECT MasterLabel, ColumnOrder__c, FieldName__c, InitialWidth__c, IsFilter__c, IsVisible__c, Sortable__c, FieldType__c, IsAmountField__c
             FROM HDT_ColumnsSecondLevel__mdt
             WHERE IsVisible__c = true AND Tab__r.DeveloperName = :tabValue
             WITH SECURITY_ENFORCED
@@ -124,5 +124,14 @@ public inherited sharing class HDT_QR_AccountStatement {
     
     }
 
+    public static List<wrts_prcgvr__Activity__c> getActivityById(String id){
+        return [
+            SELECT Id, Order__r.SapContractCode__c, Order__r.Contract.SapContractCode__c, Order__r.CommodityFormula__c
+            FROM wrts_prcgvr__Activity__c
+            WHERE Id = :id
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+    }
 
 }

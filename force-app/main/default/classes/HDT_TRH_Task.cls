@@ -212,22 +212,22 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
     private String doxeeTemplateCode(String doxeeTemplate) {
 
         switch on doxeeTemplate {
-            when 'Comunicazione Forte Consumo (23)' {
+            when 'Comunicazione Forte Consumo (23)','023' {
                 return '023';
             }
-            when 'Comunicazione Fuga Accertata (24)' {
+            when 'Comunicazione Fuga Accertata (24)','024' {
                 return '024';
             }
-            when 'Comunicazione Fuga Presunta (25)' {
+            when 'Comunicazione Fuga Presunta (25)','025' {
                 return '025';
             }
-            when 'Ultimo Avviso (26)' {
+            when 'Ultimo Avviso (26)','026' {
                 return '026';
             }
+            when else{
+                return doxeeTemplate;
+            }
         }
-
-        return '0';
-
     }
 
 }

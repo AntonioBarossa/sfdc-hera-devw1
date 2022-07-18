@@ -2059,7 +2059,7 @@
     <picklistValues>
         <picklist>SourceDetail__c</picklist>
         <values>
-            <fullName>ADSALA</fullName>
+            <fullName>ADSALSA</fullName>
             <default>false</default>
         </values>
         <values>

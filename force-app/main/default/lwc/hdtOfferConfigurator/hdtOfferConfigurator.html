@@ -390,6 +390,10 @@
                                                 label="stringValue"
                                                 variant="label-hidden"
                                                 max-length="10"
+                                                data-row-id={d.id}
+                                                value={d.stringValue.value}
+                                                name="stringValue"
+                                                onchange={setParam}
                                             ></lightning-input>
                                         </template>
                                         <template if:false={d.stringValue.enabled} >

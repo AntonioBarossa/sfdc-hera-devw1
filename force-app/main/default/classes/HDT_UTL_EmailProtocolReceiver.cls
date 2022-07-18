@@ -16,11 +16,12 @@ public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
                 emailBody = email.plainTextBody;
             }
 
+            String subject = (String.isNotBlank(email.subject) && email.subject.length() > 255) ? email.subject.substring(0,254) : email.subject;
             Interaction__c interaction = new Interaction__c(
                 Type__c = 'Digital',
-                ReceptionDate__c = Date.today(),
+                ReceptionDate__c = DateTime.now(),
                 BodyEmail__c = emailBody,
-                SubjectEmail__c = email.subject,
+                SubjectEmail__c = subject,
                 CompanyOwner__c = TEMPORARY_COMPANYOWNER_DEFAULT
             );
 
@@ -98,10 +99,11 @@ public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
                 mapEmailObj.put(specificEmail.Email__c.toUpperCase(), specificEmail);
             }
 
-            if(mapEmailObj.get(toAddress) != null) {
+            if(mapEmailObj.get(toAddress.toUpperCase()) != null) {
                 HDT_ProtocolSpecificEmail__mdt specificEmail = mapEmailObj.get(toAddress.toUpperCase());
                 activity.Cluster__c = specificEmail.Cluster__c;
                 activity.Process__c = specificEmail.Process__c;
+                activity.Type__c = specificEmail.Type__c;
             }
             new HDT_SRV_ActivityCustom().createRecord(activity);
         } catch (Exception e) {

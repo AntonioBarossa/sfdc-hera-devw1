@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ReasonSuspension__c</fullName>
+    <externalId>false</externalId>
+    <label>Motivo Sospensione</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>TNSOSP-Non sospeso</fullName>
+                <default>false</default>
+                <label>TNSOSP-Non sospeso</label>
+            </value>
+            <value>
+                <fullName>TSASCULT-Associaz. sociali e stor.cult.</fullName>
+                <default>false</default>
+                <label>TSASCULT-Associaz. sociali e stor.cult.</label>
+            </value>
+            <value>
+                <fullName>TSCFM-Causa forza maggiore.</fullName>
+                <default>false</default>
+                <label>TSCFM-Causa forza maggiore.</label>
+            </value>
+            <value>
+                <fullName>TSCONT-Contenzioso</fullName>
+                <default>false</default>
+                <label>TSCONT-Contenzioso</label>
+            </value>
+            <value>
+                <fullName>TSOSP-Sospensione generica.</fullName>
+                <default>false</default>
+                <label>TSOSP-Sospensione generica.</label>
+            </value>
+            <value>
+                <fullName>TSPARSC-Aree scoperte Fiume Foglia.</fullName>
+                <default>false</default>
+                <label>TSPARSC-Aree scoperte Fiume Foglia.</label>
+            </value>
+            <value>
+                <fullName>TSPDISC-Vicinanza alla discarica.</fullName>
+                <default>false</default>
+                <label>TSPDISC-Vicinanza alla discarica.</label>
+            </value>
+            <value>
+                <fullName>TSPEREN-Sospensione perenne.</fullName>
+                <default>false</default>
+                <label>TSPEREN-Sospensione perenne.</label>
+            </value>
+            <value>
+                <fullName>TSRIMM-Ristrutturazione immobi.</fullName>
+                <default>false</default>
+                <label>TSRIMM-Ristrutturazione immobi.</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

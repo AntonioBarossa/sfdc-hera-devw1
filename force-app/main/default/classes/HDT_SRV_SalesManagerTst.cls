@@ -50,15 +50,22 @@ public class HDT_SRV_SalesManagerTst {
     
         insert internalUser;  
         System.runAs(internalUser){
+
+
+            HDT_UTL_DataFactoryTst.pClickInstance();
+            HDT_UTL_DataFactoryTst.pClickOrderPhase();
+            HDT_UTL_DataFactoryTst.pClickCasePhase();
+
             List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, false, 'HERA COMM', 'Azienda', 'Aziende SME');
             accounts[0].ActiveMonitoring__c=false;
             accounts[0].Name='INRETE DIST. ENER.-13R0000000';
             accounts[0].LastName__c='INRETE DIST. ENER.-13R0000000';
             insert accounts;
-
+            Id pricebookId = Test.getStandardPricebookId();
+            List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].id, 'Bozza');
             List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
-
-            List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1, false, accounts[0].Id, 'Bozza');
+            List<ServicePoint__c> points = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+            List<Order> orders = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1, false, accounts[0].id, sales, pricebookId);
             orders[0].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_VAS;
 			orders[0].EffectiveDate = Date.today();
             orders[0].Contact__c = contacts[0].Id;
@@ -68,14 +75,22 @@ public class HDT_SRV_SalesManagerTst {
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
             List<Contract> contract = HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].Id);
 
+            List<Product2> prods = HDT_UTL_DataFactoryTst.createProduct2(1, false);
+            prods[0].Family = 'VAS Fatturabili';
+            prods[0].DescriptionSAP__c = 'descr';
+            insert prods;
+
+            List<PricebookEntry> entries = HDT_UTL_DataFactoryTst.createPricebookEntry(prods, true, pricebookId);
+        
+            HDT_UTL_DataFactoryTst.createOrderItem(1, true, orders[0].id, points[0].id, prods[0].id, entries[0].id);
+
+
             List<Case> cases = HDT_UTL_DataFactoryTst.createCase(1, false, accounts[0].Id,contact[0].Id,spList[0].Id,contract[0].Id,orders[0].Id);
             cases[0].RecordTypeId = utlConstants.CASE_RECORDTYPEID_POST_SALES_VAS;
             cases[0].Order__c = orders[0].Id;
             insert cases;
             
-            HDT_UTL_DataFactoryTst.pClickInstance();
-            HDT_UTL_DataFactoryTst.pClickOrderPhase();
-            HDT_UTL_DataFactoryTst.pClickCasePhase();
+
 
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa conferma cliente','Bozza',utlConstants.ORDER_RECORDTYPEID_VAS,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VAS);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione Motore VAS','Bozza',utlConstants.ORDER_RECORDTYPEID_VAS,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VAS);

@@ -1257,7 +1257,7 @@
         <name>InviataHeroku_0</name>
         <label>Inviata ad Heroku?</label>
         <locationX>3669</locationX>
-        <locationY>2375</locationY>
+        <locationY>2376</locationY>
         <defaultConnector>
             <targetReference>Chiusura_activity_Order</targetReference>
         </defaultConnector>
@@ -1334,6 +1334,13 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Dati discordanti</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Amm. Precheck KO SII</stringValue>
                 </rightValue>
             </conditions>
             <connector>

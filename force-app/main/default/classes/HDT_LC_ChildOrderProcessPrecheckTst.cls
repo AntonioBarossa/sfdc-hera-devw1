@@ -207,7 +207,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                         CommodityFormula__c,
                         SupplyCity__c,
                      	AccountId,
-                     	Account.RecordType.DeveloperName
+                     	Account.RecordType.DeveloperName,
+                        SupplyType__c
                         From Order
                         WHERE Name = 'testOrderName0'];
         
@@ -263,7 +264,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                          ServicePoint__r.isReseller__c,
                          CommodityFormula__c,
                      	 Account.RecordType.DeveloperName,
-                         SupplyCity__c                          
+                         SupplyCity__c,
+                         SupplyType__c                          
                          From Order
                          WHERE Name = 'testOrderName0'];
             
@@ -321,7 +323,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      SBQQ__Quote__r.AmendmentAllowed__c, 
                      ServicePoint__r.isReseller__c,
                      Account.RecordType.DeveloperName,
-                     CommodityFormula__c
+                     CommodityFormula__c,
+                     SupplyType__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -379,7 +382,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      ServicePoint__r.isReseller__c,
                      CommodityFormula__c,
                      SupplyCity__c,
-                     Account.RecordType.DeveloperName
+                     Account.RecordType.DeveloperName,
+                     SupplyType__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -436,7 +440,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      SBQQ__Quote__r.AmendmentAllowed__c, 
                      ServicePoint__r.isReseller__c,
                      Account.RecordType.DeveloperName,
-                     CommodityFormula__c
+                     CommodityFormula__c,
+                     SupplyType__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -502,7 +507,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      SBQQ__Quote__r.AmendmentAllowed__c, 
                      ServicePoint__r.isReseller__c,
                      Account.RecordType.DeveloperName,
-                     CommodityFormula__c
+                     CommodityFormula__c,
+                     SupplyType__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -747,10 +753,68 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
 
         Test.stopTest();
 
-        //System.debug('EDO: effectiveDate', effectiveDate);
-        //System.debug('EDO: dateToCompare', dateToCompare);
-
         System.assertEquals(dateToCompare, effectiveDate, 'getEffectiveDateBonus did not work correctly');
     }
+
+    @isTest 
+    static void next7(){
+        
+        Order ord = [Select id,
+                     ServicePoint__c,
+                     VoltageLevel__c,
+                     AccountId,
+                     MarketOrigin__c,
+                     PowerRequested__c,
+                     PowerCommitted__c,
+                     IsWinback__c,
+                     SAPImplantCode__c,
+                     ServicePoint__r.MeterStatus__c,
+                     ServicePoint__r.Account__c,
+                     ServicePoint__r.PlugPresence__c,
+                     ServicePoint__r.ServicePointCode__c,
+                     ServicePoint__r.RecordType.DeveloperName,
+                     SBQQ__Quote__r.AllowChangeUse__c,
+                     SBQQ__Quote__r.AmendmentAllowed__c, 
+                     ServicePoint__r.isReseller__c,
+                     Account.RecordType.DeveloperName,
+                     CommodityFormula__c,
+                     SupplyType__c
+                     From Order
+                     WHERE Name = 'testOrderName0'];
+            
+        ServiceRequest__c srRequest = [Select id,
+                                       ServicePointCode__c,
+                                       Status__c,
+                                       Order__c,
+                                       CommoditySector__c,
+                                       Type__c,
+                                       ServicePoint__c,
+                                       ProcessType__c,
+                                       Account__c,
+                                       BillingProfile__c
+                                       From ServiceRequest__c];
+
+        srRequest.ServicePoint__c = null;
+       
+        Map<String,String> selectedProcessObject = new Map<String,String>();
+        selectedProcessObject.put('RecordTypeName__c','HDT_RT_SwitchIn');
+        selectedProcessObject.put('processType','Prima Attivazione');
+        selectedProcessObject.put('processCode','somecode');
+        Map<String,String> extraParams = new Map<String,String>();
+        extraParams.put('servicePointType','HDT_RT_Gas');
+        
+        String deliberate = 'dontknow';
+        
+        Test.startTest();
+        
+        String result = HDT_LC_ChildOrderProcessPrecheck.next(ord,ord.id,selectedProcessObject,deliberate,extraParams,srRequest);
+        
+        Test.stopTest();
+        
+        System.assertEquals('', result, 'next did not work correctly');
+        System.assertNotEquals(null, result, 'next did not work correctly');
+    }
+
+
     
 }
