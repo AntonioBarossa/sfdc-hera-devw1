@@ -186,5 +186,13 @@
             <controllingFieldValue>Acqua</controllingFieldValue>
             <valueName>1100-ACQUA --- Non definito ---</valueName>
         </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ambiente</controllingFieldValue>
+            <valueName>1201-Domestico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ambiente</controllingFieldValue>
+            <valueName>1202-Non domestico</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

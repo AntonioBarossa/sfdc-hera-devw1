@@ -17,6 +17,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
     private static HDT_UTL_VoltureChangeUtilities voltureChangeUtils = new HDT_UTL_VoltureChangeUtilities();
     private static String emptyEmailDefault = 'mailnondisponibile@acquirenteunico.it';
+    private static Set<String> recordTypeToExclude = new Set<String>{'HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro'};
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -339,7 +340,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         {
             orderToUpdate.CIAccoutn__c = '';
         }*/
-        if(order.SignatureMethod__c.containsIgnoreCase('Contratto già firmato'))
+        if(order.SignatureMethod__c != null && order.SignatureMethod__c.containsIgnoreCase('Contratto già firmato'))
         {
             orderToUpdate.CIAccoutn__c = '';
             orderToUpdate.QuickQuote__c = '';
@@ -475,6 +476,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
         }
 
+        /**2022-07-14 903758C --> Valorizzazione CF se PIVA valorizzata e CF Vuoto */
+        if(!recordTypeToExclude.contains(order.RecordType.DeveloperName) && currentOrder.Account.VATNumber__c != null && String.isNotBlank(currentOrder.Account.VATNumber__c) && currentOrder.Account.FiscalCode__c == null)
+        {
+            orderToUpdate.CustomerFiscalCode__c = currentOrder.Account.VATNumber__c;
+        }
 
         orderSrv.updateRecord(orderToUpdate);
         if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
