@@ -118,7 +118,8 @@ public with sharing class HDT_LC_AttachmentManager {
     @AuraEnabled
     public static HDT_LC_AttachmentManager getOrderForButton(Id recordId){
         Order currOrder = [SELECT Id,AccountholderTypeBeneficiary__c,Channel__c,BillingCity__c,Cluster__c,ProcessType__c,Subprocess__c,CommercialProductCode__c,SignatoryType__c
-        FROM Order WHERE Id =:recordId];
+        FROM Order WHERE Id =:recordId 
+        WITH SECURITY_ENFORCED];
         HDT_LC_AttachmentManager paramsWrap = new HDT_LC_AttachmentManager(currOrder.AccountholderTypeBeneficiary__c, currOrder.Channel__c,
                                                                             currOrder.BillingCity__c, currOrder.Cluster__c, currOrder.ProcessType__c, currOrder.Subprocess__c, 
                                                                             currOrder.CommercialProductCode__c, currOrder.SignatoryType__c);
