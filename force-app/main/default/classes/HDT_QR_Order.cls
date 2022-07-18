@@ -105,6 +105,7 @@ public inherited sharing class HDT_QR_Order {
             Account.FiscalCode__c,
             Account.BillingAddress,
             Account.ShippingAddress,
+            Account.BirthProvince__c,
             Account.BirthDate__c,
             Account.FirstName__c,
             Account.LastName__c,
@@ -353,7 +354,7 @@ public inherited sharing class HDT_QR_Order {
             isSTG__c,
             Contact__r.Phone,
             Contact__r.MobilePhone,
-            Qualita__c,
+            SubscriberType__c,
             Subprocess__c,
             LandRegistry__c
             FROM Order 

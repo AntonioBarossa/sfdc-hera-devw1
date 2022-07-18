@@ -1,6 +1,6 @@
     
     class fieldData{
-        constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value) {
+        constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value, func) {
             this.label = label;
             this.apiname=apiname;
             this.typeVisibility = typeVisibility;
@@ -8,6 +8,7 @@
             this.disabled=disabled;
             this.processVisibility=processVisibility;
             this.value=value;
+            this.changeFunction=func;
         }
         static dataInstanceDiffObj(label, apiname, typeVisibility, required, disabled, processVisibility, value){
             const data = new fieldData(label, apiname, typeVisibility, required, disabled, processVisibility, value);
@@ -20,6 +21,18 @@
         }
         
     }
+
+    class wrp2Infos{
+        constructor(val1, val2){
+            this.val1=val1;
+            this.val2=val2;
+        }
+    }
+
+    function getFormattedDate(date){
+        return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
+    }
+
     const handleSections = function() {
         this.fields = [
             {
@@ -28,7 +41,7 @@
                 name: 'variabiliDiProcesso',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                hasCodiceRonchiButton: this.order.Account.RecordTypeName__c == 'Business',
+                hasCodiceRonchiButton: this.order.RateCategory__c=='TATND00001',
                 hasVerificaAccertamento: true,
                 hasAllegatiObbligatori: true,
                 diffObjApi: 'Sale',
@@ -40,20 +53,20 @@
                     new fieldData('Impianto SAP','SAPImplantCode__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Tipo Impianto','ImplantType__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Residente','Resident__c', this.typeVisibility('both'), false, true,'',''),
-                    new fieldData('Codice ATECO','AtecoCode__c', this.typeVisibility('both'), true, true,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
+                    new fieldData('Codice ATECO','AtecoCode__c', this.order.RateCategory__c=='TATND00001', true, true,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
                     new fieldData('Codice Ronchi','RonchiCode__c', this.order.RateCategory__c=='TATND00001' , true, true,'',' '),
+                    new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', this.order.RateCategory__c=='TATND00001', false, false,'',''),
                     new fieldData('Contratto Precedente','ContractReference__c', this.typeVisibility('both'), true, true,'',''),
                     new fieldData('Documentazione consegnata da contribuente','DeliveredDocumentation__c', this.typeVisibility('both'), true, false,'',''),
-                    new fieldData('Provenienza richiesta','RequiredSource__c', this.typeVisibility('both'), true, false,'',''),
-                    new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', this.typeVisibility('both'), false, false,'',' '),
+                    new fieldData('Provenienza richiesta','RequiredSource__c', this.typeVisibility('both'), true, false,'','Da contribuente'),
                     new fieldData('Importo mancato dovuto','MissingDueAmount__c', this.typeVisibility('both'), false, false,'',''),
-                    new fieldData('Pagamento Unico Annuale TARI','SingleAnnualTARIPayment__c', this.typeVisibility('both'), false, false,'',''),
-                    new fieldData('Data dichiarazione','DeclarationDate__c', this.typeVisibility('both'), true, true,'', this.order.Sale__r.CreatedDate?.substring(0, 10)),
+                    new fieldData('Pagamento Unico Annuale TARI','AnnualTARIPayment__c', this.typeVisibility('both'), false, false,'',''),
+                    new fieldData('Data dichiarazione','DeclarationDate__c', this.typeVisibility('both'), true, false,'', getFormattedDate(new Date())),
                     new fieldData('Data decorrenza','EffectiveDate__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Integrazione alla Dichiarazione (da Gestore)','OperatorDeclarationInfos__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('integrazione Riduzione Agevolazione Esclusione','IntegrationExclusion__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Allegati obbligatori','MandatoryAttachments__c', this.typeVisibility('both'), false, true,'',''),
-                    new fieldData('Allegati aggiuntivi','AdditionalAttachments__c', this.typeVisibility('both'), false, false,'',''),
+                    new fieldData('Allegati aggiuntivi','AdditionalAttachments__c', this.typeVisibility('both'), false, false,'','', function(){console.log("dynamic on change")}),
                     new fieldData('Blocca al calcolo','BlockOnComputation__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Integrazione alla Dichiarazione (da Contribuente)','TaxpayerDeclarationInfos__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Inizio periodo ravvedibile','OnerousReviewableStartDate__c', this.typeVisibility('both'), false, true,'',''),
@@ -71,14 +84,24 @@
                 diffRecordId: this.order.AccountId,
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente',
                 data:[
-                    new fieldData('Qualità','Qualita__c',this.typeVisibility('both'),true, false, '', ''),
+                    new fieldData('Qualità','SubscriberType__c',this.typeVisibility('both'),true, false, '', '', 
+                        function(event){
+                            [new wrp2Infos('CustomerName__c', "FirstName__c"), new wrp2Infos('CustomerLastName__c', "LastName__c"),new wrp2Infos('BirthPlace__c', "BirthProvince__c"),new wrp2Infos('BirthDate__c', "BirthDate__c")].forEach(wrp=>{
+                                let node = this.template.querySelector(`[data-id='${wrp.val1}']`);
+                                if(!node)   return;
+                                let value = event.target.value=== "Soggetto Passivo"? this.order.Account[wrp.val2] : "";
+                                node.value=value;
+                                this.sectionDataToSubmit[wrp.val1]=value;
+                            });
+                        }
+                    ),
                     new fieldData('Luogo di sottoscrizione','ResidentialCity__c',this.typeVisibility('both'),true, false, 'true', ''),
-                    new fieldData('Indirizzo di residenza','ResidentialStreetName__c' , this.order.Qualita__c=='Soggetto Passivo', true, false, '',''),
-                    // new fieldData('Tipo Attivazione','ActivationMode__c' , this.order.Qualita__c=='Soggetto Passivo', true, false, '',''),
-                    fieldData.dataInstanceDiffObj('Nome','FirstName__c', this.order.Qualita__c=='Soggetto Passivo', true, false,'',''),
-                    fieldData.dataInstanceDiffObj('Cognome','LastName__c', this.order.Qualita__c=='Soggetto Passivo', true, false,'',''),
-                    fieldData.dataInstanceDiffObj('Luogo di nascita','BirthProvince__c', this.order.Qualita__c=='Soggetto Passivo', true, false,'',''),
-                    fieldData.dataInstanceDiffObj('Data di nascita','BirthDate__c', this.order.Qualita__c=='Soggetto Passivo', true, false,'','')
+                    new fieldData('Indirizzo di residenza','ResidentialStreetName__c' , this.typeVisibility('both'), true, false, '',''),
+                    new fieldData('Nome','CustomerName__c', this.typeVisibility('both'), true, false,'',''),
+                    new fieldData('Cognome','CustomerLastName__c', this.typeVisibility('both'), true, false,'',''),
+                    new fieldData('Luogo di nascita','BirthPlace__c', this.typeVisibility('both'), true, false,'',''),
+                    new fieldData('Data di nascita','BirthDate__c', this.typeVisibility('both'), true, false,'',''),
+                    new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c!=='TATND00001', true, false,'','')
                 ]
             },
             {
@@ -98,7 +121,6 @@
                 recordId: this.order.Id,
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente',
                 data: [
-                    
                     new fieldData('Modalità Invio Bolletta', 'BillSendMode__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('Email Invio Bolletta', 'InvoiceEmailAddress__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('Email PEC invio Bolletta', 'InvoiceCertifiedEmailAddress__c',this.typeVisibility('both'),false,true,'',''),

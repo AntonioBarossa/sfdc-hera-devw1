@@ -109,6 +109,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(event.target.name !== undefined){
             this.sectionDataToSubmit[event.target.name] = event.target.value;
         }
+
+        const DynamicOnChange = this.pendingSteps[event.target.getAttribute('data-section-index')]?.data?.[event.target.getAttribute('data-field-index')]?.changeFunction;
+        if(DynamicOnChange && DynamicOnChange instanceof Function ){
+            DynamicOnChange.call(this, event);
+        }
         if(event.target.fieldName === 'VATfacilitationFlag__c' && event.target.value) {
             this.template.querySelector("[data-id='VAT__c']").disabled = false;
             this.template.querySelector("[data-id='VAT__c']").required = true;
@@ -872,7 +877,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.getQuoteType(currentSectionIndex, nextSectionStep);
                 return;
             }
-
             this.updateProcess(currentSectionIndex, nextSectionStep);
         }
     }
@@ -1169,10 +1173,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('###CloseAttachmentEvent in details>>> ' + JSON.stringify(event.detail));
 
         if(event.detail.required){
-            this.template.querySelector("[data-id='MandatoryAttachments__c']").value = event.detail.required;
+            this.template.querySelector("[data-id='MandatoryAttachments__c']").value = event.detail.required, this.sectionDataToSubmit["MandatoryAttachments__c"]=event.detail.required;
         }
         if(event.detail.additional){
-            this.template.querySelector("[data-id='AdditionalAttachments__c']").value = event.detail.additional;
+            this.template.querySelector("[data-id='AdditionalAttachments__c']").value = event.detail.additional, this.sectionDataToSubmit["AdditionalAttachments__c"]=event.detail.additional;
         }
         
     }
@@ -1192,19 +1196,20 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     handleActiveRepentantStart(event){
         console.log("test call");
         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
+        let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
         this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = false;
-        this.template.querySelector("c-hdt-active-repentant").startActiveRepentant(decorrenza);
+        this.template.querySelector("c-hdt-active-repentant").startActiveRepentant(decorrenza, dichiarazione);
     }
 
     handleActiveRepentantFinish(event) {
         console.log('###Missed Due Event >>> ');
-        this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = event.detail.dateX;
-        this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = event.detail.dateY;
+        this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = event.detail.dateX, this.sectionDataToSubmit["OnerousReviewableStartDate__c"]=event.detail.dateX;
+        this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = event.detail.dateY, this.sectionDataToSubmit["OnerousUnreviewableStartDate__c"]=event.detail.dateY;
         //this.missedDueDate = this.getFormattedDate(event.detail.missedDue);
         this.template.querySelector("[data-id='MissingDueAmount__c']").required = event.detail.missedDue? true : false;
         if(event.detail.period=="Y"){
             this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = true;
-            this.template.querySelector("[data-id='BlockOnComputation__c']").value = 'Y';
+            this.template.querySelector("[data-id='BlockOnComputation__c']").value = 'Y', this.sectionDataToSubmit["BlockOnComputation__c"]='Y';
         }
     }
     

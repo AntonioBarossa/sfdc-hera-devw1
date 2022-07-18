@@ -65,8 +65,8 @@ export default class HdtActiveRepentant extends LightningElement {
         if(this.recordId){
             //flow
             let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
-            this.dateDichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
-            if(this.dateDichiarazione){     this.startActiveRepentant(decorrenza);  }  
+            let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
+            if(this.dateDichiarazione){     this.startActiveRepentant(decorrenza, dichiarazione);  }  
             else{   this.showMessage("Attenzione!", "Popolare Data Dichiarazione", "error");this.disabled=false;    }
         }else{
             //wizard Attivazioni
@@ -123,14 +123,16 @@ export default class HdtActiveRepentant extends LightningElement {
         );
     }
 
-    @api startActiveRepentant(dateDecorrenza) {
-        if (dateDecorrenza && new Date(dateDecorrenza).getTime() <= new Date().getTime() && this.dateDichiarazione && new Date(dateDecorrenza).getTime() <= new Date(this.dateDichiarazione).getTime()) {
+    @api startActiveRepentant(dateDecorrenza, dateDichiarazione) {
+
+        if (dateDecorrenza && new Date(dateDecorrenza).getTime() <= new Date().getTime() && dateDichiarazione && new Date(dateDecorrenza).getTime() <= new Date(dateDichiarazione).getTime()) {
+            this.dateDichiarazione = dateDichiarazione;
             this.dateDecorrenza = dateDecorrenza;
             this.handleRepentant();
         } else {
             this.showMessage(
                 "Attenzione!",
-                dateDecorrenza && this.dateDichiarazione? "La data di decorrenza non può essere maggiore della data dichiarazione e non può essere maggiore della data odierna" : "Popolare Data Decorrenza / Dichiaraziones",
+                dateDecorrenza && dateDichiarazione? "La data di decorrenza non può essere maggiore della data dichiarazione e non può essere maggiore della data odierna" : "Popolare Data Decorrenza / Dichiarazione",
                 "error"
             );
             this.dateDecorrenza=null;
@@ -288,7 +290,10 @@ export default class HdtActiveRepentant extends LightningElement {
     }
 
     getFormattedDate(date){
-        return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
+        let month = date.getMonth()+1;
+        month = month<10? "0"+month : month;
+        let day = date.getDate()<10? "0"+date.getDate() : date.getDate();
+        return date.getFullYear()+'-'+month+'-'+day;
     }
 
     subscribeMC() {
