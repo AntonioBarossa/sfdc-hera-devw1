@@ -16,6 +16,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 	@AuraEnabled
 	public static Boolean isInBlacklist(String pod){
+		if(String.isBlank(pod))return false;
 		HDT_QR_Blacklist qrBlack = new HDT_QR_Blacklist();
 		Blacklist__c blacklist = qrBlack.getBlacklist(pod);
 		Boolean response = false;

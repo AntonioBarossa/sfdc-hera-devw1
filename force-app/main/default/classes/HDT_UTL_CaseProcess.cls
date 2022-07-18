@@ -344,4 +344,18 @@ public with sharing class HDT_UTL_CaseProcess {
         }
         HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
     }
+
+    public static void setCloseStatusForAll(List<Case> caseList){
+        for(Case c : caseList) {
+            setCloseStatus(c);
+        }
+    }
+
+    public static void setCloseStatus(Case c){
+        if ('Chiuso'.equalsIgnoreCase(c.Status)){
+            c.Status = 'Closed';
+        }
+    }
+
+
 }

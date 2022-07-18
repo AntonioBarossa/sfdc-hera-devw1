@@ -19,11 +19,15 @@ public class HDT_QBL_AnagAlignmentTst {
         HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
         HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
 
+        String rtName = 'HDT_RT_AllineamentoAnagrafica';
+        String rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AllineamentoAnagrafica').getRecordTypeId();
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', rtId, rtName,'A','','','');
+
     }
     @isTest
     public static void testExecute(){
         
-        String rtName = 'HDT_RT_AllineamentoAnagrafica';
         String rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AllineamentoAnagrafica').getRecordTypeId();
         List<Case> caseList = new List<Case>();
         
@@ -32,9 +36,6 @@ public class HDT_QBL_AnagAlignmentTst {
         ServicePoint__c sp = [SELECT Id FROM ServicePoint__c LIMIT 1];
         Contract contr = [SELECT Id FROM Contract LIMIT 1];
         Order ord = [SELECT Id FROM Order LIMIT 1];
-        
-        HDT_UTL_DataFactoryTst.pClickCasePhase();
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', rtId, rtName,'A','','','');
 
         caseList = HDT_UTL_DataFactoryTst.createCase(2, false, acc.Id, cont.Id, sp.Id, contr.Id, ord.Id);
         for(Case c : caseList){
@@ -45,7 +46,7 @@ public class HDT_QBL_AnagAlignmentTst {
         HDT_QBL_AnagAlignment anagAlign = new HDT_QBL_AnagAlignment(caseList);
 
         Test.startTest();        
-        Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
+        Test.setMock(HttpCalloutMock.class, new HDT_UTL_TestMockArricchimentoDati());
         System.enqueueJob(anagAlign);
         Test.stopTest();
         //Mi aspetto che a sistema sia stato salvato un record di case con valorizzati i campi formula:
@@ -70,7 +71,6 @@ public class HDT_QBL_AnagAlignmentTst {
     @isTest
     public static void testExecuteException(){
         
-        String rtName = 'HDT_RT_AllineamentoAnagrafica';
         String rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AllineamentoAnagrafica').getRecordTypeId();
         List<Case> caseList = new List<Case>();
         
@@ -78,9 +78,6 @@ public class HDT_QBL_AnagAlignmentTst {
         	recordTypeId = rtId
         );
         caseList.add(myCase);
-        
-        HDT_UTL_DataFactoryTst.pClickCasePhase();
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', rtId, rtName,'A','','','');        
         HDT_QBL_AnagAlignment anagAlign = new HDT_QBL_AnagAlignment(caseList);
         
         Test.startTest();
@@ -91,5 +88,36 @@ public class HDT_QBL_AnagAlignmentTst {
         System.assertEquals(newCaseList.size(), 1,'');
         System.assertEquals(true ,newCaseList[0].PODPDRFormula__c == null, 'PODPDRFormula__c is not Null');
         System.assertEquals(true, newCaseList[0].ContractCode__c == null, 'ContractCode__c is not Null');
+    }
+    public class HDT_UTL_TestMockArricchimentoDati implements HTTPCalloutMock{
+
+        public HTTPResponse respond(HTTPRequest request){
+
+            HttpResponse response = new HttpResponse();
+            String bodyResponse;
+            Integer statusCode;
+
+            bodyResponse = '{"status": "success","correlationId": "2a0c1340-f6b5-11eb-bb88-068530f44c42","timestamp": "2021-08-06T14:52:33",'
+            +'"data": {"testata": {"esito": "OK"},"posizioni": ['
+            +'{"campo": "DATACESSAZIONE","valore": "99991231"},'
+            +'{"campo": "ALIQUOTAIVA","valore": "01"},'
+            +'{"campo": "CA","valore": "200008867681"},'
+            +'{"campo": "DESCRFATTURAZCOLL","valore": "Il contratto può essere fatturato con altri contratti"},'
+            +'{"campo": "ANNOFABBRCONT","valore": "2000"},'
+            +'{"campo": "CALIBRO1","valore": "GRT003"},'
+            +'{"campo": "PRESENZACORRETTORE","valore": "NO"},'
+            +'{"campo": "OPZIONE","valore": "E_UD_TDR"},'
+            +'{"campo": "MOTIVOBLOCCOCALCOLO","valore": "T1"},'
+            +'{"campo": "IMPOSTE","valore": "E_IMPOST"},'
+            +'{"campo": "CODICE_ATECO","valore": "999999"}'
+            +']}}';
+            statusCode = 200;
+
+            response.setHeader('Content-Type', 'application/json');
+            response.setBody(bodyResponse);
+            response.setStatusCode(statusCode);
+            response.setStatus('OK');
+            return response;
+        }
     }
 }

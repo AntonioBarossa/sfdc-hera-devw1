@@ -140,16 +140,21 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     handleCompanyOwnerChange(event) {
         console.log("***************CHANGE" + event.target.value);
         let key = this.customerData.controllerValues[event.target.value];
-        this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
-        this.filterMarkingOptions();
+        //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        //this.filterMarkingOptions();
+        let customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        this.filterMarkingOptions(customerMarkingOptionsPreCheck);
         this.companyPicklist( event.target.value);
         this.markingValue = '';
         this.categoryValue = '';
         
     }
-    filterMarkingOptions(){
+    //filterMarkingOptions(){
+    filterMarkingOptions(customerMarkingOptionsPreCheck){
+        console.log("@@@@Option Marcatura Cliente " + JSON.stringify(customerMarkingOptionsPreCheck));
         var customMarkingOptions=[];
-        this.customerMarkingOptions.forEach(function callbackFn(element, index) {
+        //this.customerMarkingOptions.forEach(function callbackFn(element, index) {
+        customerMarkingOptionsPreCheck.forEach(function callbackFn(element, index) {
             var arrayToRemove=[];
             for (let i = 0; i < 20; i++) {
                 arrayToRemove.push('D'+i+' -');
@@ -178,27 +183,31 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     
     inizializeInit(){
         checkRole({}).then((response) => {
+            let customerMarkingOptionsPreCheck = [];
             if(response == 'HDT_BackOffice'){
                 this.showCompanyOwner = false;
-            }else if(response == 'HDT_FrontOffice_HERACOMM'){
+            }else if(response == 'HDT_FrontOffice_HERA_COMM'){
                 this.companyDefault = 'HERA COMM';
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['HERA COMM'];
-                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
                 this.companyPicklist(this.companyDefault);
                 
             }else if(response == 'HDT_FrontOffice_Reseller'){
                 this.companyDefault = 'Reseller';
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['Reseller'];
-                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
                 this.companyPicklist(this.companyDefault);
             }
             else if(response == 'HDT_FrontOffice_MMS'){
                 this.companyDefault = 'MMS';
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['MMS'];
-                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
                 this.companyPicklist(this.companyDefault);
                 
             }
@@ -206,7 +215,8 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 this.companyDefault = 'AAA-EBT';
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['AAA-EBT'];
-                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
                 this.companyPicklist(this.companyDefault);
                 
                 
@@ -215,11 +225,13 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 this.companyDefault = 'HERA COMM';
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['HERA COMM'];
-                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
                 this.companyPicklist(this.companyDefault);
                 
             }
-            this.filterMarkingOptions();
+            //this.filterMarkingOptions();
+            this.filterMarkingOptions(customerMarkingOptionsPreCheck);
 
         });
     }
@@ -301,6 +313,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             this.dispatchEvent(event);
         }
     }
+    /**Residenza */
     getAccountAdress(){
         
         if(this.accountAddress!= undefined){
@@ -343,8 +356,18 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 this.fieldsToUpdate['BillingIsAddressVerified__c'] = this.accountAddress['Flag Verificato'];
                 this.isVerified = this.accountAddress['Flag Verificato'];
             }
+            if(this.accountAddress['Indirizzo Estero'] === true)
+            {
+                this.fieldsToUpdate['BillingAddressIsForeign__c'] = true;
+                this.fieldsToUpdate['BillingIsAddressVerified__c'] = true;
+                this.isVerified = true;
+            }
+            console.log('### Indirizzo Residenza >>> ' + JSON.stringify(this.accountAddress));
+            console.log('### Residenza Verificato >>> ' + this.isVerified);
+            console.log('### Residenza Estero ' + this.accountAddress["Indirizzo Estero"]);
         }
     }
+    /**Dcomicilio */
     getAccountAdressRes(){
         
         if(this.accountAddressRes!= undefined){
@@ -387,6 +410,15 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 this.fieldsToUpdateRes['ShippingIsAddressVerified__c'] = this.accountAddressRes['Flag Verificato'];
                 this.isVerifiedShipping = this.accountAddressRes['Flag Verificato'];
             }
+            if(this.accountAddressRes['Indirizzo Estero'] === true)
+            {
+                this.fieldsToUpdateRes['ShippingAddressIsForeign__c'] = true;
+                this.fieldsToUpdateRes['ShippingIsAddressVerified__c'] = true;
+                this.isVerifiedShipping = true;
+            }
+            console.log('### Indirizzo Domicilio >>> ' + JSON.stringify(this.fieldsToUpdateRes));
+            console.log('### Domicilio Verificato >>> ' + this.isVerifiedShipping);
+            console.log('### Domicilio Estero >>> ' + this.accountAddressRes['Indirizzo Estero'])
         }
     }
     handleSave(){

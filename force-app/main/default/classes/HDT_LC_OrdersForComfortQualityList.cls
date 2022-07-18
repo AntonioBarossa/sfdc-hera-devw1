@@ -73,7 +73,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
         act.wrts_prcgvr__Status__c = 'Esitata';
         act.ContactResult__c = causalQuality;
-
+        act.ActivityEndTime__c = null; //@ealpi ticket 906587C
         activitySrv.updateRecord(act);
 
         List<CampaignMember> campMembList = HDT_QR_CampaignMember.getCampMembByActivity(activityId);
@@ -140,12 +140,16 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 throw new AuraHandledException('Non è possibile procedere all’annullamento, effettuare una richiesta di recesso');
             }
         }
-        else {
+        else
+        {
+            String phase = (HDT_UTL_Order.checkCancellationPhase(new Set<String>{ordId})).get(ordId);
+            String status = phase.equalsIgnoreCase('Annullato') ? 'Annullato' : 'In Lavorazione';
             orderSrv.updateRecord(new Order(
                 Id = ordId,
-                Phase__c = 'Annullato',
+                Phase__c = phase,
                 CancellationReason__c = causal,
-                Status = 'Annullato'
+                CancellationRequestDate__c = System.today(),
+                Status = status
             ));
 
             wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
@@ -210,7 +214,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             ClosedByUsername__c=actAppo.ClosedByUsername__c,
             ClosingCreatorGroup__c = actAppo.ClosingCreatorGroup__c,
             ClosingUserChannel__c = actAppo.ClosingUserChannel__c,
-            Place__c = actAppo.Place__c,
+            //@ealpi valorizzato in apertura activity --> Place__c = actAppo.Place__c,
             ActivityEndTime__c = actAppo.ActivityEndTime__c
         );
     }

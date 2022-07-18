@@ -5,6 +5,17 @@
     <description>Punto di fornitura Idrico</description>
     <label>Punto Idrico</label>
     <picklistValues>
+        <picklist>AuthorizedNotToConfer__c</picklist>
+        <values>
+            <fullName>0-Non autorizzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1-Autorizzato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CommoditySector__c</picklist>
         <values>
             <fullName>Acqua</fullName>
@@ -295,172 +306,67 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>MarketOrigin__c</picklist>        
+        <picklist>JointBottomAdhesion__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>MarketOrigin__c</picklist>
         <values>
             <fullName>Regolamentato</fullName>
             <default>false</default>
         </values>
-        </picklistValues>
+    </picklistValues>
     <picklistValues>
         <picklist>MeterClass__c</picklist>
         <values>
-            <fullName>100</fullName>
+            <fullName>10 x 30 - 10 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>100 Volt</fullName>
+            <fullName>20 x 40 - 16 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>230 Volt</fullName>
+            <fullName>3 x 15 - 2%2E5 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>30</fullName>
+            <fullName>30 x 50 - 30 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>4</fullName>
+            <fullName>5 x 20 - 4 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>400 Volt</fullName>
+            <fullName>7 x 25 - 6%2E3 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>50</fullName>
+            <fullName>WV 100 - 100 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>8</fullName>
+            <fullName>WV 50 - 25 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>DIR Biorario</fullName>
+            <fullName>WV 65 - 50 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>DIR Monorario</fullName>
+            <fullName>WV 80 - 63 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>DIR Orario</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Elettronico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G1%2C6 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G10 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G100 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G100 Turbina</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G1000 Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G1000 Turbina</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G16 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G160 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G160 Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G160 Turbina</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G1600 Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G2%2C5 pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G25 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G250 Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G250 Turbina</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G250G Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G4 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G40 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G40 Turbina</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G400 Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G400 Turbina</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G4000 Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G6 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G65 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G65 Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G65 Turbina</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G650 Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G650 Turbina</fullName>
+            <fullName>WV150 - 300 mc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -495,6 +401,32 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>PayPurification__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PaySewer__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>PlugPresence__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -517,6 +449,328 @@
         </values>
         <values>
             <fullName>MP</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PurificationInfoOnTheInvoice__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>RateCategory__c</picklist>
+        <values>
+            <fullName>%23N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso Promiscuo con bocche antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso commerciale%2Fartigianale idroesigenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso industriale idroesigenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubbl%2Edisalim%2E - Piscine Serv%2E Pubb%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ut%2E produttive%3A scar%2E industr%2E a Tariffa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ut%2E produttive%3A scarichi industriali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza Industriale - Uso Agricolo Binom%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza Industriale - Uso Agricolo Mon%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza Industriale - Uso Antincendio M%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza Industriale - Uso Domestico Bin%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza Industriale - Uso Domestico Mon%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza Industriale - Uso Irriguo Piena</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza Industriale - Uso Irriguo Ridotta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza Industriale - Uso Monomia Alta P%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza Industriale - Uso Monomia Bassa P</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza Industriale - Uso No Dom%2E Binomia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza Industriale - Uso No Dom%2E Monomia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile  - Piscine pubbliche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Altri usi generici</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Acqua non Potabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Aggiuntivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Agricolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Agricolo%2FZootecnico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Alberghiero</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Allacc%2Eoccasion%2Evari</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Allevamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Antincendio con cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Antincendio senza C%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Artigianale%2FCommerc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Cantiere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Comunale%2FEnte Pubbl%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Comunità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Dom%2E non residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Domest%2E non resid%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Domest%2E residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Domestico pro-capite</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Domestico residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Grandi utenze</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Industriale ATO5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Non Potabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Pozzi Privati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Promiscuo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Promiscuo pro-capite</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Promiscuo%2Fcondomin%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Pubblico disaliment%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Pubblico non disalim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Sost%2E Pozzo Privato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso Subdistributori</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso attività varie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso diverso da domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso industriale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso pozzi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso subdistributore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile - Uso zootecnico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile ATO4  - Uso Interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile ATO4 - MO - Agricolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile ATO4 - MO - Antinc%2E Civile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile ATO4 - MO - Antinc%2E Ind%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile ATO4 - MO - Centr Pro-capi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile ATO4 - MO - Centralizzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile ATO4 - MO - Dom%2E Pro-capit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile ATO4 - MO - Dom%2E Res%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile ATO4 - MO - Dom%2E non Res%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile ATO4 - MO - Industriale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile ATO4 - MO - Non Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile ATO4 - MO - Pubblico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile ATO4 - MO - Subdist%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile ATO4 - MO - Zootecnico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile ATO4 - Pubblico Piscine</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza civile- Uso dedicato Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza produttiva - Scarichi Industriali</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -551,6 +805,37 @@
         </values>
         <values>
             <fullName>Interruzione avviata</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SupplySubtype__c</picklist>
+        <values>
+            <fullName>Uso artigianale e commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico condominiale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico non residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso industriale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico disalimentabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico non disalimentabile</fullName>
             <default>false</default>
         </values>
     </picklistValues>

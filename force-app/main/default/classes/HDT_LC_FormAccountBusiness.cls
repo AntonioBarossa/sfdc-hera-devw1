@@ -49,7 +49,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
         }
         account.put('Name', name);
         for(String s: accountAddress.keySet()){
-            if('BillingIsAddressVerified__c' == s){
+            if('BillingIsAddressVerified__c' == s || 'BillingAddressIsForeign__c' == s){
                 account.put(s, accountAddress.get(s) == 'true' ? true : false);
             }
             else{
@@ -226,7 +226,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
             CustomerMarking__c=varMarking ,
             Category__c='Famiglie');
             for(String s: accountAddress.keySet()){
-                if('BillingIsAddressVerified__c' == s){
+                if('BillingIsAddressVerified__c' == s || 'BillingAddressIsForeign__c' == s){
                     accountPerson.put(s, accountAddress.get(s) == 'true' ? true : false);
                 }
                 else{

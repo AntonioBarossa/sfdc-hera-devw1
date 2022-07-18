@@ -1025,7 +1025,8 @@ public inherited sharing class HDT_QR_Order {
         IsTechnicalTransfer__c,
         Sale__c,
         RecordTypeId,
-        ParentOrder__c
+        ParentOrder__c,
+        ImplantType__c
         FROM Order 
         WHERE ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
@@ -1121,7 +1122,8 @@ public inherited sharing class HDT_QR_Order {
         AccountId,
         IsTechnicalTransfer__c,
         RecordTypeId,
-        ParentOrder__c
+        ParentOrder__c,
+        ImplantType__c
         FROM Order 
         WHERE Id = :recordId WITH SECURITY_ENFORCED];
     }
@@ -1280,7 +1282,7 @@ public inherited sharing class HDT_QR_Order {
         FROM Order
         WHERE ParentOrder__c = :parentOrderId
         AND QualityCall__c = true
-        AND VasSubtype__c != 'Analisi Consumi'
+        AND (VasSubtype__c != 'Analisi Consumi' OR ComfortCallDaysDue__c != NULL)
         AND Phase__c NOT IN ('Completata','Annullato')
         WITH SECURITY_ENFORCED
         ];

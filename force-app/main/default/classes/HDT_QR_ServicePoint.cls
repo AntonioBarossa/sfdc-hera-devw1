@@ -264,4 +264,23 @@ public inherited sharing class HDT_QR_ServicePoint {
 		contractSrv.checkReadAccess('FieldRequiredGas__c');
 		return [SELECT FieldRequiredGas__c FROM CS_SelezioneFornitura__c WITH SECURITY_ENFORCED];
 	}
+	/**
+	 * @description Getting Custom Settimg FIELD REQUIRED ACQUA 'CS_SelezioneFornitura'
+	 * @return CS_SelezioneFornitura__c
+	 */
+	@AuraEnabled
+	public static CS_SelezioneFornitura__c getCustomSettingFieldsRequiredAcqua() {
+		contractSrv.checkReadAccess('FieldRequiredWater__c');
+		return [SELECT FieldRequiredWater__c FROM CS_SelezioneFornitura__c WITH SECURITY_ENFORCED];
+	}
+
+	/**
+	 * @description Getting Custom Settimg FIELD REQUIRED AMBIENTE 'CS_SelezioneFornitura'
+	 * @return CS_SelezioneFornitura__c
+	 */
+	@AuraEnabled
+	public static CS_SelezioneFornitura__c getCustomSettingFieldsRequiredAmbiente() {
+		contractSrv.checkReadAccess('FieldRequiredWaste__c');
+		return [SELECT FieldRequiredWaste__c FROM CS_SelezioneFornitura__c WITH SECURITY_ENFORCED];
+	}
 }

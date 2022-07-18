@@ -17,7 +17,7 @@ public with sharing class HDT_BA_AppoitmentManagmentActivity implements Database
     public void execute(Database.BatchableContext bc, List<wrts_prcgvr__Activity__c> scope){
         Set<String> actvIds= new Set<String>();
         List<String> actvId = new List<String>();
-        Id recType= qrRecordType.getRecordTypeIdByName('HDT_RT_CommunicationReject');
+        Id recType= qrRecordType.getRecordTypeIdByName('HDT_RT_Scarto');
         List<wrts_prcgvr__Activity__c> activitiesToInsert = new List<wrts_prcgvr__Activity__c>();
         for(wrts_prcgvr__Activity__c ac: scope){
             actvIds.add(ac.Id);
@@ -50,6 +50,7 @@ public with sharing class HDT_BA_AppoitmentManagmentActivity implements Database
                 at.RecordTypeId = recType;
                 at.DateTimeRef__c= ac.DateTimeRef__c;
                 at.Type__c = 'Scarto Comunicazione';
+                at.DiscardCategory__c = 'Manuale';
                 activitiesToInsert.add(at);
             }else{
                 if(smsTracking.containsKey(ac.Id)){
@@ -60,6 +61,7 @@ public with sharing class HDT_BA_AppoitmentManagmentActivity implements Database
                         at.RecordTypeId = recType;
                         at.DateTimeRef__c= ac.DateTimeRef__c;
                         at.Type__c = 'Scarto Comunicazione';
+                        at.DiscardCategory__c = 'Manuale';
                         activitiesToInsert.add(at);
                     }
                 }else if(emailResults.containsKey(ac.Id)){
@@ -70,15 +72,17 @@ public with sharing class HDT_BA_AppoitmentManagmentActivity implements Database
                         at.RecordTypeId = recType;
                         at.DateTimeRef__c= ac.DateTimeRef__c;
                         at.Type__c = 'Scarto Comunicazione';
+                        at.DiscardCategory__c = 'Manuale';
                         activitiesToInsert.add(at);
                     }
                 }
             }
         }
+        Database.insert(activitiesToInsert, true);
     }
 
 
     public void finish(Database.BatchableContext bc){
-        insert activitiesToInsert;
+        //insert activitiesToInsert;
     }
 }

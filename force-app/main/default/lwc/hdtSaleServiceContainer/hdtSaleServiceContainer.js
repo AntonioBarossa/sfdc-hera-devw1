@@ -9,6 +9,7 @@ export default class hdtSaleServiceContainer extends LightningElement {
     @api saleRecord;
     @api processType;
     @api accountId;
+    @api customercode;
     @api targetObject;
     @api addititionalParam;
     @track servicePoint;

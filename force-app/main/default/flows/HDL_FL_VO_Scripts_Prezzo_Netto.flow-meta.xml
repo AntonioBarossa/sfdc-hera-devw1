@@ -1869,7 +1869,7 @@
         </connector>
         <fields>
             <name>text_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[3. Condizioni economiche Energia elettrica per {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche Energia elettrica per {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1879,7 +1879,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_0</name>
-            <fieldText>&lt;p&gt;Sul prezzo sopra definito e con riferimento ai consumi effettivi, le sarà riconosciuto uno sconto del 10% nelle fasce orarie “F2” ed “F3”, oppure, in caso di misuratore elettronico gestito monorario, uno sconto del 5%.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo in bolletta, denominato Prezzo Netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese precedente quello di consumo, per ciascuna delle tre fasce orarie, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 81% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;€/kWh e lo&lt;/span&gt; sbilanciamento pari a 0,004 €/kWh, corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 19% circa della spesa annua&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Sul prezzo sopra definito e con riferimento ai consumi effettivi, le sarà riconosciuto uno sconto del 10% nelle fasce orarie “F2” ed “F3”, oppure, in caso di misuratore elettronico gestito monorario, uno sconto del 5%.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo in bolletta, denominato Prezzo Netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese precedente quello di consumo, per ciascuna delle tre fasce orarie, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 81% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;€/kWh e lo&lt;/span&gt; sbilanciamento pari a 0,004 €/kWh, corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 19% circa della spesa annua.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1929,22 +1929,22 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/Estenergy pari ad € 23,00.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 23,00.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Mortis Causa</stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1965,7 +1965,7 @@
         </connector>
         <fields>
             <name>text_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[3. Condizioni economiche Energia elettrica per {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche Energia elettrica per {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2025,17 +2025,10 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/Estenergy pari ad € 23,00.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 23,00.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue>Mortis Causa</stringValue>
-                    </rightValue>
-                </conditions>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
                     <operator>EqualTo</operator>
@@ -2068,7 +2061,7 @@
         </connector>
         <fields>
             <name>text_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[3. Condizioni economiche Gas per {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche Gas per {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2108,17 +2101,10 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti&amp;nbsp;da Hera Comm/ Hera Comm Marche/ EstEnergy pari ad € 25,00&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Sono inoltre a suo carico tasse, IVA ed imposte previste dalla legge.&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti&amp;nbsp;da {!HDT_Script_Introduzione.salesCompany} pari ad € 25,00&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Sono inoltre a suo carico tasse, IVA ed imposte previste dalla legge.&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue>Mortis Causa</stringValue>
-                    </rightValue>
-                </conditions>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
                     <operator>EqualTo</operator>
@@ -2151,7 +2137,7 @@
         </connector>
         <fields>
             <name>text_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[3. Condizioni economiche Gas per {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche Gas per {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2191,22 +2177,22 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti&amp;nbsp;da Hera Comm/ Hera Comm Marche/ EstEnergy pari ad € 25,00&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti&amp;nbsp;da {!HDT_Script_Introduzione.salesCompany} pari ad € 25,00&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Mortis Causa</stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2240,7 +2226,7 @@
                     <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Sostenibili</stringValue>
+                        <stringValue>Soluzioni Sostenibili</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -2283,7 +2269,7 @@
                     <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Sostenibili</stringValue>
+                        <stringValue>Soluzioni Sostenibili</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2450,7 +2436,7 @@
                     <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Sostenibili</stringValue>
+                        <stringValue>Soluzioni Sostenibili</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2471,7 +2457,7 @@
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text7_0</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 12pt;&quot;&gt;[3. Condizioni economiche Energia elettrica per: &lt;/strong&gt;&lt;strong style=&quot;font-size: 11pt;&quot;&gt;{{!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;•	Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 12pt;&quot;&gt;Condizioni economiche Energia elettrica per: &lt;/strong&gt;&lt;strong style=&quot;font-size: 11pt;&quot;&gt;{!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2629,7 +2615,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/Estenergy pari ad € 23,00.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 23,00.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2641,10 +2627,17 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2670,7 +2663,7 @@
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text7_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;[3. Condizioni economiche Energia elettrica per: &lt;/span&gt;&lt;span style=&quot;font-size: 11pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;{!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}]&lt;/span&gt;&lt;/p&gt;&lt;p&gt;•	Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo in bolletta, denominato Prezzo netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese precedente quello di consumo, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt;&quot;&gt;Condizioni economiche Energia elettrica per: &lt;/strong&gt;&lt;strong style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 11pt;&quot;&gt;{!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo in bolletta, denominato Prezzo netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese precedente quello di consumo, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2757,10 +2750,10 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/Estenergy pari ad € 23,00.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 23,00.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
                     <operator>NotEqualTo</operator>
@@ -2769,10 +2762,17 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2798,7 +2798,7 @@
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text1</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[4. Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2863,22 +2863,29 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text4</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura previsti da {!HDT_Script_Introduzione.salesCompanyToDisplay} pari ad € 25,00 e quelli applicabili a discrezione del Distributore Locale.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 25,00 e quelli applicabili a discrezione del Distributore Locale.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue></stringValue>
-                    </rightValue>
-                </conditions>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue>Mortis Causa</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2899,7 +2906,7 @@
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text1_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[4. Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2939,22 +2946,29 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text4_0</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura previsti da Hera Comm/EstEnergy/Hera Comm Marche pari ad € 25,00 e quelli applicabili a discrezione del Distributore Locale.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 25,00 e quelli applicabili a discrezione del Distributore Locale.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue></stringValue>
-                    </rightValue>
-                </conditions>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue>Mortis Causa</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4573,20 +4587,114 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text1_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta della luce [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura] ?&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c} {!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Energia Elettrica&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta della luce?&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c} {!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text2_0_0</name>
-            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/p&gt;&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_OUT_AZ_ELE</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_OUT_AZ_ELE_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PREVIOUS_CUSTOMER_AZ_ELE_INB</name>
+            <fieldText>&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4612,20 +4720,114 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text1_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta della luce [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura] ?&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c} {!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Energia Elettrica&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta della luce?&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c} {!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text2_0_0_0</name>
-            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/p&gt;&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_AZ_OUT_ELE</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_AZ_OUT_ELE_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PREVIOUS_CUSTOMER_AZ_ELE_OUT</name>
+            <fieldText>&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4651,20 +4853,111 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[Dati Tecnici Gas]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas?&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c} {!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Gas&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas?&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c} {!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text2_0_0</name>
-            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/p&gt;&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_GAS_AZ_INB</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_GAS_AZ_INB_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PREVIOUS_CUSTOMER_AZ_INB_GAS</name>
+            <fieldText>&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4705,27 +4998,121 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[Dati Tecnici Gas]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura]?&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta_0.Account.VATNumber__c} {!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Gas&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas?&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c} {!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text2_0_0_0</name>
-            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/p&gt;&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_AZ_GAS_OUT</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_AZ_GAS_OUT_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PREVIOUS_CUSTOMER_AZ_GAS_OUT</name>
+            <fieldText>&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text3_0_0_0</name>
-            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice pdr è {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4759,20 +5146,114 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text1</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta della luce sono presenti i dati anagrafici della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Energia Elettrica&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta della luce sono presenti i dati anagrafici della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text2</name>
-            <fieldText>&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura.&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma di essere titolare del diritto di [proprietà/locazione/comodato] sull’immobile?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHolderLastName__c} {!LoopOrdiniFigliOfferta.PreviousHolderFirstName__c}, {!LoopOrdiniFigliOfferta.PreviousHolderFiscalCode__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	 Conferma che il codice cliente è {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura.&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma di essere titolare del diritto di [proprietà/locazione/comodato] sull’immobile?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_INB_ELE_FAM</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FiscalCode__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_INB_ELE_FAM_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHolderLastName__c} {!LoopOrdiniFigliOfferta.PreviousHolderFirstName__c}  e {!LoopOrdiniFigliOfferta.PreviousHolderFiscalCode__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousHolderFirstName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PREVIOUS_CUSTOMER_FAM_ELE_INB</name>
+            <fieldText>&lt;p&gt;•	 Conferma che il codice cliente è {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4848,7 +5329,7 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text5</name>
-            <fieldText>&lt;p&gt;Operatore: Mi conferma che il codice POD relativo alla sua nuova fornitura ci verrà comunicato direttamente dal Distributore a seguito della richiesta di preventivo subordinata al presente contratto?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Operatore: Mi conferma che la &quot;Tipologia di contratto&quot; è {!LoopOrdiniFigliOfferta.SupplyTypeTechnical__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Operatore: Mi conferma che il codice POD relativo alla sua nuova fornitura ci verrà comunicato direttamente dal Distributore a seguito della richiesta di preventivo subordinata al presente contratto?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Operatore: Mi conferma che la &quot;Tipologia di contratto&quot; è {!LoopOrdiniFigliOfferta.SupplyTypeTechnical__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4889,6 +5370,27 @@
                         <stringValue>Prima Attivazione Ele</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prima Attivazione In delibera</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prima Attivazione Fuori delibera</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prima Attivazione con modifica</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
@@ -4907,20 +5409,114 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text1_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta della luce sono presenti i dati anagrafici della persona cui va intestato il contratto? &lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Energia Elettrica&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta della luce sono presenti i dati anagrafici della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text2_0</name>
-            <fieldText>&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura.&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma di essere titolare del diritto di [proprietà/locazione/comodato] sull’immobile?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHolderLastName__c} {!LoopOrdiniFigliOfferta.PreviousHolderFirstName__c},{!LoopOrdiniFigliOfferta.PreviousHolderFiscalCode__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;• Conferma che il codice cliente è {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura.&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma di essere titolare del diritto di [proprietà/locazione/comodato] sull’immobile?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_OUT_FAM_ELE</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FiscalCode__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_OUT_FAM_ELE_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;﻿•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHolderLastName__c} {!LoopOrdiniFigliOfferta.PreviousHolderFirstName__c}  e {!LoopOrdiniFigliOfferta.PreviousHolderFiscalCode__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousHolderFirstName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PREVIOUS_CUSTOMER_FAM_OUT_ELE</name>
+            <fieldText>&lt;p&gt;• Conferma che il codice cliente è {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4946,20 +5542,114 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[Dati Tecnici Gas]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta del gas sono presenti i dati anagrafici della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Gas&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta del gas sono presenti i dati anagrafici della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text2</name>
-            <fieldText>&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma di essere titolare del diritto di [proprietà/locazione/comodato] sull’immobile?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Cognome, Nome e codice fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHolderLastName__c} {!LoopOrdiniFigliOfferta.PreviousHolderFirstName__c} , {!LoopOrdiniFigliOfferta.PreviousHolderFiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma di essere titolare del diritto di [proprietà/locazione/comodato] sull’immobile?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_INB_GAS_FAM</name>
+            <fieldText>&lt;p&gt;•	Conferma che Cognome, Nome e codice fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FirstName} {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_INB_GAS_FAM_2</name>
+            <fieldText>&lt;p&gt;•	Conferma che Cognome, Nome e codice fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHolderLastName__c} {!LoopOrdiniFigliOfferta.PreviousHolderFirstName__c}  e {!LoopOrdiniFigliOfferta.PreviousHolderFiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousHolderFirstName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PREVIOUS_CUSTOMER_FAM_INB_GAS</name>
+            <fieldText>&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4975,6 +5665,27 @@
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Ele</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Cambio Offerta</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Cambio Offerta Gas</stringValue>
+                    </rightValue>
+                </conditions>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
                     <operator>NotEqualTo</operator>
@@ -5015,27 +5726,6 @@
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue>Switch in Gas</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue>Switch in Ele</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue>Cambio Offerta</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue>Cambio Offerta Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -5115,20 +5805,114 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[Dati Tecnici Gas]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta del gas sono presenti i dati anagrafici della persona cui va intestato il contratto? &lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Gas&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta del gas sono presenti i dati anagrafici della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text2_0</name>
-            <fieldText>&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma di essere titolare del diritto di [proprietà/locazione/comodato] sull’immobile?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Cognome, Nome e codice fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta.PreviousHolderVatNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma di essere titolare del diritto di [proprietà/locazione/comodato] sull’immobile?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_OUT_GAS_FAM</name>
+            <fieldText>&lt;p&gt;•	Conferma che Cognome, Nome e codice fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PRE_CU_OUT_GAS_FAM_2</name>
+            <fieldText>&lt;p&gt;•	Conferma che Cognome, Nome e codice fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHolderLastName__c}{!LoopOrdiniFigliOfferta.PreviousHolderFirstName__c}  e {!LoopOrdiniFigliOfferta.PreviousHolderFiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousHolderFirstName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PREVIOUS_CUSTOMER_FAM_GAS_OUT</name>
+            <fieldText>&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -5159,7 +5943,7 @@
         </connector>
         <fields>
             <name>title_Durata_Contratto</name>
-            <fieldText>&lt;h1&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;[8. Durata contratto]&lt;/strong&gt;&lt;/h1&gt;</fieldText>
+            <fieldText>&lt;h1&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Durata contratto&lt;/strong&gt;&lt;/h1&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -5249,7 +6033,7 @@
         </connector>
         <fields>
             <name>text12_0</name>
-            <fieldText>&lt;h1&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;[8. Durata contratto]&lt;/b&gt;&lt;/h1&gt;&lt;p&gt;La informo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 9 mesi presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Qualora il punto di fornitura di energia elettrica sia connesso in bassa tensione e/o&amp;nbsp;i consumi di gas non siano superiori a 200.000 Smc/anno può recedere in qualsiasi momento entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;h1&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Durata contratto&lt;/strong&gt;&lt;/h1&gt;&lt;p&gt;La informo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 9 mesi presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Qualora il punto di fornitura di energia elettrica sia connesso in bassa tensione e/o&amp;nbsp;i consumi di gas non siano superiori a 200.000 Smc/anno può recedere in qualsiasi momento entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -5313,7 +6097,7 @@
         </connector>
         <fields>
             <name>SB_Text1</name>
-            <fieldText>&lt;p style=&quot;text-align: justify;&quot;&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;[“DIARIO DEI CONSUMI”]&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta {!offertaInput}, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, il servizio DIARIO DEI CONSUMI. A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;•	il numero di addetti che lavorano nella sua attività è  {!GetAnalisiConsumi_0.OccupantsNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	la superficie dello stabile è &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!GetAnalisiConsumi_0.Surface__c} &lt;/span&gt;metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il report di DIARIO DEI CONSUMI le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio non sarà più disponibile.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il servizio citato è descritto in dettaglio nel plico contrattuale che riceverà.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: justify;&quot;&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;DIARIO DEI CONSUMI&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta {!offertaInput}, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, il servizio DIARIO DEI CONSUMI. A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;•	il numero di addetti che lavorano nella sua attività è  {!GetAnalisiConsumi_0.OccupantsNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	la superficie dello stabile è &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!GetAnalisiConsumi_0.Surface__c} &lt;/span&gt;metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il report di DIARIO DEI CONSUMI le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio non sarà più disponibile.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Il servizio citato è descritto in dettaglio nel plico contrattuale che riceverà.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5335,7 +6119,7 @@
         </fields>
         <fields>
             <name>SB_Text3</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[“DIARIO DEI CONSUMI”]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi Diario dei consumi e Hera Fast check up. A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di abitanti della sua abitazione è {!GetAnalisiConsumi_0.OccupantsNumber__c} e la superficie è {!GetAnalisiConsumi_0.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;DIARIO DEI CONSUMI&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi Diario dei consumi e Hera Fast check up. A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di abitanti della sua abitazione è {!GetAnalisiConsumi_0.OccupantsNumber__c} e la superficie è {!GetAnalisiConsumi_0.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5424,7 +6208,7 @@
         </fields>
         <fields>
             <name>SB_Text3_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[“HERA FAST CHECK UP”]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente sui Servizi On Line, per tutta la durata della fornitura, il servizio Hera Fast check up.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio, di cui riceverà il dettaglio nel plico contrattuale, non sarà più disponibile.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA FAST CHECK UP&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente sui Servizi On Line, per tutta la durata della fornitura, il servizio Hera Fast check up.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio, di cui riceverà il dettaglio nel plico contrattuale, non sarà più disponibile.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
