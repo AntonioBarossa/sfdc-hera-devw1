@@ -356,7 +356,9 @@ public inherited sharing class HDT_QR_Order {
             Contact__r.MobilePhone,
             SubscriberType__c,
             Subprocess__c,
-            LandRegistry__c
+            LandRegistry__c,
+            TaxpayerDeclarationInfos__c,
+            AnnualTARIPayment__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
