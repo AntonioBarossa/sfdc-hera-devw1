@@ -141,6 +141,11 @@
                 <label>Chiamata outbound</label>
             </value>
             <value>
+                <fullName>Comfort Call</fullName>
+                <default>false</default>
+                <label>Comfort Call</label>
+            </value>
+            <value>
                 <fullName>Comunicazione da DL</fullName>
                 <default>false</default>
                 <label>Comunicazione da DL</label>
@@ -301,6 +306,11 @@
                 <label>Gestione M01/M02</label>
             </value>
             <value>
+                <fullName>Gestione manuale</fullName>
+                <default>false</default>
+                <label>Gestione manuale</label>
+            </value>
+            <value>
                 <fullName>Gestione Manuale SAP</fullName>
                 <default>false</default>
                 <label>Gestione manuale SAP</label>
@@ -436,16 +446,6 @@
                 <label>Protocollo - Da tipizzare</label>
             </value>
             <value>
-                <fullName>Protocollo - Reclami Contratti</fullName>
-                <default>false</default>
-                <label>Protocollo - Reclami Contratti</label>
-            </value>
-			<value>
-                <fullName>Protocollo - Reclami Post Vendita</fullName>
-                <default>false</default>
-                <label>Protocollo - Reclami Post Vendita</label>
-            </value>
-            <value>
                 <fullName>Protocollo - Disattivazioni</fullName>
                 <default>false</default>
                 <label>Protocollo - Disattivazioni</label>
@@ -481,6 +481,16 @@
                 <label>Protocollo - Reclami</label>
             </value>
             <value>
+                <fullName>Protocollo - Reclami Contratti</fullName>
+                <default>false</default>
+                <label>Protocollo - Reclami Contratti</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Reclami Post Vendita</fullName>
+                <default>false</default>
+                <label>Protocollo - Reclami Post Vendita</label>
+            </value>
+            <value>
                 <fullName>Protocollo - Variazioni</fullName>
                 <default>false</default>
                 <label>Protocollo - Variazioni</label>
@@ -499,6 +509,11 @@
                 <fullName>Protocollo - Voltura</fullName>
                 <default>false</default>
                 <label>Protocollo - Voltura</label>
+            </value>
+            <value>
+                <fullName>Quality Call</fullName>
+                <default>false</default>
+                <label>Quality Call</label>
             </value>
             <value>
                 <fullName>Rapporti con i distributori e SII</fullName>
