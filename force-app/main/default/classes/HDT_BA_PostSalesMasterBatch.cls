@@ -37,6 +37,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
         List<Case> myCurrentCaseList = new List<Case>();
         //List<HDT_PEV_NonReqContract__e> eventsToPublish = new List<HDT_PEV_NonReqContract__e>();
+        List<Case> casesToCheck = new List<Case>();
 
         for(SObject sobj : scope){
 
@@ -100,7 +101,16 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                             currentCase.EffectiveDate__c = HDT_UTL_Case.addBusinessDay(System.today(),3);
                             currentCase.Phase__c = 'Da Inviare';
                             myCurrentCaseList.add(currentCase);
-                        }               
+           
+                        //START MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
+                        }else if('In Lavorazione'.equalsIgnoreCase(currentCase.Phase__c) && ('Cessazione post accertamento'.equalsIgnoreCase(currentCase.Type) || 'Modifica post accertamento'.equalsIgnoreCase(currentCase.Type))){
+                            casesToCheck.add(currentCase);
+                            system.debug('@@@@ currcase Type: '+currentCase.Type);
+                            //system.debug('@@@@ currcase AccountId: '+currentCase.AccountId);
+                            system.debug('@@@@ currcase AccountId: '+currentCase.Id);
+                            system.debug('@@@@ currcase AccountId: '+currentCase.Phase__c);
+                        }     
+                    //END MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto      
                     }
                     when Knowledge__kav article{
                         if(article.ExpirationDate__c != null){
