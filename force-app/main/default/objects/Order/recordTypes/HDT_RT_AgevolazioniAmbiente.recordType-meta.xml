@@ -2821,6 +2821,10 @@
             <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>In attesa Approvazione</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>In attesa appuntamento DL</fullName>
             <default>false</default>
