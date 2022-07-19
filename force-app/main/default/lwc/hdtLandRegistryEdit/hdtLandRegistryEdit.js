@@ -187,6 +187,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
             this.modify = false;
             if(event.detail.records[this._recordId]){
                 this.disableElimina = false;
+                console.log("RegistryCity__c "+event.detail.records[this._recordId].fields.RegistryCity__c?.value);
                 this.registryCityValue = event.detail.records[this._recordId].fields.RegistryCity__c?.value;
                 this.registryCityCodeValue = event.detail.records[this._recordId].fields.RegistryCityCode__c?.value;
                 this.legalCityValue = event.detail.records[this._recordId].fields.LegalCity__c?.value;
