@@ -14,16 +14,6 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
 
     @api
     validate() {
-<<<<<<< HEAD
-        let address = this.getAddress();
-        let validity = this.validateAddress(address);
-        if (validity.isValid === true) {
-            this.populateCase(address);
-            //lanciare evento per inviare oggetto theCase;
-            //integrare coi campi del BP (non fare update diretto da apex, torna un nuovo case)
-            //Gestire salva in bozza in cui saltiamo i controlli dell'input ma poi siamo anche in grado di riprenderli (sfrutta funzionalità clona bp)
-            //anche per cb indirizzi, abilita sempre il tasto per verifica indirizzi
-=======
         if(!this.cancelCase){
             let address = this.getAddress();
             let validity = this.validateAddress(address);
@@ -37,7 +27,6 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
             return validity;
         }else{
             return {isValid: true};
->>>>>>> origin/DEVW2
         }
     }
 

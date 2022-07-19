@@ -345,7 +345,6 @@ public with sharing class HDT_UTL_CaseProcess {
         HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
     }
 
-<<<<<<< HEAD
     /**
     * @author Marco Arci (marco.arci@webresults.it)
     * @description metodo per la chiusura delle activity "aprire cessazione" correlate al case al suo completamento
@@ -447,7 +446,6 @@ public with sharing class HDT_UTL_CaseProcess {
             system.debug(e);
         }
     }
-=======
     public static void setCloseStatusForAll(List<Case> caseList){
         for(Case c : caseList) {
             setCloseStatus(c);
@@ -461,5 +459,4 @@ public with sharing class HDT_UTL_CaseProcess {
     }
 
 
->>>>>>> origin/DEVW2
 }
