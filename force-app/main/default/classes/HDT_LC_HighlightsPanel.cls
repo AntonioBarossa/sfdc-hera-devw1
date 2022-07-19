@@ -36,7 +36,11 @@ public with sharing class HDT_LC_HighlightsPanel {
             AggregateResult caseCount = [SELECT COUNT(Id) FROM Case WHERE AccountId = :accountId AND CreatedDate = LAST_N_DAYS:15 AND Origin IN ('Web','Chat','Sportello','Telefono Inbound') WITH SECURITY_ENFORCED];
             y = (Integer) caseCount.get('expr0');
             y = y > 0 ? y : 1;
-            return (x / y) * 100;
+            // montors fix 904176C
+            Double d = ((Double) x) / y;
+            return Integer.valueOf(d * 100);
+            //return (x / y) * 100;
+            // ****
         } catch (Exception e) {
             throw e;
         }

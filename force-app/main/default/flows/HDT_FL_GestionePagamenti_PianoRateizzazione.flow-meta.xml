@@ -996,10 +996,13 @@
     <formulas>
         <name>DocumentalFormula</name>
         <dataType>Boolean</dataType>
-        <expression>OR( 
+        <expression>AND(
+TEXT({!GetCaseDocumentale.TypeInstallmentPlan__c}) = &apos;Personalizzato&apos;,
+OR( 
      {!GetCaseDocumentale.InstallmentNumberRequired__c} &gt; 3,
       {!GetCaseDocumentale.AmountToPayInInstallments__c} &gt; 2000,
         CONTAINS(TEXT({!GetCaseDocumentale.Reason__c}),&quot;Disoccupato/Cassintegrato&quot;)
+)
 )</expression>
     </formulas>
     <formulas>
@@ -1845,7 +1848,7 @@
             <inputParameters>
                 <name>source</name>
                 <value>
-                    <elementReference>CaseInput.Origin</elementReference>
+                    <elementReference>$User.LoginChannel__c</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

@@ -335,6 +335,12 @@ public with sharing class HDT_UTL_ServicePoint {
         
         return listFields;        
     }
+    @AuraEnabled(cacheable=true)
+    public static  HDT_WRP_AddressObject getInstanceWrapAddressObject(String servicePoint)
+    {
+        ServicePoint__c sp = (ServicePoint__c) JSON.deserialize(servicePoint, ServicePoint__c.class);
+        return getInstanceWrapAddressObject(sp);
+    }
     
     @AuraEnabled(cacheable=true)
     public static  HDT_WRP_AddressObject getInstanceWrapAddressObject(sObject s){

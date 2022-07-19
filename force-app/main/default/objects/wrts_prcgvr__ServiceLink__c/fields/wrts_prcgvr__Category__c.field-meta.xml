@@ -140,6 +140,11 @@
                 <default>false</default>
                 <label>Post Sales VAS</label>
             </value>
+            <value>
+                <fullName>Segnalazioni</fullName>
+                <default>false</default>
+                <label>Segnalazioni</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
