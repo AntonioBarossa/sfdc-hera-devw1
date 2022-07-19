@@ -358,7 +358,8 @@ public inherited sharing class HDT_QR_Order {
             Subprocess__c,
             LandRegistry__c,
             TaxpayerDeclarationInfos__c,
-            AnnualTARIPayment__c
+            AnnualTARIPayment__c,
+            AdditionalAttachments__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
