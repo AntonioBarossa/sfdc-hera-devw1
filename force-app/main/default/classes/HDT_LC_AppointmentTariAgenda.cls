@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 06-06-2022
+ * @last modified on  : 19-07-2022
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfStmtsMustUseBraces, PMD.IfElseStmtsMustUseBraces, PMD.pmdAvoidDebugStatements, PMD.CyclomaticComplexity')
@@ -116,8 +116,9 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         try{
                 //response = srvAgenda.handleFirstSearch(caseId,preferedDate,preferedTimeSlot);
                 // return handleSearc(caseId, preferedDate, preferedTimeSlot, requestType.FIRST_SEARCH);
-                return '{"codCaus" : "test" ,"codFlusso" : "0160" ,"desEsitoConf" : "1" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "0" ,"appuntamento" : [{"appData" : "2022-12-31","appFasciaOrario" : "15:00/16:00","codiceApp" : "2222","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"}]}';
-
+                // return '{"codCaus" : "test" ,"codFlusso" : "0160" ,"desEsitoConf" : "1" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "0" ,"appuntamento" : [{"appData" : "2022-12-31","appFasciaOrario" : "15:00/16:00","codiceApp" : "2222","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"}]}';
+                return '{"appuntamento" : {"id" : "1","tipo" : "Primo Appuntamento","inizio" : "2022-12-31","fine" : "2022-12-31"}}';
+               
         }catch (exception e){
             throw new AuraHandledException(e.getMessage());
         }
