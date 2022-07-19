@@ -1246,6 +1246,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CaseSource__c</picklist>
+        <values>
+            <fullName>Gestore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utente</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Category__c</picklist>
         <values>
             <fullName>Accedi</fullName>
@@ -2057,6 +2068,29 @@
         </values>
         <values>
             <fullName>VAS</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CommunicationType__c</picklist>
+        <values>
+            <fullName>Forte Consumo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fuga Accertata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fuga Presunta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pozzetto Allagato con Lettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pozzetto Allagato senza Lettura</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -9981,6 +10015,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Documenti non validati</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>E-Mail Inviata</fullName>
             <default>false</default>
         </values>
@@ -10073,6 +10111,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione documentale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>IR010</fullName>
             <default>false</default>
         </values>
@@ -10122,6 +10164,10 @@
         </values>
         <values>
             <fullName>In attesa Documentazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa perfezionamento documentazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10476,6 +10522,21 @@
         </values>
         <values>
             <fullName>SI</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PurificationPay__c</picklist>
+        <values>
+            <fullName>Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ridotta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -11488,6 +11549,17 @@
         </values>
         <values>
             <fullName>G_ICD-Imposta Usi Domestici</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SewerPay__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -13120,6 +13192,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ambiente annullo richiesta senza appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento Contratti</fullName>
             <default>false</default>
         </values>
@@ -13164,6 +13240,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cessazione post accertamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Chiusura Contatore</fullName>
             <default>false</default>
         </values>
@@ -13185,6 +13269,10 @@
         </values>
         <values>
             <fullName>Condizioni Contrattuali Errate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conferimento Centri di Raccolta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13256,6 +13344,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Formulari Richiesta Sconto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gestione Bonus Sociale</fullName>
             <default>false</default>
         </values>
@@ -13265,6 +13357,10 @@
         </values>
         <values>
             <fullName>Gestione Disalimentabilità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Rifiuti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13368,6 +13464,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pagamento Unico Annuale TARI</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Paperless</fullName>
             <default>false</default>
         </values>
@@ -13448,6 +13548,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Riduz%2E superficie rifiuti spec promiscui</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riduzione Agevolazione dopo Accertamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rimborso</fullName>
             <default>false</default>
         </values>
@@ -13481,6 +13589,14 @@
         </values>
         <values>
             <fullName>Ritorno a Fatturazione Bimestrale%2FMensile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sconti Collettivi Pap</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni Ambientali</fullName>
             <default>false</default>
         </values>
         <values>
