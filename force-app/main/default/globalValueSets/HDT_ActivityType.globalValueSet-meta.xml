@@ -796,6 +796,11 @@
         <label>Vocal Order non validato</label>
     </customValue>
     <customValue>
+        <fullName>Esito non elaborato</fullName>
+        <default>false</default>
+        <label>Esito non elaborato</label>
+    </customValue>
+    <customValue>
         <fullName>Segnalazioni VAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
