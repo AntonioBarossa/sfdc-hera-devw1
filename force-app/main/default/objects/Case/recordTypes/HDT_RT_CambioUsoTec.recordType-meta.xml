@@ -10830,6 +10830,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ambiente annullo richiesta senza appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento Contratti</fullName>
             <default>false</default>
         </values>
@@ -10863,6 +10867,10 @@
         </values>
         <values>
             <fullName>Comunicazione Pagamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conferimento Centri di Raccolta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10906,11 +10914,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Formulari Richiesta Sconto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gestione Bonus Sociale</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Gestione Disalimentabilità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Rifiuti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10943,6 +10959,10 @@
         </values>
         <values>
             <fullName>Nuovo Impianto - Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamento Unico Annuale TARI</fullName>
             <default>false</default>
         </values>
         <values>
@@ -11006,6 +11026,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Riduz%2E superficie rifiuti spec promiscui</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riduzione Agevolazione dopo Accertamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rimborso</fullName>
             <default>false</default>
         </values>
@@ -11035,6 +11063,14 @@
         </values>
         <values>
             <fullName>Ritorno a Fatturazione Bimestrale%2FMensile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sconti Collettivi Pap</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni Ambientali</fullName>
             <default>false</default>
         </values>
         <values>
