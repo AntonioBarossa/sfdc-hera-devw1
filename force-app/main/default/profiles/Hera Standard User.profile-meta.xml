@@ -2015,6 +2015,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Lead.Consenso_IBM_Unica__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Lead.Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
