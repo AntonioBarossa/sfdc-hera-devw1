@@ -8,7 +8,7 @@
             this.disabled=disabled;
             this.processVisibility=processVisibility;
             this.value=value;
-            this.changeFunction=func;
+            this.changeFunction=func;//You can define a function that recive and handle the change event
         }
         static dataInstanceDiffObj(label, apiname, typeVisibility, required, disabled, processVisibility, value){
             const data = new fieldData(label, apiname, typeVisibility, required, disabled, processVisibility, value);
