@@ -138,7 +138,7 @@ export default class HdtStringGenerationForDocument extends LightningElement {
         }
         this.uniqueString = await getUniqueString({comune : this.comune , caseProcess : this.caseProcess , caseSubProcess : this.caseSubProcess});
         this.currNumber = this.numComponenti;
-        this.resultString = this.uniqueString[0].Fixed_String__c.replace('[N°]',this.currNumber);
+        this.resultString = this.uniqueString[0].FixedString__c.replace('[N°]',this.currNumber);
         this.numberOfLoop = [];
         for( let i=0; i<this.currNumber; i++){
             let wrp = {number:i, labelNome: 'Nome componente '+(i+1), labelCognome:'Cognome componente '+(i+1), labelCf:'Codice Fiscale componente '+(i+1)}
