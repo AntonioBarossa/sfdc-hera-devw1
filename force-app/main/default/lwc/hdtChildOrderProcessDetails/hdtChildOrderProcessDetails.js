@@ -614,7 +614,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     return;
                 }
 
-                if(this.template.querySelector("[data-id='MandatoryAttachments__c']")?.value != ''){
+                if(this.template.querySelector("[data-id='MandatoryAttachments__c']")?.value == ''){
                     if(!this.validateAttachment.isValid){
                         this.showMessage('Errore', "Verificare gli allegati obbligatori prima di procedere", 'error');
                         this.validateAttachment.isValid = true;
@@ -1106,6 +1106,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.isNoDayAfterthought = await isAfterthoughtDaysZero({order: this.order});
         }
 
+        if(this.order.AdditionalAttachments__c != ''){
+            this.additionalAttachments = this.order.AdditionalAttachments__c;
+        }
+        
         console.log('hdtChildOrderProcessDetails - connectedCallback - END');
     }
 
@@ -1176,6 +1180,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.template.querySelector("[data-id='MandatoryAttachments__c']").value = event.detail.required, this.sectionDataToSubmit["MandatoryAttachments__c"]=event.detail.required;
         }
         if(event.detail.additional){
+            this.additionalAttachments = event.detail.additional;
             this.template.querySelector("[data-id='AdditionalAttachments__c']").value = event.detail.additional, this.sectionDataToSubmit["AdditionalAttachments__c"]=event.detail.additional;
         }
         
