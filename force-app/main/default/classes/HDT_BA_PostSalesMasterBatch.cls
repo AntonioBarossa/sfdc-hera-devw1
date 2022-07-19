@@ -100,8 +100,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                         }else if( currentCase.Type.equalsIgnoreCase('Voltura Tecnica') && currentCase.Phase__c.equalsIgnoreCase('In attesa Data Decorrenza') ){
                             currentCase.EffectiveDate__c = HDT_UTL_Case.addBusinessDay(System.today(),3);
                             currentCase.Phase__c = 'Da Inviare';
-                            myCurrentCaseList.add(currentCase);
-           
+                            myCurrentCaseList.add(currentCase); 
                         //START MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
                         }else if('In Lavorazione'.equalsIgnoreCase(currentCase.Phase__c) && ('Cessazione post accertamento'.equalsIgnoreCase(currentCase.Type) || 'Modifica post accertamento'.equalsIgnoreCase(currentCase.Type))){
                             casesToCheck.add(currentCase);
@@ -109,8 +108,9 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                             //system.debug('@@@@ currcase AccountId: '+currentCase.AccountId);
                             system.debug('@@@@ currcase AccountId: '+currentCase.Id);
                             system.debug('@@@@ currcase AccountId: '+currentCase.Phase__c);
+
                         }     
-                    //END MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto      
+                        //END MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto              
                     }
                     when Knowledge__kav article{
                         if(article.ExpirationDate__c != null){
@@ -142,6 +142,13 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
             updateObjectList(myCurrentCaseList);
             //HDT_UTL_DatabaseService.updateSObject(myCurrentCaseList);
         }
+        //START MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
+        if(!casesToCheck.isEmpty()){
+            system.debug('@@@: Start Logica Post Accertamento');
+            HDT_UTL_CaseProcess.createActivityFromContract(casesToCheck);
+        }
+        //END MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
+          
     }
 
     public void updateObjectList(List<SObject> caseToUpdate){
@@ -156,15 +163,6 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                     }
                 }
             }        
-            if(!myCurrentCaseList.isEmpty()){
-                HDT_UTL_DatabaseService.updateSObject(myCurrentCaseList);
-            }
-            //START MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
-            if(!casesToCheck.isEmpty()){
-                system.debug('@@@: Start Logica Post Accertamento');
-                HDT_UTL_CaseProcess.createActivityFromContract(casesToCheck);
-            }
-            //END MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
         }
     }
 
