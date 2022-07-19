@@ -147,8 +147,8 @@
             Individual individual =new Individual(LastName = l.LastName,FirstName = l.firstName,companyOwner__c = l.companyOwner__c);
             
 
-            DateTime dT = Datetime.now();
-            Date myDate = date.newinstance(dT.year(), dT.month(), dT.day());
+            DateTime timeNow = Datetime.now();
+            Date myDate = date.newinstance(timeNow.year(), timeNow.month(), timeNow.day());
             if(l.Consenso_IBM_Unica__c){
                 
                 individual.MarketingPrivacy__c = 'SI';
