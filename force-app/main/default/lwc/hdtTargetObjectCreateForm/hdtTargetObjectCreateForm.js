@@ -10,6 +10,7 @@ import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.c
 import createServicePoinString from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoinString';
 import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint2';
 import getDistributorPointCode from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getDistributorPointCode';
+import getATO from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getAto';
 import checkFieldCoerenceSpGas from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.checkFieldCoerenceSpGas';
 import checkCoerenceServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.checkCoerenceServicePoint';
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
@@ -1591,6 +1592,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     }
                     let comune = servizio == 'Gas' || servizio == 'Acqua' || servizio == 'Ambiente' ? addressRecord['Comune'] : '';
                     let presenzaAllaccio = this.allSubmitedFields['PlugPresence__c'] != undefined ? this.allSubmitedFields['PlugPresence__c'] : '';
+
+                    getATO({comune : comune}).then(data => {
+                        this.allSubmitedFields['ATO__c'] = data;
+                    });
 
                     getDistributorPointCode({code : radicePunto, commodity: servizio, comune : comune, presenzaAllaccio: presenzaAllaccio}).then(data => {
                         this.retrievedDistributor = data;
