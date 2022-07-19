@@ -411,6 +411,11 @@
                 <label>Modifica Contratti PreAttivazione</label>
             </value>
             <value>
+                <fullName>Pratica non gestita per il DL</fullName>
+                <default>false</default>
+                <label>Pratica non gestita per il DL</label>
+            </value>
+            <value>
                 <fullName>Preavviso Cessazione</fullName>
                 <default>false</default>
                 <label>Preavviso cessazione</label>
