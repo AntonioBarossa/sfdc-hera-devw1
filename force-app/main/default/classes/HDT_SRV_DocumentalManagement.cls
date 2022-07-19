@@ -1602,7 +1602,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND ParentId=\''+parentSobj[0].get('IndividualId')+'\'');
 			if(cpPhone.isEmpty() && sobjName == 'Contact')
 			{
-				cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND (Contact__c=\''+contactId+'\'');
+				cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND Contact__c=\''+contactId+'\'');
 			}
 		}	
 		Map<String,String> result = new Map<String,String>();
