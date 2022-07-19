@@ -489,6 +489,11 @@
         <editable>true</editable>
         <field>OrderItem.VatPercentageFormula__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.Phase__c</field>
+        <readable>true</readable>
     </fieldPermissions>  
     <fieldPermissions>
         <editable>true</editable>

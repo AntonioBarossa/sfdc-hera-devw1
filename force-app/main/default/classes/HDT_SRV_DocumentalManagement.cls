@@ -1580,18 +1580,27 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 
 	public static String queryContactPoint(String email,String phone,String contactId){
 		List<SObject> cpEmailList = new List<Sobject>();
-		List<Contact> conList = [SELECT Id, IndividualId FROM Contact WHERE Id = :contactId WITH SECURITY_ENFORCED];
+		List<SObject> parentSobj = new List<SObject>();
+		String sobjName = ((Id)contactId).getSObjectType().getDescribe().getName();
+		if( sobjName == 'Lead')
+		{
+			parentSobj = [SELECT Id, IndividualId FROM Lead WHERE Id = :contactId WITH SECURITY_ENFORCED];
+		}
+		else 
+		{
+			parentSobj = [SELECT Id, IndividualId FROM Contact WHERE Id = :contactId WITH SECURITY_ENFORCED];	
+		}
 		if(String.isNotBlank(email)){
-			cpEmailList =HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointEmail', 'EmailAddress =\''+String.escapeSingleQuotes(email)+'\' AND ParentId=\''+conList[0].IndividualId+'\'');
-			if(cpEmailList.isEmpty())
+			cpEmailList =HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointEmail', 'EmailAddress =\''+String.escapeSingleQuotes(email)+'\' AND ParentId=\''+parentSobj[0].get('IndividualId')+'\'');
+			if(cpEmailList.isEmpty() && sobjName == 'Contact')
 			{
 				cpEmailList =HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointEmail', 'EmailAddress =\''+String.escapeSingleQuotes(email)+'\' AND Contact__c=\''+contactId+'\'');
 			}
 		}
 		List<SObject> cpPhone = new List<Sobject>();
 		if(String.isNotBlank(phone)){
-			cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND ParentId=\''+conList[0].IndividualId+'\'');
-			if(cpPhone.isEmpty())
+			cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND ParentId=\''+parentSobj[0].get('IndividualId')+'\'');
+			if(cpPhone.isEmpty() && sobjName == 'Contact')
 			{
 				cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND Contact__c=\''+contactId+'\'');
 			}
@@ -1624,25 +1633,40 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 
 	public static String createContactPoint(String email,String phone,String contactId){
 		String result = 'OK';
+		String sobjName = ((Id)contactId).getSObjectType().getDescribe().getName();
 		try{
 			HDT_QR_Contact qrContact = new HDT_QR_Contact();
-			Contact cont = qrContact.getRecordById(contactId);
+			SObject sobj;
+			if(sobjName == 'Contact')
+			{
+				sobj = qrContact.getRecordById(contactId);
+			}
+			else
+			{
+				sobj = [SELECT Id, IndividualId FROM Lead WHERE Id = :contactId WITH SECURITY_ENFORCED LIMIT 1]; 
+			}
 			List<SObject> objectList = new List<SObject>();
 			if(String.isNotBlank(email)){
 				ContactPointEmail cpEmail = new ContactPointEmail();
-				cpEmail.ParentId = cont.IndividualId;
+				cpEmail.ParentId = (String) sobj.get('IndividualId');
 				cpEmail.EmailAddress = email;
 				cpEmail.Type__c = 'E-mail Anagrafica';
-				cpEmail.Contact__c = contactId;
+				if(sobjName == 'Contact')
+				{
+					cpEmail.Contact__c = contactId;
+				}
 				objectList.add(cpEmail);
 			}
 	
 			if(String.isNotBlank(phone)){
 				ContactPointPhone cpPhone = new ContactPointPhone();
-				cpPhone.ParentId = cont.IndividualId;
+				cpPhone.ParentId = (String) sobj.get('IndividualId');
 				cpPhone.TelephoneNumber = phone;
 				cpPhone.Type__c = 'Mobile';
-				cpPhone.Contact__c = contactId;
+				if(sobjName == 'Contact')
+				{
+					cpPhone.Contact__c = contactId;
+				}
 				cpPhone.Prefix__c = '+39';
 				objectList.add(cpPhone);
 			}
