@@ -251,7 +251,6 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                         this.case.Note__c = 'l’appuntamento non può essere preso perché l’agenda non restituisce alcuna data - ricontattare il cliente';
                         this.case.Outcome__c ='Empty_Slots';
                         var caseFields = new Objectfields(null,null,null,null,null,null,this.case.Note__c,this.case.Outcome__c);
-                        this.createNewActivityAndUpdateCase(this.caseid, caseFields, 'Contattare Cliente', null);
                         this.disableConfirmButton = true; 
                     }else{
                         slots.forEach(element => {
