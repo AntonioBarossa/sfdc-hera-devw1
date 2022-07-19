@@ -175,8 +175,8 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
             }
 
         } else {
-
-            caseToUpdate.TecnicalPhase__c = 'Esito KO da SAP';
+            caseToUpdate.Description = 'Time Out da SAP';
+            //caseToUpdate.TecnicalPhase__c = 'Esito KO da SAP';
             //createActivity(recordId, 'Comunicazione con SAP fallita', 'Esito KO da SAP');
 
         }
@@ -201,15 +201,9 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
             return phase;
         }
 
-        phase = handlePhaseChange(response, recordId, process, 
-            process ==   'Piano Rateizzazione'
-                ? pianoRateCondition //successCondition
-            : process == 'Comunicazione Pagamento'
-                ? comPagCondition //successCondition
-            : process == 'Paperless'
-                ? paperlessCondition //successCondition
-            : null,
-            depositMode);
+        String condition = process == 'Piano Rateizzazione' ? pianoRateCondition : process == 'Comunicazione Pagamento' ? comPagCondition : process == 'Paperless' ? paperlessCondition : null;
+
+        phase = handlePhaseChange(response, recordId, process, condition, depositMode);
 
         return phase;
 

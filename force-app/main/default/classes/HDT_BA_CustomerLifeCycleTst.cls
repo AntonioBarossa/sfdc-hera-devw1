@@ -2,7 +2,7 @@
 public with sharing class HDT_BA_CustomerLifeCycleTst {
     @TestSetup
     static void makeData(){
-        List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountResidenziale(2, false, 'HERA COMM', 'Persona Fisica', 'Famiglie');
+        List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountResidenziale(2, false, 'HERA COMM', 'D1 - Persona fisica', 'Famiglie');
         accounts[1].CustomerLifeCycleWaste__c = 'ONBOARDING';
         insert accounts;
 
