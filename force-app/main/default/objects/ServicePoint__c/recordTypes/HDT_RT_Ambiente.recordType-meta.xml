@@ -265,9 +265,6 @@
             <fullName>G25 Pareti def%2E</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>ImplantType__c</picklist>
         <values>
             <fullName>G250 Pistoni rot%2E</fullName>
             <default>false</default>
@@ -734,21 +731,6 @@
         </values>
         <values>
             <fullName>Utenza produttiva - Scarichi Industriali</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PurificationInfoOnTheInvoice__c</picklist>
-        <values>
-            <fullName>No - Esente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si - Paga</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si - Ridotta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
