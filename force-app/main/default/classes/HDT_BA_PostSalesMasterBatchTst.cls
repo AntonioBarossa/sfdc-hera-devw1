@@ -134,7 +134,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
         Knowledge__kav kArt = [SELECT Id, KnowledgeArticleId FROM Knowledge__kav LIMIT 1];
         
         String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
-        Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator' or Name='Amministratore del sistema'];
         User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
                             EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
                             LocaleSidKey='en_US', ProfileId = p.Id,

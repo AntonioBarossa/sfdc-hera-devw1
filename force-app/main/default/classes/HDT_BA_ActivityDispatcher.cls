@@ -16,8 +16,8 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         'Segment__c' => 'Account__r.Segment__c IN (###)',
         'FirstLevelOpinion__c' => 'Case__r.FirstLevelOpinion__c IN (###)',
         'SecondLevelOpinion__c' => 'Case__r.SecondLevelOpinion__c IN (###)',
-        'CreatorAgency__c' => 'Order__r.CreatedBy.UserCompany__c IN (###)',
-        'UserCreatorGroup__c' => 'Order__r.CreatedBy.CreatorGroup__c IN (###)',
+        'CreatorAgency__c' => '(Order__r.CreatedBy.UserCompany__c IN (###) OR Case__r.CreatedBy.UserCompany__c IN (###))',
+        'UserCreatorGroup__c' => 'CreatorGroup__c IN (###)',
         'SalesChannel__c' => 'Order__r.Channel__c IN (###)',
         'OfferType__c' => 'Order__r.OfferType__c IN (###)',
         'Distributor__c' => '(Case__r.DistributorName__c IN (###) OR Order__r.DistributorFormula__c IN (###))',
@@ -179,7 +179,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     public String getQuery(AssignmentRule__c rule) {
         Map<String,Object> ruleMap = rule.getPopulatedFieldsAsMap();
         // INITIALIZING QUERY'S STATIC PART
-        List<String> query = new List<String> {'SELECT Id, wrts_prcgvr__Priority__c FROM wrts_prcgvr__Activity__c WHERE Queued__c = false AND ManuallyReassigned__c = false AND wrts_prcgvr__Priority__c != null AND wrts_prcgvr__Status__c IN (\'Aperta\')'};
+        List<String> query = new List<String> {'SELECT Id, wrts_prcgvr__Priority__c FROM wrts_prcgvr__Activity__c WHERE Queued__c = false AND ManuallyReassigned__c = false AND wrts_prcgvr__Priority__c != null AND wrts_prcgvr__Status__c IN (\'Aperta\',\'Creata\')'};
         String mapping;
         String value;
         // ADD EACH INDIVIDUAL WHERE CONDITION TO THE QUERY LIST

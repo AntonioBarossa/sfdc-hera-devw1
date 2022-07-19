@@ -7019,7 +7019,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Falso procurato</fullName>
+            <fullName>Falso procuratore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7207,7 +7207,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Prelivo abusivo</fullName>
+            <fullName>Prelievo abusivo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -11556,7 +11556,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Importi per consumi risalenti a più di due anni</fullName>
+            <fullName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12174,17 +12174,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>UseChangeCharge__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>UseTypeEnergy__c</picklist>
         <values>
             <fullName>03 Illuminazione Pubblica</fullName>
@@ -12410,6 +12399,10 @@
         </values>
         <values>
             <fullName>ANNULLATO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BLOCCO AL RINNOVO</fullName>
             <default>false</default>
         </values>
         <values>

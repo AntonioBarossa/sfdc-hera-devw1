@@ -4,6 +4,7 @@ import updateCase from '@salesforce/apex/HDT_LC_ModificaContrattiBp.updateBpData
 import populateBpData from '@salesforce/apex/HDT_LC_ModificaContrattiBp.filterDataToBp';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
+import SystemCapacity__c from '@salesforce/schema/Case.SystemCapacity__c';
 
 
 
@@ -17,8 +18,8 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
 
 
     //output Properties
-    @api cancelCase;
-    @api saveInDraft;
+    @api cancelCase = false;
+    @api saveInDraft = false;
 
 
     get signatoryTypeOptions() {
@@ -51,19 +52,43 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
         super.connectedCallback();
         this.theCase={...this.theCase, Account:this.account};
         //override metodo getClone per prepopolazione campi billing profile
-        if(this.theCase.DocumentPaymentMethod__c){
-            //this.template.querySelector("[data-id='PaymentMethod__c']").value=this.theCase.DocumentPaymentMethod__c;
+        //console.log('TheCase >>> ' + JSON.stringify(this.theCase));
+        console.log('Note__c >>> ' + this.theCase.Note__c);
+        if(this.theCase.Note__c !== null && this.theCase.Note__c !== undefined && this.theCase.Note__c !== '')
+        {
+            console.log('### Before TryClone ###');
             this.tryClone();
+            console.log('### After TryClone ###');
         }
     }
 
-    handleWrapAddressObjectReverse(){}
+    handleWrapAddressObjectReverse(data)
+    {
+
+        console.log('### Inside Address Wrapper ###');
+        console.log('### Data >>> ' + JSON.stringify(data));
+        let addressWrapper = {};
+        console.log('### Start Writing Obj ###')
+        addressWrapper["Via"] = data["InvoicingStreetName__c"];
+        addressWrapper["Comune"] = data["InvoicingCity__c"];
+        addressWrapper["CAP"] = data["InvoicingPostalCode__c"];
+        addressWrapper["Stato"] = data["InvoicingCountry__c"];
+        addressWrapper["Provincia"] = data["InvoicingProvince__c"];
+        addressWrapper["Estens.Civico"] = data["InvoicingStreetNumberExtension__c"];
+        addressWrapper["Civico"] = data["InvoicingStreetNumber__c"];
+        addressWrapper["Localita"] = data["InvoicingPlace__c"];
+
+        console.log('### AddressWrapper >>> ' + JSON.stringify(addressWrapper));
+
+        return addressWrapper;
+    }
     handleWrapAddressObject(){
         this.template.querySelector('c-hdt-target-object-address-for-flow').validate();
     }
 
     handleAnnull(){
         this.cancelCase=true;
+        this.saveInDraft=false;
         this.handleGoNext();
     }
 
@@ -83,7 +108,8 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
     checksAndSave(){
         const targetObjectFlow =this.template.querySelector('c-hdt-target-object-address-for-flow');
         let validity=targetObjectFlow.validate();
-        if(validity.isValid){
+        console.log('AddressValidity >>> ' + JSON.stringify(validity))
+        if(validity.isValid === true){
             //jump address controls on parent lwc, we already done it on targetObjectFlow
             this.isForeignAddress=false;
             this.isVerifiedAddress=true;
@@ -99,6 +125,9 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
                 //Crea metodo in JS che ti converte le api name da BP a Case
                 console.log("isValid");
                 let mapFieldValue = this.convertBpToCase();
+                /* Address Fields */
+                mapFieldValue = this.getAddressFields(mapFieldValue, targetObjectFlow.getAddress());
+                console.log('#BpData >>> ' + JSON.stringify(mapFieldValue));
                 updateCase({"bpData" : mapFieldValue, "caseId" : this.theCase.Id}).then(data=>{
                     this.loading = false;
                     this.handleGoNext();
@@ -137,9 +166,19 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
     }
 
     tryClone(){
-        let map = this.convertCaseToBp();
-        populateBpData({theCase:map}).then(data =>{
+        //let map = this.convertCaseToBp();
+        populateBpData({theCase:this.theCase}).then(data =>{
             //let map = data;
+
+            console.log('### PrepoluatedMap >>> ' + JSON.stringify(data));
+            const targetObjectFlow =this.template.querySelector('c-hdt-target-object-address-for-flow');
+
+            if(data["InvoicingCity__c"] !== null && data["InvoicingCity__c"] !== undefined && data["InvoicingCity__c"] !== "")
+            {
+                let addressWrapper = this.handleWrapAddressObjectReverse(data);
+                console.log('### PrepopulateAddress >>> ' + JSON.stringify(addressWrapper));
+                targetObjectFlow.prepopulateAddress(addressWrapper);
+            }
 
             this.cloneObject = data;
             this.dataToSubmit = this.cloneObject;
@@ -172,10 +211,11 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
         
     }
 
+    /*
     convertCaseToBp(){
         let listFields = Object.keys(this.theCase);
         let bp = {...this.theCase};
-        let map = this.invertMap();
+        let map = new Map();
         listFields.forEach(el => {
             if(map.has(el)){
                 bp[map.get(el)] = bp[el];
@@ -184,11 +224,12 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
         });
         return bp;
     }
+    */
 
     convertBpToCase(){
         let listFields = Object.keys(this.dataToSubmit);
         let data = {...this.dataToSubmit};
-        let map = this.getFieldsMapped();
+        let map = new Map();
         listFields.forEach(el => {
             if(map.has(el)){
                 data[map.get(el)] = data[el];
@@ -227,6 +268,22 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
             this.dispatchEvent(navigateFinish);
         }
 
+    }
+
+    getAddressFields(map, address)
+    {
+        console.log('### Address Fields >>> ' + JSON.stringify(address));
+
+        map['InvoicingStreetName__c'] =address["Via"];
+        map['InvoicingCity__c'] =address["Comune"];
+        map['InvoicingPostalCode__c'] =address["CAP"];       
+        map['InvoicingCountry__c'] =address["Stato"];
+        map['InvoicingProvince__c'] =address["Provincia"];
+        map['InvoicingStreetNumberExtension__c'] =address["Estens.Civico"];
+        map['InvoicingStreetNumber__c'] =address["Civico"];
+        map['InvoicingPlace__c'] = address["Localita"];
+
+        return map;
     }
 
 }

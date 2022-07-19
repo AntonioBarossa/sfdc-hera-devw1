@@ -10,14 +10,14 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
     @TestVisible
     private static String communicationPhase = 'Comunicazione verso Heroku';
     @TestVisible
-    private static Integer btLimit = 1;
+    private static Integer btLimit = 1000;
     @TestVisible
-    private static Integer mtLimit = 35;
+    private static Integer mtLimit = 30000;
     /**@frpanico 12/11/2021
      * field not used but can be used if other threshold are included (e.g. AAT)
      */
     @TestVisible
-    private static Integer atLimit = 35;
+    private static Integer atLimit = 150000;
     @TestVisible
     private static Decimal lowerThreshold = 10.0;
     @TestVisible
@@ -80,8 +80,8 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
     @TestVisible
     private String getTension(Integer tensionNumberValue)
     {
-        return tensionNumberValue > 0 && tensionNumberValue <= btLimit ? 'BT' /* If Tension value lower than bt limit : BT */ 
-            : (btLimit < tensionNumberValue && tensionNumberValue <= mtLimit)
+        return tensionNumberValue > 0 && tensionNumberValue < btLimit ? 'BT' /* If Tension value lower than bt limit : BT */ 
+            : (btLimit <= tensionNumberValue && tensionNumberValue < mtLimit)
                 ? 'MT' /* If tension value between btLimit and mtLimit : MT */
                 : tensionNumberValue > mtLimit 
                     ? 'AT' : ''; /* If thension value greater than mtLimit: AT */
@@ -247,5 +247,14 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
     {
         List<String> listToConvert = ddmmyyyy.split('/');
         return Date.newInstance(Integer.valueOf(listToConvert[2]), Integer.valueOf(listToConvert[1]), Integer.valueOf(listToConvert[0]));
+    }
+    public Date convertDdMmYyyyList(String ddmmyyyyList)
+    {
+        List<String> dateList = ddmmyyyyList.split(',');
+        if(!dateList.isEmpty())
+        {
+            return convertDdMmYyyy(dateList[dateList.size() - 1]);
+        }
+        return null;
     }
 }

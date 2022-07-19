@@ -90,6 +90,19 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
     }
 
     public List<Case> getAutoletturaBozzaCase(){
+
+        String whereConditionFieldValue1 = 'Autolettura';
+        String queryString = 'SELECT id, Type__c, NumberOfDays__c FROM CS_DaysToExpiration__c where Type__c = \'' + String.escapeSingleQuotes(whereConditionFieldValue1) + '\'';
+        SObject mySobj = database.query(queryString);
+
+        if(mySobj == null)
+        {
+            return new List<Case>();
+        }
+
+        Integer numberOfDays = Integer.valueOf(((CS_DaysToExpiration__c) mySobj).NumberOfDays__c);
+        Date limitDate = (System.today()).addDays(- numberOfDays);
+
         return [SELECT Id,
         Type,
         Phase__c,
@@ -104,11 +117,25 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         FROM Case
         WHERE Phase__c = :this.bozzaCase
         AND Cluster__c = : this.autoletturaCase
+        AND CreatedDate < :limitDate
         WITH SECURITY_ENFORCED
         ];
     }
 
     public List<Case> getPostSalesBozzaCase(){
+
+        String whereConditionFieldValue2 = 'PostSales';
+        String queryString = 'SELECT id, Type__c, NumberOfDays__c FROM CS_DaysToExpiration__c where Type__c = \'' + String.escapeSingleQuotes(whereConditionFieldValue2) + '\'';
+        SObject mySobj = database.query(queryString);
+
+        if(mySobj == null)
+        {
+            return new List<Case>();
+        }
+
+        Integer numberOfDays = Integer.valueOf(((CS_DaysToExpiration__c) mySobj).NumberOfDays__c);
+        Date limitDate = (System.today()).addDays(- numberOfDays);
+
         return [SELECT Id,
         Type,
         Phase__c,
@@ -123,6 +150,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         FROM Case
         WHERE Phase__c = :this.bozzaCase
         AND Cluster__c != : this.autoletturaCase
+        AND CreatedDate < :limitDate
         WITH SECURITY_ENFORCED
         ];
     }

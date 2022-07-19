@@ -34,16 +34,47 @@ public with sharing class HDT_LC_ReletedListAccount {
         }
         //HRAWRM-491 27/09/2021
 
-        Contact contact= new Contact(AccountId= dataContact.get('accountId'), DegreeOfStudies__c= dataContact.get('education'),LastName= account.LastName__c,Gender__c= account.Gender__c ,FirstName=account.FirstName__c ,Birthdate=birthdate, FiscalCode__c= account.FiscalCode__c,Birthcity__c=dataContact.get('birthplace') ,Phone= account.Phone, Email= account.PrimaryEmail__c,MobilePhonePrefix__c= account.MobilePhonePrefix__c, MobilePhone= account.MobilePhone__c, PhonePrefix__c= account.PhonePrefix__c, Fax= account.FAX__c,Profession__c= account.Profession__c, MailingCity= account.BillingCity, MailingCityCode__c= account.BillingCityCode__c, MailingCountry= account.BillingCountry, MailingPostalCode= account.BillingPostalCode, MailingState= account.BillingState, MailingStreet= account.BillingStreet, MailingStreetName__c= account.BillingStreetName__c, MailingStreetCode__c= account.BillingStreetCode__c, MailingStreetNumber__c= account.BillingStreetNumber__c, MailingStreetNumberExtension__c= account.BillingStreetNumberExtension__c, MailingStreetToponym__c= account.BillingStreetToponym__c, MailingRegion__c= account.BillingRegion__c,MailingPlace__c = account.BillingPlace__c ,MailingPlaceCode__c = account.BillingPlaceCode__c , MailingIsAddressVerified__c = account.BillingIsAddressVerified__c);
+        Contact contact= new Contact(AccountId= dataContact.get('accountId'), DegreeOfStudies__c= dataContact.get('education'),LastName= account.LastName__c,Gender__c= account.Gender__c ,FirstName=account.FirstName__c ,Birthdate=birthdate, FiscalCode__c= account.FiscalCode__c,Birthcity__c=dataContact.get('birthplace') ,Phone= account.Phone, Email= account.PrimaryEmail__c,MobilePhonePrefix__c= account.MobilePhonePrefix__c, MobilePhone= account.MobilePhone__c, PhonePrefix__c= account.PhonePrefix__c, Fax= account.FAX__c,Profession__c= account.Profession__c, MailingCity= account.BillingCity, MailingCityCode__c= account.BillingCityCode__c, MailingCountry= account.BillingCountry, MailingPostalCode= account.BillingPostalCode, MailingState= account.BillingState, MailingStreet= account.BillingStreet, MailingStreetName__c= account.BillingStreetName__c, MailingStreetCode__c= account.BillingStreetCode__c, MailingStreetNumber__c= account.BillingStreetNumber__c, MailingStreetNumberExtension__c= account.BillingStreetNumberExtension__c, MailingRegion__c= account.BillingRegion__c,MailingPlace__c = account.BillingPlace__c ,MailingPlaceCode__c = account.BillingPlaceCode__c , MailingIsAddressVerified__c = account.BillingIsAddressVerified__c);
         contactSrv.checkCreateAccess(contact);
         Contact cont= contactSrv.createRecord(contact);
         if(dataContact.get('role')!=null){
-            List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(dataContact.get('accountId'), cont.Id, 'Id');
+            List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(dataContact.get('accountId'), cont.Id, 'Id, AccountId');
             if(listAccCon != null && listAccCon.size() > 0){
                 AccountContactRelation acr= new AccountContactRelation(Id= listAccCon[0].Id,ContactId= cont.Id, AccountId= dataContact.get('accountId'), Roles= dataContact.get('role'));
                 accoContRelSrv.updateRecord(acr);
             }
-
+            if(dataContact.get('role').equalsIgnoreCase('Amministratore Condominio'))
+            {
+                String accountId = listAccCon[0].AccountId;
+                Account acc = [SELECT Id,
+                RecordTypeId,
+                Category__c,
+                FirstName__c,
+                FiscalCode__c,
+                BillingStreetNumber__c,
+                BillingStreetName__c,
+                BillingCountry,
+                BillingState,
+                BillingCity,
+                BillingPostalCode,
+                VATNumber__c,
+                LastName__c,
+                CustomerCode__c,
+                MobilePhone__c,
+                fax,
+                customerMarking__c,
+                BuildingFloor__c,
+                PrimaryEmail__c,
+                VATGroup__c,
+                VATGroupStartDate__c,
+                VATGroupEndDate__c
+                FROM Account
+                WHERE Id = :accountId
+                WITH SECURITY_ENFORCED
+                LIMIT 1
+                ];
+                System.enqueueJob(new HDT_QBL_BpCaRequest(acc, contact));
+            }
         }
         return contact;
     }
