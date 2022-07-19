@@ -799,11 +799,17 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                 console.log('### Inside Gas Switch');
                                 this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldGas__c : (this.customSettings.FieldGas__c == null || this.customSettings.FieldGas__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldGas__c));
                                 this.fieldsDataReqRaw = (this.customSettings.Field_Required_Generic__c == null || this.customSettings.Field_Required_Generic__c == undefined ? this.customSettings.FieldRequiredGas__c : (this.customSettings.FieldRequiredGas__c == null || this.customSettings.FieldRequiredGas__c == null ? this.customSettings.Field_Required_Generic__c : this.customSettings.Field_Required_Generic__c + ',' + this.customSettings.FieldRequiredGas__c));
-                            case 'HDT_RT_Acqua':
+                            case 'Acqua':
+                                recordtype['label'] = 'Punto Idrico';
+                                recordtype['value'] = this.servicePointRetrievedData['RecordTypeId'];
+                                recordtype['DeveloperName'] = 'HDT_RT_Acqua';
                                 this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldWater__c : (this.customSettings.FieldWater__c == null || this.customSettings.FieldWater__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldWater__c));
                                 this.fieldsDataReqRaw = (this.customSettings.Field_Required_Generic__c == null || this.customSettings.Field_Required_Generic__c == undefined ? this.customSettings.FieldRequiredWater__c : (this.customSettings.FieldRequiredWater__c == null || this.customSettings.FieldRequiredWater__c == null ? this.customSettings.Field_Required_Generic__c : this.customSettings.Field_Required_Generic__c + ',' + this.customSettings.FieldRequiredWater__c));
                                 break;
-                            case 'HDT_RT_Ambiente':
+                            case 'Ambiente':
+                                recordtype['label'] = 'Punto Ambiente';
+                                recordtype['value'] = this.servicePointRetrievedData['RecordTypeId'];
+                                recordtype['DeveloperName'] = 'HDT_RT_Ambiente';
                                 this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldWaste__c : (this.customSettings.FieldWaste__c == null || this.customSettings.FieldWaste__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldWaste__c));
                                 this.fieldsDataReqRaw = (this.customSettings.Field_Required_Generic__c == null || this.customSettings.Field_Required_Generic__c == undefined ? this.customSettings.FieldRequiredWaste__c : (this.customSettings.FieldRequiredWaste__c == null || this.customSettings.FieldRequiredWaste__c == null ? this.customSettings.Field_Required_Generic__c : this.customSettings.Field_Required_Generic__c + ',' + this.customSettings.FieldRequiredWaste__c));
                             }
@@ -836,6 +842,20 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                     recordtype['DeveloperName'] = 'HDT_RT_Gas';
                                     this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldGas__c : (this.customSettings.FieldGas__c == null || this.customSettings.FieldGas__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldGas__c));
                                     this.fieldsDataReqRaw = (this.customSettings.Field_Required_Generic__c == null || this.customSettings.Field_Required_Generic__c == undefined ? this.customSettings.FieldRequiredGas__c : (this.customSettings.FieldRequiredGas__c == null || this.customSettings.FieldRequiredGas__c == null ? this.customSettings.Field_Required_Generic__c : this.customSettings.Field_Required_Generic__c + ',' + this.customSettings.FieldRequiredGas__c));
+                                case 'HDT_RT_Acqua':
+                                    recordtype['label'] = 'Punto Idrico';
+                                    recordtype['value'] = this.servicePointRetrievedData['RecordTypeId'];
+                                    recordtype['DeveloperName'] = 'HDT_RT_Acqua';
+                                    this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldWater__c : (this.customSettings.FieldWater__c == null || this.customSettings.FieldWater__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldWater__c));
+                                    this.fieldsDataReqRaw = (this.customSettings.Field_Required_Generic__c == null || this.customSettings.Field_Required_Generic__c == undefined ? this.customSettings.FieldRequiredWater__c : (this.customSettings.FieldRequiredWater__c == null || this.customSettings.FieldRequiredWater__c == null ? this.customSettings.Field_Required_Generic__c : this.customSettings.Field_Required_Generic__c + ',' + this.customSettings.FieldRequiredWater__c));
+                                    break;
+                                case 'HDT_RT_Ambiente':
+                                    recordtype['label'] = 'Punto Ambiente';
+                                    recordtype['value'] = this.servicePointRetrievedData['RecordTypeId'];
+                                    recordtype['DeveloperName'] = 'HDT_RT_Ambiente';
+                                    this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldWaste__c : (this.customSettings.FieldWaste__c == null || this.customSettings.FieldWaste__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldWaste__c));
+                                    this.fieldsDataReqRaw = (this.customSettings.Field_Required_Generic__c == null || this.customSettings.Field_Required_Generic__c == undefined ? this.customSettings.FieldRequiredWaste__c : (this.customSettings.FieldRequiredWaste__c == null || this.customSettings.FieldRequiredWaste__c == null ? this.customSettings.Field_Required_Generic__c : this.customSettings.Field_Required_Generic__c + ',' + this.customSettings.FieldRequiredWaste__c));
+                            
                             }
                         }
                         this.recordtype = {...recordtype};
