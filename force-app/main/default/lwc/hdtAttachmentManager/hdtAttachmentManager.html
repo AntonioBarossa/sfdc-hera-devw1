@@ -1,0 +1,31 @@
+<!--
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 27/06/2022
+    * @description JS - Gestione Allegati Obbligatori e Aggiuntivi
+-->
+
+<template>
+    
+    <lightning-card>
+        
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_6-of-12">
+                <lightning-input type="text" label="Allegati Obbligatori" value={required} required disabled></lightning-input>
+                <lightning-input type="text" data-id = "AdditionalAttachments__c" label="Allegati Aggiuntivi" value={additional} onchange={handleAdditionalChange}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_6-of-12"></div>
+        </div>
+        <br></br>
+        <c-hdt-content-document-list files={files} onfiledelete={afterDelete}></c-hdt-content-document-list>
+        <lightning-file-upload
+            label="Inserimento Allegati"
+            name="fileUploader"
+            accept={acceptedFormats}
+            record-id={recordId}
+            onuploadfinished={handleUploadFinished}
+            multiple
+        >
+        </lightning-file-upload>
+
+    </lightning-card>
+</template>

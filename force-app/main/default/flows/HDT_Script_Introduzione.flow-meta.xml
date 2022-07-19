@@ -5,7 +5,7 @@
         <name>AllVas</name>
         <label>AllVas</label>
         <locationX>3086</locationX>
-        <locationY>1310</locationY>
+        <locationY>1646</locationY>
         <assignmentItems>
             <assignToReference>ChildProcessTypeVas</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>assignAxa</name>
         <label>assignAxa</label>
         <locationX>4274</locationX>
-        <locationY>1886</locationY>
+        <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>isAxa3</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +37,7 @@
         <name>AssignCaldaiaSicura</name>
         <label>AssignCaldaiaSicura</label>
         <locationX>5198</locationX>
-        <locationY>2222</locationY>
+        <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -53,7 +53,7 @@
         <name>assignEstEnergy</name>
         <label>assignEstEnergy</label>
         <locationX>798</locationX>
-        <locationY>2870</locationY>
+        <locationY>3206</locationY>
         <assignmentItems>
             <assignToReference>salesCompanyToDisplay</assignToReference>
             <operator>Add</operator>
@@ -69,7 +69,7 @@
         <name>AssignHeraAcqua</name>
         <label>AssignHeraAcqua</label>
         <locationX>4934</locationX>
-        <locationY>2222</locationY>
+        <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -85,7 +85,7 @@
         <name>assignHeraComm</name>
         <label>assignHeraComm</label>
         <locationX>270</locationX>
-        <locationY>2870</locationY>
+        <locationY>3206</locationY>
         <assignmentItems>
             <assignToReference>salesCompanyToDisplay</assignToReference>
             <operator>Add</operator>
@@ -101,7 +101,7 @@
         <name>assignHeraCommMarche</name>
         <label>assignHeraCommMarche</label>
         <locationX>534</locationX>
-        <locationY>2870</locationY>
+        <locationY>3206</locationY>
         <assignmentItems>
             <assignToReference>salesCompanyToDisplay</assignToReference>
             <operator>Add</operator>
@@ -117,7 +117,7 @@
         <name>AssignHeraContawatt</name>
         <label>AssignHeraContawatt</label>
         <locationX>4142</locationX>
-        <locationY>2222</locationY>
+        <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -133,7 +133,7 @@
         <name>AssignHeraGas</name>
         <label>AssignHeraGas</label>
         <locationX>4670</locationX>
-        <locationY>2222</locationY>
+        <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -149,7 +149,7 @@
         <name>AssignHeraLed</name>
         <label>AssignHeraLed</label>
         <locationX>3614</locationX>
-        <locationY>2222</locationY>
+        <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -165,7 +165,7 @@
         <name>AssignHeraLuce</name>
         <label>AssignHeraLuce</label>
         <locationX>4406</locationX>
-        <locationY>2222</locationY>
+        <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -181,7 +181,7 @@
         <name>AssignHerEBike</name>
         <label>AssignHerEBike</label>
         <locationX>3350</locationX>
-        <locationY>2222</locationY>
+        <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -213,7 +213,7 @@
         <name>AssignMonopattino</name>
         <label>AssignMonopattino</label>
         <locationX>3086</locationX>
-        <locationY>2222</locationY>
+        <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -245,7 +245,7 @@
         <name>AssignRicarica</name>
         <label>AssignRicarica</label>
         <locationX>5462</locationX>
-        <locationY>2222</locationY>
+        <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -261,7 +261,7 @@
         <name>AssignTermostato</name>
         <label>AssignTermostato</label>
         <locationX>3878</locationX>
-        <locationY>2222</locationY>
+        <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -271,6 +271,22 @@
         </assignmentItems>
         <connector>
             <targetReference>LoopOrderItem</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>ExistVas</name>
+        <label>ExistVas</label>
+        <locationX>2866</locationX>
+        <locationY>1310</locationY>
+        <assignmentItems>
+            <assignToReference>VasForBonus</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ProcessType</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -286,14 +302,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>ProcessType</targetReference>
+            <targetReference>isVasForBonus</targetReference>
         </connector>
     </assignments>
     <decisions>
         <name>Axa</name>
         <label>Axa</label>
         <locationX>4406</locationX>
-        <locationY>1766</locationY>
+        <locationY>2102</locationY>
         <defaultConnector>
             <targetReference>VasName</targetReference>
         </defaultConnector>
@@ -318,7 +334,7 @@
         <name>callTypeDecision</name>
         <label>callTypeDecision</label>
         <locationX>182</locationX>
-        <locationY>3182</locationY>
+        <locationY>3518</locationY>
         <defaultConnector>
             <targetReference>Introduzione_Inbound</targetReference>
         </defaultConnector>
@@ -359,16 +375,41 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>ProcessType</targetReference>
+                <targetReference>isVasForBonus</targetReference>
             </connector>
             <label>containsSC</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isVasForBonus</name>
+        <label>isVasForBonus</label>
+        <locationX>2998</locationX>
+        <locationY>1190</locationY>
+        <defaultConnector>
+            <targetReference>ProcessType</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrderChild.ProcessType__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>VAS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ExistVas</targetReference>
+            </connector>
+            <label>Yes</label>
         </rules>
     </decisions>
     <decisions>
         <name>ProcessType</name>
         <label>ProcessType</label>
         <locationX>2998</locationX>
-        <locationY>1190</locationY>
+        <locationY>1526</locationY>
         <defaultConnector>
             <targetReference>AllVas</targetReference>
         </defaultConnector>
@@ -393,7 +434,7 @@
         <name>salesCompanyDisplay</name>
         <label>salesCompanyDisplay</label>
         <locationX>666</locationX>
-        <locationY>2750</locationY>
+        <locationY>3086</locationY>
         <defaultConnector>
             <targetReference>LoopSalesCompany</targetReference>
         </defaultConnector>
@@ -473,7 +514,7 @@
         <name>VasName</name>
         <label>VasName</label>
         <locationX>4406</locationX>
-        <locationY>2102</locationY>
+        <locationY>2438</locationY>
         <defaultConnector>
             <targetReference>LoopOrderItem</targetReference>
         </defaultConnector>
@@ -656,7 +697,7 @@
         <name>LoopOrderItem</name>
         <label>LoopOrderItem</label>
         <locationX>2998</locationX>
-        <locationY>1646</locationY>
+        <locationY>1982</locationY>
         <collectionReference>GetOrderItem_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -670,7 +711,7 @@
         <name>LoopSalesCompany</name>
         <label>LoopSalesCompany</label>
         <locationX>182</locationX>
-        <locationY>2630</locationY>
+        <locationY>2966</locationY>
         <collectionReference>salesCompany</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -724,7 +765,7 @@
         <name>GetOrderItem_0</name>
         <label>GetOrderItem</label>
         <locationX>2998</locationX>
-        <locationY>1526</locationY>
+        <locationY>1862</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>LoopOrderItem</targetReference>
@@ -745,7 +786,7 @@
         <name>Introduzione_Inbound</name>
         <label>Introduzione Inbound</label>
         <locationX>314</locationX>
-        <locationY>3302</locationY>
+        <locationY>3638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -844,7 +885,7 @@
         <name>Introduzione_Outbound</name>
         <label>Introduzione_Outbound</label>
         <locationX>50</locationX>
-        <locationY>3302</locationY>
+        <locationY>3638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1087,6 +1128,16 @@
         <isCollection>true</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>VasForBonus</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>VasToDisplay</name>

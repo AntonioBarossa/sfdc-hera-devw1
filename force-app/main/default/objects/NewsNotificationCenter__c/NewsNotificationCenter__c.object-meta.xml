@@ -157,12 +157,11 @@
     <gender>Feminine</gender>
     <label>Regola Notifiche News</label>
     <nameField>
-        <displayFormat>NNC-{00000}</displayFormat>
         <label>Name</label>
-        <type>AutoNumber</type>
+        <type>Text</type>
     </nameField>
     <pluralLabel>Regole Notifiche News</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts></searchLayouts>
     <sharingModel>Private</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

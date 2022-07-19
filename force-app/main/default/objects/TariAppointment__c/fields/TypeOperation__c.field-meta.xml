@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>AdministrativeCity__c</fullName>
+    <fullName>TypeOperation__c</fullName>
     <externalId>false</externalId>
-    <label>Comune amministrativo</label>
-    <length>255</length>
+    <label>Tipo Intervento</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_OperationType</valueSetName>
+    </valueSet>
 </CustomField>
