@@ -8,8 +8,10 @@ export default class HdtAdvancedSearchSelectionFeildRadioGroup extends Lightning
     get options() {
         return [
             {label: 'Codice POD/PDR', value: 'pod'},
+            {label: 'Codice Punto Presa (Acqua)', value: 'podH2o'},
             {label: 'Codice Contratto', value: 'contract'},
-            {label: 'Matricola contatore', value: 'serialnumber'}
+            {label: 'Matricola contatore', value: 'serialnumber'},
+            {label: 'Indirizzo di fornitura (Ambiente)', value: 'address'}
         ];
     }
 

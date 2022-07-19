@@ -358,6 +358,20 @@ public with sharing class HDT_LC_AdvancedSearch {
 				isSerachFromContract=true;
 			}
 
+			when 'podH2o' {
+				if (parameter.length() < 5 || parameter.length() > 20) {
+					throw new AuraHandledException('Il Codice Punto Presa deve essere di compreso tra 5 e 20 caratteri');
+				}
+				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
+				servicePoints.addAll(servicePointQr.getServicePointsByCodeH2O(parameter, customSetting.OutputServicePoint__c));
+			}
+
+			when 'address' {
+				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
+				servicePoints.addAll(servicePointQr.getServicePointsByAddress(parameter, customSetting.OutputServicePoint__c));
+
+			}
+
 		}
 		checkTheNumberOfRecords(servicePoints.size());
 		String[] customSettingFields = customSetting.OutputServicePoint__c.split(',');
