@@ -154,14 +154,15 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
     <gender>Feminine</gender>
-    <label>StaticStringForDocuments</label>
+    <label>Stringa Documentale</label>
     <nameField>
-        <displayFormat>SSD - {000000}</displayFormat>
-        <label>StaticStringForDocuments Number</label>
+        <displayFormat>SD - {0000000}</displayFormat>
+        <label>Numero Stringa Documentale</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>StaticStringForDocuments</pluralLabel>
     <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Special</startsWith>
     <visibility>Public</visibility>
 </CustomObject>
