@@ -178,7 +178,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              */
             if(order.Phase__c != oldOrder.Phase__c 
                 && order.ProcessType__c == 'Voltura' 
-                && oldOrder.Phase__c == 'In attesa validazione' 
+                && (oldOrder.Phase__c == 'In attesa validazione' || oldOrder.Phase__c == 'Accettazione Voltura')
                 && (order.Phase__c == 'Documentazione Validata') 
                 && isMonitoringList.contains(order.AgencyCode__c) 
                 && !phaseStory.contains('Quality Call OK')
@@ -192,10 +192,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             /**@frpanico 04/02/2022
              * Aggiunta gestione per
              * Comfort Call
+             * Inserito caso transitorio
              */
             if(order.Phase__c != oldOrder.Phase__c
             && oldOrder.Phase__c == 'Documentazione validata' 
-            && (order.Phase__c == 'Comunicazione Verso Heroku' || order.Phase__c == 'Comunicazione Motore VAS')
+            && (order.Phase__c == 'Comunicazione Verso Heroku' || order.Phase__c == 'Comunicazione Motore VAS' || order.Phase__c == 'Esportazione VS Siebel')
             && order.ComfortCallDaysDue__c != null
             )
             {
@@ -206,8 +207,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
             /**@frpanico 07/03/2022
              * Aggiunta comfort per voltura
+             * Inserito caso transitorio
              */
-            if(order.Phase__c != oldOrder.Phase__c && order.ProcessType__c == 'Voltura' && oldOrder.Phase__c == 'In attesa validazione' && (order.Phase__c == 'Documentazione Validata') && order.ComfortCallDaysDue__c != null )
+            if(order.Phase__c != oldOrder.Phase__c && order.ProcessType__c == 'Voltura' && oldOrder.Phase__c == 'In attesa validazione' && (order.Phase__c == 'Documentazione Validata' || order.Phase__c == 'Esportazione VS Siebel') && order.ComfortCallDaysDue__c != null )
             {
                 String newPhase = 'In attesa conferma cliente';
                 DateTime nowDateTime = DateTime.now();
@@ -1090,6 +1092,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
                 catch(Exception e)
                 {
+                    if (String.isNotBlank(e.getMessage()) && e.getMessage().containsIgnoreCase('Questo utente non dispone dei permessi per l\'activity CreditCheckKO')){
+                        orderNew.addError('Non è possibile annullare l\'ordine perchè è presente un\'attività di credit check ancora aperta e non si dispone dei permessi per poterla lavorare.');
+                    }
                     System.debug(Logginglevel.Debug, 'Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
                 }
                 if(orderNew.ProcessType__c != null && 
@@ -1306,7 +1311,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              * Pratica Gestita
              * per pratiche a transitorio
              */
-            if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))&&((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Pratica Gestita'))
+            Set<String> finalStatuses = new Set<String>{'Annullato','KO definitivo','Pratica gestita','KO gestito','Eliminato','KO','Pratica Rifiutata'};
+            if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))&&(finalStatuses.contains((String)newOrder.get('SiebelStatus__c'))))
             {
                 response = true;
             }
@@ -1329,7 +1335,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Set<Id> parentOrderIds = new Set<Id>();
         Map<Id,String> mapVasPhase = new Map<Id,String>();
         Map<Id,String> mapVasStatus = new Map<Id,String>();
-        
+        Set<String> negativeOutcomes = new Set<String>{'Annullato','KO definitivo','Eliminato','KO','Pratica Rifiutata'};
+        Set<String> positiveOutcomes = new Set<String>{'Pratica gestita','KO gestito'};
         for(Order newOrder : (List<Order>) newOrderList)
         {
             String oldPhase = newOrder.Phase__c;
@@ -1338,25 +1345,25 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))
                 && (oldOrder.SiebelStatus__c == null || !(((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase((String)oldOrder.get('SiebelStatus__c')))))
             {
-                String newPhase = ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Pratica Gestita') 
+                String newPhase = positiveOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                     ? 'Completata'
-                    : ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Annullato')
+                    : negativeOutcomes.contains((String)newOrder.get('SiebelStatus__c')) 
                         ? 'Annullato'
                         : '';
-                String status = ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Pratica Gestita') 
+                String status = positiveOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                 ? 'Activated'
-                : ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Annullato')
+                : negativeOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                     ? 'Annullato'
                     : '';
-                String vasPhase = ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Pratica Gestita') 
+                String vasPhase = positiveOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                 ? 'Esportazione VS Siebel'
-                : ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Annullato')
+                : negativeOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                     ? 'Annullato'
                     : '';
-                String vasStatus = ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Pratica Gestita') 
+                String vasStatus = positiveOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                 ? 'In Lavorazione'
-                : ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Annullato')
-                    ? 'Annullato'
+                : negativeOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
+                    ? 'Annullato' 
                     : '';
                 mapVasPhase.put(newOrder.ParentOrder__c, vasPhase);
                 mapVasStatus.put(newOrder.ParentOrder__c, vasStatus);
@@ -1389,6 +1396,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 List<ServiceRequest__c> serviceRequests = [SELECT Id, 
                     Order__c,
                     Order__r.ParentOrder__c,
+                    Order__r.Process__c,
                     NextPhase__c
                     FROM ServiceRequest__c 
                     WHERE Order__r.ParentOrder__c IN :parentOrderIds
@@ -1396,9 +1404,17 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 List<Order> vasScontiOrders = new List<Order>();
                 for(ServiceRequest__c sr : serviceRequests)
                 {
+                    /* Check if the sr.Order__c is contained in "Pratica Gestita"/"Annullato" Order */
                     if(orderIds.contains(sr.Order__c))
                     {
                         serviceRequestToDelete.add(sr);
+                        continue;
+                    }
+                    /* If sr.NextPhase__c == null and sr.Order__c is not contained in orderIds
+                    * No action needed
+                    */
+                    if(sr.NextPhase__c == null)
+                    {
                         continue;
                     }
                     Order orderVas = new Order();

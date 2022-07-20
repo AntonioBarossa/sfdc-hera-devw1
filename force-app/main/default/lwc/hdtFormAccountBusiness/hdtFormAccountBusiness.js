@@ -411,6 +411,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 this.fieldsToUpdate['BillingIsAddressVerified__c'] = this.accountAddress['Flag Verificato'];
                 this.isVerified = this.accountAddress['Flag Verificato'];
             }
+            if(this.accountAddress['Indirizzo Estero'] === true)
+            {
+                this.fieldsToUpdate['BillingAddressIsForeign__c'] = true;
+                this.fieldsToUpdate['BillingIsAddressVerified__c'] = true;
+                this.isVerified = true;
+            }
         }
     }
     //HRAWRM-933 Start 08/11/2021
@@ -455,7 +461,11 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             if(this.contactAddress['Flag Verificato'] !=null){
                 this.fieldsToUpdateContact['MailingIsAddressVerified__c'] = this.contactAddress['Flag Verificato'];
                 this.isVerified2 = this.contactAddress['Flag Verificato'];
-                
+            }
+            if(this.contactAddress['Indirizzo Estero'] === true)
+            {
+                this.fieldsToUpdateContact['MailingIsAddressVerified__c'] = true;
+                this.isVerified2 = true;
             }
         }
     }
@@ -646,6 +656,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             if(mobilePhone.value.length<9 || mobilePhone.value.length > 10){
                 isValidated=false;
                 messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre!";
+            }
+            if( String(mobilePhone.value).charAt(0)!='3' ){
+                isValidated=false;
+                messageError=" Il numero di cellulare deve iniziare con il numero 3!";
             }
         }
         if(!(mobilephoneNumber.value=== undefined || mobilephoneNumber.value.trim()==='')){

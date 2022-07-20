@@ -1059,8 +1059,9 @@ handleAddressValues(servicepointretrieveddata){
             break;
             case 'codiceComuneSAP':
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
-                this.codComuneSAP = servicepointretrieveddata[key] ;
-                this.theRecord['Codice Comune SAP'] = servicepointretrieveddata[key] ;
+                this.codcomunesap = servicepointretrieveddata[key]; 
+                this.codComuneSAP = servicepointretrieveddata[key];
+                this.theRecord['Codice Comune SAP'] = servicepointretrieveddata[key];
             break;
             case 'CodiceViaStradarioSAP':
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
@@ -1069,7 +1070,8 @@ handleAddressValues(servicepointretrieveddata){
             break;
             case 'codiceViaStradarioSAP':
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
-                this.codStradarioSAP = servicepointretrieveddata[key] ;
+                this.codstradariosap = servicepointretrieveddata[key];
+                this.codStradarioSAP = servicepointretrieveddata[key];
                 this.theRecord['Codice Via Stradario SAP'] = servicepointretrieveddata[key] ;
             break;
             case 'IndirizzoEstero':
@@ -1092,6 +1094,7 @@ handleAddressValues(servicepointretrieveddata){
             case 'flagVerificato':
 
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.flagverificato = servicepointretrieveddata[key] ;
                 this.flagVerificato = servicepointretrieveddata[key] ;
                 this.theRecord['Flag Verificato'] = this.flagVerificato;
 
@@ -1121,6 +1124,8 @@ handleAddressValues(servicepointretrieveddata){
         }
 
     });
+    console.log('cod')
+    console.log('### TheRecord >>> ' + JSON.stringify(this.theRecord));
     console.log('handleAddressValues END ');
 }
 
@@ -1572,7 +1577,8 @@ disabledverifyFieldsAddressDisabled(){
 
         console.log('connectedCallback indirizzo estero : ' + JSON.stringify(this.IndEstero));
         this.disableFieldByIndEstero();
-        if(this.processtype !== undefined && this.processtype!= null && this.processtype!='' && this.processtype!='Reclamo Scritto/Rich. Info' && this.processType != 'Comportamento Venditori HC' && this.processType != 'Comportamento Altri Venditori'){
+        if(this.processtype !== undefined && this.processtype!= null && this.processtype!='' && this.processtype!=='Reclamo Scritto/Rich. Info' && !this.processtype.localeCompare('Venditori') === -1){
+            console.log('Entering if with processtype >>> ' + this.processtype);
             this.disableAll=true;
             this.disableCodComuneSap=true;
             this.disableCap=true;

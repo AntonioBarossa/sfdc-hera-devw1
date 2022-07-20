@@ -101,6 +101,21 @@
                 <default>false</default>
                 <label>Target Sinergie</label>
             </value>
+            <value>
+                <fullName>Comdata</fullName>
+                <default>false</default>
+                <label>Comdata</label>
+            </value>
+            <value>
+                <fullName>Hera Spa</fullName>
+                <default>false</default>
+                <label>Hera Spa</label>
+            </value>
+            <value>
+                <fullName>Estenergy</fullName>
+                <default>false</default>
+                <label>Estenergy</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

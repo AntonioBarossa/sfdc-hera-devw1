@@ -39,6 +39,9 @@
                         <valueListItems>
                             <value>ChangeOwnerOne</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Account.AssignAccountToMe</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -96,7 +99,7 @@
                             <value>Account.Scheda_Cliente</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Account.Escalation</value>
+                            <value>Account.AssignAccountToMe</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

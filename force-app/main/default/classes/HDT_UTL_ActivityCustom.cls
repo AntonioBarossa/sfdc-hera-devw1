@@ -321,9 +321,90 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     }
 
     public static void inheritUserFields(List<wrts_prcgvr__Activity__c> activites) {
-        User user = [SELECT Id, CreatorGroup__c FROM User WHERE Id =: UserInfo.getUserId()];
+        User user = [SELECT Id, CreatorGroup__c, LoginChannel__c, Station__c FROM User WHERE Id =: UserInfo.getUserId()];
+        List<String> excludedActivityType = new List<String>{'chiamata outbound', 'chiamata inbound', 'sportello'};
         for(wrts_prcgvr__Activity__c activity : activites) {
             activity.CreatorGroup__c = user.CreatorGroup__c;
+            if (!activity.IsMigrated__c && String.isNotBlank(activity.Type__c) && !excludedActivityType.contains(activity.Type__c.toLowerCase())){
+                activity.Place__c	 = user.Station__c;
+                activity.LoginChannel__c = user.LoginChannel__c;
+            }
+        }
+    }
+
+    public static void setConvertCloseStatus(List<wrts_prcgvr__Activity__c> activites){
+        List<String> stateToConvert = new List<String>{'completed'};
+        Set<String> closedStatus = new Set<String>();
+        for (wrts_prcgvr__ActivityStatusSetting__c config : wrts_prcgvr__ActivityStatusSetting__c.getAll().values()){
+            if (String.isNotBlank(config.wrts_prcgvr__ApiName__c) && config.wrts_prcgvr__IsClosed__c){
+                closedStatus.add(config.wrts_prcgvr__ApiName__c.toUpperCase());
+            }
+        }
+        for(wrts_prcgvr__Activity__c activity : activites) {
+            if (String.isNotBlank(activity.wrts_prcgvr__Status__c) && stateToConvert.contains(activity.wrts_prcgvr__Status__c.toLowerCase())){
+                activity.wrts_prcgvr__Status__c = 'Chiusa';
+            }
+            if (activity.EndDate__c == null && String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase())){
+                activity.EndDate__c = Date.today();
+            }
+            if (activity.ActivityEndTime__c == null && String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase())){
+                activity.ActivityEndTime__c = DateTime.now();
+            }
+        }
+    }
+
+    public static void checkForProcessFields(List<wrts_prcgvr__Activity__c> newActivities, Map<Id,wrts_prcgvr__Activity__c> oldActivitiesMap){
+        Set<Id> caseId = new Set<Id>();
+        Set<Id> orderId = new Set<Id>();
+        for (wrts_prcgvr__Activity__c act :newActivities){
+            if (conditionForProcessFields(act,  oldActivitiesMap.get(act.Id), 'Case__c')){
+                caseId.add(act.Case__c);
+            }else if (conditionForProcessFields(act,  oldActivitiesMap.get(act.Id), 'Order__c')){
+                orderId.add(act.Order__c);
+            }else if (act.Case__c == null && act.Order__c == null){
+                act.ParentCluster__c = null;
+                act.ParentProcess__c = null;
+                act.ParentSubprocess__c = null;
+            }
+        }
+        Map<Id,Case> caseFieldProcessMap = new Map<Id,Case>();
+        Map<Id,Order> orderFieldProcessMap = new Map<Id,Order>();
+        if (!caseId.isEmpty()){
+            caseFieldProcessMap = new Map<Id,Case>([SELECT id,Cluster__c,Type,Subprocess__c  FROM Case WHERE Id IN: caseId WITH SECURITY_ENFORCED]);
+        }
+        if (!orderId.isEmpty()){
+            orderFieldProcessMap = new Map<Id,Order>([SELECT id,ProcessType__c,Subprocess__c FROM Order WHERE Id IN: orderId WITH SECURITY_ENFORCED]);
+        }
+        if (!caseFieldProcessMap.isEmpty() || !orderFieldProcessMap.isEmpty()){
+            setAllProcessFields(newActivities, caseFieldProcessMap, orderFieldProcessMap);
+        }
+    }
+
+    private static Boolean conditionForProcessFields(wrts_prcgvr__Activity__c newAct,wrts_prcgvr__Activity__c oldAct, String fieldToCheck){
+        switch on fieldToCheck {
+            when 'Case__c' {
+                return newAct.Case__c != null && (oldAct == null || newAct.Case__c != oldAct.Case__c || (String.isBlank(newAct.ParentCluster__c)&&String.isBlank(newAct.ParentProcess__c)&&String.isBlank(newAct.ParentSubprocess__c)));
+            }
+            when 'Order__c' {
+                return newAct.Case__c == null && newAct.Order__c != null && (oldAct == null || newAct.Order__c != oldAct.Order__c || (String.isBlank(newAct.ParentProcess__c)&&String.isBlank(newAct.ParentSubprocess__c)));
+            }
+        }
+        return false; 
+    }
+
+    private static void setAllProcessFields(List<wrts_prcgvr__Activity__c> activities,Map<Id,Case> caseFieldProcessMap,Map<Id,Order> orderFieldProcessMap){
+        for (wrts_prcgvr__Activity__c act : activities){
+            if (act.Case__c != null && caseFieldProcessMap.containsKey(act.Case__c)){
+                Case c = caseFieldProcessMap.get(act.Case__c);
+                act.ParentCluster__c = c.Cluster__c;
+                act.ParentProcess__c = c.Type;
+                act.ParentSubprocess__c = c.Subprocess__c;
+            }else if (act.Order__c != null && orderFieldProcessMap.containsKey(act.Order__c)){
+                Order o = orderFieldProcessMap.get(act.Order__c);
+                act.ParentCluster__c = null;
+                act.ParentProcess__c = o.ProcessType__c;
+                act.ParentSubprocess__c = o.Subprocess__c;
+            }
         }
     }
 }

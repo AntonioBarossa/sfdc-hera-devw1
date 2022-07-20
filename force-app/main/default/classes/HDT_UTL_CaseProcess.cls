@@ -83,7 +83,7 @@ public with sharing class HDT_UTL_CaseProcess {
                        a = mapAccount.get(newCase.AccountId);
                    }
                    if(a != null && c != null && newCase.Lead__c == null){
-                    commList.add(commUTL.instanceCommunicationLog(newCase.cluster__c,newCase.type,newCase.Phase__c,newCase.status,newCase.CancellationReasonDescription__c,'',newCase.id,newCase.ContactId,newCase.AccountId,c != null ? c.company__c : 'ND',a != null ? a.CompanyOwner__c : ''));
+                    commList.add(commUTL.instanceCommunicationLog(newCase.cluster__c,newCase.type,newCase.Phase__c,newCase.status,newCase.CancellationReasonDescription__c,'',newCase.id,newCase.ContactId,newCase.AccountId, STRING.isNotBlank(c?.company__c) ? c.company__c : 'ND',a != null ? a.CompanyOwner__c : ''));
                    }  
                }
            }
@@ -344,4 +344,18 @@ public with sharing class HDT_UTL_CaseProcess {
         }
         HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
     }
+
+    public static void setCloseStatusForAll(List<Case> caseList){
+        for(Case c : caseList) {
+            setCloseStatus(c);
+        }
+    }
+
+    public static void setCloseStatus(Case c){
+        if ('Chiuso'.equalsIgnoreCase(c.Status)){
+            c.Status = 'Closed';
+        }
+    }
+
+
 }

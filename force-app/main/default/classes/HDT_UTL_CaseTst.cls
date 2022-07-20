@@ -161,4 +161,27 @@ public with sharing class HDT_UTL_CaseTst {
         
     }
 
+
+    @IsTest
+    static void createServiceRequestFromCasesTst()
+    {
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        ServicePoint__c myServicePoint = servPointList[0];
+        myServicePoint.CommoditySector__c = 'Energia Elettrica';
+        update myServicePoint;
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, null);
+
+        Formula.recalculateFormulas(caseList);
+
+        Test.startTest();
+            List<ServiceRequest__c> result = HDT_UTL_Case.createServiceRequestFromCases(caseList);
+        Test.stopTest();
+
+        System.assertEquals(true, !result.isEmpty(), 'Service Request create con successo');
+
+    }
+
 }

@@ -3,8 +3,8 @@
     <actionCalls>
         <name>RedirectToCase</name>
         <label>RedirectToCase</label>
-        <locationX>974</locationX>
-        <locationY>1946</locationY>
+        <locationX>1106</locationX>
+        <locationY>1766</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -99,7 +99,7 @@
     <assignments>
         <name>assign_service_point_conferimento</name>
         <label>assign service point</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>theCase.ServicePointCode__c</assignToReference>
@@ -178,7 +178,7 @@
     <assignments>
         <name>assign_service_point_formulari</name>
         <label>assign service point</label>
-        <locationX>490</locationX>
+        <locationX>578</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>theCase.ServicePointCode__c</assignToReference>
@@ -257,7 +257,7 @@
     <assignments>
         <name>assign_service_point_pap</name>
         <label>assign service point</label>
-        <locationX>930</locationX>
+        <locationX>1106</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>theCase.ServicePointCode__c</assignToReference>
@@ -329,7 +329,7 @@
     <assignments>
         <name>assign_service_point_superficie</name>
         <label>assign service point</label>
-        <locationX>1810</locationX>
+        <locationX>2162</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>theCase.ServicePointCode__c</assignToReference>
@@ -402,7 +402,7 @@
     <decisions>
         <name>isCompatible_conferimento</name>
         <label>isCompatible</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Wizard_Processo</targetReference>
@@ -431,7 +431,7 @@
     <decisions>
         <name>isCompatible_formulari</name>
         <label>isCompatible</label>
-        <locationX>490</locationX>
+        <locationX>578</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Wizard_Processo</targetReference>
@@ -460,7 +460,7 @@
     <decisions>
         <name>isCompatible_pap</name>
         <label>isCompatible</label>
-        <locationX>930</locationX>
+        <locationX>1106</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Wizard_Processo</targetReference>
@@ -489,7 +489,7 @@
     <decisions>
         <name>isCompatible_superficie</name>
         <label>isCompatible</label>
-        <locationX>1810</locationX>
+        <locationX>2162</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Wizard_Processo_0</targetReference>
@@ -518,8 +518,8 @@
     <decisions>
         <name>Next_Step</name>
         <label>Next Step</label>
-        <locationX>974</locationX>
-        <locationY>1610</locationY>
+        <locationX>1106</locationX>
+        <locationY>1430</locationY>
         <defaultConnector>
             <targetReference>In_Lavorazione_Case</targetReference>
         </defaultConnector>
@@ -558,7 +558,7 @@
     <decisions>
         <name>Tipo_Generica</name>
         <label>Tipo Generica</label>
-        <locationX>974</locationX>
+        <locationX>1106</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -718,7 +718,7 @@
     <recordCreates>
         <name>insert_the_case_conferimento</name>
         <label>insert the case</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Flow_Compatibility_conferimento</targetReference>
@@ -728,7 +728,7 @@
     <recordCreates>
         <name>insert_the_case_formulari</name>
         <label>insert the case</label>
-        <locationX>490</locationX>
+        <locationX>578</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Flow_Compatibility_formulari</targetReference>
@@ -738,7 +738,7 @@
     <recordCreates>
         <name>insert_the_case_pap</name>
         <label>insert the case</label>
-        <locationX>930</locationX>
+        <locationX>1106</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Flow_Compatibility_pap</targetReference>
@@ -748,7 +748,7 @@
     <recordCreates>
         <name>insert_the_case_superficie</name>
         <label>insert the case</label>
-        <locationX>1810</locationX>
+        <locationX>2162</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Flow_Compatibility_superficie</targetReference>
@@ -758,7 +758,7 @@
     <recordLookups>
         <name>getAccount</name>
         <label>getAccount</label>
-        <locationX>974</locationX>
+        <locationX>1106</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -779,8 +779,8 @@
     <recordUpdates>
         <name>In_Lavorazione_Case</name>
         <label>In Lavorazione Case</label>
-        <locationX>1194</locationX>
-        <locationY>1730</locationY>
+        <locationX>1326</locationX>
+        <locationY>1550</locationY>
         <connector>
             <targetReference>RedirectToCase</targetReference>
         </connector>
@@ -803,8 +803,8 @@
     <recordUpdates>
         <name>update_Case</name>
         <label>update Case</label>
-        <locationX>974</locationX>
-        <locationY>1490</locationY>
+        <locationX>710</locationX>
+        <locationY>1118</locationY>
         <connector>
             <targetReference>Next_Step</targetReference>
         </connector>
@@ -855,7 +855,7 @@
     <screens>
         <name>Selezione_Fornitura_Conferimento</name>
         <label>Selezione Fornitura</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -876,7 +876,7 @@
     <screens>
         <name>Selezione_Fornitura_Formulari</name>
         <label>Selezione Fornitura</label>
-        <locationX>490</locationX>
+        <locationX>578</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -897,7 +897,7 @@
     <screens>
         <name>Selezione_Fornitura_Pap</name>
         <label>Selezione Fornitura</label>
-        <locationX>930</locationX>
+        <locationX>1106</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -918,7 +918,7 @@
     <screens>
         <name>Selezione_Fornitura_Superficie</name>
         <label>Selezione Fornitura</label>
-        <locationX>1810</locationX>
+        <locationX>2162</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -939,8 +939,8 @@
     <screens>
         <name>Wizard_Processo</name>
         <label>Wizard Processo</label>
-        <locationX>974</locationX>
-        <locationY>1370</locationY>
+        <locationX>710</locationX>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1130,7 +1130,7 @@
     <screens>
         <name>Wizard_Processo_0</name>
         <label>Wizard Processo</label>
-        <locationX>1942</locationX>
+        <locationX>2294</locationX>
         <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1240,7 +1240,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>848</locationX>
+        <locationX>980</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>getAccount</targetReference>
@@ -1267,7 +1267,7 @@
     <subflows>
         <name>Flow_Compatibility_conferimento</name>
         <label>Flow Compatibility</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>isCompatible_conferimento</targetReference>
@@ -1284,7 +1284,7 @@
     <subflows>
         <name>Flow_Compatibility_formulari</name>
         <label>Flow Compatibility</label>
-        <locationX>490</locationX>
+        <locationX>578</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>isCompatible_formulari</targetReference>
@@ -1301,7 +1301,7 @@
     <subflows>
         <name>Flow_Compatibility_pap</name>
         <label>Flow Compatibility</label>
-        <locationX>930</locationX>
+        <locationX>1106</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>isCompatible_pap</targetReference>
@@ -1318,7 +1318,7 @@
     <subflows>
         <name>Flow_Compatibility_superficie</name>
         <label>Flow Compatibility</label>
-        <locationX>1810</locationX>
+        <locationX>2162</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>isCompatible_superficie</targetReference>
@@ -1335,8 +1335,8 @@
     <subflows>
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
-        <locationX>754</locationX>
-        <locationY>1730</locationY>
+        <locationX>886</locationX>
+        <locationY>1550</locationY>
         <connector>
             <targetReference>RedirectToCase</targetReference>
         </connector>

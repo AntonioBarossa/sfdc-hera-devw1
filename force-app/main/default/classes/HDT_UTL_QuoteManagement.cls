@@ -121,6 +121,21 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 
 		try 
 		{
+
+			powerAdjustment = powerAdjustment != null ? powerAdjustment : '';
+			caliber = caliber != null ? caliber : '';
+			checkPrPc = checkPrPc != null ? checkPrPc : '';
+			phaseType = phaseType != null ? phaseType : '';
+			rangePc = rangePc != null ? rangePc : '';
+			rangePr = rangePr != null ? rangePr : '';
+			displacementDistance = displacementDistance != null ? displacementDistance : '';
+			voltage = voltage != null ? voltage : '';
+			operationType = operationType != null ? operationType : '';
+			commodity = commodity != null ? commodity : '';
+			energyUseType = energyUseType != null ? energyUseType : '';
+			vendDist = vendDist != null ? vendDist : '';
+			voltagePhase = voltagePhase != null ? voltagePhase : '';
+
 			returnQuote = Database.query('SELECT Id, CausalCode__c, QuoteType__c, OperationCode__c FROM QuoteManagement__c WHERE' +
 			+'(AdegPotDisp__c =\'' + String.escapeSingleQuotes(powerAdjustment) + '\' OR AdegPotDisp__c = null) '
 			+'AND (Caliber__c = \''+ String.escapeSingleQuotes(caliber) + '\' OR Caliber__c = null) ' 

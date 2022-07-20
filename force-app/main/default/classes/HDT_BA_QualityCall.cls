@@ -9,7 +9,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
     public Database.QueryLocator start(Database.BatchableContext bc) {
 
         String query = 'SELECT Id, OrderNumber, IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c FROM Order '+
-        'Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND VasSubtype__c != \'Analisi Consumi\'';
+        'Where Phase__c NOT IN (\'In attesa validazione\', \'Accettazione Voltura\', \'Da Inviare\', \'Bozza\',  \'In attesa conferma cliente\', \'Completata\',\'Annullato\',\'Credit Check KO\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND VasSubtype__c != \'Analisi Consumi\'';
         return Database.getQueryLocator(query);
     }
 
@@ -84,11 +84,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
             for (ComfortQualityCall__c cqc : docValidList) {
                 if (
-                    'Documentazione Validata'.equalsIgnoreCase(ord.Phase__c)
-                    && cqc.Process__c == ord.RecordType.DeveloperName
-                    && cqc.Channel__c == ord.Channel__c
-                    && cqc.CustomerType__c == ord.CustomerCategory__c
-                    && cqc.QualitySignatureMethod__c == ord.SignatureMethod__c
+                    'Documentazione Validata'.equalsIgnoreCase(ord.Phase__c) && cqc.Process__c == ord.RecordType.DeveloperName && cqc.Channel__c == ord.Channel__c && cqc.CustomerType__c == ord.CustomerCategory__c && cqc.QualitySignatureMethod__c == ord.SignatureMethod__c
                 ) {
                     startDate = HDT_UTL_Utils.exctrPhaseTransDateFromStory(ord.PhaseStory__c, 'Documentazione Validata');
                     break;
