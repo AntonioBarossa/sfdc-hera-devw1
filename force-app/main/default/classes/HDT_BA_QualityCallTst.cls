@@ -23,8 +23,10 @@ public with sharing class HDT_BA_QualityCallTst {
             
             HDT_UTL_DataFactoryTst.pClickInstance();
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
-            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa conferma cliente','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
-
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Ammissibilità OK','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);  
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Motore VAS','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);  
+             
             List<AgentMatrix__c> agentMatrix = HDT_UTL_DataFactoryTst.createAgentMatrix(1,true,'Sportello') ; 
             agentMatrix[0].IsMonitoring__c=true;
             agentMatrix[0].AgencyCode__c='001';
@@ -42,7 +44,8 @@ public with sharing class HDT_BA_QualityCallTst {
             List<Order> parentOrders = HDT_UTL_DataFactoryTst.createOrder(1,true,accId,'Bozza');
             Id parentOrderId = parentOrders[0].id;
             parentOrders[0].Contact__c = contactId;
-            parentOrders[0].phase__c = 'In attesa conferma cliente';
+            parentOrders[0].VASType__c = 'VAS Fatturabili';
+            parentOrders[0].phase__c = 'Comunicazione verso Heroku';
             parentOrders[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
             update parentOrders;
             
@@ -57,13 +60,13 @@ public with sharing class HDT_BA_QualityCallTst {
             orderss[0].CreditCheckDescription__c='test1';
             orderss[0].QualityCall__c=true;  
             orderss[0].ComfortCallDaysDue__c=null;
-            orderss[0].WizardCompletedDate__c=date.today()-60;
+            orderss[0].WizardCompletedDate__c=date.today().addDays(-60);
             orderss[0].ParentOrder__c = parentOrderId;
             orderss[0].Contact__c = contactId;
-            orderss[0].QualityCallUnique__c=false;
+            orderss[0].QualityCallUnique__c=true;
             orderss[0].AgencyCode__c='001';
-            orderss[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
-            orderss[0].Phase__c = 'Bozza';
+            orderss[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
+            orderss[0].Phase__c = 'Ammissibilità OK';
             insert orderss;
             
             List<Campaign> campaigns = HDT_UTL_DataFactoryTst.createCampaign(1,false);
@@ -77,10 +80,10 @@ public with sharing class HDT_BA_QualityCallTst {
             moreOrders[0].ParentOrder__c = parentOrderId;
             moreOrders[0].Contact__c = anotherContactId;
             moreOrders[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
-            moreOrders[0].Phase__c = 'In attesa conferma cliente';
+            moreOrders[0].Phase__c = 'Bozza';
             insert moreOrders;
         
-            List<Order> ordersToday = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
+            List<Order> ordersToday = HDT_UTL_DataFactoryTst.createOrder(2,false,accId,'Bozza');
             ordersToday[0].Username__c='test';
             ordersToday[0].Password__c='test1';
             ordersToday[0].NotRegisteredMeterCase__c=true;
@@ -92,11 +95,30 @@ public with sharing class HDT_BA_QualityCallTst {
             ordersToday[0].QualityCall__c=true;  
             ordersToday[0].ComfortCallDaysDue__c=null;
             ordersToday[0].WizardCompletedDate__c=date.today();
-            ordersToday[0].QualityCallUnique__c=false;
+            ordersToday[0].QualityCallUnique__c=true;
             ordersToday[0].ParentOrder__c = parentOrderId;
             ordersToday[0].Contact__c = contactId;
-            ordersToday[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
-            ordersToday[0].Phase__c = 'Bozza';
+            ordersToday[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
+            ordersToday[0].VASType__c = 'VAS Fatturabili';
+            ordersToday[0].Phase__c = 'Comunicazione verso Heroku';
+            
+            ordersToday[1].Username__c='test2';
+            ordersToday[1].Password__c='test21';
+            ordersToday[1].NotRegisteredMeterCase__c=true;
+            ordersToday[1].EffectiveDate__c=date.today();
+            ordersToday[1].PowerCommitted__c=2;
+            ordersToday[1].ImplantType__c='13A0-Usi di Abitazione BT';
+            ordersToday[1].RequestOption__c='Domestici-TD';
+            ordersToday[1].CreditCheckDescription__c='test2';
+            ordersToday[1].QualityCall__c=true;  
+            ordersToday[1].ComfortCallDaysDue__c=null;
+            ordersToday[1].WizardCompletedDate__c=date.today().addDays(-100);
+            ordersToday[1].QualityCallUnique__c=true;
+            ordersToday[1].ParentOrder__c = parentOrderId;
+            ordersToday[1].Contact__c = contactId;
+            ordersToday[1].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
+            ordersToday[1].VASType__c = 'VAS Fatturabili';
+            ordersToday[1].Phase__c = 'Comunicazione verso Heroku';
             insert ordersToday;
 
             List<Contract> con = HDT_UTL_DataFactoryTst.createContract(1,true,accId);
@@ -105,7 +127,16 @@ public with sharing class HDT_BA_QualityCallTst {
 
             List<Campaign> campaign = HDT_UTL_DataFactoryTst.createCampaign(1,false);
             campaign[0].Name='Quality Campaign';
+            campaign[0].CompanyOwner__c ='MMS';
+            campaign[0].Tipology__c = 'Quality Call';
+            campaign[0].Status = 'In Corso';
             insert campaign;
+
+            List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(1, false);
+            insert leads;
+
+            List<CampaignMember> campaignMember = HDT_UTL_DataFactoryTst.createCampaignMember( false, campaign[0].Id, leads, contacts);
+            insert campaignMember;
 
             List<wrts_prcgvr__Activity__c> activity = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,accId);
             activity[0].order__c=orderss[0].Id;

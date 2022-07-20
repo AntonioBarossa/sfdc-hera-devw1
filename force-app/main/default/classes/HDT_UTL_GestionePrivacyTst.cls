@@ -533,5 +533,23 @@ public class HDT_UTL_GestionePrivacyTst {
         System.assertEquals('test1@gmail.com', contEm.EmailAddress, 'The ContactPointEmail has not been updated');
         System.assertNotEquals(null, contEm, 'The ContactPointEmail has not been created');
     }
-        
+
+    @isTest
+    public static void testSetIndividualField(){
+        Contact c = [SELECT Id, AccountId FROM Contact WHERE Account.Name = 'myAccPartnerName'];
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, c.AccountId, c.Id, null,null,null);
+        insert new DocumentalEnvelopeAttachment__c(
+            Case__c = caseList[0].Id,
+            AttachmentCode__c = 'MOD_SOC_PRIVACY',
+            Version__c = '01_01',
+            Required__c = true
+
+        );
+        Test.startTest();
+            List<HDT_UTL_GestionePrivacy.HDT_WRP_SetIndividualFieldOutput> response = HDT_UTL_GestionePrivacy.setIndividualField(new List<String>{caseList[0].Id});
+        Test.stopTest();
+        System.assertEquals('SOC', response[0].company, 'Wrong company');
+        System.assertEquals('01_01', response[0].version, 'Wrong version');
+
     }
+}

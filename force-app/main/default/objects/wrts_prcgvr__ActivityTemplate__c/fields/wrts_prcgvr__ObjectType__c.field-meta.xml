@@ -43,6 +43,11 @@
                 <default>false</default>
                 <label>Order</label>
             </value>
+            <value>
+                <fullName>Asset</fullName>
+                <default>false</default>
+                <label>Asset</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

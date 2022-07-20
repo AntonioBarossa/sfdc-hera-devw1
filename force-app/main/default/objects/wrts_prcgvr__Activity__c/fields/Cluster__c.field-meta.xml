@@ -26,6 +26,7 @@
                 <fullName>Attivazioni - Generiche</fullName>
                 <default>false</default>
                 <label>Attivazioni - Generiche</label>
+                <isActive>false</isActive>
             </value>
             <value>
                 <fullName>Autolettura</fullName>

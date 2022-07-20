@@ -30,6 +30,7 @@ public class HDT_QR_RateCategoryTst{
 			test.startTest();
 
 			List<RateCategory__c> tRateCat=HDT_QR_RateCategory.getRateList('testCommodity', 'testDistCode', 'testProduct', 'testFornitura');
+			List<RateCategory__c> tRateCatAll=HDT_QR_RateCategory.getAllRecords();
 
 			test.stopTest();
 

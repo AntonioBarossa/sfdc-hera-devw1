@@ -520,6 +520,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         anagAlignCases.add(anagAlignCase);
         Formula.recalculateFormulas(anagAlignCases);
 
+        List<ServiceRequest__c> serviceRequestList = HDT_UTL_Case.createServiceRequestFromCases(anagAlignCases);
+        HDT_UTL_DatabaseService.insertSObject(serviceRequestList);
+
         anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
         anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
         anagAlignCase.Phase__c = 'Da Inviare';

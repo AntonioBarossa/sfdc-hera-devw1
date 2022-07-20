@@ -8,6 +8,7 @@ export default class HdtAccountStatementTabs extends LightningElement {
     @track tabList;
     //@track defaultTab = 'EC';
     @api defaultTab;
+    @api defaultRequestObj;
     showError = false;
     @track spinnerObj = {
         spinner: false,

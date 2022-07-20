@@ -91,6 +91,7 @@
         });
 
         var parentId;
+        var caseTabId;
         workspaceAPI.getAllTabInfo().then(function(response) {
             console.log('----------');
             response.forEach((element) => {
@@ -106,9 +107,12 @@
                     }
                     else if(element.pageReference.attributes.recordId === orderId){
                         parentId = element.tabId;
+                    } else if(element.pageReference.attributes.recordId === parentRecordId){
+                        caseTabId=element.tabId;
                     }
                 }
             });
+            parentId=parentId? parentId : caseTabId;
             console.log('----------');
             console.log('# parentId -> ' + parentId);
 
@@ -152,7 +156,7 @@
                 console.log('# wizard tab id: ' + newTabId);
                 workspaceAPI.setTabLabel({ tabId: newTabId, label: 'Wizard' });
                 workspaceAPI.setTabIcon({ tabId: newTabId, icon: 'custom:custom83' });
-
+                
                 workspaceAPI.closeTab({ tabId: tabToClose }).then(function(success) {
                     if (success) {
                         workspaceAPI.focusTab({tabId: newTabId});

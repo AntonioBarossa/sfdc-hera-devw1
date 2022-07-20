@@ -4,6 +4,7 @@ import getOrdersList from '@salesforce/apex/HDT_LC_SaleVas.getOrdersList';
 import getContractsList from '@salesforce/apex/HDT_LC_SaleVas.getContractsList';
 import getContractsAndOrdersMap from '@salesforce/apex/HDT_LC_SaleVas.getContractsAndOrdersMap';
 import confirmAction from '@salesforce/apex/HDT_LC_SaleVas.confirmAction';
+import handleNotMigratedContract from '@salesforce/apex/HDT_LC_SaleVas.handleNotMigratedContract';
 import checkTransition from '@salesforce/apex/HDT_LC_SaleVas.transitionCheckNew';
 
 export default class hdtSaleVas extends LightningElement {
@@ -27,6 +28,7 @@ export default class hdtSaleVas extends LightningElement {
     selectedOption = '';
     confirmedSelectedOption = '';
     inputText = '';
+    labelSelectedOptions = '';
     isLoading = false;
     @api disabledInput;
     totalPages = 0;
@@ -53,7 +55,8 @@ export default class hdtSaleVas extends LightningElement {
         // {'label': 'Ordini in corso', 'value': 'Ordini in corso'},
         // {'label': 'Contratti Attivi', 'value': 'Contratti Attivi'},
         {'label': 'Contratto attivo/ordine in corso (solo per fatturazione)', 'value': 'Contratto attivo/ordine in corso'},
-        {'label': 'Senza contratto', 'value': 'VAS stand alone'}
+        {'label': 'Senza contratto', 'value': 'VAS stand alone'},
+        {'label': 'Contratto non migrato', 'value': 'Contratto non migrato'}
     ];
 
     ordersListcolumns = [
@@ -111,6 +114,14 @@ export default class hdtSaleVas extends LightningElement {
 
             case 'VAS stand alone':
                 this.confirmedSelectedOption = 'VAS stand alone';
+                this.isInputVisible = true;
+                this.labelSelectedOptions = 'Comune';
+                this.isCompleteListVisible = false;
+                break;
+
+            case 'Contratto non migrato':
+                this.confirmedSelectedOption = 'Contratto non migrato';
+                this.labelSelectedOptions = 'Codice contratto';
                 this.isInputVisible = true;
                 this.isCompleteListVisible = false;
                 break;
@@ -249,108 +260,189 @@ export default class hdtSaleVas extends LightningElement {
     //Pagination end
 
     handleInputText(event){
-        this.inputText = event.detail.value;
+        if ( this.labelSelectedOptions === 'Comune' && event.detail.value === null ){
+
+            const toastWarning = new ShowToastEvent({
+                title: 'Warning',
+                message: 'Necessario inserire un comune!',
+                variant: 'warning'
+            });
+            this.dispatchEvent(toastWarning);
+
+        } else {
+            this.inputText = event.detail.value;
+        }
     }
 
     handleConfirmEvent(){
         this.isLoading = true;
         console.log('********' + JSON.stringify(this.sale));
         
-        checkTransition({
+        if(this.selectedOption == 'Contratto non migrato'){
 
-            salesId : this.sale.Id,
-            comune : this.inputText,
-            tipologia : this.selectedOption
+            handleNotMigratedContract({
+                contract:this.inputText,
+                sale: this.sale
+                }).then(data =>{
+                this.isLoading = false;
+                // this.isModalVisible = false;
+                this.isInputVisible = false;
+                this.isOrderListVisible = false;
+                this.isContractsListVisible = false;
+                this.isCompleteListVisible = false;
+                this.selectedOption = '';
+                this.confirmedSelectedOption = '';
+                this.inputText = '';
+                this.totalPages = 0;
+                let errorMessage = '';
+                
+                if(data == 'Errore Data Cessazione'){
+                    errorMessage = 'Data Cessazione non valida. Verificare e riprovare.';
+                }
+                else if(data == 'Errore Contratto Assente'){
+                    errorMessage = 'Contratto non trovato. Verificare e riprovare.';
+                }
 
-        }).then(data =>{
-            let dat = data;
+                if(data == 'Success')
+                {
+                    //this.dispatchEvent(new CustomEvent('createvas'));
+                    const toastSuccessMessage = new ShowToastEvent({
+                        title: 'Successo',
+                        message: 'VAS confermato con successo',
+                        variant: 'success'
+                    });
+                    this.dispatchEvent(toastSuccessMessage);
 
-            if(dat.res || (dat.messRes === 'transitorio' && this.selectedOption !== 'VAS stand alone')){
-                confirmAction({
-                    selectedOption:this.confirmedSelectedOption,
-                    order:this.selectedOrder,
-                    contract:this.selectedContract,
-                    supplyCity:this.inputText,
-                    accountId: this.accountId,
-                    sale: this.sale
-                    }).then(data =>{
-                    this.isLoading = false;
-                    // this.isModalVisible = false;
-                    this.isInputVisible = false;
-                    this.isOrderListVisible = false;
-                    this.isContractsListVisible = false;
-                    this.isCompleteListVisible = false;
-                    this.selectedOption = '';
-                    this.confirmedSelectedOption = '';
-                    this.inputText = '';
-                    this.totalPages = 0;
-                    if(dat.res)
-                    {
-                        this.dispatchEvent(new CustomEvent('createvas'));
+                    //this.dispatchEvent(new CustomEvent('createvas'));
+                    const toastWarning = new ShowToastEvent({
+                        title: 'Warning',
+                        message: 'E stato creato un caso transitorio!',
+                        variant: 'warning'
+                    });
+                    this.dispatchEvent(toastWarning);
+                }
+                else
+                {
+                    //this.dispatchEvent(new CustomEvent('createvas'));
+                    const toastWarning = new ShowToastEvent({
+                        title: 'Error',
+                        message: errorMessage,
+                        variant: 'error'
+                    });
+                    this.dispatchEvent(toastWarning);
+                }
+                this.dispatchEvent(new CustomEvent('salewizard__refreshproductstable', {
+                    bubbles: true,
+                    composed: true
+                }));
+    
+            }).catch(error => {
+                this.isLoading = false;
+                console.log('Error: ', error.body.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: error.body.message,
+                    variant: 'error'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            });
+        }
+        else{
+            checkTransition({
+
+                salesId : this.sale.Id,
+                comune : this.inputText,
+                tipologia : this.selectedOption
+
+            }).then(data =>{
+                let dat = data;
+
+                if(dat.res || (dat.messRes === 'transitorio' && this.selectedOption !== 'VAS stand alone')){
+                    confirmAction({
+                        selectedOption:this.confirmedSelectedOption,
+                        order:this.selectedOrder,
+                        contract:this.selectedContract,
+                        supplyCity:this.inputText,
+                        accountId: this.accountId,
+                        sale: this.sale
+                        }).then(data =>{
+                        this.isLoading = false;
+                        // this.isModalVisible = false;
+                        this.isInputVisible = false;
+                        this.isOrderListVisible = false;
+                        this.isContractsListVisible = false;
+                        this.isCompleteListVisible = false;
+                        this.selectedOption = '';
+                        this.confirmedSelectedOption = '';
+                        this.inputText = '';
+                        this.totalPages = 0;
+                        if(dat.res)
+                        {
+                            this.dispatchEvent(new CustomEvent('createvas'));
+                            const toastSuccessMessage = new ShowToastEvent({
+                                title: 'Successo',
+                                message: 'VAS confermato con successo',
+                                variant: 'success'
+                            });
+                            this.dispatchEvent(toastSuccessMessage);
+                        }
+                        else
+                        {
+                            this.dispatchEvent(new CustomEvent('createvas'));
+                            const toastWarning = new ShowToastEvent({
+                                title: 'Warning',
+                                message: 'E stato creato un caso transitorio!',
+                                variant: 'warning'
+                            });
+                            this.dispatchEvent(toastWarning);
+                        }
+                        this.dispatchEvent(new CustomEvent('salewizard__refreshproductstable', {
+                            bubbles: true,
+                            composed: true
+                        }));
+            
+                    }).catch(error => {
+                        this.isLoading = false;
+                        console.log('Error: ', error.body.message);
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: error.body.message,
+                            variant: 'error'
+                        });
+                        this.dispatchEvent(toastErrorMessage);
+                    });
+                }else{
+                    if(dat.messRes == 'city'){
+                        this.isLoading = false;
+                        //this.dispatchEvent(new CustomEvent('createvas'));
                         const toastSuccessMessage = new ShowToastEvent({
-                            title: 'Successo',
-                            message: 'VAS confermato con successo',
-                            variant: 'success'
+                            title: 'Error',
+                            message: 'Inserisci un Comune Valido',
+                            variant: 'Error'
+                        });
+                        this.dispatchEvent(toastSuccessMessage);
+                    }else if( dat.messRes == 'AccountMigratoTransitorio' ){
+                        this.isLoading = false;
+                        //this.dispatchEvent(new CustomEvent('createvas'));
+                        const toastSuccessMessage = new ShowToastEvent({
+                            title: 'Error',
+                            message: 'Impossibile effettuare vendita fuori ambito per cliente migrato. Necessario creare un nuovo cliente clone',
+                            variant: 'Error'
+                        });
+                        this.dispatchEvent(toastSuccessMessage);
+                    }else{
+                        this.isLoading = false;
+                        //this.dispatchEvent(new CustomEvent('createvas'));
+                        const toastSuccessMessage = new ShowToastEvent({
+                            title: 'Error',
+                            message: 'VAS Non innescabile per Transitorio',
+                            variant: 'Error'
                         });
                         this.dispatchEvent(toastSuccessMessage);
                     }
-                    else
-                    {
-                        this.dispatchEvent(new CustomEvent('createvas'));
-                        const toastWarning = new ShowToastEvent({
-                            title: 'Warning',
-                            message: 'E stato creato un caso transitorio!',
-                            variant: 'warning'
-                        });
-                        this.dispatchEvent(toastWarning);
-                    }
-                    this.dispatchEvent(new CustomEvent('salewizard__refreshproductstable', {
-                        bubbles: true,
-                        composed: true
-                    }));
-        
-                }).catch(error => {
-                    this.isLoading = false;
-                    console.log('Error: ', error.body.message);
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: error.body.message,
-                        variant: 'error'
-                    });
-                    this.dispatchEvent(toastErrorMessage);
-                });
-            }else{
-                if(dat.messRes == 'city'){
-                    this.isLoading = false;
-                    //this.dispatchEvent(new CustomEvent('createvas'));
-                    const toastSuccessMessage = new ShowToastEvent({
-                        title: 'Error',
-                        message: 'Inserisci un Comune Valido',
-                        variant: 'Error'
-                    });
-                    this.dispatchEvent(toastSuccessMessage);
-                }else if( dat.messRes == 'AccountMigratoTransitorio' ){
-                    this.isLoading = false;
-                    //this.dispatchEvent(new CustomEvent('createvas'));
-                    const toastSuccessMessage = new ShowToastEvent({
-                        title: 'Error',
-                        message: 'Impossibile effettuare vendita fuori ambito per cliente migrato. Necessario creare un nuovo cliente clone',
-                        variant: 'Error'
-                    });
-                    this.dispatchEvent(toastSuccessMessage);
-                }else{
-                    this.isLoading = false;
-                    //this.dispatchEvent(new CustomEvent('createvas'));
-                    const toastSuccessMessage = new ShowToastEvent({
-                        title: 'Error',
-                        message: 'VAS Non innescabile per Transitorio',
-                        variant: 'Error'
-                    });
-                    this.dispatchEvent(toastSuccessMessage);
                 }
-            }
-        });
-       
+            });
+        }
     }
 
     getSelectedOrder(event){

@@ -9,15 +9,19 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     public HDT_UTL_Constants constant = new HDT_UTL_Constants();
     private static HDT_QR_MassiveLoaderProcess massiveLoaderProcessQr = new HDT_QR_MassiveLoaderProcess();
     public List<MassiveLoaderRequestItem__c> requestItemList;
+    public Id requestId;
     public String processName;
     public Map<Integer, String> mapHeaderByPosition = new  Map<Integer, String>();
     public Map<String, Integer> mapHeaderForWrapper = new  Map<String, Integer>(); 
     public Map<Integer, String> mapRequiredByPosition = new  Map<Integer, String>(); 
     public Id recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
     public Id recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
+    public String splitCharacter = HDT_LC_MassiveLoader.getSplitCharacter();
 
-    public String splitCharacter = HDT_LC_MassiveLoader.getSplitCharacter();//'\\|';
-    //public String splitCharacter = ',';
+    public void setRequestId(Id requestId){
+        this.requestId = requestId;
+        System.debug(LoggingLevel.DEBUG, '>>> set this requestId: ' + this.requestId);
+    }
 
     public void setProcess(String processName){
         this.processName = processName;
@@ -280,6 +284,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
             Formula.recalculateFormulas(csList);
             ServiceRequest__c srvRequest;
             for(Case cs : csList){
+                if(cs.Phase__c == 'Bozza Annullata')continue;
                 srvRequest = new ServiceRequest__c();
                 srvRequest.Case__c = cs.Id;
                 srvRequest.ServicePointCode__c = cs.PODPDRFormula__c;
@@ -333,6 +338,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     private static void updateCaseAfterCompatibility(Map<Id, String> incompatibleCaseIdSet, List<Case> savedCase){
 
         for(Case c : savedCase){
+            if(c.Phase__c == 'Bozza Annullata')continue;
             if(incompatibleCaseIdSet.containsKey(c.Id)){
                 c.Phase__c = 'Bozza Annullata';
                 c.Status = 'Closed';

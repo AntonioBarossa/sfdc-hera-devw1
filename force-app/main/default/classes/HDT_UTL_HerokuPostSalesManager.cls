@@ -414,6 +414,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             //String contractCode = reqWrp.requestMap.get('VERTRAG');
             String paymentDate = reqWrp.requestMap.get('DT_CREA');
             String currentDescription = recordCase.Description != null?recordCase.Description:'';
+            String contractAccount = reqWrp.requestMap.get('VKONT');
             String newDescription = '';
             
             Boolean noActionNeeded = false;
@@ -470,6 +471,16 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + ' at line: ' + e.getLineNumber());
                 }
             }
+            /**@frpanico 2022-05-31
+             * Aggiornamento CA
+             */
+            if(contractAccount != null && String.isNotBlank(contractAccount))
+            {
+                BillingProfile__c ca = new BillingProfile__c();
+                ca.Id = recordCase.BillingProfile__c;
+                ca.ContractAccountCode__c = contractAccount;
+                HDT_UTL_DatabaseService.updateSObject(ca);
+            }
             
         }else if(method.equalsIgnoreCase('AddAttivita')){
             String type = reqWrp.requestMap.get('TIPO_ATTIVITA');
@@ -523,9 +534,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         if(expectedExec != null && expectedExec != ''){
             System.debug(LoggingLevel.DEBUG, '#QUOTATIONTYPE -> ' + quotationType);
             System.debug(LoggingLevel.DEBUG, '#NEXTPHASE -> ' +nextPhase);
-            if(quotationType.equalsIgnoreCase('Analitico') && (nextPhase.containsIgnoreCase('Dati Tecnici Ricevuti') || nextPhase.containsIgnoreCase('Ammissibilità OK'))){
+            if(quotationType != null && quotationType.equalsIgnoreCase('Analitico') && (nextPhase.containsIgnoreCase('Dati Tecnici Ricevuti') || nextPhase.containsIgnoreCase('Ammissibilità OK'))){
                 currentCase.ExpectedExecutionTime__c = expectedExec;
-            }else if(!quotationType.equalsIgnoreCase('Analitico')){
+            }else if(quotationType != null && !quotationType.equalsIgnoreCase('Analitico')){
                 currentCase.ExpectedExecutionTime__c = expectedExec;
             }
         }
@@ -771,6 +782,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             }
                             currentCase.Phase__c = 'Bozza';
                             currentCase.Status = 'New';
+                            //Campo riutilizzato per indicare a SAP che la pratica è stata creata da cruscotto
+                            currentCase.PartialOutcome__c = 'Y';
                         }when 'Volture'{
                             currentCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();
                             currentCase.Cluster__c = 'Voltura';

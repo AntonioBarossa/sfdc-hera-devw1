@@ -3,7 +3,7 @@ import updateCampaignMemberStatus from '@salesforce/apex/HDT_LC_CampaignsControl
 
 export default class HdtNegativeOutcome extends LightningElement {
     @api campaignMemberId;
-    status = "Rifiutato";
+    status = "Non interessato";
 
     handleClick(event) {
         console.log(this.campaignMemberId);

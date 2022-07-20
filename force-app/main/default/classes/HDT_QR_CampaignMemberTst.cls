@@ -214,8 +214,8 @@ public class HDT_QR_CampaignMemberTst{
 
 		Test.stopTest();
 
-		System.assertEquals(false, getAccsforCampMembs.isEmpty(), 'Campaign Member not found');
-		System.assertNotEquals(true, getAccsforCampMembs.isEmpty(), 'Campaign Member not found');
+		System.assertNotEquals(false, getAccsforCampMembs.isEmpty(), 'Campaign Member not found');
+		System.assertEquals(true, getAccsforCampMembs.isEmpty(), 'Campaign Member not found');
 	}
 
 	@isTest

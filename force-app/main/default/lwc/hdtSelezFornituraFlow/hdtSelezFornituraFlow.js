@@ -64,11 +64,12 @@ const DATA_ACCESS_MAP = {
             data.forEach((item) => {
                 item.ContactName = item.Contact !== undefined ? item.Contact.Name : '';
                 item.ProductName = item.Product2 !== undefined ? item.Product2.Name : '';
+                item.ContractNumber = item.Contract__r !== undefined ? item.Contract__r.SAPContractCode__c : ''
             });
         },
         columns: [
             {label: 'Nome', fieldName: 'Name', type: 'text'},
-            {label: 'Numero serial', fieldName: 'SerialNumber', type: 'text'},
+            {label: 'Codice Contratto SAP', fieldName: 'ContractNumber', type: 'text'},
             {label: 'Data installazione', fieldName: 'InstallDate', type: 'date'},
             {label: 'Referente', fieldName: 'ContactName', type: 'text'},
             {label: 'Prodotto', fieldName: 'ProductName', type: 'text'},
@@ -81,7 +82,7 @@ const DATA_ACCESS_MAP = {
         dataProcessFunction: (data) => {
             data.forEach((item) => {
                 item.ProductName = item.SBQQ__Product__r !== undefined ? item.SBQQ__Product__r.Name : '';
-                item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.ContractNumber : '';
+                item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.SAPContractCode__c : '';
                 item.PodPdr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
                     item.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c : '';
                 item.ServicePointAddr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
@@ -90,13 +91,56 @@ const DATA_ACCESS_MAP = {
         },
         columns: [
             {label: 'Nome Prodotto', fieldName: 'ProductName', type: 'text'},
-            {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'Codice Contratto SAP', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
+    'SUBS_ANALISI_CONSUMI_RENEW':
+    {
+        label : 'Subscriptions Analisi Consumi Rinnovabili',
+        sObjectName: 'SBQQ__Subscription__c',
+        emptyMessage: 'Non ci sono subscriptions, oppure vi è già una richiesta aperta.',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.ProductName = item.SBQQ__Product__r !== undefined ? item.SBQQ__Product__r.Name : '';
+                item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.SAPContractCode__c : '';
+                item.PodPdr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
+                    item.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
+                    item.SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Nome Prodotto', fieldName: 'ProductName', type: 'text'},
+            {label: 'Codice Contratto SAP', fieldName: 'ContractNumber', type: 'text'},
             {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
     },
     'SUBS_VAS_SERVIZIO':{
         label : 'VAS Servizio',
+        sObjectName: 'SBQQ__Subscription__c',
+        emptyMessage: 'Non ci sono subscriptions, oppure vi è già una richiesta aperta.',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.ProductName = item.SBQQ__Product__r !== undefined ? item.SBQQ__Product__r.Name : '';
+                item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.SAPContractCode__c : '';
+                item.PodPdr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
+                    item.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
+                    item.SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Nome Prodotto', fieldName: 'ProductName', type: 'text'},
+            {label: 'Numero Contratto SAP', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
+    'SUBS_VAS_SERVIZIO_RENEW':{
+        label : 'VAS Servizio Rinnovabili',
         sObjectName: 'SBQQ__Subscription__c',
         emptyMessage: 'Non ci sono subscriptions, oppure vi è già una richiesta aperta.',
         dataProcessFunction: (data) => {
@@ -128,7 +172,7 @@ const DATA_ACCESS_MAP = {
             });
         },
         columns: [
-            {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'Codice Contratto SAP', fieldName: 'SAPContractCode__c', type: 'text'},
             {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
@@ -172,6 +216,27 @@ const DATA_ACCESS_MAP = {
             {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
+    },
+    'RICHIESTA_SERVIZIO_ASSOCIATA':{
+        label : 'Richiesta di servizio associata',
+        sObjectName: 'OrderCase',
+        emptyMessage: 'Non ci sono richieste da associare',
+        optionalSelection : true,
+        defaultSelection : true,
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.recNumber = item.OrderNumber? item.OrderNumber : item.CaseNumber;
+                item.Type = item.Type? item.Type : item.ProcessType__c;
+                item.PodPdr = item.ServicePoint__r !== undefined? item.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = item.ServicePoint__r !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Numero Servizio', fieldName: 'recNumber', type: 'text'},
+            {label: 'Tipo Servizio', fieldName: 'Type', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
     }
 };
 const ROWS_PER_PAGE = 4;
@@ -187,6 +252,8 @@ export default class HdtSelezFornituraFlow extends LightningElement {
     @api sObjectName;
     
     emptyMessage = '';
+
+    defaultSelection;
     
     selectedRecord = {};
     selectedOption = '';
@@ -207,7 +274,13 @@ export default class HdtSelezFornituraFlow extends LightningElement {
                 value: key
             };
         });
-        
+        if(this.radioGroupOptions?.length === 1){
+            let key = this.radioGroupOptions[0].value;
+            this.handleRadioGroupChange({detail:{value : key}});
+            if(keys.length > this.radioGroupOptions.length && keys[keys.length-1] && DATA_ACCESS_MAP[key].defaultSelection){
+                this.defaultSelection = keys[keys.length-1];
+            }
+        }
         //this.handleRadioGroupChange({detail:{value:this.groupOption}});
     }
 
@@ -230,7 +303,18 @@ export default class HdtSelezFornituraFlow extends LightningElement {
                 if (DATA_ACCESS_MAP[this.selectedOption].dataProcessFunction) {
                     DATA_ACCESS_MAP[this.selectedOption].dataProcessFunction(data);
                 }
-                this.createTable(data);
+                let dataToTable;
+                if(this.defaultSelection){
+                    dataToTable= data.reduce((result, elem) => {
+                        elem.Id==this.defaultSelection? result.unshift(elem) : result.push(elem);
+                        return result;
+                    }, []);
+
+                }else{
+                    dataToTable=data;
+                }
+
+                this.createTable(dataToTable);
             } else {
                 this.emptyMessage = DATA_ACCESS_MAP[this.selectedOption].emptyMessage;
             }
@@ -245,6 +329,16 @@ export default class HdtSelezFornituraFlow extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
         });
+    }
+
+    preselectRow(){
+        setTimeout(
+            () => {if(this.defaultSelection){
+                var el = this.template.querySelector('lightning-datatable');
+                el.selectedRows=[this.defaultSelection];
+                this.defaultSelection=null;
+            }}
+          );
     }
 
     //Pagination start
@@ -263,10 +357,17 @@ export default class HdtSelezFornituraFlow extends LightningElement {
 
     reLoadTable() {
         this.tableData = this.pages[this.currentPage];
+        if(this.defaultSelection){
+            this.preselectRow();
+        }
     }
 
     get showPaginationButtons(){
         return this.totalPages > 1;
+    }
+
+    get maxRowSelection(){
+        return DATA_ACCESS_MAP[this.selectedOption].optionalSelection? 2 : 1;
     }
 
     get getCurrentPage() {
@@ -293,7 +394,16 @@ export default class HdtSelezFornituraFlow extends LightningElement {
     //Pagination end
 
     getSelectedRecord(event){
+        if(this.defaultSelection){
+            this.defaultSelection=null;
+        }
         let selectedRows = event.detail.selectedRows;
+        if(selectedRows.length>1)
+        {
+            var el = this.template.querySelector('lightning-datatable');
+            selectedRows=el.selectedRows=el.selectedRows.slice(1);
+            event.preventDefault();
+        }
         if (selectedRows[0] !== undefined) {
             this.selectedRecord = selectedRows[0];
             this.recordId = selectedRows[0].Id;
@@ -309,7 +419,7 @@ export default class HdtSelezFornituraFlow extends LightningElement {
 
     @api
     validate() {
-        if (this.recordId) {
+        if (this.recordId || DATA_ACCESS_MAP[this.selectedOption].optionalSelection) {
             return { isValid: true }; 
         }
         else {
