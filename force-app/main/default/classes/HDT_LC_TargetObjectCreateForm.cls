@@ -195,7 +195,6 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     @AuraEnabled
     public static String getAto(String comune){
 
-        serviceSp.checkReadAccess(comune);
         TownATOTable__c myRecord = [Select id, ATO__c, Town__c from TownATOTable__c where Town__c =:comune WITH SECURITY_ENFORCED];
         String ato = myRecord.ATO__C;
         return ato;
