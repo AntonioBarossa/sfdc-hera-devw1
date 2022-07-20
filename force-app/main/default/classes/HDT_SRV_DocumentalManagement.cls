@@ -584,6 +584,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						record.put('DocumentalPhase__c','Plico firmato');
 					}
 					record.put('Phase__c','Documentazione Gestita');
+					record.put('SignedDate__c', Date.today());
 					Order orderRecord = (Order) record;
 					HDT_UTL_DatabaseService.updateSObject(record);
 					if (!activitiesToCreate.isEmpty()){
