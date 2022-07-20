@@ -73,10 +73,10 @@ public with sharing class HDT_LC_OrderDossierWizardTst {
 
         Test.startTest();
 
-        Sale__c saleAttiva = [SELECT Id, Status__c, Account__c, Name FROM Sale__c WHERE Name LIKE 'testSaleName%' and Status__c = 'Attiva' LIMIT 1];
+        Sale__c saleAttiva = [SELECT Id, Status__c, Account__c, Name, Interaction__c FROM Sale__c WHERE Name LIKE 'testSaleName%' and Status__c = 'Attiva' LIMIT 1];
         System.debug(saleAttiva);
 
-        Sale__c saleBozza = [SELECT Id, Status__c, Account__c, Name FROM Sale__c WHERE Name LIKE 'testSaleName%' and Status__c = 'Bozza' LIMIT 1];
+        Sale__c saleBozza = [SELECT Id, Status__c, Account__c, Name, Interaction__c FROM Sale__c WHERE Name LIKE 'testSaleName%' and Status__c = 'Bozza' LIMIT 1];
 
         Map<String, Object> mapAttiva = HDT_LC_OrderDossierWizard.controllerInit(saleAttiva.Id);
 

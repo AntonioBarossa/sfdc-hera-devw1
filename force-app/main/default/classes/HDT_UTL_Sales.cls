@@ -264,6 +264,11 @@ public with sharing class HDT_UTL_Sales {
         return !caseList.isEmpty();
     }
 
+    public static Boolean isWinback(String servicePointId, String servicePointCode){
+        List<Case> caseList = caseQr.getServicePointCaseWinBack(servicePointId, servicePointCode);
+        return !caseList.isEmpty();
+    }
+
     public static List<Order> validationActivityPhaseTransition(List<Order> orderNew){
         List<wrts_prcgvr__Activity__c> listActivityToCreate = new List<wrts_prcgvr__Activity__c>();
         List<Order> childToUpdate = new List<Order>();
@@ -272,9 +277,14 @@ public with sharing class HDT_UTL_Sales {
         for(Order ord : orderNew){
             if(ord.RecordType.DeveloperName == 'HDT_RT_OrderDossier'){ //&& ord.TecnicalPhase__c != null){
                 if(ord.phase__c == 'Documentazione da inviare'){
-                    if((ord.Sale__r.Channel__c == 'Teleselling Outbound'  || ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
+                    if((ord.Sale__r.Channel__c == 'Teleselling Outbound'  /*|| ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono'*/) && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Registrazione  da validare';
                         listActivityToCreate.add(instanceActVocalOrd(ord.accountid,ord.id,rt));
+                        childToUpdate.add(ord);
+                    }
+                    else if((ord.Sale__r.Channel__c == 'Telefono' || ord.Sale__r.Channel__c == 'Teleselling Inbound') && ord.SignatureMethod__c == 'Vocal Order')
+                    {
+                        ord.Phase__c = 'Registrazione Validata';
                         childToUpdate.add(ord);
                     }
                     else if((ord.Sale__r.Channel__c == 'Teleselling Outbound' || ord.Sale__r.Channel__c == 'Teleselling Inbound') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
@@ -373,9 +383,14 @@ public with sharing class HDT_UTL_Sales {
       //  List<String> orderParentToActivityDocument = new List<String>();
             if(ord.RecordType.DeveloperName == 'HDT_RT_OrderDossier'){ //&& ord.TecnicalPhase__c != null){
                 if(ord.phase__c == 'Documentazione da inviare'){
-                    if((ord.Sale__r.Channel__c == 'Teleselling Outbound' || ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
+                    if((ord.Sale__r.Channel__c == 'Teleselling Outbound'  /*|| ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono'*/) && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Registrazione  da validare';
                         listActivityToCreate.add(instanceActVocalOrd(ord.accountid,ord.id,rt));
+                        childToUpdate.add(ord);
+                    }
+                    else if((ord.Sale__r.Channel__c == 'Telefono' || ord.Sale__r.Channel__c == 'Teleselling Inbound') && ord.SignatureMethod__c == 'Vocal Order')
+                    {
+                        ord.Phase__c = 'Registrazione Validata';
                         childToUpdate.add(ord);
                     }
                     else if((ord.Sale__r.Channel__c == 'Teleselling Outbound' || ord.Sale__r.Channel__c == 'Teleselling Inbound') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){

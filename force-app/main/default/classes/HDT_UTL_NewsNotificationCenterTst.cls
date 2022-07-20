@@ -37,7 +37,7 @@ public class HDT_UTL_NewsNotificationCenterTst {
 
         notificationList.add(nc1);
         insert notificationList;
-
+        
     }
 
     @IsTest

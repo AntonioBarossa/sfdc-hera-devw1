@@ -29,7 +29,7 @@ public inherited sharing class HDT_LC_SaleVas {
      */
     @AuraEnabled
     public static void confirmAction(String selectedOption, Order order, Contract contract, String supplyCity, String accountId, Sale__c sale){
-        sale = saleQr.getRecordById(sale.id, 'AgencyCode__c,CommercialId__c ,Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Account__r.CompanyOwner__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
+        sale = saleQr.getRecordById(sale.id, 'AgencyCode__c,CommercialId__c ,Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Account__r.CompanyOwner__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name, Campaign__r.CampaignEligibilityGroup__c');
         switch on selectedOption {
             when  'Ordini in corso'{
                 handleActiveOrderConfirm(order, supplyCity, sale);
@@ -39,7 +39,7 @@ public inherited sharing class HDT_LC_SaleVas {
             }
             when 'VAS stand alone'{
                 handleVasStandAloneConfirm(supplyCity, accountId, sale);
-            }
+            } 
             
         }
     }
@@ -188,7 +188,7 @@ public inherited sharing class HDT_LC_SaleVas {
     **/
     @AuraEnabled
     public static List<SObject> getFornitura(String searchString, String key){
-        List<SObject> records;
+        List<SObject> records = new List<SObject>();
         system.debug('searchString '+searchString);
         system.debug('key '+key);
 
@@ -209,7 +209,7 @@ public inherited sharing class HDT_LC_SaleVas {
             }
             //Disattivazione VAS - START
             when 'ASSETS_ACTIVATED'{
-                Map<Id,Asset> recordMap = new Map<Id,Asset>([SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
+                Map<Id,Asset> recordMap = new Map<Id,Asset>([SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name,Contract__r.SAPContractCode__c
                     FROM Asset WHERE DigitalAssetStatus='Attivo' AND SBQQ__RootAsset__c=null AND AccountId=:searchString WITH SECURITY_ENFORCED]);
                 
                 //removing assets which already have a deactivation Case
@@ -221,9 +221,24 @@ public inherited sharing class HDT_LC_SaleVas {
                 records = recordMap.values();
             }
             when 'SUBS_ANALISI_CONSUMI'{ 
-                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Product__r.Name, SBQQ__Contract__r.ContractNumber,
+                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Product__r.Name,SBQQ__Contract__r.SAPContractCode__c,
+                    SBQQ__Contract__r.ContractNumber,
                     SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
                     FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Fatturabili' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
+
+                //removing subscriptions which already have a deactivation Case
+                List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE Phase__c NOT IN ('Annullato','Bozza Annullata') AND Type='Disattivazione VAS'
+                    AND Subscription__c IN :recordMap.keySet() WITH SECURITY_ENFORCED];
+                for (Case subCase:subsCases) {
+                    recordMap.remove(subCase.Subscription__c);
+                }
+                records = recordMap.values();
+            }
+            when 'SUBS_ANALISI_CONSUMI_RENEW'{ 
+                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Product__r.Name,SBQQ__Contract__r.SAPContractCode__c,
+                    SBQQ__Contract__r.ContractNumber,
+                    SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
+                    FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Fatturabili' AND SBQQ__SubscriptionType__c = 'Renewable' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
 
                 //removing subscriptions which already have a deactivation Case
                 List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE Phase__c NOT IN ('Annullato','Bozza Annullata') AND Type='Disattivazione VAS'
@@ -246,17 +261,57 @@ public inherited sharing class HDT_LC_SaleVas {
                 }
                 records = recordMap.values();
             }
+            when 'SUBS_VAS_SERVIZIO_RENEW'{ 
+                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Product__r.Name, SBQQ__Contract__r.ContractNumber,
+                    SBQQ__Contract__r.SAPContractCode__c, SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
+                    FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Servizio' AND SBQQ__Product__r.Renewable__c = true AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
+
+                //removing subscriptions which already have a deactivation Case
+                List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE Phase__c NOT IN ('Annullato','Bozza Annullata') AND Type='Disattivazione VAS'
+                    AND Subscription__c IN :recordMap.keySet() WITH SECURITY_ENFORCED];
+                for (Case subCase:subsCases) {
+                    recordMap.remove(subCase.Subscription__c);
+                }
+                records = recordMap.values();
+            }
             //Disattivazione VAS - END
             //Segnalazioni VAS - START
             when 'CONTRACTS_VAS'{ 
                 Set<Id> contractIds = new Set<Id>();
                 Set<Id> servicePointIds = new Set<Id>();
-                for(Order o : [SELECT ContractReference__c, ServicePoint__c FROM Order WHERE (RecordType.DeveloperName='HDT_RT_VAS' OR RecordType.DeveloperName='HDT_RT_ScontiBonus') AND AccountId=:searchString AND (ContractReference__c!=null OR ServicePoint__c!= null) WITH SECURITY_ENFORCED]){
-                    contractIds.add(o.ContractReference__c);
-                    servicePointIds.add(o.ServicePoint__c);
+                List<SObject> sobjList = new List<SObject>();
+                // for(Order o : [SELECT ContractReference__c, ServicePoint__c FROM Order WHERE (RecordType.DeveloperName='HDT_RT_VAS' OR RecordType.DeveloperName='HDT_RT_ScontiBonus') AND AccountId=:searchString AND (ContractReference__c!=null OR ServicePoint__c!= null) WITH SECURITY_ENFORCED]){
+                //     contractIds.add(o.ContractReference__c);
+                //     servicePointIds.add(o.ServicePoint__c);
+                // }
+                // records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract
+                //     WHERE (Id IN :contractIds OR ServicePoint__c IN :servicePointIds) AND Status!='Cessato' WITH SECURITY_ENFORCED];
+                sobjList.addAll([SELECT Id, SBQQ__Contract__c, SBQQ__Contract__r.ContractNumber, SBQQ__Contract__r.ServicePoint__c, 
+                 SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
+                 FROM SBQQ__Subscription__c WHERE SBQQ__Account__c = :searchString AND (VasPracticeCode__c != null OR SBQQ__Product__r.Family='VAS Fatturabili') AND SBQQ__Contract__r.Status = 'Attivo']);
+                sobjList.addAll([SELECT Id, Contract__c, Contract__r.ContractNumber, Contract__r.ServicePoint__c,
+                Contract__r.ServicePoint__r.ServicePointCode__c, Contract__r.ServicePoint__r.SupplyAddress__c
+                 FROM Asset WHERE AccountId = :searchString AND VasPracticeCode__c != null AND Contract__r.Status = 'Attivo']);
+                for(SObject sobj : sobjList)
+                {
+                    String sobjName = sobj.getSObjectType().getDescribe().getName();
+                    String contractId = '';
+                    if(sobjName.equalsIgnoreCase('SBQQ__Subscription__c'))
+                    {
+                        contractId = (String)sobj.get('SBQQ__Contract__c');
+                    }
+                    if(sobjName.equalsIgnoreCase('Asset'))
+                    {
+                        contractId = (String)sobj.get('Contract__c');
+                    }
+                    if(!contractIds.contains(contractId))
+                    {
+                        contractIds.add(contractId);
+                    }
                 }
-                records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract
-                    WHERE (Id IN :contractIds OR ServicePoint__c IN :servicePointIds) AND Status!='Cessato' WITH SECURITY_ENFORCED];
+                 
+                records = [SELECT Id, SAPContractCode__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract WHERE ID IN :contractIds WITH SECURITY_ENFORCED];
+
             }
             when 'SUBS_FROM_CONTRACT'{ 
                 records = [SELECT Name, SBQQ__ProductName__c
@@ -274,6 +329,25 @@ public inherited sharing class HDT_LC_SaleVas {
                     FROM Contract WHERE Status IN ('Attivo','Activated') AND AccountId=:searchString
                     AND (ServicePoint__r.CommoditySector__c='Energia Elettrica' OR SBQQ__Order__r.ServicePoint__r.CommoditySector__c='Energia Elettrica')
                     WITH SECURITY_ENFORCED];
+            }
+            //Generiche Tari
+            when 'RICHIESTA_SERVIZIO_ASSOCIATA'{
+
+                records.addAll([SELECT OrderNumber, ProcessType__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
+                FROM Order
+                WHERE ServicePoint__c =:searchString 
+                AND AccountId IN (SELECT Account__c FROM ServicePoint__c WHERE Id =:searchString)
+                WITH SECURITY_ENFORCED
+                ]);
+                records.addAll(
+                    [SELECT Type, CaseNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
+                    FROM Case
+                    WHERE  ServicePoint__c =:searchString
+                    AND RecordTypeId!=:Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_GenericheTari').getRecordTypeId()
+                    AND AccountId IN (SELECT Account__c FROM ServicePoint__c WHERE Id =:searchString)
+                    WITH SECURITY_ENFORCED
+                    ]
+                );
             }
         }
         return records;
@@ -379,7 +453,9 @@ public inherited sharing class HDT_LC_SaleVas {
             IsTransition__c = currentSale[0].IsTransition__c,
             SBQQ__PricebookId__c = checkCommodityOrder(order.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS'),
             AgencyCode__c = sale.AgencyCode__c,
-            CommercialId__c = sale.CommercialId__c
+            CommercialId__c = sale.CommercialId__c,
+            CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null 
+
         );
 
         if(order.ContractReference__c != null)
@@ -392,6 +468,150 @@ public inherited sharing class HDT_LC_SaleVas {
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
 
         opportunitySrv.updateRecord(newOpportunity);
+    }
+
+    @AuraEnabled
+    public static String handleNotMigratedContract(String contract, Sale__c sale){
+        system.debug('contract --> '+contract);
+        system.debug('sale --> '+sale);
+        system.debug('PUNTO 1');
+        sale = saleQr.getRecordById(sale.id, 'AgencyCode__c,CommercialId__c ,Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Account__r.CompanyOwner__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name, Campaign__r.CampaignEligibilityGroup__c');
+        //REQUEST
+        String result = '';
+        // HDT_WS_ArricchimentoDatiTemp arricchimentoDati = new HDT_WS_ArricchimentoDatiTemp();
+        HDT_SRV_DataEnrichmentPostSales dataEnrichmentPostSales = new HDT_SRV_DataEnrichmentPostSales(); 
+        List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> posizioniList = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
+
+        system.debug('PUNTO 2');
+        String resPosizioni = HDT_WS_ArricchimentoDatiTemp.submitRequest('',contract);
+        String dataCessazioneString = '';
+        String commodity = '';
+        String mercato = '';
+        String venditore = '';
+        String sellerCompany = '';
+        Date dataCessazione = null;
+
+        system.debug('PUNTO 3');
+
+
+        if(resPosizioni != null && resPosizioni != ''){
+
+            system.debug('PUNTO 4');
+
+            posizioniList = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)
+            JSON.deserialize(resPosizioni, List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>.class);
+            // posizioniList = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>) JSON.deserialize(resPosizioni, HDT_WS_ArricchimentoDatiTemp.class);
+            system.debug('PUNTO 5');
+            for(HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni posizione : posizioniList){
+                if(posizione.campo == 'DATACESSAZIONE'){
+                    system.debug('PUNTO 6');
+                    dataCessazioneString = posizione.valore;
+                }
+                if(posizione.campo == 'DESCRCOMM'){
+                    system.debug('PUNTO 6.1');
+                    commodity = posizione.valore;
+                }
+                if(posizione.campo == 'MERCATO'){
+                    system.debug('PUNTO 6.1');
+                    mercato = posizione.valore;
+                    mercato = mercato.substring(0, 1).toUpperCase() + mercato.substring(1).toLowerCase();
+                    system.debug('mercato --> '+mercato);
+
+                }
+                if(posizione.campo == 'VENDITORE'){
+                    system.debug('PUNTO 6.1');
+                    venditore = posizione.valore;
+                }
+            }
+
+            List<HDT_MatriceSocietaVendita__mdt> matriceList = [SELECT SalesCompanyCode__c, SellerCompany__c FROM HDT_MatriceSocietaVendita__mdt WHERE SalesCompanyCode__c =: venditore WITH SECURITY_ENFORCED LIMIT 1];
+            if(!matriceList.isEmpty()){
+                sellerCompany = matriceList[0].SellerCompany__c;
+            }
+            else{
+                sellerCompany = null;
+            }
+            
+            system.debug('PUNTO 7');
+            if(dataCessazioneString != null && dataCessazioneString != ''){
+                system.debug('PUNTO 8');
+                dataCessazione = dataEnrichmentPostSales.getDateFromString(dataCessazioneString);
+            }
+            system.debug('PUNTO 9');
+            if(dataCessazione != null && dataCessazione > System.today()){
+                system.debug('PUNTO 10');
+
+                // if (order.Id == null) {
+                //     system.debug('PUNTO 11');
+                //     throw new AuraHandledException('Devi scegliere un ordine!');
+                // }
+                //system.debug('PUNTO 12');
+                // if (isDuplicated(sale.Id, order.Id, 'order')) {
+                //     system.debug('PUNTO 13');
+                //     throw new AuraHandledException('La quote con il riferimento di questo ordine esiste già!');
+                // }
+                // String pdrCode = order.ServicePoint__r.ServicePointCode__c;
+                String pdrCode = '';
+                pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
+                system.debug('PUNTO 15');
+                //CREAZIONE OPPORTUNITY E QUOTE
+                Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
+                    Sale__c = sale.Id,
+                    Name = opportunitySrv.generateName(sale) + ' VAS'+pdrCode,
+                    CloseDate = Date.today().addDays(30),
+                    StageName = 'Proposal',
+                    // AccountId = order.AccountId
+                    AccountId = sale.Account__c
+                ));
+                SBQQ__Quote__c newQuote = new SBQQ__Quote__c(
+                Sale__c = sale.Id,
+                //OrderReference__c = order.Id,
+                SBQQ__Opportunity2__c = newOpportunity.Id,
+                SBQQ__Account__c = sale.Account__c,
+                SBQQ__Primary__c = true,
+                Agency__c = sale.Agency__c,
+                // Market__c = order.Market__c,
+                Market__c = mercato,
+                Channel__c = sale.Channel__c,
+                FriendCode__c = sale.FriendCode__c,
+                CampaignCode__c = sale.CampaignCode__c,
+                CreatedBy__c = sale.CreatedBy__c,
+                SupplyCity__c = null, //to do (other logic to get SupplyCity)
+                // SalesCompany__c = order.SalesCompany__c,
+                SalesCompany__c = sellerCompany,
+                Campaign__c = sale.Campaign__c,
+                IsVAS__c = true,
+                IsBillableVas__c = false,
+                IsTransition__c = true,
+                SBQQ__PricebookId__c = commodity == 'Energia Elettrica' ? getPricebookId('VAS ELE') : commodity == 'Gas' ? getPricebookId('VAS GAS') : null,
+                AgencyCode__c = sale.AgencyCode__c,
+                CommercialId__c = sale.CommercialId__c,
+                SapContractCode__c = contract,
+                CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null
+                );
+                // if(order.ContractReference__c != null)
+                // {
+                //     newQuote.ContractReference__c = order.ContractReference__c;
+                // }
+                newQuote = quoteSrv.createRecord(newQuote);
+                newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
+                opportunitySrv.updateRecord(newOpportunity);
+                sale.isTransition__c = true;
+                HDT_UTL_DatabaseService.updateSObject(sale);
+                result = 'Success';
+                return result;
+            }
+            else{
+                system.debug('PUNTO 23');
+                result = 'Errore Data Cessazione';
+                return result;
+            }
+        }
+        else{
+            system.debug('PUNTO 24');
+            result = 'Errore Contratto Assente';
+            return result;
+        }
     }
 
     /**
@@ -443,7 +663,8 @@ public inherited sharing class HDT_LC_SaleVas {
             IsBillableVas__c = false,
             SBQQ__PricebookId__c = checkCommodityContract(contract.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS'),
             AgencyCode__c = sale.AgencyCode__c,
-            CommercialId__c = sale.CommercialId__c
+            CommercialId__c = sale.CommercialId__c,
+            CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -489,7 +710,8 @@ public inherited sharing class HDT_LC_SaleVas {
             IsBillableVas__c = false,
             SBQQ__PricebookId__c = getPricebookId('VAS Standalone'),
             AgencyCode__c = sale.AgencyCode__c,
-            CommercialId__c = sale.CommercialId__c
+            CommercialId__c = sale.CommercialId__c,
+            CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;

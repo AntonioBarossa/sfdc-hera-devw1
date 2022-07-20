@@ -9,5 +9,8 @@ public inherited sharing class HDT_TRH_BillingProfile extends HDT_TRH_TriggerHan
     public override void beforeInsert(){
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
     }
-}
 
+    public override void beforeUpdate(){
+        HDT_UTL_GlobaMigrationKey.setGlobalMigrationKey(Trigger.new, Trigger.oldMap);
+    }
+}

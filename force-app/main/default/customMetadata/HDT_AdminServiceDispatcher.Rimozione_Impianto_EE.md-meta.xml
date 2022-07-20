@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>DistributorCode__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">RIMOZIONEIMPIANTO</value>
     </values>
     <values>
         <field>ServiceCode__c</field>

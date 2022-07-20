@@ -10,8 +10,8 @@ public with sharing class HDT_TRH_Interaction extends HDT_TRH_TriggerHandler {
             }
         }
 
-        for(wrts_prcgvr__Activity__c activity : [SELECT Id, Name, Interaction__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c = 'Aperta' AND Interaction__c IN :idSet WITH SECURITY_ENFORCED]) {
+        /*for(wrts_prcgvr__Activity__c activity : [SELECT Id, Name, Interaction__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c = 'Aperta' AND Interaction__c IN :idSet WITH SECURITY_ENFORCED]) {
             interactionsMap.get(activity.Interaction__c).addError('Impossibile chiudere l\'Interazione corrente, in quanto associata ad Attività ancora aperte.');
-        }
+        }*/
     }
 }

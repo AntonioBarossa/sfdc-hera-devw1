@@ -49,7 +49,7 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
         orderAnalisiConsMap = new Map<Id, Order>();
 
         List<Order> orderOffCommList = [
-            SELECT Id, ParentOrder__c, processType__c, Phase__c, CancellationReasonDescription__c, RecordType.DeveloperName,
+            SELECT Id, ParentOrder__c, SignatureMethod__c ,processType__c, Phase__c, CancellationReasonDescription__c, RecordType.DeveloperName,
                    ServicePoint__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c
             FROM Order
             WHERE ParentOrder__c IN :parentOrderIdList
@@ -101,9 +101,9 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
                 orderToCheck = orderOffCommMap.get(processObj.nextDataObj.parentOrderId);
             }
             
-            //if(orderAnalisiConsMap.containsKey(processObj.nextDataObj.parentOrderId)){
-            //    analisiConsumiOrder = orderAnalisiConsMap.get(processObj.nextDataObj.parentOrderId);
-            //}
+            if(orderAnalisiConsMap.containsKey(processObj.nextDataObj.parentOrderId)){
+                analisiConsumiOrder = orderAnalisiConsMap.get(processObj.nextDataObj.parentOrderId);
+            }
 
             servReq = new Map<String, Object>();
             servReq.put('servicePointCode', orderToCheck.ServicePoint__r.ServicePointCode__c);
@@ -135,13 +135,13 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
                     srRequest = setServiceRequest(srRequest, analisiConsumiOrder);
                     serviceRequestToInsert.add(srRequest);
                     orderToUpdate.add(analisiConsumiOrder);
-
                 }
 
                 if(orderToCheck != null){
                     //orderToCheck.Phase__c = 'Comunicazione verso Heroku';
                     //orderToCheck.Status = 'In Lavorazione';
-                    orderToCheck = setOrderByRecordType(orderToCheck);
+                    //orderToCheck = setOrderByRecordType(orderToCheck);
+                    orderToCheck = setOrderBySignMode(orderToCheck);
                     orderToUpdate.add(orderToCheck);
                 }
 
@@ -187,12 +187,25 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
         }
 
     }
-
+    private static Order setOrderBySignMode(Order orderToSet){
+        String modFirma = orderToSet.SignatureMethod__c;
+        String processType = orderToSet.ProcessType__c;
+        if(modFirma != null && modFirma.equalsIgnoreCase('Contratto già firmato')){
+            if(processType.equalsIgnoreCase('Voltura')){
+                orderToSet.Phase__c = 'Documentazione Validata';
+                orderToSet.Status = 'In Lavorazione';
+            }else if(!processType.equalsIgnoreCase('VAS')) {
+                orderToSet.Phase__c = 'Comunicazione verso Heroku';
+                orderToSet.Status = 'In Lavorazione';
+            }
+        }
+        return orderToSet;
+    }
     private static Order setOrderByRecordType(Order orderToSet){
 
         switch on orderToSet.RecordType.DeveloperName {
             when 'HDT_RT_Voltura' {
-                orderToSet.Phase__c = 'Documentazione Validata';
+                //orderToSet.Phase__c = 'Documentazione Validata';
                 orderToSet.Status = 'In Lavorazione';
             }
             when else {

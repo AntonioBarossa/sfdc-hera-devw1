@@ -41,10 +41,11 @@ public with sharing class HDT_UTL_Account {
         req.account.telefono         = c.MobilePhone;
         req.account.emailCont        = c.email;
         req.account.marcaturaCliente = a.customerMarking__c;
-        req.account.codiceFiscale    = recordType == 'Organizzazione' 
-                                        ? a.vatnumber__c != null
-                                            ? a.vatnumber__c : a.FiscalCode__c
-                                        : a.FiscalCode__c;
+        req.account.codiceFiscale    = a.FiscalCode__c != null ? a.FiscalCode__c : a.vatNumber__c;
+        // req.account.codiceFiscale    = recordType == 'Organizzazione' 
+        //                                 ? a.vatnumber__c != null
+        //                                     ? a.vatnumber__c : a.FiscalCode__c
+        //                                 : a.FiscalCode__c;
         req.account.partitaIva       = '';
         return req;
     }
@@ -80,7 +81,7 @@ public with sharing class HDT_UTL_Account {
         req.account.partitaIva              = a.vatnumber__c;
         req.account.indirizzo.comune	    = a.BillingCity;
         req.account.indirizzo.nazione	    = getStateIso(a.BillingCountry);
-        req.account.indirizzo.toponimo	    = a.BillingStreetToponym__c;
+        // req.account.indirizzo.toponimo	    = a.BillingStreetToponym__c;
         req.account.indirizzo.civico	    = a.BillingStreetNumber__c;
         req.account.indirizzo.cap	        = a.BillingPostalCode;
         req.account.indirizzo.provincia	    = a.BillingState;
@@ -143,7 +144,7 @@ public with sharing class HDT_UTL_Account {
         req.account.partitaIva	                                = a.VATNumber__c;
         req.account.indirizzo.comune	                        = a.BillingCity;
         req.account.indirizzo.nazione	                        = getStateIso(a.BillingCountry);
-        req.account.indirizzo.toponimo	                        = a.BillingStreetToponym__c;
+        // req.account.indirizzo.toponimo	                        = a.BillingStreetToponym__c;
         req.account.indirizzo.piano	                            = a.BuildingFloor__c;
         req.account.indirizzo.civico	                        = a.BillingStreetNumber__c;
         req.account.indirizzo.cap	                            = a.BillingPostalCode;
@@ -163,26 +164,16 @@ public with sharing class HDT_UTL_Account {
         //Nuova Versione
         string accountType = Schema.SObjectType.Account.getRecordTypeInfosById().get(acc.RecordTypeId).getDeveloperName();
         List<SiebelCustomer__x> siebelCustomer = new List<SiebelCustomer__x>();
-
-        /*if(accountType.contains('Residenziale')){
-            siebelCustomer = [SELECT Id, OU_NUM__c, X_MARCATURA_CLIENTE__c 
-                              FROM SiebelCustomer__x 
-                              WHERE X_ACCT_PH_TYPE__c =: acc.CustomerType__c 
-                              AND OU_TYPE_CD__c =: acc.Category__c 
-                              AND TAX_IDEN_NUM__c =: acc.FiscalCode__c WITH SECURITY_ENFORCED];
-        }
-        else if(accountType.contains('Business')){
-            siebelCustomer = [SELECT Id, OU_NUM__c, X_MARCATURA_CLIENTE__c 
-                              FROM SiebelCustomer__x 
-                              WHERE X_ACCT_PH_TYPE__c =: acc.CustomerType__c 
-                              AND OU_TYPE_CD__c =: acc.Category__c 
-                              AND VAT_REGN_NUM__c =: acc.VATNumber__c WITH SECURITY_ENFORCED];
-        }*/
-
+        List<SObject> sobjToUpdate = new List<SObject>();
+        /* Setup query filters */
         String category = acc.Category__c;
         String vatNumber = acc.VATNumber__c;
         String fiscalCode = acc.FiscalCode__c;
+        Boolean archive = false;
+        
+        Contact contRelation = new Contact();
 
+        /* Query account archive */
         String query = 'SELECT Id,OU_NUM__c, X_MARCATURA_CLIENTE__c FROM SiebelCustomer__x WHERE OU_TYPE_CD__c = :category';
         if(acc.FiscalCode__c != null && acc.FiscalCode__c != '')
         {
@@ -195,55 +186,30 @@ public with sharing class HDT_UTL_Account {
         query += ' WITH SECURITY_ENFORCED';
 
         siebelCustomer = Database.query(query);
-        
+        /* If query returns results update account */
         if(!siebelCustomer.isEmpty()){
+            archive = true;
             acc.CustomerCode__c = siebelCustomer[0].OU_NUM__c;
             acc.CustomerMarking__c = siebelCustomer[0].X_MARCATURA_CLIENTE__c;
-            HDT_UTL_DatabaseService.updateSObject(acc);
-
-            if(acc.Category__c == 'Grandi Condomini'){
-                List<SiebelContact__x> siebelContact = new List<SiebelContact__x>();
-                siebelContact = [SELECT Id, INTEGRATION_ID__c 
-                                 FROM SiebelContact__x 
-                                 WHERE REFERENCE_TYPE_CD__c = 'Amministr. di condominio' 
-                                 AND SOC_SECURITY_NUM__c =: cont.FiscalCode__c LIMIT 1];
-                if(siebelContact.isEmpty()){
-                    //Creazione Condominio su SAP
-                    HDT_WS_RicCreBpCaRequest   req;
-                    HDT_WS_RichCreBpCaResponse resCreate;
-                    req = callAmCaCreate(acc,cont);
-                    resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
-                    //Update Contact
-                    if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP)) {
-                        cont.ContactCode__c = resCreate.data.codiceBP;
-                        HDT_UTL_DatabaseService.updateSObject(cont);
-                    }
-                }
-            }
+            sobjToUpdate.add(acc);
         }
+        /* If query does not return results call BpCaSearch */
         else{
-            system.debug('LISTA VUOTA');
             HDT_WS_RicCreBpCaRequest   req = callBpCaSearch(acc,cont);
             HDT_WS_RichCreBpCaResponse res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
-            // System.debug('Response SRC : ' + res);
-            analizeResponse(res,acc,cont);
-
             if ('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)) {
                 acc.CustomerCode__c = res.data.codiceBP;
-                HDT_UTL_DatabaseService.updateSObject(acc);
-            }
-            else{
-                if(acc.Category__c == 'Grandi Condomini'){
-                     //Creazione Condominio su SAP
-                     req = callAmCaCreate(acc,cont);
-                     res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
-                     //Update Contact
-                     if ('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)) {
-                         cont.ContactCode__c = res.data.codiceBP;
-                         HDT_UTL_DatabaseService.updateSObject(cont);
-                     }
-                }
-            }
+                sobjToUpdate.add(acc);
+            }       
+        }
+        contRelation = registerAmmCondominio(cont, archive);
+        if(contRelation.ContactCode__c != null)
+        {
+            sobjToUpdate.add(contRelation);
+        }
+        if(!sobjToUpdate.isEmpty())
+        {
+            HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
         }    
     }
     
@@ -414,13 +380,13 @@ public with sharing class HDT_UTL_Account {
 
         for(AccountContactRelation accountContactRel : accountContactRelList){
             //AccountContactRelation del Amm. o del Legale se presenti
-            if( accountContactRel.Roles == 'Amministratore condominio' || accountContactRel.Roles == 'Legale rappresentante' ){
+            if( accountContactRel.Roles.equalsIgnoreCase('Amministratore condominio') || accountContactRel.Roles.equalsIgnoreCase('Legale rappresentante')){
                 accountContactMap = generateAccountContact(accountContactRel);
-                if( accountContactRel.Roles == 'Amministratore condominio'){
+                if( accountContactRel.Roles.equalsIgnoreCase('Amministratore condominio')){
                     isAmministratore = true;
                 }
                 break;
-            }else if( accountContactRel.Roles == 'Titolare' ){
+            }else if( accountContactRel.Roles == 'Titolare' || accountContactRel.Roles == 'Familiare'){
                 //if AccountId not in the list yet, insert
                 if( !accountContactMap.containsKey('Account')){
                     accountContactMap = generateAccountContact(accountContactRel);
@@ -444,9 +410,11 @@ public with sharing class HDT_UTL_Account {
             //HRADTR_GV Modifiche 31/03/2022 - Inizio
             if(searchToUse){
                 req = callBpCaSearch(acc,cont);
+                acc.Description = System.now() + ' : Account ricercato su SAP';
             }
             else{
                 req = callBpCaCreate(acc,cont);
+                acc.Description = System.now() + ' : Account creato';
             }
             //HRADTR_GV Modifiche 31/03/2022 - Fine
             resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
@@ -454,7 +422,7 @@ public with sharing class HDT_UTL_Account {
                 acc.CustomerCode__c = resCreate.data.codiceBP;
             } // TODO gestire l'errore 
 
-            if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) && isAmministratore ){
+            if((acc.Category__c.equalsIgnoreCase('Grandi Condomini') || acc.Category__c.equalsIgnoreCase('Piccoli Condomini')) && isAmministratore ){
                 req = callAmCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
                 if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
@@ -472,7 +440,7 @@ public with sharing class HDT_UTL_Account {
         //HRADTR_GV Modifiche 03/02/2022 - Fine
 
     }
-
+    @TestVisible
     private static Account checkCustomerMarking( Account acc , string saleId)
     {
         //Modifiche HRADTR_GV 03/02/2022 - Inizio
@@ -556,6 +524,111 @@ public with sharing class HDT_UTL_Account {
         accountContactMap.put('Account',newAccount);
         accountContactMap.put('Contact',newContact);
         return accountContactMap;
+    }
+    @TestVisible
+    private static Contact registerAmmCondominio(Contact cont, Boolean archive)
+    {
+        Contact contactReturn = new Contact();
+        Account administratorAccount = new Account();
+        Boolean isAmministratoreCondominio = false;
+
+        contactReturn.Id = cont.Id;
+
+        List<AccountContactRelation> acrList = [SELECT Id,
+        Roles,
+        AccountId,
+        Account.RecordTypeId,
+        Account.Category__c,
+        Account.CustomerMarking__c,
+        Account.FiscalCode__c,
+        Account.VatNumber__c,
+        Account.FirstName__c,
+        Account.BillingStreetNumber__c,
+        Account.BillingStreetName__c,
+        Account.BillingCountry,
+        Account.BillingState,
+        Account.BillingCity,
+        Account.BillingPostalCode,
+        Account.LastName__c,
+        Account.CustomerCode__c,
+        Account.MobilePhone__c,
+        Account.Fax,
+        Account.BuildingFloor__c,
+        Account.PrimaryEmail__c,
+        Account.VATGroup__c,
+        Account.VATGroupStartDate__c,
+        Account.VATGroupEndDate__c
+        FROM AccountContactRelation
+        WHERE ContactId = :cont.Id
+        WITH SECURITY_ENFORCED];
+
+        for(AccountContactRelation acr : acrList){
+            if(acr.Roles!= null && acr.Roles.equalsIgnoreCase('Amministratore condominio')){
+                isAmministratoreCondominio = true;
+                /* Feed Account */
+                administratorAccount.Id = acr.AccountId;
+                administratorAccount.RecordTypeId = acr.Account?.RecordTypeId;
+                administratorAccount.Category__c = acr.Account?.Category__c;
+                administratorAccount.CustomerMarking__c = acr.Account?.CustomerMarking__c;
+                administratorAccount.FiscalCode__c = acr.Account?.FiscalCode__c;
+                administratorAccount.VatNumber__c = acr.Account?.VatNumber__c;
+                administratorAccount.BillingStreetNumber__c = acr.Account?.BillingStreetNumber__c;
+                administratorAccount.BillingStreetName__c = acr.Account?.BillingStreetName__c;
+                administratorAccount.BillingCountry = acr.Account?.BillingCountry;
+                administratorAccount.BillingState = acr.Account?.BillingState;
+                administratorAccount.BillingCity = acr.Account?.BillingCity;
+                administratorAccount.BillingPostalCode = acr.Account?.BillingPostalCode;
+                administratorAccount.LastName__c = acr.Account?.LastName__c;
+                administratorAccount.CustomerCode__c = acr.Account?.CustomerCode__c;
+                administratorAccount.MobilePhone__c = acr.Account?.MobilePhone__c;
+                administratorAccount.Fax = acr.Account?.Fax;
+                administratorAccount.BuildingFloor__c = acr.Account?.BuildingFloor__c;
+                administratorAccount.PrimaryEmail__c = acr.Account?.PrimaryEmail__c;
+                administratorAccount.VATGroup__c = acr.Account?.VATGroup__c;
+                administratorAccount.VATGroupStartDate__c = acr.Account?.VATGroupStartDate__c;
+                administratorAccount.VATGroupEndDate__c = acr.Account?.VATGroupEndDate__c;
+                break;
+            }
+        }
+        /* Check if Roles Amministratore condominio and account category is either Grandi Codnomini or Piccoli Condomini */
+        if(isAmministratoreCondominio && administratorAccount.Category__c != null && (administratorAccount.Category__c.equalsIgnoreCase('Grandi Condomini') || administratorAccount.Category__c.equalsIgnoreCase('Piccoli Condomini'))){
+            /* Create Request */
+            HDT_WS_RicCreBpCaRequest   req;
+            HDT_WS_RichCreBpCaResponse resCreate;
+            req = callAmCaCreate(administratorAccount,contactReturn);
+            /* If its archive search on contact archive */
+            if(archive)
+            {
+                List<SiebelContact__x> siebelContact = new List<SiebelContact__x>();
+                siebelContact = [SELECT Id, INTEGRATION_ID__c 
+                                    FROM SiebelContact__x 
+                                    WHERE REFERENCE_TYPE_CD__c = 'Amministr. di condominio' 
+                                    AND SOC_SECURITY_NUM__c = :contactReturn.FiscalCode__c LIMIT 1];
+                /* If no contact is returned make the Am request registering the Amministratore condominio */
+                if(siebelContact.isEmpty()){
+                    resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
+                    if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP)) {
+                        contactReturn.ContactCode__c = resCreate.data.codiceBP;
+                    }
+                }
+                /* If a contact is returned the contact code is saved */
+                else
+                {
+                    contactReturn.ContactCode__c = siebelContact[0].INTEGRATION_ID__c;
+                }
+            }
+            /* If it is not archive register the Amministratore Condominio */
+            else
+            {
+                resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
+                if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP)) {
+                    contactReturn.ContactCode__c = resCreate.data.codiceBP;
+                }
+            }
+        }
+        
+        return contactReturn;
+
     }
 
 }

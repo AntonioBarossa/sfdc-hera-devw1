@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AnnullaPrestazioneEnabled__c</fullName>
+    <externalId>false</externalId>
+    <formula>AND(
+	NOT(ISPICKVAL(Phase__c, &apos;Ammissibilità KO&apos;)),
+	NOT(ISPICKVAL(Phase__c, &apos;Esito KO da DL&apos;)),
+	NOT(ISPICKVAL(Phase__c, &apos;Esito KO da SII&apos;)),
+	NOT(ISPICKVAL(Phase__c, &apos;Amm. Precheck KO SII&apos;)),
+	NOT(NotCancellable__c),
+	NOT(ISPICKVAL(Status, &apos;Activated&apos;)),
+	NOT(ISPICKVAL(Status, &apos;Annullato&apos;)),
+	OR(
+		NOT(FlyingRequest__c),
+		AND(
+			FlyingRequest__c,
+			$Permission.HDT_CP_AnnullamentoPraticheInVolo
+		)
+	),
+	OR(
+		NOT(isTransition__c),
+		AND(
+			isTransition__c,
+			NOT(ISPICKVAL(Phase__c, &apos;Esportazione VS Siebel&apos;)),
+			NOT(ISPICKVAL(Phase__c, &apos;Caricamento Siebel OK&apos;)),
+			NOT(ISPICKVAL(Phase__c, &apos;In Corso Caricamento Siebel&apos;))
+		)
+	)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Annulla Prestazione Enabled</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

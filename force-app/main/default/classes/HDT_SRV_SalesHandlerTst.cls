@@ -21,20 +21,21 @@ private class HDT_SRV_SalesHandlerTst {
         HDT_WRP_MrrRequest.HDT_WRP_Request request=new HDT_WRP_MrrRequest.HDT_WRP_Request();
         HDT_WRP_MrrRequest.HDT_WRP_Header header=new HDT_WRP_MrrRequest.HDT_WRP_Header();
         header.requestType=requestType;
-		HDT_WRP_MrrRequest.HDT_WRP_Field field=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+		    HDT_WRP_MrrRequest.HDT_WRP_Field field=new HDT_WRP_MrrRequest.HDT_WRP_Field();
         HDT_WRP_MrrRequest.HDT_WRP_Field field3=new HDT_WRP_MrrRequest.HDT_WRP_Field();
      // For Pass the RICH_PASS and NOTIF_ES else    
-      if(requestType=='RICH_PASS'||requestType=='NOTIF_ES'){
-        field.name='ATTIVITA';
-        field.value=null;
-      }else{
+        if(requestType=='RICH_PASS'||requestType=='NOTIF_ES'){
+          field.name='ATTIVITA';
+          field.value=null;
+        } 
+        else{
         // create fields
-        field.name='ATTIVITA';
-        field.value='Gestione Switch in Ripristinatorio';
-        field3.name='CODERR_AEEG';
-        field3.value='032';
-        if(phase=='Ammissibilità OK'){
-          field3.value='034';
+          field.name='ATTIVITA';
+          field.value='Gestione Switch in Ripristinatorio';
+          field3.name='CODERR_AEEG';
+          field3.value='032';
+          if(phase=='Ammissibilità OK'){
+            field3.value='034';
         	}
       	}
         HDT_WRP_MrrRequest.HDT_WRP_Field field1=new HDT_WRP_MrrRequest.HDT_WRP_Field();
@@ -64,11 +65,11 @@ private class HDT_SRV_SalesHandlerTst {
         field9.value='2021-06-01';
         HDT_WRP_MrrRequest.HDT_WRP_Field field10=new HDT_WRP_MrrRequest.HDT_WRP_Field();
           //if(requestType!='SIE34_1' && requestType!='SIE34_2' && requestType!='SIE34_3' && requestType!='SIE34_6' && requestType!='SIE34_7'){//to avoid entering into a block that enqueues Jobs
-            field10.name='runId';
-            field10.value='runId00';
+        field10.name='runId';
+        field10.value='runId00';
           //}
         HDT_WRP_MrrRequest.HDT_WRP_Field field11=new HDT_WRP_MrrRequest.HDT_WRP_Field();
-          if(requestType=='NOTIF_ES'){
+        if(requestType=='NOTIF_ES'){
             field11.name='CODERR_ES';
             field11.value='003';
           }
@@ -87,7 +88,30 @@ private class HDT_SRV_SalesHandlerTst {
         HDT_WRP_MrrRequest.HDT_WRP_Field field16=new HDT_WRP_MrrRequest.HDT_WRP_Field();
         field16.name='ANNOTAZIONI';
         field16.value='ok';//To throw List index out of bounds 
-
+        HDT_WRP_MrrRequest.HDT_WRP_Field field17=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field17.name='STATO_SOSP';
+        field17.value='ok';//To throw List index out of bounds 
+        HDT_WRP_MrrRequest.HDT_WRP_Field field18=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field18.name='DATE_SOSP';
+        field18.value='ok';//To throw List index out of bounds 
+        HDT_WRP_MrrRequest.HDT_WRP_Field field19=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field19.name='INDENNIZZO';
+        field19.value='ok';//To throw List index out of bounds 
+        HDT_WRP_MrrRequest.HDT_WRP_Field field20=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field20.name='DATE_SOST';
+        field20.value='ok';//To throw List index out of bounds 
+        HDT_WRP_MrrRequest.HDT_WRP_Field field21=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field21.name='DATA_SALVAGUARDIA';
+        field21.value='ok';//To throw List index out of bounds 
+        HDT_WRP_MrrRequest.HDT_WRP_Field field22=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field22.name='DATA_ULT_SOSP';
+        field22.value='ok';//To throw List index out of bounds 
+        HDT_WRP_MrrRequest.HDT_WRP_Field field23=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field23.name='DT_SOSP_ATT';
+        field23.value='ok';//To throw List index out of bounds
+        HDT_WRP_MrrRequest.HDT_WRP_Field field24=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field24.name='MERCATO_PROV';
+        field24.value='ok';//To throw List index out of bounds 
           
         List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList=new List<HDT_WRP_MrrRequest.HDT_WRP_Field> ();
         fieldList.add(field);
@@ -98,19 +122,27 @@ private class HDT_SRV_SalesHandlerTst {
         if(paramsBool.get('withImpPrevDist')!=null && paramsBool.get('withImpPrevDist')==true) fieldList.add(field4);
         fieldList.add(field5);
         fieldList.add(field6);
-		fieldList.add(field7);
+		    fieldList.add(field7);
         fieldList.add(field8);
         fieldList.add(field9);
         System.debug('paramsBool.get("withRunId")!=null '+paramsBool.get('withRunId')!=null);
         if(paramsBool.get('withRunId')!=null && paramsBool.get('withRunId')==true) fieldList.add(field10);
         if(requestType=='NOTIF_ES') fieldList.add(field11);
-          HDT_WRP_MrrRequest.HDT_WRP_Object obj=new HDT_WRP_MrrRequest.HDT_WRP_Object();
+        HDT_WRP_MrrRequest.HDT_WRP_Object obj=new HDT_WRP_MrrRequest.HDT_WRP_Object();
         fieldList.add(field11);
         fieldList.add(field12);
         fieldList.add(field13);
         fieldList.add(field14);
         fieldList.add(field15);
         fieldList.add(field16);
+        fieldList.add(field17);
+        fieldList.add(field18);
+        fieldList.add(field19);
+        fieldList.add(field20);
+        fieldList.add(field21);
+        fieldList.add(field22);
+        fieldList.add(field23);
+        fieldList.add(field24);
         obj.fields=fieldList;
         List<HDT_WRP_MrrRequest.HDT_WRP_Object> objList=new List<HDT_WRP_MrrRequest.HDT_WRP_Object> ();
         objList.add(obj);
@@ -120,15 +152,16 @@ private class HDT_SRV_SalesHandlerTst {
         if(paramsBool.get('withoutObjects')==null || paramsBool.get('withoutObjects')==false) request.objects=objList;
       
       /* Configuration of response */
-      HDT_WRP_MrrResponse.HDT_WRP_Object objResponse =new HDT_WRP_MrrResponse.HDT_WRP_Object();
-      List<HDT_WRP_MrrResponse.HDT_WRP_Object> objResponseList=new List<HDT_WRP_MrrResponse.HDT_WRP_Object> ();
-      objResponseList.add(objResponse);
-      HDT_WRP_MrrResponse.HDT_WRP_Response response =new HDT_WRP_MrrResponse.HDT_WRP_Response();
-      response.objects=objResponseList;
+        HDT_WRP_MrrResponse.HDT_WRP_Object objResponse =new HDT_WRP_MrrResponse.HDT_WRP_Object();
+        List<HDT_WRP_MrrResponse.HDT_WRP_Object> objResponseList=new List<HDT_WRP_MrrResponse.HDT_WRP_Object> ();
+        objResponseList.add(objResponse);
+        HDT_WRP_MrrResponse.HDT_WRP_Response response =new HDT_WRP_MrrResponse.HDT_WRP_Response();
+        response.objects=objResponseList;
         // Try{
-          new HDT_SRV_SalesHandler().manageSalesProcessCategory(request,response);
+        new HDT_SRV_SalesHandler().manageSalesProcessCategory(request,response);
         // }catch(Exception e){}
     }
+
   }
 
 
@@ -274,6 +307,13 @@ static void setup() {
       'ProcessType__c' =>'Cambio Uso',
       'Pricebook2Id' => pricebook.Id
     });
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_SwitchIn',new Map<String,Object>{
+      'AccountId'=>accountList[0].id,
+      'Phase__c'=>'Dati TIMOE ricevuti',     
+      'BillingProfile__c'=>billingProfileList[0].Id,
+      'ProcessType__c' =>'Prima Attivazione Fuori delibera',
+      'ServicePoint__c'=>servicePointList[0].Id
+    } )); 
     insert orders;
 
     HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderCompletata[0].id, servicePointList[0].id, product2List[0].Id, pricebookentryList[0].id);
@@ -291,6 +331,7 @@ static void testHandleSalesProcessCategoryAmmissibilita() {
     new TestBuilderCallManageSalesProcessCategory(orderAmmissibilitaKo,'Ammissibilità KO','NOTIF_ES',null);
     new TestBuilderCallManageSalesProcessCategory(orderAmmissibilitaOk,'Ammissibilità OK','NOTIF_ES',new Map<String,Boolean>{'withImpPrevDist'=>false,'withDesErrAeeg'=>false});
     new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoAmmissibilita,'Annullamento - Ammissibilità OK','NOTIF_ES',null);
+    new TestBuilderCallManageSalesProcessCategory(orderAmmissibilitaOk,'Ammissibilità OK','NOTIF_ES',new Map<String,Boolean>{'withImpPrevDist'=>true,'withDesErrAeeg'=>false});
     System.assertNotEquals(400, RestContext.response.statusCode,'No errors triggered during the processes execution');
     System.assertEquals(200, RestContext.response.statusCode,'the processes are well completed');
   Test.stopTest();
@@ -305,6 +346,7 @@ static void testHandleSalesProcessCategoryErrorCases() {
     new TestBuilderCallManageSalesProcessCategory(new Order(),null,'WSLead_CariBoll',new Map<String,Boolean>{'withoutObjects'=>true});
     new TestBuilderCallManageSalesProcessCategory(new Order(),null,'WSLead_HVAC',new Map<String,Boolean>{'withoutObjects'=>true});
     new TestBuilderCallManageSalesProcessCategory(new Order(),null,'WSLead_SOL',new Map<String,Boolean>{'withoutObjects'=>true});
+
     System.assertNotEquals(200, RestContext.response.statusCode,'errors happened because of lack of Objects.fields into the request');
     System.assertEquals(400, RestContext.response.statusCode,'the processes are not well completed');
     try{
@@ -410,12 +452,12 @@ static void testHandleSalesProcessCategory8() {
 
 @isTest
 static void testHandleSalesProcessCategory7() {
-    // Order orderAmmPrecheckKoSii=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Amm. Precheck KO SII' LIMIT 1]; 
+     Order orderAmmPrecheckKoSii=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Amm. Precheck KO SII' LIMIT 1]; 
   	Order orderDatidiscordanti=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Dati discordanti' LIMIT 1]; 
   	// Order orderErrorelavorazione=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Errore lavorazione SAP' LIMIT 1];
     Order orderCompletata=[ SELECT id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c FROM Order WHERE Phase__c='Completata' LIMIT 1];
     Test.startTest(); 
-    //new TestBuilderCallManageSalesProcessCategory(orderAmmPrecheckKoSii,'Amm. Precheck KO SII','NOTIF_ES',null);
+    new TestBuilderCallManageSalesProcessCategory(orderAmmPrecheckKoSii,'Amm. Precheck KO SII','NOTIF_ES',null);
     new TestBuilderCallManageSalesProcessCategory(orderDatidiscordanti,'Dati discordanti','NOTIF_ES',null); 
     new TestBuilderCallManageSalesProcessCategory(orderCompletata,'Completata','NOTIF_ES',null); 
     System.assertNotEquals(400, RestContext.response.statusCode,'No errors triggered during the processes execution');
@@ -549,4 +591,233 @@ static void moveOutTest()
     System.assertEquals(System.today(), contractList[0].EndDate, 'Move Out: EndDate non corretta');
 }
 
+@IsTest
+static void datiTimoeTst()
+{
+  Order datiTimoeOrder = [SELECT Id, Description FROM Order WHERE Phase__c = 'Dati TIMOE ricevuti' LIMIT 1];
+  Test.startTest();
+  try
+  {
+    new TestBuilderCallManageSalesProcessCategory(datiTimoeOrder,'Dati TIMOE ricevuti','NOTIF_ES',null); 
+  }
+  catch(Exception e)
+  {
+    System.assertEquals(true,e.getMessage().contains('List index out of bounds'),'Due to badvalue passed to updatedFrom ');
+  }
+  Test.stopTest();
+  datiTimoeOrder = [SELECT Id, Description FROM Order WHERE Phase__c = 'Dati TIMOE ricevuti' LIMIT 1];
+  System.assertEquals(true, String.isNotBlank(datiTimoeOrder.Description), 'Dati TIMOE: Fase non ricevuta correttamente');
+}
+
+@isTest
+static void coverageWithoutObjectsNOTIF_ES() {
+
+  RestResponse res = new RestResponse();
+  res.statusCode = 200;
+  RestContext.response = res;
+
+
+
+  HDT_WRP_MrrRequest.HDT_WRP_Request request=new HDT_WRP_MrrRequest.HDT_WRP_Request();
+  HDT_WRP_MrrRequest.HDT_WRP_Header header=new HDT_WRP_MrrRequest.HDT_WRP_Header();
+  header.requestType='NOTIF_ES';
+  request.header=header;
+
+  HDT_WRP_MrrRequest.HDT_WRP_Object obj=new HDT_WRP_MrrRequest.HDT_WRP_Object();
+  List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList=new List<HDT_WRP_MrrRequest.HDT_WRP_Field> ();
+  fieldList.add(null);
+  obj.fields=fieldList;
+  List<HDT_WRP_MrrRequest.HDT_WRP_Object> objList=new List<HDT_WRP_MrrRequest.HDT_WRP_Object> ();
+  objList.add(obj);
+
+  request.objects=objList;
+
+
+
+  HDT_WRP_MrrResponse.HDT_WRP_Object objResponse =new HDT_WRP_MrrResponse.HDT_WRP_Object();
+  List<HDT_WRP_MrrResponse.HDT_WRP_Object> objResponseList=new List<HDT_WRP_MrrResponse.HDT_WRP_Object> ();
+  objResponseList.add(objResponse);
+  HDT_WRP_MrrResponse.HDT_WRP_Response response =new HDT_WRP_MrrResponse.HDT_WRP_Response();
+  response.objects=objResponseList;
+  
+
+
+
+  new HDT_SRV_SalesHandler().manageSalesProcessCategory(request,response);
+}
+
+@isTest
+static void coverageWithoutObjectsRICH_PASS() {
+
+  RestResponse res = new RestResponse();
+  res.statusCode = 200;
+  RestContext.response = res;
+
+
+
+  HDT_WRP_MrrRequest.HDT_WRP_Request request=new HDT_WRP_MrrRequest.HDT_WRP_Request();
+  HDT_WRP_MrrRequest.HDT_WRP_Header header=new HDT_WRP_MrrRequest.HDT_WRP_Header();
+  header.requestType='RICH_PASS';
+  request.header=header;
+
+  HDT_WRP_MrrRequest.HDT_WRP_Object obj=new HDT_WRP_MrrRequest.HDT_WRP_Object();
+  List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList=new List<HDT_WRP_MrrRequest.HDT_WRP_Field> ();
+  fieldList.add(null);
+  obj.fields=fieldList;
+  List<HDT_WRP_MrrRequest.HDT_WRP_Object> objList=new List<HDT_WRP_MrrRequest.HDT_WRP_Object> ();
+  objList.add(obj);
+
+  request.objects=objList;
+
+
+
+  HDT_WRP_MrrResponse.HDT_WRP_Object objResponse =new HDT_WRP_MrrResponse.HDT_WRP_Object();
+  List<HDT_WRP_MrrResponse.HDT_WRP_Object> objResponseList=new List<HDT_WRP_MrrResponse.HDT_WRP_Object> ();
+  objResponseList.add(objResponse);
+  HDT_WRP_MrrResponse.HDT_WRP_Response response =new HDT_WRP_MrrResponse.HDT_WRP_Response();
+  response.objects=objResponseList;
+  
+
+
+
+  new HDT_SRV_SalesHandler().manageSalesProcessCategory(request,response);
+}
+
+@isTest
+static void coverageWithoutObjectsNOTIF_ESDULL() {
+
+  RestResponse res = new RestResponse();
+  res.statusCode = 200;
+  RestContext.response = res;
+
+
+  List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList=new List<HDT_WRP_MrrRequest.HDT_WRP_Field> ();
+  HDT_WRP_MrrRequest.HDT_WRP_Request request=new HDT_WRP_MrrRequest.HDT_WRP_Request();
+  HDT_WRP_MrrRequest.HDT_WRP_Header header=new HDT_WRP_MrrRequest.HDT_WRP_Header();
+  header.requestType='NOTIF_ES';
+  request.header=header;
+
+  HDT_WRP_MrrRequest.HDT_WRP_Object obj=new HDT_WRP_MrrRequest.HDT_WRP_Object();
+  HDT_WRP_MrrRequest.HDT_WRP_Field field=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+  field.name='RECORD_ID';
+  field.value='a';
+  HDT_WRP_MrrRequest.HDT_WRP_Field field1=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+  field1.name='FASE';
+  field1.value='123';
+  fieldList.add(field);
+  fieldList.add(field1);
+  obj.fields=fieldList;
+  List<HDT_WRP_MrrRequest.HDT_WRP_Object> objList=new List<HDT_WRP_MrrRequest.HDT_WRP_Object> ();
+  objList.add(obj);
+
+  request.objects=objList;
+
+
+
+  HDT_WRP_MrrResponse.HDT_WRP_Object objResponse =new HDT_WRP_MrrResponse.HDT_WRP_Object();
+  List<HDT_WRP_MrrResponse.HDT_WRP_Object> objResponseList=new List<HDT_WRP_MrrResponse.HDT_WRP_Object> ();
+  objResponseList.add(objResponse);
+  HDT_WRP_MrrResponse.HDT_WRP_Response response =new HDT_WRP_MrrResponse.HDT_WRP_Response();
+  response.objects=objResponseList;
+  
+
+
+
+  new HDT_SRV_SalesHandler().manageSalesProcessCategory(request,response);
+}
+@isTest
+static void coverageWithoutObjectsNOTIF_ESMETHOD() {
+
+  RestResponse res = new RestResponse();
+  res.statusCode = 200;
+  RestContext.response = res;
+  List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList=new List<HDT_WRP_MrrRequest.HDT_WRP_Field> ();
+  List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldsList=new List<HDT_WRP_MrrRequest.HDT_WRP_Field> ();
+  HDT_WRP_MrrRequest.HDT_WRP_Field field1=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+  field1.name='PROCESS_CATEGORY';
+  field1.value='test';
+
+  fieldsList.add(field1);
+
+  HDT_WRP_MrrRequest.HDT_WRP_Request request=new HDT_WRP_MrrRequest.HDT_WRP_Request();
+  HDT_WRP_MrrRequest.HDT_WRP_Header header=new HDT_WRP_MrrRequest.HDT_WRP_Header();
+  header.requestType='NOTIF_ES';
+  header.fields = fieldsList;
+  request.header=header;
+
+  HDT_WRP_MrrRequest.HDT_WRP_Object obj=new HDT_WRP_MrrRequest.HDT_WRP_Object();
+  
+  HDT_WRP_MrrRequest.HDT_WRP_Field field=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+  field.name='METHOD';
+  field.value='AggiornaAppuntamento';
+/*  HDT_WRP_MrrRequest.HDT_WRP_Field field1=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+  field1.name='RECORD_ID';
+  field1.value=order.Id;*/
+  fieldList.add(field);
+  obj.fields=fieldList;
+  List<HDT_WRP_MrrRequest.HDT_WRP_Object> objList=new List<HDT_WRP_MrrRequest.HDT_WRP_Object> ();
+  objList.add(obj);
+
+  request.objects=objList;
+
+
+
+  HDT_WRP_MrrResponse.HDT_WRP_Object objResponse =new HDT_WRP_MrrResponse.HDT_WRP_Object();
+  List<HDT_WRP_MrrResponse.HDT_WRP_Object> objResponseList=new List<HDT_WRP_MrrResponse.HDT_WRP_Object> ();
+  objResponseList.add(objResponse);
+  HDT_WRP_MrrResponse.HDT_WRP_Response response =new HDT_WRP_MrrResponse.HDT_WRP_Response();
+  response.objects=objResponseList;
+  
+  try {
+    new HDT_SRV_SalesHandler().manageSalesProcessCategory(request,response);
+  } catch (Exception e) {
+      System.debug(e);
+  }
+
+
+  
+}
+
+@isTest
+static void coverageWithoutObjectsNOTIF_ESrecordnull() {
+
+  RestResponse res = new RestResponse();
+  res.statusCode = 200;
+  RestContext.response = res;
+
+
+  List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList=new List<HDT_WRP_MrrRequest.HDT_WRP_Field> ();
+  HDT_WRP_MrrRequest.HDT_WRP_Request request=new HDT_WRP_MrrRequest.HDT_WRP_Request();
+  HDT_WRP_MrrRequest.HDT_WRP_Header header=new HDT_WRP_MrrRequest.HDT_WRP_Header();
+  header.requestType='NOTIF_ES';
+  request.header=header;
+
+  HDT_WRP_MrrRequest.HDT_WRP_Object obj=new HDT_WRP_MrrRequest.HDT_WRP_Object();
+  HDT_WRP_MrrRequest.HDT_WRP_Field field=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+  field.name='RECORD_ID';
+  field.value='';
+  HDT_WRP_MrrRequest.HDT_WRP_Field field1=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+  field1.name='FASE';
+  field1.value='123';
+  fieldList.add(field);
+  fieldList.add(field1);
+  obj.fields=fieldList;
+  List<HDT_WRP_MrrRequest.HDT_WRP_Object> objList=new List<HDT_WRP_MrrRequest.HDT_WRP_Object> ();
+  objList.add(obj);
+
+  request.objects=objList;
+
+
+
+  HDT_WRP_MrrResponse.HDT_WRP_Object objResponse =new HDT_WRP_MrrResponse.HDT_WRP_Object();
+  List<HDT_WRP_MrrResponse.HDT_WRP_Object> objResponseList=new List<HDT_WRP_MrrResponse.HDT_WRP_Object> ();
+  objResponseList.add(objResponse);
+  HDT_WRP_MrrResponse.HDT_WRP_Response response =new HDT_WRP_MrrResponse.HDT_WRP_Response();
+  response.objects=objResponseList;
+  
+
+
+
+  new HDT_SRV_SalesHandler().manageSalesProcessCategory(request,response);
+}
 }
