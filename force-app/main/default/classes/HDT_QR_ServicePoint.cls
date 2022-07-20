@@ -213,7 +213,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 	 * @return List<ServicePoint__c>
 	 */
 	@SuppressWarnings('PMD.UnusedLocalVariable')
-	public List<ServicePoint__c> getServicePointsByCodeH2O(String code, String fields) {
+	public List<ServicePoint__c> getServicePointsByCodeWater(String code, String fields) {
 		contractSrv.checkReadAccess(fields);
 		String stringCode = code.trim();
 		List<ServicePoint__c> servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE CommoditySector__c = \'Acqua\' AND ServicePointCode__c = :stringCode ');

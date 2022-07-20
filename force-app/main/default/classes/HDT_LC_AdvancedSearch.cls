@@ -363,7 +363,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 					throw new AuraHandledException('Il Codice Punto Presa deve essere di compreso tra 5 e 20 caratteri');
 				}
 				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
-				servicePoints.addAll(servicePointQr.getServicePointsByCodeH2O(parameter, customSetting.OutputServicePoint__c));
+				servicePoints.addAll(servicePointQr.getServicePointsByCodeWater(parameter, customSetting.OutputServicePoint__c));
 			}
 
 			when 'address' {
