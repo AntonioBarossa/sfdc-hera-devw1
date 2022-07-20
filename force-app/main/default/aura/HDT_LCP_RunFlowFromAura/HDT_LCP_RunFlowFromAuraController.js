@@ -152,7 +152,7 @@
             console.log('# CaseId is NOT NULL');
             //{ name : "InputCase", type : "SObject", value: {"Id" : caseId}}
             inputVariables.push({ name : 'InputCase', type : 'String', value : caseId });
-            if(processType === 'Annullamento prestazione' || processType === 'Ripristina fase' || processType === 'Ripensamento'
+            if(processType === 'Annullamento prestazione' || processType === 'Annullamento segnalazioni' || processType === 'Ripristina fase' || processType === 'Ripensamento'
                 || processType === 'KO Definitivo' || processType === 'KO Forzato' || processType === 'KO Risolto'){
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
                 //Gestione Risottomissione Annullamento
