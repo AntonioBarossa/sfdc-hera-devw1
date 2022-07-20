@@ -224,7 +224,7 @@ export default class HdtActiveRepentant extends LightningElement {
             return;
         }
 
-        if (declarationDate.getTime() > this.limitDateY.getTime()) {
+        if (declarationDate.getTime() >= this.limitDateY.getTime()) {
             console.log("Periodo non ravv Z");
             this.periodType ="Z";
             this.showMessage("Attenzione!", this.period.PopupZ__c, " error", "sticky");
