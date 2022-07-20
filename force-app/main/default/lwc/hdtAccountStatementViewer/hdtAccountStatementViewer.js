@@ -867,6 +867,23 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         }
 
         //montors fix 07/07/2022
+
+        //this.totAmount = 0;
+        //if(this.amountField != null && this.amountField != ''){
+        //    obj.data.forEach((e) => { 
+        //        e.id = e['idPrimoLivelloSAP'];
+        //        this.totAmount += parseFloat(e[this.amountField]);
+        //    });
+        //} else {
+        //    obj.data.forEach((e) => { 
+        //        e.id = e['idPrimoLivelloSAP'];
+        //    });
+        //}
+
+        this.columns.forEach((column) => {
+            column.detail.totAmount = 0;
+        });
+
         obj.data.forEach((e) => { 
             e.id = e['idPrimoLivelloSAP'];
 
@@ -880,18 +897,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.columns.forEach((column) => {
             column.detail.totAmountStored = column.detail.totAmount;
         });
-
-        //this.totAmount = 0;
-        //if(this.amountField != null && this.amountField != ''){
-        //    obj.data.forEach((e) => { 
-        //        e.id = e['idPrimoLivelloSAP'];
-        //        this.totAmount += parseFloat(e[this.amountField]);
-        //    });
-        //} else {
-        //    obj.data.forEach((e) => { 
-        //        e.id = e['idPrimoLivelloSAP'];
-        //    });
-        //}
+        //montors fix 07/07/2022
 
         this.allData = obj.data;//result.data;
 
