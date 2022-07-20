@@ -233,6 +233,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         var fields = record[this.recordId].fields;
         this.installmentsLogic();
         console.log('Edit Form Loaded ' + fields);
+        
         }
         this.showCustomLabels=true;
     }

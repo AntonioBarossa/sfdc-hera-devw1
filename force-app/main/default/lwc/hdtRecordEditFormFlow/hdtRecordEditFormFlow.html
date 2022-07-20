@@ -14,7 +14,7 @@
                                             density={density}>
                 <template if:true={showInputSection}>
                     <div class="slds-section slds-is-open">
-                        <h3 class="slds-section__title slds-theme_shade">
+                        <h3 if:true={labelInputSection} class="slds-section__title slds-theme_shade">
                             <span class="slds-truncate slds-p-horizontal_small" title="Section Title">{labelInputSection}</span>
                         </h3>
                         <div aria-hidden="false" class="slds-section__content">

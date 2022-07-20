@@ -330,6 +330,25 @@ public inherited sharing class HDT_LC_SaleVas {
                     AND (ServicePoint__r.CommoditySector__c='Energia Elettrica' OR SBQQ__Order__r.ServicePoint__r.CommoditySector__c='Energia Elettrica')
                     WITH SECURITY_ENFORCED];
             }
+            //Generiche Tari
+            when 'RICHIESTA_SERVIZIO_ASSOCIATA'{
+
+                records.addAll([SELECT OrderNumber, ProcessType__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
+                FROM Order
+                WHERE ServicePoint__c =:searchString 
+                AND AccountId IN (SELECT Account__c FROM ServicePoint__c WHERE Id =:searchString)
+                WITH SECURITY_ENFORCED
+                ]);
+                records.addAll(
+                    [SELECT Type, CaseNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
+                    FROM Case
+                    WHERE  ServicePoint__c =:searchString
+                    AND RecordTypeId!=:Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_GenericheTari').getRecordTypeId()
+                    AND AccountId IN (SELECT Account__c FROM ServicePoint__c WHERE Id =:searchString)
+                    WITH SECURITY_ENFORCED
+                    ]
+                );
+            }
         }
         return records;
     }
