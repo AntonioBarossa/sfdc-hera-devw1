@@ -2626,6 +2626,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato per decorrenza dei termini</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Attesa Credit Check</fullName>
             <default>false</default>
         </values>
@@ -2778,6 +2782,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO Da SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO da DL</fullName>
             <default>false</default>
         </values>
@@ -2822,6 +2830,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In attesa Approvazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In attesa appuntamento DL</fullName>
             <default>false</default>
         </values>
@@ -2835,6 +2847,18 @@
         </values>
         <values>
             <fullName>In attesa esecuzione appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa esito documentale da E1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa perfezionamento documentazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa perfezionamento documentazione sollecitata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3027,6 +3051,10 @@
         </values>
         <values>
             <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito perfezionamento documentazione da inviare a E1</fullName>
             <default>false</default>
         </values>
         <values>
