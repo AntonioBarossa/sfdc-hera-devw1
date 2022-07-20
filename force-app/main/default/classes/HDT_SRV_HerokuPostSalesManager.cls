@@ -74,11 +74,16 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
              * e' necessaria una customizzazione per inviare
              * soltanto la subscription di offerta commerciale
              */
-            if(currentCase.Type.equalsIgnoreCase('Allineamento Anagrafica'))
+            
+            mrrList = removeNonCommoditySubscriptions(mrrList);
+            String processType = obj.get('Type') != null ? (String)obj.get('Type') : '';
+            if(String.isNotBlank(processType) && 
+            (processType.equalsIgnoreCase('Richiesta Domiciliazione')
+            || processType.equalsIgnoreCase('Variazione Domiciliazione')
+            || processType.equalsIgnoreCase('Rimborso')))
             {
-                mrrList = removeNonCommoditySubscriptions(mrrList);
+                mrrList = addIbanCountry(mrrList); 
             }
-
             arg.put('endpoint', endpoint);
             arg.put('timeout', 12000);
             arg.put('payload',mrrList);
@@ -317,4 +322,69 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         return mrrList;
     }
     
+    @TestVisible
+    private static wrts_prcgvr.MRR_1_0.MultiRequest removeNonCommodityOrderItems(wrts_prcgvr.MRR_1_0.MultiRequest mrrList)
+    {
+        Set<Id> orderItemsId = new Set<Id>();
+        String commodityOrderItem;
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
+        {
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('OrderItem'))
+            {
+                orderItemsId.add(obj.Id);
+            }
+        }
+        List<OrderItem> orderItems = [SELECT Id FROM OrderItem WHERE Id IN :orderItemsId AND ProductFamily__c = 'Offerta commerciale' WITH SECURITY_ENFORCED];
+        if(!orderItems.isEmpty())
+        {
+            commodityOrderItem = orderItems[0].Id;
+        }
+        for(Integer i = mrrList.requests[0].objects.size() - 1; i >= 0; --i)
+        {
+            wrts_prcgvr.MRR_1_0.WObject obj = mrrList.requests[0].objects[i];
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('OrderItem'))
+            {
+                if(obj.id.equalsIgnoreCase(commodityOrderItem))
+                {
+                    continue;
+                }
+                else
+                {
+                    mrrList.requests[0].objects.remove(i); 
+                }
+            }
+        }
+        return mrrList;
+    }
+
+    @TestVisible
+    private static wrts_prcgvr.MRR_1_0.MultiRequest addIbanCountry(wrts_prcgvr.MRR_1_0.MultiRequest mrrList)
+    {
+        Boolean ibanCountry = false;
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
+        {
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('BillingProfile__c'))
+            {
+                for(wrts_prcgvr.MRR_1_0.Field f : obj.fields)
+                {
+                    if(f.name.equalsIgnoreCase('PAESE_IBAN'))
+                    {
+                        ibanCountry = true;
+                        break;
+                    }
+                }
+                if(!ibanCountry)
+                {
+                    wrts_prcgvr.MRR_1_0.Field ibanField = new wrts_prcgvr.MRR_1_0.Field();
+                    ibanField.name = 'PAESE_IBAN';
+                    ibanField.fieldType = 'STRING';
+                    ibanField.value = 'IT';
+                    obj.fields.add(ibanField);
+                }
+                break;
+            }
+        }
+        return mrrList;
+    }
+
 }

@@ -3,6 +3,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
+    private static HDT_SRV_CampaignMember campMembSrv = new HDT_SRV_CampaignMember();
     private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
 
     @AuraEnabled
@@ -14,10 +15,10 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         if (actList[0].Order__r.RecordType.DeveloperName == 'HDT_RT_OrderDossier') {
             resultList = orderQr.getOrderForComfortQualityResult(actList[0].Order__c);
-        } else {
+        }
+        else {
             resultList = actList;
         }
-
         return resultList;
     }
 
@@ -55,7 +56,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             
             orderUpdate.SignedDate__c = Date.today();
             orderUpdate.Phase__c = phase;
-        } else {
+        }
+        else {
             List<Order> orderActiveMonitoring = orderQr.getOrderForActiveMonitoringCheck(ordId);
             List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
             
@@ -63,20 +65,27 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 orderUpdate.Phase__c = 'Quality Call OK';
                 orderUpdate.SignedDate__c = Date.today();
             }
-
             causalQuality = 'Quality Call OK';
 
         }
-
         orderSrv.updateRecord(orderUpdate);
 
-        activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
-            Id = activityId,
-            wrts_prcgvr__Status__c = 'Esitata',
-            ContactResult__c	 = causalQuality
-        ));
+        wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
+        act.wrts_prcgvr__Status__c = 'Esitata';
+        act.ContactResult__c = causalQuality;
+        act.ActivityEndTime__c = null; //@ealpi ticket 906587C
+        activitySrv.updateRecord(act);
+
+        List<CampaignMember> campMembList = HDT_QR_CampaignMember.getCampMembByActivity(activityId);
+        for(CampaignMember cm : campMembList){
+            if(String.isNotBlank(cm.Campaign.PositiveOutcomeDefaultStatus__c)){
+                cm.Status = cm.Campaign.PositiveOutcomeDefaultStatus__c;
+            }
+        }
+        campMembSrv.updateRecords(campMembList);
     }
 
+    @SuppressWarnings('PMD.CyclomaticComplexity')
     @AuraEnabled
     public static void cancelContract(String ordId, String activityId, String causal){
 
@@ -111,7 +120,9 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         if (notCancelPhase.contains(ordToCheck[0].Phase__c) || notCancelNonBillable.contains(ordToCheck[0].Phase__c) || notCancelBillable.contains(ordToCheck[0].Phase__c)) {
             if ('Firma Falsa'.equalsIgnoreCase(causal) || 'Volontà estorta'.equalsIgnoreCase(causal) || causal.equalsIgnoreCase('Contatto Quality Fallito')) {
 
-                wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = activityId, ContactResult__c = 'Annullato');
+                //wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = activityId, ContactResult__c = 'Annullato');
+                wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
+                act.ContactResult__c = 'Annullato';
                 if(causal.equalsIgnoreCase('Contatto Quality Fallito')){
                     act.wrts_prcgvr__Status__c = 'Non Esitata';
                 }    
@@ -129,21 +140,34 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 throw new AuraHandledException('Non è possibile procedere all’annullamento, effettuare una richiesta di recesso');
             }
         }
-        else {
+        else
+        {
+            String phase = (HDT_UTL_Order.checkCancellationPhase(new Set<String>{ordId})).get(ordId);
+            String status = phase.equalsIgnoreCase('Annullato') ? 'Annullato' : 'In Lavorazione';
             orderSrv.updateRecord(new Order(
                 Id = ordId,
-                Phase__c = 'Annullato',
+                Phase__c = phase,
                 CancellationReason__c = causal,
-                Status = 'Annullato'
+                CancellationRequestDate__c = System.today(),
+                Status = status
             ));
 
-            wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = activityId, ContactResult__c = 'Annullato');
+            wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
+            act.ContactResult__c = 'Annullato';
             if(causal.equalsIgnoreCase('Contatto Quality Fallito')){
                 act.wrts_prcgvr__Status__c = 'Non Esitata';
             }
 
             activitySrv.updateRecord(act);
         }
+
+        List<CampaignMember> campMembList = HDT_QR_CampaignMember.getCampMembByActivity(activityId);
+        for(CampaignMember cm : campMembList){
+            if(String.isNotBlank(cm.Campaign.PositiveOutcomeDefaultStatus__c)){
+                cm.Status = cm.Campaign.PositiveOutcomeDefaultStatus__c;
+            }
+        }
+        campMembSrv.updateRecords(campMembList);
     }
 
     @AuraEnabled
@@ -179,5 +203,19 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             newPhase =  'Comunicazione Motore VAS';
         }
         return newPhase;
+    }
+
+    private static wrts_prcgvr__Activity__c createActivityToClose(String activityId){
+        wrts_prcgvr__Activity__c actAppo = HDT_UTL_Scarti.closeDiscardActivity(activityId);
+        return new wrts_prcgvr__Activity__c(
+            Id = activityId,
+            EndDate__c = actAppo.EndDate__c, 
+            UserCompany__c = actAppo.UserCompany__c, 
+            ClosedByUsername__c=actAppo.ClosedByUsername__c,
+            ClosingCreatorGroup__c = actAppo.ClosingCreatorGroup__c,
+            ClosingUserChannel__c = actAppo.ClosingUserChannel__c,
+            //@ealpi valorizzato in apertura activity --> Place__c = actAppo.Place__c,
+            ActivityEndTime__c = actAppo.ActivityEndTime__c
+        );
     }
 }

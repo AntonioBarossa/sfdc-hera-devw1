@@ -4,6 +4,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
         try{
 
+            //String transactionType = dbr.tipoTransazione;
+
             dbr.codiceCliente = tObj.customerCode;
             dbr.tipoTransazione = tObj.tabCode;
             dbr.applicativo = 'ML';
@@ -156,7 +158,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
     }
 
     public static HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow setDefaultHttpDataBodyRow(HDT_WRP_AccountStatement.HDT_WRP_TechObj tObj, HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow dbr){
-        
+
         switch on tObj.tabCode {
             //Estratto conto
             when 'EC' {
@@ -165,10 +167,11 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
             }
             //Gestione del credito
             when 'EC1' {
-                /*
-                * @Author: Salvatore A. Sarà 18/10/2021
-                * Risoluzione "Avoid Empty Block Statements"
-                */
+                if(String.isNotEmpty(dbr.originLwc) && dbr.originLwc.equalsIgnoreCase('activity')){
+                    dbr.tipoTransazione = 'EC2';
+                }
+                
+
                 return dbr;
             }
             //Indennizzi

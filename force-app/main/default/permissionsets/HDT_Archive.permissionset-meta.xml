@@ -1944,11 +1944,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SiebelOrderAttribute__x.AZ_ImportDatetime__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SiebelOrderAttribute__x.BANK_BRANCH__c</field>
         <readable>true</readable>
     </fieldPermissions>

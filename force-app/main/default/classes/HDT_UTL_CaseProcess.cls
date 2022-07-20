@@ -83,7 +83,7 @@ public with sharing class HDT_UTL_CaseProcess {
                        a = mapAccount.get(newCase.AccountId);
                    }
                    if(a != null && c != null && newCase.Lead__c == null){
-                    commList.add(commUTL.instanceCommunicationLog(newCase.cluster__c,newCase.type,newCase.Phase__c,newCase.status,newCase.CancellationReasonDescription__c,'',newCase.id,newCase.ContactId,newCase.AccountId,c != null ? c.company__c : 'ND',a != null ? a.CompanyOwner__c : ''));
+                    commList.add(commUTL.instanceCommunicationLog(newCase.cluster__c,newCase.type,newCase.Phase__c,newCase.status,newCase.CancellationReasonDescription__c,'',newCase.id,newCase.ContactId,newCase.AccountId, STRING.isNotBlank(c?.company__c) ? c.company__c : 'ND',a != null ? a.CompanyOwner__c : ''));
                    }  
                }
            }
@@ -267,26 +267,25 @@ public with sharing class HDT_UTL_CaseProcess {
 
             List<String> accountIds = new List<String>(accountIdCase.keySet());
             List<String> campaignIds = new List<String>(campaignIdCase.keySet());
-
-            List<CampaignMember> membersToUpdate = new List<CampaignMember>();
-
-            List<CampaignMember> cmembers = campaignMemberQr.getMembersByAccountAndCampaign(accountIds, campaignIds);
-            for (CampaignMember cm : cmembers) {
-                if (accountIdCase.get(cm.Contact.AccountId) == campaignIdCase.get(cm.CampaignId)) {
-                    CampaignMember updateMember = new CampaignMember();
-                    updateMember.Id = cm.Id;
-                    updateMember.Status = 'Positivo';
-                    membersToUpdate.add(updateMember);
+            if(!campaignIds.isEmpty()){
+                List<CampaignMember> membersToUpdate = new List<CampaignMember>();
+                List<CampaignMember> cmembers = campaignMemberQr.getMembersByAccountAndCampaign(accountIds, campaignIds);
+                for (CampaignMember cm : cmembers) {
+                    if (accountIdCase.get(cm.Contact.AccountId) == campaignIdCase.get(cm.CampaignId)) {
+                        CampaignMember updateMember = new CampaignMember();
+                        updateMember.Id = cm.Id;
+                        updateMember.Status = 'Positivo';
+                        membersToUpdate.add(updateMember);
+                    }
                 }
+                //update campaignMember siblings Status a 'Non Proposto Auto'
+                List<CampaignMember> siblingMembers = HDT_QR_CampaignMember.getSiblingMembersByAccountId(accountIds, newCasesList[0].Campaign__r.Channel__c);
+                List<String> campaignMembersIdList = new List<String>(new Map<String, CampaignMember>(siblingMembers).keySet());
+                if (campaignMembersIdList.size()>0) {
+                    HDT_LC_CampaignsController.updateCampaignMembersStatus(campaignMembersIdList, 'Non Proposto Auto');
+                }
+                campaignMemberSrv.updateRecords(membersToUpdate);
             }
-            //update campaignMember siblings Status a 'Non Proposto Auto'
-            List<CampaignMember> siblingMembers = HDT_QR_CampaignMember.getSiblingMembersByAccountId(accountIds, newCasesList[0].Campaign__r.Channel__c);
-            List<String> campaignMembersIdList = new List<String>(new Map<String, CampaignMember>(siblingMembers).keySet());
-            if (campaignMembersIdList.size()>0) {
-                HDT_LC_CampaignsController.updateCampaignMembersStatus(campaignMembersIdList, 'Non Proposto Auto');
-            }
-        
-			campaignMemberSrv.updateRecords(membersToUpdate);
 		}catch(Exception e)
 		{
             System.debug(LoggingLevel.DEBUG, '*******Error:' + e);
@@ -309,20 +308,22 @@ public with sharing class HDT_UTL_CaseProcess {
                 caseStatuses.put(cs.Id, cs.Status);
             }
         }
-        List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(caseIds, 'Case__c');
-        List<ServiceRequest__c> srvRequestsToDelete = new List<ServiceRequest__c>();
-        for(ServiceRequest__c s: srvRequests){
-            s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(caseStatuses.get(s.Case__c), 'Case');
-            if( s.Status__c.equalsIgnoreCase('Chiuso') ){
-                srvRequestsToDelete.add(s);
-            } else {
-                sReqToUpdate.add(s);
+        if (!caseIds.isEmpty()){
+            List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(caseIds, 'Case__c');
+            List<ServiceRequest__c> srvRequestsToDelete = new List<ServiceRequest__c>();
+            for(ServiceRequest__c s: srvRequests){
+                s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(caseStatuses.get(s.Case__c), 'Case');
+                if( s.Status__c.equalsIgnoreCase('Chiuso') ){
+                    srvRequestsToDelete.add(s);
+                } else {
+                    sReqToUpdate.add(s);
+                }
             }
+            if (!srvRequestsToDelete.isEmpty()){
+                HDT_SRV_ServiceRequest.deleteRecord(srvRequestsToDelete);
+            }
+            HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
         }
-        if (!srvRequestsToDelete.isEmpty()){
-            HDT_SRV_ServiceRequest.deleteRecord(srvRequestsToDelete);
-        }
-        HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
     }
 
     /**
@@ -343,4 +344,18 @@ public with sharing class HDT_UTL_CaseProcess {
         }
         HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
     }
+
+    public static void setCloseStatusForAll(List<Case> caseList){
+        for(Case c : caseList) {
+            setCloseStatus(c);
+        }
+    }
+
+    public static void setCloseStatus(Case c){
+        if ('Chiuso'.equalsIgnoreCase(c.Status)){
+            c.Status = 'Closed';
+        }
+    }
+
+
 }

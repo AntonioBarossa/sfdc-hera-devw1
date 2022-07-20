@@ -277,4 +277,32 @@ public inherited sharing class HDT_UTL_Order {
         HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
     }
 
+
+    /**@frpanico 2022-07-12
+     * Metodo che ritorna la fase di annullamento
+     * Se la pratica e' stata gia' inviata verso Heroku
+     * Deve andare in Annullamento - Da Inviare
+     * Altrimenti Annullato
+     */
+    public static Map<String, String> checkCancellationPhase(Set<String> orderIds)
+    {
+        Set<String> nonSendablePhases = new Set<String>{'Amm. Precheck KO SII','Amm. Precheck OK SII', 'Esito KO da DL', 'Esito KO da SII', 'Ammissibilità KO','Dati discordanti'};
+        List<Order> orderList = [SELECT Id, Phase__c, HerokuPracticeCode__c, PhaseStory__c, ProcessType__c, EffectiveDate__c FROM Order WHERE Id IN :orderIds WITH SECURITY_ENFORCED];
+        Map<String, String> resultMap = new Map<String, String>();
+        Boolean switchCancellationEligibility = true;
+        for(Order singleOrder: orderList)
+        {
+            switchCancellationEligibility = (singleOrder.ProcessType__c!= null && singleOrder.ProcessType__c.containsIgnoreCase('Switch In')) ? (singleOrder.PhaseStory__c != null && singleOrder.PhaseStory__c.containsIgnoreCase('Ammissibilità OK')) : true;
+            if(singleOrder.HerokuPracticeCode__c != null && !nonSendablePhases.contains(singleOrder.Phase__c) && switchCancellationEligibility)
+            {
+                resultMap.put(singleOrder.Id, 'Annullamento - Da Inviare');
+            }
+            else
+            {
+                resultMap.put(singleOrder.Id, 'Annullato');
+            }
+        }
+        return resultMap;        
+    }
+
 }

@@ -1,5 +1,9 @@
 // BATCH DEPRECATO - DA NON SCHEDULARE
-public inherited sharing class HDT_BA_SelfReadings implements Database.Batchable<SObject> {
+public inherited sharing class HDT_BA_SelfReadings implements Database.Batchable<SObject>, Schedulable {
+
+    public void execute(SchedulableContext ctx){
+        Database.executebatch(this,100);
+    }
 
     public Database.QueryLocator start(Database.BatchableContext context) {
         String query = 'SELECT Id FROM Case WHERE Type = \'Autolettura da cliente\' AND Phase__c = \'Inviata a SAP\' AND LastModifiedDate <= LAST_N_DAYS:2';
