@@ -308,6 +308,56 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
+                else if (this.recordtype.label === 'Punto Idrico' && element === 'ServicePointCode__c') {
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: true,
+                            value: this.servicePointRetrievedData[element],
+                            disabled: true
+                        }
+                    )
+                }
+                else if (this.recordtype.label === 'Punto Idrico' && element === 'ImplantType__c') {
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: true,
+                            value: this.servicePointRetrievedData[element],
+                            disabled: false
+                        }
+                    )
+                }
+                else if (this.recordtype.label === 'Punto Idrico' && element === 'SupplyType__c') {
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: true,
+                            value: this.servicePointRetrievedData[element],
+                            disabled: false
+                        }
+                    )
+                }
+                else if (this.recordtype.label === 'Punto Idrico' && element === 'MarketOrigin__c') {
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: true,
+                            value: this.servicePointRetrievedData[element],
+                            disabled: false
+                        }
+                    )
+                }
+                else if (this.recordtype.label === 'Punto Idrico' && element === 'ATO__c') {
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: true,
+                            value: this.servicePointRetrievedData[element],
+                            disabled: true
+                        }
+                    )
+                }
                 else {
                     fieldsDataObject.push(
                         {
@@ -463,16 +513,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
-                else if (this.recordtype.label === 'Punto Idrico' && element === 'ImplantType__c') {
-                    fieldsDataObject.push(
-                        {
-                            fieldname: element,
-                            required: true,
-                            value: this.servicePointRetrievedData[element],
-                            disabled: false
-                        }
-                    )
-                }
                 else if (element === 'Resident__c') {
                     if(this.recordTypeAccount == 'Residenziale'){
                         this.allSubmitedFields.Resident__c = true;
@@ -496,6 +536,26 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             }
                         )
                     }
+                }
+                else if (this.recordtype.label === 'Punto Idrico' && element === 'ImplantType__c') {
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: true,
+                            value: this.servicePointRetrievedData[element],
+                            disabled: false
+                        }
+                    )
+                }
+                else if (this.recordtype.label === 'Punto Idrico' && element === 'SupplyType__c') {
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: true,
+                            value: this.servicePointRetrievedData[element],
+                            disabled: false
+                        }
+                    )
                 }
                 else if (this.recordtype.label === 'Punto Idrico' && element === 'CommoditySector__c') {
                     this.commodity = 'Acqua';
@@ -527,8 +587,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         {
                             fieldname: element,
                             required: false,
-                            value: 'Regolamentato',
-                            disabled: true
+                            value: this.servicePointRetrievedData[element],
+                            disabled: false
                         }
                     )
                 }
