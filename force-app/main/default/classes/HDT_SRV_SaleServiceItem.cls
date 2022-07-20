@@ -374,6 +374,16 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                     Name = 'Energia Elettrica Non Domestico';
                 }
             }
+            when 'Acqua'{
+                if(sp.SupplyTypeTemp__c=='Domestico'){
+                    Name = 'Acqua Domestico';
+                }else{
+                    Name = 'Acqua Non Domestico';
+                }
+            }
+            when 'Ambiente'{
+                Name = 'Ambiente';
+            }
         }
         system.debug('Pricebook Name '+name);
         return name;

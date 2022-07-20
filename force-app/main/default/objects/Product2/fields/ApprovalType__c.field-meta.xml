@@ -8,23 +8,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>1 - Avviso di servizio</fullName>
-                <default>false</default>
-                <label>1 - Avviso di servizio</label>
-            </value>
-            <value>
-                <fullName>2 - Attività</fullName>
-                <default>false</default>
-                <label>2 - Attività</label>
-            </value>
-            <value>
-                <fullName>3 - Nessuna</fullName>
-                <default>false</default>
-                <label>3 - Nessuna</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_ApprovalType</valueSetName>
     </valueSet>
 </CustomField>

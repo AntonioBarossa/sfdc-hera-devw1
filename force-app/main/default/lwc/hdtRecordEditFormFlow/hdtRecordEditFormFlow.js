@@ -53,6 +53,13 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     //@track notificationType = '';
     //@track delay = 3000;
     @track show = false;
+    showCustomLabels= false;
+
+    get customLabelClass(){
+        if(this.density)    return "slds-form-element "+(this.density=="comfy"? "slds-form-element_stacked" : "slds-form-element_horizontal");
+        let clist = this.template.querySelector('lightning-input-field.slds-form-element')?.classList?.value;
+        return clist? clist : "slds-form-element slds-form-element_horizontal";
+    }
 
     @wire(getFields, { processType: '$processType' }) 
         wiredFieldsJSON ({ error, data }) {
@@ -226,7 +233,9 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         var fields = record[this.recordId].fields;
         this.installmentsLogic();
         console.log('Edit Form Loaded ' + fields);
+        
         }
+        this.showCustomLabels=true;
     }
 
     handleError(event){
@@ -352,8 +361,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         : this.secondColumn.filter(element => element['FieldName'] === fieldName);
     }
 
-    handleChange(event){
+    virtualValidate(event){
+        return;
+    }
 
+    handleChange(event){
+        this.virtualValidate(event);
         //Reclami customizations
         this.complaintsLogic();
         //PianoRata customizations
