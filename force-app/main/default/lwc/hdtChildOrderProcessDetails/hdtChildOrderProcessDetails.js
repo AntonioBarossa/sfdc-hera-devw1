@@ -114,6 +114,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(DynamicOnChange && DynamicOnChange instanceof Function ){
             DynamicOnChange.call(this, event);
         }
+
+        /*  # Le logiche degli eventi onchange dei singoli campi sono configurabili direttamente nel JSON del wizard
+
         if(event.target.fieldName === 'VATfacilitationFlag__c' && event.target.value) {
             this.template.querySelector("[data-id='VAT__c']").disabled = false;
             this.template.querySelector("[data-id='VAT__c']").required = true;
@@ -176,7 +179,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     delete this.sectionDataToSubmit.EffectiveDate__c;
                 }
             }
-        }
+        } */
         let draftData = this.sectionDataToSubmit;
         draftData.Id = this.currentSectionRecordId;
         if(this.lastStepNumber === this.currentSection.step) {

@@ -89,13 +89,13 @@
                 data:[
                     new fieldData('Qualità','SubscriberType__c',this.typeVisibility('both'),true, false, '', '', 
                         function(event){
-                            [new wrp2Infos('CustomerName__c', "FirstName__c"), new wrp2Infos('CustomerLastName__c', "LastName__c"),new wrp2Infos('BirthPlace__c', "BirthProvince__c"),new wrp2Infos('BirthDate__c', "BirthDate__c")].forEach(wrp=>{
+                            for(let wrp of [new wrp2Infos('CustomerName__c', "FirstName__c"), new wrp2Infos('CustomerLastName__c', "LastName__c"),new wrp2Infos('BirthPlace__c', "BirthProvince__c"),new wrp2Infos('BirthDate__c', "BirthDate__c")]){
                                 let node = this.template.querySelector(`[data-id='${wrp.val1}']`);
                                 if(!node)   return;
                                 let value = event.target.value=== "Soggetto Passivo"? this.order.Account[wrp.val2] : "";
                                 node.value=value;
                                 this.sectionDataToSubmit[wrp.val1]=value;
-                            });
+                            }
                         }
                     ),
                     new fieldData('Luogo di sottoscrizione','ResidentialCity__c',this.typeVisibility('both'),true, false, 'true', ''),
@@ -631,8 +631,34 @@
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' 
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data: [
-                    new fieldData('Flag Agevolazione IVA','VATfacilitationFlag__c',this.typeVisibility('both'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || ((this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound') && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta')  ,''),
-                    new fieldData('Flag Accise Agevolata','FacilitationExcise__c',this.typeVisibility('both'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || ((this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound') && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta') ,''),
+                    new fieldData('Flag Agevolazione IVA','VATfacilitationFlag__c',this.typeVisibility('both'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || ((this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound') && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta')  ,'', '', 
+                        function(event){
+                            let disableXorRequire = event?.target?.value == true;//if has value, field editable and required, else opposite
+                            if(this.template.querySelector(`[data-id='VAT__c']`) !== null) {
+                                this.template.querySelector(`[data-id='VAT__c']`).disabled = !disableXorRequire;
+                                this.template.querySelector(`[data-id='VAT__c']`).required = disableXorRequire;
+                                Promise.resolve().then(() => {
+                                    const inputEle = this.template.querySelector(`[data-id='VAT__c']`);
+                                    inputEle.reportValidity();
+                                });
+                            }
+                        }
+                    ),
+                    new fieldData('Flag Accise Agevolata','FacilitationExcise__c',this.typeVisibility('both'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || ((this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound') && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta') ,'', '',
+                        function(event){
+                            let disableXorRequire = event?.target?.value == true;//if has value, field editable and required, else opposite
+                            for(let field of ["ExciseEle__c", "ExciseGAS__c"]){
+                                if(this.template.querySelector(`[data-id='${field}']`) !== null) {
+                                    this.template.querySelector(`[data-id='${field}']`).disabled = !disableXorRequire;
+                                    this.template.querySelector(`[data-id='${field}']`).required = disableXorRequire;
+                                    Promise.resolve().then(() => {
+                                        const inputEle = this.template.querySelector(`[data-id='${field}']`);
+                                        inputEle.reportValidity();
+                                    });
+                                }
+                            }
+                        }
+                    ),
                     new fieldData('IVA','VAT__c',this.typeVisibility('both'),false, (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioUso'),''),
                     new fieldData('Accise Agevolata Ele','ExciseEle__c',this.typeVisibility('ele'),false,(this.order.RecordType.DeveloperName !== 'HDT_RT_CambioUso'),''),
                     new fieldData('Accise Agevolata Gas','ExciseGAS__c',this.typeVisibility('gas'),false,(this.order.RecordType.DeveloperName !== 'HDT_RT_CambioUso'),''),
@@ -691,7 +717,17 @@
                 processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn') && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
                 data: [
                     new fieldData('Data Firma','SignedDate__c',this.typeVisibility('both'), false, true, this.order.ParentOrder__r.SignedDate__c,''),
-                    new fieldData('Attivazione Posticipata','IsActivationDeferred__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '',''),
+                    new fieldData('Attivazione Posticipata','IsActivationDeferred__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '','',
+                        function(event){
+                            console.log("IsActivationDeferred__c");
+                            this.pendingSteps.filter(section => section.name === 'dateOrdine')[0].data.filter(field => field.apiname === 'EffectiveDate__c')[0].typeVisibility = event.target.value;
+                            if (event.target.value && this.sectionDataToSubmit.EffectiveDate__c === undefined) {
+                                this.sectionDataToSubmit['EffectiveDate__c'] = this.order.EffectiveDate__c;
+                            } else {
+                                delete this.sectionDataToSubmit.EffectiveDate__c;
+                            }
+                        }
+                    ),
                     new fieldData('Data decorrenza','EffectiveDate__c',this.typeVisibility('both') && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '','')
                 ]
             },
