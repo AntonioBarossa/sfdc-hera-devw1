@@ -5356,11 +5356,6 @@
 	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
-		<field>Case.AnnualUnicInstallment__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
 		<field>Case.AppointmentCode__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
@@ -13574,11 +13569,6 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Order.IntegrationExclusion__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
-		<field>Order.SingleAnnualTARIPayment__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>

@@ -4621,11 +4621,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>SBQQ__Quote__c.ImplantType__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>CampaignEasyCIM__c.IdCampaignEasyCIM__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5312,11 +5307,6 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Case.AdditionalAttachments__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
-		<field>Case.AnnualUnicInstallment__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>
@@ -10458,16 +10448,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>EligibilityCriteria__c.ImplantType__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EligibilityCriteria__c.ImplantTypeOperator__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>EligibleMunicipality__c.AreaCode__c</field>
         <readable>true</readable>
@@ -13715,11 +13695,6 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Order.IntegrationExclusion__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
-		<field>Order.SingleAnnualTARIPayment__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>
