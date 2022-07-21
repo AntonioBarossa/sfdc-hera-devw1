@@ -375,6 +375,25 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         this.reimbursmentLogic();
         //DisconnectableLogic
         this.disconnectableLogic();
+        //Variazioni customLogic
+        this.variationsLogic();     //MODIFICA 21/07/22 marco.arci@webresults.it Logica form compilazione Variazioni
+    }
+
+    variationsLogic(){
+        //Sottoprocessi di varaiazioni
+        if(['AGEVOLAZIONE','COMPONENTI RESIDENTI','COMPONENTI NON RESIDENTI','COABITAZIONI','DATI CATASTALI',
+            'ISTAT/RONCHI','SUPERFICIE','DOMICILIATO IN NUCLEO RESIDENTE'].includes(this.processType.toUpperCase())){
+            let RequestSource = this.selector('RequestSource__c');
+            let SubscriberType = this.selector('SubscriberType__c');
+            if(RequestSource.value.toUpperCase() != 'DA CONTRIBUENTE'){
+                SubscriberType.required = false;
+                SubscriberType.value = null;
+                SubscriberType.disabled = true;
+            } else {
+                SubscriberType.required = true;
+                SubscriberType.disabled = false;
+            }
+        }
     }
 
     complaintsLogic(){
