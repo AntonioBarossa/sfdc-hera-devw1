@@ -1,24 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Disattivazioni Tari - Cessazione</label>
+    <label>Variazioni Tari - Coabitazioni Post</label>
     <protected>false</protected>
     <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
+
 {
 
 &quot;FieldName&quot;:&quot;RequestSource__c&quot;,
-
-&quot;Required&quot;:true,
-
-&quot;ReadOnly&quot;:false,
-
-&quot;Column&quot;:1
-
-},
-{
-
-&quot;FieldName&quot;:&quot;SubscriberType__c&quot;,
 
 &quot;Required&quot;:true,
 
@@ -35,7 +25,7 @@
 
 &quot;ReadOnly&quot;:false,
 
-&quot;Column&quot;:1
+&quot;Column&quot;:2
 
 },
 {
@@ -46,16 +36,49 @@
 
 &quot;ReadOnly&quot;:false,
 
+&quot;Column&quot;:2
+
+},
+{
+
+&quot;FieldName&quot;:&quot;SubscriberType__c&quot;,
+
+&quot;Required&quot;:true,
+
+&quot;ReadOnly&quot;:false,
+
 &quot;Column&quot;:1
 
 },
 {
 
-&quot;FieldName&quot;:&quot;ContractCode__c&quot;,
+&quot;FieldName&quot;:&quot;SubscriptionPlace__c&quot;,
 
 &quot;Required&quot;:true,
 
-&quot;ReadOnly&quot;:true,
+&quot;ReadOnly&quot;:false,
+
+&quot;Column&quot;:1
+
+},
+{
+
+&quot;FieldName&quot;:&quot;ShipmentAddressAssign__c&quot;,
+
+&quot;Required&quot;:true,
+
+&quot;ReadOnly&quot;:false,
+
+&quot;Column&quot;:1
+
+},
+{
+
+&quot;FieldName&quot;:&quot;CustomerRepentanceRefusal__c&quot;,
+
+&quot;Required&quot;:true,
+
+&quot;ReadOnly&quot;:false,
 
 &quot;Column&quot;:1
 
@@ -73,66 +96,18 @@
 },
 {
 
-&quot;FieldName&quot;:&quot;TerminationReason__c&quot;,
-
-&quot;Required&quot;:true,
-
-&quot;ReadOnly&quot;:false,
-
-&quot;Column&quot;:2
-
-},
-{
-
-&quot;FieldName&quot;:&quot;AccountId&quot;,
-
-&quot;Required&quot;:true,
-
-&quot;ReadOnly&quot;:true,
-
-&quot;Column&quot;:2
-
-},
-{
-
-&quot;FieldName&quot;:&quot;SubscriptionPlace__c&quot;,
-
-&quot;Required&quot;:true,
-
-&quot;ReadOnly&quot;:false,
-
-&quot;Column&quot;:2
-
-},
-{
-
-<<<<<<< HEAD
-&quot;FieldName&quot;:&quot;SupplyAddress__c&quot;,
-=======
-&quot;FieldName&quot;:&quot;AddressFormula__c&quot;,
->>>>>>> origin/DEVW2
+&quot;FieldName&quot;:&quot;CalculationBlock__c&quot;,
 
 &quot;Required&quot;:false,
 
-&quot;ReadOnly&quot;:true,
+&quot;ReadOnly&quot;:false,
 
-&quot;Column&quot;:2
-
-},
-{
-
-&quot;FieldName&quot;:&quot;Commodity__c&quot;,
-
-&quot;Required&quot;:true,
-
-&quot;ReadOnly&quot;:true,
-
-&quot;Column&quot;:2
+&quot;Column&quot;:1
 
 },
 {
 
-&quot;FieldName&quot;:&quot;CustomerRequestDate__c&quot;,
+&quot;FieldName&quot;:&quot;CohabitantsNumber__c&quot;,
 
 &quot;Required&quot;:true,
 
@@ -141,11 +116,12 @@
 &quot;Column&quot;:2
 
 }
+
 ]</value>
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">CessazioneForm</value>
+        <value xsi:type="xsd:string">CoabitazioniPost</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
@@ -153,6 +129,6 @@
     </values>
     <values>
         <field>ValidateClass__c</field>
-        <value xsi:type="xsd:string">HDT_UTL_CaseValidations</value>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>
