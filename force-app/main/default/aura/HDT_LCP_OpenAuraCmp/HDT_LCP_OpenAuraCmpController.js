@@ -22,9 +22,8 @@
 
         //variabile per innesco da campagne
         var campaignId = myPageRef.state.c__campaignId;
-
         var campaignMemberId = myPageRef.state.c__campaignMemberId;
-        console.log('campaignMemberId --> '+campaignMemberId);
+        
 
 
         // id del lead oggetto del process.
@@ -70,7 +69,8 @@
         console.log('# recordToCancell -> '         + recordToCancell);
         console.log('# sObjectRecordToCancell -> '  + sObjectRecordToCancell);
         console.log('# parentRecordId --> '         + parentRecordId);
-        console.log('# campaignId -> '              + campaignId)
+        console.log('# campaignId -> '              + campaignId);
+        console.log('# campaignMemberId --> '       +campaignMemberId);
         console.log('# leadId -> '                  + leadId);
         console.log('# servicePointId -> '          + servicePointId);
         console.log('# billingProfileId -> '        + billingProfileId);

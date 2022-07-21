@@ -1313,7 +1313,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              * Pratica Gestita
              * per pratiche a transitorio
              */
-            Set<String> finalStatuses = new Set<String>{'Annullato','KO definitivo','Pratica gestita','KO gestito','Eliminato'};
+            Set<String> finalStatuses = new Set<String>{'Annullato','KO definitivo','Pratica gestita','KO gestito','Eliminato','KO','Pratica Rifiutata'};
             if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))&&(finalStatuses.contains((String)newOrder.get('SiebelStatus__c'))))
             {
                 response = true;
@@ -1337,7 +1337,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Set<Id> parentOrderIds = new Set<Id>();
         Map<Id,String> mapVasPhase = new Map<Id,String>();
         Map<Id,String> mapVasStatus = new Map<Id,String>();
-        
+        Set<String> negativeOutcomes = new Set<String>{'Annullato','KO definitivo','Eliminato','KO','Pratica Rifiutata'};
+        Set<String> positiveOutcomes = new Set<String>{'Pratica gestita','KO gestito'};
         for(Order newOrder : (List<Order>) newOrderList)
         {
             String oldPhase = newOrder.Phase__c;
@@ -1346,24 +1347,24 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))
                 && (oldOrder.SiebelStatus__c == null || !(((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase((String)oldOrder.get('SiebelStatus__c')))))
             {
-                String newPhase = ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Pratica Gestita') || ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('KO gestito')
+                String newPhase = positiveOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                     ? 'Completata'
-                    : ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Annullato') || ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('KO definitivo') || ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Eliminato')
+                    : negativeOutcomes.contains((String)newOrder.get('SiebelStatus__c')) 
                         ? 'Annullato'
                         : '';
-                String status = ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Pratica Gestita') || ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('KO gestito')
+                String status = positiveOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                 ? 'Activated'
-                : ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Annullato') || ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('KO definitivo') || ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Eliminato')
+                : negativeOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                     ? 'Annullato'
                     : '';
-                String vasPhase = ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Pratica Gestita') || ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('KO gestito')
+                String vasPhase = positiveOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                 ? 'Esportazione VS Siebel'
-                : ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Annullato') || ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('KO definitivo') || ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Eliminato')
+                : negativeOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                     ? 'Annullato'
                     : '';
-                String vasStatus = ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Pratica Gestita') || ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('KO gestito')
+                String vasStatus = positiveOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                 ? 'In Lavorazione'
-                : ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Annullato') || ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('KO definitivo') || ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Eliminato')
+                : negativeOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                     ? 'Annullato' 
                     : '';
                 mapVasPhase.put(newOrder.ParentOrder__c, vasPhase);

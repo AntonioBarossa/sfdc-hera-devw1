@@ -539,6 +539,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.Phase__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ManuallyReassigned__c</field>
         <readable>true</readable>
@@ -1876,6 +1881,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Lead.AreaManager__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.Consenso_IBM_Unica__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

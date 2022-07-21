@@ -1,4 +1,4 @@
-public inherited sharing class HDT_QR_SearchPlug {
+public without sharing class HDT_QR_SearchPlug {
 
     public static List<Product2> getAllAvailableProducts(List<Product2> prodWithoutCriteria, List<String> familyList, List<String> statusList){
         prodWithoutCriteria = new List<Product2>();

@@ -138,6 +138,7 @@ public inherited sharing class HDT_QR_Knowledge {
         userList =[SELECT Id
         FROM User
         WHERE UserRole.Name IN :roles
+        AND IsActive = true
         WITH SECURITY_ENFORCED];
         
         for(User singleUser : userList){
