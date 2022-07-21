@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>AnnualUnicInstallment__c</fullName>
+    <fullName>SubscriberType__c</fullName>
     <externalId>false</externalId>
-    <label>Rata Unica Annuale TARI</label>
+    <label>Qualità</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
-    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>HDT_AnnualUnicInstallment</valueSetName>
+        <valueSetName>HDT_SubscriberType</valueSetName>
     </valueSet>
 </CustomField>
