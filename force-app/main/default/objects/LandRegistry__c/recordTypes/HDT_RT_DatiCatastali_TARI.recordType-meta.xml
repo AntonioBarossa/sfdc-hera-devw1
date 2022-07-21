@@ -29,11 +29,19 @@
     <picklistValues>
         <picklist>Status__c</picklist>
         <values>
-            <fullName>1</fullName>
+            <fullName>Bozza</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>2</fullName>
+            <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito SAP KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito SAP OK</fullName>
             <default>false</default>
         </values>
     </picklistValues>
