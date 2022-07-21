@@ -190,8 +190,9 @@ export default class HdtAttachmentManager extends LightningElement {
             }
         }
 
-        return { isValid : isValid
-                ,errorMessage: message? message : null
+        return { 
+            isValid : isValid, 
+            errorMessage: message? message : null
         };
     }
 

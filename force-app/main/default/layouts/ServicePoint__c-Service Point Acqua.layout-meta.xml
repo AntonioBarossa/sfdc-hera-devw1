@@ -104,10 +104,6 @@
                 <behavior>Readonly</behavior>
                 <field>PurificationInfoOnTheInvoice__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>AlignmentFrequencyGAA__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
