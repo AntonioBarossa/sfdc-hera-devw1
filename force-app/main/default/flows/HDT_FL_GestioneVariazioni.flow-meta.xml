@@ -1926,6 +1926,13 @@
                     <stringValue>Variazione indirizzo di fornitura</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_VariazioniTari</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_Valori_0_0_0</targetReference>
             </connector>
@@ -2032,6 +2039,21 @@
                 <targetReference>Dettaglio_Bolletta</targetReference>
             </connector>
             <label>Altri Processi</label>
+        </rules>
+        <rules>
+            <name>Variazioni_Tari</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_VariazioniTari</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Variazioni_Tari</targetReference>
+            </connector>
+            <label>Variazioni Tari</label>
         </rules>
     </decisions>
     <decisions>
@@ -2704,7 +2726,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>GetInputCase</name>
         <label>Get Input Case</label>
         <locationX>5110</locationX>
-        <locationY>263</locationY>
+        <locationY>262</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_in_Bozza</targetReference>
@@ -5224,6 +5246,20 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <name>sObjectRecordToCancell</name>
             <value>
                 <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>chiamata a subflow HDT_FL_GestioneVariazioniTari</description>
+        <name>Gestione_Variazioni_Tari</name>
+        <label>Gestione Variazioni Tari</label>
+        <locationX>3383</locationX>
+        <locationY>466</locationY>
+        <flowName>HDT_FL_GestioneVariazioniTari</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>InputCase</elementReference>
             </value>
         </inputAssignments>
     </subflows>
