@@ -96,6 +96,7 @@ public class HDT_LC_OrderDossierWizardActionsTst{
         Id ordId = ord.id;
         
         ord.Phase__c = 'In Lavorazione';
+		update ord;
         
 		HDT_LC_OrderDossierWizardActions.save2(ord, null);
         
