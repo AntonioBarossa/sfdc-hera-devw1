@@ -1824,7 +1824,7 @@
             <name>Si_SecondScreen</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>getAfterForm_0.RequestSource__c</leftValueReference>
+                <leftValueReference>tryGet.RequestSource__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>D’ufficio</stringValue>
