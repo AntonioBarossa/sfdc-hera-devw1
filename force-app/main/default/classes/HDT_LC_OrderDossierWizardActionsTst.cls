@@ -19,6 +19,7 @@ public class HDT_LC_OrderDossierWizardActionsTst{
         HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','Documentazione da validare',rt,'HDT_RT_OrderDossier');
         HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Bozza',rt,'HDT_RT_OrderDossier');
         HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione da inviare','Bozza',rt,'HDT_RT_OrderDossier');
+		HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Bozza',rt,'HDT_RT_OrderDossier');
         HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione da validare','Documentazione da inviare',rt,'HDT_RT_OrderDossier');
         HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione da inviare','Documentazione da validare',rt,'HDT_RT_OrderDossier');
         HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Bozza',Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId(),'HDT_RT_VolturaConSwitch');
