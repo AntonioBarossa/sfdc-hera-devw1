@@ -1207,6 +1207,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
                 FROM Order
                 WHERE Name='testOrderName1'
                 LIMIT 1];
+            tOrder[0].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_VOLTURA;
+            update tOrder[0];
             List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
                 ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
                 Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
