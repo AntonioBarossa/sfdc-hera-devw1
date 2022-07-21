@@ -178,6 +178,8 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         updateCommodityWithConsumptionAnalisi(orderParent.Id);
 
+        orderParent = [SELECT Id, Phase__c, ContractSigned__c, SignMode__c, SignatureMethod__c FROM Order WHERE Id = :orderParent.Id WITH SECURITY_ENFORCED];
+
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
         Boolean isOnlyAmend = false;
