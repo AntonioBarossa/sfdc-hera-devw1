@@ -372,6 +372,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_LC_ChildOrderProcessActions.save(tOrder2[2],m2);
             
             tOrder2[2].SignedDate__c=Date.today();
+            tOrder2[2].SignatureMethod__c = 'Contratto già firmato';
             tOrder2[2].ProcessType__c='';
             HDT_LC_ChildOrderProcessActions.save(tOrder2[2],m2);
 

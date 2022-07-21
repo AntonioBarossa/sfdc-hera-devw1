@@ -340,10 +340,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                  * Vocal Order + Comfort
                  */
                 if (myOrder.Phase__c == 'Da Inviare' && myOrder.ParentOrder__r.Phase__c.equalsIgnoreCase('Documentazione Gestita')) {
+                    Boolean isNotVoltureAcceptanceWorked = String.isNotBlank(myOrder.PhaseStory__c) 
+                                                            && (myOrder.PhaseStory__c.containsIgnoreCase('Attesa Credit Check')
+                                                            || myOrder.PhaseStory__c.containsIgnoreCase('Credit Check KO'))
+                                                            && myOrder.PhaseStory__c.containsIgnoreCase('Accettazione Voltura') ? false : true; 
                     childOrdersDocValid.add(new Order(
                         Id = myOrder.Id,
                     // phase__c = 'In attesa validazione'
-                        phase__c = myOrder.ProcessType__c == 'Voltura' ? 'Accettazione Voltura': HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione'));
+                        phase__c = (myOrder.ProcessType__c == 'Voltura') && isNotVoltureAcceptanceWorked ? 'Accettazione Voltura': HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione'));
                 }
             }
             if(ordersFullList != null && !ordersFullList.isEmpty()){
@@ -900,8 +904,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         
         if (!orderParentList.isEmpty()){
             List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> platformEventToPublish = new List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>();
-            for (Order o : [SELECT id FROM Order WHERE Id IN :orderParentList AND Phase__c = 'Documentazione Gestita' WITH SECURITY_ENFORCED]){
-                o.Description = 'Aggiornato Post Credit Check';
+            for (Order o : [SELECT id,Description FROM Order WHERE Id IN :orderParentList AND Phase__c = 'Documentazione Gestita' WITH SECURITY_ENFORCED]){
+                o.Description = String.isBlank(o.Description) ? 'Aggiornato Post Credit Check' : '';
                 HDT_PEV_VoltureChangeManagerUpdateSObj__e item = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
                 item.SerializedSobj__c = JSON.serialize(o);
                 platformEventToPublish.add(item);
@@ -1216,7 +1220,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 || ('OK'.equalsIgnoreCase(o.IncomingCreditCheckResult__c) && !oldCreditCheckDescription.equalsIgnoreCase(o.CreditCheckDescription__c) && 'Saldo debito cattivo pagatore'.equalsIgnoreCase(oldCreditCheckDescription))
                 || o.OutgoingCreditCheckResult__c != oldOrdersMap.get(o.id).OutgoingCreditCheckResult__c)
             ){
-                o.CreditCheckInProgress__c = false;
                 if('Attesa Credit Check'.equalsIgnoreCase(o.Phase__c) || 'Credit Check KO'.equalsIgnoreCase(o.Phase__c) || o.IsMassive__c){
                     ordersId.add(o.Id);
                     /* if('HDT_RT_Voltura'.equalsIgnoreCase(recordTypeName) || 'HDT_RT_VolturaConSwitch'.equalsIgnoreCase(recordTypeName)){
@@ -1245,7 +1248,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     || o.OutgoingCreditCheckResult__c != oldOrdersMap.get(o.id).OutgoingCreditCheckResult__c
                     )
                 ){
-                    o.CreditCheckInProgress__c = false;
                     if('Attesa Credit Check'.equalsIgnoreCase(o.Phase__c) || 'Credit Check KO'.equalsIgnoreCase(o.Phase__c) || o.IsMassive__c){
                         if((String.isNotBlank(o.IncomingCreditCheckResult__c) && o.IncomingCreditCheckResult__c.containsIgnoreCase('KO')) || (String.isNotBlank(o.OutgoingCreditCheckResult__c) && o.OutgoingCreditCheckResult__c.containsIgnoreCase('KO'))){
                             o.Phase__c = 'Credit Check KO';
