@@ -29,6 +29,7 @@
             <property name="isPrevious" type="Boolean" label="Is Previous?" description="if the Case is Previous" role="inputOnly"/>
             
             <property name="recordId" type="String" label="Record Id" description="Record Id" role="inputOnly"/>
+            <property name="sessionid" type="String" label="sessionid" description="sessionid Id" role="inputOnly"/>
             
             <property name="loadingSpinner" type="Boolean" label="Loading Spinner" description="If true a loading spinner is shown" role="inputOnly"/>
             
