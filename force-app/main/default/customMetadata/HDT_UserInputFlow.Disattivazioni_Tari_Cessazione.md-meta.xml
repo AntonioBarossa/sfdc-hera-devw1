@@ -106,11 +106,7 @@
 },
 {
 
-<<<<<<< HEAD
 &quot;FieldName&quot;:&quot;SupplyAddress__c&quot;,
-=======
-&quot;FieldName&quot;:&quot;AddressFormula__c&quot;,
->>>>>>> origin/DEVW2
 
 &quot;Required&quot;:false,
 
