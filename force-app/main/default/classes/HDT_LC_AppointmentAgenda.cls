@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : Giacinto Florio
+ * @group             : 
+ * @last modified on  : 28-06-2022
+ * @last modified by  : Giacinto Florio
+**/
 public with sharing class HDT_LC_AppointmentAgenda {
     
     private static HDT_SRV_AppointmentAgenda srvAgenda = new HDT_SRV_AppointmentAgenda();
@@ -7,6 +14,17 @@ public with sharing class HDT_LC_AppointmentAgenda {
         String response = '';
         try{
             response = srvAgenda.getActivity(activityId,fields);
+        }catch (exception e){
+            throw new AuraHandledException(e.getMessage());
+        }
+        return response;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static String getCase(String caseId,List<String> fields){
+        String response = '';
+        try{
+            response = srvAgenda.getCase(caseId,fields);
         }catch (exception e){
             throw new AuraHandledException(e.getMessage());
         }

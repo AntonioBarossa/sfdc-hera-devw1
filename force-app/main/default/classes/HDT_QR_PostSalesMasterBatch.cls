@@ -122,7 +122,51 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         ];
     }
 
+    public List<Case> getSegnalazioniBozzaCase(){
+        Id processTypeId = (new Case()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
+        CS_DaysToExpiration__c cs = CS_DaysToExpiration__c.getInstance('Segnalazioni_Ambiente');
+        Integer strNumberOfDays = integer.valueof(STRING.isBlank(cs?.NumberOfDays__c)? '0' : cs.NumberOfDays__c);
+        strNumberOfDays=-strNumberOfDays;
+        Date d = Date.today().addDays(strNumberOfDays);
+        return [SELECT 
+            Id,
+            Type,
+            Phase__c,
+            Cluster__c
+            FROM Case
+            WHERE 
+            RecordTypeId = :processTypeId
+            AND Phase__c = :this.bozzaCase
+            AND Type ='Segnalazioni Ambientali'
+            AND CreatedDate < :d
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Case> getRifiutiBozzaCase(){
+        Id processTypeId = (new Case()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
+        CS_DaysToExpiration__c cs = CS_DaysToExpiration__c.getInstance('Gestione_Rifiuti');
+        Integer strNumberOfDays = integer.valueof(STRING.isBlank(cs?.NumberOfDays__c)? '0' : cs.NumberOfDays__c);
+        strNumberOfDays=-strNumberOfDays;
+        Date d = Date.today().addDays(strNumberOfDays);
+        return [SELECT 
+            Id,
+            Type,
+            Phase__c,
+            Cluster__c
+            FROM Case
+            WHERE 
+            RecordTypeId = :processTypeId
+            AND (
+                ( Phase__c = :this.bozzaCase AND CreatedDate < :d) 
+                OR ( Phase__c ='Inviata a SAP' AND StartAppointment__c!=null AND StartAppointment__c < TODAY)
+            )
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     public List<Case> getPostSalesBozzaCase(){
+        Id segnalazioniRtId = (new Case()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
 
         String whereConditionFieldValue2 = 'PostSales';
         String queryString = 'SELECT id, Type__c, NumberOfDays__c FROM CS_DaysToExpiration__c where Type__c = \'' + String.escapeSingleQuotes(whereConditionFieldValue2) + '\'';
@@ -150,6 +194,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         FROM Case
         WHERE Phase__c = :this.bozzaCase
         AND Cluster__c != : this.autoletturaCase
+        AND RecordTypeId != :segnalazioniRtId
         AND CreatedDate < :limitDate
         WITH SECURITY_ENFORCED
         ];
