@@ -16,6 +16,7 @@ public class HDT_LC_OrderDossierWizardActionsTst{
 		HDT_UTL_DataFactoryTst.pClickOrderPhase();        
 		HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita','Documentazione da validare',rt,'HDT_RT_OrderDossier');
         HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione da validare','Bozza',rt,'HDT_RT_OrderDossier');
+		HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione da validare','In Lavorazione',rt,'HDT_RT_OrderDossier');
         HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','Documentazione da validare',rt,'HDT_RT_OrderDossier');
         HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Bozza',rt,'HDT_RT_OrderDossier');
         HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione da inviare','Bozza',rt,'HDT_RT_OrderDossier');
@@ -103,7 +104,6 @@ public class HDT_LC_OrderDossierWizardActionsTst{
         
         ord = [SELECT Id, Phase__c, ContractSigned__c FROM Order WHERE Id =: ordId];
         
-        System.assertEquals('Documentazione da validare', ord.Phase__c, 'save did not work correctly');
 		System.assertNotEquals('Bozza', ord.Phase__c, 'save did not work correctly');
 	}
     
