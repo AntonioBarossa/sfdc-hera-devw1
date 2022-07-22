@@ -37,23 +37,39 @@
     }
 
     const handleSections = function() {
-        this.fields = [
+        this.fields = [ 
             {
                 step: 1,
-                label: 'Riepilogo Dati',
-                name: 'riepilogoDatiTariffa',
+                label: 'Variabili di Processo',
+                name: 'variabiliDiProcesso',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
+                hasVerificaAccertamento: true,
+                hasAllegatiObbligatori: true,
+                diffObjApi: 'Sale',
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
                 data:[
-                    new fieldData('Codice Punto','ServicePointCode__c',this.typeVisibility('both'),true, true, '', ''),
-                    new fieldData('Servizio','CommodityFormula__c',this.typeVisibility('both'),true, true, '', ''),
-                    new fieldData('Società di vendita','SalesCompany__c', this.typeVisibility('both'), false, true, '',''),
-                    new fieldData('Impianto SAP','SAPImplantCode__c', this.typeVisibility('both'), false, true,'',''),
+                    new fieldData('Codice Punto','ServicePointCode__c',this.typeVisibility('both'),true, false, '', ''),
+                    new fieldData('Servizio','CommodityFormula__c',this.typeVisibility('both'),true, false, '', ''),
+                    new fieldData('Società di vendita','SalesCompany__c', this.typeVisibility('both'), false, false, '',''),
+                    new fieldData('Impianto SAP','SAPImplantCode__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Tipo Impianto','ImplantType__c', this.typeVisibility('both'), false, true,'',''),
+                    new fieldData('Residente','Resident__c', this.typeVisibility('both'), false, true,'',''),
+                    new fieldData('Contratto Precedente','ContractReference__c', this.typeVisibility('both'), true, true,'',''),
+                    new fieldData('Documentazione consegnata da contribuente','DeliveredDocumentation__c', this.typeVisibility('both'), true, false,'',''),
+                    new fieldData('Provenienza richiesta','RequestSource__c', this.typeVisibility('both'), true, false,'','Da contribuente'),
+                    new fieldData('Importo mancato dovuto','MissingDueAmount__c', this.typeVisibility('both'), false, false,'',''),
+                    new fieldData('Data dichiarazione','DeclarationDate__c', this.typeVisibility('both'), true, false,'', getFormattedDate(new Date())),
+                    new fieldData('Data decorrenza','EffectiveDate__c', this.typeVisibility('both'), true, false,'',''),
+                    new fieldData('Integrazione alla Dichiarazione (da Gestore)','OperatorDeclarationInfos__c', this.typeVisibility('both'), false, false,'',''),
+                    new fieldData('integrazione Riduzione Agevolazione Esclusione','IntegrationExclusion__c', this.typeVisibility('both'), false, true,'',''),
+                    new fieldData('Allegati obbligatori','MandatoryAttachments__c', this.typeVisibility('both'), false, true,'',''),
+                    new fieldData('Allegati aggiuntivi','AdditionalAttachments__c', this.typeVisibility('both'), false, false,'','', function(){console.log("dynamic on change")}),
                     new fieldData('Blocca al calcolo','BlockOnComputation__c', this.typeVisibility('both'), false, false,'',''),
-                    new fieldData('Provenienza Richiesta','RequestSource__c', this.typeVisibility('both'), false, false,'',''),
-                    new fieldData('Contratto','ContractReference__c', this.typeVisibility('both'), false, true,'',''),
+                    new fieldData('Integrazione alla Dichiarazione (da Contribuente)','TaxpayerDeclarationInfos__c', this.typeVisibility('both'), false, false,'',''),
+                    new fieldData('Inizio periodo ravvedibile','OnerousReviewableStartDate__c', this.typeVisibility('both'), false, true,'',''),
+                    new fieldData('Inizio periodo non ravvedibile','OnerousUnreviewableStartDate__c', this.typeVisibility('both'), false, true,'',''),
+                    new fieldData('Rifiuta supporto al calcolo del ravvedimento operoso','DeclineComputationSupport__c', this.typeVisibility('both'), false, false,'','')
                 ]
             },
             {
@@ -83,65 +99,6 @@
                     new fieldData('Cognome','CustomerLastName__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Luogo di nascita','BirthPlace__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Data di nascita','BirthDate__c', this.typeVisibility('both'), true, false,'',''),
-                    new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c!=='TATND00001', true, false,'','')
-                ]
-            },
-            {
-                step: 3,
-                label:'Fatturazione',
-                name: 'fatturazione',
-                objectApiName: 'Order',
-                recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
-                data: [
-                    new fieldData('Modalità Invio Bolletta', 'BillSendMode__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('Email Invio Bolletta', 'InvoiceEmailAddress__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('Email PEC invio Bolletta', 'InvoiceCertifiedEmailAddress__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('SendCertifiedEmailConsentDate__c', 'SendCertifiedEmailConsentDate__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('Destinatario Divergente', 'DivergentSubject__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('Comune', 'BillingCity__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('Stato', 'BillingCountry__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('Localita', 'BillingPlace__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('Provincia', 'BillingProvince__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('Nome Via', 'BillingStreetName__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('Civico', 'BillingStreetNumber__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('CAP', 'BillingPostalCode__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('Codice ISTAT', 'BillingCityCode__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('AggregateBilling__c', 'AggregateBilling__c',this.typeVisibility('both'),true,false,'',''),
-                ]
-            },
-            {
-                step: 4,
-                label: 'Agevolazione',
-                name: 'agevolazioneTariffa',
-                objectApiName: 'Order',
-                recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
-                data:[
-                new fieldData('Propietario','',this.typeVisibility('both'),true, true, 'true', ''),
-                new fieldData('Residente','Resident__c' , this.typeVisibility('both'), true, true, '',''),
-                new fieldData('Tipo occupazione','', this.typeVisibility('both'), true, true,'',''),
-                new fieldData('Numero Abitanti','', this.typeVisibility('both'), true, true,'',''),
-                new fieldData('Superficie','', this.typeVisibility('both'), true, true,'',''),
-                ]
-            },
-            {
-                step: 5,
-                label: 'Indirizzo di fornitura',
-                name: 'indirizzoFornituraTariffa',
-                objectApiName: 'Order',
-                recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
-                data: [
-                    new fieldData('Comune','SupplyCity__c', this.typeVisibility('both'), false, true, '',''),                  
-                    new fieldData('Via','SupplyStreetName__c', this.typeVisibility('both'), false, true, '',''),                  
-                    new fieldData('Civico','SupplyStreetNumber__c', this.typeVisibility('both'), false, true, '',''),                  
-                    new fieldData('Barrato','SupplyStreetNumberExtension__c', this.typeVisibility('both'), false, true, '',''), 
-                    new fieldData('Codice Comune Sap','ActivationCityCode__c', this.typeVisibility('both'), false, true, '',''),                  
-                    new fieldData('Provincia','SupplyState__c', this.typeVisibility('both'), false, true, '',''),                  
-                    new fieldData('Cap','SupplyPostalCode__c', this.typeVisibility('both'), false, true, '',''),                  
-                    new fieldData('Nazione','SupplyCountry__c', this.typeVisibility('both'), false, true, '',''),                  
-                    new fieldData('Localita','SupplyPlace__c', this.typeVisibility('both'), false, true, '',''),                  
                 ]
             },
             {
@@ -167,7 +124,7 @@
                     new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', this.typeVisibility('both'), this.order.RateCategory__c=='TATND00001', true,'',''),
                     new fieldData('Contratto Precedente','ContractReference__c', this.typeVisibility('both'), true, true,'',''),
                     new fieldData('Documentazione consegnata da contribuente','DeliveredDocumentation__c', this.typeVisibility('both'), true, false,'',''),
-                    new fieldData('Provenienza richiesta','RequiredSource__c', this.typeVisibility('both'), true, false,'','Da contribuente'),
+                    new fieldData('Provenienza richiesta','RequestSource__c', this.typeVisibility('both'), true, false,'','Da contribuente'),
                     new fieldData('Importo mancato dovuto','MissingDueAmount__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Pagamento Unico Annuale TARI','AnnualTARIPayment__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Data dichiarazione','DeclarationDate__c', this.typeVisibility('both'), true, false,'', getFormattedDate(new Date())),
@@ -228,7 +185,8 @@
                 name: 'fatturazione',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente'
+                                    || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
                 data: [
                     new fieldData('Modalità Invio Bolletta', 'BillSendMode__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('Email Invio Bolletta', 'InvoiceEmailAddress__c',this.typeVisibility('both'),false,true,'',''),
@@ -454,7 +412,8 @@
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' || this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente',
+                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' || this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
                 data: [
                     new fieldData('Comune','SupplyCity__c', this.typeVisibility('both'), false, true, '',''),                  
                     new fieldData('Via','SupplyStreetName__c', this.typeVisibility('both'), false, true, '',''),                  
@@ -478,7 +437,7 @@
                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente',
+                || this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente' || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
                 data: [
                     new fieldData('Comune','BillingCity', this.typeVisibility('both'), false, false, '',''),  
                     new fieldData('Via','BillingStreetName__c', this.typeVisibility('both'), false, false, '',''),  

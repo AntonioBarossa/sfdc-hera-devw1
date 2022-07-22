@@ -336,11 +336,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         && section.name !== 'ivaAccise'
         && section.name !== 'riepilogoDatiAmend'
         && section.name !== 'dateOrdine'
-        && section.name !== 'analisiConsumi'
-        && section.name !== 'riepilogoDatiTariffa'
-        && section.name !== 'datiSottoscrittoreTariffa'
-        && section.name !== 'agevolazioneTariffa'
-        && section.name !== 'indirizzoFornituraTariffa'));
+        && section.name !== 'analisiConsumi'));
     }
 
     getPendingSteps(){
@@ -359,11 +355,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         || section.name === 'ivaAccise'
         || section.name === 'riepilogoDatiAmend'
         || section.name === 'dateOrdine'
-        || section.name === 'analisiConsumi'
-        || section.name === 'riepilogoDatiTariffa'
-        || section.name === 'datiSottoscrittoreTariffa'
-        || section.name === 'agevolazioneTariffa'
-        || section.name === 'indirizzoFornituraTariffa'));
+        || section.name === 'analisiConsumi'));
         this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
         console.log('PENDING HOLA:' + JSON.stringify(this.pendingSteps));
     }
