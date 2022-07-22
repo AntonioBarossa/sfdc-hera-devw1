@@ -350,9 +350,28 @@
                 <label>Firma falsa</label>
             </value>
             <value>
+                <fullName>Mancata erogazione Bonus con domanda di attivazione/rinnovo su contratto Energy</fullName>
+                <default>false</default>
+                <label>Mancata erogazione Bonus con domanda di attivazione/rinnovo su contratto Energy</label>
+            </value>
+            <value>
+                <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale su contratto Energy</fullName>
+                <default>false</default>
+                <label>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale su contratto Energy</label>
+            </value>
+            <value>
+                <fullName>Permanenza condizioni di disagio su contratto Energy</fullName>
+                <default>false</default>
+                <label>Permanenza condizioni di disagio su contratto Energy</label>
+            </value>
+            <value>
+                <fullName>Bonus integrativo solo per non Energy</fullName>
+                <default>false</default>
+                <label>Bonus integrativo solo per non Energy</label>
+            </value>
+            <value>
                 <fullName>Agevolazioni non Energy indirette</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Agevolazioni non Energy indirette</label>
             </value>
             <value>
@@ -362,16 +381,22 @@
                 <label>Bolletta Fuga H2O</label>
             </value>
             <value>
-                <fullName>Bonus integrativo solo per non Energy</fullName>
+                <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
-                <label>Bonus integrativo solo per non Energy</label>
+                <label>Cessazione utilizzo apparecchiatura elettromedicale</label>
             </value>
             <value>
                 <fullName>Chiamata Mura</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Chiamata Mura</label>
+            </value>
+            <value>
+                <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</label>
             </value>
             <value>
                 <fullName>Delibera 655 2016</fullName>
@@ -571,6 +596,18 @@
             <valueName>Richiesta documentazione che attesti la presenza di un contratto Energy attivo e relativo CF</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Permanenza condizioni di disagio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratto Non Richiesto</controllingFieldValue>
+            <valueName>Volontà estorta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratto Non Richiesto</controllingFieldValue>
+            <valueName>Firma falsa</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
             <valueName>Portabilità dei dati</valueName>
         </valueSettings>
@@ -599,20 +636,16 @@
             <valueName>Caduta Linea</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
+            <valueName>Chiamata Muta</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Votive Modena Contestazione Fattura</controllingFieldValue>
             <valueName>Sollecito Emissione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Votive Modena Contestazione Fattura</controllingFieldValue>
             <valueName>Errata Emissione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Contratto Non Richiesto</controllingFieldValue>
-            <valueName>Volontà estorta</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Contratto Non Richiesto</controllingFieldValue>
-            <valueName>Firma falsa</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
