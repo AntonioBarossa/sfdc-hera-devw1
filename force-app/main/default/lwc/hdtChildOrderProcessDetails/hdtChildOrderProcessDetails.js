@@ -46,7 +46,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track lastStepData = {};
     @track isNoDayAfterthought = false;
     loginChannel;
-    validateAttachment = {isValid:false};
+    closeAttachmentEvent;
     @track additionalAttachments;
 
     get orderWithData(){
@@ -617,10 +617,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     return;
                 }
 
-                if(this.template.querySelector("[data-id='MandatoryAttachments__c']")?.value == ''){
-                    if(!this.validateAttachment.isValid){
+                if(!(this.closeAttachmentEvent?.buttonPressed && this.closeAttachmentEvent?.numberOfFiles)){
+                    if(this.template.querySelector("[data-id='DeliveredDocumentation__c']")?.value == 'Y'){
+                        this.showMessage('Errore', "Verificare gli allegati obbligatori per Documentazione da Contribuente", 'error');
+                        //this.closeAttachmentEvent.isValid = true;
+                        return;
+                    }else if(!this.closeAttachmentEvent?.buttonPressed){
                         this.showMessage('Errore', "Verificare gli allegati obbligatori prima di procedere", 'error');
-                        this.validateAttachment.isValid = true;
                         return;
                     }
                 }
@@ -1171,14 +1174,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }, 3000)
     }
 
-    handleValidateAttachments(event){
-        console.log('###Attachments Event >>> ' + JSON.stringify(event.detail));
-        this.validateAttachment = event.detail;
-    }
-
     handleCloseAttachment(event){
         console.log('###CloseAttachmentEvent in details>>> ' + JSON.stringify(event.detail));
-
+        event.detail.buttonPressed=true;
+        this.closeAttachmentEvent = event.detail;
         if(event.detail.required){
             this.template.querySelector("[data-id='MandatoryAttachments__c']").value = event.detail.required, this.sectionDataToSubmit["MandatoryAttachments__c"]=event.detail.required;
         }
