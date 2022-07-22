@@ -24,7 +24,129 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
     * @return Map<String, Object>
     */
     @AuraEnabled
-    public static Map<String, Object> controllerInit(String saleId) {
+    public static string controllerInit(String saleId){
+        controllerInit(saleId, 'handleProcess');
+    }
+
+    private static Order createOrderParent(Sale sale, String saleOrder, String contactId)
+    {
+        /* If Sale is null no reason to go further */
+        if(sale == null)
+        {
+            return;
+        }
+        Order parentOrder = new Order();
+        parentOrder.Name = 'Ord. ' + sale.Name.abbreviate(70) + saleOrder;
+        parentOrder.AccountId = sale.Account__c;
+        parentOrder.Contact__c = contactId;
+        parentOrder.Sale__c = sale.Id;
+        parentOrder.Status = 'Draft';
+        parentOrder.RecordTypeId = HDT_UTL_Constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+        parentOrder.EffectiveDate = Date.today();
+        parentOrder.Step__c = 1;
+        parentOrder.Channel__c = sale.Channel__c;
+        parentOrder.LoginChannel__c = sale.CreatedBy.LoginChannel__c;
+        parentOrder.VendorLastName__c = sale.VendorLastName__c;
+        parentOrder.VendorFirstName__c = sale.VendorFirstName__C;
+        parentOrder.CommercialId__c = sale.CommercialId__c;
+        parentOrder.AgencyCode__c = sale.AgencyCode__c;
+        parentOrder.Agency__c = sale.Agency__c;
+        parentOrder.AreaManager__c = sale.AreaManager__c;
+        parentOrder.SalesContact__c = sale.SalesContact__c;
+        parentOrder.Interaction__c = sale.Interaction__c;
+        parentOrder.LowerChannelAgency__c = sale.LowerChannelAgency__c;
+        parentOrder.UpperChannelAgency__c = sale.UpperChannelAgency__c;
+
+        return parentOrder;
+        
+    }
+
+    private static Map<String, Map<String, String>> createOrderParamsMap(List<Id> orderIds, List<OrderItem> orderItemList)
+    {
+        Map<String, List<String>> result = new Map<String, List<String>>();
+        for(OrderItem item : orderItemList)
+        {
+            if(result.containsKey(item.orderId))
+            {
+                result.put(item.orderId, new Map<String, String>());
+            }
+            if(item.BillingProfile__c != null && String.isNotBlank(item.BillingProfile__c))
+            {
+                (result.get(item.orderId)).put('billingprofile',item.BillingProfile__c);
+            }
+            if(item.ServicePoint__c != null && String.isNotBlank(item.ServicePoint__c))
+            {
+                (result.get(item.orderId)).put('servicepoint',item.ServicePoint__c);
+            }
+        }
+        return result;
+    }
+
+    private static List<Order> createOrderStructure(Sale sale, List<Order> listOrderParent, String contactId, String macroProcessType)
+    {
+        List<Id> listOrdersId = new List<Id>();
+        List<Order> listOrder = orderQr.getRecordBySale(sale.Id);
+        List<Order> orderToUpdate = new List<Order>();
+        /* Check if order parent already exists */
+        if(listOrderParent.isEmpty())
+        {
+            /* Create Order Parent */
+            Order parentOrder = createOrderParent(sale, 'a', contactId);
+            orderSrv.createRecord(parentOrder);
+            /* Loop add child orders to listOrderIds */
+            for(Order o : listOrder){
+                listOrdersId.add(o.Id);
+            }
+
+            if(listOrder != null && !listOrder.isEmpty())
+            {
+                /* Get all orderItem which are not sconti, bonus */
+                List<OrderItem> orderItemsList = orderItemQr.getRecordsByOrderIdListFilteredPdrPod(listOrdersId);
+                orderItemsList.addAll(handleNotAmendBonus(listOrdersId));
+                /* Separates order item of Ambiente */
+                List<Id> orderTariIds = new List<Id>();
+                List<Id> orderNotTariIds = new List<Id>();
+                for(OrderItem item : orderItemsList)
+                {
+                    if(item.ServicePoint__c != null && item.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Ambiente'))
+                    {
+                        orderTariIds.add(item.OrderId);
+                    }
+                    else if(item.servicePoint__c != null && !item.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Ambiente'))
+                    {
+                        orderNotTariIds.add(item.OrderId);
+                    }
+                }
+                /* Update child Orders */
+                Map<String, Map<String, String>> paramsMap = createOrderParamsMap(listOrdersId,orderItemsList);
+                for(String orderId : paramsMap.keySet())
+                {
+                    /* Excludes order Tari if handleProcess, excludes other orders if handleProcessTari */
+                    if(macroProcessType.equalsIgnoreCase('handleProcess') && orderTariIds.contains(orderId))
+                    {
+                        continue;
+                    }
+                    if(macroProcessType.equalsIgnoreCase('handleProcessTari') && orderNotTariIds.contains(orderId))
+                    {
+                        continue;
+                    }
+                    Order singleOrder = new Order();
+                    Map<String, String> singleParams = paramsMap.get(orderId);
+                    singleOrder.id = orderId;
+                    singleOrder.ServicePoint__c = singleParams.get('servicepoint') != null ? singleParams.get('servicepoint') : null;
+                    singleOrder.BillingProfile__c = singleParams.get('billingprofile') != null ? singleParams.get('billingprofile') : null;
+                    singleOrder.ParentOrder__c = parentOrder.Id;
+                    singleOrder.RecordTypeId = ORDER_RECORDTYPEID_DEFAULT;
+                    orderToUpdate.add(singleOrder);
+                }
+            }
+        }
+        return orderToUpdate;
+        
+    }
+
+    @AuraEnabled
+    public static Map<String, Object> controllerInit(String saleId, String macroProcessType) {
         
         Map<String,Object> mapResponse = new Map<String,Object>();
         
@@ -44,7 +166,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         List<Id> listOrdersId = new List<Id>();
         
         //Get OrderDossier record type
-        String recordTypeIdOrderDossier = orderSrv.getRecordTypeIdOrderDossier();
+        //String recordTypeIdOrderDossier = orderSrv.getRecordTypeIdOrderDossier();
 
         //Get Default record type
         String recordTypeIdDefault = orderSrv.getRecordTypeIdDefault();
@@ -59,6 +181,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
 
         //Init parent order
         Order parentOrder = new Order();
+
 
         //Case Order is 'Attiva'
         if(check){

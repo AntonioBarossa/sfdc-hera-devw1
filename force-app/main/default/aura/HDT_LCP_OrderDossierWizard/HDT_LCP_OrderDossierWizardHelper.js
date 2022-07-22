@@ -1,9 +1,11 @@
 ({
     helperInit : function(component,event,helper,saleId,accountId) {
 		var action = component.get('c.controllerInit');
+        var macroProcessType = component.get("v.macroProcessType");
         console.log('saleId - helperInit '+saleId);
         action.setParams({
             "saleId" : saleId,
+            "macroProcessType" : macroProcessType
         });
         action.setCallback(this, function(response) {
             var state = response.getState();
