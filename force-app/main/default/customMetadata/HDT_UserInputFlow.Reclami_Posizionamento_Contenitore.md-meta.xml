@@ -20,7 +20,7 @@
 
 &quot;FieldName&quot;:&quot;Email__c&quot;,
 
-&quot;Required&quot;:false,
+&quot;Required&quot;:true,
 
 &quot;ReadOnly&quot;:false,
 
@@ -42,7 +42,7 @@
 
 &quot;FieldName&quot;:&quot;ComplaintDetail__c&quot;,
 
-&quot;Required&quot;:false,
+&quot;Required&quot;:true,
 
 &quot;ReadOnly&quot;:false,
 

@@ -8,7 +8,7 @@
         <label>Dettagli</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>CorrectAddressToVerify__c</field>
             </layoutItems>
             <layoutItems>
@@ -31,10 +31,14 @@
                 <behavior>Readonly</behavior>
                 <field>Description</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>MandatoryAttachments__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Phase__c</field>
             </layoutItems>
             <layoutItems>
@@ -42,11 +46,11 @@
                 <field>Status</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>PhoneNumber__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Email__c</field>
             </layoutItems>
             <layoutItems>
@@ -58,7 +62,7 @@
                 <field>ContactId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>ComplaintDetail__c</field>
             </layoutItems>
         </layoutColumns>

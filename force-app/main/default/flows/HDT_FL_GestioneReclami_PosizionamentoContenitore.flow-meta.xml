@@ -3,8 +3,8 @@
     <actionCalls>
         <name>redirectToCase</name>
         <label>redirectToCase</label>
-        <locationX>957</locationX>
-        <locationY>2054</locationY>
+        <locationX>418</locationX>
+        <locationY>2030</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -20,8 +20,8 @@
     <assignments>
         <name>assignAttachments</name>
         <label>assignAttachments</label>
-        <locationX>539</locationX>
-        <locationY>758</locationY>
+        <locationX>638</locationX>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>getPreAttachments.AdditionalAttachments__c</assignToReference>
             <operator>Assign</operator>
@@ -30,164 +30,134 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getPreAttachments.AttachmentsStringTARI__c</assignToReference>
+            <assignToReference>getPreAttachments.MandatoryAttachments__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>componentAttachment.required</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updatePostAttachment</targetReference>
+            <targetReference>assignPhase</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>assignFields</name>
+        <name>assignFields_0</name>
         <label>assignFields</label>
-        <locationX>1045</locationX>
-        <locationY>1718</locationY>
+        <locationX>506</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
-            <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
+            <assignToReference>getAfterAddress.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getAfterSecondForm.SupplyCity__c</assignToReference>
+            <assignToReference>getAfterAddress.SupplyCity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>AddressForm.theCase.InvoicingCity__c</elementReference>
+                <elementReference>AddressForm_0.theCase.InvoicingCity__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getAfterSecondForm.SupplyPostalCode__c</assignToReference>
+            <assignToReference>getAfterAddress.SupplyPostalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>AddressForm.theCase.InvoicingPostalCode__c</elementReference>
+                <elementReference>AddressForm_0.theCase.InvoicingPostalCode__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getAfterSecondForm.SupplyCountry__c</assignToReference>
+            <assignToReference>getAfterAddress.SupplyCountry__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>AddressForm.theCase.InvoicingCountry__c</elementReference>
+                <elementReference>AddressForm_0.theCase.InvoicingCountry__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getAfterSecondForm.SupplyProvince__c</assignToReference>
+            <assignToReference>getAfterAddress.SupplyProvince__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>AddressForm.theCase.InvoicingProvince__c</elementReference>
+                <elementReference>AddressForm_0.theCase.InvoicingProvince__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getAfterSecondForm.SupplyStreetName__c</assignToReference>
+            <assignToReference>getAfterAddress.SupplyStreetName__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>AddressForm.theCase.InvoicingStreetName__c</elementReference>
+                <elementReference>AddressForm_0.theCase.InvoicingStreetName__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getAfterSecondForm.SupplyStreetNumber__c</assignToReference>
+            <assignToReference>getAfterAddress.SupplyStreetNumber__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>AddressForm.theCase.InvoicingStreetNumber__c</elementReference>
+                <elementReference>AddressForm_0.theCase.InvoicingStreetNumber__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getAfterSecondForm.SupplyStreetNumberExtension__c</assignToReference>
+            <assignToReference>getAfterAddress.SupplyStreetNumberExtension__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>AddressForm.theCase.InvoicingStreetNumberExtension__c</elementReference>
+                <elementReference>AddressForm_0.theCase.SupplyStreetNumberExtension__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getAfterSecondForm.SupplyPlace__c</assignToReference>
+            <assignToReference>getAfterAddress.SupplyPlace__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>AddressForm.theCase.InvoicingPlace__c</elementReference>
+                <elementReference>AddressForm_0.theCase.InvoicingPlace__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>FinalUpdateRecord</targetReference>
+            <targetReference>updateFinishAddress</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignPhase</name>
+        <label>assignPhase</label>
+        <locationX>638</locationX>
+        <locationY>1694</locationY>
+        <assignmentItems>
+            <assignToReference>getPreAttachments.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updatePostAttachment</targetReference>
         </connector>
     </assignments>
     <decisions>
-        <name>isChecked</name>
+        <name>isChecked_0</name>
         <label>isChecked</label>
-        <locationX>957</locationX>
-        <locationY>1598</locationY>
+        <locationX>418</locationX>
+        <locationY>638</locationY>
         <defaultConnector>
-            <targetReference>assignFields</targetReference>
+            <targetReference>assignFields_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Indirizzo_Alternativo</name>
+            <name>Indirizzo_Alternativo_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>checkAddress</leftValueReference>
+                <leftValueReference>checkAddress_0</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>FinalUpdateRecord</targetReference>
+                <targetReference>updateFinishAddress</targetReference>
             </connector>
             <label>Indirizzo Alternativo</label>
         </rules>
     </decisions>
     <decisions>
-        <name>operationButton</name>
-        <label>operationButton</label>
-        <locationX>825</locationX>
-        <locationY>1358</locationY>
-        <defaultConnector>
-            <targetReference>getAfterSecondForm</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Continua</defaultConnectorLabel>
-        <rules>
-            <name>Annullamento</name>
-            <conditionLogic>(1 AND 2) OR (3 AND 4)</conditionLogic>
-            <conditions>
-                <leftValueReference>AddressForm.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>checkAddress</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>alternativeAddressForm.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>checkAddress</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>subFlowAnnullamento_0</targetReference>
-            </connector>
-            <label>Annullamento</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>operationButton_0</name>
         <label>operationButton</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>418</locationX>
+        <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>getPreAttachments</targetReference>
         </defaultConnector>
@@ -218,26 +188,46 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>redirectToCase</targetReference>
             </connector>
             <label>Salva In Bozza</label>
         </rules>
     </decisions>
     <decisions>
-        <name>operationButton_0_0</name>
+        <name>operationButton_0_0_0</name>
         <label>operationButton</label>
-        <locationX>539</locationX>
-        <locationY>998</locationY>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>getAfterForm_0</targetReference>
+            <targetReference>getAfterAddress</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Continua</defaultConnectorLabel>
         <rules>
-            <name>Annullamento_0_0</name>
-            <conditionLogic>and</conditionLogic>
+            <name>Annullamento_0_0_0</name>
+            <conditionLogic>(1 AND 2) OR (3 AND 4)</conditionLogic>
             <conditions>
-                <leftValueReference>hdtFlowNavButtons.cancelCase</leftValueReference>
+                <leftValueReference>AddressForm_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>checkAddress_0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>alternativeAddressForm_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>checkAddress_0</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -247,22 +237,6 @@
                 <targetReference>subFlowAnnullamento_0</targetReference>
             </connector>
             <label>Annullamento</label>
-        </rules>
-        <rules>
-            <name>Salva_In_Bozza_Button_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>hdtFlowNavButtons.saveDraft</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <isGoTo>true</isGoTo>
-                <targetReference>redirectToCase</targetReference>
-            </connector>
-            <label>Salva In Bozza</label>
         </rules>
     </decisions>
     <interviewLabel>HDT_FL_GestioneReclami_PosizionamentoContenitore {!$Flow.CurrentDateTime}</interviewLabel>
@@ -287,34 +261,13 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>getAfterForm_0</name>
-        <label>getAfterForm</label>
-        <locationX>825</locationX>
-        <locationY>1118</locationY>
+        <name>getAfterAddress</name>
+        <label>getAfterAddress</label>
+        <locationX>418</locationX>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>screenIndirizzo</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>InputCase</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>getAfterSecondForm</name>
-        <label>getAfterSecondForm</label>
-        <locationX>957</locationX>
-        <locationY>1478</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>isChecked</targetReference>
+            <targetReference>isChecked_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -335,7 +288,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>ScreenFieldsForm</targetReference>
+            <targetReference>screenIndirizzo_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -352,8 +305,8 @@
     <recordLookups>
         <name>getPreAttachments</name>
         <label>getPreAttachments</label>
-        <locationX>539</locationX>
-        <locationY>518</locationY>
+        <locationX>638</locationX>
+        <locationY>1334</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>screenGestioneAllegati</targetReference>
@@ -371,44 +324,30 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>FinalUpdateRecord</name>
-        <label>FinalUpdateRecord</label>
-        <locationX>957</locationX>
-        <locationY>1934</locationY>
+        <name>updateFinishAddress</name>
+        <label>updateFinishAddress</label>
+        <locationX>418</locationX>
+        <locationY>974</locationY>
         <connector>
-            <targetReference>redirectToCase</targetReference>
+            <targetReference>ScreenFieldsForm</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>InputCase</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Phase__c</field>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
+        <inputReference>getAfterAddress</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>updatePostAttachment</name>
         <label>updatePostAttachment</label>
-        <locationX>539</locationX>
-        <locationY>878</locationY>
+        <locationX>638</locationX>
+        <locationY>1814</locationY>
         <connector>
-            <targetReference>operationButton_0_0</targetReference>
+            <targetReference>redirectToCase</targetReference>
         </connector>
         <inputReference>getPreAttachments</inputReference>
     </recordUpdates>
     <screens>
         <name>ScreenFieldsForm</name>
         <label>ScreenFieldsForm</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>418</locationX>
+        <locationY>1094</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -512,8 +451,8 @@
     <screens>
         <name>screenGestioneAllegati</name>
         <label>Gestione allegati</label>
-        <locationX>539</locationX>
-        <locationY>638</locationY>
+        <locationX>638</locationX>
+        <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -606,18 +545,18 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>screenIndirizzo</name>
+        <name>screenIndirizzo_0</name>
         <label>screenIndirizzo</label>
-        <locationX>825</locationX>
-        <locationY>1238</locationY>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>operationButton</targetReference>
+            <targetReference>operationButton_0_0_0</targetReference>
         </connector>
         <fields>
-            <name>checkAddress</name>
+            <name>checkAddress_0</name>
             <dataType>Boolean</dataType>
             <defaultValue>
                 <booleanValue>false</booleanValue>
@@ -627,7 +566,7 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>AddressForm</name>
+            <name>AddressForm_0</name>
             <extensionName>c:hdtTargetObjectAddressForFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -645,7 +584,7 @@
             <inputParameters>
                 <name>theCase</name>
                 <value>
-                    <elementReference>getAfterForm_0</elementReference>
+                    <elementReference>getInputCase</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -654,7 +593,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>checkAddress</leftValueReference>
+                    <leftValueReference>checkAddress_0</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
@@ -663,7 +602,7 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>alternativeAddressForm</name>
+            <name>alternativeAddressForm_0</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -711,13 +650,13 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>getAfterForm_0.Id</elementReference>
+                    <elementReference>getInputCase.Id</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>recordType</name>
                 <value>
-                    <elementReference>getAfterForm_0.RecordTypeId</elementReference>
+                    <elementReference>getInputCase.RecordTypeId</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -738,7 +677,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>checkAddress</leftValueReference>
+                    <leftValueReference>checkAddress_0</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -760,8 +699,8 @@
     <subflows>
         <name>subFlowAnnullamento_0</name>
         <label>subFlowAnnullamento</label>
-        <locationX>176</locationX>
-        <locationY>2582</locationY>
+        <locationX>198</locationX>
+        <locationY>1334</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
