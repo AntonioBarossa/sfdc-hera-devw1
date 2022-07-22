@@ -4621,11 +4621,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>SBQQ__Quote__c.ImplantType__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>CampaignEasyCIM__c.IdCampaignEasyCIM__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5312,11 +5307,6 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Case.AdditionalAttachments__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
-		<field>Case.AnnualUnicInstallment__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>
@@ -10344,6 +10334,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>EligibilityCriteria__c.ImplantType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>EligibilityCriteria__c.LoginGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10455,16 +10450,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>EligibilityCriteria__c.AtoReferenceOperator__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EligibilityCriteria__c.ImplantType__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EligibilityCriteria__c.ImplantTypeOperator__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13715,11 +13700,6 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Order.IntegrationExclusion__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
-		<field>Order.SingleAnnualTARIPayment__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>
@@ -24359,6 +24339,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.ImplantType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.IsBillableVas__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -28880,6 +28865,21 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.ATO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.AlignmentFrequencyGAA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.ContractualExpensesCharged__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.MethodsForOutgoingPayments__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

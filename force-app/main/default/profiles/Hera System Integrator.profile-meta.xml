@@ -4667,6 +4667,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.ImplantType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.SapContractCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5363,11 +5368,6 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Case.AdditionalAttachments__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
-		<field>Case.AnnualUnicInstallment__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>
@@ -10389,6 +10389,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>EligibilityCriteria__c.ImplantType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>EligibilityCriteria__c.LoginGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13735,11 +13740,6 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Order.IntegrationExclusion__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
-		<field>Order.SingleAnnualTARIPayment__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>

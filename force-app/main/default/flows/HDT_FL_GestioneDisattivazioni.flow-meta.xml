@@ -750,54 +750,54 @@
         <name>assignParams</name>
         <label>assignParams</label>
         <locationX>1348</locationX>
-        <locationY>3950</locationY>
+        <locationY>4070</locationY>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.accountType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Input_Case.Account.Type</elementReference>
+                <elementReference>getPreAttachments.Account.Type</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.city</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Input_Case.SupplyCity__c</elementReference>
+                <elementReference>getPreAttachments.SupplyCity__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.cluster</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Input_Case.Cluster__c</elementReference>
+                <elementReference>getPreAttachments.Cluster__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.contactChannel</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Input_Case.Channel__c</elementReference>
+                <elementReference>getPreAttachments.Channel__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.processType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Input_Case.Type</elementReference>
+                <elementReference>getPreAttachments.Type</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.subProcessType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Input_Case.Subprocess__c</elementReference>
+                <elementReference>getPreAttachments.Subprocess__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.SubscriberType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Input_Case.SubscriberType__c</elementReference>
+                <elementReference>getPreAttachments.SubscriberType__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -808,7 +808,7 @@
         <name>assignPhase_0_0</name>
         <label>assignPhase</label>
         <locationX>1612</locationX>
-        <locationY>4670</locationY>
+        <locationY>4910</locationY>
         <assignmentItems>
             <assignToReference>getTariCase_1.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -824,7 +824,7 @@
         <name>assignPhase_0_0_0</name>
         <label>assignPhase</label>
         <locationX>1348</locationX>
-        <locationY>4670</locationY>
+        <locationY>4910</locationY>
         <assignmentItems>
             <assignToReference>getTariCase_1.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -840,12 +840,12 @@
         <name>assignPhase_0_0_0_0</name>
         <label>assignPhase</label>
         <locationX>1876</locationX>
-        <locationY>4670</locationY>
+        <locationY>4910</locationY>
         <assignmentItems>
             <assignToReference>getTariCase_1.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>In Bozza</stringValue>
+                <stringValue>Bozza</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -895,7 +895,7 @@
         <name>assignStatus</name>
         <label>assignStatus</label>
         <locationX>1612</locationX>
-        <locationY>4430</locationY>
+        <locationY>4670</locationY>
         <assignmentItems>
             <assignToReference>getTariCase_1.Status</assignToReference>
             <operator>Assign</operator>
@@ -1724,7 +1724,7 @@
         <locationX>952</locationX>
         <locationY>3830</locationY>
         <defaultConnector>
-            <targetReference>assignParams</targetReference>
+            <targetReference>getPreAttachments</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Avanti</defaultConnectorLabel>
         <rules>
@@ -1759,7 +1759,7 @@
         <name>Scelta_pulsantiera_0_0_0</name>
         <label>Scelta pulsantiera</label>
         <locationX>1348</locationX>
-        <locationY>4190</locationY>
+        <locationY>4430</locationY>
         <defaultConnector>
             <targetReference>getTariCase_1</targetReference>
         </defaultConnector>
@@ -1862,7 +1862,7 @@
         <name>WhichProcess</name>
         <label>WhichProcess</label>
         <locationX>1612</locationX>
-        <locationY>4550</locationY>
+        <locationY>4790</locationY>
         <defaultConnector>
             <targetReference>assignPhase_0_0_0_0</targetReference>
         </defaultConnector>
@@ -2099,6 +2099,27 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>getPreAttachments</name>
+        <label>getPreAttachments</label>
+        <locationX>1348</locationX>
+        <locationY>3950</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>assignParams</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetRecordTypeVotiveModena</name>
         <label>GetRecordTypeVotiveModena</label>
         <locationX>4007</locationX>
@@ -2165,7 +2186,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>getTariCase_1</name>
         <label>getTariCase_1</label>
         <locationX>1612</locationX>
-        <locationY>4310</locationY>
+        <locationY>4550</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assignStatus</targetReference>
@@ -2257,7 +2278,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>updateCaseTari_1</name>
         <label>updateCaseTari_1</label>
         <locationX>1612</locationX>
-        <locationY>4886</locationY>
+        <locationY>5126</locationY>
         <inputReference>getTariCase_1</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -2269,6 +2290,36 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
             <targetReference>SecondTariForm</targetReference>
         </connector>
         <inputReference>getTariCase_0</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updatePostAttachments</name>
+        <label>updatePostAttachments</label>
+        <locationX>1348</locationX>
+        <locationY>4310</locationY>
+        <connector>
+            <targetReference>Scelta_pulsantiera_0_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>AdditionalAttachments__c</field>
+            <value>
+                <elementReference>componentAttachment.additional</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>MandatoryAttachments__c</field>
+            <value>
+                <elementReference>componentAttachment.required</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
     </recordUpdates>
     <recordUpdates>
         <name>updatePreForm</name>
@@ -2892,12 +2943,12 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>ScreenReminderAllegati</name>
         <label>ScreenAllegati</label>
         <locationX>1348</locationX>
-        <locationY>4070</locationY>
+        <locationY>4190</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Scelta_pulsantiera_0_0_0</targetReference>
+            <targetReference>updatePostAttachments</targetReference>
         </connector>
         <fields>
             <name>componentAttachment</name>
