@@ -13031,6 +13031,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>TerminationReason__c</picklist>
+        <values>
+            <fullName>Cessazione del presupposto da verifica interna</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cessazione del presupposto di applicazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta da ente creditore</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ThirdLevelComplaintClassification__c</picklist>
         <values>
             <fullName>Altro</fullName>

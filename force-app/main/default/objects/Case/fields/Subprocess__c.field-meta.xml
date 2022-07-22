@@ -183,7 +183,24 @@
                 <default>false</default>
                 <label>Recupero</label>
             </value>
+            <value>
+                <fullName>Domiciliato in nucleo residente</fullName>
+                <default>false</default>
+                <label>Domiciliato in nucleo residente</label>
+            </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Ordinaria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Mortis Causa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Incorporazione societaria</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
             <valueName>In Continuità</valueName>
@@ -191,6 +208,18 @@
         <valueSettings>
             <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
             <valueName>Recupero</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
+            <valueName>Elementi di dettaglio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
+            <valueName>Report disaggregato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
+            <valueName>Report storno di adeguamento</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
@@ -205,16 +234,16 @@
             <valueName>CA</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
-            <valueName>Elementi di dettaglio</valueName>
+            <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
+            <valueName>Account</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
-            <valueName>Report disaggregato</valueName>
+            <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
+            <valueName>Account e Billing Profile</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
-            <valueName>Report storno di adeguamento</valueName>
+            <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
+            <valueName>Billing Profile</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
@@ -247,18 +276,6 @@
         <valueSettings>
             <controllingFieldValue>Fiscale</controllingFieldValue>
             <valueName>IVA - Errata applicazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
-            <valueName>Ordinaria</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
-            <valueName>Mortis Causa</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
-            <valueName>Incorporazione societaria</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
