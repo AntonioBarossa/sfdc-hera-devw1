@@ -4,7 +4,7 @@
         <name>redirectToCase</name>
         <label>redirectToCase</label>
         <locationX>418</locationX>
-        <locationY>2030</locationY>
+        <locationY>2150</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -21,7 +21,7 @@
         <name>assignAttachments</name>
         <label>assignAttachments</label>
         <locationX>638</locationX>
-        <locationY>1574</locationY>
+        <locationY>1694</locationY>
         <assignmentItems>
             <assignToReference>getPreAttachments.AdditionalAttachments__c</assignToReference>
             <operator>Assign</operator>
@@ -113,10 +113,68 @@
         </connector>
     </assignments>
     <assignments>
+        <name>assignParamsAttachments_0</name>
+        <label>assignParamsAttachments</label>
+        <locationX>638</locationX>
+        <locationY>1454</locationY>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.accountType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreAttachments.Account.Type</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.city</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreAttachments.SupplyCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.cluster</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreAttachments.Cluster__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.contactChannel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreAttachments.Channel__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.processType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreAttachments.Type</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.subProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreAttachments.Subprocess__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.SubscriberType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreAttachments.SubscriberType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>screenGestioneAllegati</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>assignPhase</name>
         <label>assignPhase</label>
         <locationX>638</locationX>
-        <locationY>1694</locationY>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>getPreAttachments.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -309,7 +367,7 @@
         <locationY>1334</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>screenGestioneAllegati</targetReference>
+            <targetReference>assignParamsAttachments_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -337,7 +395,7 @@
         <name>updatePostAttachment</name>
         <label>updatePostAttachment</label>
         <locationX>638</locationX>
-        <locationY>1814</locationY>
+        <locationY>1934</locationY>
         <connector>
             <targetReference>redirectToCase</targetReference>
         </connector>
@@ -452,7 +510,7 @@
         <name>screenGestioneAllegati</name>
         <label>Gestione allegati</label>
         <locationX>638</locationX>
-        <locationY>1454</locationY>
+        <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -732,6 +790,14 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>paramsRequiredAttachments</name>
+        <apexClass>HDT_LC_AttachmentManager</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
