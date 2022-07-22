@@ -801,6 +801,11 @@
         <label>Esito non elaborato</label>
     </customValue>
     <customValue>
+        <fullName>Busta Docusign non consegnata</fullName>
+        <default>false</default>
+        <label>Busta Docusign non consegnata</label>
+    </customValue>
+    <customValue>
         <fullName>Segnalazioni VAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
