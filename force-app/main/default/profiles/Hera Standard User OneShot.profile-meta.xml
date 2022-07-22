@@ -4552,11 +4552,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>SBQQ__Quote__c.ImplantType__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>SBQQ__Quote__c.SapContractCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
