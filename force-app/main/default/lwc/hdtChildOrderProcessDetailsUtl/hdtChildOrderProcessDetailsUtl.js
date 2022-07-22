@@ -37,18 +37,18 @@
     }
 
     const handleSections = function() {
-        this.fields = [
+        this.fields = [   
             {
                 step: 1,
                 label: 'Variabili di Processo',
                 name: 'variabiliDiProcesso',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                hasCodiceRonchiButton: this.order.RateCategory__c=='TATND00001',
+                hasCodiceRonchiButton: this.order.RateCategory__c=='TATND00001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente',
                 hasVerificaAccertamento: true,
                 hasAllegatiObbligatori: true,
                 diffObjApi: 'Sale',
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente' || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
                 data:[
                     new fieldData('Codice Punto','ServicePointCode__c',this.typeVisibility('both'),true, false, '', ''),
                     new fieldData('Servizio','CommodityFormula__c',this.typeVisibility('both'),true, false, '', ''),
@@ -56,14 +56,14 @@
                     new fieldData('Impianto SAP','SAPImplantCode__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Tipo Impianto','ImplantType__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Residente','Resident__c', this.typeVisibility('both'), false, true,'',''),
-                    new fieldData('Codice ATECO','AtecoCode__c', this.typeVisibility('both'), this.order.RateCategory__c=='TATND00001', true,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
-                    new fieldData('Codice Ronchi','RonchiCode__c', this.typeVisibility('both'), this.order.RateCategory__c=='TATND00001', true,'',' '),
-                    new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', this.typeVisibility('both'), this.order.RateCategory__c=='TATND00001', true,'',''),
+                    new fieldData('Codice ATECO','AtecoCode__c', this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', this.order.RateCategory__c=='TATND00001', true,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
+                    new fieldData('Codice Ronchi','RonchiCode__c', this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', this.order.RateCategory__c=='TATND00001', true,'',' '),
+                    new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', this.order.RateCategory__c=='TATND00001', true,'',''),
                     new fieldData('Contratto Precedente','ContractReference__c', this.typeVisibility('both'), true, true,'',''),
                     new fieldData('Documentazione consegnata da contribuente','DeliveredDocumentation__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Provenienza richiesta','RequestSource__c', this.typeVisibility('both'), true, false,'','Da contribuente'),
                     new fieldData('Importo mancato dovuto','MissingDueAmount__c', this.typeVisibility('both'), false, false,'',''),
-                    new fieldData('Pagamento Unico Annuale TARI','AnnualTARIPayment__c', this.typeVisibility('both'), false, false,'',''),
+                    new fieldData('Pagamento Unico Annuale TARI','AnnualTARIPayment__c', this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', false, false,'',''),
                     new fieldData('Data dichiarazione','DeclarationDate__c', this.typeVisibility('both'), true, false,'', getFormattedDate(new Date())),
                     new fieldData('Data decorrenza','EffectiveDate__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Integrazione alla Dichiarazione (da Gestore)','OperatorDeclarationInfos__c', this.typeVisibility('both'), false, false,'',''),
@@ -85,7 +85,7 @@
                 recordId: this.order.Id,
                 diffObjApi: 'Account',
                 diffRecordId: this.order.AccountId,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente' || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
                 data:[
                     new fieldData('Qualità','SubscriberType__c',this.typeVisibility('both'),true, false, '', '', 
                         function(event){
@@ -104,7 +104,7 @@
                     new fieldData('Cognome','CustomerLastName__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Luogo di nascita','BirthPlace__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Data di nascita','BirthDate__c', this.typeVisibility('both'), true, false,'',''),
-                    new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c!=='TATND00001', true, false,'','')
+                    new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c!=='TATND00001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', true, false,'','')
                 ]
             },
             {
