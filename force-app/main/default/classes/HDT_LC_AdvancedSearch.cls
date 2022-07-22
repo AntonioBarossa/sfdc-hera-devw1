@@ -297,6 +297,9 @@ public with sharing class HDT_LC_AdvancedSearch {
 			if(ac.BillingCityCode__c != null){
 				outPut.put('Codice Comune SAP',ac.BillingCityCode__c);
 			}
+			if(ac.BillingPlace__c != null){
+				outPut.put('Localita',ac.BillingPlace__c);
+			}
 
 		system.debug('outPut *******'+ outPut);
 

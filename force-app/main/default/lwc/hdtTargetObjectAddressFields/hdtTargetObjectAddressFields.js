@@ -417,6 +417,7 @@ handleAddressFromAccount()
 			this.estenscivico=data['Est.Civico'];
             this.codcomunesap=data['Codice Comune SAP'];
             this.codstradariosap=data['Codice Via Stradario SAP'];
+            this.localita=data['Localita'];
             this.flagverificato=true;
 
             this.theRecord['Via']= data['Via'];
@@ -428,6 +429,7 @@ handleAddressFromAccount()
             this.theRecord['Estens.Civico']= data['Est.Civico'];
             this.theRecord['Codice Comune SAP']=data['Codice Comune SAP'];
             this.theRecord['Codice Via Stradario SAP']= data['Codice Via Stradario SAP'];
+            this.theRecord['Localita']= data['Localita'];
             this.theRecord['Flag Verificato']= true;
             this.theRecord['Indirizzo Estero']=false;
             if(this.codstradariosap != undefined && this.codstradariosap != ''){
