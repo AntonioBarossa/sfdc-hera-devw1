@@ -40,6 +40,112 @@
         this.fields = [
             {
                 step: 1,
+                label: 'Riepilogo Dati',
+                name: 'riepilogoDatiTariffa',
+                objectApiName: 'Order',
+                recordId: this.order.Id,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
+                data:[
+                    new fieldData('Codice Punto','ServicePointCode__c',this.typeVisibility('both'),true, true, '', ''),
+                    new fieldData('Servizio','CommodityFormula__c',this.typeVisibility('both'),true, true, '', ''),
+                    new fieldData('Società di vendita','SalesCompany__c', this.typeVisibility('both'), false, true, '',''),
+                    new fieldData('Impianto SAP','SAPImplantCode__c', this.typeVisibility('both'), false, true,'',''),
+                    new fieldData('Tipo Impianto','ImplantType__c', this.typeVisibility('both'), false, true,'',''),
+                    new fieldData('Blocca al calcolo','BlockOnComputation__c', this.typeVisibility('both'), false, false,'',''),
+                    new fieldData('Provenienza Richiesta','RequestSource__c', this.typeVisibility('both'), false, false,'',''),
+                    new fieldData('Contratto','ContractReference__c', this.typeVisibility('both'), false, true,'',''),
+                ]
+            },
+            {
+                step: 2,
+                label: 'Dati Sottoscrittore',
+                name: 'datiSottoscrittore',
+                objectApiName : 'Order',
+                recordId: this.order.Id,
+                diffObjApi: 'Account',
+                diffRecordId: this.order.AccountId,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
+                data:[
+                    new fieldData('Qualità','SubscriberType__c',this.typeVisibility('both'),true, false, '', '', 
+                        function(event){
+                            for(let wrp of [new wrp2Infos('CustomerName__c', "FirstName__c"), new wrp2Infos('CustomerLastName__c', "LastName__c"),new wrp2Infos('BirthPlace__c', "BirthProvince__c"),new wrp2Infos('BirthDate__c', "BirthDate__c")]){
+                                let node = this.template.querySelector(`[data-id='${wrp.val1}']`);
+                                if(!node)   return;
+                                let value = event.target.value=== "Soggetto Passivo"? this.order.Account[wrp.val2] : "";
+                                node.value=value;
+                                this.sectionDataToSubmit[wrp.val1]=value;
+                            }
+                        }
+                    ),
+                    new fieldData('Luogo di sottoscrizione','ResidentialCity__c',this.typeVisibility('both'),true, false, 'true', ''),
+                    new fieldData('Indirizzo di residenza','ResidentialStreetName__c' , this.typeVisibility('both'), true, false, '',''),
+                    new fieldData('Nome','CustomerName__c', this.typeVisibility('both'), true, false,'',''),
+                    new fieldData('Cognome','CustomerLastName__c', this.typeVisibility('both'), true, false,'',''),
+                    new fieldData('Luogo di nascita','BirthPlace__c', this.typeVisibility('both'), true, false,'',''),
+                    new fieldData('Data di nascita','BirthDate__c', this.typeVisibility('both'), true, false,'',''),
+                    new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c!=='TATND00001', true, false,'','')
+                ]
+            },
+            {
+                step: 3,
+                label:'Fatturazione',
+                name: 'fatturazione',
+                objectApiName: 'Order',
+                recordId: this.order.Id,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
+                data: [
+                    new fieldData('Modalità Invio Bolletta', 'BillSendMode__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('Email Invio Bolletta', 'InvoiceEmailAddress__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('Email PEC invio Bolletta', 'InvoiceCertifiedEmailAddress__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('SendCertifiedEmailConsentDate__c', 'SendCertifiedEmailConsentDate__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('Destinatario Divergente', 'DivergentSubject__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('Comune', 'BillingCity__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('Stato', 'BillingCountry__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('Localita', 'BillingPlace__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('Provincia', 'BillingProvince__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('Nome Via', 'BillingStreetName__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('Civico', 'BillingStreetNumber__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('CAP', 'BillingPostalCode__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('Codice ISTAT', 'BillingCityCode__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('AggregateBilling__c', 'AggregateBilling__c',this.typeVisibility('both'),true,false,'',''),
+                ]
+            },
+            {
+                step: 4,
+                label: 'Agevolazione',
+                name: 'agevolazioneTariffa',
+                objectApiName: 'Order',
+                recordId: this.order.Id,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
+                data:[
+                new fieldData('Propietario','',this.typeVisibility('both'),true, true, 'true', ''),
+                new fieldData('Residente','Resident__c' , this.typeVisibility('both'), true, true, '',''),
+                new fieldData('Tipo occupazione','', this.typeVisibility('both'), true, true,'',''),
+                new fieldData('Numero Abitanti','', this.typeVisibility('both'), true, true,'',''),
+                new fieldData('Superficie','', this.typeVisibility('both'), true, true,'',''),
+                ]
+            },
+            {
+                step: 5,
+                label: 'Indirizzo di fornitura',
+                name: 'indirizzoFornituraTariffa',
+                objectApiName: 'Order',
+                recordId: this.order.Id,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
+                data: [
+                    new fieldData('Comune','SupplyCity__c', this.typeVisibility('both'), false, true, '',''),                  
+                    new fieldData('Via','SupplyStreetName__c', this.typeVisibility('both'), false, true, '',''),                  
+                    new fieldData('Civico','SupplyStreetNumber__c', this.typeVisibility('both'), false, true, '',''),                  
+                    new fieldData('Barrato','SupplyStreetNumberExtension__c', this.typeVisibility('both'), false, true, '',''), 
+                    new fieldData('Codice Comune Sap','ActivationCityCode__c', this.typeVisibility('both'), false, true, '',''),                  
+                    new fieldData('Provincia','SupplyState__c', this.typeVisibility('both'), false, true, '',''),                  
+                    new fieldData('Cap','SupplyPostalCode__c', this.typeVisibility('both'), false, true, '',''),                  
+                    new fieldData('Nazione','SupplyCountry__c', this.typeVisibility('both'), false, true, '',''),                  
+                    new fieldData('Localita','SupplyPlace__c', this.typeVisibility('both'), false, true, '',''),                  
+                ]
+            },
+            {
+                step: 1,
                 label: 'Variabili di Processo',
                 name: 'variabiliDiProcesso',
                 objectApiName: 'Order',
@@ -691,7 +797,7 @@
                             || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso'
                             || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
                             || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'
-                            || this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente',
+                            || this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente' || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
                 data: [
                     new fieldData('Modalità di Pagamento','PaymentMode__c',this.typeVisibility('both'), false, false, '',''),
                     new fieldData('IBAN Estero','IbanIsForeign__c',this.typeVisibility('both'), false, false, '',''),
@@ -743,7 +849,8 @@
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' || this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente'),
+                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' || this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente'),
                 data: [
                     new fieldData('Metodo firma','SignatureMethod__c',this.typeVisibility('both'), true, false, '',''),
                     new fieldData('Invio doc','DocSendingMethod__c',this.typeVisibility('both'), true, false, '','')
