@@ -13573,11 +13573,6 @@
 	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
-		<field>Order.SingleAnnualTARIPayment__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
 		<field>Order.TaxpayerDeclarationInfos__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
