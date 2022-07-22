@@ -5356,11 +5356,6 @@
 	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
-		<field>Case.AnnualUnicInstallment__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
 		<field>Case.AppointmentCode__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
@@ -26098,6 +26093,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.ATO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.ImplantType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
