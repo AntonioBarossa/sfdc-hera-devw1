@@ -156,7 +156,8 @@ public inherited sharing class HDT_QR_AgentMatrix {
             AgencyCode__c,
             UpperChannelAgency__c,
             LowerChannelAgency__c,
-            IsMonitoring__c	
+            IsMonitoring__c,
+            AgentCode__c
             FROM AgentMatrix__c
             WHERE IsMonitoring__c = true
             WITH SECURITY_ENFORCED
