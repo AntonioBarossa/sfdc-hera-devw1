@@ -4572,11 +4572,11 @@
         <field>SBQQ__Quote__c.CampaignEleggibilityGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+    /*<fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.ImplantType__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions>*/
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.SapContractCode__c</field>
