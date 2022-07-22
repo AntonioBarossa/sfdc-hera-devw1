@@ -66,7 +66,7 @@ export default class HdtActiveRepentant extends LightningElement {
             //flow
             let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
             let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
-            if(this.dateDichiarazione){     this.startActiveRepentant(decorrenza, dichiarazione);  }  
+            if(dichiarazione){     this.startActiveRepentant(decorrenza, dichiarazione);  }  
             else{   this.showMessage("Attenzione!", "Popolare Data Dichiarazione", "error");this.disabled=false;    }
         }else{
             //wizard Attivazioni
@@ -275,18 +275,18 @@ export default class HdtActiveRepentant extends LightningElement {
         const unrevDate = this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']");
         if(unrevDate)   unrevDate.value = event.detail.dateY;
 
-        if(event.detail.period=="Y"){
-            const missingDueAmount = this.template.querySelector("[data-id='MissingDueAmount__c']");
-            if(missingDueAmount)    missingDueAmount.required = event.detail.missedDue? true : false;
+        let isPeriodY = event.detail.period=="Y";
 
-            const decline = this.template.querySelector("[data-id='DeclineComputationSupport__c']");
-            if(decline) decline.required = true;
+        const missingDueAmount = this.template.querySelector("[data-id='MissingDueAmount__c']");
+        if(missingDueAmount)    missingDueAmount.required = event.detail.missedDue? true : false, missingDueAmount.disabled = !isPeriodY; missingDueAmount.value = isPeriodY? missingDueAmount.value : "";        
+        
+        const decline = this.template.querySelector("[data-id='DeclineComputationSupport__c']");
+        if(decline) decline.required = isPeriodY;
 
-            const refusal = this.template.querySelector("[data-id='CustomerRepentanceRefusal__c']");
-            if(refusal) refusal.required=true;
+        const refusal = this.template.querySelector("[data-id='CustomerRepentanceRefusal__c']");
+        if(refusal) refusal.required=isPeriodY;
 
-            this.template.querySelector("[data-id='BlockOnComputation__c']").value = 'Y';
-        }
+        this.template.querySelector("[data-id='BlockOnComputation__c']").value = isPeriodY? "Y" : "";
     }
 
     getFormattedDate(date){

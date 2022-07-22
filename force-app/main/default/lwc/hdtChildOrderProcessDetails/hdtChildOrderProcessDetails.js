@@ -1205,7 +1205,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log("test call");
         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
         let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
-        this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = false;
         this.template.querySelector("c-hdt-active-repentant").startActiveRepentant(decorrenza, dichiarazione);
     }
 
@@ -1215,10 +1214,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = event.detail.dateY, this.sectionDataToSubmit["OnerousUnreviewableStartDate__c"]=event.detail.dateY;
         //this.missedDueDate = this.getFormattedDate(event.detail.missedDue);
         this.template.querySelector("[data-id='MissingDueAmount__c']").required = event.detail.missedDue? true : false;
-        if(event.detail.period=="Y"){
-            this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = true;
-            this.template.querySelector("[data-id='BlockOnComputation__c']").value = 'Y', this.sectionDataToSubmit["BlockOnComputation__c"]='Y';
-        }
+        
+        let isPeriodY = event.detail.period=="Y";
+        this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = isPeriodY;
+        this.template.querySelector("[data-id='BlockOnComputation__c']").value = isPeriodY? "Y" : "", this.sectionDataToSubmit["BlockOnComputation__c"]=isPeriodY? "Y" : "";
     }
     
 }

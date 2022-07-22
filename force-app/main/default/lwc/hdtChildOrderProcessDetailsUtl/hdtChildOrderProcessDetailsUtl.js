@@ -61,7 +61,7 @@
                     new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', this.typeVisibility('both'), this.order.RateCategory__c=='TATND00001', true,'',''),
                     new fieldData('Contratto Precedente','ContractReference__c', this.typeVisibility('both'), true, true,'',''),
                     new fieldData('Documentazione consegnata da contribuente','DeliveredDocumentation__c', this.typeVisibility('both'), true, false,'',''),
-                    new fieldData('Provenienza richiesta','RequiredSource__c', this.typeVisibility('both'), true, false,'','Da contribuente'),
+                    new fieldData('Provenienza richiesta','RequestSource__c', this.typeVisibility('both'), true, false,'','Da contribuente'),
                     new fieldData('Importo mancato dovuto','MissingDueAmount__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Pagamento Unico Annuale TARI','AnnualTARIPayment__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Data dichiarazione','DeclarationDate__c', this.typeVisibility('both'), true, false,'', getFormattedDate(new Date())),
