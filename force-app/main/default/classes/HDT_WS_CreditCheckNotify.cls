@@ -37,17 +37,17 @@ global with sharing class HDT_WS_CreditCheckNotify {
     }
 
     private static void workOrder(Order ord, String description, String incomingOutcome, String outgoingOutcome){
-        if ((!description.equalsIgnoreCase(description) && (String.isBlank(ord.CreditCheckDescription__c) || !ord.CreditCheckDescription__c.containsIgnoreCase(description))) 
-            || !incomingOutcome.equalsIgnoreCase(ord.IncomingCreditCheckResult__c)
-            || !outgoingOutcome.equalsIgnoreCase(ord.OutgoingCreditCheckResult__c)
-        ){
-            Order orderToUpdate = new Order();
-            orderToUpdate.Id = ord.Id;
-            orderToUpdate.CreditCheckDescription__c = description;
-            orderToUpdate.OutgoingCreditCheckResult__c = outgoingOutcome;
-            orderToUpdate.IncomingCreditCheckResult__c = incomingOutcome;
-            HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
-        }
+        //Gestione Credit Check
+        HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate orderData = new HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate();
+        orderData.orderId = ord.Id;
+        orderData.outcomeDescription = description;
+        orderData.outcome = (String.isNotBlank(incomingOutcome) && !incomingOutcome.equalsIgnoreCase(ord.IncomingCreditCheckResult__c)) ? incomingOutcome 
+                            : (String.isNotBlank(outgoingOutcome) && !outgoingOutcome.equalsIgnoreCase(ord.OutgoingCreditCheckResult__c)) ?
+                                                     outgoingOutcome : ord.IncomingCreditCheckResult__c;
+        orderData.outcoming = (String.isNotBlank(incomingOutcome) && !incomingOutcome.equalsIgnoreCase(ord.IncomingCreditCheckResult__c)) ? false 
+                            : (String.isNotBlank(outgoingOutcome) && !outgoingOutcome.equalsIgnoreCase(ord.OutgoingCreditCheckResult__c)) ?
+                                 true : false;
+        HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{orderData});
     }
 
     public class HDT_WRP_NotifyResponse{

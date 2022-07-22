@@ -806,6 +806,11 @@
         <label>Busta Docusign non consegnata</label>
     </customValue>
     <customValue>
+        <fullName>Inviare Legge 80</fullName>
+        <default>false</default>
+        <label>Inviare Legge 80</label>
+    </customValue>
+    <customValue>
         <fullName>Segnalazioni VAS</fullName>
         <default>false</default>
         <isActive>false</isActive>

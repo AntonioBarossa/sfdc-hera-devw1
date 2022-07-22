@@ -631,6 +631,7 @@ public inherited sharing class HDT_QR_Order {
         return [
             SELECT
             Phase__c,
+            PhaseStory__c,
             isTransition__c ,
             recordtype.developername,
             AutorizationVolturaThirdTrader__c,
