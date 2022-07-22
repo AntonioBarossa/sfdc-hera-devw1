@@ -101,7 +101,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         HDT_QR_RecordType recordTypeQr = new HDT_QR_RecordType();
         String rtCambioOfferta = recordTypeQr.getRecordTypeIdByName('HDT_RT_CambioOfferta', 'Order');
 
-        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agentCodeIsMonitoringList();
 
         Map<String,Order> mapParentOrder = new Map<String,Order>();
         List<String> ordParentsIds = new List<String>();
@@ -160,7 +160,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && oldOrder.Phase__c == 'Documentazione validata' 
                 && (order.Phase__c == 'Comunicazione Verso Heroku' || order.Phase__c == 'Comunicazione Motore VAS' || order.Phase__c == 'In attesa tempi di ripensamento' || order.Phase__c == 'Esportazione VS Siebel')
                 && order.QualityCall__c
-                && isMonitoringList.contains(order.AgencyCode__c)
+                && isMonitoringList.contains(order.CommercialId__c)
                 && !phaseStory.contains('Quality Call OK')
                 && order.ComfortCallDaysDue__c == null){
                     if(String.isNotBlank(order.VasSubtype__c) && order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi')){
@@ -180,7 +180,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && order.ProcessType__c == 'Voltura' 
                 && (oldOrder.Phase__c == 'In attesa validazione' || oldOrder.Phase__c == 'Accettazione Voltura')
                 && (order.Phase__c == 'Documentazione Validata') 
-                && isMonitoringList.contains(order.AgencyCode__c) 
+                && isMonitoringList.contains(order.CommercialId__c) 
                 && !phaseStory.contains('Quality Call OK')
                 && order.ComfortCallDaysDue__c == null)
             {
@@ -231,7 +231,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && order.ProcessType__c != 'Voltura'
                 && oldOrder.Phase__c != 'In attesa di quality call'
                 && order.Phase__c == 'Quality Call OK'
-                && isMonitoringList.contains(order.AgencyCode__c)) {
+                /*&& isMonitoringList.contains(order.CommercialId__c)*/) {
 
                     String newPhase = (HDT_LC_OrderDossierWizardActions.checkRequiredDocs(order) && HDT_LC_OrderDossierWizardActions.checkRequiredDocs(mapParentOrder.get(order.ParentOrder__c))) ? 'Comunicazione verso Heroku' : 'In attesa validazione';
                     order.Phase__c = newPhase;
@@ -661,7 +661,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Map<Id, String> vasOrdersToUpdate = new Map<Id, String>();//id->newPhase
         
         orderSrv.checkReadAccess('Phase__c');
-        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agentCodeIsMonitoringList();
         Order notManagedOrder = new Order();
         Boolean isNotManaged = false;
         for(Order childOrder : parentOrderIds)
@@ -935,7 +935,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         //List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
         Map<Id,wrts_prcgvr__Activity__c> mapIdOrderToActivity = new Map<Id,wrts_prcgvr__Activity__c>();
 
-        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agentCodeIsMonitoringList();
 
         for(Order orderToUpdate : orderList){
             mapIdToTotalOrder.put(orderToUpdate.id,orderToUpdate);
@@ -944,7 +944,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if(orderToUpdate.ParentOrder__r.Phase__c == 'Documentazione Gestita' && (orderToUpdate.Phase__c == 'Documentazione Validata' || orderToUpdate.Phase__c == 'Documentazione da inviare' )){
                 if(orderToUpdate.recordType.Developername != 'HDT_RT_VAS'
                     && !orderToUpdate.QualityCall__c
-                    && !isMonitoringList.contains(orderToUpdate.AgencyCode__c)){
+                    && !isMonitoringList.contains(orderToUpdate.CommercialId__c)){
                     orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
                     orderListToUpdate.add(orderToUpdate);
                     mapIdToOrderUpdate.put(orderToUpdate.id,orderToUpdate);
