@@ -20,7 +20,6 @@ public class HDT_WS_CreditCheck {
         }
         
         //req.sistema = 'Standard'.equalsIgnoreCase(UserInfo.getUserType())? 'SFDC' : 'COMMUNITY';
-
         System.debug(LoggingLevel.DEBUG, 'HDT_WS_CreditCheck - HDT_WS_CreditCheckResponse - callService: req ----> ');
         if (String.isNotEmpty(req.bpClass) && req.bpClass.containsIgnoreCase('Marcatura nulla')){
             req.bpClass = '';
@@ -64,6 +63,9 @@ public class HDT_WS_CreditCheck {
                 orderData.orderId = req.crmId;
                 orderData.outcomeDescription =  'KO Tecnico - ' + res.exceptionMessage;
                 orderData.outcome = 'KO';
+            }else{
+                //Gestione Credit Check In Progress 
+                HDT_UTL_DatabaseService.updateSObject(new Order(Id = req.crmId, CreditCheckInProgress__c = true));
             }
 
             if (!orderData.isEmpty()){
