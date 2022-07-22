@@ -10514,6 +10514,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>EligibilityCriteria__c.ImplantType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>EligibilityCriteria__c.LoginGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
