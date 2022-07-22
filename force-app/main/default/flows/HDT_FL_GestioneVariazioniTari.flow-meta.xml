@@ -23,7 +23,7 @@
         <locationX>2882</locationX>
         <locationY>5618</locationY>
         <assignmentItems>
-            <assignToReference>getAfterSecondForm.AttachmentsStringTARI__c</assignToReference>
+            <assignToReference>getAfterSecondForm.MandatoryAttachments__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>componentAttachment.required</elementReference>
@@ -2114,7 +2114,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>AttachmentsStringTARI__c</field>
+            <field>MandatoryAttachments__c</field>
             <value>
                 <elementReference>componentAttachment_VIF.required</elementReference>
             </value>
@@ -2558,6 +2558,18 @@
                     <stringValue>Case</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>paramsWrap</name>
+                <value>
+                    <elementReference>paramsRequiredAttachments</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -2600,6 +2612,18 @@
                 <name>standAlone</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
