@@ -622,7 +622,8 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						String leggeOtt = (String)childOrder.get('DocumentLow80__c');
 						String istanza = (String)childOrder.get('Instance326__c');
 						if((String.isBlank(leggeOtt) || (String.isNotBlank(leggeOtt) && leggeOtt.equalsIgnoreCase('Validato'))) && 
-						(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))){
+						(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))
+						&& (!'Credit Check KO'.equalsIgnoreCase(singleOrder.Phase__c) && !'Attesa Credit Check'.equalsIgnoreCase(singleOrder.Phase__c))){
 							singleOrder.Phase__c = 'Documentazione Validata';
 							orderPhaseMap.put(singleOrder.Id, 'Documentazione Validata');
 						}
