@@ -358,6 +358,26 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
+                else if(this.recordtype.label === 'Punto Idrico' && element === 'ServicePointCode__c'){
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: false,
+                            value: this.allSubmitedFields['ServicePointCode__c'],
+                            disabled: true
+                        }
+                    )
+                }
+                else if(this.recordtype.label === 'Punto Idrico' && element === 'PlugPresence__c'){
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: false,
+                            value: 'No',
+                            disabled: true
+                        }
+                    )
+                }
                 else {
                     fieldsDataObject.push(
                         {
@@ -649,13 +669,23 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
-                else if(this.recordtype.label === 'Punto Idrico' && element === 'ServicePointCode__c' && this.allSubmitedFields['PlugPresence__c'] == 'No'){
+                else if(this.recordtype.label === 'Punto Idrico' && element === 'ServicePointCode__c'){
                     fieldsDataObject.push(
                         {
                             fieldname: element,
                             required: false,
                             value: this.allSubmitedFields['ServicePointCode__c'],
-                            disabled: false
+                            disabled: true
+                        }
+                    )
+                }
+                else if(this.recordtype.label === 'Punto Idrico' && element === 'PlugPresence__c'){
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: false,
+                            value: 'No',
+                            disabled: true
                         }
                     )
                 }
@@ -1265,12 +1295,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if ((this.allSubmitedFields['Distributor__c'] === undefined || this.allSubmitedFields['Distributor__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
             }
-            if (this.allSubmitedFields['AuthorizedNotToConfer__c'] === undefined || this.allSubmitedFields['AuthorizedNotToConfer__c'] === '') {
-                concatPointErrorFields = concatPointErrorFields.concat('Autorizzato a non conferire, ');
-            }
-            if ((this.allSubmitedFields['NumberOfFamilyMembers__c'] === undefined || this.allSubmitedFields['NumberOfFamilyMembers__c'] === '')) {
-                concatPointErrorFields = concatPointErrorFields.concat('Numero componenti nucleo familiare, ');
-            }
         }
         else {
 
@@ -1378,9 +1402,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 this.loading = false;
                 this.alert('Dati tabella', 'Il Codice Punto Presa non può avere meno di 5 caratteri oppure più di 20 caratteri');
             }
-            if ((this.allSubmitedFields['PlugPresence__c'] === undefined || this.allSubmitedFields['PlugPresence__c'] === '')) {
-                concatPointErrorFields = concatPointErrorFields.concat('Presenza Allaccio, ');
-            }
             if (this.allSubmitedFields['CommoditySector__c'] === undefined || this.allSubmitedFields['CommoditySector__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Servizio, ');
             }
@@ -1408,12 +1429,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             if ((this.allSubmitedFields['Distributor__c'] === undefined || this.allSubmitedFields['Distributor__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
-            }
-            if (this.allSubmitedFields['AuthorizedNotToConfer__c'] === undefined || this.allSubmitedFields['AuthorizedNotToConfer__c'] === '') {
-                concatPointErrorFields = concatPointErrorFields.concat('Autorizzato a non conferire, ');
-            }
-            if ((this.allSubmitedFields['NumberOfFamilyMembers__c'] === undefined || this.allSubmitedFields['NumberOfFamilyMembers__c'] === '')) {
-                concatPointErrorFields = concatPointErrorFields.concat('Numero componenti nucleo familiare, ');
             }
         }
         else {
@@ -1671,7 +1686,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if((this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica' && this.allSubmitedFields['PlugPresence__c'] == 'Si' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '') ||
             (this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica' && this.allSubmitedFields['PlugPresence__c'] == 'No') ||
             (this.allSubmitedFields['CommoditySector__c'] == 'Gas' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '') ||
-            (this.allSubmitedFields['CommoditySector__c'] == 'Acqua' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '') ||
+            (this.allSubmitedFields['CommoditySector__c'] == 'Acqua' && this.allSubmitedFields['PlugPresence__c'] == 'Si' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '') ||
+            (this.allSubmitedFields['CommoditySector__c'] == 'Acqua' && this.allSubmitedFields['PlugPresence__c'] == 'No') ||
             (this.allSubmitedFields['CommoditySector__c'] == 'Ambiente')){
                 
                 if(addressRecord['Comune'] != undefined && addressRecord['Comune'].trim() != ''){
