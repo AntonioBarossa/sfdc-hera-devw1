@@ -67,6 +67,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }
 
         switch on order.RecordType.DeveloperName {
+            when 'HDT_RT_SubentroAmbiente' {
+                //if(order.AnnualTARIPayment__c=='Attiva'){       order.TaxpayerDeclarationInfos__c='CHIEDO di ricevere ogni anno il bollettino precompilato per il pagamento della TARI - '+order.TaxpayerDeclarationInfos__c;}
+                //if(order.AnnualTARIPayment__c=='Disattiva'){    order.TaxpayerDeclarationInfos__c='CHIEDO la revoca della disposizione di pagamento in unica soluzione - '+order.TaxpayerDeclarationInfos__c;}
+                orderToUpdate.DocumentLow80__c = 'Richiesto';
+                orderToUpdate.CIAccoutn__c = 'Richiesto';
+            }
             when 'HDT_RT_Subentro' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
@@ -263,10 +269,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 if(currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Gas') && currentOrder.Subprocess__c != null && currentOrder.Subprocess__c.equalsIgnoreCase('Con Autolettura')){
                     HDT_QR_SelfReadings qrReading = new HDT_QR_SelfReadings();
                     try {
-                        Reading__c selfRead = qrReading.getReading('Order',currentOrder.Id,'Gas','ReadingValueMeter__c,ReadingSerialNumberCorrector__c,ReadingValueCorrector__c');
+                        Reading__c selfRead = qrReading.getReading('Order',currentOrder.Id,'Gas','ReadingValueMeter__c,ReadingDate__c,ReadingSerialNumberCorrector__c,ReadingValueCorrector__c');
                         orderToUpdate.ReadingValueMeter__c = selfRead.ReadingValueMeter__c;
                         orderToUpdate.ReadingValueCorrector__c = selfRead.ReadingValueCorrector__c;
                         orderToUpdate.ReadingSerialNumberCorrector__c = selfRead.ReadingSerialNumberCorrector__c;
+                        orderToUpdate.ReadingCustomerDate__c = selfRead.ReadingDate__c;
                     } catch (Exception ex) {
                         //no record
                     }
@@ -383,13 +390,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
         }
 
-        orderToUpdate.CreditCheckInProgress__c = false;
 
-       /*  if(currentOrder.CreditCheckInProgress__c && String.isBlank(currentOrder.IncomingCreditCheckResult__c) && String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
-            orderToUpdate.Phase__c = 'Attesa Credit Check';
-        }
-        else  */if(!String.isBlank(currentOrder.IncomingCreditCheckResult__c) || !String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
-            //orderToUpdate.CreditCheckInProgress__c = false;
+        if(!String.isBlank(currentOrder.IncomingCreditCheckResult__c) || !String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
             /**@frpanico 17/02/2022
              * Aggiunto il null check 
              * l'Or nella condizioni di sopra puo comunque

@@ -649,6 +649,16 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
+                else if(this.recordtype.label === 'Punto Idrico' && element === 'ServicePointCode__c' && this.allSubmitedFields['PlugPresence__c'] == 'No'){
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: false,
+                            value: this.allSubmitedFields['ServicePointCode__c'],
+                            disabled: false
+                        }
+                    )
+                }
                 else {
                     fieldsDataObject.push(
                         {
@@ -1231,7 +1241,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
         }
         else if (this.allSubmitedFields['CommoditySector__c'] == 'Acqua') {
-
+            if ((this.allSubmitedFields['PlugPresence__c'] === undefined || this.allSubmitedFields['PlugPresence__c'] === '')) {
+                concatPointErrorFields = concatPointErrorFields.concat('Presenza Allaccio, ');
+            }
             if ((this.allSubmitedFields['Distributor__c'] === undefined || this.allSubmitedFields['Distributor__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
             }
@@ -1365,6 +1377,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 this.isValidFields = false;
                 this.loading = false;
                 this.alert('Dati tabella', 'Il Codice Punto Presa non può avere meno di 5 caratteri oppure più di 20 caratteri');
+            }
+            if ((this.allSubmitedFields['PlugPresence__c'] === undefined || this.allSubmitedFields['PlugPresence__c'] === '')) {
+                concatPointErrorFields = concatPointErrorFields.concat('Presenza Allaccio, ');
             }
             if (this.allSubmitedFields['CommoditySector__c'] === undefined || this.allSubmitedFields['CommoditySector__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Servizio, ');

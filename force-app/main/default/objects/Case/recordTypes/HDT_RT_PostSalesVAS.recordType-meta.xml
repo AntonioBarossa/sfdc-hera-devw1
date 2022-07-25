@@ -11993,6 +11993,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>TerminationReason__c</picklist>
+        <values>
+            <fullName>Cessazione del presupposto da verifica interna</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cessazione del presupposto di applicazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta da ente creditore</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ThirdLevelComplaintClassification__c</picklist>
         <values>
             <fullName>Altro</fullName>
@@ -12992,17 +13007,6 @@
         </values>
         <values>
             <fullName>013-Uso Condizionam%2E%2BRiscald%2E</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>UseChangeCharge__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
