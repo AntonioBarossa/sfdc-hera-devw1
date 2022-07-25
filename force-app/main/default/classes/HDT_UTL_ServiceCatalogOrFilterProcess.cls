@@ -579,4 +579,11 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
         }
         return res;
     }
+
+    public static Boolean checkSalesTari(String saleId)
+    {
+        Map<String, Order> resultMap = HDT_LC_OrderDossierWizard.checkExistingOrderParent(saleId);
+        return resultMap.get('tari') != null;
+    }
+
 }

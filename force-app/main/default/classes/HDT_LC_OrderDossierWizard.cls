@@ -140,7 +140,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         return orderToUpdate;
     }
 
-    private static Map<String,Order> checkExistingOrderParent(String saleId)
+    public static Map<String,Order> checkExistingOrderParent(String saleId)
     {
         Map<String, Order> resultMap = new Map<String, Order>();
         /* Query all orders under the sale */
@@ -193,14 +193,14 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
 
         Order parentOrder = new Order();
 
-        AccountContactRelation acr = acrQr.getPrimaryContactRelationBusiness(sale.Account__c);
-        Id contactId = acr != null ? acr.ContactId : null;
-
         //Case Sale is 'Attiva'
         if(check){
             //When there is no parent order
             if(createOrder){
-
+                
+                AccountContactRelation acr = acrQr.getPrimaryContactRelationBusiness(sale.Account__c);
+                Id contactId = acr != null ? acr.ContactId : null;
+                
                 List<Order> childOrderToUpdate = createOrderStructure(sale, contactId, macroProcessType);
 
                 if(childOrderToUpdate != null && !childOrderToUpdate.isEmpty())
