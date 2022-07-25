@@ -246,6 +246,11 @@
                 <label>Variazione Gruppo IVA</label>
             </value>
             <value>
+                <fullName>Voltura</fullName>
+                <default>false</default>
+                <label>Voltura</label>
+            </value>
+            <value>
                 <fullName>Voltura con Switch</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
