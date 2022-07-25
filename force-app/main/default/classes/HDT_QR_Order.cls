@@ -1331,6 +1331,7 @@ public inherited sharing class HDT_QR_Order {
         return [
             Select 
             id,
+            Phase__c,
             AgencyCode__c
             from Order 
             Where id = :id
