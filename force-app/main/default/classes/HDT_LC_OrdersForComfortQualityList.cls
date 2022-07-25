@@ -23,7 +23,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
     }
 
     @AuraEnabled
-    public static void confirmContract(String ordId, String activityId, String type){
+    public static CampaignMember confirmContract(String ordId, String activityId, String type){
 
         String confirmText = type == 'Comfort' ? 'Comfort call' : 'Quality call';
         String causalQuality = '';
@@ -73,7 +73,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
         act.wrts_prcgvr__Status__c = 'Esitata';
         act.ContactResult__c = causalQuality;
-
+        act.ActivityEndTime__c = null; //@ealpi ticket 906587C
         activitySrv.updateRecord(act);
 
         List<CampaignMember> campMembList = HDT_QR_CampaignMember.getCampMembByActivity(activityId);
@@ -83,11 +83,17 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             }
         }
         campMembSrv.updateRecords(campMembList);
+        if (campMembList!=null && campMembList.size()>0) {
+            return campMembList[0];
+        }
+        else {
+            return null;
+        }
     }
 
     @SuppressWarnings('PMD.CyclomaticComplexity')
     @AuraEnabled
-    public static void cancelContract(String ordId, String activityId, String causal){
+    public static CampaignMember cancelContract(String ordId, String activityId, String causal){
 
         List<String> notCancelPhase = new List<String>{
             'Esito Ok da DL',
@@ -168,6 +174,12 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             }
         }
         campMembSrv.updateRecords(campMembList);
+        if (campMembList!=null && campMembList.size()>0) {
+            return campMembList[0];
+        }
+        else {
+            return null;
+        }
     }
 
     @AuraEnabled

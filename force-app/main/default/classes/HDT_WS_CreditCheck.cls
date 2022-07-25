@@ -36,6 +36,7 @@ public class HDT_WS_CreditCheck {
             if ('failed'.equalsIgnoreCase(res?.status)) {
                 orderData.orderId = req.crmId;
                 Set<String> errorMessageList = new Set<String>();
+                String codiceErrore = '';
                 Boolean isOk = false;
                 List<HDT_WS_CreditCheckResponse.HDT_WRP_errorResponseObject> items = res.errorDetails != null ? res.errorDetails : new List<HDT_WS_CreditCheckResponse.HDT_WRP_errorResponseObject>();
                 for (HDT_WS_CreditCheckResponse.HDT_WRP_errorResponseObject item : items){
@@ -45,6 +46,7 @@ public class HDT_WS_CreditCheck {
                             switch on keyMessage?.toUpperCase() {
                                 when  'ERROR_CODE'{
                                     isOk = HDT_UTL_CreditCheck.managedErrorCode(message);
+                                    codiceErrore = message+' - ';
                                 }
                                 when else {
                                     errorMessageList.add(message); 
@@ -55,7 +57,7 @@ public class HDT_WS_CreditCheck {
                 }
                 errorMessageList.remove('');
                 if (!errorMessageList.isEmpty()){
-                    String testMessage = String.join((Iterable<String>)errorMessageList, ' \n');
+                    String testMessage = codiceErrore + String.join((Iterable<String>)errorMessageList, ' \n');
                     orderData.outcomeDescription = (isOk) ? testMessage : 'KO Tecnico - ' + testMessage;
                     orderData.outcome = (isOK)? 'OK' : 'KO';
                 }
