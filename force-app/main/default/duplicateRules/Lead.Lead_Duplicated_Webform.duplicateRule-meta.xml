@@ -57,7 +57,7 @@
             <outputObject>Contact</outputObject>
         </objectMapping>
     </duplicateRuleMatchRules>
-    <isActive>true</isActive>
+    <isActive>false</isActive>
     <masterLabel>Lead Duplicated Webform</masterLabel>
     <operationsOnUpdate>Alert</operationsOnUpdate>
     <securityOption>EnforceSharingRules</securityOption>

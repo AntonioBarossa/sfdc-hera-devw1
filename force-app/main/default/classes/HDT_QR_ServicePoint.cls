@@ -188,7 +188,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 	public List<ServicePoint__c> getServicePointsByAddress(String address, String fields) {
 		contractSrv.checkReadAccess(fields);
 		String stringAddress = '%' + address + '%';
-		List<ServicePoint__c> servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) +' FROM ServicePoint__c WHERE CommoditySector__c = \'Ambiente\' AND ServicePointCode__c != null AND SupplyAddress__c LIKE :stringAddress ');
+		List<ServicePoint__c> servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) +' FROM ServicePoint__c WHERE CommoditySector__c = \'Ambiente\' AND ServicePointCode__c != null AND SupplyAddress__c LIKE :stringAddress LIMIT 50');
 		return servicePoints;
     }
     

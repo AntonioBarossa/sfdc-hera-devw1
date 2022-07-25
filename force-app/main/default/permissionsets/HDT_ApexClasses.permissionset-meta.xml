@@ -305,6 +305,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_BA_KnowledegeTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_BA_Knowledge</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_BA_LeadExpired</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -478,6 +486,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_BA_SuspendedActivitiesEmailAlertTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_BA_UpdateActivitiesStatus</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_BA_UpdateActivitiesStatusTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2562,6 +2578,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SCH_SuspendedActivitiesTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SCH_UpdateActivitiesStatus</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SCH_UpdateActivitiesStatusTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -4906,6 +4930,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WS_CreditCheckHttpCalloutMock</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_CreditCheckNotify</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_CreditCheckNotifyTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
