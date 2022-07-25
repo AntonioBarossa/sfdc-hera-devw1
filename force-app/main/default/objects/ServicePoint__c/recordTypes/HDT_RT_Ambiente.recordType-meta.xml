@@ -544,6 +544,10 @@
     <picklistValues>
         <picklist>SupplySubtype__c</picklist>
         <values>
+            <fullName>Altri usi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Uso artigianale e commerciale</fullName>
             <default>false</default>
         </values>

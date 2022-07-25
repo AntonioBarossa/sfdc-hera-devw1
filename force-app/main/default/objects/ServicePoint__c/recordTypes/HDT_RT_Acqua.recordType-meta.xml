@@ -584,6 +584,10 @@
     <picklistValues>
         <picklist>SupplySubtype__c</picklist>
         <values>
+            <fullName>Altri usi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Uso artigianale e commerciale</fullName>
             <default>false</default>
         </values>
@@ -615,27 +619,27 @@
     <picklistValues>
         <picklist>SupplyTypeTemp__c</picklist>
         <values>
-            <fullName>A-Domestico</fullName>
+            <fullName>Uso domestico</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>B-Condominio</fullName>
+            <fullName>Uso diverso da domestico</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>C-Aziende di pubblica utilita</fullName>
+            <fullName>Uso civile domestico</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>D-Altri usi</fullName>
+            <fullName>Uso civile non domestico</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Domestico</fullName>
+            <fullName>Usi industriali che scaricano in pubblica fognatura</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Non Domestico</fullName>
+            <fullName>Altri usi</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -669,11 +673,27 @@
     <picklistValues>
         <picklist>SupplyType__c</picklist>
         <values>
-            <fullName>Domestico</fullName>
+            <fullName>Uso domestico</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Non Domestico</fullName>
+            <fullName>Uso diverso da domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso civile domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso civile non domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Usi industriali che scaricano in pubblica fognatura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Altri usi</fullName>
             <default>false</default>
         </values>
     </picklistValues>
