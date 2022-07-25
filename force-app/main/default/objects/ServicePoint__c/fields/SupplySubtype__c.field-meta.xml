@@ -45,6 +45,11 @@
                 <default>false</default>
                 <label>Uso artigianale e commerciale</label>
             </value>
+            <value>
+                <fullName>Altri usi</fullName>
+                <default>false</default>
+                <label>Altri usi</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

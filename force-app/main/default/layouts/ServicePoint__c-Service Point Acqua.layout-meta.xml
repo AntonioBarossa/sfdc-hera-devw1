@@ -60,11 +60,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>MethodsForOutgoingPayments__c</field>
+                <field>ContractualExpensesCharged__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ContractualExpensesCharged__c</field>
+                <field>MethodsForOutgoingPayments__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
