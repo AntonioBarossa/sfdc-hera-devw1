@@ -59,6 +59,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         HDT_UTL_DataFactoryTst.pClickInstance();
         
         HDT_UTL_DataFactoryTst.newPhaseTransition('Attesa conferma preventivo cliente', 'Bozza', caseList[0].Id, 'HDT_RT_Default');
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione EngageOne KO', 'Documentazione Gestita', utlconstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlconstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER);
 
         
         
@@ -388,6 +389,16 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate[0],requestBody, transactionId);
         //HDT_SRV_DocumentalManagement.handleRadioGroup(record,listOfRadio,envelopeId);
 
+    }
+
+    @isTest
+    static void testLogDiscardPhase() {
+        Order ord = [SELECT Id FROM Order LIMIT 1];
+        Test.startTest();
+        HDT_SRV_DocumentalManagement.logDiscardPhase(ord.Id);
+        ord = [SELECT Id,Phase__c FROM Order LIMIT 1];
+        System.assertEquals('Comunicazione EngageOne KO', ord.Phase__c, 'Errore nel funzionamento di logDiscardPhase');
+        Test.stopTest();
     }
 /*
     @isTest
