@@ -27,9 +27,11 @@ public inherited sharing class HDT_QR_OrderItem {
         famils.add('VAS Fatturabili');
         return [
             SELECT
+            BillingProfile__c,
             ServicePoint__c,
             ServicePoint__r.Name,
             ServicePoint__r.ServicePointCode__c,
+            ServicePoint__r.CommoditySector__c,
             OrderId,
             Product2.Name
             FROM 
@@ -76,7 +78,7 @@ public inherited sharing class HDT_QR_OrderItem {
             BillingProfile__c,
             ServicePoint__r.Name,
             ServicePoint__r.ServicePointCode__c,
-            ServicePoint__r.CommoditySector__c
+            ServicePoint__r.CommoditySector__c,
             OrderId,
             Order.OrderNumber,
             SBQQ__QuoteLine__r.SBQQ__RequiredBy__c,

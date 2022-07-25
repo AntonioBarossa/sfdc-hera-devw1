@@ -3,6 +3,7 @@
 		var action = component.get('c.controllerInit');
         var macroProcessType = component.get("v.macroProcessType");
         console.log('saleId - helperInit '+saleId);
+        console.log('macroProcessType - helperInit ' + macroProcessType);
         action.setParams({
             "saleId" : saleId,
             "macroProcessType" : macroProcessType

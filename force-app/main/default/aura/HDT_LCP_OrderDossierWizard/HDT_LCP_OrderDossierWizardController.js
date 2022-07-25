@@ -102,7 +102,7 @@
                 component.set("v.accountId",accountId);
                 component.set("v.discardRework",discardRework);
                 component.set("v.discardActivityId",discardActivityId);
-                component.set('v.macroProcesstype', macroProcessType);
+                component.set("v.macroProcessType", macroProcessType);
                 helper.helperInit(component, event, helper, saleId, accountId);
                 
             }
