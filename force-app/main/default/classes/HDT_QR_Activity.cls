@@ -43,4 +43,25 @@ public inherited sharing class HDT_QR_Activity {
 
         return actList;
     }
+
+    public static List<wrts_prcgvr__Activity__c> getActivityFromTypeList(Id parentId, Set<String> actTypes){
+        
+        List<wrts_prcgvr__Activity__c> actList = new List<wrts_prcgvr__Activity__c>();
+        String nameObject = recordId.getSObjectType().getDescribe().getName();
+        if('Case'.equalsIgnoreCase(nameObject)){
+            actList = [SELECT Id, RecordTypeId, Case__c, Case__r.RecordType.DeveloperName, Order__c, Order__r.Id, Order__r.AgencyCode__c, Order__r.RecordType.DeveloperName 
+                       FROM wrts_prcgvr__Activity__c 
+                       WHERE Type__c = :actTypes
+                       AND Case__c = :parentId
+                       WITH SECURITY_ENFORCED];
+        }else if('Order'.equalsIgnoreCase(nameObject)){
+            actList = [SELECT Id, RecordTypeId, Case__c, Case__r.RecordType.DeveloperName, Order__c, Order__r.Id, Order__r.AgencyCode__c, Order__r.RecordType.DeveloperName 
+                       FROM wrts_prcgvr__Activity__c 
+                       WHERE Type__c = :actTypes
+                       AND Order__c = :parentId
+                       WITH SECURITY_ENFORCED];
+        }
+
+        return actList ? actList : null;
+    }
 }

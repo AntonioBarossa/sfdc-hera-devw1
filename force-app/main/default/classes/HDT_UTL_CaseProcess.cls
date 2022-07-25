@@ -403,10 +403,8 @@ public with sharing class HDT_UTL_CaseProcess {
                                             AND BillingCity IN: fieldsMap.get('SupplyCity__c')
                                             AND BillingStreet IN: fieldsMap.get('SupplyStreetName__c')];
             system.debug('@@@@ related contract: '+relatedContracts);
-            List<wrts_prcgvr__Activity__c> notInsertActivity = [SELECT Id, Type__c, Case__c 
-                                                                FROM wrts_prcgvr__Activity__c 
-                                                                WHERE Case__c IN: cases
-                                                                AND (Type__c = 'Aprire variazione' OR Type__c = 'Aprire Cessazione')];
+            List<wrts_prcgvr__Activity__c> notInsertActivity = HDT_QR_Activity.getActivityFromTypeList(new Set<String>{'Aprire variazione','Aprire Cessazione'});
+            
             List<Id> excludedCases = new List<Id>();
             for(wrts_prcgvr__Activity__c currAct : notInsertActivity){
                 excludedCases.add(currAct.Case__c);
@@ -424,11 +422,21 @@ public with sharing class HDT_UTL_CaseProcess {
                         !excludedCases.contains(CaseItem.Id) ){
                             if('Modifica post accertamento'.equalsIgnoreCase(caseItem.Type)){
                                 findContract = true;
-                                newActivityToInsert.add(new wrts_prcgvr__Activity__c(Account__c=caseItem.AccountId, Case__c=caseItem.Id, ServicePoint__c=caseItem.ServicePoint__c, Type__c='Aprire Variazione'));
+                                newActivityToInsert.add(new wrts_prcgvr__Activity__c(Account__c=caseItem.AccountId, 
+                                                                                     Case__c=caseItem.Id, 
+                                                                                     ServicePoint__c=caseItem.ServicePoint__c, 
+                                                                                     wrts_prcgvr__Status__c ='Aperta',
+                                                                                     DiscardCategory__c = 'Manuale',
+                                                                                     Type__c='Aprire Variazione'));
                                 break;
                             }else if('Cessazione post accertamento'.equalsIgnoreCase(caseItem.Type)){
                                 findContract = true;
-                                newActivityToInsert.add(new wrts_prcgvr__Activity__c(Account__c=caseItem.AccountId, Case__c=caseItem.Id, ServicePoint__c=caseItem.ServicePoint__c, Type__c='Aprire Cessazione'));
+                                newActivityToInsert.add(new wrts_prcgvr__Activity__c(Account__c=caseItem.AccountId,
+                                                                                     Case__c=caseItem.Id, 
+                                                                                     ServicePoint__c=caseItem.ServicePoint__c,
+                                                                                     wrts_prcgvr__Status__c ='Aperta',
+                                                                                     DiscardCategory__c = 'Manuale',
+                                                                                     Type__c='Aprire Cessazione'));
                                 break;
                             }
                     }
