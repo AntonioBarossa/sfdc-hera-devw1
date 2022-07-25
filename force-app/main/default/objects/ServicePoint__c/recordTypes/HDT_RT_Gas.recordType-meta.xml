@@ -708,14 +708,14 @@
             <fullName>Elettronico</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>G1%2C6</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>G1%2C6 Pareti def%2E</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>G10</fullName>
             <default>false</default>
@@ -780,7 +780,7 @@
             <fullName>G1600 Pistoni rot%2E</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>G2</fullName>
             <default>false</default>
         </values>
@@ -791,7 +791,7 @@
         <values>
             <fullName>G2%2C5 pareti def%2E</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>G25</fullName>
             <default>false</default>
