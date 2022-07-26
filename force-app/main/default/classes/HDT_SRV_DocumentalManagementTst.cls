@@ -572,5 +572,58 @@ static void testgeneratePayloadEstrattoConto(){
             
         }
     }
-    
+
+    @isTest
+    static void logEmailForAccountStatementTst()
+    {
+        List<Account> accList = [SELECT Id FROM Account];
+        String formParams = '{"email": "testEmail@email.com"}';
+        Test.startTest();
+            HDT_SRV_DocumentalManagement.logEmailForAccountStatement(accList[0].Id, formParams);
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(formParams), 'Form params vuoto');
+    }
+    @isTest
+    static void createIntesaDocumentalActivityTst()
+    {
+        List<Order> orderList = [SELECT Id FROM Order];
+        HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest req = new HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest();
+        req.status = 'completed';
+        String transactionId = '109dkasodk01';
+        Test.startTest();
+            HDT_SRV_DocumentalManagement.createIntesaDocumentalActivity(orderList[0], req, transactionId);
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(transactionId), 'TransactionId vuoto');
+    }
+    @isTest
+    static void getTransactionId()
+    {
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_DocumentalMock());
+        Test.startTest();
+            String result = HDT_SRV_DocumentalManagement.getTransactionId('asdojiasod');
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(result), 'TransactionId vuoto');
+    }
+
+    public class HDT_WS_DocumentalMock implements HttpCalloutMock
+    {
+        
+        public HTTPResponse respond(HTTPRequest request){
+
+            HttpResponse response = new HttpResponse();
+            String bodyResponse;
+            Integer statusCode;
+
+            bodyResponse = '{"data": {"transactionId": "asdjjads"}}';
+            statusCode = 200;
+
+            response.setHeader('Content-Type', 'application/json');
+            response.setBody(bodyResponse);
+            response.setStatusCode(statusCode);
+            response.setStatus('OK');
+            return response;
+        }
+    }
+
 }
+

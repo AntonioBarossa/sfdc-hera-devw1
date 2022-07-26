@@ -59,7 +59,8 @@ const FIELDS = ['Case.ContactMobile',
 				'Case.InvoicingCountry__c',
                 'Case.InvoicingProvince__c',
                 'Case.Origin',
-                'Case.ContactId'];
+                'Case.ContactId',
+                'Case.Lead__c'];
 
 export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(LightningElement) {
     
@@ -297,7 +298,8 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                     },
                     sendMode:this.caseRecord.fields.SendMode__c.value,
                     signMode:this.caseRecord.fields.SignMode__c.value,
-                    contactId:this.caseRecord.fields.ContactId.value 
+                    contactId:this.caseRecord.fields.ContactId.value,
+                    leadId:this.caseRecord.fields.Lead__c.value
                 }
                 canale = this.caseRecord.fields.Origin.value;
                 var signMode = this.caseRecord.fields.SignMode__c.value;
