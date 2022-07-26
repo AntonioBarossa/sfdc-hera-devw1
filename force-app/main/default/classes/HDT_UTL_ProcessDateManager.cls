@@ -92,7 +92,10 @@ public with sharing class HDT_UTL_ProcessDateManager {
                             if(dataRipensamento != null && order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale' ){
 								if(dataRipensamento > Date.Today()){
 									dateSentToSii = dataRipensamento.addDays(1);
-								}else {
+								}else if(dataRipensamento < Date.Today()){
+									dateSentToSii = Date.today();
+								}
+								else {
 									dateSentToSii = dataRipensamento;
 								}
                             }else {
