@@ -418,11 +418,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Bonifico bancario</fullName>
+            <fullName>Bonifico</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>RID</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standard</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -583,6 +591,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>SupplySubtype__c</picklist>
+        <values>
+            <fullName>Altri usi</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Uso artigianale e commerciale</fullName>
             <default>false</default>
