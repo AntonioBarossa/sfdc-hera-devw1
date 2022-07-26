@@ -1,6 +1,7 @@
 import { LightningElement, api, track, wire } from "lwc";
 import getPeriods from "@salesforce/apex/HDT_LC_ActiveRepentant.getPeriods";
 import getTerms from "@salesforce/apex/HDT_LC_ActiveRepentant.getTerms";
+import getTables from "@salesforce/apex/HDT_LC_ActiveRepentant.getTables";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { MessageContext, subscribe, unsubscribe, APPLICATION_SCOPE} from "lightning/messageService";
 import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
@@ -22,9 +23,12 @@ export default class HdtActiveRepentant extends LightningElement {
     @track limitDateX;
     @track limitDateY;
     @track period;
+    @track termsAdministration;
+    @track cityData;//Comuni non affidatari
     skipCheck = false;
     disabled = false;
-    loading=true;
+    loading=0;
+    formLoading= true;
 
     @api dateDecorrenza;
     @api dateDichiarazione;
@@ -40,22 +44,30 @@ export default class HdtActiveRepentant extends LightningElement {
     @wire(MessageContext)
 	messageContext;
 
+    get showSpinner(){
+        return this.formLoading || this.loading==0;
+    }
+
     get isCase(){
         return this.objectApiName=="Case";
     }
 
     loadedForm(){
-        this.loading=false;
+        this.formLoading=false;
     }
 
     connectedCallback(){
-        this.subscribeMC();
-        const oldWrpStr = window.sessionStorage.getItem(this.sessionid);
-        if(this.sessionid && oldWrpStr){
-            try{
-                this.outputWrp = JSON.parse(oldWrpStr);
-            }catch(e){
-                console.log(e);
+        this.loading++;
+        this.getTablesConfig();
+        if(this.recordId){
+            this.subscribeMC();
+            const oldWrpStr = window.sessionStorage.getItem(this.sessionid);
+            if(this.sessionid && oldWrpStr){
+                try{
+                    this.outputWrp = JSON.parse(oldWrpStr);
+                }catch(e){
+                    console.log(e);
+                }
             }
         }
     }
@@ -124,10 +136,10 @@ export default class HdtActiveRepentant extends LightningElement {
     }
 
     @api startActiveRepentant(dateDecorrenza, dateDichiarazione) {
-
         if (dateDecorrenza && new Date(dateDecorrenza).getTime() <= new Date().getTime() && dateDichiarazione && new Date(dateDecorrenza).getTime() <= new Date(dateDichiarazione).getTime()) {
             this.dateDichiarazione = dateDichiarazione;
             this.dateDecorrenza = dateDecorrenza;
+            if(this.checkComuniNonAffidatari(new Date(this.dateDecorrenza))) return;
             this.handleRepentant();
         } else {
             this.showMessage(
@@ -140,20 +152,49 @@ export default class HdtActiveRepentant extends LightningElement {
         }
     }
 
-    async handleRepentant() {
+    checkComuniNonAffidatari(dateDecorrenza){
+        if(this.cityData?.TARIManagingStartDate__c && this.cityData?.TARIManagingEndDate__c && (dateDecorrenza.getTime() < new Date(this.cityData?.TARIManagingStartDate__c).getTime() || dateDecorrenza.getTime() > new Date(this.cityData?.TARIManagingEndDate__c).getTime())){
+            this.showMessage(
+                "Attenzione!",
+                this.cityData.CityNotManagedAlert__c,
+                "error"
+            );
+            this.dateDecorrenza=null;
+            this.disabled=false;
+            return true;
+        }
+        return false;
+    }
+
+    async getTablesConfig(){
+        let wrp = await getTables({ comune: this.city, sottotipo: this.sottotipo });
+        let {termsTable : data, termsAdministration: terms, cityData} = wrp;
+        this.cityData=cityData?.[0];
+        this.loading--;
+        if (data?.length) {
+            console.log("data " + data[0].Id);
+            this.termsAdministration= terms;
+            this.period = data[0];
+        }else{
+            console.log("#getTablesConfig -> Data not found! " + JSON.stringify(error));
+            this.skipCheck=true;
+        }
+    }
+
+    handleRepentant() {
         console.log("order ->" + this.city);
         console.log("Richiesta Subentro ");
 
         try{
-            let data = await getPeriods({ comune: this.city, sottotipo: this.sottotipo });
-            let terms = await getTerms({ comune: this.city });
-            if (data?.length) {
+            //let data = await getPeriods({ comune: this.city, sottotipo: this.sottotipo });
+            //let terms = await getTerms({ comune: this.city });
+            //let wrp = await getTables({ comune: this.city, sottotipo: this.sottotipo });
+            //let {termsTable : data, termsAdministration: terms, cityData} = wrp;
+            //this.cityData=cityData?.[0];
+            //if(this.checkComuniNonAffidatari(new Date(this.dateDecorrenza))) return;
+            if (this.period) {
                 this.skipCheck=false;
-                console.log("data " + data[0].Id);
-                this.period = data[0];
-                this.checkData(data[0], terms);
-            }else{
-                throw 'Data not found!';
+                this.checkData(this.period, this.termsAdministration);
             }
         }catch(error) {
             console.log("#ErrorGetPeriods -> " + JSON.stringify(error));
@@ -238,7 +279,7 @@ export default class HdtActiveRepentant extends LightningElement {
     }
 
     showMessage(title, message, variant, mode) {
-        this.loading = false;
+        //this.loading=0;
         const toastErrorMessage = new ShowToastEvent({
             title: title,
             message: message,
