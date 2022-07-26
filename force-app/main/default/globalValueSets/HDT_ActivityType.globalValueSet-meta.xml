@@ -811,6 +811,11 @@
         <label>Inviare Legge 80</label>
     </customValue>
     <customValue>
+        <fullName>Vendita - Contratti</fullName>
+        <default>false</default>
+        <label>Vendita - Contratti</label>
+    </customValue>
+    <customValue>
         <fullName>Segnalazioni VAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
