@@ -465,6 +465,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
         }
 
+        /**2022-07-14 903758C --> Valorizzazione CF se PIVA valorizzata e CF Vuoto */
+        if( currentOrder.Account.VATNumber__c != null && String.isNotBlank(currentOrder.Account.VATNumber__c) && currentOrder.Account.FiscalCode__c == null)
+        {
+            orderToUpdate.CustomerFiscalCode__c = currentOrder.Account.VATNumber__c;
+        }
+
         orderSrv.updateRecord(orderToUpdate);
         if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
             HDT_LC_ChildOrderProcessDetails.createActivityAccise(orderToUpdate.FacilitationExcise__c,orderToUpdate.VATfacilitationFlag__c,orderToUpdate.id,orderToUpdate.accountid);
