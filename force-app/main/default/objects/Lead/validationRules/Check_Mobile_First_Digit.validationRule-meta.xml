@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Mobile_First_Digit</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF(ISBLANK(MobilePhone),false,IF(BEGINS(MobilePhone,&apos;3&apos;),false,true))</errorConditionFormula>
+    <errorMessage>Il numero di cellulare deve iniziare con il numero 3</errorMessage>
+</ValidationRule>
