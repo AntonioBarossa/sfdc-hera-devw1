@@ -252,6 +252,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
 									singleRecord.FulfillmentDateTo__c >= dateToFrom
 								){
 									order.EffectiveDate__c = singleRecord.ActivationDate__c;
+									order.AttributesCatalogDesc__c = 'Calcolata Data Order Gas il ' + Date.today() + 'con il seguente valore: ' + singleRecord.ActivationDate__c + ' Record utilizzato ' + singleRecord.Id;
                                     founded = true;
 								}else {
                                     founded = false; 
@@ -268,6 +269,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
 									singleRecord.FulfillmentDateTo__c >= 	dateToFrom
 								){
 									order.EffectiveDate__c = singleRecord.ActivationDate__c;
+									order.AttributesCatalogDesc__c = 'Calcolata Data Order Ele il ' + Date.today() + ' con il seguente valore: ' + singleRecord.ActivationDate__c + ' Record utilizzato ' + singleRecord.Id;
                                     founded = true;
 								}else {
                                     founded = false; 
