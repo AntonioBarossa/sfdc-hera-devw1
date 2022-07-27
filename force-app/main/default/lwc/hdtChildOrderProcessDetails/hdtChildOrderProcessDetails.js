@@ -544,6 +544,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         : this.availableSteps[currentSectionIndex + 2].step) 
         : this.availableSteps[currentSectionIndex + 1].step;
         this.isReading = currentSectionName === 'reading';
+
+        const sectionNextActions = this.pendingSteps[event.target.getAttribute('data-section-index')]?.nextActions;
+        if(sectionNextActions && sectionNextActions instanceof Function ){
+            if(sectionNextActions(event)) return;//Azioni automatiche da eseguire definite nel JSON del Wizard
+        }
         //EVERIS AGGIUNTA LOGICA PER SEZIONE AUTOLETTURA
         if(currentSectionName === 'reading'){
             let readingComponent = this.template.querySelector('c-hdt-self-reading');
@@ -602,32 +607,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 }
             }
             if(currentSectionName === 'processVariables'){
-            if(this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
-            {
-                this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
-                return;
-            }
-            }
-            if(currentSectionName === 'variabiliDiProcesso'){
-                let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
-                let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
-                //if(!this.isActiveRepentantPressed){
-                if(this.template.querySelector("c-hdt-active-repentant")?.validateDate(decorrenza, dichiarazione)){
-                    this.showMessage('Errore', 'Verificare il ravvedimento operoso prima di procedere', 'error');
+                if(this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
+                {
+                    this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
                     return;
                 }
-
-                if(!(this.closeAttachmentEvent?.buttonPressed && this.closeAttachmentEvent?.numberOfFiles)){
-                    if(this.template.querySelector("[data-id='DeliveredDocumentation__c']")?.value == 'Y'){
-                        this.showMessage('Errore', "Verificare gli allegati obbligatori per Documentazione da Contribuente", 'error');
-                        //this.closeAttachmentEvent.isValid = true;
-                        return;
-                    }else if(!this.closeAttachmentEvent?.buttonPressed){
-                        this.showMessage('Errore', "Verificare gli allegati obbligatori prima di procedere", 'error');
-                        return;
-                    }
-                }
-
             }
             if(currentSectionName === 'dettaglioImpianto'){
                 if( this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))

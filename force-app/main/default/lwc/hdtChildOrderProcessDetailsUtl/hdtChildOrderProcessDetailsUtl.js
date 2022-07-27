@@ -1,4 +1,4 @@
-    
+import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
     class fieldData{
         constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value, func) {
             this.label = label;
@@ -49,8 +49,29 @@
                 hasAllegatiObbligatori: true,
                 diffObjApi: 'Sale',
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente' || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
+                nextActions : () => 
+                    {
+                        let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
+                        let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
+                        //if(!this.isActiveRepentantPressed){
+                        if(this.template.querySelector("c-hdt-active-repentant")?.validateDate(decorrenza, dichiarazione)){
+                            this.showMessage('Errore', 'Verificare il ravvedimento operoso prima di procedere', 'error');
+                            return true;
+                        }
+        
+                        if(!(this.closeAttachmentEvent?.buttonPressed && this.closeAttachmentEvent?.numberOfFiles)){
+                            if(this.template.querySelector("[data-id='DeliveredDocumentation__c']")?.value == 'Y'){
+                                this.showMessage('Errore', "Verificare gli allegati obbligatori per Documentazione da Contribuente", 'error');
+                                //this.closeAttachmentEvent.isValid = true;
+                                return true;
+                            }else if(!this.closeAttachmentEvent?.buttonPressed){
+                                this.showMessage('Errore', "Verificare gli allegati obbligatori prima di procedere", 'error');
+                                return true;
+                            }
+                        }
+                    },
                 data:[
-                    new fieldData('Codice Punto','ServicePointCode__c',this.typeVisibility('both'),true, false, '', ''),
+                    new fieldData('Codice Punto','ServicePointCode__c',this.typeVisibility('both'),true, true, '', ''),
                     new fieldData('Servizio','CommodityFormula__c',this.typeVisibility('both'),true, false, '', ''),
                     new fieldData('Società di vendita','SalesCompany__c', this.typeVisibility('both'), false, false, '',''),
                     new fieldData('Impianto SAP','SAPImplantCode__c', this.typeVisibility('both'), false, false,'',''),
@@ -86,6 +107,11 @@
                 diffObjApi: 'Account',
                 diffRecordId: this.order.AccountId,
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente' || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
+                nextActions: () => 
+                    {
+                        const famNumb =this.template.querySelector("[data-id='FamilyNumber__c']");
+                        if(famNumb) this.sectionDataToSubmit["FamilyNumber__c"]=this.template.querySelector("[data-id='FamilyNumber__c']")?.value;
+                    },
                 data:[
                     new fieldData('Qualità','SubscriberType__c',this.typeVisibility('both'),true, false, '', '', 
                         function(event){
@@ -104,7 +130,8 @@
                     new fieldData('Cognome','CustomerLastName__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Luogo di nascita','BirthPlace__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Data di nascita','BirthDate__c', this.typeVisibility('both'), true, false,'',''),
-                    new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c!=='TATND00001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', true, false,'','')
+                    new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c==='TATUDNR001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', true, tariNonResidenti[this.order.ServicePoint__r.SupplyCity__c.toUpperCase()]?.readOnly,'', tariNonResidenti[this.order.ServicePoint__r.SupplyCity__c.toUpperCase()]?.getResident(this.order.Surface__c)?.toString()),
+                    new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c==='TATUDRES01' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', true, false,'', '')                    
                 ]
             },
             {
