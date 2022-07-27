@@ -8,7 +8,7 @@ class comune {
 
 export const cities = [
     new comune("BORGO TOSSIGNANO", false, ()=>2),
-    new comune("MORINO", false, ()=>2),
+    new comune("MORINO", false, ()=>2),//test Only, rimuovere
     new comune("MODENA", false, (mq) => {
         if (mq <= 50)   return 1;
         if (mq <= 80)   return 2;
