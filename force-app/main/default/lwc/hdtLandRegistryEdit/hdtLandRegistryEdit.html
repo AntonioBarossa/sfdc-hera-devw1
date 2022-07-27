@@ -14,11 +14,11 @@
                                     onsubmit={handleFormSubmit}
                                     onsuccess={handleFormSuccess}
                                     onerror={handleFormError}>
-            
+
             <lightning-input-field class="slds-hide" field-name="RegistryCategory__c"></lightning-input-field>         
             <lightning-input-field class="slds-hide" field-name="LegalCity__c"></lightning-input-field>         
             <lightning-input-field class="slds-hide" field-name="RegistryCity__c"></lightning-input-field>
-
+            
             <lightning-layout multiple-rows>
 
                 <lightning-layout-item size="4" padding="around-medium">
@@ -103,7 +103,7 @@
 
                 <lightning-layout-item size="4" padding="around-medium">
                     <lightning-input-field variant="label-stacked" disabled value={servicePointId} field-name="ServicePoint__c"></lightning-input-field>
-                </lightning-layout-item>
+                </lightning-layout-item> 
 
                 <lightning-layout-item size="12" padding="around-medium">
                     <lightning-layout horizontal-align="end">
@@ -128,7 +128,8 @@
                         </template>
                     </lightning-layout>
                 </lightning-layout-item>
-            </lightning-layout>    
+            </lightning-layout>            
+            
         </lightning-record-edit-form>
     <!-- </template> -->
 

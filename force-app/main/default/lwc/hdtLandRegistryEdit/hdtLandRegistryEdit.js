@@ -7,7 +7,7 @@ import LNDRGS_OBJ from '@salesforce/schema/LandRegistry__c';
 import getCadastralCategories from '@salesforce/apex/HDT_UTL_LandRegistry.getCadastralCategories';
 import getCities from '@salesforce/apex/HDT_UTL_LandRegistry.getCities';
 
-const RT_NAME = 'Dati Catastali TARI';
+const RT_NAME = 'Dati Catastali Pratica TARI';
 const FORM_LOAD_TO_DO = 'TO_DO';
 const FORM_LOAD_ALMOST_DONE = 'ALMOST_DONE';
 const FORM_LOAD_DONE = 'DONE';
@@ -26,6 +26,8 @@ export default class HdtLandRegistryEdit extends LightningElement {
             this._recordId = newValue;
         }
     }
+    @api orderId;
+    @api caseId;
     @api servicePointId;
     @api required;
     @api readonly;
@@ -187,6 +189,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
             this.modify = false;
             if(event.detail.records[this._recordId]){
                 this.disableElimina = false;
+                console.log("RegistryCity__c "+event.detail.records[this._recordId].fields.RegistryCity__c?.value);
                 this.registryCityValue = event.detail.records[this._recordId].fields.RegistryCity__c?.value;
                 this.registryCityCodeValue = event.detail.records[this._recordId].fields.RegistryCityCode__c?.value;
                 this.legalCityValue = event.detail.records[this._recordId].fields.LegalCity__c?.value;
@@ -237,6 +240,8 @@ export default class HdtLandRegistryEdit extends LightningElement {
         event.detail.fields.LegalCity__c = this.legalCityValue;
         event.detail.fields.RegistryCategory__c = this.cadastralCategoryValue;
         event.detail.fields.Status__c = "Bozza";
+        event.detail.fields.Case__c = this.caseId;
+        event.detail.fields.Order__c = this.orderId;
         this.template.querySelector('lightning-record-edit-form').submit(event.detail.fields);
         this.disableSalva=true;
         this.showSpinner = true;
