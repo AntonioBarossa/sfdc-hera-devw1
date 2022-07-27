@@ -30,7 +30,8 @@ public class HDT_BA_InvioNumerazioniTst {
             
             
             List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(50,true);
-                
+            leads[0].ContactDate__c = Datetime.now();
+            update leads[0];
                 
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
