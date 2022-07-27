@@ -553,20 +553,17 @@
     <customValue>
         <fullName>HC_CRM_SIND_LEMURA</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>HC_CRM_SIND_LEMURA</label>
-    </customValue>
-    <customValue>
-        <fullName>HC_CRM_SIND_LAMI</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>HC_CRM_SIND_LAMI</label>
     </customValue>
     <customValue>
         <fullName>HC_CRM_SIND_LEONI</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>HC_CRM_SIND_LEONI</label>
+    </customValue>
+    <customValue>
+        <fullName>HC_CRM_SIND_LAMI</fullName>
+        <default>false</default>
+        <label>HC_CRM_SIND_LAMI</label>
     </customValue>
     <description>Gruppo creatore dell&apos; utente</description>
     <masterLabel>Gruppo Creatore</masterLabel>
