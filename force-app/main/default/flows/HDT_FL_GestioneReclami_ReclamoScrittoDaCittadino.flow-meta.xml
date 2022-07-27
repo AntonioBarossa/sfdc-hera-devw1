@@ -504,18 +504,6 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>addContentDocument</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>contentDocumentLabel</name>
-                <value>
-                    <stringValue>Aggiungi Documento Delegato (Se Necessario)</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>nextStep</name>
                 <value>
                     <stringValue>NEXT</stringValue>
