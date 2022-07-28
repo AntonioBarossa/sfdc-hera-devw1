@@ -94,18 +94,34 @@ public with sharing class HDT_UTL_ActivityCloseActions {
     private static Map<String,List<wrts_prcgvr__Activity__c>> getRelatedSObjects(List<wrts_prcgvr__Activity__c> newTriggerList,  Map<Id,SObject> oldTriggerMap){
         Map<Id,Id> caseToActivity = new Map<Id,Id>();
         Map<Id,Id> orderToActivity = new Map<Id,Id>();
+        List<Id> allActivity = new List<Id>();
         for (wrts_prcgvr__Activity__c activity : newTriggerList){
             wrts_prcgvr__Activity__c oldActivity = (wrts_prcgvr__Activity__c)oldTriggerMap.get(activity.Id);
             if ('Chiusa'.equalsIgnoreCase(activity.wrts_prcgvr__Status__c) && !activity.wrts_prcgvr__Status__c.equalsIgnoreCase(oldActivity.wrts_prcgvr__Status__c)){
-                if(activity.Case__c!= null)  caseToActivity.put(activity.Case__c, activity.Id);
-                if(activity.Order__c!= null)  orderToActivity.put(activity.Order__c, activity.Id);
+                if(activity.Case__c!= null)  {
+                    caseToActivity.put(activity.Case__c, activity.Id);
+                    allActivity.add(activity.Id);
+                }
+                if(activity.Order__c!= null)  {
+                    orderToActivity.put(activity.Order__c, activity.Id);
+                    allActivity.add(activity.Id);
+                }
             }
         }
 
         if (caseToActivity.isEmpty() && orderToActivity.isEmpty())    return new Map<String,List<wrts_prcgvr__Activity__c>>();
         Map<String,List<wrts_prcgvr__Activity__c>> result = new Map<String,List<wrts_prcgvr__Activity__c>>();
-        result.put('Related Cases',[SELECT Case__r.Id, Case__r.Type, Case__r.Phase__c, Case__r.RelatedCase__c, Case__r.PhaseStory__c, wrts_prcgvr__ActivityTemplate__r.Name FROM wrts_prcgvr__Activity__c WHERE Id IN :caseToActivity.values()  WITH Security_Enforced]);
-        result.put('Related Orders',[SELECT Order__r.Id, Order__r.Type, Order__r.Phase__c, Order__r.PhaseStory__c, wrts_prcgvr__ActivityTemplate__r.Name FROM wrts_prcgvr__Activity__c WHERE Id IN :caseToActivity.values()  WITH Security_Enforced]);
+        List<wrts_prcgvr__Activity__c> activities = [SELECT Case__r.Id, Case__r.Type, Case__r.Phase__c, Case__r.RelatedCase__c, Case__r.PhaseStory__c, Order__r.Id, Order__r.Type, Order__r.Phase__c, Order__r.PhaseStory__c, wrts_prcgvr__ActivityTemplate__r.Name FROM wrts_prcgvr__Activity__c WHERE Id IN :allActivity  WITH Security_Enforced];
+        List<wrts_prcgvr__Activity__c> caseActivities  = new List<wrts_prcgvr__Activity__c>();
+        List<wrts_prcgvr__Activity__c> orderActivities = new List<wrts_prcgvr__Activity__c>();
+        
+        for(wrts_prcgvr__Activity__c act :activities){
+            if(caseToActivity.values().contains(act.Id))  caseActivities.add(act);
+            if(orderToActivity.values().contains(act.Id)) orderActivities.add(act);
+        }
+
+        result.put('Related Cases',  caseActivities);
+        result.put('Related Orders', orderActivities);
         return result;
     }
 
