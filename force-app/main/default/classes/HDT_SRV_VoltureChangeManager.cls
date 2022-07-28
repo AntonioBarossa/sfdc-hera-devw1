@@ -147,6 +147,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
                 activity.OpeningNote__c = (String)ammissibilityCheckMap.get('note');
                 activity.wrts_prcgvr__Description__c = (String)ammissibilityCheckMap.get('message');
                 activity.Order__c = currentOrder.Id;
+                activity.wrts_prcgvr__IsRequired__c = true;
                 HDT_UTL_DatabaseService.insertSObject(activity);
             }
         }

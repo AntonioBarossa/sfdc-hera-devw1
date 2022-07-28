@@ -265,7 +265,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 !newValue.equalsIgnoreCase(oldValue) && 
                 newOrder.ParentOrder__c == null && 
                 newOrder.Phase__c == 'Documentazione Gestita' &&
-                !newOrder.Channel__c.equalsIgnoreCase('Teleselling Outbound'))
+                (!newOrder.Channel__c.equalsIgnoreCase('Teleselling Outbound') ||
+                newOrder.Channel__c.equalsIgnoreCase('Teleselling Outbound') && newOrder.SignatureMethod__c.equalsIgnoreCase('Contratto già firmato'))
+                )
             || (newOrder.ParentOrder__c == null && (oldDate == null && newDate != null) || (oldDate != null && newDate != null && oldDate != newDate))
             ){
                 orderParentIds.add(newOrder.Id);
