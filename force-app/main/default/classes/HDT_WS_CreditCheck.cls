@@ -65,6 +65,7 @@ public class HDT_WS_CreditCheck {
                 orderData.orderId = req.crmId;
                 orderData.outcomeDescription =  'KO Tecnico - ' + res.exceptionMessage;
                 orderData.outcome = 'KO';
+                HDT_UTL_CreditCheck.insertCalloutLog(JSON.serialize(req), JSON.serialize(res));
             }else{
                 //Gestione Credit Check In Progress 
                 HDT_UTL_DatabaseService.updateSObject(new Order(Id = req.crmId, CreditCheckInProgress__c = true));
