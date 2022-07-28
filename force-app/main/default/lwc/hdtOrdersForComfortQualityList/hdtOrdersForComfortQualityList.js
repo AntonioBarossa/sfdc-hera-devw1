@@ -64,11 +64,11 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
     }
 
     setTableData(isOperationRunning = false){
-        this.loading = true;
         getTableData({activityId: this.activityId}).then(data =>{
 
             console.log('getTableData: ' + JSON.stringify(data));
             console.log('Size Data: ' + data.length);
+            console.log('is operation running: ' + isOperationRunning);
             this.loading = isOperationRunning;
             if(data.length > 0){
                 this.ordersList = data;
@@ -262,7 +262,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
             }
         }
         this.showTable=false;
-        this.setTableData(true);
+        this.setTableData(false);
     }
 
     handleDialogResponse(event){
