@@ -64,6 +64,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
     }
 
     setTableData(isOperationRunning = false){
+        this.loading = true;
         getTableData({activityId: this.activityId}).then(data =>{
 
             console.log('getTableData: ' + JSON.stringify(data));
