@@ -182,6 +182,13 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPreAttachments.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>updatePostAttachment</targetReference>
         </connector>
@@ -292,7 +299,6 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>subFlowAnnullamento_0</targetReference>
             </connector>
             <label>Annullamento</label>

@@ -5,7 +5,7 @@
         <name>Assegna_Id_Contenitore</name>
         <label>Assegna Id Contenitore</label>
         <locationX>50</locationX>
-        <locationY>1934</locationY>
+        <locationY>2270</locationY>
         <assignmentItems>
             <assignToReference>IdContenitore</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>Assegna_Id_Contenitore_0</name>
         <label>Assegna Id Contenitore</label>
         <locationX>314</locationX>
-        <locationY>1814</locationY>
+        <locationY>2150</locationY>
         <assignmentItems>
             <assignToReference>IdContenitore</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +37,7 @@
         <name>Assegna_Process_Type</name>
         <label>Assegna Process Type</label>
         <locationX>916</locationX>
-        <locationY>3134</locationY>
+        <locationY>3470</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -53,7 +53,7 @@
         <name>Assegna_Process_Type_0</name>
         <label>Assegna Process Type</label>
         <locationX>1444</locationX>
-        <locationY>3014</locationY>
+        <locationY>3350</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -69,7 +69,7 @@
         <name>Assegna_Process_Type_0_0</name>
         <label>Assegna Process Type</label>
         <locationX>1180</locationX>
-        <locationY>3014</locationY>
+        <locationY>3350</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -82,10 +82,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Process_Type_0_0_0</name>
+        <label>Assegna Process Type</label>
+        <locationX>1543</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Riclassificazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Controllo_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Process_Type_0_0_0_0</name>
         <label>Assegna Process Type</label>
         <locationX>652</locationX>
-        <locationY>3134</locationY>
+        <locationY>3470</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -98,10 +114,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Process_Type_0_0_0_0_0</name>
+        <label>Assegna Process Type</label>
+        <locationX>1279</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>RiclassificazioneAmbiente</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Controllo_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaCollection</name>
         <label>AssegnaCollection</label>
         <locationX>182</locationX>
-        <locationY>2270</locationY>
+        <locationY>2606</locationY>
         <assignmentItems>
             <assignToReference>CaseCollection</assignToReference>
             <operator>Add</operator>
@@ -124,7 +156,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>982</locationX>
-        <locationY>758</locationY>
+        <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.CorrectionRight__c</assignToReference>
             <operator>Assign</operator>
@@ -140,7 +172,7 @@
         <name>AssegnaValori_1</name>
         <label>AssegnaValori</label>
         <locationX>182</locationX>
-        <locationY>2150</locationY>
+        <locationY>2486</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.ParentId</assignToReference>
             <operator>Assign</operator>
@@ -162,8 +194,8 @@
     <assignments>
         <name>AssegnaValori_2</name>
         <label>AssegnaValori</label>
-        <locationX>828</locationX>
-        <locationY>4406</locationY>
+        <locationX>960</locationX>
+        <locationY>4598</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -258,7 +290,7 @@
         <name>Rimuovi_Link_Reiterazione_0</name>
         <label>Rimuovi Link Reiterazione</label>
         <locationX>1370</locationX>
-        <locationY>1094</locationY>
+        <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.RelatedCase__c</assignToReference>
             <operator>Assign</operator>
@@ -281,7 +313,7 @@
         <name>Rimuovi_Link_Reiterazione_0_0</name>
         <label>Rimuovi Link Reiterazione</label>
         <locationX>842</locationX>
-        <locationY>1454</locationY>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.RelatedCase__c</assignToReference>
             <operator>Assign</operator>
@@ -324,8 +356,8 @@
     <decisions>
         <name>Avanzamento</name>
         <label>Avanzamento</label>
-        <locationX>1389</locationX>
-        <locationY>398</locationY>
+        <locationX>1411</locationX>
+        <locationY>734</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione</targetReference>
         </defaultConnector>
@@ -357,7 +389,7 @@
         <name>Avanzamento_0</name>
         <label>Avanzamento</label>
         <locationX>858</locationX>
-        <locationY>1214</locationY>
+        <locationY>1550</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0</targetReference>
         </defaultConnector>
@@ -389,7 +421,7 @@
         <name>Avanzamento_0_0</name>
         <label>Avanzamento</label>
         <locationX>1114</locationX>
-        <locationY>3566</locationY>
+        <locationY>3902</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0_0_0</targetReference>
         </defaultConnector>
@@ -420,10 +452,10 @@
     <decisions>
         <name>Blocco_Sollecito_0</name>
         <label>Blocco Sollecito? (Fixare al completamento della build DM)</label>
-        <locationX>828</locationX>
-        <locationY>3590</locationY>
+        <locationX>960</locationX>
+        <locationY>4142</locationY>
         <defaultConnector>
-            <targetReference>Get_Activity</targetReference>
+            <targetReference>AssegnaValori_2</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Blocco</defaultConnectorLabel>
         <rules>
@@ -446,7 +478,7 @@
         <name>Case_Contenitore_esiste</name>
         <label>Case Contenitore esiste?</label>
         <locationX>182</locationX>
-        <locationY>1694</locationY>
+        <locationY>2030</locationY>
         <defaultConnector>
             <targetReference>Assegna_Id_Contenitore_0</targetReference>
         </defaultConnector>
@@ -478,7 +510,7 @@
         <name>Case_Vecchio_Scaduto</name>
         <label>Case Vecchio Scaduto?</label>
         <locationX>380</locationX>
-        <locationY>1454</locationY>
+        <locationY>1790</locationY>
         <defaultConnector>
             <targetReference>AggiornaCase_0_0</targetReference>
         </defaultConnector>
@@ -503,7 +535,7 @@
         <name>checkRecordType</name>
         <label>checkRecordType</label>
         <locationX>784</locationX>
-        <locationY>3014</locationY>
+        <locationY>3350</locationY>
         <defaultConnector>
             <targetReference>Assegna_Process_Type</targetReference>
         </defaultConnector>
@@ -525,10 +557,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>checkRecordType_0</name>
+        <label>checkRecordType</label>
+        <locationX>1411</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Process_Type_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>processTari_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCaseAggiornato.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_ReclamiScrittiTARI</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Process_Type_0_0_0_0_0</targetReference>
+            </connector>
+            <label>processTari</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Diritto_Rettifica</name>
         <label>Diritto Rettifica?</label>
         <locationX>1114</locationX>
-        <locationY>638</locationY>
+        <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Presenza_Reiterazione</targetReference>
         </defaultConnector>
@@ -553,7 +610,7 @@
         <name>Presenza_Reiterazione</name>
         <label>Presenza Reiterazione?</label>
         <locationX>1114</locationX>
-        <locationY>974</locationY>
+        <locationY>1310</locationY>
         <defaultConnector>
             <targetReference>Rimuovi_Link_Reiterazione_0</targetReference>
         </defaultConnector>
@@ -578,7 +635,7 @@
         <name>Reclamo_Scritto_Richiesta_Info</name>
         <label>Reclamo Scritto/Richiesta Info?</label>
         <locationX>1114</locationX>
-        <locationY>2894</locationY>
+        <locationY>3230</locationY>
         <defaultConnector>
             <targetReference>Assegna_Process_Type_0</targetReference>
         </defaultConnector>
@@ -618,7 +675,7 @@
         <name>Reiterazione_Confermata</name>
         <label>Reiterazione Confermata?</label>
         <locationX>611</locationX>
-        <locationY>1334</locationY>
+        <locationY>1670</locationY>
         <defaultConnector>
             <targetReference>Rimuovi_Link_Reiterazione_0_0</targetReference>
         </defaultConnector>
@@ -709,8 +766,8 @@
     <recordCreates>
         <name>Crea_Activity_Blocco_Sollecito</name>
         <label>Crea Activity Blocco Sollecito</label>
-        <locationX>696</locationX>
-        <locationY>3830</locationY>
+        <locationX>828</locationX>
+        <locationY>4382</locationY>
         <connector>
             <targetReference>Get_Activity</targetReference>
         </connector>
@@ -745,7 +802,7 @@
         <name>Crea_Case_Contenitore_0</name>
         <label>Crea Case Contenitore</label>
         <locationX>50</locationX>
-        <locationY>1814</locationY>
+        <locationY>2150</locationY>
         <connector>
             <targetReference>Assegna_Id_Contenitore</targetReference>
         </connector>
@@ -861,11 +918,11 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>1389</locationX>
+        <locationX>1411</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Controllo_Classificazione</targetReference>
+            <targetReference>Controllo_Classificazione</targetReference>       
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -882,8 +939,8 @@
     <recordLookups>
         <name>GetActivityBloccoSollecito</name>
         <label>Get Activity Blocco Sollecito</label>
-        <locationX>696</locationX>
-        <locationY>3710</locationY>
+        <locationX>828</locationX>
+        <locationY>4262</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Activity_Blocco_Sollecito</targetReference>
@@ -910,8 +967,8 @@
     <recordLookups>
         <name>GetCaseAggiornatoSecondaClassificazione</name>
         <label>GetCaseAggiornatoSecondaClassificazione</label>
-        <locationX>828</locationX>
-        <locationY>3470</locationY>
+        <locationX>960</locationX>
+        <locationY>4022</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Blocco_Sollecito_0</targetReference>
@@ -932,7 +989,7 @@
         <name>getCaseReiterato</name>
         <label>getCaseReiterato</label>
         <locationX>182</locationX>
-        <locationY>1574</locationY>
+        <locationY>1910</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_Contenitore_esiste</targetReference>
@@ -953,7 +1010,7 @@
         <name>GetInputCaseAggiornato</name>
         <label>GetInputCaseAggiornato</label>
         <locationX>1114</locationX>
-        <locationY>518</locationY>
+        <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Diritto_Rettifica</targetReference>
@@ -986,15 +1043,15 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>828</locationX>
-        <locationY>4526</locationY>
+        <locationX>960</locationX>
+        <locationY>4718</locationY>
         <inputReference>GetCaseAggiornatoSecondaClassificazione</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>842</locationX>
-        <locationY>1574</locationY>
+        <locationY>1910</locationY>
         <connector>
             <targetReference>Reclamo_Scritto_Richiesta_Info</targetReference>
         </connector>
@@ -1004,7 +1061,7 @@
         <name>AggiornaCase_0</name>
         <label>AggiornaCase</label>
         <locationX>1370</locationX>
-        <locationY>1214</locationY>
+        <locationY>1550</locationY>
         <connector>
             <targetReference>Reclamo_Scritto_Richiesta_Info</targetReference>
         </connector>
@@ -1014,7 +1071,7 @@
         <name>AggiornaCase_0_0</name>
         <label>AggiornaCase</label>
         <locationX>578</locationX>
-        <locationY>1574</locationY>
+        <locationY>1910</locationY>
         <connector>
             <targetReference>Inserimento_Sollecito_Vecchio_Reclamo</targetReference>
         </connector>
@@ -1024,7 +1081,7 @@
         <name>AggiornaCaseCollection</name>
         <label>AggiornaCaseCollection</label>
         <locationX>182</locationX>
-        <locationY>2390</locationY>
+        <locationY>2726</locationY>
         <connector>
             <targetReference>Reclamo_Scritto_Richiesta_Info</targetReference>
         </connector>
@@ -1033,8 +1090,8 @@
     <screens>
         <name>Controllo_Classificazione</name>
         <label>Controllo Classificazione</label>
-        <locationX>1389</locationX>
-        <locationY>278</locationY>
+        <locationX>1411</locationX>
+        <locationY>614</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1077,7 +1134,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Riclassificazione</stringValue>
+                    <elementReference>ProcessType</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1127,7 +1184,7 @@
         <name>Inserimento_Sollecito_Vecchio_Reclamo</name>
         <label>Inserimento Sollecito Vecchio Reclamo</label>
         <locationX>578</locationX>
-        <locationY>1694</locationY>
+        <locationY>2030</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1190,7 +1247,7 @@
         <name>Screen_Conferma_Reiterazione</name>
         <label>Screen Conferma Reiterazione</label>
         <locationX>858</locationX>
-        <locationY>1094</locationY>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1327,7 +1384,7 @@
         <name>Screen_Seconda_Classificazione</name>
         <label>Screen Seconda Classificazione</label>
         <locationX>1114</locationX>
-        <locationY>3446</locationY>
+        <locationY>3782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1429,7 +1486,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1263</locationX>
+        <locationX>1285</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
@@ -1439,8 +1496,8 @@
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>1664</locationX>
-        <locationY>518</locationY>
+        <locationX>1708</locationX>
+        <locationY>854</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1465,7 +1522,7 @@
         <name>Annulla_Prestazione_0</name>
         <label>Annulla Prestazione</label>
         <locationX>1106</locationX>
-        <locationY>1334</locationY>
+        <locationY>1670</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1490,7 +1547,7 @@
         <name>Annulla_Prestazione_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>578</locationX>
-        <locationY>1814</locationY>
+        <locationY>2150</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1514,8 +1571,8 @@
     <subflows>
         <name>Annulla_Prestazione_0_0_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>1400</locationX>
-        <locationY>3470</locationY>
+        <locationX>1268</locationX>
+        <locationY>4022</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1580,6 +1637,13 @@
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ParentRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
