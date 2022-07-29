@@ -157,7 +157,7 @@
             console.log('# CaseId is NOT NULL');
             //{ name : "InputCase", type : "SObject", value: {"Id" : caseId}}
             inputVariables.push({ name : 'InputCase', type : 'String', value : caseId });
-            if(processType === 'Annullamento prestazione' || processType === 'Ripristina fase' || processType === 'Ripensamento'){
+            if(processType === 'Annullamento prestazione' || processType === 'Ripristina fase' || processType === 'Ripensamento' || processType === 'Annullamento comunicazione pagamenti' || processType ==='Annullamento doppi pagamenti' || processType ==='Annullamento storno rateizzazione'){
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
             }
 

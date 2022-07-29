@@ -153,7 +153,7 @@
             //{ name : "InputCase", type : "SObject", value: {"Id" : caseId}}
             inputVariables.push({ name : 'InputCase', type : 'String', value : caseId });
             if(processType === 'Annullamento prestazione' || processType === 'Ripristina fase' || processType === 'Ripensamento'
-                || processType === 'KO Definitivo' || processType === 'KO Forzato' || processType === 'KO Risolto'){
+                || processType === 'KO Definitivo' || processType === 'KO Forzato' || processType === 'KO Risolto' || processType === 'Annullamento comunicazione pagamenti' || processType ==='Annullamento doppi pagamenti' || processType ==='Annullamento storno rateizzazione'){
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
                 //Gestione Risottomissione Annullamento
                 if (discardRework !== undefined){
