@@ -154,7 +154,11 @@ public inherited sharing class HDT_QR_OrderItem {
             VASBillingMode__c,
             SBQQ__QuoteLine__r.SBQQ__RequiredBy__c,
             SBQQ__QuoteLine__r.ServicePointLinkItem__r.ServicePoint__c,
-            DelayEffectiveDate__c
+            DelayEffectiveDate__c,
+            Product2.IntegratedSAP__c,
+            Product2.ApprovalType__c,
+            Surface__c,
+            MonthsOccupYear__c
             FROM 
             OrderItem 
             WHERE OrderId = :orderId
