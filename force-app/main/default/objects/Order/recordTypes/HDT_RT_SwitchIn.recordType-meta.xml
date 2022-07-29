@@ -2197,6 +2197,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Errore invio a DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
             <default>false</default>
         </values>
