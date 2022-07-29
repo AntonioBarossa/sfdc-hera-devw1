@@ -1,45 +1,25 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api} from 'lwc';
 import callSap from '@salesforce/apexContinuation/HDT_LC_AccountDataEnrichment.startRequest';
 import getTableConfig from '@salesforce/apex/HDT_LC_AccountDataEnrichment.getTableConfig';
 
-export default class HdtAccountDataEnrichment extends LightningElement {
+export default class HdtSocialBonusWsTable extends LightningElement {
     data = [];
     columns;
     tableTitle;
     iconName;
-    height1;
-
-    showSecondTable;
-    data2 = [];
-    columns2;
-    tableTitle2;
-    iconName2;
-    height2;
+    height;
 
     showError = false;
     showErrorMessage = '';
     showSpinner = true;
-    
-    //defaultSortDirection = 'desc';
     sortDirection = 'desc';
     sortedBy;
-    //asc = true;
 
     @api recordId;
     @api type;
-    @api relatedToId;
-
-    get showSocialBonusButton(){
-        return this.type === 'socialBonus';
-    }
 
     connectedCallback(){
-        console.log('--------------');
-        console.log('### hdtAccountDataEnrichment ###');
-        console.log('>>> recordId: ' + this.recordId);
-        console.log('>>> type: ' + this.type);
-        console.log('>>> relatedToId: ' + this.relatedToId);
-        console.log('--------------');
+        console.log('# type: ' + this.type);
         this.getConfiguration();
         this.backendCall();
     }
@@ -50,37 +30,14 @@ export default class HdtAccountDataEnrichment extends LightningElement {
         getTableConfig({recordId: this.recordId, type: this.type})
 
         .then(result => {
-
             console.log('# getTableConfig #');
- 
-            if(this.type == 'cmor'){
-                this.showSecondTable = true;
-                this.tableTitle = result.tables[0].tableTitle;
-                this.iconName = result.tables[0].iconName;
-                this.columns = result.tables[0].columns;
-                this.height1 = 'topTable';
-
-                this.tableTitle2 = result.tables[1].tableTitle;
-                this.iconName2 = result.tables[1].iconName;
-                this.columns2 = result.tables[1].columns;
-                this.height2 = 'bottomTable';
-            } else if(this.type == 'socialBonus') {
-                this.tableTitle = result.tables[0].tableTitle;
-                this.iconName = result.tables[0].iconName;
-                this.columns = result.tables[0].columns;
-                this.height1 = 'topTable';
-            } else {
-                this.tableTitle = result.tables[0].tableTitle;
-                this.iconName = result.tables[0].iconName;
-                this.columns = result.tables[0].columns;
-                this.height1 = 'singleTable';
-            } 
-
-
+            this.tableTitle = result.tables[0].tableTitle;
+            this.iconName = result.tables[0].iconName;
+            this.columns = result.tables[0].columns;
+            this.height = 'singleTable';
         }).catch(error => {
             console.log('# error -> ' + error);
             this.showError = true;
-            //{"status":500,"body":{"message":"No Customer Code!"},"headers":{}}
             this.showErrorMessage = error.body.message;
             this.showSpinner = false;
         });
@@ -102,24 +59,13 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                 this.showErrorMessage = obj.errorDetails[0].message;
                 this.showSpinner = false;            
             } else {
-                if(this.type != 'cmor'){
-                    this.data = obj.data.posizioni;
-                } else {
-                    this.showSecondTable = true;
-                    this.data = obj.data.venditoreEntrante;
-                    this.data2 = obj.data.venditoreUscente;
-                }
+                this.data = obj.data;
             }
 
             this.showSpinner = false;
             
         }).catch(error => {
-            //var obj = JSON.parse(error.body.message);
             this.showError = true;
-            //var s = '';
-            //obj.errorDetails.forEach(element => {
-            //    s += element.code + ': ' + element.message;
-            //});
             this.showErrorMessage = error.body.message;
             this.showSpinner = false;
         });
@@ -202,9 +148,4 @@ export default class HdtAccountDataEnrichment extends LightningElement {
             console.log(e);
         }
     }
-
-    openKnowledgeArticle(){
-        console.log('apertura articolo knowledge con importi bonus sociale');
-    }
-
 }

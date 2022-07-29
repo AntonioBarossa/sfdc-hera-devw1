@@ -19,4 +19,11 @@ public inherited sharing class HDT_LC_AccountDataEnrichment {
         return HDT_LC_AccountDataEnrichmentHelper.processResponseHelper(labels, state);
     }
 
+    // W2 develop
+    @AuraEnabled
+    public static String getAccountDetail(String recordId){
+        //return HDT_LC_AccountStatementCtrlHelper.buildDefaultRequest(activityId);
+        return '0011X00000owtvoQAA';
+    }
+
 }

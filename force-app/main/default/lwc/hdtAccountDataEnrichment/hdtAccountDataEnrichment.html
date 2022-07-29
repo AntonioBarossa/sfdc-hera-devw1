@@ -64,6 +64,11 @@
                 </lightning-card>
             </div>
         </template>
+
+        <template if:true={showSocialBonusButton}>
+            <c-hdt-social-bonus-ws-table record-id={recordId} type="bonusSocialeIdrico" ></c-hdt-social-bonus-ws-table>
+        </template>
+
     </template>
 
 </template>
