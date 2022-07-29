@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 01-07-2022
+ * @last modified on  : 07-07-2022
  * @last modified by  : Giacinto Florio
 **/
 public with sharing class HDT_LC_CheckAssessments {

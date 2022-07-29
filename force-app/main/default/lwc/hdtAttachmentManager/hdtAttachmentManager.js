@@ -94,14 +94,24 @@ export default class HdtAttachmentManager extends LightningElement {
         };
     }
 
-    /*
+    
     @api
     specificValidate(){
-        let objectToReturn = null;
+        let objectToReturn = { 
+            isValid: true
+        };
         if(this.objectName.toUpperCase() == 'CASE'){
             switch(this.currObject.Type.toUpperCase()) {
                 case 'MODIFICA DATI CONTRATTUALI':
+                    if( this.currObject.RequestSource__c.toUpperCase() != 'DA CONTRIBUENTE' ){
+                        objectToReturn = { 
+                            isValid: false, 
+                            errorMessage: 'E\' obbligatorio inserire almeno un allegato' 
+                        };  
+                    }
+                /*
                 case 'MODIFICA POST ACCERTAMENTO':
+                    /*
                     if( 'SUPERFICIE' == this.currObject.Subprocess__c?.toUpperCase() && 
                         'NON DOMESTICO' == this.currObject.ServicePoint__r?.SupplyType__c.toUpperCase() && 
                         this.currObject.DeclaredArea__c < this.currObject.Surface__c){
@@ -119,17 +129,15 @@ export default class HdtAttachmentManager extends LightningElement {
                             isValid: true
                         } 
                     }
+                */
                     break;
                 default:
-                    objectToReturn = { 
-                        isValid: true
-                    } 
                     break;
             }
         }
         return objectToReturn;
     }
-    */
+
 
     subscribeMC() {
 		// recordId is populated on Record Pages, and this component
@@ -153,7 +161,7 @@ export default class HdtAttachmentManager extends LightningElement {
         console.log("event catched   "+this.eventButton);
         this.unsubscribeToMessageChannel();
         let message, isValid=true;
-        /*
+
         if('cancel' != this.eventButton){
             
             if(this.numberOfFiles == 0){    //se non ci sono allegati, quale messaggio mostrare
@@ -162,10 +170,9 @@ export default class HdtAttachmentManager extends LightningElement {
                     isValid = checkCustomValidate?.isValid;
                     message = checkCustomValidate?.errorMessage;
                 }else if(this.required?.length > 0){
-                    isValid = false; 
-                    message = 'Inserire gli allegati Obbligatori';
+                    isValid = true;
             
-        ///  }else if(this.additional?.length > 0 && this.numberOfFiles == 0){
+        /*  }else if(this.additional?.length > 0 && this.numberOfFiles == 0){
                 return { 
                         isValid: false, 
                         errorMessage: 'Inserire gli allegati descritti' 
@@ -175,11 +182,10 @@ export default class HdtAttachmentManager extends LightningElement {
                         isValid: false, 
                         errorMessage: 'Descrivere gli allegati inseriti nel campo "Allegati Aggiuntivi"' 
                         }; 
-        ///
+        */
                 }
             }
         }
-        */
 
         let outputAdditional = this.outputObject();
         if(this.interviewId){

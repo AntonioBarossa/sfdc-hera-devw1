@@ -51,6 +51,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>AnnualTARIPayment__c</picklist>
+        <values>
+            <fullName>Attiva</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattiva</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ApprovalType__c</picklist>
         <values>
             <fullName>1 - Avviso di servizio</fullName>
@@ -2157,6 +2168,33 @@
         </values>
         <values>
             <fullName>Imposta usi non domestici iva 22%25 %28Cod%2E G_ICC%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FamilyNumber__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6</fullName>
             <default>false</default>
         </values>
     </picklistValues>

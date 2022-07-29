@@ -228,11 +228,11 @@ public with sharing class HDT_UTL_ProcessDateManager {
 					dateToFrom = order.DateSentToSII__c;
 				}else if(order.EffectiveDate__c == null){
 					order.EffectiveDate__c = order.SignedDate__c;
-					break;
+					continue;
 				}
 
 				if (order.IsActivationDeferred__c==true) {
-					break;
+					continue;
 				}
 				
 				if(dateToFrom != null){
