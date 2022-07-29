@@ -78,10 +78,11 @@ export default class HdtAttachmentManager extends LightningElement {
             .then(result => {
                 console.log(JSON.stringify(result));
                 this.numberOfFiles = Object.keys(result).length;
-                if( this.numberOfFiles > 0 )
+                if( this.numberOfFiles > 0 ){
                     this.files = result;
-                else
+                }else{
                     this.files = null;
+                }
             })
             .catch(error => {
                 this.error = error;
@@ -100,7 +101,7 @@ export default class HdtAttachmentManager extends LightningElement {
         let objectToReturn = { 
             isValid: true
         };
-        if(this.objectName.toUpperCase() == 'CASE'){
+        if(this.objectName?.toUpperCase() == 'CASE'){
             switch(this.currObject.Type.toUpperCase()) {
                 case 'MODIFICA DATI CONTRATTUALI':
                     if( this.currObject.RequestSource__c.toUpperCase() != 'DA CONTRIBUENTE' ){
@@ -260,8 +261,10 @@ export default class HdtAttachmentManager extends LightningElement {
         console.log("disconnectedCallback -> manager")
         this.dispatchEvent(new CustomEvent('close_attachment_manager', 
                             {bubbles: true, composed: true, 
-                                detail: {  required: this.required,
-                                            additional: this.additional }}));
+                                detail: {   required: this.required,
+                                            additional: this.additional,
+                                            numberOfFiles : this.files?.length
+                                        }}));
     }
 
 }

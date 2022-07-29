@@ -10,18 +10,11 @@ export default class HdtAttachmentManagerButton extends LightningElement {
     @track isModalOpen = false;
     
     async openModal() {
-        // this.additionalAttachments = this.template.querySelector("[data-id='AdditionalAttachments__c']").value;
-        console.log('AdditionalAttachments__c -> ' + this.additionalAttachments);
         this.params = await this.outputObject();
         this.isModalOpen = true;
     }
     closeModal() {
         this.isModalOpen = false;
-        console.log('disconnect validate_attachments');
-        let validate = this.template.querySelector("c-hdt-attachment-manager")?.validate()
-        this.dispatchEvent(new CustomEvent('validate_attachments',{
-            detail: {isValid : validate.isValid , errorMessage :validate.errorMessage}
-        }));
     }
 
     async outputObject(){

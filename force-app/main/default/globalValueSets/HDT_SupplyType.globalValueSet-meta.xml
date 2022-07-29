@@ -30,6 +30,36 @@
         <default>false</default>
         <label>D-Altri usi</label>
     </customValue>
+    <customValue>
+        <fullName>Uso domestico</fullName>
+        <default>false</default>
+        <label>Uso domestico</label>
+    </customValue>
+    <customValue>
+        <fullName>Uso diverso da domenstico</fullName>
+        <default>false</default>
+        <label>Uso diverso da domenstico</label>
+    </customValue>
+    <customValue>
+        <fullName>Uso civile domestico</fullName>
+        <default>false</default>
+        <label>Uso civile domestico</label>
+    </customValue>
+    <customValue>
+        <fullName>Uso civile non domestico</fullName>
+        <default>false</default>
+        <label>Uso civile non domestico</label>
+    </customValue>
+    <customValue>
+        <fullName>Usi industriali che scaricano in pubblica fognatura</fullName>
+        <default>false</default>
+        <label>Usi industriali che scaricano in pubblica fognatura</label>
+    </customValue>
+    <customValue>
+        <fullName>Altri usi</fullName>
+        <default>false</default>
+        <label>Altri usi</label>
+    </customValue>
     <description>Domestico
 Non Domestico
 A-Domestico
