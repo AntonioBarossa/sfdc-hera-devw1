@@ -7,6 +7,8 @@
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
+    private static Set<String> methods = new Set<String>{'TemporaneaNuovaAttivazioneCreaRich', 'Annullamento','Ripensamento', 'SwitchInEECreaRich', 'SwitchInGasCreaRich', 'AggScontiBonusEECreaRich', 'AggScontiBonusGGCreaRich', 'SubentroEECreaRich', 'AttivazioneEECreaRich', 'PrecheckEECreaRich', 'SubentroGasCreaRich', 'AttivazioneInDeliberaCreaRich', 'AttivazioneFuoriDeliberaCreaRich', 'PrecheckGasCreaRich', 'AttivazioneConModCreaRich', 'PreventivoAccettatoSales', 'PreventivoRifiutatoSales', 'CambioOffertaGasCreaRich', 'CambioOffertaEleCreaRich', 'CambioUsoCreaRich', 'ConnessioneConAttCreaRich', 'TempNuovaAttivazionCereaRich', 'SConVEECreaRich', 'SConVGasCreaRich', 'EsecuzioneLavori', 'ConfPrev', 'SWRipristinatorioEle', 'SWRipristinatorioGas', 'Voltura', 'AgevolazioneContestuale'};
+
     @Testvisible
     private static HDT_WS_SalesApexCalloutActionMock mock;
 
@@ -16,7 +18,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         SObject action = (SObject) argsMap.get('action');
         SObject obj = (sObject) argsMap.get('sender');
         String method = (String) argsMap.get('method');        
-        if('TemporaneaNuovaAttivazioneCreaRich'.equalsIgnoreCase(method) || 'Annullamento'.equalsIgnoreCase(method) || 'Ripensamento'.equalsIgnoreCase(method) || 'SwitchInEECreaRich'.equalsIgnoreCase(method) || 'SwitchInGasCreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusEECreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusGGCreaRich'.equalsIgnoreCase(method) || 'SubentroEECreaRich'.equalsIgnoreCase(method) || 'AttivazioneEECreaRich'.equalsIgnoreCase(method) || 'PrecheckEECreaRich'.equalsIgnoreCase(method) || 'SubentroGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneInDeliberaCreaRich'.equalsIgnoreCase(method) || 'AttivazioneFuoriDeliberaCreaRich'.equalsIgnoreCase(method) || 'PrecheckGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneConModCreaRich'.equalsIgnoreCase(method) || 'PreventivoAccettatoSales'.equalsIgnoreCase(method) || 'PreventivoRifiutatoSales'.equalsIgnoreCase(method) || 'CambioOffertaGasCreaRich'.equalsIgnoreCase(method) || 'CambioOffertaEleCreaRich'.equalsIgnoreCase(method) || 'CambioUsoCreaRich'.equalsIgnoreCase(method) || 'ConnessioneConAttCreaRich'.equalsIgnoreCase(method) || 'TempNuovaAttivazionCereaRich'.equalsIgnoreCase(method) || 'SConVEECreaRich'.equalsIgnoreCase(method) || 'SConVGasCreaRich'.equalsIgnoreCase(method) || 'EsecuzioneLavori'.equalsIgnoreCase(method) || 'ConfPrev'.equalsIgnoreCase(method) || 'SWRipristinatorioEle'.equalsIgnoreCase(method) || 'SWRipristinatorioGas'.equalsIgnoreCase(method) || 'Voltura'.equalsIgnoreCase(method)) {
+        if(methods.contains(method)) {
             wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = getMrrObj(argsMap);
             setHeader(multirequestObj);
             System.debug(multirequestObj.requests[0]);
