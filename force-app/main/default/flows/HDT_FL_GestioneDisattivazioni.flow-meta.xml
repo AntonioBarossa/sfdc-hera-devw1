@@ -1303,7 +1303,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <inputAssignments>
             <field>DiscardDescription__c</field>
             <value>
-                <stringValue>Errore Modifica dati di recapito</stringValue>
+                <elementReference>Submit_Request.commenti</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1316,6 +1316,12 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
             <field>Type__c</field>
             <value>
                 <stringValue>Errore Lavorazione SAP</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__Description__c</field>
+            <value>
+                <elementReference>Submit_Request.commenti</elementReference>
             </value>
         </inputAssignments>
         <object>wrts_prcgvr__Activity__c</object>
@@ -1344,7 +1350,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <inputAssignments>
             <field>DiscardDescription__c</field>
             <value>
-                <stringValue>Errore Modifica dati di recapito</stringValue>
+                <elementReference>Submit_Request_0.commenti</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1357,6 +1363,12 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
             <field>Type__c</field>
             <value>
                 <stringValue>Errore Lavorazione SAP</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__Description__c</field>
+            <value>
+                <elementReference>Submit_Request_0.commenti</elementReference>
             </value>
         </inputAssignments>
         <object>wrts_prcgvr__Activity__c</object>
