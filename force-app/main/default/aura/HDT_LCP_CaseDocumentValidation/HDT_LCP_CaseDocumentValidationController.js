@@ -38,14 +38,17 @@
         var validated = event.getParam('validated');
         var isValidated = validated.isValidated;
         var subprocess = validated.subprocess;
+        var process = validated.process;
 
         console.log('AURA: Event Detail--> '+isValidated);
         console.log('AURA: Event Datail--> '+subprocess);
+        console.log('AURA: Event Detail--> '+process);
 
         action.setParams({
             caseId: component.get("v.recordId"),
             subprocess: subprocess,
-            allValidated: isValidated
+            allValidated: isValidated,
+            process: process
         });
         action.setCallback(this,function(response){
 
