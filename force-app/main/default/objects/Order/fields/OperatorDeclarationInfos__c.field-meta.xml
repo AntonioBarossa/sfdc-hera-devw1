@@ -3,9 +3,8 @@
     <fullName>OperatorDeclarationInfos__c</fullName>
     <externalId>false</externalId>
     <label>Integrazione Dichiarazione Gestore</label>
-    <length>255</length>
-    <required>false</required>
+    <length>500</length>
     <trackHistory>false</trackHistory>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
 </CustomField>

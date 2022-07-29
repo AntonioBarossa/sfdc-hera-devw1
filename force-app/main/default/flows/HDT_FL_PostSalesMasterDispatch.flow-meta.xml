@@ -279,7 +279,7 @@
         <name>Assegna_Case_Id_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
         <locationX>842</locationX>
-        <locationY>2006</locationY>
+        <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
@@ -295,7 +295,7 @@
         <name>Assegna_Case_Id_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
         <locationX>578</locationX>
-        <locationY>2006</locationY>
+        <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
@@ -781,7 +781,7 @@
     <assignments>
         <name>AssignRecordTypeIdEle</name>
         <label>AssignRecordTypeIdEle</label>
-        <locationX>10654</locationX>
+        <locationX>10786</locationX>
         <locationY>2102</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
@@ -797,13 +797,29 @@
     <assignments>
         <name>AssignRecordTypeIdGas</name>
         <label>AssignRecordTypeIdGas</label>
-        <locationX>10390</locationX>
+        <locationX>10258</locationX>
         <locationY>2102</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>GetGasRecordType.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Selezione_Fornitura_00_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignRecordTypeIdTari_Var</name>
+        <label>AssignRecordTypeIdTari</label>
+        <locationX>10522</locationX>
+        <locationY>2102</locationY>
+        <assignmentItems>
+            <assignToReference>RecordTypeCalculated</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetTariRecordType_Var.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1478,6 +1494,21 @@
             </connector>
             <label>Gas</label>
         </rules>
+        <rules>
+            <name>Ambiente_Var</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Commodity</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetTariRecordType_Var</targetReference>
+            </connector>
+            <label>Ambiente</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Con_Senza_SelezioneFornitura</name>
@@ -1733,7 +1764,7 @@
         <name>Processo_Compatibile_0_0</name>
         <label>Processo Compatibile?</label>
         <locationX>710</locationX>
-        <locationY>1766</locationY>
+        <locationY>1982</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_Disattivazioni</targetReference>
         </defaultConnector>
@@ -2481,6 +2512,13 @@
                     <stringValue>Split Payment</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica post accertamento</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>CommodityDecision_0_0</targetReference>
             </connector>
@@ -2570,10 +2608,42 @@
                     <stringValue>Split Payment</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica post accertamento</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>CreaCaseVariazioni_0_0</targetReference>
             </connector>
             <label>Processi Generici</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>SelezioneFornitura_Dis</name>
+        <label>Selezione Fornitura?</label>
+        <locationX>710</locationX>
+        <locationY>1526</locationY>
+        <defaultConnector>
+            <targetReference>Selezione_Fornitura_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>PostAccertamento_Dis</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cessazione post accertamento</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_RT_Disattivazioni</targetReference>
+            </connector>
+            <label>PostAccertamento</label>
         </rules>
     </decisions>
     <decisions>
@@ -2659,7 +2729,7 @@
         </rules>
         <rules>
             <name>Cluster_Disattivazioni</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
@@ -2667,8 +2737,15 @@
                     <stringValue>HDT_RT_Disattivazioni</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_DisattivazioniTari</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Selezione_Fornitura_0</targetReference>
+                <targetReference>SelezioneFornitura_Dis</targetReference>
             </connector>
             <label>Cluster Disattivazioni</label>
         </rules>
@@ -2971,6 +3048,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>HDT_RT_VariazioniGas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_VariazioniTari</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -4247,7 +4331,7 @@
         <name>Crea_Case_Disattivazioni</name>
         <label>Crea Case Disattivazioni</label>
         <locationX>842</locationX>
-        <locationY>1886</locationY>
+        <locationY>2102</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0_0_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
@@ -4360,7 +4444,7 @@
         <name>Crea_Case_Disattivazioni_0</name>
         <label>Crea Case Disattivazioni</label>
         <locationX>578</locationX>
-        <locationY>1886</locationY>
+        <locationY>2102</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
@@ -7712,7 +7796,7 @@
         <name>Get_RT_Disattivazioni</name>
         <label>Get RT Disattivazioni</label>
         <locationX>710</locationX>
-        <locationY>1646</locationY>
+        <locationY>1862</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Processo_Compatibile_0_0</targetReference>
@@ -8169,7 +8253,7 @@
     <recordLookups>
         <name>GetEleRecordType</name>
         <label>GetEleRecordType</label>
-        <locationX>10654</locationX>
+        <locationX>10786</locationX>
         <locationY>1982</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8190,7 +8274,7 @@
     <recordLookups>
         <name>GetGasRecordType</name>
         <label>GetGasRecordType</label>
-        <locationX>10390</locationX>
+        <locationX>10258</locationX>
         <locationY>1982</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8202,6 +8286,27 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>HDT_RT_VariazioniGas</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetTariRecordType_Var</name>
+        <label>GetTariRecordType</label>
+        <locationX>10522</locationX>
+        <locationY>1982</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssignRecordTypeIdTari_Var</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_VariazioniTari</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -8399,7 +8504,7 @@
         <name>Arricchimento_Dati</name>
         <label>Arricchimento Dati</label>
         <locationX>842</locationX>
-        <locationY>2126</locationY>
+        <locationY>2342</locationY>
         <connector>
             <targetReference>Subflow_Gestione_Disattivazioni</targetReference>
         </connector>
@@ -9317,8 +9422,8 @@
     <subflows>
         <name>Selezione_Fornitura_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>710</locationX>
-        <locationY>1526</locationY>
+        <locationX>798</locationX>
+        <locationY>1646</locationY>
         <connector>
             <targetReference>Get_RT_Disattivazioni</targetReference>
         </connector>
@@ -10039,7 +10144,7 @@
         <name>Subflow_Gestione_Disattivazioni</name>
         <label>Subflow Gestione Disattivazioni</label>
         <locationX>842</locationX>
-        <locationY>2246</locationY>
+        <locationY>2462</locationY>
         <connector>
             <targetReference>Campaign_Member_presente</targetReference>
         </connector>

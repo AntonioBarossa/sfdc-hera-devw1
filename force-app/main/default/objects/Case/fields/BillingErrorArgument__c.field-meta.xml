@@ -68,6 +68,16 @@
                 <default>false</default>
                 <label>Storno per dati fiscali errati</label>
             </value>
+            <value>
+                <fullName>Richiesta di ricalcolo fuga acqua</fullName>
+                <default>false</default>
+                <label>Richiesta di ricalcolo fuga acqua</label>
+            </value>
+            <value>
+                <fullName>Rimborso retroattivo importo fognatura e depurazione</fullName>
+                <default>false</default>
+                <label>Rimborso retroattivo importo fognatura e depurazione</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

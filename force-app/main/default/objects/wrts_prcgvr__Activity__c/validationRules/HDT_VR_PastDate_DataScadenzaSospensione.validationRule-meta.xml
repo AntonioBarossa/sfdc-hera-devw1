@@ -4,6 +4,7 @@
     <active>true</active>
     <errorConditionFormula>AND(
 		ISPICKVAL(wrts_prcgvr__Status__c, &apos;Sospesa&apos;),
+		NOT(ISCHANGED(OwnerId)),
 		SuspensionDueDate__c &lt; TODAY()
 )</errorConditionFormula>
     <errorDisplayField>SuspensionDueDate__c</errorDisplayField>
