@@ -152,6 +152,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
                     }
                 });
             }
+            this.setTableData(false);
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
                 message: 'Contratto confermato con successo',
@@ -165,7 +166,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
 
         }).catch(error => {
             this.loading = false;
-
+            this.setTableData(false);
             let errorMessage = '';
 
             if (error.body.message !== undefined) {
@@ -198,6 +199,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
                 });
             }
             this.loading = false;
+            this.setTableData(false);
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
                 message: 'Contratto annullato con successo',
@@ -209,7 +211,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
 
         }).catch(error => {
             this.loading = false;
-
+            this.setTableData(false);
             let errorMessage = '';
 
             if (error.body.message !== undefined) {
@@ -262,8 +264,10 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
                 this.cancelContractAction('Annullato per no conferma cliente');
             }
         }
+        /*
         this.showTable=false;
         this.setTableData(false);
+        */
     }
 
     handleDialogResponse(event){
