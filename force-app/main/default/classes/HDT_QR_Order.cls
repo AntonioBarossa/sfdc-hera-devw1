@@ -105,12 +105,15 @@ public inherited sharing class HDT_QR_Order {
             Account.FiscalCode__c,
             Account.BillingAddress,
             Account.ShippingAddress,
+            Account.BirthProvince__c,
             Account.BirthDate__c,
             Account.FirstName__c,
             Account.LastName__c,
             Account.CompanyOwner__c,
+            Account.RecordTypeName__c,
             Sale__r.SalesContact__c,
             Sale__r.Ecid__c,
+            Sale__r.CreatedDate,
             Sale__r.SalesContact__r.FiscalCode__c,
             Sale__r.SalesContact__r.VATNumber__c,
             Username__c,
@@ -351,7 +354,14 @@ public inherited sharing class HDT_QR_Order {
             isSTG__c,
             Contact__r.Phone,
             Contact__r.MobilePhone,
-            Subprocess__c
+            SubscriberType__c,
+            Subprocess__c,
+            LandRegistry__c,
+            TaxpayerDeclarationInfos__c,
+            AnnualTARIPayment__c,
+            RequestSource__c,
+            DeliveredDocumentation__c,
+            AdditionalAttachments__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -631,6 +641,7 @@ public inherited sharing class HDT_QR_Order {
         return [
             SELECT
             Phase__c,
+            PhaseStory__c,
             isTransition__c ,
             recordtype.developername,
             AutorizationVolturaThirdTrader__c,
@@ -1025,7 +1036,8 @@ public inherited sharing class HDT_QR_Order {
         IsTechnicalTransfer__c,
         Sale__c,
         RecordTypeId,
-        ParentOrder__c
+        ParentOrder__c,
+        ImplantType__c
         FROM Order 
         WHERE ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
@@ -1121,7 +1133,8 @@ public inherited sharing class HDT_QR_Order {
         AccountId,
         IsTechnicalTransfer__c,
         RecordTypeId,
-        ParentOrder__c
+        ParentOrder__c,
+        ImplantType__c
         FROM Order 
         WHERE Id = :recordId WITH SECURITY_ENFORCED];
     }
@@ -1280,7 +1293,7 @@ public inherited sharing class HDT_QR_Order {
         FROM Order
         WHERE ParentOrder__c = :parentOrderId
         AND QualityCall__c = true
-        AND VasSubtype__c != 'Analisi Consumi'
+        AND (VasSubtype__c != 'Analisi Consumi' OR ComfortCallDaysDue__c != NULL)
         AND Phase__c NOT IN ('Completata','Annullato')
         WITH SECURITY_ENFORCED
         ];

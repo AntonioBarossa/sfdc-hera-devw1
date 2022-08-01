@@ -61,7 +61,7 @@ public with sharing class HDT_UTL_CheckCompatibilitySalesTst {
             insert campaigns;
             String processName='Lead';
             MassiveLoaderRequest__c req= HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{'HERA COMM,HCM,null,347852147,null,,Mario,Rossi,Laurea,Studente,Benedetto Brin,1,80100,80100,Napoli,NA,null,,null,,25,null,Maschio,null,SI,1,2020-10-1,Webform callback,AAA,sito standard,NO,1,2020-10-1,Webform callback,HCM,sito standard,null,,null,,2020-10-1,null,,null,,null,,null,,null,test'});
-
+            
         } 
     }
 
@@ -71,7 +71,7 @@ public with sharing class HDT_UTL_CheckCompatibilitySalesTst {
     public static void generateWrapperMapTst(){
         setRequestItemListTst();
         HDT_UTL_CheckCompatibilitySales testClass =  new HDT_UTL_CheckCompatibilitySales();
-       // testClass.generateWrapperMap();
+      //  testClass.generateWrapperMap();
     }
 
     public static void setRequestItemListTst(){

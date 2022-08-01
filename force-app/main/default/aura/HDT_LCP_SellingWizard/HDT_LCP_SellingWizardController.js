@@ -80,7 +80,7 @@
                 }
                 
                 component.set("v.recordId", accountId);
-                
+        
                 if(saleId != undefined){
                     component.set("v.saleId", saleId);
                     helper.getSaleRecord(component);
@@ -175,8 +175,12 @@
                     console.log('interactionId*****' + interactionId);
 
                 }
-                
+
                 component.set("v.recordId", accountId);
+                if(component.get('v.recordId') != undefined){
+                    helper.getCustomerCode(component);
+                }
+
                 
                 if(saleId != undefined){
                     component.set("v.saleId", saleId);
@@ -198,7 +202,7 @@
             workspaceAPI.setTabLabel({
                 tabId: response3.tabId,
                 label: "Wizard Vendita"
-            })});
+            })});      
         
         $A.enqueueAction(checkprocess);
     },

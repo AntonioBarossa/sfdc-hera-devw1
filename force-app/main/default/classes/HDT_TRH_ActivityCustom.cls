@@ -8,6 +8,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
 	private  Id recordTypeD2DId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_VisitaD2D').getRecordTypeId();
 
     public override void beforeInsert(){
+        HDT_UTL_ActivityCustom.setConvertCloseStatus((List<wrts_prcgvr__Activity__c>) trigger.new);
         //Start>>> modifica marco.arci@webresults.it 11/10/21
         wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)
         wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
@@ -19,6 +20,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
         HDT_UTL_Scarti.setLookupFields(trigger.new);
         HDT_UTL_ActivityCustom.inheritUserFields((List<wrts_prcgvr__Activity__c>) trigger.new);
+        HDT_UTL_ActivityCustom.checkForProcessFields(Trigger.new, new Map<Id, wrts_prcgvr__Activity__c>());
     }
 
  	//public override void beforeDelete(){}
@@ -26,6 +28,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
   //	public override void afterUndelete(){}
     
     public override void beforeUpdate(){
+        HDT_UTL_ActivityCustom.setConvertCloseStatus((List<wrts_prcgvr__Activity__c>) trigger.new);
         //Start>>> modifica marco.arci@webresults.it 11/10/21
         wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)
         wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
@@ -49,6 +52,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
         // HRAWRM-672 22/09/2021 EC
         // HRAWRM-880 LG
         HDT_UTL_ActivityCustom.updateTimeRefAppointment(trigger.old,trigger.new);
+        HDT_UTL_ActivityCustom.checkForProcessFields(Trigger.new, (Map<Id, wrts_prcgvr__Activity__c>)Trigger.oldMap);
         // Assessment Gestione Scarti: rimossa chiamata a method poichè errato.
         //HDT_UTL_Scarti.handleEditButtonPress(trigger.new, (Map<Id, wrts_prcgvr__Activity__c>) trigger.oldMap);//>>> costanzo.lomele@webresults.it 14/10/21
     }
@@ -75,6 +79,8 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
         //HDT_UTL_ActivityCustomProcess.closeSobjectOnActivityClosing(trigger.new, trigger.old);
         HDT_UTL_ActivityCustom.checkForMandatoryAttachment((Map<Id, wrts_prcgvr__Activity__c>) trigger.newMap);
 
+        //GiFlorio  
+        HDT_UTL_ActivityCustom.executeOnCloseActions((List<wrts_prcgvr__Activity__c>) trigger.new, (Map<Id, wrts_prcgvr__Activity__c>) trigger.oldMap);
         // Assessment Gestione Scarti: rimossa chiamata a method poichè errato.
         // HDT_UTL_Scarti.handleEditButtonPress(trigger.new, (Map<Id, wrts_prcgvr__Activity__c>) trigger.oldMap);
         HDT_UTL_ActivityCustomProcess.sendCloseNotification(Trigger.new, Trigger.oldMap);

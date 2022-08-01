@@ -69,8 +69,6 @@ public inherited sharing class HDT_SRV_ServicePoint {
         }else{
             existingServicePoint = servicePointQuery.getRecordByCode(servicePoint.ServicePointCode__c, 'ServicePointCode__c');
         }
-        
-
         if (!existingServicePoint.isEmpty() && (servicePoint.PlugPresence__c == null ||(servicePoint.PlugPresence__c != null && servicePoint.PlugPresence__c == 'Si'))) {
             throw new AuraHandledException('Codice POD/PDR duplicato');
         } else {

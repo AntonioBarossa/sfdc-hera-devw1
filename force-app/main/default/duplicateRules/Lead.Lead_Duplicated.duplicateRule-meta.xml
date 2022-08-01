@@ -16,7 +16,7 @@
         <duplicateRuleFilterItems>
             <field>LeadSource</field>
             <operation>equals</operation>
-            <value>Creazione manuale</value>
+            <value>Creazione manuale, DBU</value>
             <sortOrder>2</sortOrder>
             <table>Lead</table>
         </duplicateRuleFilterItems>
@@ -32,10 +32,6 @@
         <objectMapping>
             <inputObject>Lead</inputObject>
             <mappingFields>
-                <inputField>Email</inputField>
-                <outputField>Email</outputField>
-            </mappingFields>
-            <mappingFields>
                 <inputField>FirstName</inputField>
                 <outputField>FirstName</outputField>
             </mappingFields>
@@ -46,6 +42,10 @@
             <mappingFields>
                 <inputField>MobilePhone</inputField>
                 <outputField>MobilePhone</outputField>
+            </mappingFields>
+            <mappingFields>
+                <inputField>Email</inputField>
+                <outputField>Email</outputField>
             </mappingFields>
             <outputObject>Contact</outputObject>
         </objectMapping>

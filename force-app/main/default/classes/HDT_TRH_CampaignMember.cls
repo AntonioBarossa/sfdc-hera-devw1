@@ -14,10 +14,6 @@ public inherited sharing class HDT_TRH_CampaignMember extends HDT_TRH_TriggerHan
         HDT_UTL_CampaignMember.assignCmAgency(trigger.new);
     }
     
-    public override void afterInsert(){
-        HDT_UTL_CampaignMember.createCommercialCode(trigger.new);
-    }
-    
     public override void beforeUpdate(){
         HDT_UTL_CampaignMember.handleStatusChange(trigger.new, (Map<Id,CampaignMember>) trigger.oldMap);
     }

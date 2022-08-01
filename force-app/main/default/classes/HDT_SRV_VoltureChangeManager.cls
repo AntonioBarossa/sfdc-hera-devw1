@@ -61,7 +61,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         }
         if(clonedOrder.get('Email__c') == null || String.isBlank((String)clonedOrder.get('Email__c')))
         {
-            clonedOrder.put('Email__c','emptyEmailDefault');
+            clonedOrder.put('Email__c', emptyEmailDefault);
         }
         /* Calcolo Addizionale Regionale + Aliquota accise */
         String tax = (String) clonedOrder.get('ExciseEle__c');

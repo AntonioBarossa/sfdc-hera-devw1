@@ -3,10 +3,29 @@
     <fullName>BeneficiaryType__c</fullName>
     <externalId>false</externalId>
     <label>Tipo beneficiario</label>
-    <length>255</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Stesso Sottoscrittore</fullName>
+                <default>false</default>
+                <label>Stesso Sottoscrittore</label>
+            </value>
+            <value>
+                <fullName>Erede</fullName>
+                <default>false</default>
+                <label>Erede</label>
+            </value>
+            <value>
+                <fullName>Beneficiario Alternativo</fullName>
+                <default>false</default>
+                <label>Beneficiario Alternativo</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>3</visibleLines>
 </CustomField>

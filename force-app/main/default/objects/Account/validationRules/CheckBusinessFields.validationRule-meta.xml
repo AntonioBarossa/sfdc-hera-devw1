@@ -2,30 +2,29 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CheckBusinessFields</fullName>
     <active>true</active>
-    <errorConditionFormula>IF(AND(CONTAINS( $User.Username , $CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Account.SkipUsernames__c ), DATETIMEVALUE(NOW()) &lt; DATETIMEVALUE($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Account.SkipDueDateTime__c)),false,
-IF(OR
-(AND(IsMigrated__c = True,RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;)),
-RecordType.DeveloperName = &quot;HDT_RT_Partner&quot;,AND(ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;), IsSOL__c = true)) ,
-false,
+    <errorConditionFormula>IF(AND(CONTAINS($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Account.SkipUsernames__c,$User.Username), DATETIMEVALUE(NOW()) &lt; DATETIMEVALUE($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Account.SkipDueDateTime__c)),false,
+	IF(OR
+	(AND(IsMigrated__c = True,RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;)),
+	RecordType.DeveloperName = &quot;HDT_RT_Partner&quot;,AND(ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;), IsSOL__c = true)) ,
+	false,
 
-IF(
-AND(RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,NOT(IsWrongFiscalData__c),
-OR( AND(Not(BillingIsAddressVerified__c),IsMigrated__c = False), ISPICKVAL(CustomerMarking__c, &quot;&quot;),ISPICKVAL(Category__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),
-true ,
+		IF(
+		AND(RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,NOT(IsWrongFiscalData__c),
+		OR( AND(Not(BillingIsAddressVerified__c),IsMigrated__c = False), ISPICKVAL(CustomerMarking__c, &quot;&quot;),ISPICKVAL(Category__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),
+		true ,
+			IF(
+			AND( ISBLANK(FiscalCode__c),RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,NOT(IsWrongFiscalData__c),
+			OR( CONTAINS(TEXT(CustomerMarking__c), &apos;Condominio&apos;) , CONTAINS(TEXT(CustomerMarking__c), &apos;Associazione&apos;))),
+			true,
+				IF(
+				AND(ISBLANK(VATNumber__c),RecordType.DeveloperName = &quot;HDT_RT_Business&quot;, NOT(CONTAINS(TEXT(CustomerMarking__c), &apos;Condominio&apos;)) , NOT(CONTAINS(TEXT(CustomerMarking__c), &apos;Associazione&apos;))),
+				true,false
 
-IF(
-AND( ISBLANK(FiscalCode__c),RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,NOT(IsWrongFiscalData__c),
-OR( CONTAINS(TEXT(CustomerMarking__c), &apos;Condominio&apos;) , CONTAINS(TEXT(CustomerMarking__c), &apos;Associazione&apos;))),
-true,
-IF(
-AND(ISBLANK(VATNumber__c),RecordType.DeveloperName = &quot;HDT_RT_Business&quot;, NOT(CONTAINS(TEXT(CustomerMarking__c), &apos;Condominio&apos;)) , NOT(CONTAINS(TEXT(CustomerMarking__c), &apos;Associazione&apos;))),
-true,false
+				)
+			)
 
-)
-)
-
-)
-)
+		)
+	)
 )</errorConditionFormula>
     <errorMessage>Campi obbligatori: Marcatura , Categoria ,Indirizzo ,Silos.
 		La PIVA è obbligatoria solo se Marcatura è DIVERSA da Condominio o Associazione.
