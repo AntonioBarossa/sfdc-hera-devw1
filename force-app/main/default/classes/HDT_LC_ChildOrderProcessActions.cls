@@ -17,7 +17,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
     private static HDT_UTL_VoltureChangeUtilities voltureChangeUtils = new HDT_UTL_VoltureChangeUtilities();
     private static String emptyEmailDefault = 'mailnondisponibile@acquirenteunico.it';
-    private static Set<String> recordTypeToExclude = new Set<String>{'HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro'};
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -68,10 +67,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
         switch on order.RecordType.DeveloperName {
             when 'HDT_RT_SubentroAmbiente' {
-                //if(order.AnnualTARIPayment__c=='Attiva'){       order.TaxpayerDeclarationInfos__c='CHIEDO di ricevere ogni anno il bollettino precompilato per il pagamento della TARI - '+order.TaxpayerDeclarationInfos__c;}
-                //if(order.AnnualTARIPayment__c=='Disattiva'){    order.TaxpayerDeclarationInfos__c='CHIEDO la revoca della disposizione di pagamento in unica soluzione - '+order.TaxpayerDeclarationInfos__c;}
-                orderToUpdate.DocumentLow80__c = 'Richiesto';
-                orderToUpdate.CIAccoutn__c = 'Richiesto';
+                if(order.AnnualTARIPayment__c=='Attiva'){       order.TaxpayerDeclarationInfos__c='CHIEDO di ricevere ogni anno il bollettino precompilato per il pagamento della TARI - '+order.TaxpayerDeclarationInfos__c;}
+                if(order.AnnualTARIPayment__c=='Disattiva'){    order.TaxpayerDeclarationInfos__c='CHIEDO la revoca della disposizione di pagamento in unica soluzione - '+order.TaxpayerDeclarationInfos__c;}
+                if( currentOrder.RequestSource__c == 'D’ufficio' 
+                    || 'Back office'.equalsIgnoreCase(currentOrder.Sale__r.Channel__c) 
+                    || 'Sportello'.equalsIgnoreCase(currentOrder.Sale__r.Channel__c)
+                    || 'y'.equalsIgnoreCase(currentOrder.DeliveredDocumentation__c)
+                ){
+                    orderToUpdate.Phase__c='Documentazione Validata';
+                }else{
+                    orderToUpdate.Phase__c='In attesa perfezionamento documentazione';
+                }
             }
             when 'HDT_RT_Subentro' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
@@ -473,7 +479,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }
 
         /**2022-07-14 903758C --> Valorizzazione CF se PIVA valorizzata e CF Vuoto */
-        if(!recordTypeToExclude.contains(order.RecordType.DeveloperName) && currentOrder.Account.VATNumber__c != null && String.isNotBlank(currentOrder.Account.VATNumber__c) && currentOrder.Account.FiscalCode__c == null)
+        if( currentOrder.Account.VATNumber__c != null && String.isNotBlank(currentOrder.Account.VATNumber__c) && currentOrder.Account.FiscalCode__c == null)
         {
             orderToUpdate.CustomerFiscalCode__c = currentOrder.Account.VATNumber__c;
         }

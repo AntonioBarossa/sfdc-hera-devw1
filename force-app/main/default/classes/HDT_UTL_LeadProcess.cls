@@ -51,7 +51,14 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.Company__c= mapRequestFields.get('COMPANY'); //HRAWRM-841 05/10/2021
                     newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
-                    newLead.MobilePhone= mapRequestFields.get('CELLULARE');
+
+                    if(mapRequestFields.get('CELLULARE').left(1) == '3'){
+                        newLead.MobilePhone= mapRequestFields.get('CELLULARE');
+                    }
+                    else{
+                        newLead.Phone= mapRequestFields.get('CELLULARE');
+                    }
+                    
                     newLead.LeadSource= mapRequestFields.get('FONTE');
                     newLead.SourceDetail__c= mapRequestFields.get('DETTAGLIOFONTE');
                     newLead.InterestProduct__c= mapRequestFields.get('PRODOTTO');
@@ -231,7 +238,12 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.Company__c= mapRequestFields.get('COMPANY'); //HRAWRM-841 05/10/2021
                     newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
-                    newLead.MobilePhone= mapRequestFields.get('CELLULARE');
+                    if(mapRequestFields.get('CELLULARE').left(1) == '3'){
+                        newLead.MobilePhone= mapRequestFields.get('CELLULARE');
+                    }
+                    else{
+                        newLead.Phone= mapRequestFields.get('CELLULARE');
+                    }
                     newLead.LeadSource= mapRequestFields.get('FONTE');
                     newLead.SourceDetail__c= mapRequestFields.get('DETTAGLIOFONTE');
                     newLead.CollectionAgency__c	= mapRequestFields.get('AGENZIA');//HRAWRM-840 Bolzon 05/10/2021
@@ -405,7 +417,12 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.Company__c= mapRequestFields.get('COMPANY'); //HRAWRM-841 05/10/2021
                     newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
-                    newLead.MobilePhone= mapRequestFields.get('CELLULARE');
+                    if(mapRequestFields.get('CELLULARE').left(1) == '3'){
+                        newLead.MobilePhone= mapRequestFields.get('CELLULARE');
+                    }
+                    else{
+                        newLead.Phone= mapRequestFields.get('CELLULARE');
+                    }
                     newLead.LeadSource= mapRequestFields.get('FONTE');
                     newLead.CollectionAgency__c	= mapRequestFields.get('AGENZIA');//HRAWRM-840 Bolzon 05/10/2021
                     newLead.SourceDetail__c= mapRequestFields.get('DETTAGLIOFONTE');
@@ -584,7 +601,12 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.Company__c= mapRequestFields.get('COMPANY'); //HRAWRM-841 05/10/2021
                     newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
-                    newLead.MobilePhone= mapRequestFields.get('CELLULARE');
+                    if(mapRequestFields.get('CELLULARE').left(1) == '3'){
+                        newLead.MobilePhone= mapRequestFields.get('CELLULARE');
+                    }
+                    else{
+                        newLead.Phone= mapRequestFields.get('CELLULARE');
+                    }
                     newLead.LeadSource= mapRequestFields.get('FONTE');
                     newLead.SourceDetail__c= mapRequestFields.get('DETTAGLIOFONTE');
                     newLead.CollectionAgency__c	= mapRequestFields.get('AGENZIA');//HRAWRM-840 Bolzon 05/10/2021
@@ -649,7 +671,7 @@ public with sharing class HDT_UTL_LeadProcess {
                         newLead.LastName= 'HVAC';
                     }
                     newLead.Company= newLead.FirstName+ ' '+newLead.LastName;
-                    
+                    System.debug('££check' + newLead);
                     HDT_SRV_Lead.checkCreateAccess(newLead);
                     Lead l = HDT_SRV_Lead.createRecord(newLead);
                     Lead ctl= leadQr.getRecordById(l.Id);
@@ -787,7 +809,12 @@ public with sharing class HDT_UTL_LeadProcess {
                         newLead.Contact__c = contactId;
                     }
                     newLead.CollectionAgency__c	= mapRequestFields.get('AGENZIA');//HRAWRM-840 Bolzon 05/10/2021
-                    newLead.MobilePhone= mapRequestFields.get('CELLULARE');
+                    if(mapRequestFields.get('CELLULARE').left(1) == '3'){
+                        newLead.MobilePhone= mapRequestFields.get('CELLULARE');
+                    }
+                    else{
+                        newLead.Phone= mapRequestFields.get('CELLULARE');
+                    }
                     newLead.Email= mapRequestFields.get('EMAIL');
                     newLead.State= mapRequestFields.get('COMUNE');
                     newLead.FirstName= mapRequestFields.get('NOME');

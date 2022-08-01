@@ -1257,7 +1257,7 @@
         <name>InviataHeroku_0</name>
         <label>Inviata ad Heroku?</label>
         <locationX>3669</locationX>
-        <locationY>2376</locationY>
+        <locationY>2375</locationY>
         <defaultConnector>
             <targetReference>Chiusura_activity_Order</targetReference>
         </defaultConnector>
@@ -1336,13 +1336,6 @@
                     <stringValue>Dati discordanti</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Amm. Precheck KO SII</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Assegna_Fase_Precedente_0</targetReference>
             </connector>
@@ -1357,7 +1350,7 @@
         <defaultConnectorLabel>Annullamento Passivo</defaultConnectorLabel>
         <rules>
             <name>AnnullamentoPrestazione</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
@@ -2956,13 +2949,6 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <value>
             <booleanValue>true</booleanValue>
         </value>
-    </variables>
-    <variables>
-        <name>ParentRecordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>ProcessType</name>

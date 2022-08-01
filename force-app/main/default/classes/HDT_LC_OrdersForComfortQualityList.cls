@@ -59,9 +59,9 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         }
         else {
             List<Order> orderActiveMonitoring = orderQr.getOrderForActiveMonitoringCheck(ordId);
-            List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+            // List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
             
-            if(isMonitoringList.contains(orderActiveMonitoring[0].AgencyCode__c)){
+            if(orderActiveMonitoring[0].Phase__c != null && orderActiveMonitoring[0].Phase__c.equalsIgnoreCase('In attesa di quality call')){
                 orderUpdate.Phase__c = 'Quality Call OK';
                 orderUpdate.SignedDate__c = Date.today();
             }
