@@ -9364,6 +9364,12 @@
                 <elementReference>ManageDocumentsFatturazione_0.tipoDocumento</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>serviceCatalogId</name>
+            <value>
+                <elementReference>serviceCatalogId</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Gestione_Informative_SubFlow</name>
