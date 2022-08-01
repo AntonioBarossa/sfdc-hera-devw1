@@ -14,7 +14,6 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
     //TEST SETUP
     private static void mySetup(){
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<BillingProfile__c> bpf = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, acc[0].Id);
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
@@ -49,15 +48,17 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest myOutcomeRequest;
         myOutcomeRequest = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest();
         
-        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData singleData;
-        singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
-        singleData.caseId = myCase.Id;
-        singleData.activityType = 'Esito OK da SAP';
-        singleData.errorCode = '';
-        singleData.errorDescription = '';
+        List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>();
+        for (Integer i = 0; i < 3; i++){
+            HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData singleData;
+            singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
+            singleData.caseId = myCase.Id;
+            singleData.activityType = 'Esito OK da SAP';
+            singleData.errorCode = '';
+            singleData.errorDescription = '';
+            data.add(singleData);
+        }
         
-        List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data;
-        data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>{singleData};
         myOutcomeRequest.data = data;
         
         
@@ -84,6 +85,7 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         
         System.assertEquals(201, RestContext.response.statusCode, 'Status code errato.');
         System.assertEquals('Esito OK da SAP', myCaseUpdated.Phase__c, 'Fase del Case Errata.');
+        System.assertEquals(2, [SELECT id FROM SelfReadingOutcomeRequest__c WHERE Status__c = 'ERROR' AND StatusDescription__c = 'In presenza di più esiti è stato lavorato l\'ultimo inviato.'].size(), 'Gestione degli errori non funzionante');
         
     }
     
@@ -109,15 +111,17 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest myOutcomeRequest;
         myOutcomeRequest = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest();
         
-        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData singleData;
-        singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
-        singleData.caseId = myCase.Id;
-        singleData.activityType = 'Esito OK da SAP';
-        singleData.errorCode = '';
-        singleData.errorDescription = '';
+        List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>();
+        for (Integer i = 0; i < 3; i++){
+            HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData singleData;
+            singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
+            singleData.caseId = myCase.Id;
+            singleData.activityType = 'Esito OK da SAP';
+            singleData.errorCode = '';
+            singleData.errorDescription = '';
+            data.add(singleData);
+        }
         
-        List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data;
-        data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>{singleData};
         myOutcomeRequest.data = data;
         
         
@@ -146,7 +150,7 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         System.assertEquals(201, RestContext.response.statusCode, 'Status code errato.');
         System.assertEquals('Annullato', myCaseUpdated.Phase__c, 'Fase del Case Errata.');
         System.assert((activities != null && !activities.isEmpty()), 'Attività Gestione Manuale SAP non creata');
-        
+        System.assertEquals(2, [SELECT id FROM SelfReadingOutcomeRequest__c WHERE Status__c = 'ERROR' AND StatusDescription__c = 'In presenza di più esiti è stato lavorato l\'ultimo inviato.'].size(), 'Gestione degli errori non funzionante');
     }
 
     //TODO: TEST DEL METODO doPost CON CASISTICHE CON KO
@@ -168,15 +172,17 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest myOutcomeRequest;
         myOutcomeRequest = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest();
         
-        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData singleData;
-        singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
-        singleData.caseId = myCase.Id;
-        singleData.activityType = 'Esito KO da SAP';
-        singleData.errorCode = 'ErrorCode Fittizio per Test';
-        singleData.errorDescription = '';
+        List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>();
+        for (Integer i = 0; i < 3; i++){
+            HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData singleData;
+            singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
+            singleData.caseId = myCase.Id;
+            singleData.activityType = 'Esito KO da SAP';
+            singleData.errorCode = 'ErrorCode Fittizio per Test';
+            singleData.errorDescription = '';
+            data.add(singleData);
+        }
         
-        List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data;
-        data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>{singleData};
         myOutcomeRequest.data = data;
         
         
@@ -203,7 +209,8 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         
         System.assertEquals(201, RestContext.response.statusCode, 'Status code errato.');
         System.assertEquals('Esito KO da SAP', myCaseUpdated.Phase__c, 'Fase del Case Errata.');
-        
+        System.assertEquals(2, [SELECT id FROM SelfReadingOutcomeRequest__c WHERE Status__c = 'ERROR' AND StatusDescription__c = 'In presenza di più esiti è stato lavorato l\'ultimo inviato.'].size(), 'Gestione degli errori non funzionante');
+
     }
     
     
@@ -232,15 +239,18 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest myOutcomeRequest;
         myOutcomeRequest = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest();
         
-        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData singleData;
-        singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
-        singleData.caseId = myCase.Id;
-        singleData.activityType = 'Esito KO da SAP';
-        singleData.errorCode = '';
-        singleData.errorDescription = 'ErrorCode Fittizio per Test';
+        List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>();
+        for (Integer i = 0; i < 3; i++){
+            HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData singleData;
+            singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
+            singleData.caseId = myCase.Id;
+            singleData.activityType = 'Esito KO da SAP';
+            singleData.errorCode = '';
+            singleData.errorDescription = 'ErrorCode Fittizio per Test';
         
-        List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data;
-        data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>{singleData};
+            data.add(singleData);
+        }
+        
         myOutcomeRequest.data = data;
         
         
@@ -267,7 +277,8 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         
         System.assertEquals(201, RestContext.response.statusCode, 'Status code errato.');
         System.assertEquals('Annullato', myCaseUpdated.Phase__c, 'Fase del Case Errata.');
-        
+        System.assertEquals(2, [SELECT id FROM SelfReadingOutcomeRequest__c WHERE Status__c = 'ERROR' AND StatusDescription__c = 'In presenza di più esiti è stato lavorato l\'ultimo inviato.'].size(), 'Gestione degli errori non funzionante');
+
     }
     
     @isTest
@@ -288,15 +299,17 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest myOutcomeRequest;
         myOutcomeRequest = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest();
         
-        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData singleData;
-        singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
-        singleData.caseId = myCase.Id;
-        singleData.activityType = 'KO Pre-MDM';
-        singleData.errorCode = '';
-        singleData.errorDescription = 'errorDescription Fittizia per Test';
+        List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>();
+        for (Integer i = 0; i < 3; i++){
+            HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData singleData;
+            singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
+            singleData.caseId = myCase.Id;
+            singleData.activityType = 'KO Pre-MDM';
+            singleData.errorCode = '';
+            singleData.errorDescription = 'errorDescription Fittizia per Test';
+            data.add(singleData);
+        }
         
-        List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data;
-        data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>{singleData};
         myOutcomeRequest.data = data;
         
         
@@ -323,7 +336,8 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         
         System.assertEquals(201, RestContext.response.statusCode, 'Status code errato.');
         System.assertEquals('Esito KO pre-MDM', myCaseUpdated.Phase__c, 'Fase del Case Errata.');
-        
+        System.assertEquals(2, [SELECT id FROM SelfReadingOutcomeRequest__c WHERE Status__c = 'ERROR' AND StatusDescription__c = 'In presenza di più esiti è stato lavorato l\'ultimo inviato.'].size(), 'Gestione degli errori non funzionante');
+
     }
     
     
