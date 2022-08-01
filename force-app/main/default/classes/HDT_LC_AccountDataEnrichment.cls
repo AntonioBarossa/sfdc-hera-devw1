@@ -9,8 +9,8 @@ public inherited sharing class HDT_LC_AccountDataEnrichment {
     
     // Action method
     @AuraEnabled(continuation=true cacheable=true)
-    public static Object startRequest(String recordId, String type) {
-        return HDT_LC_AccountDataEnrichmentHelper.startRequestHelper(recordId, type);
+    public static Object startRequest(String recordId, String relatedToId, String type) {
+        return HDT_LC_AccountDataEnrichmentHelper.startRequestHelper(recordId, relatedToId, type);
     }
     
     // Callback method
@@ -22,8 +22,7 @@ public inherited sharing class HDT_LC_AccountDataEnrichment {
     // W2 develop
     @AuraEnabled
     public static String getAccountDetail(String recordId){
-        //return HDT_LC_AccountStatementCtrlHelper.buildDefaultRequest(activityId);
-        return '0011X00000owtvoQAA';
+        return HDT_LC_AccountDataEnrichmentHelper.getAccountId(recordId);
     }
 
 }

@@ -47,7 +47,7 @@ export default class HdtAccountDataEnrichment extends LightningElement {
     getConfiguration(){
         console.log('# getConfiguration #');
     
-        getTableConfig({recordId: this.recordId, type: this.type})
+        getTableConfig({recordId: this.recordId, relatedToId: this.relatedToId, type: this.type})
 
         .then(result => {
 
@@ -90,7 +90,7 @@ export default class HdtAccountDataEnrichment extends LightningElement {
     backendCall(){
         console.log('# Get data from SAP #');
     
-        callSap({recordId: this.recordId, type: this.type}).then(result => {
+        callSap({recordId: this.recordId, relatedToId: this.relatedToId, type: this.type}).then(result => {
             console.log('# SAP result #');
             var obj = JSON.parse(result);
             console.log('# success: ' + obj.status);
@@ -99,16 +99,34 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                 console.log('# SAP result failed #');
                 this.showError = true;
                 console.log('>>> ' + obj.errorDetails[0].code + ' - ' + obj.errorDetails[0].message);
-                this.showErrorMessage = obj.errorDetails[0].message;
+                this.showErrorMessage = obj.errorDetails[0].code + ' - ' + obj.errorDetails[0].message;
                 this.showSpinner = false;            
             } else {
-                if(this.type != 'cmor'){
-                    this.data = obj.data.posizioni;
-                } else {
-                    this.showSecondTable = true;
-                    this.data = obj.data.venditoreEntrante;
-                    this.data2 = obj.data.venditoreUscente;
+                //if(this.type != 'cmor'){
+                //    this.data = obj.data.posizioni;
+                //} else {
+                //    this.showSecondTable = true;
+                //    this.data = obj.data.venditoreEntrante;
+                //    this.data2 = obj.data.venditoreUscente;
+                //}
+
+                switch (this.type) {
+                    case 'cmor':
+                        this.showSecondTable = true;
+                        this.data = obj.data.venditoreEntrante;
+                        this.data2 = obj.data.venditoreUscente;
+
+                    case 'bonusSocialeIdrico':
+                        this.data = obj.data;
+
+                    case 'gaaView':
+                        this.data = obj.data;
+
+                    default:
+                        this.data = obj.data.posizioni;
+
                 }
+
             }
 
             this.showSpinner = false;

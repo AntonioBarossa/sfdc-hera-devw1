@@ -1,12 +1,10 @@
 ({
     openTabWithSubtab : function(component, event, helper) {
         
-        var recordId = component.get("v.recordId");
-        var accountId = component.get("v.accountId");
+        var accountId = component.get("v.recordId");
         var workspaceAPI = component.find("workspace");
 
         console.log('>>> accountId ' + accountId);
-        console.log('>>> recordId ' + recordId);
 
         workspaceAPI.openTab({
             url: '/' + accountId
@@ -20,8 +18,7 @@
                    },
                    state: {
                        c__recordid: accountId,
-                       c__type: 'odlAdsView',
-                       c__relatedtoid: recordId
+                       c__type: 'odlAdsView'
                    }
 				}
            });
