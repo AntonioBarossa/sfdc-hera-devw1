@@ -73,7 +73,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ReasonStornoRate__c</field>
+                <field>RateReversalReason__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
