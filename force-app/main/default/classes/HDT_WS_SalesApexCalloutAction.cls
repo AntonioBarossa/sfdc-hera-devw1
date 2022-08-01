@@ -7,7 +7,40 @@
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
-    private static Set<String> methods = new Set<String>{'TemporaneaNuovaAttivazioneCreaRich', 'Annullamento','Ripensamento', 'SwitchInEECreaRich', 'SwitchInGasCreaRich', 'AggScontiBonusEECreaRich', 'AggScontiBonusGGCreaRich', 'SubentroEECreaRich', 'AttivazioneEECreaRich', 'PrecheckEECreaRich', 'SubentroGasCreaRich', 'AttivazioneInDeliberaCreaRich', 'AttivazioneFuoriDeliberaCreaRich', 'PrecheckGasCreaRich', 'AttivazioneConModCreaRich', 'PreventivoAccettatoSales', 'PreventivoRifiutatoSales', 'CambioOffertaGasCreaRich', 'CambioOffertaEleCreaRich', 'CambioUsoCreaRich', 'ConnessioneConAttCreaRich', 'TempNuovaAttivazionCereaRich', 'SConVEECreaRich', 'SConVGasCreaRich', 'EsecuzioneLavori', 'ConfPrev', 'SWRipristinatorioEle', 'SWRipristinatorioGas', 'Voltura', 'AgevolazioneContestuale'};
+    private static Set<String> methods = new Set<String>{
+        'TemporaneaNuovaAttivazioneCreaRich',
+        'Annullamento',
+        'Ripensamento',
+        'SwitchInEECreaRich',
+        'SwitchInGasCreaRich',
+        'AggScontiBonusEECreaRich',
+        'AggScontiBonusGGCreaRich',
+        'SubentroEECreaRich',
+        'AttivazioneEECreaRich',
+        'PrecheckEECreaRich',
+        'SubentroGasCreaRich',
+        'AttivazioneInDeliberaCreaRich',
+        'AttivazioneFuoriDeliberaCreaRich',
+        'PrecheckGasCreaRich',
+        'AttivazioneConModCreaRich',
+        'PreventivoAccettatoSales',
+        'PreventivoRifiutatoSales',
+        'CambioOffertaGasCreaRich',
+        'CambioOffertaEleCreaRich',
+        'CambioUsoCreaRich',
+        'ConnessioneConAttCreaRich',
+        'TempNuovaAttivazionCereaRich',
+        'SConVEECreaRich',
+        'SConVGasCreaRich',
+        'EsecuzioneLavori',
+        'ConfPrev',
+        'SWRipristinatorioEle',
+        'SWRipristinatorioGas',
+        'Voltura',
+        'SubentroAmbiente',
+        'SubentroAmbienteModifica',
+        'AgevolazioneContestuale'
+    };
 
     @Testvisible
     private static HDT_WS_SalesApexCalloutActionMock mock;
