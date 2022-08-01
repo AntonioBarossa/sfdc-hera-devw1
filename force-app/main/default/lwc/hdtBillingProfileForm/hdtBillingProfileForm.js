@@ -493,6 +493,7 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceCertifiedEmailAddress__c')].visibility = event.target.value === 'Invio tramite PEC';
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceCertifiedEmailAddress__c')].required = event.target.value === 'Invio tramite PEC';
             this.fields[this.fields.findIndex(el => el.fieldName === 'SendCertifiedEmailConsentDate__c')].visibility = event.target.value === 'Invio tramite PEC';
+            this.fields[this.fields.findIndex(el => el.fieldName === 'SendCertifiedEmailConsentDate__c')].required = event.target.value === 'Invio tramite PEC';
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceEmailAddress__c')].required = event.target.value.includes('e-mail');
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceEmailAddress__c')].visibility = event.target.value.includes('e-mail');
            // this.refreshField = true;
@@ -627,12 +628,19 @@ export default class hdtBillingProfileForm extends LightningElement {
             && (this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Bolletta per e-mail' || this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Bolletta per e-mail + Carta')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Email Invio Bolletta, ');
         }
-        
 
-        if (this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']") !== null 
-            && this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']").value === null 
-            && this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Invio tramite PEC') {
+        if ( this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Invio tramite PEC' &&
+             ( this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']") === null || 
+             this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']").value === null ||
+             !this.validateEmail(this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']").value) )) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Email PEC invio Bolletta, ');
+        }
+
+        if ( this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Invio tramite PEC' &&
+             ( this.template.querySelector("[data-id='SendCertifiedEmailConsentDate__c']") === null ||
+             this.template.querySelector("[data-id='SendCertifiedEmailConsentDate__c']").value === null ||
+             this.template.querySelector("[data-id='SendCertifiedEmailConsentDate__c']").value === '' )) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Data consenso E-mail PEC Invio Bolletta, ');
         }
 
         if (this.template.querySelector("[data-id='XMLType__c']") !== null 
