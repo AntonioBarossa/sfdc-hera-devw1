@@ -21,7 +21,7 @@
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
         <locationX>50</locationX>
-        <locationY>1550</locationY>
+        <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -65,7 +65,7 @@
         <name>AssegnaValori_0_0</name>
         <label>AssegnaValori</label>
         <locationX>314</locationX>
-        <locationY>1550</locationY>
+        <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -130,27 +130,11 @@
             <targetReference>Prima_Classificazione</targetReference>
         </connector>
     </assignments>
-    <assignments>
-        <name>assignRelatedId</name>
-        <label>assignRelatedId</label>
-        <locationX>182</locationX>
-        <locationY>1310</locationY>
-        <assignmentItems>
-            <assignToReference>relatedId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Cerca_Case_reiterazione.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Linkare_Case</targetReference>
-        </connector>
-    </assignments>
     <decisions>
         <name>Linkare_Case</name>
         <label>Linkare Case?</label>
         <locationX>182</locationX>
-        <locationY>1430</locationY>
+        <locationY>1310</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_0_0</targetReference>
         </defaultConnector>
@@ -380,14 +364,14 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>50</locationX>
-        <locationY>1670</locationY>
+        <locationY>1550</locationY>
         <inputReference>Get_Input_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
         <locationX>314</locationX>
-        <locationY>1670</locationY>
+        <locationY>1550</locationY>
         <inputReference>Get_Input_Case_Aggiornato</inputReference>
     </recordUpdates>
     <screens>

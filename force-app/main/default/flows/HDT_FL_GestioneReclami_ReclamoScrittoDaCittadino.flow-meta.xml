@@ -4,7 +4,7 @@
         <name>redirectToRecord</name>
         <label>redirectToRecord</label>
         <locationX>204</locationX>
-        <locationY>2390</locationY>
+        <locationY>2270</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -30,14 +30,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Cerca_Case_reiterazione</targetReference>
+            <targetReference>AssegnaValori_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssegnaValori_0_0</name>
         <label>AssegnaValori</label>
         <locationX>204</locationX>
-        <locationY>2150</locationY>
+        <locationY>2030</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -244,7 +244,7 @@
         <locationX>204</locationX>
         <locationY>1694</locationY>
         <defaultConnector>
-            <targetReference>Cerca_Case_reiterazione</targetReference>
+            <targetReference>AssegnaValori_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -314,11 +314,6 @@
             <label>Annulla</label>
         </rules>
     </decisions>
-    <formulas>
-        <name>CaseVecchioScaduto</name>
-        <dataType>Boolean</dataType>
-        <expression>DATEVALUE({!Cerca_Case_reiterazione.CreatedDate}) + 90 &gt; DATEVALUE({!InputCase.CreatedDate})</expression>
-    </formulas>
     <interviewLabel>HDT_FL_GestioneReclami_ReclamoScrittoDaCittadino {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GestioneReclami_ReclamoScrittoDaCittadino</label>
     <processMetadataValues>
@@ -340,55 +335,6 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordLookups>
-        <name>Cerca_Case_reiterazione</name>
-        <label>Cerca Case reiterazione</label>
-        <locationX>204</locationX>
-        <locationY>2030</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>AssegnaValori_0_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>ServicePoint__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Input_Case_Aggiornato.ServicePoint__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>FirstLevelComplaintClassification__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Input_Case_Aggiornato.FirstLevelComplaintClassification__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Id</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <elementReference>InputCase.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Status</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Closed</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>RecordTypeId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Input_Case_Aggiornato.RecordTypeId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordLookups>
         <name>Get_Input_Case_Aggiornato</name>
         <label>Get Input Case Aggiornato</label>
@@ -435,7 +381,7 @@
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
         <locationX>204</locationX>
-        <locationY>2270</locationY>
+        <locationY>2150</locationY>
         <connector>
             <targetReference>redirectToRecord</targetReference>
         </connector>
@@ -725,7 +671,7 @@
         <locationX>265</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>assignProcessType_0</targetReference>
+            <targetReference>assignCommodity</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -733,7 +679,7 @@
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
         <locationX>391</locationX>
-        <locationY>2822</locationY>
+        <locationY>2702</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

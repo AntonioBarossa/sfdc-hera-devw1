@@ -299,6 +299,7 @@
                 </rightValue>
             </conditions>
             <connector>
+                <isGoTo>true</isGoTo>
                 <targetReference>subFlowAnnullamento_0</targetReference>
             </connector>
             <label>Annullamento</label>
