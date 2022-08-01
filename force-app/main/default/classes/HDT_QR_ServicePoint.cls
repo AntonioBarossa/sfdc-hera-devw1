@@ -23,9 +23,9 @@ public inherited sharing class HDT_QR_ServicePoint {
 	 * @return List<ServicePoint__c>
 	 */
 	public List<ServicePoint__c> getAddressFornitura(String accountid) {
-		contractSrv.checkReadAccess('Account__c, SupplyStreet__c, SupplyStreetNumber__c, SupplyStreetNumberExtension__c, SupplyPlace__c, SupplyCity__c,SupplyProvince__c, SupplyPostalCode__c, SupplyCountry__c');
+		contractSrv.checkReadAccess('Account__c, SupplyStreet__c,SupplyStreetName__c, SupplyStreetNumber__c, SupplyStreetNumberExtension__c, SupplyPlace__c, SupplyCity__c,SupplyProvince__c, SupplyPostalCode__c, SupplyCountry__c');
 		List<ServicePoint__c> listSp = new List<ServicePoint__c>();
-		return listSp= [SELECT Account__c, SupplyStreet__c, SupplyStreetNumber__c, SupplyStreetNumberExtension__c, SupplyPlace__c, SupplyCity__c,SupplyProvince__c, SupplyPostalCode__c, SupplyCountry__c,SupplySAPCityCode__c,SupplySAPStreetCode__c FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
+		return listSp= [SELECT Account__c, SupplyCityCode__c,SupplyStreetCode__c,SupplyStreetName__c,SupplyStreet__c, SupplyStreetNumber__c, SupplyStreetNumberExtension__c, SupplyPlace__c, SupplyCity__c,SupplyProvince__c, SupplyPostalCode__c, SupplyCountry__c,SupplySAPCityCode__c,SupplySAPStreetCode__c FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
 	}
 
 	/**
@@ -177,6 +177,20 @@ public inherited sharing class HDT_QR_ServicePoint {
 		}		
 		return servicePoints;
 	}
+
+	/** 
+	 * @description Query for Address
+	 * @param address
+	 * @param fields
+	 * @return List<ServicePoint__c>
+	 */
+	@SuppressWarnings('PMD.UnusedLocalVariable')
+	public List<ServicePoint__c> getServicePointsByAddress(String address, String fields) {
+		contractSrv.checkReadAccess(fields);
+		String stringAddress = '%' + address + '%';
+		List<ServicePoint__c> servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) +' FROM ServicePoint__c WHERE CommoditySector__c = \'Ambiente\' AND ServicePointCode__c != null AND SupplyAddress__c LIKE :stringAddress LIMIT 50');
+		return servicePoints;
+    }
     
     /**
 	 * @description Query for POD
@@ -189,6 +203,20 @@ public inherited sharing class HDT_QR_ServicePoint {
 		contractSrv.checkReadAccess(fields);
 		String stringCode = code.trim();
 		List<ServicePoint__c> servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE ServicePointCode__c = :stringCode ');
+		return servicePoints;
+	}
+
+	/**
+	 * @description Query for POD
+	 * @param code
+	 * @param fields
+	 * @return List<ServicePoint__c>
+	 */
+	@SuppressWarnings('PMD.UnusedLocalVariable')
+	public List<ServicePoint__c> getServicePointsByCodeWater(String code, String fields) {
+		contractSrv.checkReadAccess(fields);
+		String stringCode = code.trim();
+		List<ServicePoint__c> servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE CommoditySector__c = \'Acqua\' AND ServicePointCode__c = :stringCode ');
 		return servicePoints;
 	}
 
@@ -263,5 +291,24 @@ public inherited sharing class HDT_QR_ServicePoint {
 	public static CS_SelezioneFornitura__c getCustomSettingFieldsRequiredGas() {
 		contractSrv.checkReadAccess('FieldRequiredGas__c');
 		return [SELECT FieldRequiredGas__c FROM CS_SelezioneFornitura__c WITH SECURITY_ENFORCED];
+	}
+	/**
+	 * @description Getting Custom Settimg FIELD REQUIRED ACQUA 'CS_SelezioneFornitura'
+	 * @return CS_SelezioneFornitura__c
+	 */
+	@AuraEnabled
+	public static CS_SelezioneFornitura__c getCustomSettingFieldsRequiredAcqua() {
+		contractSrv.checkReadAccess('FieldRequiredWater__c');
+		return [SELECT FieldRequiredWater__c FROM CS_SelezioneFornitura__c WITH SECURITY_ENFORCED];
+	}
+
+	/**
+	 * @description Getting Custom Settimg FIELD REQUIRED AMBIENTE 'CS_SelezioneFornitura'
+	 * @return CS_SelezioneFornitura__c
+	 */
+	@AuraEnabled
+	public static CS_SelezioneFornitura__c getCustomSettingFieldsRequiredAmbiente() {
+		contractSrv.checkReadAccess('FieldRequiredWaste__c');
+		return [SELECT FieldRequiredWaste__c FROM CS_SelezioneFornitura__c WITH SECURITY_ENFORCED];
 	}
 }

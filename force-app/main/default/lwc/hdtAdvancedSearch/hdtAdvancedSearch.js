@@ -53,8 +53,10 @@ export default class HdtAdvancedSearch extends LightningElement {
     @track iconCompatibility='';
     notFoundMsg={
         'pod':'Codice POD/PDR non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
-        'contract':'Codice Contratto non trovato su SFDC, Eseguire una nuova riceerca o verifica esistenza su SAP',
-        'serialnumber':'Nessun record trovato'
+        'contract':'Codice Contratto non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
+        'serialnumber':'Nessun record trovato',
+        'podH2o':'Codice Punto Presa non trovato su SFDC. Eseguire una nuova ricerca o verifica esistenza su SAP',
+        'address':'Nessun record trovato'
     }
     @api isRicercainSAP=false;
     postSales=false;

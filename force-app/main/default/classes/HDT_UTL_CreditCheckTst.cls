@@ -74,8 +74,10 @@ public with sharing class HDT_UTL_CreditCheckTst {
         data.outcoming = null;
         Test.startTest();
             HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{data});
+            update new Order(Id = o.Id, Phase__c = 'Comunicazione Verso Heroku');
         Test.stopTest();
-        o = [SELECT Id, Phase__c FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_Subentro'];
+        o = [SELECT Id, IncomingCreditCheckResult__c,Phase__c FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_Subentro'];
+        System.assertEquals('KO', o.IncomingCreditCheckResult__c, 'testUpdateOrderIncoming - Esito non Aggiornato');
         System.assertEquals('Credit Check KO', o.Phase__c, 'testUpdateOrderIncoming - Fase non Aggiornata');
         
     }
@@ -90,8 +92,20 @@ public with sharing class HDT_UTL_CreditCheckTst {
         data.outcoming = true;
         Test.startTest();
             HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{data});
+            update new Order(Id = o.Id, Phase__c = 'Comunicazione Verso Heroku');
         Test.stopTest();
-        o = [SELECT Id, Phase__c FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_Subentro'];
-        System.assertEquals('Credit Check KO', o.Phase__c, 'testUpdateOrderOutcoming - Fase non Aggiornata');
+        o = [SELECT Id, OutgoingCreditCheckResult__c,Phase__c FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_Subentro'];
+        System.assertEquals('KO', o.OutgoingCreditCheckResult__c, 'testUpdateOrderOutcoming - Fase non Aggiornata');
+        System.assertEquals('Credit Check KO', o.Phase__c, 'testUpdateOrderIncoming - Fase non Aggiornata');
     }
+
+    @IsTest
+    public static void testManagedErrorCode(){
+        Boolean isManaged;
+        Test.startTest();
+            isManaged = HDT_UTL_CreditCheck.managedErrorCode('NO_CODE');
+        Test.stopTest();
+        System.assertEquals(false, isManaged, 'La risposta non è quella attesa');
+    }
+
 }

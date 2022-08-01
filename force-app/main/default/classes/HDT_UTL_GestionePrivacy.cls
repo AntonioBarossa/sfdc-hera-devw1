@@ -500,13 +500,13 @@
             List<String> listIndividual = new List<String>();
             Boolean phCheck = true;
             Boolean emCheck = true;
-            System.debug('*****CONTROL');
+            //System.debug('*****CONTROL');
             for(contact l : contactOld){
                 mapMobilePhone.put(l.id,l.mobilePhone == null ? '' : l.mobilePhone);
                 mapPhone.put(l.id,l.phone == null ? '' : l.phone);
                 mapEmail.put(l.id,l.email == null ? '' : l.email);
             }
-            System.debug('*****CONTROL4:' + mapPhone);
+            //System.debug('*****CONTROL4:' + mapPhone);
             for(contact l : contactNew){
                 boolean check = false;
                 if(mapMobilePhone.get(l.id) != null && mapMobilePhone.get(l.id) != l.MobilePhone && l.MobilePhone != '' && l.MobilePhone != null){
@@ -528,11 +528,11 @@
                     phCheck = true;
                     check = true;
                 }
-                System.debug('*****CONTROL');
+                //System.debug('*****CONTROL');
                 if(mapPhone.get(l.id) != null && mapPhone.get(l.id) != l.Phone && l.phone != '' && l.phone != null){
-                    System.debug('*****CONTROL2');
+                    //System.debug('*****CONTROL2');
                     if(mapPhone.get(l.id) == ''){
-                        System.debug('*****CONTRO3');
+                        //System.debug('*****CONTRO3');
                         mapCreatePhone.put(l.Id,l.Phone);
                         check = true;
                         phonePrefixesToCreate.put(l.Phone, l.PhonePrefix__c);
@@ -690,7 +690,7 @@
                 }
             }
             if(emCheck){
-                List<ContactPointEmail> listCpe = HDT_QR_ContactPoint.getIndividualContactsEmailList(listIndividual,'id,EmailAddress,Status__c,parentid');
+                List<ContactPointEmail> listCpe = HDT_QR_ContactPoint.getIndividualContactsEmailList(listIndividual,'id,EmailAddress, isPrimary, Status__c,parentid');
                 for(ContactPointEmail cp : listCpe){
                     isAlreadyExistContact.put(cp.parentId + '-' + cp.EmailAddress,cp.id);
                     if(mapToUpdateEmail.get(cp.EmailAddress) != null){
@@ -929,7 +929,7 @@
                 //phone.remove(0);
                 primaryPhone.put(lead.IndividualId, emPhone);
                 phones.put(lead.IndividualId, phone);
-                System.debug(phonesHome);
+                //System.debug(phonesHome);
             }
         }
         if(check){
@@ -1165,7 +1165,7 @@
             Map<String,String> mobilePrefixes= new Map<String,String>();
             Map<String,String> phonePrefixes= new Map<String,String>();
             List<String> contactIds= new List<String>(); 
-            System.debug('*******Preparazione Alla Creazione Individual');
+            //System.debug('*******Preparazione Alla Creazione Individual');
             for(Contact contact: contacts){
                 List<String> emails= new List<String>();
                 List<String> mobile = new List<String>();
@@ -1217,4 +1217,44 @@
             return res;
         }
 
+        // Modifica Anagrafica Modifica Privacy
+        private static String extractCompany(String codiceModulo){
+            String response = '';
+            if (String.isNotEmpty(codiceModulo)){
+                try {
+                    response = codiceModulo.split('_').get(1);
+                } catch (Exception e) {
+                    response = '';
+                }
+            }
+            return response;
+        }
+
+        @InvocableMethod(label = 'Get Individual Field Value')
+        public static List<HDT_WRP_SetIndividualFieldOutput> setIndividualField(List<String> inputs){
+            List<HDT_WRP_SetIndividualFieldOutput> output = new List<HDT_WRP_SetIndividualFieldOutput>();
+            try{
+                String caseId = inputs[0];
+                output.add(getOutputData((Id) caseId));
+            }catch(Exception e){
+                output.add(new HDT_WRP_SetIndividualFieldOutput());
+            }
+            return output;
+        }
+
+        private static HDT_WRP_SetIndividualFieldOutput getOutputData(Id caseId){
+            HDT_WRP_SetIndividualFieldOutput data = new HDT_WRP_SetIndividualFieldOutput();
+            DocumentalEnvelopeAttachment__c doc = (DocumentalEnvelopeAttachment__c)HDT_QR_GenericQuery.getGenericRecords('Id, AttachmentCode__c, Version__c', 'DocumentalEnvelopeAttachment__c', 'Case__c = \''+caseId+'\' AND AttachmentCode__c LIKE \'%PRIVACY\'').get(0);
+            data.company = extractCompany(doc.AttachmentCode__c);
+            data.version = doc.Version__c;
+            return data;
+        }
+
+
+        public class HDT_WRP_SetIndividualFieldOutput{
+            @InvocableVariable
+            public String version;
+            @InvocableVariable
+            public String company;
+        }
 }

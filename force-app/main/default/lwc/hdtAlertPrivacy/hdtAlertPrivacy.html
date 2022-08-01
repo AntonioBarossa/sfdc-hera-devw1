@@ -1,0 +1,46 @@
+<template>
+    <template if:true={showAlert}>
+        <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+            <span class="slds-assistive-text">warning</span>
+            <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small"
+                title="Description of icon when needed">
+                <lightning-icon
+                    class="slds-icon-utility-error slds-m-horizontal_x-small slds-icon_container slds-icon_x-small">
+                </lightning-icon>
+                <lightning-icon size="small" icon-name="utility:error" alternative-text="Error!" title="Error">
+                </lightning-icon>
+            </span>
+            <h2>Attenzione! Ricordati di raccogliere la privacy del Cliente innescando un Case di Modifica Privacy
+                tramite Catalogo Servizi.
+            </h2>
+            <div class="slds-notify__close">
+                <button class="slds-button slds-button_icon slds-button_icon-small" title="Close">
+
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+            </div>
+        </div>
+    </template>
+    <template if:true={showAlertDoc}>
+        <br></br>
+        <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+            <span class="slds-assistive-text">warning</span>
+            <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small"
+                title="Description of icon when needed">
+                <lightning-icon
+                    class="slds-icon-utility-error slds-m-horizontal_x-small slds-icon_container slds-icon_x-small">
+                </lightning-icon>
+                <lightning-icon size="small" icon-name="utility:error" alternative-text="Error!" title="Error">
+                </lightning-icon>
+            </span>
+            <h2 align="left">Attenzione! Esegui il download del Plico Contrattuale da far firmare al cliente dalla sezione Files in basso a sinistra.
+            </h2>
+            <div class="slds-notify__close">
+                <button class="slds-button slds-button_icon slds-button_icon-small" title="Close">
+
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+            </div>
+        </div>
+    </template>
+</template>

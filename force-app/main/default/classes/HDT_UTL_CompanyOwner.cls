@@ -42,7 +42,7 @@ public inherited sharing class HDT_UTL_CompanyOwner {
             Map<String,Contact> contactsMap=new Map<String,Contact>();
 
             for(SObject s: objs){
-
+                if(objectApiName=='Lead' && s.get('LeadSource') != null && s.get('LeadSource') == 'DBU')break;
                 String rtId = '';
                 objectApiName=String.valueOf(s.getSObjectType());
                 if(objectApiName.equalsIgnoreCase('Account')){
@@ -120,6 +120,7 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                 contactsMap.put(con.Id,con);
             }
             for(SObject s: objs){
+                if(objectApiName.equalsIgnoreCase('Lead'))break;
                 if(objectApiName=='Asset' || objectApiName== 'Case' || objectApiName== 'Contact' || objectApiName== 'Opportunity' ){
                     if(accountsMap.containsKey(String.valueOf(s.get('AccountId')))){
                         Account ac= accountsMap.get(String.valueOf(s.get('AccountId')));

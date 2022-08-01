@@ -385,6 +385,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
                 Order__r.VasSubtype__c
                 FROM wrts_prcgvr__Activity__c
                 WHERE Id = :activityId
+                AND Order__r.VasSubtype__c != 'Analisi Consumi'
                 WITH SECURITY_ENFORCED
             ];
         }
@@ -603,5 +604,17 @@ public inherited sharing class HDT_QR_ActivityCustom {
             }
 
         }
+    
+    public static Map<String, wrts_prcgvr__Activity__c> getQualCallByParentOrder(Set<String> parentOrderSet){
 
+        Map<String, wrts_prcgvr__Activity__c> parentActMap = new Map<String, wrts_prcgvr__Activity__c>();
+
+        List<wrts_prcgvr__Activity__c> actList = [SELECT Id, Order__c, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c 
+            WHERE Order__c = :parentOrderSet AND Type__c = 'Quality Call' AND wrts_prcgvr__IsClosed__c = false AND wrts_prcgvr__Status__c = 'Aperta' WITH SECURITY_ENFORCED];
+
+        for(wrts_prcgvr__Activity__c act : actList){
+            parentActMap.put(act.Order__c, act);
+        }
+        return parentActMap;
+    }
 }

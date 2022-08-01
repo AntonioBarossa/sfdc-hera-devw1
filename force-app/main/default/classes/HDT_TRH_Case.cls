@@ -2,7 +2,7 @@
 public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 	
     public override void beforeInsert(){
-
+        HDT_UTL_CaseProcess.setCloseStatusForAll(Trigger.new);
         markCasesFromCurrentUser();
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
 
@@ -16,6 +16,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         //Check Quotation Type && set technical phase
         try{
             for(Case caseNew : (List<Case>) Trigger.new){
+                HDT_UTL_CaseProcess.setCloseStatus(caseNew);
                 Case caseOld = (Case) Trigger.oldMap.get(caseNew.Id);
                 if(caseOld.Amount__c != null && caseNew.Amount__c != caseOld.Amount__c && caseOld.QuotationType__c == 'Rapido'){
                     caseNew.QuotationType__c = 'Predeterminabile';
@@ -75,9 +76,13 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         HDT_UTL_CaseProcess.updateMemberStatusforClosedCases(trigger.new, trigger.old); 
         //**FINE SVILUPPO */
 
+        //***INIZIO SVILUPPO Marco Arci 17/05/2022 Cluster Disattivazioni Tari, chiusura activity correlate*/
+        HDT_UTL_CaseProcess.closeRelatedActivity(Trigger.new, Trigger.oldMap);
+        //**FINE SVILUPPO */
+        
         HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
         HDT_UTL_PrClickEndSubscriptionBulk.updateCorrelatedObjects();
-
+        HDT_UTL_Scarti.closeActivityOnCompleted(Trigger.new, Trigger.oldMap);
         
     }
 

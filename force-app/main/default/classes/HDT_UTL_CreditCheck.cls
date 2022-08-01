@@ -74,7 +74,7 @@ public with sharing class HDT_UTL_CreditCheck {
             
             List<HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail> l = new List<HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail>();
             l.add(iwd);
-
+            String separator =  String.isBlank(o.Account?.CustomerCode__c)? ',':' ';
             req.sistema = 'eEnergy';
             req.caso = 'Transazionale';
             req.crmEntity = 'Order';
@@ -85,7 +85,7 @@ public with sharing class HDT_UTL_CreditCheck {
             req.userId = o.CreatedById;
             req.jobTitle = o.ChannelTransCode__c;
             req.internalCustomerId = o.Account?.CustomerCode__c;
-            req.companyName = String.isNotBlank(o.Account?.FirstName__c)? o.Account.FirstName__c+' '+o.Account.LastName__c : o.Account?.LastName__c;
+            req.companyName = String.isNotBlank(o.Account?.FirstName__c)? o.Account.FirstName__c+separator+o.Account.LastName__c : o.Account?.LastName__c;
             req.externalCustomerId = String.isNotBlank(o.Account?.FiscalCode__c)? o.Account.FiscalCode__c : o.Account?.VATNumber__c;
             req.secondaryCustomerId = o.Account?.VATNumber__c;
             req.bpClass =  bpClass;
@@ -131,15 +131,17 @@ public with sharing class HDT_UTL_CreditCheck {
     public static void updateOrder(List<HDT_WRP_DataForUpdate> ordersData){
         List<Order> ordersToUpdate = new List<Order>();
         for (HDT_WRP_DataForUpdate item : ordersData){
-            Order o = new Order(Id = item.orderId, CreditCheckDescription__c = item.outcomeDescription);
+            Order o = new Order(Id = item.orderId, CreditCheckDescription__c = item.outcomeDescription, CreditCheckInProgress__c = false);
             if (item.outcoming != null && item.outcoming){
                 o.OutgoingCreditCheckResult__c = item.outcome;
+                o.IncomingCreditCheckResult__c = null;
             }else{
                 o.IncomingCreditCheckResult__c = item.outcome;
+                o.OutgoingCreditCheckResult__c = null;
             }
-            if ('KO'.equalsIgnoreCase(item.outcome)){
+            /* if ('KO'.equalsIgnoreCase(item.outcome)){
                 o.Phase__c = 'Credit Check KO';
-            }
+            } */
             ordersToUpdate.add(o);
         }
         
@@ -148,11 +150,89 @@ public with sharing class HDT_UTL_CreditCheck {
         }
     }
 
+    public static Boolean managedErrorCode(String errorCode){
+        List<HDT_CreditCheckExcludedCode__mdt> codiceErroriGestiti = HDT_QR_GenericQuery.getGenericRecords('Label', 'HDT_CreditCheckExcludedCode__mdt', 'ErrorCode__c = \''+errorCode+ '\' AND IsActive__c = true');
+        return !codiceErroriGestiti.isEmpty();
+    }
+
+    public static Boolean skipTriggerDuringCall(List<Order> newOrderList, Map<Id,Order> oldOrderMap){
+        if (newOrderList.size() == 1 && newOrderList[0].CreditCheckInProgress__c && !oldOrderMap.get(newOrderList[0].Id).CreditCheckInProgress__c) {
+            return true;
+        }
+        return false;
+    }
+
+    public static Map<SObject,SObject> verifyCreditCheckStatus(List<Order> newOrderList, Map<Id,Order> oldOrderMap){
+        Map<SObject,SObject> mapOrderNotSkipCreditCheck = new Map<SObject,SObject>();
+        Map<String,Set<String>> warningStatusMap = getWarnigStatusCreditCheck();
+        for (Order newOrder : newOrderList){
+            Order oldOrder = oldOrderMap.get(newOrder.Id);
+            if (oldOrder.EffectiveDate__c != null && newOrder.EffectiveDate__c ==null){
+                newOrder.EffectiveDate__c = oldOrder.EffectiveDate__c;
+            }
+            if (!setCreditCheckOnSinglOrder(newOrder, oldOrder,warningStatusMap.containsKey(newOrder.RecordTypeId)? warningStatusMap.get(newOrder.RecordTypeId) : warningStatusMap.get('FOR_ALL'))){
+                mapOrderNotSkipCreditCheck.put(newOrder,oldOrderMap.get(newOrder.Id));
+            }
+        }
+        return mapOrderNotSkipCreditCheck;
+    }
+
+    private static Map<String,Set<String>> getWarnigStatusCreditCheck(){
+        Map<String,Set<String>> warningStatusMap = new Map<String,Set<String>>();
+        for (HDT_WarningStatusList__mdt status : HDT_WarningStatusList__mdt.getAll().values()){
+            if (status.IsActive__c && String.isNotBlank(status.SendingPhase__c)){
+                String key = getKeyFromStatus(status);
+                if (String.isBlank(key)){
+                    continue;
+                } 
+                if (!warningStatusMap.containsKey(key)){
+                    warningStatusMap.put(key, new Set<String>());
+                }
+                warningStatusMap.get(key).add(status.SendingPhase__c.toUpperCase());
+            }
+        }
+        return warningStatusMap;
+    }
+
+    private static Boolean setCreditCheckOnSinglOrder(Order newOrder, Order oldOrder,Set<String> warningStatusList){
+        Boolean creditCheckManage = false;
+        String oldPhase = oldOrder?.Phase__c;
+        String rtDeveloperName = Schema.SObjectType.Order.getRecordTypeInfosById().get(newOrder.RecordTypeId).getDeveloperName();
+        Boolean changePhase = String.isNotBlank(newOrder.Phase__c) ? !newOrder.Phase__c.equalsIgnoreCase(oldPhase) : String.isNotBlank(oldPhase);
+        DateTime nowDateTime = DateTime.now();
+        if ( changePhase && warningStatusList.contains(newOrder.Phase__c?.toUpperCase())
+            && HDT_UTL_OrderProcess.checkRecordTypeForCreditCheck(rtDeveloperName, newOrder)
+            && (newOrder.CreditCheckInProgress__c || 'KO'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c) || 'KO'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c))){
+                String newPhase = newOrder.CreditCheckInProgress__c? 'Attesa Credit Check' : 'Credit Check KO';
+                newOrder.Phase__c = newPhase;
+                newOrder.PhaseStory__c = !String.isBlank(oldOrder?.PhaseStory__c) 
+                        ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder?.PhaseStory__c
+                        : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
+                creditCheckManage = true;
+
+        }
+        return creditCheckManage;
+    }
+
+    private static String getKeyFromStatus(HDT_WarningStatusList__mdt status){
+        try{
+            return String.isBlank(status.RecordTypeDev__c) ? 'FOR_ALL' : (String)Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(status.RecordTypeDev__c).getRecordTypeId();
+        }catch (Exception e){
+            return '';
+        }
+    }
+
+    
+
     public class HDT_WRP_DataForUpdate{
         public String orderId;
         public String outcome;
         public String outcomeDescription;
         public Boolean outcoming;
+
+        public Boolean isEmpty(){
+            return String.isEmpty(this.orderId);
+        }
     }
     
 }

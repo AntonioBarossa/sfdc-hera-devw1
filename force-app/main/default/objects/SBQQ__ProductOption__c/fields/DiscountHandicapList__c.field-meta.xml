@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DiscountHandicapList__c</fullName>
+    <externalId>false</externalId>
+    <label>Sconto portatori Handicap/Inval</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>TRDH_1_3-Port.Hand. - 1 su 3</fullName>
+                <default>false</default>
+                <label>TRDH_1_3-Port.Hand. - 1 su 3</label>
+            </value>
+            <value>
+                <fullName>TRDH_1_4-Port.Hand. - 1 su 4</fullName>
+                <default>false</default>
+                <label>TRDH_1_4-Port.Hand. - 1 su 4</label>
+            </value>
+            <value>
+                <fullName>TRDH_1_5-Port.Hand. - 1 su 5</fullName>
+                <default>false</default>
+                <label>TRDH_1_5-Port.Hand. - 1 su 5</label>
+            </value>
+            <value>
+                <fullName>TRDH_1_6-Port.Hand. - 1 su 6</fullName>
+                <default>false</default>
+                <label>TRDH_1_6-Port.Hand. - 1 su 6</label>
+            </value>
+            <value>
+                <fullName>TRDH_2_3-Port.Hand. - 2 su 3</fullName>
+                <default>false</default>
+                <label>TRDH_2_3-Port.Hand. - 2 su 3</label>
+            </value>
+            <value>
+                <fullName>TRDH_2_5-Port.Hand. - 2 su 5</fullName>
+                <default>false</default>
+                <label>TRDH_2_5-Port.Hand. - 2 su 5</label>
+            </value>
+            <value>
+                <fullName>TRDH_2_6-Port.Hand. - 2 su 6</fullName>
+                <default>false</default>
+                <label>TRDH_2_6-Port.Hand. - 2 su 6</label>
+            </value>
+            <value>
+                <fullName>TRDH_3_4-Port.Hand. - 3 su 4</fullName>
+                <default>false</default>
+                <label>TRDH_3_4-Port.Hand. - 3 su 4</label>
+            </value>
+            <value>
+                <fullName>TRDH_3_5-Port.Hand. - 3 su 5</fullName>
+                <default>false</default>
+                <label>TRDH_3_5-Port.Hand. - 3 su 5</label>
+            </value>
+            <value>
+                <fullName>TRDH_4_5-Port.Hand. - 4 su 5</fullName>
+                <default>false</default>
+                <label>TRDH_4_5-Port.Hand. - 4 su 5</label>
+            </value>
+            <value>
+                <fullName>TRDH_4_6-Port.Hand. - 4 su 6</fullName>
+                <default>false</default>
+                <label>TRDH_4_6-Port.Hand. - 4 su 6</label>
+            </value>
+            <value>
+                <fullName>TRDH_5_6-Port.Hand. - 5 su 6</fullName>
+                <default>false</default>
+                <label>TRDH_5_6-Port.Hand. - 5 su 6</label>
+            </value>
+            <value>
+                <fullName>TRDH_ALL-Port.Hand. – tutti</fullName>
+                <default>false</default>
+                <label>TRDH_ALL-Port.Hand. – tutti</label>
+            </value>
+            <value>
+                <fullName>TRDH_MET-Port.Hand. - metà componenti</fullName>
+                <default>false</default>
+                <label>TRDH_MET-Port.Hand. - metà componenti</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

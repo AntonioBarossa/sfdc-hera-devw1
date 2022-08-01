@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : Giacinto Florio
+ * @group             : 
+ * @last modified on  : 07-07-2022
+ * @last modified by  : Giacinto Florio
+**/
 @SuppressWarnings('PMD.CyclomaticComplexity')
 public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseValidationInterface {
 
@@ -101,11 +108,16 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         }else if(caseType == 'Proroga Conn Temp')
         {
             Date currentEndDate = currentCase.TemporaryConnectionEndDate__c;
-            result = validateEndDate(fields, currentEndDate);
+            result = validateEndDate(fields, currentEndDate, currentCase);
         }else if(cluster.equalsIgnoreCase('Attivazioni'))
         {
             result = validateAttivazioniPostSales(fields);
-        }else {
+        }else if(caseType=='Cessazione' || caseType=='Cessazione post accertamento')   
+        {
+            result = cessazioneValidate(currentCase, fields);
+        }   
+        
+        else {
 
         result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
@@ -115,6 +127,13 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
+    private String cessazioneValidate(Case currCase, String fields){
+        if( getFieldValue(fields, 'EffectiveDate__c') > getFieldValue(fields, 'DeclarationDate__c') || getFieldValue(fields, 'EffectiveDate__c') > String.valueOf(Date.today())) {
+            return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Attenzione! La data di decorrenza non può essere maggiore della data dichiarazione e non può essere maggiore della data odierna'));
+        }
+        return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+    }
+    
     /*
     * @Author: Salvatore A. Sarà 19/10/2021
     * Risoluzione "Debug Should Use Logging Level"
@@ -684,7 +703,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         && (getFieldValue(fields, 'CompliantOriginEmail__c') == null || getFieldValue(fields, 'CompliantOriginEmail__c') == '')){
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire indirizzo Email provenienza reclamo'));
-        }else if(delegateName != null && delegateName != ''){
+        /*}else if(delegateName != null && delegateName != ''){
             
             attachedDocument = caseValidationQr.getDocumentByCaseId(recordId); 
             
@@ -697,8 +716,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
                  
             }
-       
-        } else if((getFieldValue(fields,'FithLevelComplaintClassification__c') == null || getFieldValue(fields,'FithLevelComplaintClassification__c') == '')
+        */
+        }else if((getFieldValue(fields,'FithLevelComplaintClassification__c') == null || getFieldValue(fields,'FithLevelComplaintClassification__c') == '')
         && (getFieldValue(fields, 'SoldBy__c') != null && getFieldValue(fields, 'SoldBy__c') != '')){
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Venduto Da non deve essere valorizzato se 5° Livello non é valorizzato'));
@@ -795,6 +814,13 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 {
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
                         'Se Categoria Disalimentabilità è "01- App. medico terapeutiche" bisogna valorizzare a SI "Autocert. di acq. da cliente cert. ASL"'));
+                }
+                else if(String.isNotBlank(disconnectableCategory) 
+                && !disconnectableCategory.equalsIgnoreCase('01- App. medico terapeutiche')
+                && !disconnectableCategory.equalsIgnoreCase('02- Pubblica utilità'))
+                {
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
+                    'Impossibile selezionare valori differenti da "01- App. medico terapeutiche" o "02- Pubblica utilità" per Categoria Disalimentabilità'));
                 }
                 else {
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
@@ -1056,12 +1082,18 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     private String validateVerificaTitolarita(Case currentCase) {
 
+        /**@frpanico 2022-07-08
+         * TK 904342C
+         * Rimuovere obbligatorieta allegato
+         */
+        
+        /*
         List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
 
         if(attachedDocument.size() == 0){
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
         }
-            
+        */    
         return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
     }
 
@@ -1219,7 +1251,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return result;
     }
 
-    public String validateEndDate(String fields, Date currentEndDate){
+    public String validateEndDate(String fields, Date currentEndDate, Case currentCase){
 
         String endDateString = getFieldValue(fields, 'TemporaryConnectionEndDate__c');
 
@@ -1227,8 +1259,14 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         Date endDate = Date.valueOf(endDateString);
 
+        List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+
         if ( currentEndDate > endDate) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario che la data fine connessione temporanea sia successiva a quella già esistente sul contratto.'));
+        }
+        if(attachedDocument.size() == 0)
+        {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire allegati'));
         }
 
         return result;

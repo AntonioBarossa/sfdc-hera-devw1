@@ -30,11 +30,7 @@ public inherited sharing class HDT_UTL_Case {
         
 
         if(process == 'Voltura Tecnica'){
-
-            if(effectiveDate == null){
-                effectiveDate = addBusinessDay(System.today(), 3);
-            }
-
+            effectiveDate = addBusinessDay(System.today(), 3);
             output.effectiveDate = effectiveDate;
         
         } else if(cluster == 'Preventivi'){
@@ -54,8 +50,30 @@ public inherited sharing class HDT_UTL_Case {
 
                 
                 // output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
-                output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
-                output.salesCompany = city.SDV__c;
+                switch on city.SDV__c {
+                    when 'HCM' {
+                        output.salesCompanyCode = '10V0000160';
+                        output.salesCompany = 'Hera Comm Marche';
+                    }
+                    when 'HC' {
+                        output.salesCompanyCode = '13V0000000';
+                        output.salesCompany = 'Hera Comm S.p.A.';
+                    }
+                    when 'EENE'{
+                        if(currentCase.Commodity__c!= null && currentCase.Commodity__c.equalsIgnoreCase('Energia Elettrica')){
+                            output.salesCompanyCode = '13V0000170';
+                        }else {
+                            output.salesCompanyCode = '10V0000263';
+                        }
+                        output.salesCompany = 'ESTENERGY SPA';
+                    }
+                    when else {
+                        output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
+                        output.salesCompany = city.SDV__c;
+                    }
+                }
+                //output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
+                //output.salesCompany = city.SDV__c;
             }
         } 
         else if(process.equalsIgnoreCase('Compatibilita'))
@@ -297,6 +315,24 @@ public inherited sharing class HDT_UTL_Case {
         }
     }
 
-
-
+    public static List<ServiceRequest__c> createServiceRequestFromCases(List<Case> caseList)
+    {
+        List<ServiceRequest__c> serviceRequestList = new List<ServiceRequest__c>();
+        String processType = 'Allineamento anagrafica';
+        String status = 'Bozza';
+        String type = 'Case';
+        for(Case singleCase : caseList)
+        {
+            ServiceRequest__c srRequest = new ServiceRequest__c();
+            srRequest.Case__c = singleCase.Id;
+            srRequest.CommoditySector__c = singleCase.CommodityFormula__c;
+            srRequest.ProcessType__c = processType;
+            srRequest.ServicePointCode__c = singleCase.PODPDRFormula__c;
+            srRequest.ServicePoint__c = singleCase.ServicePoint__c;
+            srRequest.Status__c = status;
+            srRequest.Type__c = type;
+            serviceRequestList.add(srRequest);
+        }
+        return serviceRequestList;
+    }
 }

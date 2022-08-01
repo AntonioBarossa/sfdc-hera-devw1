@@ -30,6 +30,10 @@
                 <behavior>Readonly</behavior>
                 <field>CommercialProduct__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ContractSalesCompany__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -101,7 +101,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
                         }            
                     //}
                 }else {
-                    break;
+                    continue;
                 }
 				if(dateSentToSii != null){
 					order.DateSentToSII__c = dateSentToSii;
@@ -132,11 +132,13 @@ public with sharing class HDT_UTL_ProcessDateManager {
 			if(order.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
 				dateToFrom = order.EffectiveDate__c;
 			}else if(order.EffectiveDate__c == null){
-				break;
+				continue;
 			}else {
-				break;
+				continue;
 			}
-			if(dateToFrom != null){
+			if(!order.IsActivationDeferred__c){
+				order.DateSentToSII__c = order.WizardCompletedDate__c != null? order.WizardCompletedDate__c:Date.today();
+			}else if(dateToFrom != null){
 				Boolean founded = false;
 				for(FulfillmentDateMatrix__c singleRecord : dateMatrix){
 						founded = false;
@@ -226,11 +228,11 @@ public with sharing class HDT_UTL_ProcessDateManager {
 					dateToFrom = order.DateSentToSII__c;
 				}else if(order.EffectiveDate__c == null){
 					order.EffectiveDate__c = order.SignedDate__c;
-					break;
+					continue;
 				}
 
 				if (order.IsActivationDeferred__c==true) {
-					break;
+					continue;
 				}
 				
 				if(dateToFrom != null){

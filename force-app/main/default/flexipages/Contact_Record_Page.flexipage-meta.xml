@@ -18,6 +18,16 @@
                         <valueListItems>
                             <value>Contact.HDT_RecallMe</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>LoginToNetworkAsUser</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>System Administrator</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -281,7 +291,7 @@
         <name>activityTabContent</name>
         <type>Facet</type>
     </flexiPageRegions>
-    <!--<flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentName>forceChatter:recordFeedContainer</componentName>
@@ -290,7 +300,7 @@
         <mode>Replace</mode>
         <name>feedTabContent</name>
         <type>Facet</type>
-    </flexiPageRegions>-->
+    </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
@@ -327,6 +337,17 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>activityId</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>recordId</name>
+                </componentInstanceProperties>
+                <componentName>hdtActivityTrace</componentName>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>

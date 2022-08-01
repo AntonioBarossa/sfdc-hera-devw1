@@ -444,6 +444,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
         var amount = 0.0;
         var amountFee = 0.0;
         let documentResidue = 0.0;
+        let raiFee = 0.0;
 
         if(documents){
             documents.forEach(document =>{
@@ -454,6 +455,10 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 if(document.TvFeeResidual__c !== null && document.TvFeeResidual__c !== undefined)
                 {
                     amountFee += document.TvFeeResidual__c;
+                }
+                if(document.RaiFeeAmount__c !== null && document.RaiFeeAmount__c !== undefined)
+                {
+                    raiFee += document.RaiFeeAmount__c;
                 }
                 documentResidue += document.DocumentResidue__c;
             });
@@ -466,7 +471,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
         this.amountWoFee = amount - amountFee;
         this.amountWiFee = amount;
         this.documentResiudal = documentResidue;
-        this.raiFeeAmount = amountFee;
+        this.raiFeeAmount = raiFee;
 
         // Istanzia i campi da mostrare.
         console.log('#CalculateAmount: processType -> ' + this.processType);

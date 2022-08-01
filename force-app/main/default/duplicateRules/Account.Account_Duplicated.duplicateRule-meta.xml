@@ -10,7 +10,7 @@
         <matchingRule>Account_Matching</matchingRule>
         <objectMapping xsi:nil="true"/>
     </duplicateRuleMatchRules>
-    <isActive>true</isActive>
+    <isActive>false</isActive>
     <masterLabel>Account Duplicated</masterLabel>
     <securityOption>BypassSharingRules</securityOption>
     <sortOrder>2</sortOrder>

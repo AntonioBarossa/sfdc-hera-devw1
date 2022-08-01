@@ -182,12 +182,12 @@
         <lookupPhoneDialogsAdditionalFields>CONTRACT.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CORE.USERS.ALIAS</lookupPhoneDialogsAdditionalFields>
         <searchResultsAdditionalFields>CONTRACT.CONTRACT_NUMBER</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>CONTRACT.NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>SAPContractCode__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>SALES.ACCOUNT.NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTRACT.STATUS</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTRACT.START_DATE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTRACT.END_DATE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTRACT_TERM</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
 </CustomObject>

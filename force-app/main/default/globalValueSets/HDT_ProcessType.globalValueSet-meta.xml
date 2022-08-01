@@ -696,9 +696,9 @@
         <label>Subentro su GDM chiuso - GAS</label>
     </customValue>
     <customValue>
-        <fullName>Switch in  - GAS</fullName>
+        <fullName>Switch in - GAS</fullName>
         <default>false</default>
-        <label>Switch in  - GAS</label>
+        <label>Switch in - GAS</label>
     </customValue>
     <customValue>
         <fullName>Switch in - EE</fullName>

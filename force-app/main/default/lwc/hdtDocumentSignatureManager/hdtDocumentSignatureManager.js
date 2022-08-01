@@ -4,6 +4,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import getSignSendMode from '@salesforce/apex/HDT_LC_DocumentSignatureManager.getSignSendMode';
 import handleContactPoint from '@salesforce/apex/HDT_LC_DocumentSignatureManager.handleContactPoint';
+import TraderWithdrawalDate__c from '@salesforce/schema/Order.TraderWithdrawalDate__c';
 const sourceWithDefault = ['Agenzie','Agenzie SME','Business Agent'];
 const signModeAgenzie = 'Contratto già firmato';
 const sendModeAgenzie = 'Posta Cartacea';
@@ -48,6 +49,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track tipoPlico='';
     @track showModalContact=false;
     @track contactPointInfo;
+    @track requireSendMode=true;
     defautlAgenciesManagement;
 
     //@frpanico 07/09 added EntryChannel__c (Canale di Ingresso) to predefault SendMode
@@ -101,6 +103,11 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.sendMode = inputWrapper.sendMode;
                 this.entryChannel = inputWrapper.entryChannel;
                 this.defautlAgenciesManagement = false;
+
+                if(this.signMode === 'Vocal Order' && this.processType === 'Modifica Privacy'){
+                    this.requireSendMode = false;
+                    this.emailRequired = false;
+                }
                 if (inputWrapper.checkAgencies && inputWrapper.checkAgencies.localeCompare('Y') === 0){
                     this.defautlAgenciesManagement = true;
                 }
@@ -141,8 +148,13 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     var sendMode = [];
                     var signSendMode;
                     var signSendModeList = [];
+                    var existContrattoFirmato = false;
                     resultJSON.forEach((element) => {
                         signMode.push(element.signMode);
+                        console.log('#element >>> ' + JSON.stringify(element.signMode));
+                        if(element.signMode.value === 'Contratto già firmato'){
+                            existContrattoFirmato = true;
+                        }
                         element.sendMode.forEach((element2) => {
                             sendMode.push(element2);
                         });
@@ -153,16 +165,16 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                         signSendModeList.push(signSendMode);
                         sendMode = [];
                     });
-                    if(this.loginSource != null && this.loginSource.localeCompare('Back office') === 0 && this.context.localeCompare('Order') === 0){
+                    if(this.loginSource != null && this.loginSource.localeCompare('Back office') === 0 && this.context.localeCompare('Order') === 0 && !existContrattoFirmato){
                         console.log('##inside backoffice');
                         sendMode = [];
                         const obj = {value: 'Stampa Cartacea', label: 'Stampa Cartacea'};
                         sendMode.push(obj);
                         signSendMode = {
-                            signMode : 'Cartacea',
+                            signMode : 'Contratto già firmato',
                             sendMode : sendMode
                         };
-                        const obj2 = {value: 'Cartacea', label: 'Cartacea'};
+                        const obj2 = {value: 'Contratto già firmato', label: 'Contratto già firmato'};
                         signMode.push(obj2);
                         signSendModeList.push(signSendMode);
                     }
@@ -284,7 +296,11 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
             if (modSpedizione == null){
                 modSpedizione = '';
             }
-            if(modFirma.localeCompare('OTP Coopresenza')===0 || modFirma.localeCompare('OTP Remoto')===0){
+            if(modFirma.localeCompare('Vocal Order')===0 && this.processType != null && this.processType === 'Modifica Privacy'){
+                this.emailRequired = false;
+                this.phoneRequired = false;
+                this.addressRequired = false;
+            }else if(modFirma.localeCompare('OTP Coopresenza')===0 || modFirma.localeCompare('OTP Remoto')===0){
                 this.emailRequired = true;
                 this.phoneRequired = true;
                 this.addressRequired = false;
@@ -316,12 +332,18 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     handleChangeSignMode(event){
         try{
             this.sendMode = null;
+            this.dispatchEvent(new CustomEvent('changesignmode', { detail: event.detail.value}));
             var temp = this.signSendMap.find(function(post, index) {
                 if(post.signMode == event.detail.value)
                     return true;
             });
             console.log(JSON.stringify(temp));
             this.modalitaInvio = temp.sendMode;
+            console.log('Mod Invio ' + this.modalitaInvio);
+            if(event.detail.value === 'Vocal Order' && this.processType != null && this.processType === 'Modifica Privacy'){
+                this.requireSendMode = false;
+                this.emailRequired = false;
+            }
             console.log('mod invio ' + this.modalitaInvio);
             this.phoneRequired = false;
             this.addressRequired = false;
@@ -332,6 +354,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 resetDate = false;
             }
             this.launchSetRequiredFieldEvent(resetDate);
+            
         }catch(error){
             console.error(error);
         }
@@ -386,11 +409,14 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
         console.log('### ' +this.returnWrapper.email);
         console.log('### ' +this.returnWrapper.phone);
         console.log('### ' +this.returnWrapper.contactId);
-        if(this.returnWrapper.contactId != '' && this.returnWrapper.contactId != undefined){
+        console.log('### ' +this.returnWrapper.leadId);
+        if(this.returnWrapper.contactId !== '' && this.returnWrapper.contactId !== undefined && this.returnWrapper.leadId !== undefined && this.returnWrapper.leadId !== null){
+            let contactId = this.returnWrapper.leadId !== undefined && this.returnWrapper.leadId !== '' ? this.returnWrapper.leadId : this.returnWrapper.contactId;
+            console.log('### contactId' + contactId); 
             handleContactPoint({
                 email: this.returnWrapper.email,
                 phone: this.returnWrapper.phone,
-                contactId:this.returnWrapper.contactId,
+                contactId:contactId,
                 mode:'query'
             }).then(result => {
                 this.contactPointInfo = JSON.parse(result);
@@ -416,11 +442,12 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
         if(this.contactPointInfo.phone === 'KO'){
             phone = this.returnWrapper.phone;
         }
-        
+        let contactId = this.returnWrapper.leadId !== undefined && this.returnWrapper.leadId !== '' ? this.returnWrapper.leadId : this.returnWrapper.contactId;
+        console.log('### contactId' + contactId); 
         handleContactPoint({
             email: email,
             phone: phone,
-            contactId:this.returnWrapper.contactId,
+            contactId:contactId,
             mode:'insert'
         }).then(result => {
             console.log('result' + result);

@@ -68,7 +68,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             srvReq.ServicePoint__c= srRequest.ServicePoint__c;
         }else{
             srvReq.Account__c= srRequest.Account__c;
-            srvReq.BillingProfile__c= srRequest.BillingProfile__c;
+            if(srRequest.BillingProfile__c != null)
+            {
+                srvReq.BillingProfile__c= srRequest.BillingProfile__c;
+            }
+        }
+        if(srvReq.Type__c != null && srvReq.ServicePointCode__c != null && (srvReq.Type__c.containsIgnoreCase('Sconti e bonus') || srvReq.ServicePointCode__c.equalsIgnoreCase('PODPROVVISORIO')))
+        {
+            srvReq.Account__c = srRequest.Account__c;
         }
         srvReq.ProcessType__c= srRequest.ProcessType__c;
         HDT_SRV_ServiceRequest.createRecord(srvReq);
@@ -167,13 +174,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 }
             }
 
-            if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale')
-            {
                 newOrder.VAT__c = 
                     order.CommodityFormula__c == 'Energia Elettrica' ?
                         order.SupplyType__c == 'Domestico' ? 'Iva 10% (Cod. 01)' : 'Iva 22% (Cod. 02)'
                     : 'Iva 22% (Cod. 02)';
-            }
+            
             if(order.CommodityFormula__c == 'Gas')
             {
                 newOrder.ExciseGAS__c = (order.SupplyType__c == 'A-Domestico' || order.SupplyType__c == 'B-Condominio') ? 'Imposta Usi Domestici (Cod. G_ICD)' : 'Imposta usi non domestici iva 22% (Cod. G_ICC)';

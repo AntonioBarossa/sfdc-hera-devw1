@@ -275,7 +275,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         setSingleRow.discountCode.label = tempItem.DiscountCode__c;
         setSingleRow.discountCode.value = tempItem.DiscountCodeValue__c;
 
-        setSingleRow.stringValue.label = tempItem.StringValue__c;
+        setSingleRow.stringValue.value = tempItem.StringValue__c;
         return setSingleRow;
     }
 
@@ -337,6 +337,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         tecOffItem.DiscountCode__c = offerLine.discountCode.label;
         tecOffItem.DiscountCodeValue__c = offerLine.discountCode.value;
         tecOffItem.StringValue__c = offerLine.stringValue.value;
+
         return tecOffItem;
     }
     
@@ -657,6 +658,10 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
                 position.sconto = item.DiscountCodeValue__c;
                 position.valore = item.NumericValue__c;
                 position.stringa = item.StringValue__c;
+
+                if(item.Type__c.equalsIgnoreCase('FLAG') && item.Flag__c){
+                    position.stringa = 'X';
+                }
 
                 obj.header.input.add(position);
             }

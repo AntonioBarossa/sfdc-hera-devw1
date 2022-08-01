@@ -16,8 +16,12 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     * @description Handle "stampa" action
     * @param Order orderParent
     */
+
+    /* Il Metodo Save viene chiamato nelle casistiche in cui non si esegue la Stampa Documentale */
     @AuraEnabled
     public static void save(Order orderParent){ 
+
+        updateCommodityWithConsumptionAnalisi(orderParent.Id);
 
         /**@frpanico 2022-04-29
          * Aggiunta gestione del contratto gia firmato
@@ -168,8 +172,13 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         return JSON.serialize(wrpActivityVo);
     }
 
+    /* Viene chiamato quando si esegue la stampa documentale */
     @AuraEnabled
     public static void save2(Order orderParent,boolean isPlicoSend){ 
+
+        updateCommodityWithConsumptionAnalisi(orderParent.Id);
+
+        orderParent = [SELECT Id, Phase__c, ContractSigned__c, SignMode__c, SignatureMethod__c FROM Order WHERE Id = :orderParent.Id WITH SECURITY_ENFORCED];
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
@@ -207,6 +216,15 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         {
             orderToUpdate.Phase__c = 'Documentazione Gestita';
             orderToUpdate.status = 'Completed';
+        }
+        /**@frpanico 2022-07-15
+        * Gestione Accettato Digitalmente
+        */
+        if(orderParent.SignatureMethod__c != null && orderParent.SignatureMethod__c.equalsIgnoreCase('Accettato Digitalmente'))
+        {
+            orderToUpdate.Phase__c = 'Documentazione Gestita';
+            orderToUpdate.Status = 'Completed';
+            orderToUpdate.SignedDate__c = date.today();
         }
 
         //il campo SignMode è stato utilizzato per salvare il SignatureMethod dell'ultimo invio
@@ -391,7 +409,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         
         for (Order childOrder : childOrders) {
-            System.debug('PrcessType ' + childOrder.ProcessType__c);
             if ((childOrder.ProcessType__c != null && childOrder.ProcessType__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS')) || childOrder.Type.equalsIgnoreCase('Amendment')) {
                 result = true;
             }else {
@@ -452,24 +469,38 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         Boolean isFraud = false;
         String message = 'Nessuna frode trovata.';
 
-        List<Order> orderList =[SELECT PhoneNumber__c, ShippingMail__c, Contact__r.HomePhone, Contact__r.Phone, Contact__r.Email, ProcessType__c, LoginChannel__c, CustomerCategory__c
-                                FROM Order WHERE Id=:recordId WITH SECURITY_ENFORCED ];
+        Order parentOrder = new Order();
+        List<String> processList = new List<String>();
+
+        List<Order> orderList =[SELECT Account.Category__c, ParentOrder__c, PhoneNumber__c, ShippingMail__c, Contact__r.HomePhone, Contact__r.Phone, Contact__r.Email, ProcessType__c, Channel__c, CustomerCategory__c
+                                FROM Order WHERE Id=:recordId OR ParentOrder__c = :recordId WITH SECURITY_ENFORCED];
         
+        for(Order singleOrder : orderList)
+        {
+            if(singleOrder.ParentOrder__c == null)
+            {
+                parentOrder = singleOrder;
+            }
+            else
+            {
+                processList.add(singleOrder.ProcessType__c);
+            }
+        }
+
         if(!orderList.isEmpty()){
-            List<AmministrazioneFrodi__c> ammFrodiList = [SELECT BpNumber__c FROM AmministrazioneFrodi__c WHERE (Processo__c=: orderList[0].ProcessType__c AND CanaleVendita__c=: orderList[0].LoginChannel__c AND CategoriaCliente__c=: orderList[0].CustomerCategory__c) WITH SECURITY_ENFORCED ];
+            List<AmministrazioneFrodi__c> ammFrodiList = [SELECT BpNumber__c FROM AmministrazioneFrodi__c WHERE (Processo__c IN :processList AND CanaleVendita__c=: parentOrder.Channel__c AND CategoriaCliente__c=: parentOrder.Account.Category__c) WITH SECURITY_ENFORCED ];
             
             if( ammFrodiList != null && !ammFrodiList.isEmpty() ){
                 integer maxCount = maxInFraud(orderList[0]);
-                if( /* mmFrodiList[0].BpNumber__c != null && */ maxCount > ammFrodiList[0].BpNumber__c ){
+                if( /* mmFrodiList[0].BpNumber__c != null && */ maxCount >= ammFrodiList[0].BpNumber__c ){
                     //Annullamento con causale: phase annullato + causale .txt + update
                     if(orderParent != null){
-                        List<Order> ordiniDaAnnullare = orderQr.getChildOrdersByParentId(orderParent.Id);
-                        ordiniDaAnnullare.add(orderParent);
-                        for (Order ord : ordiniDaAnnullare) {
+                        for (Order ord : orderList) {
                             ord.phase__c = 'Annullato';
+                            ord.Status = 'Annullato';
                             ord.CancellationReason__c = 'Annullato per possibile frode';
                         }
-                        HDT_UTL_DatabaseService.updateSObject(ordiniDaAnnullare);
+                        HDT_UTL_DatabaseService.updateSObject(orderList);
                     }else{
                         Order ord = new Order();
                         ord.Id = orderList[0].Id;
@@ -519,6 +550,72 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             maxCount = maxCount < (integer)count[0].get('expr0')? (integer)count[0].get('expr0') : maxCount;
         }
         return maxCount;
+    }
+
+
+    public static void updateCommodityWithConsumptionAnalisi(String orderParentId)
+    {
+        List<OrderItem> orderItems = [SELECT Id,
+        OwnerAC__c,
+        DwellingType__c,
+        OccupantsNumber__c,
+        Surface__c,
+        Product2.Family,
+        SBQQ__QuoteLine__c,
+        Order.ServicePointCode__c,
+        Order.VasSubtype__c
+        FROM OrderItem
+        WHERE Order.ParentOrder__c = :orderParentId
+        WITH SECURITY_ENFORCED];
+
+        List<SObject> sobjToUpdate = new List<SObject>();
+
+        Map<String, Map<String,OrderItem>> podOrderItemMap = new Map<String, Map<String,OrderItem>>();
+        /* Build the map that groups orderItems for ServicePointCode of the related order */
+        for(OrderItem item : orderItems)
+        {
+            if(!podOrderItemMap.containsKey(item.Order.ServicePointCode__c))
+            {
+                podOrderItemMap.put(item.Order.ServicePointCode__c, new Map<String,OrderItem>());
+            }
+            if(item.Product2.Family != null && item.Product2.Family.equalsIgnoreCase('Offerta commerciale'))
+            {
+                podOrderItemMap.get(item.Order.ServicePointCode__c).put('offertaCommerciale',item);
+            }
+            if(item.Product2.Family != null && item.Product2.Family.equalsIgnoreCase('VAS Fatturabili') && item.Order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi'))
+            {
+                podOrderItemMap.get(item.Order.ServicePointCode__c).put('analisiConsumi',item);
+            }
+        }
+        /* Write on the commodity OrderItem/QuoteLine
+        Consumption Analysis fields 
+        */
+        for(String key : podOrderItemMap.keySet())
+        {
+            if(podOrderItemMap.get(key).get('analisiConsumi') == null)
+            {
+                continue;
+            }
+            OrderItem offertaCommerciale = new OrderItem(Id = (String) (podOrderItemMap.get(key).get('offertaCommerciale')).get('Id'));
+            SBQQ__QuoteLine__c offertaCommQl = new SBQQ__QuoteLine__c(Id =(String) (podOrderItemMap.get(key).get('offertaCommerciale')).get('SBQQ__QuoteLine__c'));
+            offertaCommerciale.OwnerAC__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('OwnerAC__c');
+            offertaCommerciale.DwellingType__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('DwellingType__c');
+            offertaCommerciale.OccupantsNumber__c = (Decimal) (podOrderItemMap.get(key).get('analisiConsumi')).get('OccupantsNumber__c');
+            offertaCommerciale.Surface__c = (Decimal) (podOrderItemMap.get(key).get('analisiConsumi')).get('Surface__c');
+            offertaCommQl.OwnerAC__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('OwnerAC__c');
+            offertaCommQl.DwellingType__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('DwellingType__c');
+            offertaCommQl.OccupantsNumber__c = (Decimal) (podOrderItemMap.get(key).get('analisiConsumi')).get('OccupantsNumber__c');
+            offertaCommQl.Surface__c = (Decimal) (podOrderItemMap.get(key).get('analisiConsumi')).get('Surface__c');
+
+            sobjToUpdate.add(offertaCommerciale);
+            sobjToUpdate.add(offertaCommQl);
+        }
+
+        if(!sobjToUpdate.isEmpty())
+        {
+            HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
+        }
+
     }
 
 }
