@@ -119,6 +119,9 @@
                     else if(element.pageReference.attributes.recordId===orderId){
                         orderTabId = element.tabId;
                     }
+                    else if(element.pageReference.attributes.recordId===parentRecordId){
+                        orderTabId = element.tabId;
+                    }
                 }
             });
             console.log('----------');

@@ -109,7 +109,14 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOM_MARKING })
     customerGetMarkingOptions({error, data}) {
         if (data){
-            this.customerData = data;
+            try{
+                this.customerData = {
+                    "controllerValues" : data.controllerValues,
+                    "values" : data.values.filter(element => !(new RegExp("D[0-9] - ").test(element.value)))
+                };
+            }catch(err){
+                console.log('@@@@@@error ' + JSON.stringify(err));
+            }
         }
     };
     
@@ -140,17 +147,17 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     handleCompanyOwnerChange(event) {
         console.log("***************CHANGE" + event.target.value);
         let key = this.customerData.controllerValues[event.target.value];
-        //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
         //this.filterMarkingOptions();
-        let customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
-        this.filterMarkingOptions(customerMarkingOptionsPreCheck);
+        //let customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        //this.filterMarkingOptions(customerMarkingOptionsPreCheck);
         this.companyPicklist( event.target.value);
+        this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
         this.markingValue = '';
         this.categoryValue = '';
         
     }
     //filterMarkingOptions(){
-    filterMarkingOptions(customerMarkingOptionsPreCheck){
+    /* filterMarkingOptions(customerMarkingOptionsPreCheck){
         console.log("@@@@Option Marcatura Cliente " + JSON.stringify(customerMarkingOptionsPreCheck));
         var customMarkingOptions=[];
         //this.customerMarkingOptions.forEach(function callbackFn(element, index) {
@@ -168,7 +175,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         })
         
         this.customerMarkingOptions=customMarkingOptions;
-    }
+    } */
     handleCustomerChange(event) {
         let key = this.categoryData.controllerValues[event.target.value];
         this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
@@ -183,40 +190,41 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     
     inizializeInit(){
         checkRole({}).then((response) => {
-            let customerMarkingOptionsPreCheck = [];
+            //let customerMarkingOptionsPreCheck = [];
+            let key = '';
             if(response == 'HDT_BackOffice'){
                 this.showCompanyOwner = false;
             }else if(response == 'HDT_FrontOffice_HERA_COMM'){
                 this.companyDefault = 'HERA COMM';
                 this.showCompanyOwner = true;
-                let key = this.customerData.controllerValues['HERA COMM'];
+                key = this.customerData.controllerValues['HERA COMM'];
                 //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
-                customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                //customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
                 this.companyPicklist(this.companyDefault);
                 
             }else if(response == 'HDT_FrontOffice_Reseller'){
                 this.companyDefault = 'Reseller';
                 this.showCompanyOwner = true;
-                let key = this.customerData.controllerValues['Reseller'];
+                key = this.customerData.controllerValues['Reseller'];
                 //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
-                customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                //customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
                 this.companyPicklist(this.companyDefault);
             }
             else if(response == 'HDT_FrontOffice_MMS'){
                 this.companyDefault = 'MMS';
                 this.showCompanyOwner = true;
-                let key = this.customerData.controllerValues['MMS'];
+                key = this.customerData.controllerValues['MMS'];
                 //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
-                customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                //customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
                 this.companyPicklist(this.companyDefault);
                 
             }
             else if(response == 'HDT_FrontOffice_AAAEBT'){
                 this.companyDefault = 'AAA-EBT';
                 this.showCompanyOwner = true;
-                let key = this.customerData.controllerValues['AAA-EBT'];
+                key = this.customerData.controllerValues['AAA-EBT'];
                 //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
-                customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                //customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
                 this.companyPicklist(this.companyDefault);
                 
                 
@@ -224,14 +232,15 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             else{
                 this.companyDefault = 'HERA COMM';
                 this.showCompanyOwner = true;
-                let key = this.customerData.controllerValues['HERA COMM'];
+                key = this.customerData.controllerValues['HERA COMM'];
                 //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
-                customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                //customerMarkingOptionsPreCheck = this.customerData.values.filter(opt => opt.validFor.includes(key));
                 this.companyPicklist(this.companyDefault);
                 
             }
+            this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             //this.filterMarkingOptions();
-            this.filterMarkingOptions(customerMarkingOptionsPreCheck);
+            //this.filterMarkingOptions(customerMarkingOptionsPreCheck);
 
         });
     }
@@ -639,7 +648,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                             "fiscalCode": fiscalCodeToUC.replace(/ /g,""),
                             "phoneNumber": phoneNumber.value,
                             "mobilePhone" : mobilePhone.value,
-                            "name": firstNameToUC+' '+lastNameToUC,
+                            "name": firstNameToUC.trim()+' '+lastNameToUC,
                             "email": email.value,
                             "birthplace": birthPlaceToUC,
                             "recordTypeId" : this.RecordTypeId,
@@ -705,7 +714,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         "fiscalCode": fiscalCodeToUC.replace(/ /g,""),
                         "phoneNumber": phoneNumber.value,
                         "mobilePhone" : mobilePhone.value,
-                        "name": firstName.value+' '+lastName.value,
+                        "name": firstName.value.trim()+' '+lastName.value,
                         "email": email.value,
                         "birthplace": birthPlaceToUC,
                         "recordTypeId" : this.RecordTypeId,
