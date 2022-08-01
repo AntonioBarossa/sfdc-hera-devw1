@@ -333,6 +333,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>HC_CRM_SIND_CAFFARO</controllingFieldValue>
+            <valueName>MO_SP_PH_Fanano</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HC_CRM_SIND_CAFFARO</controllingFieldValue>
             <valueName>MO_SP_PH_Lama_Mocogno</valueName>
         </valueSettings>
         <valueSettings>
@@ -342,6 +346,10 @@
         <valueSettings>
             <controllingFieldValue>HC_CRM_SIND_CAFFARO</controllingFieldValue>
             <valueName>MO_SP_PH_Polinago</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HC_CRM_SIND_CAFFARO</controllingFieldValue>
+            <valueName>MO_SP_PH_Sestola</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>HC_CRM_SIND_COMBONP</controllingFieldValue>
@@ -409,32 +417,12 @@
             <valueName>FE_SP_PH_Bondeno</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>HC_CRM_SIND_LAMI</controllingFieldValue>
-            <valueName>MO_SP_PH_Pievepelago</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>HC_CRM_SIND_LAMONT</controllingFieldValue>
             <valueName>BO_SP_PH_Loiano</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>HC_CRM_SIND_LAPRAT</controllingFieldValue>
-            <valueName>RA_SP_PH_Alfonsine</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>HC_CRM_SIND_LAPRAT</controllingFieldValue>
             <valueName>RA_SP_PH_Fusignano</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>HC_CRM_SIND_LEMURA</controllingFieldValue>
-            <valueName>MO_SP_PH_Fanano</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>HC_CRM_SIND_LEMURA</controllingFieldValue>
-            <valueName>MO_SP_PH_Sestola</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>HC_CRM_SIND_LEONI</controllingFieldValue>
-            <valueName>RA_SP_PH_SPVincoli</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>HC_CRM_SIND_LTCH</controllingFieldValue>
