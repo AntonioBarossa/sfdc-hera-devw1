@@ -569,7 +569,7 @@
             <name>processTari_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetInputCaseAggiornato.RecordType.DeveloperName</leftValueReference>
+                <leftValueReference>Get_Input_Case.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>HDT_RT_ReclamiScrittiTARI</stringValue>
