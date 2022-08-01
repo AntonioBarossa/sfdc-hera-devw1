@@ -1358,90 +1358,90 @@
 
         <defaultConnectorLabel>Annullamento Passivo</defaultConnectorLabel>
         <rules>
-	<name>AnnullamentoPrestazione</name>
-	<conditionLogic>or</conditionLogic>
-	<conditions>
-		<leftValueReference>ProcessType</leftValueReference>
-		<operator>EqualTo</operator>
-		<rightValue>
-			<stringValue>Annullamento prestazione</stringValue>
-		</rightValue>
-	</conditions>
-	<conditions>
-		<leftValueReference>ProcessType</leftValueReference>
-		<operator>EqualTo</operator>
-		<rightValue>
-			<stringValue>Annullamento comunicazione pagamenti</stringValue>
-		</rightValue>
-	</conditions>
-	<conditions>
-		<leftValueReference>ProcessType</leftValueReference>
-		<operator>EqualTo</operator>
-		<rightValue>
-			<stringValue>Modifica dati contrattuali</stringValue>
-		</rightValue>
-	</conditions>
-	<conditions>
-		<leftValueReference>ProcessType</leftValueReference>
-		<operator>EqualTo</operator>
-		<rightValue>
-			<stringValue>Annullamento doppi pagamenti</stringValue>
-		</rightValue>
-	</conditions>
-	<conditions>
-		<leftValueReference>ProcessType</leftValueReference>
-		<operator>EqualTo</operator>
-		<rightValue>
-			<stringValue>Modifica post accertamento</stringValue>
-		</rightValue>
-	</conditions>
-	<conditions>
-		<leftValueReference>ProcessType</leftValueReference>
-		<operator>EqualTo</operator>
-		<rightValue>
-			<stringValue>Annullamento storno rateizzazione</stringValue>
-		</rightValue>
-	</conditions>
-	<conditions>
-		<leftValueReference>ProcessType</leftValueReference>
-		<operator>EqualTo</operator>
-		<rightValue>
-			<stringValue>Variazione indirizzo di fornitura tari</stringValue>
-		</rightValue>
-	</conditions>
-	<conditions>
-		<leftValueReference>ProcessType</leftValueReference>
-		<operator>EqualTo</operator>
-		<rightValue>
-			<stringValue>Cessazione</stringValue>
-		</rightValue>
-	</conditions>
-	<conditions>
-		<leftValueReference>ProcessType</leftValueReference>
-		<operator>EqualTo</operator>
-		<rightValue>
-			<stringValue>Cessazione post accertamento</stringValue>
-		</rightValue>
-	</conditions>
-	<conditions>
-		<leftValueReference>ProcessType</leftValueReference>
-		<operator>EqualTo</operator>
-		<rightValue>
-			<stringValue>Posizionamento contenitore</stringValue>
-		</rightValue>
-	</conditions>
-	<conditions>
-		<leftValueReference>ProcessType</leftValueReference>
-		<operator>EqualTo</operator>
-		<rightValue>
-			<stringValue>Annullamento segnalazioni</stringValue>
-		</rightValue>
-	</conditions>
-	<connector>
-		<targetReference>AssegnaValori</targetReference>
-	</connector>
-	<label>Annullamento Prestazione</label>
-</rules>
+            <name>AnnullamentoPrestazione</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Annullamento prestazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Annullamento comunicazione pagamenti</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica dati contrattuali</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Annullamento doppi pagamenti</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica post accertamento</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Annullamento storno rateizzazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Variazione indirizzo di fornitura tari</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cessazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cessazione post accertamento</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Posizionamento contenitore</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Annullamento segnalazioni</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValori</targetReference>
+            </connector>
+            <label>Annullamento Prestazione</label>
+        </rules>
         <rules>
             <name>Ripensamento</name>
             <conditionLogic>and</conditionLogic>
