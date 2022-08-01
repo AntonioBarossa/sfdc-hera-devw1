@@ -286,36 +286,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 else if (this.recordtype.label === 'Punto Gas' && element === 'PlugPresence__c') {
                     console.log('ENTRATO IN PUNTO GAS');
                 }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'PlugPresence__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'ServicePointCode__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'Distributor__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'SAPImplantCode__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'SupplyType__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'AnnualConsumption__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'Disconnectable__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'DisconnectibilityType__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'MarketOrigin__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'MeterStatus__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
                 else if (element == 'PowerRequested__c') {
 
                     fieldsDataObject.push(
@@ -531,36 +501,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
                 else if (this.recordtype.label === 'Punto Gas' && element === 'PlugPresence__c') {
                     console.log('ENTRATO IN PUNTO GAS');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'PlugPresence__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'ServicePointCode__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'Distributor__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'SAPImplantCode__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'SupplyType__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'AnnualConsumption__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'Disconnectable__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'DisconnectibilityType__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }                
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'MarketOrigin__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
-                }
-                else if (this.recordtype.label === 'Punto Ambiente' && element === 'MeterStatus__c') {
-                    console.log('ENTRATO IN PUNTO AMBIENTE');
                 }
                 else if (element == 'PowerRequested__c') {
 
