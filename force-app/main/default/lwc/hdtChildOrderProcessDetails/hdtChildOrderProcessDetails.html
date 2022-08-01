@@ -129,7 +129,7 @@
                                         <template if:true={section.value.hasVerificaAccertamento}>
                                            <c-hdt-active-repentant city={order.ServicePoint__r.SupplyCity__c} sottotipo="Subentro" onrequest_data={handleActiveRepentantStart} onend_algorithm={handleActiveRepentantFinish}></c-hdt-active-repentant>
                                         </template>
-                                        <lightning-button if:false={section.value.lastStep} value={section.value.name} onclick={handleNext} label="Avanti" variant="brand" class="slds-m-left_x-small" icon-name="utility:right"></lightning-button>
+                                        <lightning-button data-section-index={section.index} if:false={section.value.lastStep} value={section.value.name} onclick={handleNext} label="Avanti" variant="brand" class="slds-m-left_x-small" icon-name="utility:right"></lightning-button>
                                     </div>
                                 </div>
                             </lightning-accordion-section>

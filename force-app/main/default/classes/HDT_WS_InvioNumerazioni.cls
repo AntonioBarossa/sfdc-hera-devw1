@@ -8,6 +8,7 @@ public inherited sharing class HDT_WS_InvioNumerazioni {
         request.macroActivity = macroactivity;
         request.phoneNumber = phonenumber;
         request.callcenterName=agency;
+        request.queueName='PREVIEW';
         HDT_WS_StructureData structData=new HDT_WS_StructureData();
         structData.campaignMemberId=cmId;
         request.structureData=structData;
@@ -43,6 +44,7 @@ public inherited sharing class HDT_WS_InvioNumerazioni {
         @AuraEnabled public String phoneNumber;
         @AuraEnabled public String callDateTime;
         @AuraEnabled public String callcenterName;
+        @AuraEnabled public String queueName;
 
         @AuraEnabled public HDT_WS_StructureData structureData=new HDT_WS_StructureData();
     }

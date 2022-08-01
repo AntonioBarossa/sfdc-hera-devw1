@@ -31,8 +31,24 @@ export default class HdtPill extends LightningElement {
     }
 
     handleRemove(event){
+
+        console.log('@ rowId -> ' + this.rowId + ' - fieldName -> ' + this.fieldName);
+
         event.preventDefault();
         this.showPill = false;
+
+        const selectedEvent = new CustomEvent("setvaluetoparent", {
+            detail:  {
+                        rowId: this.rowId,
+                        fieldName: this.fieldName,
+                        recId: null,
+                        label: null
+                    }
+        });
+
+        // Dispatches the event.
+        this.dispatchEvent(selectedEvent);
+
     }
 
     openModal(event){

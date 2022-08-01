@@ -384,8 +384,10 @@ public with sharing class HDT_UTL_CaseProcess {
         try{
             Map<String, List<String>> fieldsMap = new Map<String,List<String>>{'AccountId' => new List<String>(), 'SupplyCity__c' => new List<String>(), 'SupplyStreetName__c' => new List<String>()};
             List<Case> toAnnul = new List<Case>();
+            List<String> caseIds = new List<String>();
             for(Case currCase : cases){
                 system.debug('@@@ Case Id:'+currCase.Id);
+                caseIds.add(currCase.Id);
                 //casesMap.put(currCase.Id, new Map<String,String>{'AccountId' => currCase.AccountId, 'SupplyCity__c' => currCase.SupplyCity__c, 'SupplyStreetName__c' => currCase.SupplyStreetName__c});
                 fieldsMap.get('AccountId').add(currCase.AccountId);
                 fieldsMap.get('SupplyCity__c').add(currCase.SupplyCity__c);
@@ -403,10 +405,8 @@ public with sharing class HDT_UTL_CaseProcess {
                                             AND BillingCity IN: fieldsMap.get('SupplyCity__c')
                                             AND BillingStreet IN: fieldsMap.get('SupplyStreetName__c')];
             system.debug('@@@@ related contract: '+relatedContracts);
-            List<wrts_prcgvr__Activity__c> notInsertActivity = [SELECT Id, Type__c, Case__c 
-                                                                FROM wrts_prcgvr__Activity__c 
-                                                                WHERE Case__c IN: cases
-                                                                AND (Type__c = 'Aprire variazione' OR Type__c = 'Aprire Cessazione')];
+            List<wrts_prcgvr__Activity__c> notInsertActivity = HDT_QR_Activity.getActivityFromTypeList(caseIds, new Set<String>{'Aprire variazione','Aprire Cessazione'});
+            
             List<Id> excludedCases = new List<Id>();
             for(wrts_prcgvr__Activity__c currAct : notInsertActivity){
                 excludedCases.add(currAct.Case__c);
@@ -424,11 +424,21 @@ public with sharing class HDT_UTL_CaseProcess {
                         !excludedCases.contains(CaseItem.Id) ){
                             if('Modifica post accertamento'.equalsIgnoreCase(caseItem.Type)){
                                 findContract = true;
-                                newActivityToInsert.add(new wrts_prcgvr__Activity__c(Account__c=caseItem.AccountId, Case__c=caseItem.Id, ServicePoint__c=caseItem.ServicePoint__c, Type__c='Aprire Variazione'));
+                                newActivityToInsert.add(new wrts_prcgvr__Activity__c(Account__c=caseItem.AccountId, 
+                                                                                     Case__c=caseItem.Id, 
+                                                                                     ServicePoint__c=caseItem.ServicePoint__c, 
+                                                                                     wrts_prcgvr__Status__c ='Aperta',
+                                                                                     DiscardCategory__c = 'Manuale',
+                                                                                     Type__c='Aprire Variazione'));
                                 break;
                             }else if('Cessazione post accertamento'.equalsIgnoreCase(caseItem.Type)){
                                 findContract = true;
-                                newActivityToInsert.add(new wrts_prcgvr__Activity__c(Account__c=caseItem.AccountId, Case__c=caseItem.Id, ServicePoint__c=caseItem.ServicePoint__c, Type__c='Aprire Cessazione'));
+                                newActivityToInsert.add(new wrts_prcgvr__Activity__c(Account__c=caseItem.AccountId,
+                                                                                     Case__c=caseItem.Id, 
+                                                                                     ServicePoint__c=caseItem.ServicePoint__c,
+                                                                                     wrts_prcgvr__Status__c ='Aperta',
+                                                                                     DiscardCategory__c = 'Manuale',
+                                                                                     Type__c='Aprire Cessazione'));
                                 break;
                             }
                     }

@@ -1,6 +1,6 @@
 <template>
     <template if:true={recordId}>
-        <template if:true={loading}>
+        <template if:true={showSpinner}>
             <lightning-spinner alternative-text="Loading"></lightning-spinner>
         </template>
         <lightning-record-edit-form record-id={recordId} object-api-name={objectApiName} onload={loadedForm}>

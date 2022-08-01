@@ -2,29 +2,12 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>MethodsForOutgoingPayments__c</fullName>
     <externalId>false</externalId>
-    <label>Modalità per pagamenti in uscita</label>
+    <label>Metodi di pagamento in uscita</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Bollettino postale</fullName>
-                <default>false</default>
-                <label>Bollettino postale</label>
-            </value>
-            <value>
-                <fullName>Bonifico bancario</fullName>
-                <default>false</default>
-                <label>Bonifico bancario</label>
-            </value>
-            <value>
-                <fullName>RID</fullName>
-                <default>false</default>
-                <label>RID</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_PaymentMode</valueSetName>
     </valueSet>
 </CustomField>
