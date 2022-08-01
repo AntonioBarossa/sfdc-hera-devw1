@@ -358,23 +358,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sportello</controllingFieldValue>
-            <valueName>HC_CRM_SIND_LAMI</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sportello</controllingFieldValue>
             <valueName>HC_CRM_SIND_LAMONT</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sportello</controllingFieldValue>
             <valueName>HC_CRM_SIND_LAPRAT</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sportello</controllingFieldValue>
-            <valueName>HC_CRM_SIND_LEMURA</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sportello</controllingFieldValue>
-            <valueName>HC_CRM_SIND_LEONI</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sportello</controllingFieldValue>
