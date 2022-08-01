@@ -33,5 +33,6 @@ public with sharing class HDT_UTL_ManageTari {
         }
         return checkTari;
     }
+    
 
 }
