@@ -11,7 +11,7 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>CustomerRequestDate__c</fullName>
+                <fullName>Data Inserimento Richiesta</fullName>
                 <default>false</default>
                 <label>Data Inserimento Richiesta</label>
             </value>

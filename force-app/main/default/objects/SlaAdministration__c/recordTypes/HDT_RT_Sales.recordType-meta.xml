@@ -557,7 +557,7 @@
     <picklistValues>
         <picklist>CaseField__c</picklist>
         <values>
-            <fullName>CustomerRequestDate__c</fullName>
+            <fullName>Data Inserimento Richiesta</fullName>
             <default>false</default>
         </values>
         <values>
