@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <name>Annulla_CaseItem</name>
         <label>Annulla CaseItem</label>
@@ -38,22 +38,6 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>50.0</apiVersion>
-    <assignments>
-        <name>Assegna_Comuni</name>
-        <label>Assegna Comuni</label>
-        <locationX>1487</locationX>
-        <locationY>2270</locationY>
-        <assignmentItems>
-            <assignToReference>Query_Comuni.CadastralCity__c</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Comuni2</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Selezione_Comune</targetReference>
-        </connector>
-    </assignments>
     <assignments>
         <name>AssegnaPredefault</name>
         <label>AssegnaPredefault</label>
@@ -265,12 +249,19 @@
         <name>Valorizzazione_Commodity_a_Tari</name>
         <label>Valorizzazione Commodity a Tari</label>
         <locationX>1487</locationX>
-        <locationY>2630</locationY>
+        <locationY>2510</locationY>
         <assignmentItems>
             <assignToReference>Get_Commodity.Commodity__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Commodity.SupplyCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Comune</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -741,7 +732,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Query_Comuni</targetReference>
+                <targetReference>get_comuni_options</targetReference>
             </connector>
             <label>Avanti</label>
         </rules>
@@ -1218,7 +1209,7 @@
         <locationX>1487</locationX>
         <locationY>1358</locationY>
         <defaultConnector>
-            <targetReference>Query_Comuni</targetReference>
+            <targetReference>get_comuni_options</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Altro</defaultConnectorLabel>
         <rules>
@@ -1329,12 +1320,12 @@
     </decisions>
     <description>SubFlow per la gestione del processo &quot;Comunicazione Pagamento&quot;</description>
     <dynamicChoiceSets>
-        <name>Comuni2</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>CadastralCity__c</picklistField>
-        <picklistObject>CityTechnicalData__c</picklistObject>
+        <name>comuniOptions</name>
+        <collectionReference>get_comuni_options</collectionReference>
+        <dataType>String</dataType>
+        <displayField>CadastralCity__c</displayField>
+        <object>CityTechnicalData__c</object>
+        <valueField>CadastralCity__c</valueField>
     </dynamicChoiceSets>
     <formulas>
         <name>AmountDifference</name>
@@ -1702,7 +1693,7 @@
         <name>Get_Commodity</name>
         <label>Get Commodity</label>
         <locationX>1487</locationX>
-        <locationY>2510</locationY>
+        <locationY>2390</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Valorizzazione_Commodity_a_Tari</targetReference>
@@ -1717,6 +1708,19 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>get_comuni_options</name>
+        <label>get comuni options</label>
+        <locationX>1487</locationX>
+        <locationY>2150</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>inserimentoComune</targetReference>
+        </connector>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>CityTechnicalData__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -1788,21 +1792,6 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Query_Comuni</name>
-        <label>Query Comuni</label>
-        <locationX>1487</locationX>
-        <locationY>2150</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Assegna_Comuni</targetReference>
-        </connector>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>CityTechnicalData__c</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>CadastralCity__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -1895,7 +1884,7 @@
         <name>AggiornaCase_0_0_0</name>
         <label>AggiornaCase</label>
         <locationX>1487</locationX>
-        <locationY>2750</locationY>
+        <locationY>2630</locationY>
         <connector>
             <targetReference>Salva_In_Bozza_o_Conferma_0</targetReference>
         </connector>
@@ -3029,6 +3018,30 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>inserimentoComune</name>
+        <label>inserimentoComune</label>
+        <locationX>1487</locationX>
+        <locationY>2270</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <backButtonLabel>Indietro</backButtonLabel>
+        <connector>
+            <targetReference>Get_Commodity</targetReference>
+        </connector>
+        <fields>
+            <name>Comune</name>
+            <choiceReferences>comuniOptions</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Comune</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <nextOrFinishButtonLabel>Conferma</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Inserire_altri_documenti_0_0_0</name>
         <label>Inserire altri documenti?</label>
         <locationX>1837</locationX>
@@ -3799,36 +3812,6 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <name>Selezione_Comune</name>
-        <label>Selezione Comune</label>
-        <locationX>1487</locationX>
-        <locationY>2390</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <backButtonLabel>Indietro</backButtonLabel>
-        <connector>
-            <targetReference>Get_Commodity</targetReference>
-        </connector>
-        <fields>
-            <name>Title_Selezione_Comune</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Comune</name>
-            <choiceReferences>Comuni2</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Comune</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>false</isRequired>
-        </fields>
-        <nextOrFinishButtonLabel>Conferma Pratica</nextOrFinishButtonLabel>
-        <pauseButtonLabel>Annulla</pauseButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
         <locationX>2262</locationX>
         <locationY>0</locationY>
@@ -3836,7 +3819,7 @@
             <targetReference>Case_In_Bozza_Question</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Annullamento_Prestazione_0</name>
         <label>Annullamento Prestazione</label>
