@@ -20,7 +20,9 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         scope.addAll(postsalesQr.getPostSalesBozzaCase());
         scope.addAll(postsalesQr.getCaseVolturaTecnica());
         scope.addAll(postsalesQr.getExpiredArticle());
-
+        scope.addAll(postsalesQr.getPostAccertamentoCase());
+        scope.addAll(postsalesQr.getSegnalazioniBozzaCase());
+        scope.addAll(postsalesQr.getRifiutiBozzaCase());
 
         return scope;
 
@@ -37,6 +39,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
         List<Case> myCurrentCaseList = new List<Case>();
         //List<HDT_PEV_NonReqContract__e> eventsToPublish = new List<HDT_PEV_NonReqContract__e>();
+        List<Case> casesToCheck = new List<Case>();
 
         for(SObject sobj : scope){
 
@@ -59,6 +62,10 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                     myCurrentCaseList.add(currentCase);
                                     continue;
                                 }
+                            } else if(currentCase.Type == 'Segnalazioni Ambientali' || currentCase.Type == 'Gestione Rifiuti'){
+                                currentCase.Phase__c = 'Bozza Annullata';
+                                myCurrentCaseList.add(currentCase);
+                                continue;
                             } else {
                                 //Get data from Days to Expiration Custom Setting
                                 CS_DaysToExpiration__c myCS2 = (CS_DaysToExpiration__c)mySobj3;
@@ -71,8 +78,11 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                 }
                             }*/
                         }
-                        
-                        if( currentCase.Type.equalsIgnoreCase('Piano Rateizzazione') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
+
+                        if(currentCase.Type.equalsIgnoreCase('Gestione Rifiuti') && currentCase.Phase__c.equalsIgnoreCase('Inviata a SAP') ){
+                            currentCase.Phase__c = 'Completata';
+                            myCurrentCaseList.add(currentCase);
+                        }else if( currentCase.Type.equalsIgnoreCase('Piano Rateizzazione') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
 
                             currentCase.Phase__c = 'Da Inviare';
                             myCurrentCaseList.add(currentCase);
@@ -99,8 +109,17 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                         }else if( currentCase.Type.equalsIgnoreCase('Voltura Tecnica') && currentCase.Phase__c.equalsIgnoreCase('In attesa Data Decorrenza') ){
                             currentCase.EffectiveDate__c = HDT_UTL_Case.addBusinessDay(System.today(),3);
                             currentCase.Phase__c = 'Da Inviare';
-                            myCurrentCaseList.add(currentCase);
-                        }               
+                            myCurrentCaseList.add(currentCase); 
+                        //START MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
+                        }else if('In Lavorazione'.equalsIgnoreCase(currentCase.Phase__c) && ('Cessazione post accertamento'.equalsIgnoreCase(currentCase.Type) || 'Modifica post accertamento'.equalsIgnoreCase(currentCase.Type))){
+                            casesToCheck.add(currentCase);
+                            system.debug('@@@@ currcase Type: '+currentCase.Type);
+                            //system.debug('@@@@ currcase AccountId: '+currentCase.AccountId);
+                            system.debug('@@@@ currcase AccountId: '+currentCase.Id);
+                            system.debug('@@@@ currcase AccountId: '+currentCase.Phase__c);
+
+                        }     
+                        //END MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto              
                     }
                     when Knowledge__kav article{
                         if(article.ExpirationDate__c != null){
@@ -132,6 +151,13 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
             updateObjectList(myCurrentCaseList);
             //HDT_UTL_DatabaseService.updateSObject(myCurrentCaseList);
         }
+        //START MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
+        if(!casesToCheck.isEmpty()){
+            system.debug('@@@: Start Logica Post Accertamento');
+            HDT_UTL_CaseProcess.createActivityFromContract(casesToCheck);
+        }
+        //END MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
+          
     }
 
     public void updateObjectList(List<SObject> caseToUpdate){
@@ -145,7 +171,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                         System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
                     }
                 }
-            }
+            }        
         }
     }
 

@@ -101,7 +101,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         HDT_QR_RecordType recordTypeQr = new HDT_QR_RecordType();
         String rtCambioOfferta = recordTypeQr.getRecordTypeIdByName('HDT_RT_CambioOfferta', 'Order');
 
-        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agentCodeIsMonitoringList();
 
         Map<String,Order> mapParentOrder = new Map<String,Order>();
         List<String> ordParentsIds = new List<String>();
@@ -160,7 +160,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && oldOrder.Phase__c == 'Documentazione validata' 
                 && (order.Phase__c == 'Comunicazione Verso Heroku' || order.Phase__c == 'Comunicazione Motore VAS' || order.Phase__c == 'In attesa tempi di ripensamento' || order.Phase__c == 'Esportazione VS Siebel')
                 && order.QualityCall__c
-                && isMonitoringList.contains(order.AgencyCode__c)
+                && isMonitoringList.contains(order.CommercialId__c)
                 && !phaseStory.contains('Quality Call OK')
                 && order.ComfortCallDaysDue__c == null){
                     if(String.isNotBlank(order.VasSubtype__c) && order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi')){
@@ -180,7 +180,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && order.ProcessType__c == 'Voltura' 
                 && (oldOrder.Phase__c == 'In attesa validazione' || oldOrder.Phase__c == 'Accettazione Voltura')
                 && (order.Phase__c == 'Documentazione Validata') 
-                && isMonitoringList.contains(order.AgencyCode__c) 
+                && isMonitoringList.contains(order.CommercialId__c) 
                 && !phaseStory.contains('Quality Call OK')
                 && order.ComfortCallDaysDue__c == null)
             {
@@ -231,7 +231,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && order.ProcessType__c != 'Voltura'
                 && oldOrder.Phase__c != 'In attesa di quality call'
                 && order.Phase__c == 'Quality Call OK'
-                && isMonitoringList.contains(order.AgencyCode__c)) {
+                /*&& isMonitoringList.contains(order.CommercialId__c)*/) {
 
                     String newPhase = (HDT_LC_OrderDossierWizardActions.checkRequiredDocs(order) && HDT_LC_OrderDossierWizardActions.checkRequiredDocs(mapParentOrder.get(order.ParentOrder__c))) ? 'Comunicazione verso Heroku' : 'In attesa validazione';
                     order.Phase__c = newPhase;
@@ -265,7 +265,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 !newValue.equalsIgnoreCase(oldValue) && 
                 newOrder.ParentOrder__c == null && 
                 newOrder.Phase__c == 'Documentazione Gestita' &&
-                !newOrder.Channel__c.equalsIgnoreCase('Teleselling Outbound'))
+                (!newOrder.Channel__c.equalsIgnoreCase('Teleselling Outbound') ||
+                newOrder.Channel__c.equalsIgnoreCase('Teleselling Outbound') && newOrder.SignatureMethod__c.equalsIgnoreCase('Contratto già firmato'))
+                )
             || (newOrder.ParentOrder__c == null && (oldDate == null && newDate != null) || (oldDate != null && newDate != null && oldDate != newDate))
             ){
                 orderParentIds.add(newOrder.Id);
@@ -340,10 +342,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                  * Vocal Order + Comfort
                  */
                 if (myOrder.Phase__c == 'Da Inviare' && myOrder.ParentOrder__r.Phase__c.equalsIgnoreCase('Documentazione Gestita')) {
+                    Boolean isNotVoltureAcceptanceWorked = String.isNotBlank(myOrder.PhaseStory__c) 
+                                                            && (myOrder.PhaseStory__c.containsIgnoreCase('Attesa Credit Check')
+                                                            || myOrder.PhaseStory__c.containsIgnoreCase('Credit Check KO'))
+                                                            && myOrder.PhaseStory__c.containsIgnoreCase('Accettazione Voltura') ? false : true; 
                     childOrdersDocValid.add(new Order(
                         Id = myOrder.Id,
                     // phase__c = 'In attesa validazione'
-                        phase__c = myOrder.ProcessType__c == 'Voltura' ? 'Accettazione Voltura': HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione'));
+                        phase__c = (myOrder.ProcessType__c == 'Voltura') && isNotVoltureAcceptanceWorked ? 'Accettazione Voltura': HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione'));
                 }
             }
             if(ordersFullList != null && !ordersFullList.isEmpty()){
@@ -657,7 +663,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Map<Id, String> vasOrdersToUpdate = new Map<Id, String>();//id->newPhase
         
         orderSrv.checkReadAccess('Phase__c');
-        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agentCodeIsMonitoringList();
         Order notManagedOrder = new Order();
         Boolean isNotManaged = false;
         for(Order childOrder : parentOrderIds)
@@ -900,8 +906,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         
         if (!orderParentList.isEmpty()){
             List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> platformEventToPublish = new List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>();
-            for (Order o : [SELECT id FROM Order WHERE Id IN :orderParentList AND Phase__c = 'Documentazione Gestita' WITH SECURITY_ENFORCED]){
-                o.Description = 'Aggiornato Post Credit Check';
+            for (Order o : [SELECT id,Description FROM Order WHERE Id IN :orderParentList AND Phase__c = 'Documentazione Gestita' WITH SECURITY_ENFORCED]){
+                o.Description = String.isBlank(o.Description) ? 'Aggiornato Post Credit Check' : '';
                 HDT_PEV_VoltureChangeManagerUpdateSObj__e item = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
                 item.SerializedSobj__c = JSON.serialize(o);
                 platformEventToPublish.add(item);
@@ -931,7 +937,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         //List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
         Map<Id,wrts_prcgvr__Activity__c> mapIdOrderToActivity = new Map<Id,wrts_prcgvr__Activity__c>();
 
-        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agentCodeIsMonitoringList();
 
         for(Order orderToUpdate : orderList){
             mapIdToTotalOrder.put(orderToUpdate.id,orderToUpdate);
@@ -940,7 +946,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if(orderToUpdate.ParentOrder__r.Phase__c == 'Documentazione Gestita' && (orderToUpdate.Phase__c == 'Documentazione Validata' || orderToUpdate.Phase__c == 'Documentazione da inviare' )){
                 if(orderToUpdate.recordType.Developername != 'HDT_RT_VAS'
                     && !orderToUpdate.QualityCall__c
-                    && !isMonitoringList.contains(orderToUpdate.AgencyCode__c)){
+                    && !isMonitoringList.contains(orderToUpdate.CommercialId__c)){
                     orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
                     orderListToUpdate.add(orderToUpdate);
                     mapIdToOrderUpdate.put(orderToUpdate.id,orderToUpdate);
@@ -1216,7 +1222,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 || ('OK'.equalsIgnoreCase(o.IncomingCreditCheckResult__c) && !oldCreditCheckDescription.equalsIgnoreCase(o.CreditCheckDescription__c) && 'Saldo debito cattivo pagatore'.equalsIgnoreCase(oldCreditCheckDescription))
                 || o.OutgoingCreditCheckResult__c != oldOrdersMap.get(o.id).OutgoingCreditCheckResult__c)
             ){
-                o.CreditCheckInProgress__c = false;
                 if('Attesa Credit Check'.equalsIgnoreCase(o.Phase__c) || 'Credit Check KO'.equalsIgnoreCase(o.Phase__c) || o.IsMassive__c){
                     ordersId.add(o.Id);
                     /* if('HDT_RT_Voltura'.equalsIgnoreCase(recordTypeName) || 'HDT_RT_VolturaConSwitch'.equalsIgnoreCase(recordTypeName)){
@@ -1245,7 +1250,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     || o.OutgoingCreditCheckResult__c != oldOrdersMap.get(o.id).OutgoingCreditCheckResult__c
                     )
                 ){
-                    o.CreditCheckInProgress__c = false;
                     if('Attesa Credit Check'.equalsIgnoreCase(o.Phase__c) || 'Credit Check KO'.equalsIgnoreCase(o.Phase__c) || o.IsMassive__c){
                         if((String.isNotBlank(o.IncomingCreditCheckResult__c) && o.IncomingCreditCheckResult__c.containsIgnoreCase('KO')) || (String.isNotBlank(o.OutgoingCreditCheckResult__c) && o.OutgoingCreditCheckResult__c.containsIgnoreCase('KO'))){
                             o.Phase__c = 'Credit Check KO';

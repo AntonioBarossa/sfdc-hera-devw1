@@ -377,6 +377,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_LC_ChildOrderProcessActions.save(tOrder2[2],m2);
             
             tOrder2[2].SignedDate__c=Date.today();
+            tOrder2[2].SignatureMethod__c = 'Contratto già firmato';
             tOrder2[2].ProcessType__c='';
             HDT_LC_ChildOrderProcessActions.save(tOrder2[2],m2);
 
@@ -1206,6 +1207,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
                 FROM Order
                 WHERE Name='testOrderName1'
                 LIMIT 1];
+            tOrder[0].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_VOLTURA;
+            update tOrder[0];
             List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
                 ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
                 Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,

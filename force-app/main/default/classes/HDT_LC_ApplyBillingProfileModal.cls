@@ -31,6 +31,7 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         
         
         List<SBQQ__QuoteLine__c> listVas = quoteLineQr.getRecordsBySaleFilteredPaymentMethodforVas(saleId,true);
+        List<SBQQ__QuoteLine__c> listWastePoint = quoteLineQr.getRecordsBySaleFilteredPaymentMethodPodPdr(saleId, '', '');
         System.debug('query result vas: ' + listVas);
         
         //***2809 LG disattivato per problemi visibilita */
@@ -43,10 +44,13 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         System.debug('query result listVasCambioOfferta: ' + listVasCambioOfferta);
 
         Map<String, List<SBQQ__QuoteLine__c>> quoteLineMap = new Map<String, List<SBQQ__QuoteLine__c>>();
+        if(listWastePoint!=null && !listWastePoint.isEmpty()){
+            listPodPdr.addAll(listWastePoint);
+        }
         quoteLineMap.put('listPodPdr', listPodPdr);
         quoteLineMap.put('listVas', listVas);
         quoteLineMap.put('listVasCambioOfferta', listVasCambioOfferta);
-       quoteLineMap.put('listBonus', listBonus);
+        quoteLineMap.put('listBonus', listBonus);
 
         return quoteLineMap;
     }

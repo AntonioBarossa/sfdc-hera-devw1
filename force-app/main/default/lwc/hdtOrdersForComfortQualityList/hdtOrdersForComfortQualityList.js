@@ -4,6 +4,7 @@ import isUserOwner from '@salesforce/apex/HDT_LC_OrdersForComfortQualityList.che
 import getTableData from '@salesforce/apex/HDT_LC_OrdersForComfortQualityList.getTableData';
 import confirmContract from '@salesforce/apex/HDT_LC_OrdersForComfortQualityList.confirmContract';
 import cancelContract from '@salesforce/apex/HDT_LC_OrdersForComfortQualityList.cancelContract';
+import getCachedUuid from '@salesforce/apex/HDT_LC_CtToolbar.getCachedUuid';
 
 export default class HdtOrdersForComfortQualityList extends LightningElement {
     
@@ -62,13 +63,14 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
         ];
     }
 
-    setTableData(){
+    setTableData(isOperationRunning = false){
         this.loading = true;
         getTableData({activityId: this.activityId}).then(data =>{
 
             console.log('getTableData: ' + JSON.stringify(data));
             console.log('Size Data: ' + data.length);
-            this.loading = false;
+            console.log('is operation running: ' + isOperationRunning);
+            this.loading = isOperationRunning;
             if(data.length > 0){
                 this.ordersList = data;
                 this.showTable = true;
@@ -142,7 +144,14 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
     confirmContractAction(type){
         this.loading = true;
         confirmContract({ordId: this.orderId, activityId: this.activityId, type: type}).then(data =>{
-            
+            this.loading = false;
+            if(data!=null){
+                getCachedUuid().then(cachedUuid => {
+                    if(cachedUuid!=null){
+                        window.TOOLBAR.EASYCIM.saveScript(cachedUuid, data.Campaign.PositiveOutcomeDefaultStatus__c, true)
+                    }
+                });
+            }
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
                 message: 'Contratto confermato con successo',
@@ -181,6 +190,13 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
     cancelContractAction(cancellationReason){
         this.loading = true;
         cancelContract({ordId: this.orderId, activityId: this.activityId, causal: cancellationReason}).then(data =>{
+            if(data!=null){
+                getCachedUuid().then(cachedUuid => {
+                    if(cachedUuid!=null){
+                        window.TOOLBAR.EASYCIM.saveScript(cachedUuid, data.Campaign.PositiveOutcomeDefaultStatus__c, true)
+                    }
+                });
+            }
             this.loading = false;
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
@@ -247,7 +263,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
             }
         }
         this.showTable=false;
-        this.setTableData();
+        this.setTableData(false);
     }
 
     handleDialogResponse(event){

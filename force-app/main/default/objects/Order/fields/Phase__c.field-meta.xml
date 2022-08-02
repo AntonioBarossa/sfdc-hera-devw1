@@ -86,6 +86,16 @@
                 <label>Annullamento dal SII</label>
             </value>
             <value>
+                <fullName>Annullamento - Dati discordanti</fullName>
+                <default>false</default>
+                <label>Annullamento - Dati discordanti</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Errore invio a DL/SII</fullName>
+                <default>false</default>
+                <label>Annullamento - Errore invio a DL/SII</label>
+            </value>
+            <value>
                 <fullName>Annullamento - Esito KO da DL/SII</fullName>
                 <default>false</default>
                 <label>Annullamento - Esito KO da DL/SII</label>
@@ -129,6 +139,11 @@
                 <fullName>Annullato per Dati Discordanti</fullName>
                 <default>false</default>
                 <label>Annullato per Dati Discordanti</label>
+            </value>
+            <value>
+                <fullName>Annullato per decorrenza dei termini</fullName>
+                <default>false</default>
+                <label>Annullato per decorrenza dei termini</label>
             </value>
             <value>
                 <fullName>Annullato SII</fullName>
@@ -349,6 +364,11 @@
                 <label>Esito KO da DL</label>
             </value>
             <value>
+                <fullName>Esito KO Da SAP</fullName>
+                <default>false</default>
+                <label>Esito KO Da SAP</label>
+            </value>
+            <value>
                 <fullName>Esito KO da SII</fullName>
                 <default>false</default>
                 <label>Esito KO da SII</label>
@@ -379,6 +399,11 @@
                 <label>Gestione appuntamento su portale DL</label>
             </value>
             <value>
+                <fullName>In attesa Approvazione</fullName>
+                <default>false</default>
+                <label>In attesa Approvazione</label>
+            </value>
+            <value>
                 <fullName>In attesa appuntamento DL</fullName>
                 <default>false</default>
                 <label>In attesa appuntamento DL</label>
@@ -399,9 +424,24 @@
                 <label>In attesa esecuzione appuntamento</label>
             </value>
             <value>
+                <fullName>In attesa esito documentale da E1</fullName>
+                <default>false</default>
+                <label>In attesa esito documentale da E1</label>
+            </value>
+            <value>
                 <fullName>In Attesa Legge 80</fullName>
                 <default>false</default>
                 <label>In Attesa Legge 80</label>
+            </value>
+            <value>
+                <fullName>In attesa perfezionamento documentazione</fullName>
+                <default>false</default>
+                <label>In attesa perfezionamento documentazione</label>
+            </value>
+            <value>
+                <fullName>In attesa perfezionamento documentazione sollecitata</fullName>
+                <default>false</default>
+                <label>In attesa perfezionamento documentazione sollecitata</label>
             </value>
             <value>
                 <fullName>In attesa tempi di ripensamento</fullName>
@@ -695,6 +735,11 @@
                 <label>Sequenzializzato</label>
             </value>
             <value>
+                <fullName>Sollecito perfezionamento documentazione da inviare a E1</fullName>
+                <default>false</default>
+                <label>Sollecito perfezionamento documentazione da inviare a E1</label>
+            </value>
+            <value>
                 <fullName>Sospeso</fullName>
                 <default>false</default>
                 <label>Sospeso</label>
@@ -713,11 +758,6 @@
                 <fullName>Voltura Rifiutata</fullName>
                 <default>false</default>
                 <label>Voltura Rifiutata</label>
-            </value>
-            <value>
-                <fullName>Annullamento - Dati discordanti</fullName>
-                <default>false</default>
-                <label>Annullamento - Dati discordanti</label>
             </value>
         </valueSetDefinition>
     </valueSet>

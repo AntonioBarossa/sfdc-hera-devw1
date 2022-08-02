@@ -23,8 +23,8 @@
                 <field>AreaDeclaredTARI__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NumberOfFamilyMembers__c</field>
+                <behavior>Edit</behavior>
+                <field>MethodsForOutgoingPayments__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

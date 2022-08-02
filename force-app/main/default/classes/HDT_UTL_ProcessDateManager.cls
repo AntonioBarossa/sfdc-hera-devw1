@@ -92,7 +92,10 @@ public with sharing class HDT_UTL_ProcessDateManager {
                             if(dataRipensamento != null && order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale' ){
 								if(dataRipensamento > Date.Today()){
 									dateSentToSii = dataRipensamento.addDays(1);
-								}else {
+								}else if(dataRipensamento < Date.Today()){
+									dateSentToSii = Date.today();
+								}
+								else {
 									dateSentToSii = dataRipensamento;
 								}
                             }else {
@@ -228,11 +231,11 @@ public with sharing class HDT_UTL_ProcessDateManager {
 					dateToFrom = order.DateSentToSII__c;
 				}else if(order.EffectiveDate__c == null){
 					order.EffectiveDate__c = order.SignedDate__c;
-					break;
+					continue;
 				}
 
 				if (order.IsActivationDeferred__c==true) {
-					break;
+					continue;
 				}
 				
 				if(dateToFrom != null){
@@ -249,6 +252,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
 									singleRecord.FulfillmentDateTo__c >= dateToFrom
 								){
 									order.EffectiveDate__c = singleRecord.ActivationDate__c;
+									order.AttributesCatalogDesc__c = 'Calcolata Data Order Gas il ' + Date.today() + 'con il seguente valore: ' + singleRecord.ActivationDate__c + ' Record utilizzato ' + singleRecord.Id;
                                     founded = true;
 								}else {
                                     founded = false; 
@@ -265,6 +269,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
 									singleRecord.FulfillmentDateTo__c >= 	dateToFrom
 								){
 									order.EffectiveDate__c = singleRecord.ActivationDate__c;
+									order.AttributesCatalogDesc__c = 'Calcolata Data Order Ele il ' + Date.today() + ' con il seguente valore: ' + singleRecord.ActivationDate__c + ' Record utilizzato ' + singleRecord.Id;
                                     founded = true;
 								}else {
                                     founded = false; 

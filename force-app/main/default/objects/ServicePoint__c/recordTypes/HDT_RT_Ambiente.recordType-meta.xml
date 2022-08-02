@@ -66,6 +66,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ContractualExpensesCharged__c</picklist>
+        <values>
+            <fullName>Nessun addebito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nessuno sconto</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Disconnectable__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -357,6 +368,71 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>MethodsForOutgoingPayments__c</picklist>
+        <values>
+            <fullName>Bollettino postale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RID</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NumberOfFamilyMembers__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6 o più</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NumberOfTARIMembers__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6 o più</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>PayPurification__c</picklist>
         <values>
             <fullName>No - Esente</fullName>
@@ -463,6 +539,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>SupplySubtype__c</picklist>
+        <values>
+            <fullName>Altri usi</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Uso artigianale e commerciale</fullName>
             <default>false</default>

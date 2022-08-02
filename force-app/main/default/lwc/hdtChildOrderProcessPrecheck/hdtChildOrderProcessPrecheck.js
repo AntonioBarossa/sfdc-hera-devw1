@@ -59,6 +59,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         );
     }
 
+    get isCheckAssessmentsVisible(){
+        return this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente' ? true : false;
+    }
+
     get disabledNext(){
         let result = true;
         if(this.order.RecordType.DeveloperName !== 'HDT_RT_Default' || (this.selectedProcessObject === '') || this.compatibilita === false){
@@ -852,41 +856,43 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
     @api
     async executeCreditCheckPoll(){
-        console.log('hdtChildOrderProcessPrecheck - executeCreditCheckPoll - START');
+        if(!this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente'){
+            console.log('hdtChildOrderProcessPrecheck - executeCreditCheckPoll - START');
 
-        const setAsyncTimeout = (cb, timeout = 0) => new Promise(resolve => {
-            setTimeout(() => {
-                cb();
-                resolve();
-            }, timeout);
-        });
+            const setAsyncTimeout = (cb, timeout = 0) => new Promise(resolve => {
+                setTimeout(() => {
+                    cb();
+                    resolve();
+                }, timeout);
+            });
 
-        let count = 1;
-        let time = 18000;
+            let count = 1;
+            let time = 18000;
 
-        console.log('executePoll - this.order.IncomingCreditCheckResult__c: ' + JSON.stringify(this.order.IncomingCreditCheckResult__c));
-        console.log('executePoll - this.order.OutgoingCreditCheckResult__c: ' + JSON.stringify(this.order.OutgoingCreditCheckResult__c));
-        console.log('executePoll - this.order.CreditCheckDescription__c: ' + JSON.stringify(this.order.CreditCheckDescription__c));
-        console.log('executePoll - this.creditCheckResult: ' + JSON.stringify(this.creditCheckResult));
+            console.log('executePoll - this.order.IncomingCreditCheckResult__c: ' + JSON.stringify(this.order.IncomingCreditCheckResult__c));
+            console.log('executePoll - this.order.OutgoingCreditCheckResult__c: ' + JSON.stringify(this.order.OutgoingCreditCheckResult__c));
+            console.log('executePoll - this.order.CreditCheckDescription__c: ' + JSON.stringify(this.order.CreditCheckDescription__c));
+            console.log('executePoll - this.creditCheckResult: ' + JSON.stringify(this.creditCheckResult));
 
-        while(count <= 8
-            && !(this.order.IncomingCreditCheckResult__c !== undefined || this.order.OutgoingCreditCheckResult__c !== undefined || this.order.CreditCheckDescription__c !== undefined)
-            && !(this.creditCheckResult.IncomingCreditCheckResult__c !== undefined || this.creditCheckResult.OutgoingCreditCheckResult__c !== undefined || this.creditCheckResult.CreditCheckDescription__c !== undefined)
-            ){
+            while(count <= 8
+                && !(this.order.IncomingCreditCheckResult__c !== undefined || this.order.OutgoingCreditCheckResult__c !== undefined || this.order.CreditCheckDescription__c !== undefined)
+                && !(this.creditCheckResult.IncomingCreditCheckResult__c !== undefined || this.creditCheckResult.OutgoingCreditCheckResult__c !== undefined || this.creditCheckResult.CreditCheckDescription__c !== undefined)
+                ){
 
-            if (count > 1) {
-                time = 3000;
+                if (count > 1) {
+                    time = 3000;
+                }
+
+                await setAsyncTimeout(() => {
+                    this.retryEsitiCreditCheck();
+                }, time);
+
+                console.log('OK poll! ' + count + ' ' + time);
+                count++;
             }
 
-            await setAsyncTimeout(() => {
-                this.retryEsitiCreditCheck();
-            }, time);
-
-            console.log('OK poll! ' + count + ' ' + time);
-            count++;
+            console.log('hdtChildOrderProcessPrecheck - executeCreditCheckPoll - END');
         }
-
-        console.log('hdtChildOrderProcessPrecheck - executeCreditCheckPoll - END');
     }
 
     /**@Author: Salvatore Alessandro Sarà 01/11/2021

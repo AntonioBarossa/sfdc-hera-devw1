@@ -82,6 +82,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ContractualExpensesCharged__c</picklist>
+        <values>
+            <fullName>Nessun addebito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nessuno sconto</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Disconnectable__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -634,7 +645,26 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>JointBottomAdhesion__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>MarketOrigin__c</picklist>
+        <values>
+            <fullName>Default</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUI</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Libero</fullName>
             <default>false</default>
@@ -842,6 +872,113 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>MethodsForOutgoingPayments__c</picklist>
+        <values>
+            <fullName>Bollettino postale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bonifico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RID</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standard</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NumberOfFamilyMembers__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6 o più</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NumberOfTARIMembers__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6 o più</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PayPurification__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PaySewer__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>PlugPresence__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -864,6 +1001,21 @@
         </values>
         <values>
             <fullName>MP</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PurificationInfoOnTheInvoice__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -898,6 +1050,41 @@
         </values>
         <values>
             <fullName>Interruzione avviata</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SupplySubtype__c</picklist>
+        <values>
+            <fullName>Altri usi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso artigianale e commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico condominiale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico non residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso industriale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico disalimentabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico non disalimentabile</fullName>
             <default>false</default>
         </values>
     </picklistValues>

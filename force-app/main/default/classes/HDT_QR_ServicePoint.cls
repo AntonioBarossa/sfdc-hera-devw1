@@ -177,6 +177,20 @@ public inherited sharing class HDT_QR_ServicePoint {
 		}		
 		return servicePoints;
 	}
+
+	/** 
+	 * @description Query for Address
+	 * @param address
+	 * @param fields
+	 * @return List<ServicePoint__c>
+	 */
+	@SuppressWarnings('PMD.UnusedLocalVariable')
+	public List<ServicePoint__c> getServicePointsByAddress(String address, String fields) {
+		contractSrv.checkReadAccess(fields);
+		String stringAddress = '%' + address + '%';
+		List<ServicePoint__c> servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) +' FROM ServicePoint__c WHERE CommoditySector__c = \'Ambiente\' AND ServicePointCode__c != null AND SupplyAddress__c LIKE :stringAddress LIMIT 50');
+		return servicePoints;
+    }
     
     /**
 	 * @description Query for POD
@@ -189,6 +203,20 @@ public inherited sharing class HDT_QR_ServicePoint {
 		contractSrv.checkReadAccess(fields);
 		String stringCode = code.trim();
 		List<ServicePoint__c> servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE ServicePointCode__c = :stringCode ');
+		return servicePoints;
+	}
+
+	/**
+	 * @description Query for POD
+	 * @param code
+	 * @param fields
+	 * @return List<ServicePoint__c>
+	 */
+	@SuppressWarnings('PMD.UnusedLocalVariable')
+	public List<ServicePoint__c> getServicePointsByCodeWater(String code, String fields) {
+		contractSrv.checkReadAccess(fields);
+		String stringCode = code.trim();
+		List<ServicePoint__c> servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE CommoditySector__c = \'Acqua\' AND ServicePointCode__c = :stringCode ');
 		return servicePoints;
 	}
 

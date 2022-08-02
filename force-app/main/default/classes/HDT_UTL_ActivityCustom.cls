@@ -4,7 +4,7 @@
 * @description Class that holds util functions for wrts_prcgvr__Activity__c
 * @history Keltin Mesonjesi – 18/06/2021 – Created class
 */
-@SuppressWarnings('PMD.AvoidDebugStatements')
+@SuppressWarnings('PMD.CyclomaticComplexity, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ActivityCustom {
     
     private FINAL static string APPOINTMENTDEVELOPERNAME = 'HDT_RT_DistributorAppointment';
@@ -16,13 +16,14 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 18/06/2021
     * @description Create new wrts_prcgvr__Activity__c based on passed params
     * @param Map<String,String> params
-    */
-    
+    */    
     @AuraEnabled
     public static boolean riassegnaComCod(string recordId,String causale){
         try{
@@ -155,6 +156,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             ord.DocumentPackage__c = 'Validato';
             ord.phase__c = 'Registrazione validata';
             ord.SignedDate__c = Date.today();
+            ord.DocumentalPhase__c = 'Plico firmato';
             //ord.status = 'Activated';
         }
         else{
@@ -205,6 +207,10 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 }
             }
         }
+    }
+
+    public static void executeOnCloseActions(List<wrts_prcgvr__Activity__c> newTriggerList,  Map<Id,SObject> oldTriggerMap){
+        HDT_UTL_ActivityCloseActions.executeOnCloseActions(newTriggerList, oldTriggerMap);
     }
 
     @AuraEnabled
@@ -265,6 +271,8 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                  Order ord = new Order();
                  ord.id = oldActivity.order__c;
                  ord.DocumentPackage__c = 'Validato';
+                 ord.SignedDate__c = Date.today();
+                 ord.DocumentalPhase__c = 'Plico firmato';
                  if(oldActivity.Type__c.containsIgnoreCase('Vocal Order'))
                  {
                      ord.Phase__c = 'Registrazione validata';
@@ -365,10 +373,10 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         Map<Id,Case> caseFieldProcessMap = new Map<Id,Case>();
         Map<Id,Order> orderFieldProcessMap = new Map<Id,Order>();
         if (!caseId.isEmpty()){
-            caseFieldProcessMap = new Map<Id,Case>([SELECT id,Cluster__c,Type,Subprocess__c  FROM Case WHERE Id IN: caseId WITH SECURITY_ENFORCED]);
+            caseFieldProcessMap = new Map<Id,Case>([SELECT id,Cluster__c,Type,Subprocess__c,AccountId  FROM Case WHERE Id IN: caseId WITH SECURITY_ENFORCED]);
         }
         if (!orderId.isEmpty()){
-            orderFieldProcessMap = new Map<Id,Order>([SELECT id,ProcessType__c,Subprocess__c FROM Order WHERE Id IN: orderId WITH SECURITY_ENFORCED]);
+            orderFieldProcessMap = new Map<Id,Order>([SELECT id,Cluster__c, Process__c, ProcessType__c,Subprocess__c,AccountId FROM Order WHERE Id IN: orderId WITH SECURITY_ENFORCED]);
         }
         if (!caseFieldProcessMap.isEmpty() || !orderFieldProcessMap.isEmpty()){
             setAllProcessFields(newActivities, caseFieldProcessMap, orderFieldProcessMap);
@@ -394,11 +402,21 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 act.ParentCluster__c = c.Cluster__c;
                 act.ParentProcess__c = c.Type;
                 act.ParentSubprocess__c = c.Subprocess__c;
+                if(c.AccountId==null){
+                    if(act.Type__c !='Chiamata outbound' && act.Type__c !='Sportello' && act.Type__c !='Chiamata inbound' && act.Type__c !='Richiesta non identificata'){
+                        act.Account__c = c.AccountId;
+                    }
+                }
             }else if (act.Order__c != null && orderFieldProcessMap.containsKey(act.Order__c)){
                 Order o = orderFieldProcessMap.get(act.Order__c);
-                act.ParentCluster__c = null;
-                act.ParentProcess__c = o.ProcessType__c;
-                act.ParentSubprocess__c = o.Subprocess__c;
+                act.ParentCluster__c = o.Cluster__c;
+                act.ParentProcess__c = o.Process__c;
+                act.ParentSubprocess__c = 'Voltura'.equalsIgnoreCase(act.ParentProcess__c)? o.Subprocess__c :  o.ProcessType__c;
+                if(o.AccountId==null){
+                    if(act.Type__c !='Chiamata outbound' && act.Type__c !='Sportello' && act.Type__c !='Chiamata inbound' && act.Type__c !='Richiesta non identificata'){
+                        act.Account__c = o.AccountId;
+                    }
+                }
             }
         }
     }

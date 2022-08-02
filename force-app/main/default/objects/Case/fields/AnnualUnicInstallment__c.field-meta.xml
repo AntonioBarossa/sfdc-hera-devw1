@@ -10,18 +10,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>true</sorted>
-            <value>
-                <fullName>Attiva</fullName>
-                <default>false</default>
-                <label>Attiva</label>
-            </value>
-            <value>
-                <fullName>Disattiva</fullName>
-                <default>false</default>
-                <label>Disattiva</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_AnnualUnicInstallment</valueSetName>
     </valueSet>
 </CustomField>

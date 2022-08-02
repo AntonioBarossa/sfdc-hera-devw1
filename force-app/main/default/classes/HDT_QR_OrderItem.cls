@@ -36,7 +36,7 @@ public inherited sharing class HDT_QR_OrderItem {
             OrderItem 
             WHERE
             OrderId IN :listOrderId 
-            AND (Product2.Name IN ('PDR','POD') OR (Product2.Family IN  :famils AND (NOT Product2.Description LIKE '%Sconto%')))
+            AND (Product2.Name IN ('PDR','POD','Punto Fornitura Acqua','Punto Fornitura') OR (Product2.Family IN  :famils AND (NOT Product2.Description LIKE '%Sconto%')))
             WITH SECURITY_ENFORCED
         ];
     }
@@ -129,7 +129,7 @@ public inherited sharing class HDT_QR_OrderItem {
             WHERE
             OrderId IN :listOrderId  
             AND Order.SBQQ__Quote__r.SBQQ__Type__c = 'Amendment'
-            AND (Product2.Name IN ('PDR','POD') OR Product2.Family IN :famils)
+            AND (Product2.Name IN ('PDR','POD','Punto Fornitura Acqua','Punto Fornitura') OR Product2.Family IN :famils)
             WITH SECURITY_ENFORCED
         ];
     }
@@ -154,7 +154,11 @@ public inherited sharing class HDT_QR_OrderItem {
             VASBillingMode__c,
             SBQQ__QuoteLine__r.SBQQ__RequiredBy__c,
             SBQQ__QuoteLine__r.ServicePointLinkItem__r.ServicePoint__c,
-            DelayEffectiveDate__c
+            DelayEffectiveDate__c,
+            Product2.IntegratedSAP__c,
+            Product2.ApprovalType__c,
+            Surface__c,
+            MonthsOccupYear__c
             FROM 
             OrderItem 
             WHERE OrderId = :orderId

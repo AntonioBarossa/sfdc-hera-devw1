@@ -23,7 +23,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
     }
 
     @AuraEnabled
-    public static void confirmContract(String ordId, String activityId, String type){
+    public static CampaignMember confirmContract(String ordId, String activityId, String type){
 
         String confirmText = type == 'Comfort' ? 'Comfort call' : 'Quality call';
         String causalQuality = '';
@@ -59,9 +59,9 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         }
         else {
             List<Order> orderActiveMonitoring = orderQr.getOrderForActiveMonitoringCheck(ordId);
-            List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+            // List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
             
-            if(isMonitoringList.contains(orderActiveMonitoring[0].AgencyCode__c)){
+            if(orderActiveMonitoring[0].Phase__c != null && orderActiveMonitoring[0].Phase__c.equalsIgnoreCase('In attesa di quality call')){
                 orderUpdate.Phase__c = 'Quality Call OK';
                 orderUpdate.SignedDate__c = Date.today();
             }
@@ -83,11 +83,17 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             }
         }
         campMembSrv.updateRecords(campMembList);
+        if (campMembList!=null && campMembList.size()>0) {
+            return campMembList[0];
+        }
+        else {
+            return null;
+        }
     }
 
     @SuppressWarnings('PMD.CyclomaticComplexity')
     @AuraEnabled
-    public static void cancelContract(String ordId, String activityId, String causal){
+    public static CampaignMember cancelContract(String ordId, String activityId, String causal){
 
         List<String> notCancelPhase = new List<String>{
             'Esito Ok da DL',
@@ -168,6 +174,12 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             }
         }
         campMembSrv.updateRecords(campMembList);
+        if (campMembList!=null && campMembList.size()>0) {
+            return campMembList[0];
+        }
+        else {
+            return null;
+        }
     }
 
     @AuraEnabled

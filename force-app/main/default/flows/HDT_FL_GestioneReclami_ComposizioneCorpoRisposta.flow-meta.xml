@@ -101,7 +101,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>710</locationX>
-        <locationY>1790</locationY>
+        <locationY>1454</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -216,7 +216,7 @@
         <name>Fase_Elaborazione_Risposta</name>
         <label>Fase: Elaborazione Risposta?</label>
         <locationX>578</locationX>
-        <locationY>1550</locationY>
+        <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>GetCaseAggiornato</targetReference>
         </defaultConnector>
@@ -484,7 +484,7 @@
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
         <locationX>710</locationX>
-        <locationY>1670</locationY>
+        <locationY>1334</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValori</targetReference>
@@ -533,7 +533,7 @@
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>710</locationX>
-        <locationY>1910</locationY>
+        <locationY>1574</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -628,7 +628,7 @@
         <name>ScreenInput</name>
         <label>ScreenInput</label>
         <locationX>578</locationX>
-        <locationY>1430</locationY>
+        <locationY>1094</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -889,6 +889,13 @@
     </variables>
     <variables>
         <name>InputCase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ParentRecordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

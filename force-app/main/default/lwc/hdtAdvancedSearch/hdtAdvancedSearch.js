@@ -53,8 +53,10 @@ export default class HdtAdvancedSearch extends LightningElement {
     @track iconCompatibility='';
     notFoundMsg={
         'pod':'Codice POD/PDR non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
-        'contract':'Codice Contratto non trovato su SFDC, Eseguire una nuova riceerca o verifica esistenza su SAP',
-        'serialnumber':'Nessun record trovato'
+        'contract':'Codice Contratto non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
+        'serialnumber':'Nessun record trovato',
+        'podH2o':'Codice Punto Presa non trovato su SFDC. Eseguire una nuova ricerca o verifica esistenza su SAP',
+        'address':'Nessun record trovato'
     }
     @api isRicercainSAP=false;
     postSales=false;
@@ -329,8 +331,10 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
 
     
-    onselected(value){
-        this.queryType = value.detail;
+    onselected(event){
+        console.log('Event ' + JSON.stringify(event));
+        this.queryType = event.detail;
+        console.log('## QueryType >>> ' + this.queryType);
         this.apiSearchButtonStatus= true;
     }
 
@@ -369,6 +373,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
+                console.log('this.originalData ' + this.originalData);
                 for(var i=0; i<this.originalData.length; i++){
                     this.originalData[i].Id=i.toString();
                 }

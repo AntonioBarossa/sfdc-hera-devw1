@@ -417,6 +417,7 @@ handleAddressFromAccount()
 			this.estenscivico=data['Est.Civico'];
             this.codcomunesap=data['Codice Comune SAP'];
             this.codstradariosap=data['Codice Via Stradario SAP'];
+            this.localita=data['Localita'];
             this.flagverificato=true;
 
             this.theRecord['Via']= data['Via'];
@@ -428,6 +429,7 @@ handleAddressFromAccount()
             this.theRecord['Estens.Civico']= data['Est.Civico'];
             this.theRecord['Codice Comune SAP']=data['Codice Comune SAP'];
             this.theRecord['Codice Via Stradario SAP']= data['Codice Via Stradario SAP'];
+            this.theRecord['Localita']= data['Localita'];
             this.theRecord['Flag Verificato']= true;
             this.theRecord['Indirizzo Estero']=false;
             if(this.codstradariosap != undefined && this.codstradariosap != ''){
@@ -1540,7 +1542,7 @@ disabledverifyFieldsAddressDisabled(){
         console.log('hdtTargetObjectAddressFields - fieldAddressObject : '+ JSON.stringify(this.fieldsaddressobject));
         console.log('connectedCallback  START + theRecord : '+JSON.stringify(this.theRecord));
         console.log('connectedCallback   objectApiName : '+JSON.stringify(this.objectapiname));
-        if(this.objectapiname=='Account'){
+        if(this.objectapiname=='Account' || this.accountid == null){    //MODIFICA 28/07/22 marco.arci@webresults.it -> se non c'è un contesto di account, non mostrari i due pulsanti
             this.visibleCopiaResidenza=false;
             this.visibleSelezioneIndirizzi=false;
         }else{

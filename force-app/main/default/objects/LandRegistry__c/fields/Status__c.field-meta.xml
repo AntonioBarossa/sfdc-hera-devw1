@@ -11,13 +11,35 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Bozza</fullName>
+                <default>false</default>
+                <label>Bozza</label>
+            </value>
+            <value>
+                <fullName>Da Inviare</fullName>
+                <default>false</default>
+                <label>Da Inviare</label>
+            </value>
+            <value>
+                <fullName>Esito SAP OK</fullName>
+                <default>false</default>
+                <label>Esito SAP OK</label>
+            </value>
+            <value>
+                <fullName>Esito SAP KO</fullName>
+                <default>false</default>
+                <label>Esito SAP KO</label>
+            </value>
+            <value>
                 <fullName>1</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>1</label>
             </value>
             <value>
                 <fullName>2</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>2</label>
             </value>
         </valueSetDefinition>
