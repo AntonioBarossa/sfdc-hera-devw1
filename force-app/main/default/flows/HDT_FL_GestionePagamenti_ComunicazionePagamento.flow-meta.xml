@@ -47,7 +47,7 @@
             <assignToReference>Query_Comuni.CadastralCity__c</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Comuni</elementReference>
+                <elementReference>Comuni2</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1329,12 +1329,12 @@
     </decisions>
     <description>SubFlow per la gestione del processo &quot;Comunicazione Pagamento&quot;</description>
     <dynamicChoiceSets>
-        <name>Comuni</name>
+        <name>Comuni2</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>CadastralCity__c</picklistField>
-        <picklistObject>Cities__c</picklistObject>
+        <picklistObject>CityTechnicalData__c</picklistObject>
     </dynamicChoiceSets>
     <formulas>
         <name>AmountDifference</name>
@@ -3818,7 +3818,7 @@
         </fields>
         <fields>
             <name>Comune</name>
-            <choiceReferences>Comuni</choiceReferences>
+            <choiceReferences>Comuni2</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Comune</fieldText>
             <fieldType>DropdownBox</fieldType>
