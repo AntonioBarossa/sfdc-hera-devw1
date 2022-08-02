@@ -1345,14 +1345,12 @@
     <decisions>
         <name>Processo</name>
         <label>Processo?</label>
-
         <locationX>1603</locationX>
         <locationY>1114</locationY>
-
         <defaultConnectorLabel>Annullamento Passivo</defaultConnectorLabel>
         <rules>
             <name>AnnullamentoPrestazione</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
