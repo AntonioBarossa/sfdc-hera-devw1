@@ -31,7 +31,7 @@
         <label>checkTari</label>
         <locationX>7662</locationX>
         <locationY>1310</locationY>
-        <actionName>HDT_UTL_ManageTARI</actionName>
+        <actionName>HDT_UTL_ManageTari</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Validazione_Check_Tari</targetReference>
@@ -899,7 +899,7 @@
             <name>Non_Superato</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>CheckEligibilityCriteria</leftValueReference>
+                <leftValueReference>CheckCriterioEleggibilita</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -2073,27 +2073,6 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_RT_Tari</name>
-        <label>Get RT Tari</label>
-        <locationX>7288</locationX>
-        <locationY>1670</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>AggiornaCase_00_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>HDT_RT_StornoRateizzazione_TARI</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RecordType</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
         <locationX>3201</locationX>
@@ -2559,30 +2538,6 @@
         <locationX>7354</locationX>
         <locationY>2798</locationY>
         <inputReference>GetCaseAggiornato_0_0_0</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>AggiornaCase_00_0</name>
-        <label>AggiornaCase</label>
-        <locationX>7288</locationX>
-        <locationY>1790</locationY>
-        <connector>
-            <targetReference>Salva_in_bozza_o_Conferma_0_0_0_0_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Input_Case.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>Get_RT_Tari.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase_3</name>

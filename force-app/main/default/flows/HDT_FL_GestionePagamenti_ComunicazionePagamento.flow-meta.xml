@@ -5,7 +5,7 @@
         <label>Annulla CaseItem</label>
         <locationX>50</locationX>
         <locationY>1238</locationY>
-        <actionName>HDT_UTL_ManageCaseItemTari</actionName>
+        <actionName>HDT_UTL_ManageCaseItemTARI</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Query_su_CaseItem_preesistenti</targetReference>
@@ -23,7 +23,7 @@
         <label>checkTari</label>
         <locationX>1837</locationX>
         <locationY>638</locationY>
-        <actionName>HDT_UTL_ManageTari</actionName>
+        <actionName>HDT_UTL_ManageTARI</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Validazione_Check_Tari</targetReference>
@@ -3315,7 +3315,6 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Salva_In_Bozza_o_vai_Avanti_0_0</targetReference>
         </connector>
         <fields>
@@ -3807,7 +3806,6 @@
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
-        <backButtonLabel>Indietro</backButtonLabel>
         <connector>
             <targetReference>Get_Commodity</targetReference>
         </connector>
@@ -3824,8 +3822,6 @@
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
         </fields>
-        <nextOrFinishButtonLabel>Conferma Pratica</nextOrFinishButtonLabel>
-        <pauseButtonLabel>Annulla</pauseButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
