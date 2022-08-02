@@ -22,6 +22,15 @@ public inherited sharing  class HDT_TRH_SlaTracking extends HDT_TRH_TriggerHandl
             WITH SECURITY_ENFORCED
         ];
 
+        List<Holiday> holidayList = [
+            SELECT Name, ActivityDate
+                   //,EndTimeInMinutes, IsAllDay, IsRecurrence, RecurrenceDayOfMonth,
+                   //RecurrenceDayOfWeekMask, RecurrenceEndDateOnly, RecurrenceInstance, RecurrenceInterval,
+                   //RecurrenceMonthOfYear, RecurrenceStartDate, RecurrenceType, StartTimeInMinutes
+            FROM Holiday
+            WITH SECURITY_ENFORCED
+        ];
+
         if(slaAdminList.size() > 0){
             adminRuleMap = new Map<Id, SlaAdministration__c>(slaAdminList);
         }
@@ -42,7 +51,7 @@ public inherited sharing  class HDT_TRH_SlaTracking extends HDT_TRH_TriggerHandl
             if(adminRuleMap.containsKey(track.SlaAdministration__c)){
                 rangeType = adminRuleMap.get(track.SlaAdministration__c).RangeType__c;
                 if(String.isNotEmpty(rangeType) && rangeType.equalsIgnoreCase('Giorni Lavorativi')){
-                    track.SlaValue__c = calculateWorkingDays(track.StartDateTime__c, Integer.valueOf(track.SlaValue__c));
+                    track.SlaValue__c = calculateWorkingDays(track.StartDateTime__c, Integer.valueOf(track.SlaValue__c), holidayList);
                 }
             }
 
@@ -50,18 +59,10 @@ public inherited sharing  class HDT_TRH_SlaTracking extends HDT_TRH_TriggerHandl
 
     }
 
-    public static Integer calculateWorkingDays(DateTime startDateTime, Integer diff){
+    public static Integer calculateWorkingDays(DateTime startDateTime, Integer diff, List<Holiday> holidayList){
 
         Set<String> dayToAvoid = new Set<String>{'Saturday', 'Sunday', 'Sabato', 'Domenica'};
         Set<String> holidays = new Set<String>();
-        List<Holiday> holidayList = [
-            SELECT Name, ActivityDate
-                   //,EndTimeInMinutes, IsAllDay, IsRecurrence, RecurrenceDayOfMonth,
-                   //RecurrenceDayOfWeekMask, RecurrenceEndDateOnly, RecurrenceInstance, RecurrenceInterval,
-                   //RecurrenceMonthOfYear, RecurrenceStartDate, RecurrenceType, StartTimeInMinutes
-            FROM Holiday
-            WITH SECURITY_ENFORCED
-        ];
 
         for(Holiday hDay : holidayList){
             holidays.add(String.valueOf(hDay.ActivityDate.day()) + '-' + String.valueOf(hDay.ActivityDate.month()));//01-01
