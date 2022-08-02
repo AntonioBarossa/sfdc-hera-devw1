@@ -39549,7 +39549,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
         <personAccountDefault>true</personAccountDefault>
         <recordType>SlaAdministration__c.HDT_RT_PostSales</recordType>
         <visible>true</visible>
