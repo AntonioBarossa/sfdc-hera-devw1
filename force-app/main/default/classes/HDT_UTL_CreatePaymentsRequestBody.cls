@@ -169,7 +169,12 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
                         // }else{
                         //     caseToUpdate.Description  = '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
                         // }
-
+                        try{
+                            caseToUpdate.DiscardDescription__c = errorResponse.errorDetails[0].message;
+                        }catch (Exception e){
+                            caseToUpdate.DiscardDescription__c = 'Unknown error';
+                        }
+                        
                     }
                 }
             }

@@ -376,7 +376,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             caseFieldProcessMap = new Map<Id,Case>([SELECT id,Cluster__c,Type,Subprocess__c,AccountId  FROM Case WHERE Id IN: caseId WITH SECURITY_ENFORCED]);
         }
         if (!orderId.isEmpty()){
-            orderFieldProcessMap = new Map<Id,Order>([SELECT id,ProcessType__c,Subprocess__c,AccountId FROM Order WHERE Id IN: orderId WITH SECURITY_ENFORCED]);
+            orderFieldProcessMap = new Map<Id,Order>([SELECT id,Cluster__c, Process__c, ProcessType__c,Subprocess__c,AccountId FROM Order WHERE Id IN: orderId WITH SECURITY_ENFORCED]);
         }
         if (!caseFieldProcessMap.isEmpty() || !orderFieldProcessMap.isEmpty()){
             setAllProcessFields(newActivities, caseFieldProcessMap, orderFieldProcessMap);
@@ -409,9 +409,9 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 }
             }else if (act.Order__c != null && orderFieldProcessMap.containsKey(act.Order__c)){
                 Order o = orderFieldProcessMap.get(act.Order__c);
-                act.ParentCluster__c = null;
-                act.ParentProcess__c = o.ProcessType__c;
-                act.ParentSubprocess__c = o.Subprocess__c;
+                act.ParentCluster__c = o.Cluster__c;
+                act.ParentProcess__c = o.Process__c;
+                act.ParentSubprocess__c = 'Voltura'.equalsIgnoreCase(act.ParentProcess__c)? o.Subprocess__c :  o.ProcessType__c;
                 if(o.AccountId==null){
                     if(act.Type__c !='Chiamata outbound' && act.Type__c !='Sportello' && act.Type__c !='Chiamata inbound' && act.Type__c !='Richiesta non identificata'){
                         act.Account__c = o.AccountId;

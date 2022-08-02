@@ -1652,12 +1652,19 @@
         </rules>
         <rules>
             <name>Ambiente_Var</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Commodity</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Ambiente</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_VariazioniTari</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -8686,7 +8693,7 @@
             <targetReference>Lead_o_Interaction</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati</name>
@@ -9362,6 +9369,12 @@
             <name>TipoDocumento</name>
             <value>
                 <elementReference>ManageDocumentsFatturazione_0.tipoDocumento</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>serviceCatalogId</name>
+            <value>
+                <elementReference>serviceCatalogId</elementReference>
             </value>
         </inputAssignments>
     </subflows>
