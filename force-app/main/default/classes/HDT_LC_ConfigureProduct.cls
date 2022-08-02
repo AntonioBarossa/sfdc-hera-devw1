@@ -181,12 +181,12 @@ public inherited sharing class HDT_LC_ConfigureProduct {
 
         Set<String> encounteredServicePoints = new Set<String>();
         Set<String> duplicateServicePoints = new Set<String>();
-
+        /* Modificato da ServicePointCOde__c a controllo su ServicePoint__c in quanto Acqua e Ambiente non hanno il codice punto */
         for (SBQQ__QuoteLine__c quoteLinePod : quoteLinePods) {
-            if(encounteredServicePoints.contains(quoteLinePod.ServicePoint__r.ServicePointCode__c)){
-                duplicateServicePoints.add(quoteLinePod.ServicePoint__r.ServicePointCode__c);
+            if(encounteredServicePoints.contains(quoteLinePod.ServicePoint__c)){
+                duplicateServicePoints.add(quoteLinePod.ServicePoint__c);
             }else{
-                encounteredServicePoints.add(quoteLinePod.ServicePoint__r.ServicePointCode__c);
+                encounteredServicePoints.add(quoteLinePod.ServicePoint__c);
             }
         }
 
