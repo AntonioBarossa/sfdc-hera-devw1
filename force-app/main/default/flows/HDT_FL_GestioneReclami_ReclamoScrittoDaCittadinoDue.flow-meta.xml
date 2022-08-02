@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <apiVersion>50.0</apiVersion>
+    <apiVersion>55.0</apiVersion>
     <assignments>
         <name>Assegna_Process_Type_0</name>
         <label>Assegna Process Type</label>
@@ -644,7 +644,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento prestazione</stringValue>
+                <stringValue>Reclamo da cittadino</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -669,7 +669,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento prestazione</stringValue>
+                <stringValue>Reclamo da cittadino</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
