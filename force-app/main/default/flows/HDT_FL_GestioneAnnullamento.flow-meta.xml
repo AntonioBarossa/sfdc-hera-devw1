@@ -1257,7 +1257,7 @@
         <name>InviataHeroku_0</name>
         <label>Inviata ad Heroku?</label>
         <locationX>3669</locationX>
-        <locationY>2375</locationY>
+        <locationY>2376</locationY>
         <defaultConnector>
             <targetReference>Chiusura_activity_Order</targetReference>
         </defaultConnector>
@@ -1345,14 +1345,12 @@
     <decisions>
         <name>Processo</name>
         <label>Processo?</label>
-
         <locationX>1603</locationX>
-        <locationY>1114</locationY>
-
+        <locationY>1113</locationY>
         <defaultConnectorLabel>Annullamento Passivo</defaultConnectorLabel>
         <rules>
             <name>AnnullamentoPrestazione</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
@@ -1428,6 +1426,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Annullamento segnalazioni</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reclamo da cittadino</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1972,7 +1977,7 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <name>GetRecord</name>
         <label>GetRecord</label>
         <locationX>1733</locationX>
-        <locationY>1035</locationY>
+        <locationY>1034</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Processo</targetReference>
@@ -2355,8 +2360,8 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
     <screens>
         <name>Motivo_Annullamento_Screen_0</name>
         <label>Motivo Annullamento Screen</label>
-        <locationX>1906</locationX>
-        <locationY>1321</locationY>
+        <locationX>1766</locationX>
+        <locationY>1275</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2972,6 +2977,13 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <value>
             <booleanValue>true</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>ParentRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>ProcessType</name>
