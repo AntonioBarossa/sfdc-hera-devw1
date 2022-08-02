@@ -91,49 +91,54 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
             //MOCK CALLOUT
             //responseMrr = (wrts_prcgvr.MRR_1_0.MultiResponse) client.send(arg);
             //insert HDT_SRV_BillableVasDeactivation.createLogObj(mrrList, responseMrr, argsMap);
+
+            System.debug('ResponseMrr --> ' + responseMrr);
+
+            //wrpResponses = hpsmUtl.manipulateResponse(responseMrr);
+
+            System.debug('WRPResponse --> ' + wrpResponses);
+            //caseToUpdate = hpsmUtl.handleResponse(wrpResponses, currentCase);
+
+            map<String,String> fieldValueResponse = new map<String,String>();
+            List<wrts_prcgvr.MRR_1_0.field> fieldsResponse = responseMrr?.responses?.get(0)?.objects?.get(0)?.fields;
+            fieldsResponse=fieldsResponse?.isEmpty()==false? fieldsResponse : new List<wrts_prcgvr.MRR_1_0.field>();
+            for(wrts_prcgvr.MRR_1_0.field field : fieldsResponse){                        
+                fieldValueResponse.put(field.name,field.value);
+            }
+
+            if ( !'OK'.equalsIgnoreCase(fieldValueResponse.get('result'))) {
+                // ord.DiscardReason__c = responseService.responses[0].description;
+                //ord.Phase__c = 'Comunicazione verso Heroku KO';
+                system.debug('KO RICEVUTO');
+                caseToUpdate.TecnicalPhase__c=PHASE_KO;
+            }else{
+                system.debug('OK RICEVUTO');
+                if(String.isNotBlank(fieldValueResponse.get('COD_PRAT_UTENTE'))){
+                    caseToUpdate.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                }else if(String.isNotBlank(responseMrr.responses[0].header.requestId)){
+                    caseToUpdate.HerokuPracticeCode__c = responseMrr.responses[0].header.requestId;
+                }
+                caseToUpdate.TecnicalPhase__c = 'OK'.equalsIgnoreCase(fieldValueResponse.get('result'))? PHASE_OK : PHASE_KO;
+            }
+
+            system.debug('FINAL PRE UPDATE '+caseToUpdate.TecnicalPhase__c+ ' '+caseToUpdate.Phase__c);
+
+            //OK PREDEFINITO DA SMOCKARE
+            if(caseToUpdate.StartAppointment__c==null){
+                caseToUpdate.TecnicalPhase__c= PHASE_OK;
+            }else if(currentCase.Type.equalsIgnoreCase('Gestione rifiuti')){
+                caseToUpdate.TecnicalPhase__c= 'Inviata a SAP';
+            }
+
+            if(!Test.isRunningTest()){
+                HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+            }
         } catch (Exception ex) {
             //Error Handling
             System.debug(ex.getMessage());
-        }
-
-        System.debug('ResponseMrr --> ' + responseMrr);
-
-        //wrpResponses = hpsmUtl.manipulateResponse(responseMrr);
-
-        System.debug('WRPResponse --> ' + wrpResponses);
-        //caseToUpdate = hpsmUtl.handleResponse(wrpResponses, currentCase);
-
-        if ( !(responseMrr?.responses?.size()>0) || responseMrr?.responses[0]?.objects == null) {
-            // ord.DiscardReason__c = responseService.responses[0].description;
-            //ord.Phase__c = 'Comunicazione verso Heroku KO';
-            system.debug('KO RICEVUTO');
-            caseToUpdate.TecnicalPhase__c=PHASE_KO;
-        }else{
-            system.debug('OK RICEVUTO');
-            map<String,String> fieldValueResponse = new map<String,String>();
-            wrts_prcgvr.MRR_1_0.WObject objResponse = responseMrr.responses[0].objects[0];
-            for(wrts_prcgvr.MRR_1_0.field field : objResponse.fields){
-                fieldValueResponse.put(field.name,field.value);
-            }
-            if(String.isNotBlank(fieldValueResponse.get('COD_PRAT_UTENTE'))){
-                caseToUpdate.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
-            }else if(String.isNotBlank(responseMrr.responses[0].header.requestId)){
-                caseToUpdate.HerokuPracticeCode__c = responseMrr.responses[0].header.requestId;
-            }
-            caseToUpdate.TecnicalPhase__c = 'OK'.equalsIgnoreCase(fieldValueResponse.get('result'))? PHASE_OK : PHASE_KO;
-        }
-
-        system.debug('FINAL PRE UPDATE '+caseToUpdate.TecnicalPhase__c+ ' '+caseToUpdate.Phase__c);
-
-        //OK PREDEFINITO DA SMOCKARE
-        if(caseToUpdate.StartAppointment__c==null){
-            caseToUpdate.TecnicalPhase__c= PHASE_OK;
-        }else if(currentCase.Type.equalsIgnoreCase('Gestione rifiuti')){
-            caseToUpdate.TecnicalPhase__c= 'Inviata a SAP';
-        }
-
-        if(!Test.isRunningTest()){
-            HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+            response.success = false;
+            response.message = 'KO';
+            return response;
         }
 
         response.success = true;

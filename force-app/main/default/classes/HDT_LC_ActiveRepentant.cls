@@ -8,6 +8,19 @@
 @SuppressWarnings('PMD.ApexCRUDViolation')
 public with sharing class HDT_LC_ActiveRepentant {
 
+    public with sharing class HDT_WRP_Data{
+        @AuraEnabled public List<TermsAdministration__c> termsAdministration {get;set;}
+        @AuraEnabled public List<TermTable__c> termsTable {get;set;}
+        @AuraEnabled public List<CityTechnicalData__c> cityData {get;set;}
+
+        HDT_WRP_Data(){return;}
+        public HDT_WRP_Data(List<TermsAdministration__c> termsAdministration, List<TermTable__c> termsTable, List<CityTechnicalData__c> cityData){
+            this.termsAdministration=termsAdministration;
+            this.termsTable=termsTable;
+            this.cityData=cityData;
+        }
+    }
+
     @AuraEnabled
     public Date dateX {get;set;}
 
@@ -40,6 +53,16 @@ public with sharing class HDT_LC_ActiveRepentant {
     public static List<TermsAdministration__c> getTerms(String comune){
         List<TermsAdministration__c> terms =  [SELECT Id, City__c, Day__c, Month__c FROM TermsAdministration__c WHERE City__c = :comune WITH SECURITY_ENFORCED ORDER BY Month__c ASC LIMIT 1];
         return terms;
+    }
+
+    private static List<CityTechnicalData__c> getCityTecData(String comune){
+        List<CityTechnicalData__c> cityData =  [SELECT Id, TARIManagingStartDate__c, TARIManagingEndDate__c, CityNotManagedAlert__c FROM CityTechnicalData__c WHERE CadastralCity__c = :comune WITH SECURITY_ENFORCED LIMIT 1];
+        return cityData;
+    }
+
+    @AuraEnabled
+    public static HDT_WRP_Data getTables(String comune, String sottotipo){
+        return new HDT_WRP_Data(getTerms(comune), getPeriods(comune, sottotipo), getCityTecData(comune));
     }
 
 }
