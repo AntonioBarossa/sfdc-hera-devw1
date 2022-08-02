@@ -406,10 +406,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             console.log('#Valore quinto livello -->' +fifthLevel.value)
             if(fifthLevel != null){
                 let soldBy = this.selector('SoldBy__c');
-                if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
-                    soldBy.disabled = false;
-                }else{
-                    soldBy.disabled = true;
+                if(soldBy != null){
+                    if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
+                        soldBy.disabled = false;
+                    }else{
+                        soldBy.disabled = true;
+                    }
                 }
             }
         } else if(!(Object.keys(channel).length === 0)){

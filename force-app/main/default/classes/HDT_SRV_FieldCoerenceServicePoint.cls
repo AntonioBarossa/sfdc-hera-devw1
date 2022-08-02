@@ -58,6 +58,7 @@ public class HDT_SRV_FieldCoerenceServicePoint {
             String powerRequested = (String) servicePoint.get('PowerRequested__c');
             String requestedPhase = (String) servicePoint.get('RequestPhase__c');
             String implantType = (String) servicePoint.get('ImplantType__c');
+            String voltageLevel = (String) servicePoint.get('VoltageLevel__c');
             if(String.isNotBlank(powerRequested) && Decimal.valueOf(powerRequested) > 10 && (String.isBlank(requestedPhase) || (String.isNotBlank(requestedPhase) && !requestedPhase.equalsIgnoreCase('Trifase'))))
             {
                 resultMap.put('valid', false);
@@ -67,6 +68,11 @@ public class HDT_SRV_FieldCoerenceServicePoint {
             {
                 resultMap.put('valid', false);
                 resultMap.put('message','Deve esserci coerenza nella compilazione dei seguenti campi: Tipologia Fornitura Cliente, Tipo Impianto.');
+            }
+            if(String.isNotBlank(supplyType) && String.isNotBlank(voltageLevel) && supplyType.equalsIgnoreCase('Domestico') && !voltageLevel.equalsIgnoreCase('BT'))
+            {
+                resultMap.put('valid', false);
+                resultMap.put('message','Per Tipo Fornitura: \"' + supplyType + '\" impossibile selezionare Tensione di consegna: \"' + voltageLevel + '\"');
             }
         }
         return resultMap;
