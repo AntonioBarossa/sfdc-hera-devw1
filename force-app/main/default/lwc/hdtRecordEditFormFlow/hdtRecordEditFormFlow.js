@@ -53,6 +53,13 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     //@track notificationType = '';
     //@track delay = 3000;
     @track show = false;
+    showCustomLabels= false;
+
+    get customLabelClass(){
+        if(this.density)    return "slds-form-element "+(this.density=="comfy"? "slds-form-element_stacked" : "slds-form-element_horizontal");
+        let clist = this.template.querySelector('lightning-input-field.slds-form-element')?.classList?.value;
+        return clist? clist : "slds-form-element slds-form-element_horizontal";
+    }
 
     @wire(getFields, { processType: '$processType' }) 
         wiredFieldsJSON ({ error, data }) {
@@ -226,7 +233,9 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         var fields = record[this.recordId].fields;
         this.installmentsLogic();
         console.log('Edit Form Loaded ' + fields);
+        
         }
+        this.showCustomLabels=true;
     }
 
     handleError(event){
@@ -352,8 +361,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         : this.secondColumn.filter(element => element['FieldName'] === fieldName);
     }
 
-    handleChange(event){
+    virtualValidate(event){
+        return;
+    }
 
+    handleChange(event){
+        this.virtualValidate(event);
         //Reclami customizations
         this.complaintsLogic();
         //PianoRata customizations
@@ -362,6 +375,25 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         this.reimbursmentLogic();
         //DisconnectableLogic
         this.disconnectableLogic();
+        //Variazioni customLogic
+        this.variationsLogic();     //MODIFICA 21/07/22 marco.arci@webresults.it Logica form compilazione Variazioni
+    }
+
+    variationsLogic(){
+        //Sottoprocessi di varaiazioni
+        if(['AGEVOLAZIONE','COMPONENTI RESIDENTI','COMPONENTI NON RESIDENTI','COABITAZIONI','DATI CATASTALI',
+            'ISTAT/RONCHI','SUPERFICIE','DOMICILIATO IN NUCLEO RESIDENTE','RID. AGEV. DOPO ACCERTAMENTO'].includes(this.processType.toUpperCase())){
+            let RequestSource = this.selector('RequestSource__c');
+            let SubscriberType = this.selector('SubscriberType__c');
+            if(RequestSource.value.toUpperCase() != 'DA CONTRIBUENTE'){
+                SubscriberType.required = false;
+                SubscriberType.value = null;
+                SubscriberType.disabled = true;
+            } else {
+                SubscriberType.required = true;
+                SubscriberType.disabled = false;
+            }
+        }
     }
 
     complaintsLogic(){
@@ -374,10 +406,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             console.log('#Valore quinto livello -->' +fifthLevel.value)
             if(fifthLevel != null){
                 let soldBy = this.selector('SoldBy__c');
-                if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
-                    soldBy.disabled = false;
-                }else{
-                    soldBy.disabled = true;
+                if(soldBy != null){
+                    if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
+                        soldBy.disabled = false;
+                    }else{
+                        soldBy.disabled = true;
+                    }
                 }
             }
         } else if(!(Object.keys(channel).length === 0)){
