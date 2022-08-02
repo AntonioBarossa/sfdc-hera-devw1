@@ -419,7 +419,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         myOrder = [SELECT Id, CausalCode__c FROM Order]; 
         
-        System.assertEquals('003', myOrder.CausalCode__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
+        System.assertEquals('034', myOrder.CausalCode__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
     }
     

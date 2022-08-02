@@ -293,6 +293,7 @@ public inherited sharing class HDT_QR_AccountContactRelation {
         Roles
         FROM AccountContactRelation
         WHERE (Roles = 'Titolare'
+        OR Roles = 'Familiare'
         OR Roles = 'Amministratore condominio'
         OR Roles = 'Legale rappresentante')
         AND AccountId = :accountId
@@ -327,7 +328,7 @@ public inherited sharing class HDT_QR_AccountContactRelation {
         Account.VATGroup__c,
         Account.VATGroupStartDate__c,
         Account.VATGroupEndDate__c,
-        Account.BillingStreetToponym__c,
+        //Account.BillingStreetToponym__c,
         ContactId,
         Contact.MobilePhone,
         Contact.CertifiedEmail__c,

@@ -20,6 +20,21 @@ public without sharing class HDT_UTL_IntegrationLog {
         }
 
     }
+
+    public static void handleGenericErrorRequest(String request,String method, String error, String service,String recordId){
+        try{
+            List<Integration_Log__c> integList = new List<Integration_Log__c>();
+            String workedError = String.isNotBlank(error) && error.length() > 1000 ? error.substring(0,1000) : error;
+            String workedRequest = String.isNotBlank( request) && request.length() > 15000 ? request.substring(0,15000) : request;
+            HDT_WRP_IntegrationLog wrapObj = createWrapper(workedRequest,service,method,'',recordId,workedError);
+            Integration_Log__c recordObject = createSobject(wrapObj);
+            integList.add(recordObject);
+            insertLogList(integList);
+        }catch(Exception ex){
+            //No throw 
+        }
+
+    }
     
     private static void insertLogList(List<Integration_Log__c> logList){
         if (logList != null && !logList.isEmpty()) {

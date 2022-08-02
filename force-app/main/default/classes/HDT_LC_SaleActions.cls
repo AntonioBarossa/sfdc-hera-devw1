@@ -128,11 +128,17 @@ public inherited sharing class HDT_LC_SaleActions {
         */
         Boolean ordered = true;
         Integer currentStep = 4;
-        List<wrts_prcgvr__Activity__c> manualLoadingSiebelAct = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE Sale__c = :sale.Id AND Type__c = 'Caricamento Manuale Siebel' WITH SECURITY_ENFORCED];
-        if(!manualLoadingSiebelAct.isEmpty())
+        if(sale.isTransition__c)
         {
-            ordered = false;
-            currentStep = 50;
+            String regex = '^D[0-9] - .*';
+            Pattern regexPattern = Pattern.compile(regex);
+            List<Sale__c> transitionSale = [SELECT Id, IsTransition__c, Account__c, Account__r.CustomerMarking__c FROM Sale__c WHERE Id = :sale.Id WITH SECURITY_ENFORCED];
+            if(!transitionSale.isEmpty() && regexPattern.matcher(transitionSale[0].Account__r.CustomerMarking__c).matches())
+            {
+                ordered = false;
+                currentStep = 50;
+                HDT_LC_SaleServiceContainer.siebelLoadingActivity(transitionSale[0].Id, transitionSale[0].Account__c, 'Sale__c');
+            }
         }
         for (SBQQ__Quote__c quote : quoteList) {
             quote.SBQQ__Status__c = 'Chiusa';
@@ -262,10 +268,10 @@ public inherited sharing class HDT_LC_SaleActions {
          * In ogni caso, se l'account non ha il Codice Cliente
          * viene chiamato il servizio di Crea BP/CA
          */
-        Boolean searchToUse = false;
+        Boolean searchToUse = true;
         for(SBQQ__Quote__c q : quoteList){
-            if(!q.SBQQ__Pricebook__r.Name.equalsIgnoreCase('Vas Standalone')){
-                searchToUse = true;
+            if(q.SBQQ__Pricebook__r.Name.equalsIgnoreCase('Vas Standalone')){
+                searchToUse = false;
                 break;
             }
         }

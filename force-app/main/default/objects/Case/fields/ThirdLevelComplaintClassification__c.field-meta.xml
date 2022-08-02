@@ -173,6 +173,12 @@
                 <default>false</default>
                 <label>Valori della tensione/pressione</label>
             </value>
+            <value>
+                <fullName>Importi per consumi risalenti a più di due anni</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Importi per consumi risalenti a più di due anni</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Misura</controllingFieldValue>
@@ -262,6 +268,14 @@
         <valueSettings>
             <controllingFieldValue>Contratti</controllingFieldValue>
             <valueName>Volture e subentri</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratti</controllingFieldValue>
+            <valueName>Modifiche unilaterali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratti</controllingFieldValue>
+            <valueName>Recesso</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Altro</controllingFieldValue>

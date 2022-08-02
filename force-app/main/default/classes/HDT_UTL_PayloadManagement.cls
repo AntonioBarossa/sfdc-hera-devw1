@@ -1144,6 +1144,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             boxType = '6';
         }
 
+        if(indemnityDueSendResponse == 0 && !expiredCorrection)
+        {
+            boxType = '';
+        }
+
         System.debug(LoggingLevel.DEBUG, 'calculateIndemnityBox inputs: ' + complaintClassification + ', ' + indemnityConfirmed + ', ' + indemnityMotivation + ', ' + correctionRight + ', ' + expiredCorrection + ', ' + correctionDocumentEmissionDate + ', ' + indemnityDueSendResponse);
         System.debug(LoggingLevel.DEBUG, 'calculateIndemnityBox boxType output: ' + boxType);
         return boxType;
@@ -1238,7 +1243,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
     // Restituisce la data nel formato richiesto da Engage1
     private static String getFormattedDate(Date dateToFormat) {
-        Datetime dt = dateToFormat;
+        Datetime dt;
+        if(dateToFormat != null){
+            dt = dateToFormat;
+        }else{
+            dt = date.Today();
+        }
         String formattedDate = dt.format('dd/MM/y');
         return formattedDate;
     }

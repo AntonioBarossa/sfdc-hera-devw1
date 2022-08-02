@@ -6,10 +6,6 @@
     <label>Default</label>
     <picklistValues>
         <picklist>Cluster__c</picklist>
-        <!-- <values>
-            <fullName>Ambiente</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Annullamento</fullName>
             <default>false</default>
@@ -34,18 +30,6 @@
             <fullName>Fatturazione</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Generiche Attivazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Generiche VAS</fullName>
-            <default>false</default>
-        </values>
-        <!-- <values>
-            <fullName>HERA</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Indennizzi</fullName>
             <default>false</default>

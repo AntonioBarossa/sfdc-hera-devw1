@@ -2,10 +2,11 @@
 
     <aura:attribute name="recordid" type="String"/>
     <aura:attribute name="type" type="String"/>
+    <aura:attribute name="relatedtoid" type="String"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
     <!--<c:hdtViewSapDataTable recordId="{!v.recordid}" type="{!v.type}"></c:hdtViewSapDataTable>-->
-    <c:hdtAccountDataEnrichment recordId="{!v.recordid}" type="{!v.type}"></c:hdtAccountDataEnrichment>
+    <c:hdtAccountDataEnrichment recordId="{!v.recordid}" type="{!v.type}" relatedToId="{!v.relatedtoid}" ></c:hdtAccountDataEnrichment>
 
 </aura:component>
