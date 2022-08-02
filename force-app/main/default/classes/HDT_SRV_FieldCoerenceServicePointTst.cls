@@ -119,6 +119,11 @@ public class HDT_SRV_FieldCoerenceServicePointTst {
             servicePoint.put('CommoditySector__c', 'Energia Elettrica');
             servicePoint.put('ImplantType__c','Tipo Impianto Errato');
             result = HDT_SRV_FieldCoerenceServicePoint.checkCoerenceServicePoint(servicePoint, inputFieldMap);
+            servicePoint.put('SupplyType__c', 'Domestico');
+            servicePoint.put('ImplantType__c','13A0-Usi di Abitazione BT');
+            servicePoint.put('PowerRequested__c','7');
+            servicePoint.put('VoltageLevel__c','MT');
+            result = HDT_SRV_FieldCoerenceServicePoint.checkCoerenceServicePoint(servicePoint, inputFieldMap);
         Test.stopTest();
         System.assertEquals(true, !result.isEmpty(), 'Coerenza non controllata');
     }   

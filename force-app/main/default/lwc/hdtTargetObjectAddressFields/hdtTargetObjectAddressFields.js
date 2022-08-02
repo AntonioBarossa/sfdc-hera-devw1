@@ -1542,7 +1542,7 @@ disabledverifyFieldsAddressDisabled(){
         console.log('hdtTargetObjectAddressFields - fieldAddressObject : '+ JSON.stringify(this.fieldsaddressobject));
         console.log('connectedCallback  START + theRecord : '+JSON.stringify(this.theRecord));
         console.log('connectedCallback   objectApiName : '+JSON.stringify(this.objectapiname));
-        if(this.objectapiname=='Account'){
+        if(this.objectapiname=='Account' || this.accountid == null){    //MODIFICA 28/07/22 marco.arci@webresults.it -> se non c'è un contesto di account, non mostrari i due pulsanti
             this.visibleCopiaResidenza=false;
             this.visibleSelezioneIndirizzi=false;
         }else{

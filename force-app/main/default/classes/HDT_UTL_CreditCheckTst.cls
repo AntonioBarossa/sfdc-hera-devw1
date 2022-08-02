@@ -108,4 +108,12 @@ public with sharing class HDT_UTL_CreditCheckTst {
         System.assertEquals(false, isManaged, 'La risposta non è quella attesa');
     }
 
+    @IsTest
+    public static void testInsertCalloutLog(){
+        Test.startTest();
+            HDT_UTL_CreditCheck.insertCalloutLog('request', 'response');
+        Test.stopTest();
+        System.assertEquals(1, [SELECT id FROM wrts_prcgvr__Log__c].size(), 'La risposta non è quella attesa');
+    }
+
 }

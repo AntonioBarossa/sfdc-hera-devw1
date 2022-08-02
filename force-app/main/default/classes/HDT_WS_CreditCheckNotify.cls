@@ -5,11 +5,14 @@ global with sharing class HDT_WS_CreditCheckNotify {
 
     @HttpPost
     global static void doPost(){
+        String body = '';
+        String crmId= '';
         try{
-            String body = RestContext.request.requestBody.toString();
+            body = RestContext.request.requestBody.toString();
             System.debug(LoggingLevel.DEBUG,'WS CreditCheckNotify Body Request: ' + body);
             HDT_WRP_NotifyRequest request = (HDT_WRP_NotifyRequest)JSON.deserialize(body, HDT_WRP_NotifyRequest.class);
             //Gestisco solo se non c'è un codice errore oppure non è tra quelli che devo trattare come OK
+            crmId = request.crmId;
             if (String.isBlank(request.crmId)){
                 throw new HDT_WS_CreditCheckException('CrmId field cannot be null.');
             }
@@ -28,10 +31,12 @@ global with sharing class HDT_WS_CreditCheckNotify {
             RestContext.response.responseBody = Blob.valueOf(JSON.serialize(new HDT_WRP_NotifyResponse('success',null)));
             RestContext.response.headers.put('Content-Type', 'application/json');
         }catch(Exception e){
+            body = String.isNotBlank(body) ? body : 'empty request...';
             System.debug(LoggingLevel.ERROR,'WS CreditCheckNotify Error ' + e.getMessage());
             RestContext.response.statusCode=400;
             RestContext.response.responseBody = Blob.valueOf(JSON.serialize(new HDT_WRP_NotifyResponse('error',e.getMessage())));
             RestContext.response.headers.put('Content-Type', 'application/json');
+            HDT_UTL_IntegrationLog.handleGenericErrorRequest(body,'POST', e.getMessage(), 'HDT_WS_CreditCheckNotify', crmId);  
         }
         
     }

@@ -5,7 +5,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.CorrectionRight__c</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
         <locationX>50</locationX>
-        <locationY>1094</locationY>
+        <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -65,7 +65,7 @@
         <name>AssegnaValori_0_0</name>
         <label>AssegnaValori</label>
         <locationX>314</locationX>
-        <locationY>1094</locationY>
+        <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -98,11 +98,43 @@
             <targetReference>Aggiorna_Case_0</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>assignProcessType</name>
+        <label>assignProcessType</label>
+        <locationX>644</locationX>
+        <locationY>278</locationY>
+        <assignmentItems>
+            <assignToReference>processTypeMetadato</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reclamo Scritto Prima Classificazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Prima_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignProcessType_0</name>
+        <label>assignProcessType</label>
+        <locationX>380</locationX>
+        <locationY>278</locationY>
+        <assignmentItems>
+            <assignToReference>processTypeMetadato</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reclamo Scritto Prima Classificazione Tari</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Prima_Classificazione</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Linkare_Case</name>
         <label>Linkare Case?</label>
         <locationX>182</locationX>
-        <locationY>974</locationY>
+        <locationY>1310</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_0_0</targetReference>
         </defaultConnector>
@@ -131,10 +163,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>recordType_Check</name>
+        <label>recordType Check</label>
+        <locationX>512</locationX>
+        <locationY>158</locationY>
+        <defaultConnector>
+            <targetReference>assignProcessType</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Reclami W1</defaultConnectorLabel>
+        <rules>
+            <name>ReclamiScrittiTariDecision</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>InputCase.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_ReclamiScrittiTARI</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>assignProcessType_0</targetReference>
+            </connector>
+            <label>Reclami Scritti Tari</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Rettifica_Doppia_Fatturazione</name>
         <label>Rettifica Doppia Fatturazione?</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>854</locationY>
         <defaultConnector>
             <targetReference>Cerca_Case_reiterazione</targetReference>
         </defaultConnector>
@@ -159,7 +216,7 @@
         <name>SalvaOConferma</name>
         <label>Salva in Bozza o Conferma?</label>
         <locationX>512</locationX>
-        <locationY>278</locationY>
+        <locationY>614</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -237,7 +294,7 @@
         <name>Cerca_Case_reiterazione</name>
         <label>Cerca Case reiterazione</label>
         <locationX>182</locationX>
-        <locationY>854</locationY>
+        <locationY>1190</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Linkare_Case</targetReference>
@@ -271,6 +328,13 @@
                 <stringValue>Closed</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case_Aggiornato.RecordTypeId</elementReference>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -279,7 +343,7 @@
         <name>Get_Input_Case_Aggiornato</name>
         <label>Get Input Case Aggiornato</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>734</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Rettifica_Doppia_Fatturazione</targetReference>
@@ -300,21 +364,21 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>50</locationX>
-        <locationY>1214</locationY>
+        <locationY>1550</locationY>
         <inputReference>Get_Input_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
         <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationY>1550</locationY>
         <inputReference>Get_Input_Case_Aggiornato</inputReference>
     </recordUpdates>
     <screens>
         <name>Prima_Classificazione</name>
         <label>Prima Classificazione</label>
         <locationX>512</locationX>
-        <locationY>158</locationY>
+        <locationY>494</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -363,7 +427,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Reclamo Scritto Prima Classificazione</stringValue>
+                    <elementReference>processTypeMetadato</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -426,6 +490,12 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>InputCase.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -437,7 +507,7 @@
         <locationX>386</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Prima_Classificazione</targetReference>
+            <targetReference>recordType_Check</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -445,7 +515,7 @@
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
         <locationX>578</locationX>
-        <locationY>398</locationY>
+        <locationY>734</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -487,5 +557,19 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>processTypeMetadato</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>relatedId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>
