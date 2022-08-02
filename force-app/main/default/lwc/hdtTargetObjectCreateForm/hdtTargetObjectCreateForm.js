@@ -1287,7 +1287,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 concatPointErrorFields = concatPointErrorFields.concat('Classe Contatore, ');
             }
         }
-        else {
+        else if (this.allSubmitedFields['CommoditySector__c'] == 'Gas') {
 
             if ((this.allSubmitedFields['Distributor__c'] === undefined || this.allSubmitedFields['Distributor__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
@@ -1395,7 +1395,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 concatPointErrorFields = concatPointErrorFields.concat('Classe Contatore, ');
             }
         }
-        else {
+        else if (this.allSubmitedFields['CommoditySector__c'] == 'Gas') {
 
             if (this.allSubmitedFields['ServicePointCode__c'] !== undefined 
             && this.allSubmitedFields['ServicePointCode__c'] !== ''
