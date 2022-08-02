@@ -5,25 +5,12 @@
 
 @isTest
 public with sharing class HDT_UTL_CaseTst {
-
-    
-    //DEBUG
-    public static final String TEST_NAME = 'HDT_UTL_CaseTst';
-    
     
     //TEST SETUP
-    
-    
-    //TESTS
-
-    @isTest
-    private static void caseFlowPredefaultsTest(){
-        //DEBUG
-        String debugString = TEST_NAME + ' - ' + 'caseFlowPredefaultsTest';
-        System.debug(debugString);
-        
-        //SETUP
-        HDT_UTL_DataFactoryTst.pClickCasePhase();        
+    @TestSetup
+    static void makeData()
+    {
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
 
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
@@ -33,11 +20,40 @@ public with sharing class HDT_UTL_CaseTst {
         update myServicePoint;
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);   
+
+        
+        wrts_prcgvr__ActivityTemplate__c myactivityTemplate = new wrts_prcgvr__ActivityTemplate__c();
+        myactivityTemplate.Name = 'myPClickTestTemplate';
+        myactivityTemplate.wrts_prcgvr__Assignees__c = 'my text Assignee';
+        myactivityTemplate.wrts_prcgvr__Subject__c = 'my text Subject';
+        myactivityTemplate.wrts_prcgvr__DueDateField__c = 'my text Due Date Field';
+        insert myactivityTemplate;
+
+        City__c city = new City__c();
+        city.Name = 'TEST';
+        city.Province__c = 'TS';
+        city.SDV__C = 'HCM';
+        insert city;
+
+        AtecoMatrix__c atecoMatrix = new AtecoMatrix__c();
+        atecoMatrix.AtecoCode__c = '9999';
+        atecoMatrix.City__c = 'TEST';
+        insert atecoMatrix;
+    }
+    
+    //TESTS
+
+    @isTest
+    private static void caseFlowPredefaultsTest(){
+
+        List<Case> caseList = [SELECT Id, Note__c, Type FROM Case];
+
         Case myCase = caseList[0];
         myCase.Note__c = 'Note';
         myCase.type = 'Riattivazione Fornitura';
         update myCase;
+
 
 
         List<HDT_UTL_Case.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Case.HDT_UTL_FlowInputs>();
@@ -122,26 +138,9 @@ public with sharing class HDT_UTL_CaseTst {
     @isTest
     private static void createActivityTest(){
         
-        //DEBUG
-        String debugString = TEST_NAME + ' - ' + 'createActivityTest';
-        System.debug(debugString);
-        
-        //SETUP
-        
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
-        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
-        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
-        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = [SELECT Id FROM Case];
         String idCase = caseList[0].Id;
 
-        wrts_prcgvr__ActivityTemplate__c myactivityTemplate = new wrts_prcgvr__ActivityTemplate__c();
-        myactivityTemplate.Name = 'myPClickTestTemplate';
-        myactivityTemplate.wrts_prcgvr__Assignees__c = 'my text Assignee';
-        myactivityTemplate.wrts_prcgvr__Subject__c = 'my text Subject';
-        myactivityTemplate.wrts_prcgvr__DueDateField__c = 'my text Due Date Field';
-        insert myactivityTemplate;
 
         //TESTING
         Test.startTest();
@@ -159,6 +158,43 @@ public with sharing class HDT_UTL_CaseTst {
         System.assert(caseList != null, 'Attenzione, caseList non può essere null!');
         System.assert(idCase != null, 'Attenzione, idCase non può essere null!');
         
+    }
+
+
+    @IsTest
+    static void createServiceRequestFromCasesTst()
+    {
+        List<Case> caseList = [SELECT Id,CommodityFormula__c,PODPDRFormula__c,ServicePoint__c FROM Case];
+
+        Test.startTest();
+            List<ServiceRequest__c> result = HDT_UTL_Case.createServiceRequestFromCases(caseList);
+        Test.stopTest();
+
+        System.assertEquals(true, !result.isEmpty(), 'Service Request create con successo');
+
+    }
+
+    @IsTest
+    static void calculateTransitionTst()
+    {
+        List<Case> caseList = [SELECT Id, Type, SupplyCity__c, Commodity__c, Distributor__r.Code__c FROM Case];
+        caseList[0].SupplyCity__c = 'TEST';
+        caseList[0].Commodity__c = 'Energia Elettrica';
+        caseList[0].Type = 'Nuovo Impianto';
+
+        List<HDT_UTL_Case.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Case.HDT_UTL_FlowInputs>();
+        HDT_UTL_Case.HDT_UTL_FlowInputs input = new HDT_UTL_Case.HDT_UTL_FlowInputs();
+
+        input.implantType = '';
+        input.powerRequested = 0;
+        input.cluster = 'Preventivi';
+        input.currentCase = caseList[0];
+
+        inputs.add(input);
+        Test.startTest();
+            List<HDT_UTL_Case.HDT_UTL_FlowOutputs> result = HDT_UTL_Case.caseFlowPredefaults(inputs);
+        Test.stopTest();
+        System.assertEquals(true, !result.isEmpty(), 'Test Fallito');
     }
 
 }

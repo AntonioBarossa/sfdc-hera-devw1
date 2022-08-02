@@ -4,6 +4,7 @@
 * @description HDT_QR_CampaignMember – Contains queries for CampaignMember
 * @history Keltin Mesonjesi – 27/02/2020 – Created class
 */
+@SuppressWarnings('PMD.ExcessivePublicCount')
 public inherited sharing class HDT_QR_CampaignMember {
     
     /**
@@ -23,7 +24,7 @@ public inherited sharing class HDT_QR_CampaignMember {
         String channel = currentUser.Profile.Name.equalsIgnoreCase('Hera Teleseller Partner User') ? 'Telefonico Outbound' : 'Door to Door';
 
         return [SELECT Id, CampaignId, Campaign.Name, Campaign.Status, Campaign.Channel__c, Campaign.EndDate, Status FROM CampaignMember 
-                WHERE ContactId = :contactId AND Campaign.isActive = true AND Campaign.Status = 'In Corso' AND HasResponded = false AND Campaign.StartDate <= :tday AND Campaign.Channel__c includes (:channel) WITH SECURITY_ENFORCED];
+                WHERE ContactId = :contactId AND Campaign.isActive = true AND (Campaign.Status = 'In Corso' OR Campaign.Status = 'Pianificata') AND HasResponded = false AND Campaign.StartDate <= :tday AND Campaign.Channel__c includes (:channel) WITH SECURITY_ENFORCED];
     }
 
     /**
@@ -42,7 +43,7 @@ public inherited sharing class HDT_QR_CampaignMember {
         String channel = currentUser.Profile.Name.equalsIgnoreCase('Hera Teleseller Partner User') ? 'Telefonico Outbound' : 'Door to Door';
 
         return [SELECT CampaignId, Campaign.Name, Campaign.Status, Campaign.Channel__c, Campaign.EndDate, Status FROM CampaignMember 
-                WHERE LeadId = :leadId AND Campaign.isActive = true AND Campaign.Status = 'In Corso' AND HasResponded = false AND Campaign.StartDate <= :tday AND Campaign.Channel__c includes (:channel) WITH SECURITY_ENFORCED];
+                WHERE LeadId = :leadId AND Campaign.isActive = true AND (Campaign.Status = 'In Corso' OR Campaign.Status = 'Pianificata') AND HasResponded = false AND Campaign.StartDate <= :tday AND Campaign.Channel__c includes (:channel) WITH SECURITY_ENFORCED];
     }
 
     /**
@@ -219,8 +220,8 @@ public inherited sharing class HDT_QR_CampaignMember {
             Id,
             Name
             FROM Account
-            WHERE RecordType.DeveloperName = 'HDT_RT_Partner'
-            WITH SECURITY_ENFORCED
+            WHERE RecordType.DeveloperName = 'HDT_RT_Partner' AND owner.Name ='Outbound Channel Manager'
+            WITH SECURITY_ENFORCED ORDER BY Name asc
         ];
     }
 
@@ -558,5 +559,11 @@ public inherited sharing class HDT_QR_CampaignMember {
             WHERE Id = :campaignMemberId
             WITH SECURITY_ENFORCED
         ];
+    }
+
+    public static List<CampaignMember> getCampMembByActivity(String actId){
+
+        List<CampaignMember> campMembList = [SELECT Id, Status, Campaign.PositiveOutcomeDefaultStatus__c FROM CampaignMember WHERE RelatedActivity__c = :actId WITH SECURITY_ENFORCED];
+        return campMembList;
     }
 }

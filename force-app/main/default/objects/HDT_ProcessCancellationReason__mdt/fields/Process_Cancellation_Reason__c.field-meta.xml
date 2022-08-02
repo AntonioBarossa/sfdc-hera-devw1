@@ -135,6 +135,11 @@
                 <default>false</default>
                 <label>Registrazione Non Conforme</label>
             </value>
+            <value>
+                <fullName>Annullamento per Parere Negativo</fullName>
+                <default>false</default>
+                <label>Annullamento per Parere Negativo</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

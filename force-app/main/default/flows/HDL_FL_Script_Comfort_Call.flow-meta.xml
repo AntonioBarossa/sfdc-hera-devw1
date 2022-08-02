@@ -182,6 +182,21 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
+            <name>PresaAppuntamento</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Procedere con la presa appuntamento.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Comfort_RB1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>RBChoice_NonConfermo</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Comfort_Text2</name>
             <fieldText>&lt;p&gt;Molto bene, lei è l&apos;intestatario del contratto oppure è la persona con cui è stata effettuata la registrazione (interlocutore)?&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>

@@ -222,7 +222,9 @@ public with sharing class HDT_UTL_ServicePoint {
         }
         if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
             String mercato = mapRes.get('MERCATO').substring(0,1) + mapRes.get('MERCATO').substring(1,mapRes.get('MERCATO').length()).toLowerCase();
+            Boolean isStg = mapRes.get('DEFINIZIONEOFFERTA')!=null && mapRes.get('DEFINIZIONEOFFERTA').containsIgnoreCase('STG_')? true:false;
             mercato = mercato.equalsIgnoreCase('Tutela')?'Regolamentato':mercato;
+            mercato = isStg ? 'Regolamentato':mercato;
             spNew.MarketOrigin__c = mercato;
         }
         if(mapRes.get('FLAGTELEGESTIBILE')!=null && !String.isBlank(mapRes.get('FLAGTELEGESTIBILE'))){            
@@ -332,6 +334,12 @@ public with sharing class HDT_UTL_ServicePoint {
         listFields = (List<String>)JSON.deserializeUntyped(stringWrap);
         
         return listFields;        
+    }
+    @AuraEnabled(cacheable=true)
+    public static  HDT_WRP_AddressObject getInstanceWrapAddressObject(String servicePoint)
+    {
+        ServicePoint__c sp = (ServicePoint__c) JSON.deserialize(servicePoint, ServicePoint__c.class);
+        return getInstanceWrapAddressObject(sp);
     }
     
     @AuraEnabled(cacheable=true)

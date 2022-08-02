@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>AfterthoughtDays__c</field>
-        <value xsi:type="xsd:double">24.0</value>
+        <value xsi:type="xsd:double">14.0</value>
     </values>
     <values>
         <field>Channel__c</field>

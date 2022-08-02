@@ -467,11 +467,15 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
 
     @isTest
     public static void setStepForVoltureWithSwitchTest2(){
-        List<ServicePoint__c> servPoints=HDT_UTL_DataFactoryTst.createServicePoint(1, true);
-        Account acc = [SELECT Id FROM Account];
+        List<Account> acc = [SELECT Id FROM Account LIMIT 2];
+        List<ServicePoint__c> servPoints=HDT_UTL_DataFactoryTst.createServicePoint(1, false);
 
-        Double resp = HDT_LC_EditScartiComplessi.setStepForVoltureWithSwitch(servPoints[0], acc.Id);
-        System.assertEquals(null, resp , 'Step errato');
+        servPoints[0].Account__c = acc[0].Id;
+
+        insert servPoints;
+        Account accDummy = new Account();
+        Double resp = HDT_LC_EditScartiComplessi.setStepForVoltureWithSwitch(servPoints[0], accDummy.Id);
+        System.assertEquals(4, resp , 'Step errato');
 
     }
 

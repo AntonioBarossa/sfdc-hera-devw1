@@ -16,6 +16,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 	@AuraEnabled
 	public static Boolean isInBlacklist(String pod){
+		if(String.isBlank(pod))return false;
 		HDT_QR_Blacklist qrBlack = new HDT_QR_Blacklist();
 		Blacklist__c blacklist = qrBlack.getBlacklist(pod);
 		Boolean response = false;
@@ -296,6 +297,9 @@ public with sharing class HDT_LC_AdvancedSearch {
 			if(ac.BillingCityCode__c != null){
 				outPut.put('Codice Comune SAP',ac.BillingCityCode__c);
 			}
+			if(ac.BillingPlace__c != null){
+				outPut.put('Localita',ac.BillingPlace__c);
+			}
 
 		system.debug('outPut *******'+ outPut);
 
@@ -355,6 +359,20 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 				}
 				isSerachFromContract=true;
+			}
+
+			when 'podH2o' {
+				if (parameter.length() < 5 || parameter.length() > 20) {
+					throw new AuraHandledException('Il Codice Punto Presa deve essere di compreso tra 5 e 20 caratteri');
+				}
+				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
+				servicePoints.addAll(servicePointQr.getServicePointsByCodeWater(parameter, customSetting.OutputServicePoint__c));
+			}
+
+			when 'address' {
+				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
+				servicePoints.addAll(servicePointQr.getServicePointsByAddress(parameter, customSetting.OutputServicePoint__c));
+
 			}
 
 		}

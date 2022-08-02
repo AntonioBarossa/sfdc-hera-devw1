@@ -61,7 +61,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         }
         if(clonedOrder.get('Email__c') == null || String.isBlank((String)clonedOrder.get('Email__c')))
         {
-            clonedOrder.put('Email__c','emptyEmailDefault');
+            clonedOrder.put('Email__c', emptyEmailDefault);
         }
         /* Calcolo Addizionale Regionale + Aliquota accise */
         String tax = (String) clonedOrder.get('ExciseEle__c');
@@ -147,6 +147,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
                 activity.OpeningNote__c = (String)ammissibilityCheckMap.get('note');
                 activity.wrts_prcgvr__Description__c = (String)ammissibilityCheckMap.get('message');
                 activity.Order__c = currentOrder.Id;
+                activity.wrts_prcgvr__IsRequired__c = true;
                 HDT_UTL_DatabaseService.insertSObject(activity);
             }
         }

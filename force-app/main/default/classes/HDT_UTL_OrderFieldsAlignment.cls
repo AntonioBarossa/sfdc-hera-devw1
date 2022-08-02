@@ -269,7 +269,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         // String customerLastName = null;
         // if(toCheck.vat__c == null || toCheck.vat__c == ''){
             if (account.RecordType.DeveloperName == 'HDT_RT_Business') {
-                orderToUpdate.CustomerCompanyName__c = account.LastName__c;
+                String ragioneSociale = account.CustomerMarking__c.containsIgnoreCase('Ditta Individuale') && String.isNotBlank(account.FirstName__c) ? account.FirstName__c + ' ' + account.LastName__c : account.LastName__c;
+                orderToUpdate.CustomerCompanyName__c = ragioneSociale;
 
                 if (orderOld.ServicePoint__c != null && (orderOld.ServicePoint__r.Vat__c == null || orderOld.ServicePoint__r.Vat__c == '')) {
                     // 26/08/2021 - gabriele.rota@webresults.it - Calcolo IVA
@@ -518,6 +519,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                     }
                 }
             }
+        }
+        if(false){
+            orderToUpdate.ApprovalType__c           = mainItems[0].Product2.ApprovalType__c;
+            orderToUpdate.IntegratedSAP__c          = mainItems[0].Product2.IntegratedSAP__c;
+            orderToUpdate.Surface__c                = mainItems[0].Surface__c;
+            orderToUpdate.EmploymentMonthsInYear__c = mainItems[0].MonthsOccupYear__c;
         }
         if(orderToUpdate.ServicePoint__c != null)
         {

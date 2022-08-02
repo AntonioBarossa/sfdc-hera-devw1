@@ -22,9 +22,8 @@
 
         //variabile per innesco da campagne
         var campaignId = myPageRef.state.c__campaignId;
-
         var campaignMemberId = myPageRef.state.c__campaignMemberId;
-        console.log('campaignMemberId --> '+campaignMemberId);
+        
 
 
         // id del lead oggetto del process.
@@ -70,7 +69,8 @@
         console.log('# recordToCancell -> '         + recordToCancell);
         console.log('# sObjectRecordToCancell -> '  + sObjectRecordToCancell);
         console.log('# parentRecordId --> '         + parentRecordId);
-        console.log('# campaignId -> '              + campaignId)
+        console.log('# campaignId -> '              + campaignId);
+        console.log('# campaignMemberId --> '       +campaignMemberId);
         console.log('# leadId -> '                  + leadId);
         console.log('# servicePointId -> '          + servicePointId);
         console.log('# billingProfileId -> '        + billingProfileId);
@@ -91,6 +91,7 @@
         });
 
         var parentId;
+        var caseTabId;
         workspaceAPI.getAllTabInfo().then(function(response) {
             console.log('----------');
             response.forEach((element) => {
@@ -106,9 +107,12 @@
                     }
                     else if(element.pageReference.attributes.recordId === orderId){
                         parentId = element.tabId;
+                    } else if(element.pageReference.attributes.recordId === parentRecordId){
+                        caseTabId=element.tabId;
                     }
                 }
             });
+            parentId=parentId? parentId : caseTabId;
             console.log('----------');
             console.log('# parentId -> ' + parentId);
 
@@ -152,7 +156,7 @@
                 console.log('# wizard tab id: ' + newTabId);
                 workspaceAPI.setTabLabel({ tabId: newTabId, label: 'Wizard' });
                 workspaceAPI.setTabIcon({ tabId: newTabId, icon: 'custom:custom83' });
-
+                
                 workspaceAPI.closeTab({ tabId: tabToClose }).then(function(success) {
                     if (success) {
                         workspaceAPI.focusTab({tabId: newTabId});

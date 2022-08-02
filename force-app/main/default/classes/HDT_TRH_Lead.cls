@@ -28,6 +28,16 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
        // List<Lead> leadToCheck = new List<Lead>();
         //Map<String,String> leadDomain = new Map<String,String>();
         for(Lead l : listNew){
+            if(l.Country == null || l.Country == '')
+            {
+                l.Country = 'ITALIA';
+            }
+            if(String.isNotBlank(l.FirstName)){
+                l.FirstName = l.FirstName.toUpperCase();
+            }
+            if(String.isNotBlank(l.LastName)){
+                l.LastName= l.LastName.toUpperCase();
+            }
             if(l.email != null){
                 String s = l.email.split('@')[1];
                 if(mapResBlacklist.get(s.toUpperCase()) != null){
@@ -42,7 +52,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         else{
                             l.company = l.firstname + ' '  + l.lastname; 
                         }
-                        }
+                    }
                 }
             }
             else{
@@ -261,6 +271,10 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     setFiscalCodes.add(l.FiscalCode__c);
                     leadToCheck.add(l);
                 }
+                if(l.Country == null || l.Country == '')
+                {
+                    l.Country = 'ITALIA';
+                }
             }  
 
             // Start 27-08-2021 HRAWRM-351
@@ -308,4 +322,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
             }
         }
         // End 27-08-2021 HRAWRM-351
+
+
+
 }

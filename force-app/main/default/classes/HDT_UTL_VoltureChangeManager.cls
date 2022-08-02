@@ -118,7 +118,9 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             /**@frpanico 26/10/2021
              * Cambio Voltura - RN008 "Voltura con Switch"
             */
-            voltureChangeSrv.handleAmmissibilityCheck(fieldsMap, currentOrder);
+            if (!'Amm. Precheck KO SII'.equalsIgnoreCase(orderToUpdate.TecnicalPhase__c)){
+                voltureChangeSrv.handleAmmissibilityCheck(fieldsMap, currentOrder);
+            }
 
             /*
             if(! string.isBlank((String)fieldsMap.get('VIA')) ){
@@ -143,12 +145,15 @@ public with sharing class HDT_UTL_VoltureChangeManager {
                 orderToUpdate.SupplyCountry__c = (String)fieldsMap.get('NAZIONE');
             }
             */
-            orderToUpdate.DiscardReason__c = HDT_UTL_Accents.removeDiacritics((String)fieldsMap.get('DES_ERR_AEEG'));
+            String discardReason = fieldsMap.containsKey('DES_ERR_AEEG') && String.isNotBlank((String)fieldsMap.get('DES_ERR_AEEG')) ?
+                (String)fieldsMap.get('DES_ERR_AEEG') :
+                (String)fieldsMap.get('TESTO_ERR');  
+            orderToUpdate.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(discardReason);
             orderToUpdate.HerokuPracticeCode__c = (String)fieldsMap.get('COD_PRAT_UTENTE');
             orderToUpdate.DistributorPracticeCode__c = (String)fieldsMap.get('COD_PRAT_DISTR');
             /* Date Fields */
             if( ! string.isBlank((String)fieldsMap.get('DATA_DECORRENZA_SW')) ){
-                orderToUpdate.SwitchOutDate__c = voltureChangeUtils.convertDdMmYyyy((String)fieldsMap.get('DATA_DECORRENZA_SW'));
+                orderToUpdate.SwitchOutDate__c = voltureChangeUtils.convertDdMmYyyyList((String)fieldsMap.get('DATA_DECORRENZA_SW'));
             }
             if( ! string.isBlank((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III')) ){
 
@@ -381,6 +386,8 @@ public with sharing class HDT_UTL_VoltureChangeManager {
         Boolean isRetroactive = (Boolean) checkMap.get('isRetroactive');
         Boolean isUpdateStep = (Boolean) checkMap.get('isUpdateStep');
         Date readingDate = (Date) checkMap.get('readingDate');
+        String phase = currentOrder.Phase__c != null?currentOrder.Phase__c:'';
+        Boolean isFromEdit = phase.equalsIgnoreCase('Ammissibilità KO') || phase.equalsIgnoreCase('Caricamento Siebel KO')?true:false;
 
         order.NotRegisteredMeterCase__c = order.NotRegisteredMeterCase__c!=null?order.NotRegisteredMeterCase__c:currentOrder.NotRegisteredMeterCase__c;
         order.VoltureType__c = order.VoltureType__c!=null? order.VoltureType__c: currentOrder.VoltureType__c;
@@ -441,7 +448,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             /**@frpanico 12/11/2021
              * Update check VoltureType "Recupero" the date has been changed to 2015/08/31
              */
-            if(isUpdateStep != null && isUpdateStep == true &&  order.EffectiveDate__c != null)
+            if(isUpdateStep != null && isUpdateStep == true &&  order.EffectiveDate__c != null && !isFromEdit)
             {
                 if( order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
                 {

@@ -2,12 +2,6 @@
 <StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <sorted>false</sorted>
     <standardValue>
-        <fullName>Account/Billing Profile - errata categoria</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Account/Billing Profile - errata categoria</label>
-    </standardValue>
-    <standardValue>
         <fullName>Allineamento Anagrafica</fullName>
         <default>false</default>
         <label>Allineamento Anagrafica</label>
@@ -56,12 +50,6 @@
         <fullName>Caduta Linea/Chiamata Muta</fullName>
         <default>false</default>
         <label>Caduta Linea/Chiamata Muta</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Cambio cont. non registrato</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Cambio cont. non registrato</label>
     </standardValue>
     <standardValue>
         <fullName>Cambio contatore non registrato</fullName>
@@ -132,7 +120,7 @@
         <fullName>Disassociazione Utente Web</fullName>
         <default>false</default>
         <label>Disassociazione Utente Web</label>
-    </standardValue>    
+    </standardValue>
     <standardValue>
         <fullName>Documentale/Copia Contratto</fullName>
         <default>false</default>
@@ -167,12 +155,6 @@
         <fullName>Fiscale</fullName>
         <default>false</default>
         <label>Fiscale</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Fiscale  - IVA Esenzione/Revoca</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Fiscale  - IVA Esenzione/Revoca</label>
     </standardValue>
     <standardValue>
         <fullName>Gestione Bonus Sociale</fullName>
@@ -225,12 +207,6 @@
         <label>Marcatura/Uso PdR</label>
     </standardValue>
     <standardValue>
-        <fullName>Mod. Imp. - Em. Imp. - Var. Portata</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Mod. Imp. - Em. Imp. - Var. Portata</label>
-    </standardValue>
-    <standardValue>
         <fullName>Modifica/Azzeramento Consumo Annuo</fullName>
         <default>false</default>
         <label>Modifica/Azzeramento Consumo Annuo</label>
@@ -244,12 +220,12 @@
         <fullName>Modifica Layout di dettaglio</fullName>
         <default>false</default>
         <label>Modifica Layout di dettaglio</label>
-    </standardValue>    
+    </standardValue>
     <standardValue>
         <fullName>Modifica Contr Preattivazione Pagamento Residenziale</fullName>
         <default>false</default>
         <label>Modifica Contr Preattivazione Pagamento Residenziale</label>
-    </standardValue>    
+    </standardValue>
     <standardValue>
         <fullName>Modifica Contr Preattivazione Anagr Res</fullName>
         <default>false</default>
@@ -344,18 +320,6 @@
         <fullName>Reclamo Scritto/Rich. Info</fullName>
         <default>false</default>
         <label>Reclamo Scritto/Rich. Info</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Rettifica Consumi - Errore di Lettura</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Rettifica Consumi - Errore di Lettura</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Rettifica Consumi - Errore Stima Consumi</label>
     </standardValue>
     <standardValue>
         <fullName>Revoca Domiciliazione</fullName>
@@ -538,12 +502,6 @@
         <label>Variazione Tensione</label>
     </standardValue>
     <standardValue>
-        <fullName>Variazione Tensione - Pressione</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Variazione Tensione - Pressione</label>
-    </standardValue>
-    <standardValue>
         <fullName>Verifica Dati al DL</fullName>
         <default>false</default>
         <label>Verifica Dati al DL</label>
@@ -707,5 +665,70 @@
         <fullName>Associazione Utente Web</fullName>
         <default>false</default>
         <label>Associazione Utente Web</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Riduz. superficie rifiuti spec promiscui</fullName>
+        <default>false</default>
+        <label>Riduz. superficie rifiuti spec promiscui</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Conferimento Centri di Raccolta</fullName>
+        <default>false</default>
+        <label>Conferimento Centri di Raccolta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sconti Collettivi Pap</fullName>
+        <default>false</default>
+        <label>Sconti Collettivi Pap</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Formulari Richiesta Sconto</fullName>
+        <default>false</default>
+        <label>Formulari Richiesta Sconto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Riduzione Agevolazione dopo Accertamento</fullName>
+        <default>false</default>
+        <label>Riduzione Agevolazione dopo Accertamento</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Segnalazioni Ambientali</fullName>
+        <default>false</default>
+        <label>Segnalazioni Ambientali</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Gestione Rifiuti</fullName>
+        <default>false</default>
+        <label>Gestione Rifiuti</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pagamento Unico Annuale TARI</fullName>
+        <default>false</default>
+        <label>Pagamento Unico Annuale TARI</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Ambiente annullo richiesta senza appuntamento</fullName>
+        <default>false</default>
+        <label>Ambiente annullo richiesta senza appuntamento</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Modifica dati contrattuali</fullName>
+        <default>false</default>
+        <label>Modifica dati contrattuali</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Modifica post accertamento</fullName>
+        <default>false</default>
+        <label>Modifica post accertamento</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Cessazione</fullName>
+        <default>false</default>
+        <label>Cessazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Cessazione post accertamento</fullName>
+        <default>false</default>
+        <label>Cessazione post accertamento</label>
     </standardValue>
 </StandardValueSet>

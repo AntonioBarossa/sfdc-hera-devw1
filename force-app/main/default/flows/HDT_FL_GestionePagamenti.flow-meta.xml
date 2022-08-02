@@ -899,7 +899,7 @@
             <name>Non_Superato</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>CheckCriterioEleggibilita</leftValueReference>
+                <leftValueReference>CheckEligibilityCriteria</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>

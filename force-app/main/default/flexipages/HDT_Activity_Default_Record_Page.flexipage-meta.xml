@@ -196,7 +196,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_OffertaApprovata</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
+                                <booleanFilter>1 AND (2 OR 3)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.HDT_CP_ApproveRejectCase}</leftValue>
                                     <operator>EQUAL</operator>
@@ -207,12 +207,17 @@
                                     <operator>EQUAL</operator>
                                     <rightValue>Approvazione Offerte</rightValue>
                                 </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Description__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Gestione Procedurale</rightValue>
+                                </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_OffertaNonApprovata</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+                                <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.HDT_CP_ApproveRejectCase}</leftValue>
                                     <operator>EQUAL</operator>
@@ -228,12 +233,17 @@
                                     <operator>EQUAL</operator>
                                     <rightValue>Approvazione Bonus Commerciale</rightValue>
                                 </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Description__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Gestione Procedurale</rightValue>
+                                </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_EditScartiComplessi</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3 AND 4 AND (5 OR ((6 OR 7 OR 8) AND 9))</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.DiscardCategory__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -253,6 +263,31 @@
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Esito KO da DL</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Case__r.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>HDT_RT_Morosita</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Case__r.Type}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Votive Modena Pagamenti Morosità</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Case__r.Type}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Gestione Disalimentabilità</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Case__r.Type}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Riattivazione Fornitura</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Case__r.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_Morosita</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -1260,6 +1295,42 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.PraxidiaPostWorkAction__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Lavorazione Reclamo Post Survey</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.PraxidiaPostWorkCause__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Lavorazione Reclamo Post Survey</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.PraxidiaPostWorkOutcome__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Lavorazione Reclamo Post Survey</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-89e09c30-566d-4833-be03-3b926e0c4b28</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -2165,6 +2236,11 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.OwnerId</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.AssignedToQueueDate__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <name>Facet-a122172c-02bb-4921-884e-6c5aa9b666da</name>

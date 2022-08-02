@@ -58,11 +58,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>UseChangeCharge__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>RegionalAdditional__c</field>
             <table>Case</table>
         </columns>
@@ -159,11 +154,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>BusinessHours</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CO__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -284,11 +274,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>PraxidiaClarityandUnderstanding__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Cemetery__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -424,11 +409,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>SalesCompanyCode__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>TraceabilityCode__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1038,11 +1018,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ModeSendPaperlessCode__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>SendPaperlessCodeMode__c</field>
             <table>Case</table>
         </columns>
@@ -1099,11 +1074,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>FirstName__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NameBankOrPostOffice__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1204,16 +1174,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>ExistingInstallmentsPlanNumber__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>InstallmentPlanNumber__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DistributorServiceCode__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1373,11 +1333,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Priority__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Priority</field>
             <table>Case</table>
         </columns>
@@ -1494,11 +1449,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CommodityFormula__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>EnergyService__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1704,11 +1654,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>TotalToPay__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>TotalForInstallments__c</field>
             <table>Case</table>
         </columns>
         <columns>

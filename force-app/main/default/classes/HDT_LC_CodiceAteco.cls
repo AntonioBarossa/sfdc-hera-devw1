@@ -34,4 +34,15 @@ public inherited sharing class HDT_LC_CodiceAteco {
             HerAteco__c = params.get('istatCode')
         ));
     }
+
+    @AuraEnabled
+    public static void saveAtecoRonchiCode(Order order, Map<String,String> params){
+        orderSrv.updateRecord(new Order(
+            Id = order.Id,
+            AtecoCode__c = params.get('atecoCode'),
+            HerAteco__c = params.get('istatCode'),
+            RonchiCode__c = params.get('ronchiCode'),
+            RonchiSubcat__c = params.get('ronchiSubcategory')
+        ));
+    }
 }

@@ -83,7 +83,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
         requestBody.ordine.contoContrattuale = (String) bp.get('ContractAccountCode__c');
         requestBody.ordine.indirizzo.comune = (String) caseRecord.get('InvoicingCity__c');
-        requestBody.ordine.indirizzo.nazione = (String) caseRecord.get('InvoicingCountry__c');
+        requestBody.ordine.indirizzo.nazione = getFormattedCountry((String) caseRecord.get('InvoicingCountry__c'));
         requestBody.ordine.indirizzo.civico = (String) caseRecord.get('InvoicingStreetNumber__c');
         requestBody.ordine.indirizzo.suffissoCivico = (String) caseRecord.get('InvoicingStreetNumberExtension__c') != null? (String) caseRecord.get('InvoicingStreetNumberExtension__c'):'';
         requestBody.ordine.indirizzo.cap = (String) caseRecord.get('InvoicingPostalCode__c');
@@ -173,7 +173,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.fattura.modello = modello;
         requestBody.ordine.fattura.fatturaXml = fatturaXml;
         requestBody.ordine.emailPec = (String) caseRecord.get('ReminderCertifiedEmailAddress__c');
-        requestBody.ordine.flagAttivazPec = String.valueOf(caseRecord.get('ReminderFlag__c'));
+        requestBody.ordine.flagAttivazPec = caseRecord.get('ReminderFlag__c') == true ? String.valueOf(caseRecord.get('ReminderFlag__c')):'';
 
         System.debug(LoggingLevel.DEBUG, 'requestBody ' + requestBody);
         inputParams.requestBody = JSON.serialize(requestBody);
