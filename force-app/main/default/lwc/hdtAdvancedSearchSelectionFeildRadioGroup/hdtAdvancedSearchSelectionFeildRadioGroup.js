@@ -21,13 +21,11 @@ export default class HdtAdvancedSearchSelectionFeildRadioGroup extends Lightning
     @api rowId;
 
     connectedCallback(){
-        console.log('********SONO DENTRO LA CALLBACK****');
             this.options.push({key: 1, label: 'Codice POD/PDR ', imageName: this.imagesPodPdr, value: 'pod', checked: true });
             this.options.push({key: 2, label: 'Codice Punto Presa ', imageName: this.imagesPuntoPresa, value: 'podH2o', checked: '' });
             this.options.push({key: 3, label: 'Matricola contatore ', imageName: this.imagesMatricolaContatore, value: 'serialnumber', checked: '' });
             this.options.push({key: 4, label: 'Codice Contratto ', imageName: this.imagesCodiceContratto, value: 'contract', checked: '' });
             this.options.push({key: 5, label: 'Indirizzo di fornitura ', imageName: this.imagesIndirizzo, value: 'address', checked: '' });
-            console.log('********'+ JSON.stringify(this.options));
     }
 
     handleSelected(event) {
@@ -41,7 +39,12 @@ export default class HdtAdvancedSearchSelectionFeildRadioGroup extends Lightning
                 opt.checked = false;
             }
         });
- 
+
+        
+        console.log('#Selected and ready to dispatch: ' + this.value);
+        const valueEvent = new CustomEvent('changevalue', {detail: this.value});
+        this.dispatchEvent(valueEvent);
+        
      }
 
 }
