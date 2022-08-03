@@ -577,6 +577,26 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_AccountDataEnrichmentSupport</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_DataEnrichmentView</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_WaterSocialBonus</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_OdlAdsView</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_GaaView</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_AccountDataEnrichmentTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1598,10 +1618,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QBL_GestioneScartiSap</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_QBL_InvioNumerazioni</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -4446,6 +4462,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_ReimbursementTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_RestCallRespBodyLogUtility</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

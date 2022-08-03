@@ -46,7 +46,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track lastStepData = {};
     @track isNoDayAfterthought = false;
     loginChannel;
-    validateAttachment = {isValid:false};
+    closeAttachmentEvent;
     @track additionalAttachments;
 
     get orderWithData(){
@@ -544,6 +544,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         : this.availableSteps[currentSectionIndex + 2].step) 
         : this.availableSteps[currentSectionIndex + 1].step;
         this.isReading = currentSectionName === 'reading';
+
+        const sectionNextActions = this.pendingSteps[event.target.getAttribute('data-section-index')]?.nextActions;
+        if(sectionNextActions && sectionNextActions instanceof Function ){
+            if(sectionNextActions(event)) return;//Azioni automatiche da eseguire definite nel JSON del Wizard
+        }
         //EVERIS AGGIUNTA LOGICA PER SEZIONE AUTOLETTURA
         if(currentSectionName === 'reading'){
             let readingComponent = this.template.querySelector('c-hdt-self-reading');
@@ -602,29 +607,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 }
             }
             if(currentSectionName === 'processVariables'){
-            if(this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
-            {
-                this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
-                return;
-            }
-            }
-            if(currentSectionName === 'variabiliDiProcesso'){
-                let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
-                let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
-                //if(!this.isActiveRepentantPressed){
-                if(this.template.querySelector("c-hdt-active-repentant")?.validateDate(decorrenza, dichiarazione)){
-                    this.showMessage('Errore', 'Verificare il ravvedimento operoso prima di procedere', 'error');
+                if(this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
+                {
+                    this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
                     return;
                 }
-
-                if(this.template.querySelector("[data-id='MandatoryAttachments__c']")?.value == ''){
-                    if(!this.validateAttachment.isValid){
-                        this.showMessage('Errore', "Verificare gli allegati obbligatori prima di procedere", 'error');
-                        this.validateAttachment.isValid = true;
-                        return;
-                    }
-                }
-
             }
             if(currentSectionName === 'dettaglioImpianto'){
                 if( this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
@@ -1171,14 +1158,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }, 3000)
     }
 
-    handleValidateAttachments(event){
-        console.log('###Attachments Event >>> ' + JSON.stringify(event.detail));
-        this.validateAttachment = event.detail;
-    }
-
     handleCloseAttachment(event){
         console.log('###CloseAttachmentEvent in details>>> ' + JSON.stringify(event.detail));
-
+        event.detail.buttonPressed=true;
+        this.closeAttachmentEvent = event.detail;
         if(event.detail.required){
             this.template.querySelector("[data-id='MandatoryAttachments__c']").value = event.detail.required, this.sectionDataToSubmit["MandatoryAttachments__c"]=event.detail.required;
         }
@@ -1205,7 +1188,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log("test call");
         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
         let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
-        this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = false;
         this.template.querySelector("c-hdt-active-repentant").startActiveRepentant(decorrenza, dichiarazione);
     }
 
@@ -1215,10 +1197,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = event.detail.dateY, this.sectionDataToSubmit["OnerousUnreviewableStartDate__c"]=event.detail.dateY;
         //this.missedDueDate = this.getFormattedDate(event.detail.missedDue);
         this.template.querySelector("[data-id='MissingDueAmount__c']").required = event.detail.missedDue? true : false;
-        if(event.detail.period=="Y"){
-            this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = true;
-            this.template.querySelector("[data-id='BlockOnComputation__c']").value = 'Y', this.sectionDataToSubmit["BlockOnComputation__c"]='Y';
-        }
+        
+        let isPeriodY = event.detail.period=="Y";
+        this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = isPeriodY;
+        this.template.querySelector("[data-id='BlockOnComputation__c']").value = isPeriodY? "Y" : "", this.sectionDataToSubmit["BlockOnComputation__c"]=isPeriodY? "Y" : "";
     }
     
 }

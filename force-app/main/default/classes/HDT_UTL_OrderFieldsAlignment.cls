@@ -520,6 +520,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 }
             }
         }
+        if(false){
+            orderToUpdate.ApprovalType__c           = mainItems[0].Product2.ApprovalType__c;
+            orderToUpdate.IntegratedSAP__c          = mainItems[0].Product2.IntegratedSAP__c;
+            orderToUpdate.Surface__c                = mainItems[0].Surface__c;
+            orderToUpdate.EmploymentMonthsInYear__c = mainItems[0].MonthsOccupYear__c;
+        }
         if(orderToUpdate.ServicePoint__c != null)
         {
             alignServicePointFields(orderToUpdate, orderToUpdate.ServicePoint__c);

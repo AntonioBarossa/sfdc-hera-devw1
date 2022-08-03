@@ -331,8 +331,10 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
 
     
-    onselected(value){
-        this.queryType = value.detail;
+    onselected(event){
+        console.log('Event ' + JSON.stringify(event));
+        this.queryType = event.detail;
+        console.log('## QueryType >>> ' + this.queryType);
         this.apiSearchButtonStatus= true;
     }
 
@@ -371,6 +373,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
+                console.log('this.originalData ' + this.originalData);
                 for(var i=0; i<this.originalData.length; i++){
                     this.originalData[i].Id=i.toString();
                 }

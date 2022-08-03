@@ -382,7 +382,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     variationsLogic(){
         //Sottoprocessi di varaiazioni
         if(['AGEVOLAZIONE','COMPONENTI RESIDENTI','COMPONENTI NON RESIDENTI','COABITAZIONI','DATI CATASTALI',
-            'ISTAT/RONCHI','SUPERFICIE','DOMICILIATO IN NUCLEO RESIDENTE'].includes(this.processType.toUpperCase())){
+            'ISTAT/RONCHI','SUPERFICIE','DOMICILIATO IN NUCLEO RESIDENTE','RID. AGEV. DOPO ACCERTAMENTO'].includes(this.processType.toUpperCase())){
             let RequestSource = this.selector('RequestSource__c');
             let SubscriberType = this.selector('SubscriberType__c');
             if(RequestSource.value.toUpperCase() != 'DA CONTRIBUENTE'){
@@ -406,10 +406,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             console.log('#Valore quinto livello -->' +fifthLevel.value)
             if(fifthLevel != null){
                 let soldBy = this.selector('SoldBy__c');
-                if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
-                    soldBy.disabled = false;
-                }else{
-                    soldBy.disabled = true;
+                if(soldBy != null){
+                    if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
+                        soldBy.disabled = false;
+                    }else{
+                        soldBy.disabled = true;
+                    }
                 }
             }
         } else if(!(Object.keys(channel).length === 0)){

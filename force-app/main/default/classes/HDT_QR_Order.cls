@@ -358,7 +358,9 @@ public inherited sharing class HDT_QR_Order {
             Subprocess__c,
             LandRegistry__c,
             TaxpayerDeclarationInfos__c,
-            //AnnualTARIPayment__c,
+            AnnualTARIPayment__c,
+            RequestSource__c,
+            DeliveredDocumentation__c,
             AdditionalAttachments__c
             FROM Order 
             WHERE Id = :orderId
@@ -624,6 +626,7 @@ public inherited sharing class HDT_QR_Order {
             WHERE ParentOrder__c IN :parentOrderIds
             AND Phase__c NOT IN ('Annullato')
             AND ProcessType__c != ''
+            AND ProcessType__c != 'VAS'
             WITH SECURITY_ENFORCED
         ];
     }
@@ -1339,6 +1342,7 @@ public inherited sharing class HDT_QR_Order {
         return [
             Select 
             id,
+            Phase__c,
             AgencyCode__c
             from Order 
             Where id = :id

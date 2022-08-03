@@ -20,7 +20,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     @api statementType;
     @api defaultRequestObj;
     @track accountData;
-    columns;//++++ = columns;
+    @track columns;//++++ = columns;
     @track joinFilterModal = false;
     //@track error; // to show error message from apex controller.
     @track hasRendered = true;
@@ -125,9 +125,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 }
             });
 
-            if(idlist.length > 0){
+            //if(idlist.length > 0){
                 this.selectCheckbox();
-            }
+            //}
 
         }
     }
@@ -681,21 +681,24 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             });
         });
 
-        if(this.accountData.length == count){
-            const checked = Array.from(
-                this.template.querySelectorAll('lightning-input')
-            ).filter(element => element.name == 'headerCheckbox');
-            checked[0].checked = true;
-        } else {
-            const checked = Array.from(
-                this.template.querySelectorAll('lightning-input')
-            ).filter(element => element.name == 'headerCheckbox');
-            checked[0].checked = false;            
+        if(this.accountData != undefined){
+            if(this.accountData.length == count){
+                const checked = Array.from(
+                    this.template.querySelectorAll('lightning-input')
+                ).filter(element => element.name == 'headerCheckbox');
+                checked[0].checked = true;
+            } else {
+                const checked = Array.from(
+                    this.template.querySelectorAll('lightning-input')
+                ).filter(element => element.name == 'headerCheckbox');
+                checked[0].checked = false;            
+            }
         }
     }
 
     checkboxHeaderHandler(event){
         console.log('## checkboxHeaderHandler #');
+
         // Query the DOM
         const checked = Array.from(
             this.template.querySelectorAll('lightning-input')
@@ -707,30 +710,34 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
         let totalResidual = 0.0;
 
-        this.accountData.forEach((i) => {
-            this.template.querySelectorAll('lightning-input').forEach(li => {
-                
+        if(this.accountData != undefined){
 
-                if ( li.type == 'checkbox' && li.name == i[this.uniqueId]) {
-                    if(checked[0]){
-                        li.checked = true;
+            this.accountData.forEach((i) => {
+                this.template.querySelectorAll('lightning-input').forEach(li => {
+                    
 
-                        if(!idlist.includes(i[this.uniqueId])){
-                            idlist.push(i[this.uniqueId]);
-                            totalResidual += parseFloat(i["residuo"]);
+                    if ( li.type == 'checkbox' && li.name == i[this.uniqueId]) {
+                        if(checked[0]){
+                            li.checked = true;
+
+                            if(!idlist.includes(i[this.uniqueId])){
+                                idlist.push(i[this.uniqueId]);
+                                totalResidual += parseFloat(i["residuo"]);
+                            }
+
+                        } else {
+                            li.checked = false;
+                            idlist.splice(idlist.indexOf(i[this.uniqueId]), 1);
+                            totalResidual -= parseFloat(i["residuo"]);
                         }
-
-                    } else {
-                        li.checked = false;
-                        idlist.splice(idlist.indexOf(i[this.uniqueId]), 1);
-                        totalResidual -= parseFloat(i["residuo"]);
                     }
-                }
-                
+                    
+                });
             });
-        });
+        }
         this.residualSelected = (parseFloat(this.residualSelected) + totalResidual).toFixed(2);
         this.checkboxCount = idlist.length.toString();
+
     }
 
     checkboxHandler(event){
@@ -861,11 +868,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     handleMulesoftResponse(obj){
         console.log('>>> data ' + obj.data.length);
         
-        if(obj.data.length===0){
-            this.closeMainSpinner();
-            return;
-        }
-
         //montors fix 07/07/2022
 
         //this.totAmount = 0;
@@ -883,6 +885,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.columns.forEach((column) => {
             column.detail.totAmount = 0;
         });
+
+        if(obj.data.length===0){
+            this.closeMainSpinner();
+            return;
+        }
 
         obj.data.forEach((e) => { 
             e.id = e['idPrimoLivelloSAP'];
@@ -1513,16 +1520,14 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
 
     setNewChoise(event){
-        this.acctStmt = event.detail.stmtLabel;
+        this.acctStmt = event.detail.stmtName;
         this.techObj.statementType = this.acctStmt;
         const tipoTransazione = new CustomEvent("settype", {
             detail:  event.detail.stmtName
         });
         // Dispatches the event.
         this.dispatchEvent(tipoTransazione);
-        //this.closestmtchoise();
         this.showAcctStmt = false;
-
         var requestType = 'home';//event.target.name
         this.handleButtonClick(requestType);
         this.focusOnButton(requestType);
