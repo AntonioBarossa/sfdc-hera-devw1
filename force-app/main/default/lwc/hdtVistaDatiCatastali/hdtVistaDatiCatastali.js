@@ -1,4 +1,4 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import getVistaDatiCatastali from '@salesforce/apexContinuation/HDT_UTL_LandRegistry.getVistaDatiCatastali';
 
 const COLUMNS = [
@@ -17,6 +17,7 @@ const COLUMNS = [
     { fieldName: 'superficieCatastale', label: 'Superficie Catastale' },
     { fieldName: 'categoriaCatastale', label: 'Categoria Catastale' }
 ];
+
 export default class HdtVistaDatiCatastali extends LightningElement {
 
     @api recordId;
@@ -25,28 +26,30 @@ export default class HdtVistaDatiCatastali extends LightningElement {
     rows = [];
     title = 'Vista Dati Catastali';
 
-    connectedCallback(){
-        getVistaDatiCatastali({recordId: this.recordId})
-            .then(result => {
-                if(result.response.status == 'success'){
-                    let posizioni = result.response.data?.posizioni;
-                    let index = 0;
-                    let finalRows = [];
-                    posizioni.forEach(curPos => {
-                        let newRow = curPos;
-                        newRow.Id = index;
-                        finalRows.push(newRow);
-                        index++;
-                    })
-                    this.rows = finalRows;
-                    this.title = 'Vista Dati Catastali - ' + result.recordName;
-                    return;
-                }
-                if(result.response.status == 'failed'){
-                    return;
-                }
-                console.error('Cannot read response!');
-            })
-            .catch(error => console.error(error));
+    @wire(getVistaDatiCatastali, { recordId: '$recordId' })
+    wiredVistaDatiCatastali({ error, result }) {
+        if(result) {
+            if(result.response.status == 'success'){
+                let posizioni = result.response.data?.posizioni;
+                let index = 0;
+                let finalRows = [];
+                posizioni.forEach(curPos => {
+                    let newRow = curPos;
+                    newRow.Id = index;
+                    finalRows.push(newRow);
+                    index++;
+                })
+                this.rows = finalRows;
+                this.title = 'Vista Dati Catastali - ' + result.recordName;
+                return;
+            }
+            if(result.response.status == 'failed'){
+                return;
+            }
+            console.error('Cannot read response!');
+        }
+        else if(error) {
+            console.error(JSON.stringify(error));
+        }
     }
 }
