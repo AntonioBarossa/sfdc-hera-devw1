@@ -5,16 +5,38 @@
 
 public with sharing class HDT_UTL_LandRegistry {
 
-    @AuraEnabled
-    public static list<LandRegistry__c> retrieveLandRegistryTable(list<Id> servicePointIds) {
-        HDT_QR_LandRegistry qrClass = new HDT_QR_LandRegistry();
-        return qrClass.getTARILandRegistryByServicePointIds(servicePointIds);
-    }
+    private String mockResp_OK = '{ "status":"success", "correlationId":"2ddbd94c-96c0-4aa2-a0fe-bb7603ebca7c", "timestamp":"2020-08-06T17:49:57.819+02:00", "data": { "testata": { "esito":"", "messaggio": "" } "posizioni": [ { "destinazioneUso":"test", "descrizioneDestinazioneUso":"test", "codiceAssenzaDatiCatastali":"test", "descrizioneAssenzaDc":"test", "comuneAmministrativo":"test", "comuneCatastale":"test", "codiceComuneCatastale":"test", "codiceProvincia":"test", "tipoUnita":"test", "descrizioneTipoUnita":"test", "sezioneUrbana":"test", "foglio":"test", "particella":"test", "subalterno":"test", "qualificaTitolareUtenza":"test", "descrizioneQualifica":"test", "superficieCatastale":"test", "categoriaCatastale":"test" } ] } }';
+    private String mockResp_KO = '{ "status":"failed","correlationId":"2ddbd94c-96c0-4aa2-a0fe-bb7603ebca7c","timestamp":"2020-08-06T17:49:57.819+02:00","errorDetails":[{"code":"BAD_REQUEST","message":"There was an issue with your request message","additionalInfo":"Bad Request : There was an issue with your request message"}] }';
 
     @AuraEnabled
-    public static list<LandRegistry__c> retrieveLandRegistry(list<Id> ids) {
+    public static list<LandRegistry__c> retrieveLandRegistryTable(Id caseId, Id orderId, Id servicePointId) {
+        system.debug('pratica caseId: ' + caseId);
+        system.debug('pratica orderId: ' + orderId);
+        system.debug('pratica servicePointId: ' + servicePointId);
+        list<LandRegistry__c> lndRgTable = new list<LandRegistry__c>();
         HDT_QR_LandRegistry qrClass = new HDT_QR_LandRegistry();
-        return qrClass.getTARILandRegistryById(ids);
+        Id rtIdPraticaTARI = Schema.SObjectType.LandRegistry__c.getRecordTypeInfosByName().get('Dati Catastali Pratica TARI').getRecordTypeId();
+
+        list<LandRegistry__c> praticaData = new list<LandRegistry__c>();
+        if(caseId != null) praticaData = qrClass.getPraticaTARILandRegistryByCaseIds(new list<Id> {caseId});
+        else if(orderId != null) praticaData = qrClass.getPraticaTARILandRegistryByOrderIds(new list<Id> {orderId});
+        system.debug('praticaData: ' + JSON.serialize(praticaData));
+        if(!praticaData.isEmpty()) return praticaData;
+
+        list<LandRegistry__c> originData = qrClass.getTARILandRegistryByServicePointIds(new list<Id> {servicePointId});
+        for(LandRegistry__c curOriginRecord : originData){
+            LandRegistry__c resultLR;
+            resultLR = curOriginRecord.clone(false, true, false, false);
+            resultLR.RecordTypeId = rtIdPraticaTARI;
+            resultLR.Dati_Catastali__c = curOriginRecord.Id;
+            resultLR.ServicePoint__c = null;
+            if(caseId != null) resultLR.Case__c = caseId;
+            if(orderId != null) resultLR.Order__c = orderId;
+            system.debug('pratica record: ' + JSON.serialize(resultLR));
+            lndRgTable.add(resultLR);
+        }
+        insert lndRgTable;
+        return lndRgTable;
     }
     
     @AuraEnabled
@@ -27,5 +49,45 @@ public with sharing class HDT_UTL_LandRegistry {
     public static list<CityTechnicalData__c> getCities() {        
 	    list<CityTechnicalData__c> cities = [ SELECT Id, CadastralCity__c, CityCode__c, Province__c FROM CityTechnicalData__c WITH SECURITY_ENFORCED];
         return cities;
+    }
+    
+    @AuraEnabled(continuation=true)
+    public static VistaDatiCatastaliWrapper getVistaDatiCatastali(Id recordId){
+        try {
+            VistaDatiCatastaliWrapper result = new VistaDatiCatastaliWrapper();
+
+            Map<String,Object> request;
+
+            String sobjectType = recordId.getSObjectType().getDescribe().getName();
+            if('ServicePoint__c'.equalsIgnoreCase(sobjectType)){
+                List<ServicePoint__c> sp = new HDT_QR_ServicePoint().getRecordById((String)recordId, 'SAPImplantCode__c');
+                request.put('impianto', sp[0].SAPImplantCode__c);
+                result.recordName = sp[0].SAPImplantCode__c;
+            }
+            if('Contract'.equalsIgnoreCase(sobjectType)){
+                List<Contract> cn = new HDT_QR_Contract().getRecordById((String)recordId);
+                request.put('contratto', cn[0].ContractNumber);
+                result.recordName = cn[0].ContractNumber;
+            }
+
+            String namedCredential;
+            String path = 'data-enrichment/cadastral-data';
+            String method = 'GET';
+            
+            HDT_WS_VistaDatiCatastaliResponse resp = (HDT_WS_VistaDatiCatastaliResponse) HDT_WS_HTTPServiceCall.sendRequest(namedCredential, path, method, request, HDT_WS_VistaDatiCatastaliResponse.class);
+            result.response = resp;
+
+            return result;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    class VistaDatiCatastaliWrapper{
+        @AuraEnabled
+        public string recordName;
+        @AuraEnabled
+        public HDT_WS_VistaDatiCatastaliResponse response;
+
     }
 }
