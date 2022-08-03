@@ -16,7 +16,7 @@ public with sharing class HDT_WS_SelfReadingsIntegrationAdapter implements HDT_U
         req.setHeader('Content-Type','application/json');
         Http http = new Http();
         HTTPResponse res = http.send(req);
-
+        System.debug(LoggingLevel.DEBUG, 'response: ' + res);
         inputParameters.responseBody = res.getBody();
         inputParameters.responseCode = res.getStatusCode();
         inputParameters.responseStatus = res.getStatus();
