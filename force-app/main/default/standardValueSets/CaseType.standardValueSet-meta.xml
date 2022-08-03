@@ -731,4 +731,14 @@
         <default>false</default>
         <label>Cessazione post accertamento</label>
     </standardValue>
+    <standardValue>
+        <fullName>Limitazione Fornitura</fullName>
+        <default>false</default>
+        <label>Limitazione Fornitura</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Chiusura Presa Stradale</fullName>
+        <default>false</default>
+        <label>Chiusura Presa Stradale</label>
+    </standardValue>
 </StandardValueSet>
