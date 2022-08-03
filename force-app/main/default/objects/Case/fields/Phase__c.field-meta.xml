@@ -868,6 +868,11 @@
                 <default>false</default>
                 <label>Verifica in laboratorio</label>
             </value>
+            <value>
+                <fullName>Esito KO da DBO</fullName>
+                <default>false</default>
+                <label>Esito KO da DBO</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
