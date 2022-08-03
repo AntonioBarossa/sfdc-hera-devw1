@@ -29,7 +29,6 @@
     <label>Amministrazione SLA</label>
     <navType>Standard</navType>
     <tabs>SlaAdministration__c</tabs>
-    <tabs>SBQQ__LookupData__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Amministrazione_SLA_UtilityBar</utilityBar>
 </CustomApplication>
