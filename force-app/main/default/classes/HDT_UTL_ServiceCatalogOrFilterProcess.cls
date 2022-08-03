@@ -23,7 +23,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
     'Autoletturadacliente' => new Map<String,List<String>>
         {
             'Type' => new List<String>
-                {'Verifica Dati al DL','Rettifica Consumi','Reclamo Scritto/Rich. Info'}
+                {'Verifica Dati al DL','Rettifica Consumi','Reclamo Scritto/Rich. Info', 'Consumo Anomalo Idrico'}
         },
     'AllineamentoCanoneRai' => new Map<String,List<String>>
         {
@@ -155,7 +155,9 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
     'RettificaConsumi' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
-                {'Reclami'}
+                {'Reclami', 'Segnalazioni'},
+            'Type' => new List<String>
+                {'Consumo Anomalo Idrico'}
         },
     'CadutaLineaChiamataMuta' => new Map<String,List<String>>
         {
@@ -496,6 +498,41 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
                 {'Reclami', 'Preventivi', 'Fatturazione', 'Morosità', 'Variazioni'},
             'Type' => new List<String>
                 {'Unificazione/Separazione BP-CA-Bolletta','Allineamento Canone Rai'}
+        },
+    'CessazionePostAccertamento' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Reclamo Scritto/Rich. Info'}
+        },
+    'CessazioneTari' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Reclamo Scritto/Rich. Info', 'Cessazione Post Accertamento' } 
+        },
+    'ModificaPostAccertamento' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Reclamo Scritto/Rich. Info'}
+        },      
+    'ModificaDatiContrattualiTari' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Reclamo Scritto/Rich. Info', 'Errore di Fatturazione','Modifica post accertamento' } 
+        },
+    'RipetiSegnalazione' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Segnalazioni Ambientali'} 
+        },
+    'RipetiRitiro' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Gestione Rifiuti'} 
+        },
+    'PagamentoUnicoAnnualeTari' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Reclamo Scritto/Rich. Info','Modifica Tariffa Residente/Non Residente'}
         }
     };
 
@@ -578,5 +615,11 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             }
         }
         return res;
+    }
+
+    public static Boolean checkSalesTari(String saleId)
+    {
+        List<SBQQ__QuoteLine__c> quoteLines = [Select Id, ServicePoint__r.CommoditySector__c FROM SBQQ__QuoteLine__c WHERE SBQQ__Quote__r.Sale__c = :saleId AND ServicePoint__c != null AND ServicePoint__r.CommoditySector__c = 'Ambiente'];
+		return !quoteLines.isEmpty();
     }
 }
