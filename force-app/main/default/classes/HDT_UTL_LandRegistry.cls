@@ -5,8 +5,8 @@
 
 public with sharing class HDT_UTL_LandRegistry {
 
-    private String mockResp_OK = '{ "status":"success", "correlationId":"2ddbd94c-96c0-4aa2-a0fe-bb7603ebca7c", "timestamp":"2020-08-06T17:49:57.819+02:00", "data": { "testata": { "esito":"", "messaggio": "" } "posizioni": [ { "destinazioneUso":"test", "descrizioneDestinazioneUso":"test", "codiceAssenzaDatiCatastali":"test", "descrizioneAssenzaDc":"test", "comuneAmministrativo":"test", "comuneCatastale":"test", "codiceComuneCatastale":"test", "codiceProvincia":"test", "tipoUnita":"test", "descrizioneTipoUnita":"test", "sezioneUrbana":"test", "foglio":"test", "particella":"test", "subalterno":"test", "qualificaTitolareUtenza":"test", "descrizioneQualifica":"test", "superficieCatastale":"test", "categoriaCatastale":"test" } ] } }';
-    private String mockResp_KO = '{ "status":"failed","correlationId":"2ddbd94c-96c0-4aa2-a0fe-bb7603ebca7c","timestamp":"2020-08-06T17:49:57.819+02:00","errorDetails":[{"code":"BAD_REQUEST","message":"There was an issue with your request message","additionalInfo":"Bad Request : There was an issue with your request message"}] }';
+    private String mockResp_OK = '{"status":"success","correlationId":"2ddbd94c-96c0-4aa2-a0fe-bb7603ebca7c","timestamp":"2020-08-06T17:49:57.819+02:00","data":{"testata":{"esito":"test","messaggio":"test"},"posizioni":[{"destinazioneUso":"test","descrizioneDestinazioneUso":"test","codiceAssenzaDatiCatastali":"test","descrizioneAssenzaDc":"test","comuneAmministrativo":"test","comuneCatastale":"test","codiceComuneCatastale":"test","codiceProvincia":"test","tipoUnita":"test","descrizioneTipoUnita":"test","sezioneUrbana":"test","foglio":"test","particella":"test","subalterno":"test","qualificaTitolareUtenza":"test","descrizioneQualifica":"test","superficieCatastale":"test","categoriaCatastale":"test"}]}}';
+    private String mockResp_KO = '{"status":"failed","correlationId":"2ddbd94c-96c0-4aa2-a0fe-bb7603ebca7c","timestamp":"2020-08-06T17:49:57.819+02:00","errorDetails":[{"code":"BAD_REQUEST","message":"There was an issue with your request message","additionalInfo":"Bad Request : There was an issue with your request message"}]}';
 
     @AuraEnabled
     public static list<LandRegistry__c> retrieveLandRegistryTable(Id caseId, Id orderId, Id servicePointId) {
@@ -52,7 +52,7 @@ public with sharing class HDT_UTL_LandRegistry {
     }
     
     @AuraEnabled(continuation=true)
-    public static VistaDatiCatastaliWrapper getVistaDatiCatastali(Id recordId){
+    public static VistaDatiCatastaliWrapper getVistaDatiCatastali(Id recordId, Boolean isTest){
         try {
             VistaDatiCatastaliWrapper result = new VistaDatiCatastaliWrapper();
 
@@ -70,12 +70,15 @@ public with sharing class HDT_UTL_LandRegistry {
                 result.recordName = cn[0].ContractNumber;
             }
 
-            String namedCredential;
-            String path = 'data-enrichment/cadastral-data';
-            String method = 'GET';
-            
-            HDT_WS_VistaDatiCatastaliResponse resp = (HDT_WS_VistaDatiCatastaliResponse) HDT_WS_HTTPServiceCall.sendRequest(namedCredential, path, method, request, HDT_WS_VistaDatiCatastaliResponse.class);
-            result.response = resp;
+            if(isTest) result.response = (HDT_WS_VistaDatiCatastaliResponse)JSON.deserialize(mockResp_OK, HDT_WS_VistaDatiCatastaliResponse.class);
+            else{
+                String namedCredential;
+                String path = 'data-enrichment/cadastral-data';
+                String method = 'GET';
+                
+                HDT_WS_VistaDatiCatastaliResponse resp = (HDT_WS_VistaDatiCatastaliResponse) HDT_WS_HTTPServiceCall.sendRequest(namedCredential, path, method, request, HDT_WS_VistaDatiCatastaliResponse.class);
+                result.response = resp;
+            }
 
             return result;
         } catch (Exception e) {

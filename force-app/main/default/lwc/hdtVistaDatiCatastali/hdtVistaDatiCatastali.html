@@ -1,7 +1,7 @@
 <template>
-    <lightning-card title="Vista Dati Catastali">
+    <lightning-card title={title}>
 
-        <lightning-datatable columns={cols} data={rows}></lightning-datatable>
+        <lightning-datatable key-field="Id" columns={cols} data={rows}></lightning-datatable>
 
     </lightning-card>
 </template>
