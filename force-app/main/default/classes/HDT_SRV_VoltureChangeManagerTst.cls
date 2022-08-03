@@ -18,6 +18,12 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
         HDT_UTL_DataFactoryTst.pClickCasePhase();//
 
+        List<wrts_prcgvr__ActivityTemplate__c> templates =  HDT_UTL_DataFactoryTst.createActivityTemplate(1, false);
+        templates[0].Name = 'Valori non corrispondenti';
+        templates[0].wrts_prcgvr__ObjectType__c = 'Order';
+        templates[0].wrts_prcgvr__IsRequired__c = true;
+        insert templates;
+
         //Create 1 order one for the parent and one for the child 1
         //Create 2 OrderItems (to test loop with more than one item)
         List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
