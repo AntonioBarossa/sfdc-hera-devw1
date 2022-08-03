@@ -269,6 +269,7 @@
         <locationX>391</locationX>
         <locationY>638</locationY>
         <defaultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>redirectToRecord</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
@@ -693,7 +694,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento prestazione</stringValue>
+                <stringValue>Reclamo da cittadino</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
