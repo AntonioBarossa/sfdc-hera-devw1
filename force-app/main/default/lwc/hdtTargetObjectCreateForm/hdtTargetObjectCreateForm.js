@@ -1671,9 +1671,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     let comune = servizio == 'Gas' || servizio == 'Acqua' || servizio == 'Ambiente' ? addressRecord['Comune'] : '';
                     let presenzaAllaccio = this.allSubmitedFields['PlugPresence__c'] != undefined ? this.allSubmitedFields['PlugPresence__c'] : '';
 
-                    let ato = await getATO({comune : comune});
-                    
-                    this.allSubmitedFields['ATO__c'] = ato;
+                    if(servizio === 'Acqua'){
+                        let ato = await getATO({comune : comune});
+                        this.allSubmitedFields['ATO__c'] = ato;
+                    }
 
                     getDistributorPointCode({code : radicePunto, commodity: servizio, comune : comune, presenzaAllaccio: presenzaAllaccio}).then(data => {
 
