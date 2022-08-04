@@ -63,13 +63,14 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
         ];
     }
 
-    setTableData(){
+    setTableData(isOperationRunning = false){
         this.loading = true;
         getTableData({activityId: this.activityId}).then(data =>{
 
             console.log('getTableData: ' + JSON.stringify(data));
             console.log('Size Data: ' + data.length);
-            this.loading = false;
+            console.log('is operation running: ' + isOperationRunning);
+            this.loading = isOperationRunning;
             if(data.length > 0){
                 this.ordersList = data;
                 this.showTable = true;
@@ -143,6 +144,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
     confirmContractAction(type){
         this.loading = true;
         confirmContract({ordId: this.orderId, activityId: this.activityId, type: type}).then(data =>{
+            this.loading = false;
             if(data!=null){
                 getCachedUuid().then(cachedUuid => {
                     if(cachedUuid!=null){
@@ -261,7 +263,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
             }
         }
         this.showTable=false;
-        this.setTableData();
+        this.setTableData(false);
     }
 
     handleDialogResponse(event){

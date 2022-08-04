@@ -20,8 +20,8 @@
     <decisions>
         <name>CallTypeDecision</name>
         <label>CallTypeDecision</label>
-        <locationX>1502</locationX>
-        <locationY>518</locationY>
+        <locationX>1766</locationX>
+        <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici_Inbound_Aziende_0_0_0</targetReference>
         </defaultConnector>
@@ -45,8 +45,8 @@
     <decisions>
         <name>CallTypeDecision_0</name>
         <label>CallTypeDecision</label>
-        <locationX>974</locationX>
-        <locationY>518</locationY>
+        <locationX>1238</locationX>
+        <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici</targetReference>
         </defaultConnector>
@@ -70,8 +70,8 @@
     <decisions>
         <name>CallTypeDecision_0_0</name>
         <label>CallTypeDecision</label>
-        <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationX>446</locationX>
+        <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafica_VAS_Screen_0</targetReference>
         </defaultConnector>
@@ -95,8 +95,8 @@
     <decisions>
         <name>CategoriaDecision</name>
         <label>CategoriaDecision</label>
-        <locationX>1238</locationX>
-        <locationY>398</locationY>
+        <locationX>1502</locationX>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>CallTypeDecision</targetReference>
         </defaultConnector>
@@ -120,8 +120,8 @@
     <decisions>
         <name>CategoriaDecision_0</name>
         <label>CategoriaDecision</label>
-        <locationX>380</locationX>
-        <locationY>398</locationY>
+        <locationX>644</locationX>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici_Inbound_Aziende_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -143,10 +143,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>isIdrico</name>
+        <label>isIdrico</label>
+        <locationX>561</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>VasDecision</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Luce/Gas</defaultConnectorLabel>
+        <rules>
+            <name>Idrico</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getChild_0.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Anagrafica_Servizio_Idrico</targetReference>
+            </connector>
+            <label>Idrico</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>VasDecision</name>
         <label>VasDecision</label>
-        <locationX>809</locationX>
-        <locationY>278</locationY>
+        <locationX>1073</locationX>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>CategoriaDecision</targetReference>
         </defaultConnector>
@@ -191,11 +216,11 @@
     <recordLookups>
         <name>getChild_0</name>
         <label>getChild</label>
-        <locationX>809</locationX>
+        <locationX>561</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>VasDecision</targetReference>
+            <targetReference>isIdrico</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -210,10 +235,66 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
+        <name>Anagrafica_Servizio_Idrico</name>
+        <label>Anagrafica_Servizio_Idrico</label>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Anagrafica_Acqua</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;2. Dati Anagrafici&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le chiedo di indicarmi il suo Cognome e Nome {!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;Mi indica il Cognome e Nome della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma di essere autorizzato, a concludere il presente contratto?&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;        CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è XXXXXXXXX e la Data di rilascio è XXXXXXXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di residenza della persona a cui va intestato il contratto è {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la sua mail è {!OrderData.Account.PrimaryEmail__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di telefono fisso è {!OrderData.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di cellulare è {!OrderData.Account.MobilePhone__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in{!OrderData.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che vuole ricevere le bollette al suo indirizzo {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>text_idrico_1</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole ricevere le bollette al suo indirizzo email {!OrderData.ShippingMail__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>text_idrico_2</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole pagare le bollette con {!ModalitaPagamentoInput}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>text_idrico_3</name>
+            <fieldText>&lt;p&gt;•	Mi conferma quindi che per la domiciliazione bancaria posso utilizzare il codice IBAN già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è&lt;/p&gt;&lt;p&gt;{!getChild_0.IbanCountry__c}{!getChild_0.IbanCIN_IBAN__c}{!getChild_0.IbanCIN__c}{!getChild_0.IbanABI__c}{!getChild_0.IbanCAB__c}{!getChild_0.IbanCodeNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ModalitaPagamentoInput</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>RID</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text_idrico_4</name>
+            <fieldText>&lt;p&gt;Le verrà richiesto il versamento di un deposito cauzionale, nel rispetto dei valori massimi stabiliti dall’Autorità nazionale di Regolazione Energia Reti e Ambiente. L’addebito del deposito avviene in tre rate, la prima delle quali sarà pari alla metà dell&apos;importo&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ModalitaPagamentoInput</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Bollettino postale</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Dati_Anagrafica_VAS_Screen_0</name>
         <label>Dati Anagrafica VAS</label>
-        <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -278,8 +359,8 @@
     <screens>
         <name>Dati_Anagrafica_VAS_Screen_0_0</name>
         <label>Dati Anagrafica VAS</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -344,8 +425,8 @@
     <screens>
         <name>Dati_Anagrafici</name>
         <label>Dati Anagrafici</label>
-        <locationX>1106</locationX>
-        <locationY>638</locationY>
+        <locationX>1370</locationX>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -501,8 +582,8 @@
     <screens>
         <name>Dati_Anagrafici_0</name>
         <label>Dati Anagrafici</label>
-        <locationX>842</locationX>
-        <locationY>638</locationY>
+        <locationX>1106</locationX>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -661,8 +742,8 @@
     <screens>
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
-        <locationX>1634</locationX>
-        <locationY>638</locationY>
+        <locationX>1898</locationX>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -942,8 +1023,8 @@
     <screens>
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
-        <locationX>1370</locationX>
-        <locationY>638</locationY>
+        <locationX>1634</locationX>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1136,8 +1217,8 @@
     <screens>
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
-        <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationX>842</locationX>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1264,7 +1345,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>683</locationX>
+        <locationX>435</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>getChild_0</targetReference>

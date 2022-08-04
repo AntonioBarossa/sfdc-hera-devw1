@@ -104,6 +104,7 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
     public class HDT_WRP_ArricchimentoData{
         public HDT_WRP_ArricchimentoTestata testata;
         public List<HDT_WRP_ArricchimentoPosizioni> posizioni;
+        public List<HDT_WRP_ArricchimentoDatiCatastali> datiCatastali;
     }
     
     public class HDT_WRP_ArricchimentoResponse{
@@ -112,4 +113,22 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
         public String timestamp;
         public HDT_WRP_ArricchimentoData data;
     }
+
+    public class HDT_WRP_ArricchimentoDatiCatastali{
+        public String destinazione;
+        public String progressivo;
+        public String codiceAssenzaDatiCatastali;
+        public String comuneAmministrativo;
+        public String comuneCatastale;
+        public String codiceComuneCatastale;
+        public String codiceProvincia;
+        public String tipoUnita;
+        public String sezioneUrbana;
+        public String foglio;
+        public String particella;
+        public String subalterno;
+        public String qualificaTitolareUtenza;
+        public String superficeCatastale;
+        public String categoriaCatastale;
+   }
 }

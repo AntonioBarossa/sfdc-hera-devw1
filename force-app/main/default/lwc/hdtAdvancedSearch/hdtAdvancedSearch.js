@@ -331,8 +331,10 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
 
     
-    onselected(value){
-        this.queryType = value.detail;
+    onselected(event){
+        console.log('Event ' + JSON.stringify(event));
+        this.queryType = event.detail;
+        console.log('## QueryType >>> ' + this.queryType);
         this.apiSearchButtonStatus= true;
     }
 
@@ -371,6 +373,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
+                console.log('this.originalData ' + this.originalData);
                 for(var i=0; i<this.originalData.length; i++){
                     this.originalData[i].Id=i.toString();
                 }
@@ -387,12 +390,6 @@ export default class HdtAdvancedSearch extends LightningElement {
             }
         });
     }
-
-    /**
-     * 
-     * Calling Apex callWebService method
-     * TODO this method is not finished yet need webserivce.
-     */
 
     searchInSAP(){
         
@@ -417,10 +414,11 @@ export default class HdtAdvancedSearch extends LightningElement {
             console.log('#Length Event >>> ' + this.searchInputValue.length);
             let contractCode = this.searchInputValue.length >= 14 ? '' : this.searchInputValue;
             let servicePointCode = this.searchInputValue.length >= 14 ? this.searchInputValue : '';
+            let implantCode = this.searchInputValue.length === 10 && this.searchInputValue.startsWith("4")? this.searchInputValue:'';
             this.dispatchEvent(new CustomEvent('ricercainsap', {
                 detail: this.isRicercainSAP
             }));
-            callService({contratto:contractCode, pod:servicePointCode}).then(data =>{                
+            callService({contratto:contractCode, pod:servicePointCode,impianto:implantCode}).then(data =>{            
                 if(data.statusCode=='200' || this.postSales === true){
                     if(data.statusCode != '200')
                     {
@@ -599,7 +597,9 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.preloading = true;
         let servPoint = this.rowToSend;
         let pointCode = servPoint['Codice Punto'];
-        this.callApi(pointCode, 'confirm').then(() => {
+        let implantCode = servPoint['Impianto SAP'];
+        let codeCallApi = servPoint['Codice Punto'] != null && servPoint['Codice Punto'] != undefined && servPoint['Codice Punto'] != ''?pointCode:implantCode;
+        this.callApi(codeCallApi, 'confirm').then(() => {
             this.preloading = true;
             this.closeModal();
             if(this.serviceRequestId == null || (this.serviceRequestId != null && !this.isIncompatible)){

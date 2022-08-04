@@ -177,6 +177,22 @@ public with sharing class HDT_UTL_CreditCheck {
         return mapOrderNotSkipCreditCheck;
     }
 
+    @SuppressWarnings('PMD.AvoidDebugStatements')
+    public static void insertCalloutLog(String request, String response){
+        try{
+            String description = 'request: \n'+request+'\n\n\n\nresponse:\n'+response;
+            wrts_prcgvr__Log__c calloutLog = new wrts_prcgvr__Log__c();
+            calloutLog.wrts_prcgvr__Code__c = String.valueof(system.now().format('yyyyMMddHHmmssSSS'));
+            calloutLog.wrts_prcgvr__Message__c = 'CALLOUT - CreditCheck Evaluations';
+            calloutLog.wrts_prcgvr__Level__c = 'ERROR';
+            calloutLog.wrts_prcgvr__Description__c = String.isNotBlank(description) && description.length() > 32768 ? description.substring(0,32768) : description;
+            HDT_UTL_DatabaseService.insertSObject(calloutLog);
+        }catch (Exception e){
+            System.debug(LoggingLevel.ERROR, e.getMessage()+ ' line: '+ e.getLineNumber() );
+        }
+        
+    }
+
     private static Map<String,Set<String>> getWarnigStatusCreditCheck(){
         Map<String,Set<String>> warningStatusMap = new Map<String,Set<String>>();
         for (HDT_WarningStatusList__mdt status : HDT_WarningStatusList__mdt.getAll().values()){

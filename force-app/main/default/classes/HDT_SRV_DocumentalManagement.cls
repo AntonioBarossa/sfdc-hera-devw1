@@ -572,7 +572,28 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 								moduliOpzionaliMancanti.add(singleRadio.groupName);
 							}
 						}
-						// TODO: gestire radio button per istanza 326
+						if (singleRadio.groupName.contains('326_radio')){
+							if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+								String actDescriptionIstanza = 'Ritornato correttamente';
+								if(singleRadio.groupName.contains('_1')){
+									actDescriptionIstanza  = actDescriptionIstanza + ' su ordine '+ orderList[0].get('OrderNumber');
+									orderList[0].put('Instance326__c','Validato');
+								}else {
+									actDescriptionIstanza  = actDescriptionIstanza + ' su ordine '+ orderList[1].get('OrderNumber');
+									orderList[1].put('Instance326__c','Validato');
+								}
+								DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
+								if (documentalActivity != null){
+									documentalActivity.AttachmentCode__c = 'ISTANZA_326'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
+									documentalActivity.ActivityType__c = 'Allegati ricevuti';
+									documentalActivity.AttachmentDescription__c = actDescriptionIstanza;
+									activitiesToCreate.add(documentalActivity);
+								}
+							} else {
+								moduliOpzionaliMancanti.add(singleRadio.groupName);
+							}
+						}
+						
 						
 					}
 				}
@@ -602,7 +623,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						String istanza = (String)childOrder.get('Instance326__c');
 						if((String.isBlank(leggeOtt) || (String.isNotBlank(leggeOtt) && leggeOtt.equalsIgnoreCase('Validato'))) && 
 						(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))
-						&& (!'Credit Check KO'.equalsIgnoreCase(singleOrder.Phase__c) && !'Attesa Credit Check'.equalsIgnoreCase(singleOrder.Phase__c))){
+						&& (!'Accettazione Voltura'.equalsIgnoreCase((String)childOrder.get('Phase__c')) && !'Credit Check KO'.equalsIgnoreCase((String)childOrder.get('Phase__c')) && !'Attesa Credit Check'.equalsIgnoreCase((String)childOrder.get('Phase__c')))){
 							singleOrder.Phase__c = 'Documentazione Validata';
 							orderPhaseMap.put(singleOrder.Id, 'Documentazione Validata');
 						}
@@ -612,7 +633,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					 * AF Fix Accettazione Voltura.
 					 * E' necessario chiudere l'attività prima di settare Documentazione Validata
 					 */
-					try {
+					/*try {
 						if(!orderList.isEmpty()){
 							Set<Id> voltOrdSet = new Set<Id>();
 							String processTypeVol = '';
@@ -636,7 +657,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						}
 					} catch (Exception ex) {
 						//no throws
-					}
+					}*/
 					if(!childToUpdate.isEmpty()){
 						HDT_UTL_DatabaseService.updateSObject(childToUpdate);
 					}
