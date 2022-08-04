@@ -9588,6 +9588,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Modifica dati contr. stesso Cli</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Riattivazione non morose</fullName>
             <default>false</default>
         </values>
@@ -9802,6 +9806,10 @@
             <fullName>Acconto Paperless Pagato</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Allegati ricevuti</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Allineamento RCU Concluso</fullName>
             <default>false</default>
@@ -9962,6 +9970,10 @@
             <fullName>Chiuso</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Cliente contattato</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Completata</fullName>
             <default>false</default>
@@ -9990,6 +10002,14 @@
             <fullName>Comunicazioni con il DL</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Consumo effettivo</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Contattare cliente</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Da Inviare</fullName>
             <default>false</default>
@@ -10014,6 +10034,18 @@
             <fullName>Disattivato</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Documentazione completa</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Documentazione da verificare sul posto</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Documentazione incompleta</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>E-Mail Inviata</fullName>
             <default>false</default>
@@ -10030,6 +10062,10 @@
             <fullName>Elaborazione Risposta</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Errore di lettura</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Errore Lavorazione SAP</fullName>
             <default>false</default>
@@ -10102,6 +10138,10 @@
             <fullName>Flusso bloccato in assenza del precedente</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Fuga da Gestire - In attesa validazione</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Gestione Procedurale</fullName>
             <default>false</default>
@@ -10114,6 +10154,10 @@
             <fullName>IR020</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>In attesa allegati</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>In Attesa Allineamento Anagrafica</fullName>
             <default>false</default>
@@ -10218,6 +10262,26 @@
             <fullName>Lavori Sospesi</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Lettura fatturata</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Lettura inserita in SAP</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Lettura non fatturata</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Lettura non inserita</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Lettura non inserita in SAP</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Motore VAS KO</fullName>
             <default>false</default>
@@ -13272,6 +13336,10 @@
         </values>
         <values>
             <fullName>Consegna copia chiave GdM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consumo Anomalo Idrico</fullName>
             <default>false</default>
         </values>
         <values>

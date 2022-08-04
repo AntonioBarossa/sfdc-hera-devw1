@@ -9588,6 +9588,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Modifica dati contr. stesso Cli</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Riattivazione non morose</fullName>
             <default>false</default>
         </values>
