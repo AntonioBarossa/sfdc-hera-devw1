@@ -1640,7 +1640,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.dispatchEvent(event);
     }
 
-    populateDistributor(){
+    async populateDistributor(){
 
         this.loading = true;
         let addressRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
@@ -1667,11 +1667,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     let comune = servizio == 'Gas' || servizio == 'Acqua' || servizio == 'Ambiente' ? addressRecord['Comune'] : '';
                     let presenzaAllaccio = this.allSubmitedFields['PlugPresence__c'] != undefined ? this.allSubmitedFields['PlugPresence__c'] : '';
 
-                    getATO({comune : comune}).then(data => {
-                        this.allSubmitedFields['ATO__c'] = data;
-                    });
+                    let ato = await getATO({comune : comune});
+                    
+                    this.allSubmitedFields['ATO__c'] = ato;
 
                     getDistributorPointCode({code : radicePunto, commodity: servizio, comune : comune, presenzaAllaccio: presenzaAllaccio}).then(data => {
+
                         this.retrievedDistributor = data;
                         if (data.length > 1) {
                             this.booleanFormDistributor = true;
@@ -1684,7 +1685,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             });
                             this.isDistributor = true;
                             this.allSubmitedFields['Distributor__c'] = this.recordDistributorPointCode;
-                            this.servicePointRetrievedData.Distributor__c = this.recordDistributorPointCode;
+
+                            let distributorObject = {...this.servicePointRetrievedData};
+                            distributorObject['Distributor__c'] = this.recordDistributorPointCode;
+                            this.servicePointRetrievedData = {...distributorObject};
+
                             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
                             this.save();
                         }
