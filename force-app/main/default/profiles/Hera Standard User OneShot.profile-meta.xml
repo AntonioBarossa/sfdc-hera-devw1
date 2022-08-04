@@ -36146,7 +36146,7 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
         <recordType>ServicePoint__c.HDT_RT_Ambiente</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
