@@ -3,6 +3,10 @@
     <label>Errore Fatt Tari</label>
     <protected>false</protected>
     <values>
+        <field>Commodity__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {
@@ -11,15 +15,15 @@
 &quot;Column&quot; : 1
 },
 {
+&quot;FieldName&quot; : &quot;RequestSource__c&quot;,
+&quot;Required&quot; : false,
+&quot;Column&quot; : 1
+},
+{
 &quot;FieldName&quot; : &quot;Description&quot;,
 &quot;Required&quot; : true,
   &quot;Label&quot;: &quot;Dettaglio Correzione&quot;,
 &quot;Column&quot; : 2
-},
-{
-&quot;FieldName&quot; : &quot;RequestSource__c&quot;,
-&quot;Required&quot; : false,
-&quot;Column&quot; : 1
 },
 {
 &quot;FieldName&quot; : &quot;CustomerPaymentAgreements__c&quot;,
