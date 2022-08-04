@@ -14,10 +14,12 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
 
     @AuraEnabled
     public static List<ServicePoint__c> getServicePoint(String code, String fields) {
-        
         serviceSp.checkReadAccess(fields);
-
-        return servicePointQuery.getRecordByCode(code, fields);
+        if(code != null && code.startsWith('4') && code.length() == 10){
+            return servicePointQuery.getRecordByImplantCode(code, fields);
+        }else{
+            return servicePointQuery.getRecordByCode(code, fields);
+        }
     }
 
     @AuraEnabled

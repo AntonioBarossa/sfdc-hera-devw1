@@ -36093,6 +36093,16 @@
     </objectPermissions>
     <recordTypeVisibilities>
         <default>true</default>
+        <recordType>ServicePoint__c.HDT_RT_Ambiente</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>ServicePoint__c.HDT_RT_Acqua</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
         <personAccountDefault>true</personAccountDefault>
         <recordType>Account.HDT_RT_Business</recordType>
         <visible>true</visible>
