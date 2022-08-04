@@ -20,6 +20,17 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
     @AuraEnabled
     public static Map<String, List<SBQQ__QuoteLine__c>> getQuoteLineBundle(String saleId, String paymentMethod, String sendingBillMode){
 
+
+        List<SBQQ__QuoteLine__c> quoteLines = [SELECT Id 
+        FROM SBQQ__QuoteLine__c
+        WHERE SBQQ__Quote__r.Sale__c = :saleId
+        AND SBQQ__Product__r.Name IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura')
+        AND ( SBQQ__RequiredBy__r.PaymentMode__c = :paymentMethod OR SBQQ__RequiredBy__r.PaymentMode__c = NULL)
+        AND ( SBQQ__RequiredBy__r.SendingBillMode__c = :sendingBillMode OR SBQQ__RequiredBy__r.SendingBillMode__c = NULL)
+        AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+        ];
+
+
         System.debug('saleId: ' + saleId);
         System.debug('paymentMethod: ' + paymentMethod);
         System.debug('sendingBillMode: ' + sendingBillMode);
