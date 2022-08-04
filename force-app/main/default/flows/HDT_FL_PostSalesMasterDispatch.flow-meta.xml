@@ -8693,7 +8693,7 @@
             <targetReference>Lead_o_Interaction</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati</name>
