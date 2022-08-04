@@ -91,6 +91,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             orderList[0].isTransition__c = true;
             orderList[0].RecordTypeId = constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
             orderList[0].AgencyCode__c = 'AgencyCode';
+            orderList[0].CommercialId__c = 'AgentCode';
             orderList[0].WizardCompletedDate__c = Date.today();
             orderList[0].Contact__c = cttList[0].Id;
             orderList[0].DocumentPackage__c = 'Validato';
@@ -115,15 +116,18 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> childOrders = HDT_UTL_DataFactoryTst.createChildOrder(8, false, accList[0].Id, sales, orderList[0].Id, cttList[0].Id);
             childOrders[0].Name = 'childOrder0';
+            childOrders[0].CommercialId__c = 'test';
             childOrders[0].Phase__c = 'Documentazione Validata';
             childOrders[0].CreditCheckDescription__c = 'Saldo debito cattivo pagatore A';
             childOrders[0].IncomingCreditCheckResult__c = 'OK';
             childOrders[0].ParentOrder__c = orderList[0].Id;
             childOrders[1].Name = 'childOrder1';
+            childOrders[1].CommercialId__c = 'AgentCode';
             childOrders[1].Phase__c = 'In attesa validazione';
             childOrders[1].CreditCheckDescription__c = '';
             childOrders[1].ParentOrder__c = orderList[0].Id;
             childOrders[2].Name = 'childOrder2';
+            childOrders[2].CommercialId__c = 'test';
             childOrders[2].Phase__c = 'Da Inviare';
             childOrders[2].ParentOrder__c = orderList[0].Id;
             childOrders[3].Name = 'childOrder3';
@@ -170,6 +174,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             List<AgentMatrix__c> agMatrixList = HDT_UTL_DataFactoryTst.createAgentMatrix(1, false, 'Telefono');
             agMatrixList[0].AgencyCode__c = 'AgencyCode';
             agMatrixList[0].IsMonitoring__c = true;
+            agMatrixList[0].AgentCode__c =  'AgentCode';
             insert agMatrixList;
 
             List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(4, false, accList[0].Id);
@@ -302,7 +307,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                         QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
+                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c
                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
 
             ordersOld[0].Phase__c = 'Documentazione validata';
@@ -310,7 +315,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId, VasSubtype__c,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
+                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c
                                     FROM Order 
                                     WHERE AgencyCode__c = 'AgencyCode'];
 
@@ -413,7 +418,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                         QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
+                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c
                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
 
             ordersOld[0].Phase__c = 'In attesa validazione';
@@ -421,7 +426,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
+                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c
                                     FROM Order 
                                     WHERE AgencyCode__c = 'AgencyCode'];
 
@@ -450,7 +455,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                         QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
+                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c
                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
 
             ordersOld[0].Phase__c = 'Documentazione validata';
@@ -458,7 +463,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
+                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c
                                     FROM Order 
                                     WHERE AgencyCode__c = 'AgencyCode'];
 
@@ -491,7 +496,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                         QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
+                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c
                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
 
             ordersOld[0].Phase__c = 'In attesa validazione';
@@ -499,7 +504,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
+                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c
                                     FROM Order 
                                     WHERE AgencyCode__c = 'AgencyCode'];
 
@@ -796,7 +801,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> myChildOrder = [SELECT Id, IncomingCreditCheckResult__c, OutgoingCreditCheckResult__c, ProcessType__c, Phase__c, 
                                              CreditCheckDescription__c, RecordTypeId, ParentOrder__c, ParentOrder__r.Phase__c,
-                                             OrderReferenceNumber, RecordType.Developername, QualityCall__c, AgencyCode__c, Name
+                                             OrderReferenceNumber, RecordType.Developername, QualityCall__c, AgencyCode__c, Name, CommercialId__c
                                       FROM Order 
                                       WHERE Name = 'childOrder0'];
 
@@ -827,7 +832,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> childOrder1 = [SELECT Id, IncomingCreditCheckResult__c, OutgoingCreditCheckResult__c, ProcessType__c, Phase__c, 
                                             CreditCheckDescription__c, RecordTypeId, ParentOrder__c, ParentOrder__r.Phase__c,
-                                            OrderReferenceNumber, RecordType.Developername, QualityCall__c, AgencyCode__c, Name
+                                            OrderReferenceNumber, RecordType.Developername, QualityCall__c, AgencyCode__c, Name, CommercialId__c
                                     FROM Order 
                                     WHERE Name LIKE 'childOrder1'];
 
@@ -858,7 +863,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> childOrder2 = [SELECT Id, IncomingCreditCheckResult__c, OutgoingCreditCheckResult__c, ProcessType__c, Phase__c, 
                                             CreditCheckDescription__c, RecordTypeId, ParentOrder__c, ParentOrder__r.Phase__c,
-                                            OrderReferenceNumber, RecordType.Developername, QualityCall__c, AgencyCode__c, Name
+                                            OrderReferenceNumber, RecordType.Developername, QualityCall__c, AgencyCode__c, Name, CommercialId__c
                                     FROM Order 
                                     WHERE Name LIKE 'childOrder2'];
 

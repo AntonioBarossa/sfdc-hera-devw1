@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales</fullName>
+    <columns>NAME</columns>
+    <columns>IsActive__c</columns>
+    <columns>Type__c</columns>
+    <columns>StartDate__c</columns>
+    <columns>EndDate__c</columns>
+    <columns>Range__c</columns>
+    <columns>RangeType__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>SlaAdministration__c.HDT_RT_Sales</value>
+    </filters>
+    <label>Sales</label>
+</ListView>

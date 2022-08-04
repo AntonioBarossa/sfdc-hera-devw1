@@ -445,7 +445,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 } 
-                else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas' || this.recordtype.label === 'Punto Idrico' || this.recordtype.label === 'Punto Ambiente') && element === 'SAPImplantCode__c') {
+                else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas' || this.recordtype.label === 'Punto Idrico' ) && element === 'SAPImplantCode__c') {
                     fieldsDataObject.push(
                         {
                             fieldname: element,
@@ -767,8 +767,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                 this.fieldsDataReqRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredWater__c : (this.customSettings.FieldRequiredWater__c == null || this.customSettings.FieldRequiredWater__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredWater__c));
                                 break;
                             case 'Ambiente':
-                                this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldWaste__c : (this.customSettings.FieldWaste__c == null || this.customSettings.FieldWaste__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldWaste__c));
-                                this.fieldsDataReqRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredWaste__c : (this.customSettings.FieldRequiredWaste__c == null || this.customSettings.FieldRequiredWaste__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredWaste__c));
+                                this.fieldsDataRaw = (data.FieldWaste__c !== null && data.FieldWaste__c !== undefined ? data.FieldWaste__c:null);
+                                this.fieldsDataReqRaw = (data.FieldRequiredWaste__c !== null && data.FieldRequiredWaste__c !== undefined ? data.FieldRequiredWaste__c:null);
                                 break;
                         }
 
@@ -798,8 +798,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                 this.fieldsDataReqRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredWater__c : (this.customSettings.FieldRequiredWater__c == null || this.customSettings.FieldRequiredWater__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredWater__c));
                                 break;
                             case 'Ambiente':
-                                this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldWaste__c : (this.customSettings.FieldWaste__c == null || this.customSettings.FieldWaste__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldWaste__c));
-                                this.fieldsDataReqRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredWaste__c : (this.customSettings.FieldRequiredWaste__c == null || this.customSettings.FieldRequiredWaste__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredWaste__c));
+                                this.fieldsDataRaw = (data.FieldWaste__c !== null && data.FieldWaste__c !== undefined ? data.FieldWaste__c:null);
+                                this.fieldsDataReqRaw = (data.FieldRequiredWaste__c !== null && data.FieldRequiredWaste__c !== undefined ? data.FieldRequiredWaste__c:null);
                                 break;
                         }
 
@@ -857,13 +857,15 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         console.log('### Inside RecordTypeSwitch Gas');
                         this.fieldsDataRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldGas__c : (data.FieldGas__c == null || data.FieldGas__c == null ? data.FieldGeneric__c : data.FieldGeneric__c + ',' + data.FieldGas__c));
                         this.fieldsDataReqRaw = (data.Field_Required_Generic__c == null || data.Field_Required_Generic__c == undefined ? data.FieldRequiredGas__c : (data.FieldRequiredGas__c == null || data.FieldRequiredGas__c == null ? data.Field_Required_Generic__c : data.Field_Required_Generic__c + ',' + data.FieldRequiredGas__c));
+                        break;
                     case 'Punto Idrico':
                         this.fieldsDataRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldWater__c : (data.FieldWater__c == null || data.FieldWater__c == null ? data.FieldGeneric__c : data.FieldGeneric__c + ',' + data.FieldWater__c));
                         this.fieldsDataReqRaw = (data.Field_Required_Generic__c == null || data.Field_Required_Generic__c == undefined ? data.FieldRequiredWater__c : (data.FieldRequiredWater__c == null || data.FieldRequiredWater__c == null ? data.Field_Required_Generic__c : data.Field_Required_Generic__c + ',' + data.FieldRequiredWater__c));
                         break;
                     case 'Punto Ambiente':
-                        this.fieldsDataRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldWaste__c : (data.FieldWaste__c == null || data.FieldWaste__c == null ? data.FieldGeneric__c : data.FieldGeneric__c + ',' + data.FieldWaste__c));
-                        this.fieldsDataReqRaw = (data.Field_Required_Generic__c == null || data.Field_Required_Generic__c == undefined ? data.FieldRequiredWaste__c : (data.FieldRequiredWaste__c == null || data.FieldRequiredWaste__c == null ? data.Field_Required_Generic__c : data.Field_Required_Generic__c + ',' + data.FieldRequiredWaste__c));
+                        this.fieldsDataRaw = (data.FieldWaste__c !== null && data.FieldWaste__c !== undefined ? data.FieldWaste__c:null);
+                        this.fieldsDataReqRaw = (data.FieldRequiredWaste__c !== null && data.FieldRequiredWaste__c !== undefined ? data.FieldRequiredWaste__c:null);
+                        break;
                     }
             }
 
@@ -900,6 +902,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                 console.log('### Inside Gas Switch');
                                 this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldGas__c : (this.customSettings.FieldGas__c == null || this.customSettings.FieldGas__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldGas__c));
                                 this.fieldsDataReqRaw = (this.customSettings.Field_Required_Generic__c == null || this.customSettings.Field_Required_Generic__c == undefined ? this.customSettings.FieldRequiredGas__c : (this.customSettings.FieldRequiredGas__c == null || this.customSettings.FieldRequiredGas__c == null ? this.customSettings.Field_Required_Generic__c : this.customSettings.Field_Required_Generic__c + ',' + this.customSettings.FieldRequiredGas__c));
+                                break;
                             case 'Acqua':
                                 recordtype['label'] = 'Punto Idrico';
                                 recordtype['value'] = this.servicePointRetrievedData['RecordTypeId'];
@@ -911,8 +914,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                 recordtype['label'] = 'Punto Ambiente';
                                 recordtype['value'] = this.servicePointRetrievedData['RecordTypeId'];
                                 recordtype['DeveloperName'] = 'HDT_RT_Ambiente';
-                                this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldWaste__c : (this.customSettings.FieldWaste__c == null || this.customSettings.FieldWaste__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldWaste__c));
-                                this.fieldsDataReqRaw = (this.customSettings.Field_Required_Generic__c == null || this.customSettings.Field_Required_Generic__c == undefined ? this.customSettings.FieldRequiredWaste__c : (this.customSettings.FieldRequiredWaste__c == null || this.customSettings.FieldRequiredWaste__c == null ? this.customSettings.Field_Required_Generic__c : this.customSettings.Field_Required_Generic__c + ',' + this.customSettings.FieldRequiredWaste__c));
+                                this.fieldsDataRaw = (data.FieldWaste__c !== null && data.FieldWaste__c !== undefined ? data.FieldWaste__c:null);
+                                this.fieldsDataReqRaw = (data.FieldRequiredWaste__c !== null && data.FieldRequiredWaste__c !== undefined ? data.FieldRequiredWaste__c:null);
+                                break;
                             }
                     }
                     this.recordtype = {...recordtype};
@@ -946,6 +950,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                     recordtype['DeveloperName'] = 'HDT_RT_Gas';
                                     this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldGas__c : (this.customSettings.FieldGas__c == null || this.customSettings.FieldGas__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldGas__c));
                                     this.fieldsDataReqRaw = (this.customSettings.Field_Required_Generic__c == null || this.customSettings.Field_Required_Generic__c == undefined ? this.customSettings.FieldRequiredGas__c : (this.customSettings.FieldRequiredGas__c == null || this.customSettings.FieldRequiredGas__c == null ? this.customSettings.Field_Required_Generic__c : this.customSettings.Field_Required_Generic__c + ',' + this.customSettings.FieldRequiredGas__c));
+                                    break;
                                 case 'HDT_RT_Acqua':
                                     recordtype['label'] = 'Punto Idrico';
                                     recordtype['value'] = this.servicePointRetrievedData['RecordTypeId'];
@@ -957,9 +962,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                     recordtype['label'] = 'Punto Ambiente';
                                     recordtype['value'] = this.servicePointRetrievedData['RecordTypeId'];
                                     recordtype['DeveloperName'] = 'HDT_RT_Ambiente';
-                                    this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldWaste__c : (this.customSettings.FieldWaste__c == null || this.customSettings.FieldWaste__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldWaste__c));
-                                    this.fieldsDataReqRaw = (this.customSettings.Field_Required_Generic__c == null || this.customSettings.Field_Required_Generic__c == undefined ? this.customSettings.FieldRequiredWaste__c : (this.customSettings.FieldRequiredWaste__c == null || this.customSettings.FieldRequiredWaste__c == null ? this.customSettings.Field_Required_Generic__c : this.customSettings.Field_Required_Generic__c + ',' + this.customSettings.FieldRequiredWaste__c));
-                            
+                                    this.fieldsDataRaw = (data.FieldWaste__c !== null && data.FieldWaste__c !== undefined ? data.FieldWaste__c:null);
+                                    this.fieldsDataReqRaw = (data.FieldRequiredWaste__c !== null && data.FieldRequiredWaste__c !== undefined ? data.FieldRequiredWaste__c:null);
+                                    break;
                             }
                         }
                         this.recordtype = {...recordtype};
@@ -1275,32 +1280,18 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
         }
         else if (this.allSubmitedFields['CommoditySector__c'] == 'Acqua') {
-            if ((this.allSubmitedFields['PlugPresence__c'] === undefined || this.allSubmitedFields['PlugPresence__c'] === '')) {
-                concatPointErrorFields = concatPointErrorFields.concat('Presenza Allaccio, ');
-            }
-            if ((this.allSubmitedFields['Distributor__c'] === undefined || this.allSubmitedFields['Distributor__c'] === '')) {
-                concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
-            }
+
             if ((this.allSubmitedFields['SupplyType__c'] === undefined || this.allSubmitedFields['SupplyType__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Tipo Fornitura, ');
             }
             if ((this.allSubmitedFields['ImplantType__c'] === undefined || this.allSubmitedFields.ImplantType__c === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Tipologia Impianto, ');
             }
-            if (this.allSubmitedFields['Disconnectable__c'] === 'No' && (this.allSubmitedFields['DisconnectibilityType__c'] === undefined || this.allSubmitedFields['DisconnectibilityType__c'] === '')) {
-                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
-            }
             if (this.allSubmitedFields['MeterClass__c'] === undefined || this.allSubmitedFields['MeterClass__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Classe Contatore, ');
             }
         }
-        else if (this.allSubmitedFields['CommoditySector__c'] == 'Ambiente') {
-
-            if ((this.allSubmitedFields['Distributor__c'] === undefined || this.allSubmitedFields['Distributor__c'] === '')) {
-                concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
-            }
-        }
-        else {
+        else if (this.allSubmitedFields['CommoditySector__c'] == 'Gas') {
 
             if ((this.allSubmitedFields['Distributor__c'] === undefined || this.allSubmitedFields['Distributor__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
@@ -1396,46 +1387,19 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 concatPointErrorFields = concatPointErrorFields.concat('Consumo Annuo, ');
             }
         }
-        else if (this.allSubmitedFields['CommoditySector__c'] == 'Acqua') {     
+        else if (this.allSubmitedFields['CommoditySector__c'] == 'Acqua') {            
             
-            if (this.allSubmitedFields['ServicePointCode__c'] !== undefined 
-            && this.allSubmitedFields['ServicePointCode__c'] !== ''
-            && (this.allSubmitedFields['ServicePointCode__c'].length < 5 || this.allSubmitedFields['ServicePointCode__c'].length > 20)) {
-                this.isValid = false;
-                this.isValidFields = false;
-                this.loading = false;
-                this.alert('Dati tabella', 'Il Codice Punto Presa non può avere meno di 5 caratteri oppure più di 20 caratteri');
-            }
-            if (this.allSubmitedFields['CommoditySector__c'] === undefined || this.allSubmitedFields['CommoditySector__c'] === '') {
-                concatPointErrorFields = concatPointErrorFields.concat('Servizio, ');
-            }
-            if (this.allSubmitedFields['Distributor__c'] === undefined || this.allSubmitedFields['Distributor__c'] === '') {
-                concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
-            }
             if (this.allSubmitedFields['SupplyType__c'] === undefined || this.allSubmitedFields['SupplyType__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Tipo Fornitura, ');
             }
             if (this.allSubmitedFields['ImplantType__c'] === undefined || this.allSubmitedFields['ImplantType__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Tipologia Impianto, ');
             }
-            if (this.allSubmitedFields['Disconnectable__c'] === 'No' && (this.allSubmitedFields['DisconnectibilityType__c'] === undefined || this.allSubmitedFields['DisconnectibilityType__c'] === '')) {
-                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
-            }
             if (this.allSubmitedFields['MeterClass__c'] === undefined || this.allSubmitedFields['MeterClass__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Classe Contatore, ');
             }
         }
-        
-        else if (this.allSubmitedFields['CommoditySector__c'] == 'Ambiente') {
-
-            if (this.allSubmitedFields['CommoditySector__c'] === undefined || this.allSubmitedFields['CommoditySector__c'] === '') {
-                concatPointErrorFields = concatPointErrorFields.concat('Servizio, ');
-            }
-            if ((this.allSubmitedFields['Distributor__c'] === undefined || this.allSubmitedFields['Distributor__c'] === '')) {
-                concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
-            }
-        }
-        else {
+        else if (this.allSubmitedFields['CommoditySector__c'] == 'Gas') {
 
             if (this.allSubmitedFields['ServicePointCode__c'] !== undefined 
             && this.allSubmitedFields['ServicePointCode__c'] !== ''
