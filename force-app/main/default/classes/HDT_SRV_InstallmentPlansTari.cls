@@ -1,3 +1,10 @@
+/**
+ * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)
+ * @date 04/08/2022
+ * @description populate readonly fields for tari process
+ * @history Andrei Necsulescu – 04/08/2022 – Created class
+ */
+
 public with sharing class HDT_SRV_InstallmentPlansTari {
 
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
@@ -30,7 +37,7 @@ public with sharing class HDT_SRV_InstallmentPlansTari {
             System.debug(installmentAmountFormula);
             System.debug(installmentAmountFormulaSplit);
             
-            Boolean firstExpressionResult = evaluateExpression(input.importoDaRateizzare, installmentAmountFormulaSplit.get(0), '{0}');            
+            Boolean firstExpressionResult = evaluateExpression(input.importoDaRateizzare, installmentAmountFormulaSplit.get(0), '{0}');
             Boolean secondExpressionResult = installmentAmountFormulaSplit.size() > 1 ? evaluateExpression(input.importoDaRateizzare, installmentAmountFormulaSplit.get(1), '{0}') : false;
 
             System.debug('firstExpressionResult ' + firstExpressionResult);

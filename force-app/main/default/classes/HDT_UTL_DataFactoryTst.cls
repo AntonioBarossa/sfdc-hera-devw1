@@ -3491,4 +3491,30 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 		return eligibCriteriaList;
 	}
+
+	public List<InstallmentsPlanConfig__c> createInstallmentPlanConfig(Integer amount, Boolean doInsert, String city, String importoDaRateizzare, String rateCategory, String mandatoryAttachments) {
+
+		List<InstallmentsPlanConfig__c> isps = new List<InstallmentsPlanConfig__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+			
+			isps.add(new InstallmentsPlanConfig__c(
+				City__c = city,
+				AmountToPayInInstallments__c = importoDaRateizzare,
+				RateCategory__c = rateCategory,
+				MandatoryAttachments__c = mandatoryAttachments,
+				MinInstallmentAmount__c = Integer.valueof(Math.random() * 100),
+				MinAmountForSingleInstalment__c = Integer.valueof(Math.random() * 100),
+				MaxInstallmentsNumber__c = Integer.valueof(Math.random() * 10)
+			));
+
+		}
+
+		if (doinsert) {
+			insert isps;
+		}
+
+		return isps;
+
+	}
 }
