@@ -24,5 +24,15 @@ public inherited sharing class HDT_UTL_PostSalesCriteriaManager {
 
         return !activities.isEmpty();
     }
+    public Boolean totalResidueNotNull(SObject sender)
+    {
+        Decimal totalResidue = sender.get('TotalResidue__c') != null ? (Decimal)sender.get('TotalResidue__c') : null;
+        return totalResidue != null && totalResidue > 0;
+    }
+    public Boolean totalResidueNull(SObject sender)
+    {
+        Decimal totalResidue = sender.get('TotalResidue__c') != null ? (Decimal)sender.get('TotalResidue__c') : null;
+        return totalResidue != null && totalResidue == 0;
+    }
 
 }
