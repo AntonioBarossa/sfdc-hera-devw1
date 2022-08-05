@@ -157,7 +157,6 @@ public with sharing class HDT_SRV_SalesHandler {
                             discardReasonSet.add(HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('TESTO_ERRR')));
                             discardReasonSet.add(HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('ANNOTAZIONI')));
                             discardReasonSet.remove('');
-                            //Nelle varie fasi è stato aggiunto controllo lunghezza nella valorizzazione del campo discardReason
                             String discardReasonString = String.join((Iterable<String>)discardReasonSet, ' \n');
                             switch on mapRequestFields.get('FASE') {
                                 when 'Ammissibilità KO' {
