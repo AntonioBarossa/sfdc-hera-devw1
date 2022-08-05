@@ -158,12 +158,11 @@ public with sharing class HDT_SRV_SalesHandler {
                             discardReasonSet.add(HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('ANNOTAZIONI')));
                             discardReasonSet.remove('');
                             String discardReasonString = String.join((Iterable<String>)discardReasonSet, ' \n');
-                            discardReasonString = String.isNotBlank(discardReasonString) && discardReasonString.length()>255 ? discardReasonString.substring(0,255) : discardReasonString;
                             switch on mapRequestFields.get('FASE') {
                                 when 'Ammissibilità KO' {
                                     
 
-                                    ord.DiscardReason__c = discardReasonString;
+                                    ord.DiscardReason__c = String.isNotBlank(discardReasonString) && discardReasonString.length()>255 ? discardReasonString.substring(0,255) : discardReasonString;
                                     ord.CausalCode__c = mapRequestFields.get('CODERR');
                                     //ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG'); campo sostituito
                                     ord.DiscardCodeHeroku__c = mapRequestFields.get('CODERR_AEEG');
@@ -270,7 +269,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
                                     appService.updateExtraSystemAppointment('Esito KO da DL', ord.Id, discardReasonString,mapActivityField);
                                     //fine Gestione Esito Appuntamento;
-                                    ord.DiscardReason__c = discardReasonString;
+                                    ord.DiscardReason__c = String.isNotBlank(discardReasonString) && discardReasonString.length()>255 ? discardReasonString.substring(0,255) : discardReasonString;
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                     ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                     ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
@@ -355,7 +354,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     }
                                 }
                                 when 'Esito KO da SII' {
-                                    ord.DiscardReason__c =  discardReasonString;
+                                    ord.DiscardReason__c =  String.isNotBlank(discardReasonString) && discardReasonString.length()>255 ? discardReasonString.substring(0,255) : discardReasonString;
                                     ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                     ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
@@ -423,12 +422,12 @@ public with sharing class HDT_SRV_SalesHandler {
                                     }
                                 }
                                 when 'Errore lavorazione SAP' {
-                                    ord.DiscardReason__c = discardReasonString;
+                                    ord.DiscardReason__c = String.isNotBlank(discardReasonString) && discardReasonString.length()>255 ? discardReasonString.substring(0,255) : discardReasonString;
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 }
                                 when 'Dati discordanti'{
                                     ord.phase__c = mapRequestFields.get('FASE');
-                                    ord.DiscardReason__c = discardReasonString;
+                                    ord.DiscardReason__c = String.isNotBlank(discardReasonString) && discardReasonString.length()>255 ? discardReasonString.substring(0,255) : discardReasonString;
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 }
                                 /**@frpanico 2022-05-27
