@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Calcola_parametri_rate</name>
         <label>Calcola parametri rate</label>
-        <locationX>2475</locationX>
+        <locationX>2541</locationX>
         <locationY>2402</locationY>
         <actionName>HDT_SRV_InstallmentPlansTari</actionName>
         <actionType>apex</actionType>
@@ -499,7 +499,7 @@
     <assignments>
         <name>Assign_case_values</name>
         <label>Assign case values</label>
-        <locationX>2673</locationX>
+        <locationX>2871</locationX>
         <locationY>3914</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_0.BillingCity__c</assignToReference>
@@ -670,7 +670,7 @@
     <decisions>
         <name>Alert_comune_di_fornitura</name>
         <label>Alert comune di fornitura?</label>
-        <locationX>2475</locationX>
+        <locationX>2541</locationX>
         <locationY>2762</locationY>
         <defaultConnector>
             <targetReference>Controllo_coerenza_dati_inseriti</targetReference>
@@ -720,7 +720,7 @@
     <decisions>
         <name>Cliente_Assistito_Decision</name>
         <label>Cliente Assistito?</label>
-        <locationX>2673</locationX>
+        <locationX>2871</locationX>
         <locationY>3338</locationY>
         <defaultConnector>
             <targetReference>Allegati_Obbligatori_Screen</targetReference>
@@ -745,7 +745,7 @@
     <decisions>
         <name>Controllo_coerenza_dati_inseriti</name>
         <label>Controllo coerenza dati inseriti</label>
-        <locationX>2475</locationX>
+        <locationX>2541</locationX>
         <locationY>3098</locationY>
         <defaultConnector>
             <targetReference>Get_Case_0</targetReference>
@@ -772,6 +772,28 @@
                 <targetReference>Numero_rate_non_valido</targetReference>
             </connector>
             <label>Numero rate non consentito</label>
+        </rules>
+        <rules>
+            <name>Valore_singola_rata_troppo_basso</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Tari_Layout.RequestSource__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>D’ufficio</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>checkSingleInstallmentAmount</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Valore_singola_rata_non_consentito</targetReference>
+            </connector>
+            <label>Valore singola rata troppo basso</label>
         </rules>
     </decisions>
     <decisions>
@@ -1441,6 +1463,11 @@
         <expression>NOT({!RentProcessRuleOutput.AttachmentManagement__c})</expression>
     </formulas>
     <formulas>
+        <name>checkSingleInstallmentAmount</name>
+        <dataType>Boolean</dataType>
+        <expression>{!Get_Case_Tari_Layout.MinAmountForSingleInstalment__c} &lt; ({!Get_Case_Tari_Layout.AmountToPayInInstallments__c} / {!Get_Case_Tari_Layout.InstallmentNumberRequired__c})</expression>
+    </formulas>
+    <formulas>
         <name>DataPrimaScadenza</name>
         <dataType>Date</dataType>
         <expression>DATEVALUE({!CaseInput.CreatedDate})+20</expression>
@@ -1533,7 +1560,7 @@ OR(
     <recordLookups>
         <name>Get_Case_0</name>
         <label>Get Case</label>
-        <locationX>2673</locationX>
+        <locationX>2871</locationX>
         <locationY>3218</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1554,7 +1581,7 @@ OR(
     <recordLookups>
         <name>Get_Case_Tari_Layout</name>
         <label>Get Case</label>
-        <locationX>2475</locationX>
+        <locationX>2541</locationX>
         <locationY>2522</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1575,7 +1602,7 @@ OR(
     <recordLookups>
         <name>Get_Tari_Recordtype</name>
         <label>Get Tari Recordtype</label>
-        <locationX>2673</locationX>
+        <locationX>2871</locationX>
         <locationY>3794</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1821,7 +1848,7 @@ OR(
     <recordUpdates>
         <name>Update_case_record</name>
         <label>Update case record</label>
-        <locationX>2673</locationX>
+        <locationX>2871</locationX>
         <locationY>4034</locationY>
         <connector>
             <targetReference>Salva_o_Conferma</targetReference>
@@ -1831,7 +1858,7 @@ OR(
     <screens>
         <name>Alert_Comune_di_fornitura_screen</name>
         <label>Alert Comune di fornitura</label>
-        <locationX>2343</locationX>
+        <locationX>2409</locationX>
         <locationY>2882</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1870,7 +1897,7 @@ OR(
     <screens>
         <name>Allegati_Obbligatori_Screen</name>
         <label>Allegati Obbligatori</label>
-        <locationX>2673</locationX>
+        <locationX>2871</locationX>
         <locationY>3674</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2231,7 +2258,7 @@ OR(
     <screens>
         <name>Numero_rate_non_valido</name>
         <label>Numero rate non valido</label>
-        <locationX>2277</locationX>
+        <locationX>2211</locationX>
         <locationY>3218</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2251,7 +2278,7 @@ OR(
     <screens>
         <name>Screen_Case_Layout</name>
         <label>Screen Case Layout</label>
-        <locationX>2013</locationX>
+        <locationX>1947</locationX>
         <locationY>2282</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2368,7 +2395,7 @@ OR(
     <screens>
         <name>Screen_Case_Layout_0</name>
         <label>Screen Case Layout</label>
-        <locationX>2475</locationX>
+        <locationX>2541</locationX>
         <locationY>2642</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2506,7 +2533,7 @@ OR(
     <screens>
         <name>Screen_Case_Layout_0_0</name>
         <label>Screen Case Layout</label>
-        <locationX>2541</locationX>
+        <locationX>2739</locationX>
         <locationY>3458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2589,7 +2616,7 @@ OR(
     <screens>
         <name>Screen_Case_Layout_0_0_0</name>
         <label>Screen Case Layout</label>
-        <locationX>2475</locationX>
+        <locationX>2541</locationX>
         <locationY>2282</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2919,6 +2946,26 @@ OR(
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Valore_singola_rata_non_consentito</name>
+        <label>Valore singola rata non consentito</label>
+        <locationX>2475</locationX>
+        <locationY>3218</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Screen_Case_Layout_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>Alert_fornitura_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;In base al &lt;span style=&quot;background-color: rgb(255, 255, 255); font-family: &amp;quot;Salesforce Sans&amp;quot;, Arial, sans-serif; color: rgb(22, 50, 92);&quot;&gt;Numero Rate Richieste il valore di ogni silgola rata risulta infiriore al minimo consentito di {!Get_Case_Tari_Layout.MinAmountForSingleInstalment__c}.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
         <locationX>3112</locationX>
         <locationY>0</locationY>
@@ -2926,7 +2973,7 @@ OR(
             <targetReference>Check_If_Process_Is_TARI</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Annullamento_Prestazione</name>
         <label>Annullamento Prestazione</label>
