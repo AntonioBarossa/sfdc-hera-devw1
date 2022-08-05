@@ -743,7 +743,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             input = selectedservicepoint['Codice Punto'];
         }
         let sp = selectedservicepoint;
-        callService({ contratto: '', pod: input }).then(data => {
+        let implantCode = selectedservicepoint['Impianto SAP'] != null && selectedservicepoint['Impianto SAP'].length === 10 && selectedservicepoint['Impianto SAP'].startsWith("4")? selectedservicepoint:'';
+        callService({ contratto: '', pod: input, impianto: implantCode }).then(data => {
             if (data.statusCode == '200') {
                 this.responseArriccData = data;
                 if (this.servicePointRetrievedData == undefined) {
@@ -924,8 +925,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
                 else
                 {
+                    console.log('## this.selectedservicepoint ' + JSON.stringify(this.selectedservicepoint));
+                    var implantCode = this.selectedservicepoint['Impianto SAP'] != null? this.selectedservicepoint['Impianto SAP']:'';
+                    var codeToSearch = this.selectedservicepoint['Codice Punto'] != null? this.selectedservicepoint['Codice Punto']:implantCode;
                     /** Casistica service point esistente su SFDC */
-                    getServicePoint({ code: this.selectedservicepoint['Codice Punto'], fields: queryFields.join() }).then(data => {
+                    getServicePoint({ code: codeToSearch, fields: queryFields.join() }).then(data => {
 
                         this.handleCallServiceSap(this.selectedservicepoint);
                         this.servicePointRetrievedData = data[0];
@@ -1640,7 +1644,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.dispatchEvent(event);
     }
 
-    populateDistributor(){
+    async populateDistributor(){
 
         this.loading = true;
         let addressRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
@@ -1667,11 +1671,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     let comune = servizio == 'Gas' || servizio == 'Acqua' || servizio == 'Ambiente' ? addressRecord['Comune'] : '';
                     let presenzaAllaccio = this.allSubmitedFields['PlugPresence__c'] != undefined ? this.allSubmitedFields['PlugPresence__c'] : '';
 
-                    getATO({comune : comune}).then(data => {
-                        this.allSubmitedFields['ATO__c'] = data;
-                    });
+                    if(servizio === 'Acqua'){
+                        let ato = await getATO({comune : comune});
+                        this.allSubmitedFields['ATO__c'] = ato;
+                    }
 
                     getDistributorPointCode({code : radicePunto, commodity: servizio, comune : comune, presenzaAllaccio: presenzaAllaccio}).then(data => {
+
                         this.retrievedDistributor = data;
                         if (data.length > 1) {
                             this.booleanFormDistributor = true;
@@ -1684,7 +1690,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             });
                             this.isDistributor = true;
                             this.allSubmitedFields['Distributor__c'] = this.recordDistributorPointCode;
-                            this.servicePointRetrievedData.Distributor__c = this.recordDistributorPointCode;
+
+                            let distributorObject = {...this.servicePointRetrievedData};
+                            distributorObject['Distributor__c'] = this.recordDistributorPointCode;
+                            this.servicePointRetrievedData = {...distributorObject};
+
                             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
                             this.save();
                         }
