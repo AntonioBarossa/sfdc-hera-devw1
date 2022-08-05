@@ -377,7 +377,7 @@
             <value>
                 <fullName>Bolletta Fuga H2O</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>Bolletta Fuga H2O</label>
             </value>
             <value>
@@ -502,6 +502,10 @@
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>Assistenza Sociale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
+            <valueName>Bolletta Fuga H2O</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
