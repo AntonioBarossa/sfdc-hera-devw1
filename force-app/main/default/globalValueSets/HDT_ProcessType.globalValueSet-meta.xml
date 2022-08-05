@@ -6,6 +6,11 @@
         <label>Alert</label>
     </customValue>
     <customValue>
+        <fullName>Lettura Acqua Avviso al Cliente</fullName>
+        <default>false</default>
+        <label>Lettura Acqua Avviso al Cliente</label>
+    </customValue>
+    <customValue>
         <fullName>Allineamento Anagrafica</fullName>
         <default>false</default>
         <label>Allineamento Anagrafica</label>
