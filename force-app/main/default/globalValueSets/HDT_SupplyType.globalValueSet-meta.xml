@@ -36,9 +36,9 @@
         <label>Uso domestico</label>
     </customValue>
     <customValue>
-        <fullName>Uso diverso da domenstico</fullName>
+        <fullName>Uso diverso da domestico</fullName>
         <default>false</default>
-        <label>Uso diverso da domenstico</label>
+        <label>Uso diverso da domestico</label>
     </customValue>
     <customValue>
         <fullName>Uso civile domestico</fullName>

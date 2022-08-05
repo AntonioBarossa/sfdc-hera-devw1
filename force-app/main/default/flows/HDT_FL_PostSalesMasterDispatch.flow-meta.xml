@@ -2820,7 +2820,7 @@
         <defaultConnectorLabel>Si</defaultConnectorLabel>
         <rules>
             <name>NoSelezioneFornituraReclami</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
@@ -3139,6 +3139,20 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>HDT_RT_ComportamentoVenditori</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_ReclamoDaCittadino</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_PosizionamentoContenitore</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -8693,7 +8707,7 @@
             <targetReference>Lead_o_Interaction</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati</name>
