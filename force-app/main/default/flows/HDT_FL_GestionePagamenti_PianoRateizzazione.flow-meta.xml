@@ -8,7 +8,7 @@
         <actionName>HDT_SRV_InstallmentPlansTari</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Get_Case_Tari_Layout</targetReference>
+            <targetReference>Screen_Case_Layout_0</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -1609,10 +1609,10 @@ OR(
         <name>Get_Case_Tari_Layout</name>
         <label>Get Case</label>
         <locationX>2607</locationX>
-        <locationY>2522</locationY>
+        <locationY>2642</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Screen_Case_Layout_0</targetReference>
+            <targetReference>Alert_comune_di_fornitura</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1899,7 +1899,7 @@ OR(
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Alert_data_scadenza_non_coincidente</name>
@@ -1933,6 +1933,11 @@ OR(
             <targetReference>Get_Tari_Recordtype</targetReference>
         </connector>
         <fields>
+            <name>DisplayHeader_0_0_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
             <name>allegati_obbligatori</name>
             <extensionName>c:hdtAttachmentManager</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -1951,7 +1956,7 @@ OR(
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>Get_Case.Id</elementReference>
+                    <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2021,7 +2026,7 @@ OR(
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>false</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Inserimento_Allegato_Obbligatorio</name>
@@ -2300,7 +2305,7 @@ OR(
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Screen_Case_Layout</name>
@@ -2423,12 +2428,12 @@ OR(
         <name>Screen_Case_Layout_0</name>
         <label>Screen Case Layout</label>
         <locationX>2607</locationX>
-        <locationY>2642</locationY>
+        <locationY>2522</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Alert_comune_di_fornitura</targetReference>
+            <targetReference>Get_Case_Tari_Layout</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_0_0_0</name>
@@ -2991,7 +2996,7 @@ OR(
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Valore_singola_rata_non_consentito</name>
@@ -3007,11 +3012,11 @@ OR(
         </connector>
         <fields>
             <name>Alert_importo_singola_rata</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;In base al &lt;span style=&quot;background-color: rgb(255, 255, 255); font-family: &amp;quot;Salesforce Sans&amp;quot;, Arial, sans-serif; color: rgb(22, 50, 92);&quot;&gt;Numero Rate Richieste il valore di ogni silgola rata risulta infiriore al minimo consentito di {!Get_Case_Tari_Layout.MinAmountForSingleInstalment__c}.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;In base al &lt;strong style=&quot;color: rgb(22, 50, 92); font-family: &amp;quot;Salesforce Sans&amp;quot;, Arial, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt;Numero Rate Richieste&lt;/strong&gt;&lt;span style=&quot;color: rgb(22, 50, 92); font-family: &amp;quot;Salesforce Sans&amp;quot;, Arial, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt; il valore di ogni silgola rata risulta infiriore al minimo consentito di {!Get_Case_Tari_Layout.MinAmountForSingleInstalment__c}.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>3232</locationX>
@@ -3020,7 +3025,7 @@ OR(
             <targetReference>Check_If_Process_Is_TARI</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annullamento_Prestazione</name>
         <label>Annullamento Prestazione</label>

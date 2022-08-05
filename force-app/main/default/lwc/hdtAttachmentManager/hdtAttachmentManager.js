@@ -107,7 +107,7 @@ export default class HdtAttachmentManager extends LightningElement {
                     if( this.currObject.RequestSource__c.toUpperCase() != 'DA CONTRIBUENTE' ){
                         objectToReturn = { 
                             isValid: false, 
-                            errorMessage: 'E\' obbligatorio inserire almeno un allegato' 
+                            errorMessage: 'È obbligatorio inserire almeno un allegato' 
                         };  
                     }
                 /*
@@ -130,7 +130,13 @@ export default class HdtAttachmentManager extends LightningElement {
                             isValid: true
                         } 
                     }
-                */
+                */               
+                    break;
+                case 'PIANO RATEIZZAZIONE':
+                    objectToReturn = { 
+                        isValid: false, 
+                        errorMessage: 'È obbligatorio inserire almeno un allegato' 
+                    };
                     break;
                 default:
                     break;
