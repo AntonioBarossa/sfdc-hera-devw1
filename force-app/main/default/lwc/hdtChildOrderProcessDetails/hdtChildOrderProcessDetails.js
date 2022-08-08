@@ -1200,7 +1200,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         
         let isPeriodY = event.detail.period=="Y";
         this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = isPeriodY;
-        this.template.querySelector("[data-id='BlockOnComputation__c']").value = isPeriodY? "Y" : "", this.sectionDataToSubmit["BlockOnComputation__c"]=isPeriodY? "Y" : "";
+        this.template.querySelector("[data-id='BlockOnComputation__c']").value = isPeriodY? "Y" : "", this.sectionDataToSubmit["BlockOnComputation__c"]=isPeriodY? "Y" : "N";
     }
     
 }

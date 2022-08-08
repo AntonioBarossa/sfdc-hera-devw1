@@ -327,7 +327,7 @@ export default class HdtActiveRepentant extends LightningElement {
         const refusal = this.template.querySelector("[data-id='CustomerRepentanceRefusal__c']");
         if(refusal) refusal.required=isPeriodY;
 
-        this.template.querySelector("[data-id='BlockOnComputation__c']").value = isPeriodY? "Y" : "";
+        this.template.querySelector("[data-id='BlockOnComputation__c']").value = isPeriodY? "Y" : "N";
     }
 
     getFormattedDate(date){
