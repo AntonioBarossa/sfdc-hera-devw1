@@ -45,7 +45,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 hasCodiceRonchiButton: this.order.RateCategory__c=='TATND00001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente',
-                hasVerificaAccertamento: true,
+                hasVerificaRavv: this.order.Account.CompanyOwner__c!=="MMS",
                 hasAllegatiObbligatori: true,
                 diffObjApi: 'Sale',
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente' || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
@@ -91,11 +91,11 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                     new fieldData('integrazione Riduzione Agevolazione Esclusione','IntegrationExclusion__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Allegati obbligatori','MandatoryAttachments__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Allegati aggiuntivi','AdditionalAttachments__c', this.typeVisibility('both'), false, false,'','', function(){console.log("dynamic on change")}),
-                    new fieldData('Blocca al calcolo','BlockOnComputation__c', this.typeVisibility('both'), false, true,'',''),
+                    new fieldData('Blocca al calcolo','BlockOnComputation__c', this.order.Account.CompanyOwner__c!=="MMS", false, true,'',''),
                     new fieldData('Integrazione alla Dichiarazione (da Contribuente)','TaxpayerDeclarationInfos__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Inizio periodo ravvedibile','OnerousReviewableStartDate__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Inizio periodo non ravvedibile','OnerousUnreviewableStartDate__c', this.typeVisibility('both'), false, true,'',''),
-                    new fieldData('Rifiuta supporto al calcolo del ravvedimento operoso','DeclineComputationSupport__c', this.typeVisibility('both'), false, false,'',''),
+                    new fieldData('Rifiuta supporto al calcolo del ravvedimento operoso','DeclineComputationSupport__c', this.order.Account.CompanyOwner__c!=="MMS", false, false,'',''),
                     new fieldData('Superficie Mq','Surface__c', this.typeVisibility('both'), false, false,'','', 
                         function(event){
                             if(this.order.RateCategory__c==='TATUDNR001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente' && surf){
