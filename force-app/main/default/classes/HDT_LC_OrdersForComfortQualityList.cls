@@ -73,7 +73,6 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
         act.wrts_prcgvr__Status__c = 'Esitata';
         act.ContactResult__c = causalQuality;
-        act.ActivityEndTime__c = null; //@ealpi ticket 906587C
         activitySrv.updateRecord(act);
 
         List<CampaignMember> campMembList = HDT_QR_CampaignMember.getCampMembByActivity(activityId);

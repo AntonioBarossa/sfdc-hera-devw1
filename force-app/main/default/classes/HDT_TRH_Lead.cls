@@ -19,7 +19,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
         // for(Lead lead :listlead){
         //     HDT_UTL_GestionePrivacy.setPrivacyForLead(lead);
         // }
-    HDT_UTL_GestionePrivacy.setPrivacyForLead(listlead);
+        HDT_UTL_GestionePrivacy.setPrivacyForLead(listlead);
     }
 
     public override void beforeInsert(){
