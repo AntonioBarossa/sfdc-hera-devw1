@@ -45,7 +45,7 @@ export default class HdtActiveRepentant extends LightningElement {
 	messageContext;
 
     get showSpinner(){
-        return this.formLoading || this.loading==0;
+        return this.formLoading || this.loading>0;
     }
 
     get isCase(){
