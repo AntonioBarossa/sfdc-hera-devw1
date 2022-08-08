@@ -3369,6 +3369,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_TRH_ContentDocumentLink</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_TRH_ContentDocumentLInkTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_TRH_Contract</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -3870,6 +3878,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_ContactPointTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_ContentDocumentLink</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
