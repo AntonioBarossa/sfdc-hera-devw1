@@ -480,6 +480,15 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
     }
 
+    public void advanceInstallmentPlan(SObject inputCase)
+    {
+        Case currentCase = (Case) inputCase;
+        if(currentCase.TypeInstallmentPlan__c.equalsIgnoreCase('Personalizzato') && (currentCase.InstallmentNumberRequired__c > 3 || currentCase.AmountToPayInInstallments__c > 2000 || currentCase.Reason__c.containsIgnoreCase('Disoccupato/Cassintegrato')))
+        {
+            currentCase.Phase__c = 'Attesa Modulo Firmato';
+        }
+    }
+
     @Future
     private static void updateFuture(String serializedCase)
     {
