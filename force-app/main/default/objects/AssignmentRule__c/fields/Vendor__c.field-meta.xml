@@ -20,6 +20,11 @@
                 <default>false</default>
                 <label>Hera Comm S.p.A.</label>
             </value>
+            <value>
+                <fullName>EstEnergy S.p.A.</fullName>
+                <default>false</default>
+                <label>EstEnergy S.p.A.</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>3</visibleLines>
