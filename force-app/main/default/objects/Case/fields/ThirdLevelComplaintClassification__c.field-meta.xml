@@ -291,6 +291,59 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>Impatti Ambientali</controllingFieldValue>
+            <valueName>Emissioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Impatti Ambientali</controllingFieldValue>
+            <valueName>Impatto visivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Impatti Ambientali</controllingFieldValue>
+            <valueName>Materiali/sostanze</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Impatti Ambientali</controllingFieldValue>
+            <valueName>Richiamo animali/insetti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Impatti Ambientali</controllingFieldValue>
+            <valueName>Traffico/cantieri</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <valueName>Solleciti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità del Servizio</controllingFieldValue>
+            <valueName>Arenile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità del Servizio</controllingFieldValue>
+            <valueName>Centri di Raccolta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità del Servizio</controllingFieldValue>
+            <valueName>Servizi a chiamata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità del Servizio</controllingFieldValue>
+            <valueName>Servizi di raccolta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità del Servizio</controllingFieldValue>
+            <valueName>Spazzamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio Clienti</controllingFieldValue>
+            <controllingFieldValue>Qualità Commerciale</controllingFieldValue>
+            <valueName>Servizio clienti (call center, sportelli, altri servizi)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio Clienti</controllingFieldValue>
+            <valueName>Web</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Misura</controllingFieldValue>
             <controllingFieldValue>Mercato</controllingFieldValue>
             <controllingFieldValue>Qualità Commerciale</controllingFieldValue>
@@ -305,6 +358,10 @@
         <valueSettings>
             <controllingFieldValue>Misura</controllingFieldValue>
             <valueName>Cambio misuratore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Misura</controllingFieldValue>
+            <valueName>Contestazioni</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Misura</controllingFieldValue>
@@ -336,12 +393,16 @@
             <valueName>Indennizzi</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Qualità Commerciale</controllingFieldValue>
-            <valueName>Servizio clienti (call center, sportelli, altri servizi)</valueName>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Autolettura (uso della)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione</controllingFieldValue>
-            <valueName>Autolettura (uso della)</valueName>
+            <valueName>Avviso/Bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Calcolo</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione</controllingFieldValue>
@@ -353,11 +414,27 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Modalità di pagamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
             <valueName>Pagamenti e Rimborsi</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Periodicità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
             <valueName>Periodicità e fattura di chiusura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Problemi di fatturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Recapito</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione</controllingFieldValue>
@@ -377,11 +454,23 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Contratti</controllingFieldValue>
+            <valueName>Attivazione/Cessazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratti</controllingFieldValue>
+            <valueName>Contratto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratti</controllingFieldValue>
             <valueName>Modifiche unilaterali</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Contratti</controllingFieldValue>
             <valueName>Recesso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratti</controllingFieldValue>
+            <valueName>Subentro/Voltura</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Contratti</controllingFieldValue>
