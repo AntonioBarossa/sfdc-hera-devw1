@@ -723,8 +723,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     handleCallServiceSap(selectedservicepoint) {
 
         let servicePointCode;
-        let spCode = JSON.stringify(this.selectedservicepoint).split(',');
-
+        let spCode = JSON.stringify(selectedservicepoint).split(',');
         spCode.forEach(element => {
             if (element.split(':')[0].includes('Codice Punto')) {
                 servicePointCode = element.split(':')[1];
@@ -733,17 +732,16 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 servicePointCode = element.split(':')[1];
             }
         });
-
-        let lenght = servicePointCode.length;
+        let lenght = servicePointCode !== undefined ? servicePointCode.length : 0;
         let input = '';
-        if (selectedservicepoint['Codice Punto'] == undefined) {
+        if (selectedservicepoint['Codice Punto'] == undefined && lenght > 0) {
             input = servicePointCode.substring(1, lenght - 1);
         }
         else {
             input = selectedservicepoint['Codice Punto'];
         }
         let sp = selectedservicepoint;
-        let implantCode = selectedservicepoint['Impianto SAP'] != null && selectedservicepoint['Impianto SAP'].length === 10 && selectedservicepoint['Impianto SAP'].startsWith("4")? selectedservicepoint:'';
+        let implantCode = selectedservicepoint['Impianto SAP'] !== null && selectedservicepoint['Impianto SAP'] !== undefined ? selectedservicepoint['Impianto SAP'].length === 10 && selectedservicepoint['Impianto SAP'].startsWith("4") ? selectedservicepoint['Impianto SAP']:'' : '';
         callService({ contratto: '', pod: input, impianto: implantCode }).then(data => {
             if (data.statusCode == '200') {
                 this.responseArriccData = data;
@@ -914,8 +912,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                 recordtype['label'] = 'Punto Ambiente';
                                 recordtype['value'] = this.servicePointRetrievedData['RecordTypeId'];
                                 recordtype['DeveloperName'] = 'HDT_RT_Ambiente';
-                                this.fieldsDataRaw = (data.FieldWaste__c !== null && data.FieldWaste__c !== undefined ? data.FieldWaste__c:null);
-                                this.fieldsDataReqRaw = (data.FieldRequiredWaste__c !== null && data.FieldRequiredWaste__c !== undefined ? data.FieldRequiredWaste__c:null);
+                                this.fieldsDataRaw = (this.customSettings.FieldWaste__c !== null && this.customSettings.FieldWaste__c !== undefined ? this.customSettings.FieldWaste__c:null);
+                                this.fieldsDataReqRaw = (this.customSettings.FieldRequiredWaste__c !== null && this.customSettings.FieldRequiredWaste__c !== undefined ? this.customSettings.FieldRequiredWaste__c:null);
                                 break;
                             }
                     }
@@ -926,8 +924,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 else
                 {
                     console.log('## this.selectedservicepoint ' + JSON.stringify(this.selectedservicepoint));
-                    var implantCode = this.selectedservicepoint['Impianto SAP'] != null? this.selectedservicepoint['Impianto SAP']:'';
-                    var codeToSearch = this.selectedservicepoint['Codice Punto'] != null? this.selectedservicepoint['Codice Punto']:implantCode;
+                    var implantCode = this.selectedservicepoint['Impianto SAP'] !== null && this.selectedservicepoint['Impianto SAP'] == undefined? this.selectedservicepoint['Impianto SAP']:'';
+                    var codeToSearch = this.selectedservicepoint['Codice Punto'] !== null && this.selectedservicepoint['Codice Punto'] !== undefined? this.selectedservicepoint['Codice Punto']:implantCode;
                     /** Casistica service point esistente su SFDC */
                     getServicePoint({ code: codeToSearch, fields: queryFields.join() }).then(data => {
 
@@ -962,8 +960,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                     recordtype['label'] = 'Punto Ambiente';
                                     recordtype['value'] = this.servicePointRetrievedData['RecordTypeId'];
                                     recordtype['DeveloperName'] = 'HDT_RT_Ambiente';
-                                    this.fieldsDataRaw = (data.FieldWaste__c !== null && data.FieldWaste__c !== undefined ? data.FieldWaste__c:null);
-                                    this.fieldsDataReqRaw = (data.FieldRequiredWaste__c !== null && data.FieldRequiredWaste__c !== undefined ? data.FieldRequiredWaste__c:null);
+                                    this.fieldsDataRaw = (this.customSettings.FieldWaste__c !== null && this.customSettings.FieldWaste__c !== undefined ? this.customSettings.FieldWaste__c:null);
+                                    this.fieldsDataReqRaw = (this.customSettings.FieldRequiredWaste__c !== null && this.customSettings.FieldRequiredWaste__c !== undefined ? this.customSettings.FieldRequiredWaste__c:null);
                                     break;
                             }
                         }
@@ -1776,11 +1774,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     get formTitle() {
         let title = 'Service Point: ';
 
-        if (this.selectedservicepoint != undefined) {
-            if (this.selectedservicepoint['Codice Punto'] != undefined) {
+        if (this.selectedservicepoint !== undefined) {
+            if (this.selectedservicepoint['Codice Punto'] !== undefined) {
                 title += this.selectedservicepoint['Codice Punto'];
             }
-            else if (this.selectedservicepoint['Codice Punto'] == undefined) {
+            else if (this.selectedservicepoint['Codice Punto'] === undefined) {
 
                 let sp = JSON.stringify(this.selectedservicepoint).split(',');
                 sp.forEach(element => {

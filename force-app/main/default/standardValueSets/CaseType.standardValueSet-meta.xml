@@ -17,6 +17,11 @@
 		<label>Allineamento Canone Rai</label>
 	</standardValue>
 	<standardValue>
+		<fullName>Lettura Acqua Avviso al Cliente</fullName>
+		<default>false</default>
+		<label>Lettura Acqua Avviso al Cliente</label>
+	</standardValue>
+	<standardValue>
 		<fullName>Altre Verifiche</fullName>
 		<default>false</default>
 		<label>Altre Verifiche</label>

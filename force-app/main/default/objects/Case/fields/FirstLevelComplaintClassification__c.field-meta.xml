@@ -12,7 +12,7 @@
         <controllingField>ComplaintType__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>Reclamo Scritto</fullName>
                 <default>false</default>
@@ -27,6 +27,11 @@
                 <fullName>Richiesta di informazioni</fullName>
                 <default>false</default>
                 <label>Richiesta di informazioni</label>
+            </value>
+            <value>
+                <fullName>Richiesta di Rettifica di fatturazione</fullName>
+                <default>false</default>
+                <label>Richiesta di Rettifica di fatturazione</label>
             </value>
         </valueSetDefinition>
         <valueSettings>

@@ -3185,6 +3185,13 @@
                     <stringValue>Autolettura da cliente</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Lettura Acqua Avviso al Cliente</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Selezione_Fornitura_Autolettura</targetReference>
             </connector>
