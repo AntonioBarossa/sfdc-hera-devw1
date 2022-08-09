@@ -598,7 +598,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         let servPoint = this.rowToSend;
         let pointCode = servPoint['Codice Punto'];
         let implantCode = servPoint['Impianto SAP'];
-        let codeCallApi = servPoint['Codice Punto'] != null && servPoint['Codice Punto'] != undefined && servPoint['Codice Punto'] != ''?pointCode:implantCode;
+        let codeCallApi = servPoint['Codice Punto'] !== null && servPoint['Codice Punto'] !== undefined && servPoint['Codice Punto'] !== ''?pointCode:!implantCode ? '' : implantCode;
         this.callApi(codeCallApi, 'confirm').then(() => {
             this.preloading = true;
             this.closeModal();
