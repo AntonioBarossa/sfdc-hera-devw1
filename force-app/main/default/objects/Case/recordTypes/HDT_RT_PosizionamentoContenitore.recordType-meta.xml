@@ -13183,6 +13183,10 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
+            <fullName>Posizionamento Contenitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Aggiunta Attacco</fullName>
             <default>false</default>
         </values>

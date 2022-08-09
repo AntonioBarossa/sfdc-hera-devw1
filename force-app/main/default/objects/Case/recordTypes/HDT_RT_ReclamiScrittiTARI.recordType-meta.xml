@@ -7029,6 +7029,10 @@
             <fullName>Richiesta di informazioni</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Richiesta di Rettifica di fatturazione</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>FirstLevelOpinion__c</picklist>
@@ -11050,6 +11054,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Doppia Fatturazione</fullName>
             <default>false</default>
         </values>
@@ -11057,6 +11065,11 @@
             <fullName>Fatturazione</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Impatti Ambientali</fullName>
+            <default>false</default>
+        </values>
+
         <values>
             <fullName>Mercato</fullName>
             <default>false</default>
@@ -11066,11 +11079,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Morosità</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Morosità e sospensione</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Qualità del Servizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Qualità Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Servizio Clienti</fullName>
             <default>false</default>
         </values>
     </picklistValues>
