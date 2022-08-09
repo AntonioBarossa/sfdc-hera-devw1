@@ -2820,7 +2820,7 @@
         <defaultConnectorLabel>Si</defaultConnectorLabel>
         <rules>
             <name>NoSelezioneFornituraReclami</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
@@ -3141,6 +3141,20 @@
                     <stringValue>HDT_RT_ComportamentoVenditori</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_ReclamoDaCittadino</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_PosizionamentoContenitore</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>SelezioneFornituraReclami</targetReference>
             </connector>
@@ -3169,6 +3183,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Autolettura da cliente</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Lettura Acqua Avviso al Cliente</stringValue>
                 </rightValue>
             </conditions>
             <connector>
