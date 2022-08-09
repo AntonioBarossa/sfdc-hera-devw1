@@ -13167,6 +13167,10 @@
 			<default>false</default>
 		</values>
 		<values>
+			<fullName>Posizionamento Contenitore</fullName>
+			<default>false</default>
+		</values>
+		<values>
 			<fullName>Riduz. superficie rifiuti spec promiscui</fullName>
 			<default>false</default>
 		</values>
