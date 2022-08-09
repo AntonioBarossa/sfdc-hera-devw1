@@ -89,6 +89,29 @@
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
+        <name>AssegnaLetturaAvvisoCliente</name>
+        <label>AssegnaLetturaAvvisoCliente</label>
+        <locationX>636</locationX>
+        <locationY>1076</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case_Avviso_Cliente.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Avviso_Cliente.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Record_Lettura_Avviso_Cliente</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_codice_causale_da_switch</name>
         <label>Assign codice causale (da switch)</label>
         <locationX>1150</locationX>
@@ -146,6 +169,21 @@
         </defaultConnector>
         <defaultConnectorLabel>Autolettura da cliente</defaultConnectorLabel>
         <rules>
+            <name>Set_Lettura_Acqua_Avviso_al_Cliente</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Lettura Acqua Avviso al Cliente</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Lettura_Acqua_Avviso_al_Cliente</targetReference>
+            </connector>
+            <label>Lettura Acqua Avviso al Cliente</label>
+        </rules>
+        <rules>
             <name>Set_Autolettura_da_processo</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
@@ -166,28 +204,6 @@
                 <targetReference>Check_Codice_Causale_Autolettura_da_processo</targetReference>
             </connector>
             <label>Autolettura da processo</label>
-        </rules>
-        <rules>
-            <name>Set_Lettura_Acqua_Avviso_al_Cliente</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Case.Type</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Lettura Acqua Avviso al Cliente</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>discard_Rework</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Lettura_Acqua_Avviso_al_Cliente</targetReference>
-            </connector>
-            <label>Lettura Acqua Avviso al Cliente</label>
         </rules>
     </decisions>
     <decisions>
@@ -427,6 +443,43 @@
             <label>KO MDM or SAP</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Pulsante_Premuto_Avviso_Cliente</name>
+        <label>Pulsante Premuto Avviso Cliente</label>
+        <locationX>808</locationX>
+        <locationY>914</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaLetturaAvvisoCliente</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
+        <rules>
+            <name>Conferma_Pratica</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Record_Edit_Avviso_Al_Cliente.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Salva in bozza</label>
+        </rules>
+        <rules>
+            <name>Annulla</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Record_Edit_Avviso_Al_Cliente.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Annullamento</targetReference>
+            </connector>
+            <label>Annulla</label>
+        </rules>
+    </decisions>
     <formulas>
         <description>Calcola il codice venditore per le autoletture, che non possono richiamare arricchimento dati.
 
@@ -590,9 +643,12 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordLookups>
         <name>Get_Case_Avviso_Cliente</name>
         <label>Get Case</label>
-        <locationX>940</locationX>
-        <locationY>711</locationY>
+        <locationX>791</locationX>
+        <locationY>754</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Pulsante_Premuto_Avviso_Cliente</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -859,16 +915,6 @@ TODO: Formula da adeguare in Wave 2.</description>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_Case</name>
-        <label>Update Case</label>
-        <locationX>798</locationX>
-        <locationY>712</locationY>
-        <connector>
-            <targetReference>Get_Case_Avviso_Cliente</targetReference>
-        </connector>
-        <inputReference>Get_Case</inputReference>
-    </recordUpdates>
-    <recordUpdates>
         <name>Update_Case_Phase</name>
         <label>Update Case Phase</label>
         <locationX>2809</locationX>
@@ -891,6 +937,13 @@ TODO: Formula da adeguare in Wave 2.</description>
             </value>
         </inputAssignments>
         <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Record_Lettura_Avviso_Cliente</name>
+        <label>Update Record Lettura Avviso Cliente</label>
+        <locationX>1210</locationX>
+        <locationY>1067</locationY>
+        <inputReference>Get_Case_Avviso_Cliente</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>UpdateCaseForVoltura</name>
@@ -1113,81 +1166,14 @@ TODO: Formula da adeguare in Wave 2.</description>
     <screens>
         <name>Lettura_Acqua_Avviso_al_Cliente</name>
         <label>Lettura Acqua Avviso al Cliente</label>
-        <locationX>802</locationX>
-        <locationY>565</locationY>
+        <locationX>805</locationX>
+        <locationY>576</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Update_Case</targetReference>
+            <targetReference>Get_Case_Avviso_Cliente</targetReference>
         </connector>
-        <fields>
-            <name>Phone_Avviso_al_cliente</name>
-            <extensionName>flowruntime:phone</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Recapito Telefonico</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>readonly</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>value</name>
-                <value>
-                    <elementReference>Get_Case.Contact.MobilePhone</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>email_Avviso_Cliente</name>
-            <extensionName>flowruntime:email</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>placeholder</name>
-                <value>
-                    <stringValue> </stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>value</name>
-                <value>
-                    <elementReference>Get_Case.Account.PrimaryEmail__c</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>Motivazione</name>
-            <choiceReferences>Delibera_2018</choiceReferences>
-            <choiceReferences>Servizio_Avviso_Sms_mail</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Motivazione</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
         <fields>
             <name>Record_Edit_Avviso_Al_Cliente</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
@@ -1210,12 +1196,78 @@ TODO: Formula da adeguare in Wave 2.</description>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Lettura Acqua Avviso al Cliente</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextStep</name>
+                <value>
+                    <stringValue>FINISH</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <stringValue>0121X000001j2h6QAA</stringValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Spinner</name>
