@@ -58,6 +58,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             Integer count = 0;
             List<Integer> indexOfObjectToRemove = new List<Integer>();
             Map<Integer,Integer> indexOffieldToRemove = new Map<Integer,Integer>();
+            Map<String, HDT_CodificaAgevolazione__mdt> codificaAgevolazioni = 'AgevolazioneContestuale'.equalsIgnoreCase(method)? HDT_CodificaAgevolazione__mdt.getAll() : new Map<String, HDT_CodificaAgevolazione__mdt>();
             /**Rimozione OrderItems non necessaria per Analisi consumi */
             String vasType = (String)obj.get('VASType__c');
             if(String.isBlank(vasType) || !vasType.equalsIgnoreCase('VAS Fatturabili'))
@@ -77,6 +78,9 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                     indexOffieldToRemove.put(count,k);
                                 }
                             }
+                            if(f.name.equalsIgnoreCase('AGEVTARI_CODE') && STRING.isNotBlank(f.value) && STRING.isNotBlank(codificaAgevolazioni.get(f.value)?.HerokuTag__c)){
+                                f.name = codificaAgevolazioni.get(f.value)?.HerokuTag__c;
+                            }
                         }
                         if(!find){
                             indexOfObjectToRemove.add(count);
@@ -87,8 +91,10 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                 // for(integer i : indexOffieldToRemove.keyset()){
                 //     multirequestObj.requests[0].objects[i].fields.remove(indexOffieldToRemove.get(i));
                 // }
-                for (integer i = indexOfObjectToRemove.size() - 1 ; i >= 0 ; i--) {
-                    multirequestObj.requests[0].objects.remove(indexOfObjectToRemove[i]);
+                if(!'AgevolazioneContestuale'.equalsIgnoreCase(method)){//Agevolazione deve contenere tutti gli OrderItems
+                    for (integer i = indexOfObjectToRemove.size() - 1 ; i >= 0 ; i--) {
+                        multirequestObj.requests[0].objects.remove(indexOfObjectToRemove[i]);
+                    }
                 }
             }
         
