@@ -375,6 +375,25 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         this.reimbursmentLogic();
         //DisconnectableLogic
         this.disconnectableLogic();
+        //Variazioni customLogic
+        this.variationsLogic();     //MODIFICA 21/07/22 marco.arci@webresults.it Logica form compilazione Variazioni
+    }
+
+    variationsLogic(){
+        //Sottoprocessi di varaiazioni
+        if(['AGEVOLAZIONE','COMPONENTI RESIDENTI','COMPONENTI NON RESIDENTI','COABITAZIONI','DATI CATASTALI',
+            'ISTAT/RONCHI','SUPERFICIE','DOMICILIATO IN NUCLEO RESIDENTE','RID. AGEV. DOPO ACCERTAMENTO'].includes(this.processType.toUpperCase())){
+            let RequestSource = this.selector('RequestSource__c');
+            let SubscriberType = this.selector('SubscriberType__c');
+            if(RequestSource.value.toUpperCase() != 'DA CONTRIBUENTE'){
+                SubscriberType.required = false;
+                SubscriberType.value = null;
+                SubscriberType.disabled = true;
+            } else {
+                SubscriberType.required = true;
+                SubscriberType.disabled = false;
+            }
+        }
     }
 
     complaintsLogic(){
@@ -387,10 +406,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             console.log('#Valore quinto livello -->' +fifthLevel.value)
             if(fifthLevel != null){
                 let soldBy = this.selector('SoldBy__c');
-                if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
-                    soldBy.disabled = false;
-                }else{
-                    soldBy.disabled = true;
+                if(soldBy != null){
+                    if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
+                        soldBy.disabled = false;
+                    }else{
+                        soldBy.disabled = true;
+                    }
                 }
             }
         } else if(!(Object.keys(channel).length === 0)){
@@ -419,6 +440,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         console.log('Inside Condition Installments');
                         let payType = this.selector('PaymentType__c');
                         let workStatus = this.selector('WorkStatus__c');
+                        let refundableEscape = this.selector('RefundableEscape__c');
                         console.log('#Valore payType -> ' + payType.value);
                         if(reason.value.localeCompare('Assistenza Sociale') === 0 && payType != null){
                             payType.disabled = false;
@@ -428,6 +450,9 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         }else if(reason.value.localeCompare('Fattura SD') === 0 && workStatus != null){
                             workStatus.disabled = false;
                             workStatus.required = true;
+                        }else if(reason.value.localeCompare('Bolletta Fuga H2O') === 0 && refundableEscape != null){
+                            refundableEscape.disabled = false;
+                            refundableEscape.required = false;
                         } 
                         else {
                             payType.disabled = true;

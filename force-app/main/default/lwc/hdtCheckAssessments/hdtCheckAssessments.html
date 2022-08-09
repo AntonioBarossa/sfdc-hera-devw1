@@ -1,0 +1,25 @@
+<!--
+  @description       : 
+  @author            : Giacinto Florio
+  @group             : 
+  @last modified on  : 15-06-2022
+  @last modified by  : Giacinto Florio
+-->
+<template>
+
+        <div style="width: auto;">
+            <template if:true={data}>
+                <lightning-datatable
+                                    key-field="id"
+                                    columns={columns}
+                                    data={data}
+                                    hide-checkbox-column
+                                    default-sort-direction={defaultSortDirection}
+                                    sorted-direction={sortDirection}
+                                    sorted-by={sortedBy}
+                                    onsort={onHandleSort}>
+                </lightning-datatable>
+            </template>
+        </div>
+
+</template>

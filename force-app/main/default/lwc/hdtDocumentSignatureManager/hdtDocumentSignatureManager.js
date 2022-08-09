@@ -4,6 +4,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import getSignSendMode from '@salesforce/apex/HDT_LC_DocumentSignatureManager.getSignSendMode';
 import handleContactPoint from '@salesforce/apex/HDT_LC_DocumentSignatureManager.handleContactPoint';
+import TraderWithdrawalDate__c from '@salesforce/schema/Order.TraderWithdrawalDate__c';
 const sourceWithDefault = ['Agenzie','Agenzie SME','Business Agent'];
 const signModeAgenzie = 'Contratto già firmato';
 const sendModeAgenzie = 'Posta Cartacea';
@@ -408,11 +409,14 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
         console.log('### ' +this.returnWrapper.email);
         console.log('### ' +this.returnWrapper.phone);
         console.log('### ' +this.returnWrapper.contactId);
-        if(this.returnWrapper.contactId != '' && this.returnWrapper.contactId != undefined){
+        console.log('### ' +this.returnWrapper.leadId);
+        if(this.returnWrapper.contactId !== '' && this.returnWrapper.contactId !== undefined && this.returnWrapper.leadId !== undefined && this.returnWrapper.leadId !== null){
+            let contactId = this.returnWrapper.leadId !== undefined && this.returnWrapper.leadId !== '' ? this.returnWrapper.leadId : this.returnWrapper.contactId;
+            console.log('### contactId' + contactId); 
             handleContactPoint({
                 email: this.returnWrapper.email,
                 phone: this.returnWrapper.phone,
-                contactId:this.returnWrapper.contactId,
+                contactId:contactId,
                 mode:'query'
             }).then(result => {
                 this.contactPointInfo = JSON.parse(result);
@@ -438,11 +442,12 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
         if(this.contactPointInfo.phone === 'KO'){
             phone = this.returnWrapper.phone;
         }
-        
+        let contactId = this.returnWrapper.leadId !== undefined && this.returnWrapper.leadId !== '' ? this.returnWrapper.leadId : this.returnWrapper.contactId;
+        console.log('### contactId' + contactId); 
         handleContactPoint({
             email: email,
             phone: phone,
-            contactId:this.returnWrapper.contactId,
+            contactId:contactId,
             mode:'insert'
         }).then(result => {
             console.log('result' + result);

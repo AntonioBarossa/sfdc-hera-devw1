@@ -92,6 +92,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1100-ACQUA --- Non definito ---</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
             <valueName>1101-Domestico</valueName>
         </valueSettings>
         <valueSettings>
@@ -181,10 +185,6 @@
         <valueSettings>
             <controllingFieldValue>Acqua</controllingFieldValue>
             <valueName>1123-Prel. pozzo priv. no fatt</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Acqua</controllingFieldValue>
-            <valueName>1100-ACQUA --- Non definito ---</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Ambiente</controllingFieldValue>

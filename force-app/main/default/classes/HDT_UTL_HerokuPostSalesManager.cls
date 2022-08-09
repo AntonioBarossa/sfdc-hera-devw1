@@ -120,7 +120,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             phase = 'Comunicazione verso Heroku KO';
             errorMessage = 'Errore nella risposta da Heroku';
         }
-        if(currentCase.Phase__c  == 'Da Inviare' 
+        if(currentCase.Phase__c  == 'Da Inviare'
+        || currentCase.Phase__c  == 'Inviata a SAP'
         || currentCase.Phase__c == 'Preventivo accettato' 
         || currentCase.Phase__c == 'Esito OK da SAP' // per le autoletture da cliente.
         || currentCase.Phase__c == 'Comunicazione verso Heroku KO'

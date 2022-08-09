@@ -7,14 +7,14 @@
 public inherited sharing class HDT_QR_ServicePoint {
 	
 	private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
-	String fieldSp =  'Id, Account__c, Account__r.Name, CommoditySector__c, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__c, Distributor__r.Name, RecordType.Name, ImplantType__c, ImplantTypeTemp__c, MeterStatus__c, SupplyPlace__c';
+	String fieldSp =  'Id, Account__c, Account__r.Name, CommoditySector__c, ServicePointCode__c, SAPImplantCode__c,MeterSN__c, SupplyAddress__c, Distributor__c, Distributor__r.Name, RecordType.Name, ImplantType__c, ImplantTypeTemp__c, MeterStatus__c, SupplyPlace__c';
 	/*
 	 * Query for Getting All Account Service Points
 	 */
 	public List<ServicePoint__c> getAccountServicePoints(String accountid) {
-		contractSrv.checkReadAccess('Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__c, Distributor__r.Name,recordType.Name,');
+		contractSrv.checkReadAccess('Id, Account__c,Account__r.Name, ServicePointCode__c,SAPImplantCode__c, MeterSN__c, SupplyAddress__c, Distributor__c, Distributor__r.Name,recordType.Name,');
 		List<ServicePoint__c> listSp = new List<ServicePoint__c>();
-		return listSp= [SELECT Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__c, Distributor__r.Name,recordType.Name,MeterStatus__c,CommoditySector__c,ImplantType__c,ImplantTypeTemp__c FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
+		return listSp= [SELECT Id, Account__c,Account__r.Name, ServicePointCode__c,SAPImplantCode__c, MeterSN__c, SupplyAddress__c, Distributor__c, Distributor__r.Name,recordType.Name,MeterStatus__c,CommoditySector__c,ImplantType__c,ImplantTypeTemp__c FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
 	}
 	
 	/**
@@ -82,6 +82,18 @@ public inherited sharing class HDT_QR_ServicePoint {
 	public List<ServicePoint__c> getRecordByCode(String code, String fields) {
 		contractSrv.checkReadAccess(fields);
         List<ServicePoint__c> servicePoints = Database.query('SELECT '+ String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE ServicePointCode__c = :code WITH SECURITY_ENFORCED LIMIT 1');
+        return servicePoints;
+    }
+
+	/**
+	 * @description getRecordByImplantCode
+	 * @param implantCode
+	 * @param fields
+	 * @return List<ServicePoint__c>
+	 */
+	public List<ServicePoint__c> getRecordByImplantCode(String implantCode, String fields) {
+		contractSrv.checkReadAccess(fields);
+        List<ServicePoint__c> servicePoints = Database.query('SELECT '+ String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE SAPImplantCode__c = :implantCode WITH SECURITY_ENFORCED LIMIT 1');
         return servicePoints;
     }
 
@@ -177,6 +189,20 @@ public inherited sharing class HDT_QR_ServicePoint {
 		}		
 		return servicePoints;
 	}
+
+	/** 
+	 * @description Query for Address
+	 * @param address
+	 * @param fields
+	 * @return List<ServicePoint__c>
+	 */
+	@SuppressWarnings('PMD.UnusedLocalVariable')
+	public List<ServicePoint__c> getServicePointsByAddress(String address, String fields) {
+		contractSrv.checkReadAccess(fields);
+		String stringAddress = '%' + address + '%';
+		List<ServicePoint__c> servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) +' FROM ServicePoint__c WHERE CommoditySector__c = \'Ambiente\' AND ServicePointCode__c != null AND SupplyAddress__c LIKE :stringAddress LIMIT 50');
+		return servicePoints;
+    }
     
     /**
 	 * @description Query for POD
@@ -189,6 +215,20 @@ public inherited sharing class HDT_QR_ServicePoint {
 		contractSrv.checkReadAccess(fields);
 		String stringCode = code.trim();
 		List<ServicePoint__c> servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE ServicePointCode__c = :stringCode ');
+		return servicePoints;
+	}
+
+	/**
+	 * @description Query for POD
+	 * @param code
+	 * @param fields
+	 * @return List<ServicePoint__c>
+	 */
+	@SuppressWarnings('PMD.UnusedLocalVariable')
+	public List<ServicePoint__c> getServicePointsByCodeWater(String code, String fields) {
+		contractSrv.checkReadAccess(fields);
+		String stringCode = code.trim();
+		List<ServicePoint__c> servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE CommoditySector__c = \'Acqua\' AND ServicePointCode__c = :stringCode ');
 		return servicePoints;
 	}
 
