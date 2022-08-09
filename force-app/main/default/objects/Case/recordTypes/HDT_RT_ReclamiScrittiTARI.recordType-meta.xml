@@ -7022,13 +7022,13 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Rettifica Doppia Fatturazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Richiesta di informazioni</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Richiesta di Rettifica di fatturazione</fullName>
+			<default>false</default>
+		</values>
     </picklistValues>
     <picklistValues>
         <picklist>FirstLevelOpinion__c</picklist>
@@ -11021,6 +11021,10 @@
             <fullName>Fatturazione</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Impatti Ambientali</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Mercato</fullName>
             <default>false</default>
@@ -11029,6 +11033,10 @@
             <fullName>Misura</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Morosità</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Morosità e sospensione</fullName>
             <default>false</default>
@@ -11037,6 +11045,14 @@
             <fullName>Qualità Commerciale</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Qualità del Servizio</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Servizio Clienti</fullName>
+			<default>false</default>
+		</values>
     </picklistValues>
     <picklistValues>
         <picklist>SecondLevelOpinion__c</picklist>
@@ -13019,10 +13035,26 @@
             <fullName>Altro</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Arenile</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Attivazione/Cessazione</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Autolettura %28uso della%29</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Avviso/Bolletta</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Calcolo</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Cambio fornitore</fullName>
             <default>false</default>
@@ -13031,6 +13063,10 @@
             <fullName>Cambio misuratore</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Centri di Raccolta</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Cessazioni</fullName>
             <default>false</default>
@@ -13047,14 +13083,26 @@
             <fullName>Consumi stimati errati</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Contestazioni</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Continuità</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Contratto</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Doppia Fatturazione</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Emissioni</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Erogazioni</fullName>
             <default>false</default>
@@ -13063,6 +13111,10 @@
             <fullName>Fotovoltaico</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Impatto visivo</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Indennizzi</fullName>
             <default>false</default>
@@ -13071,6 +13123,14 @@
             <fullName>Mancate letture</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Materiali/sostanze</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Modalità di pagamento</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Modifiche unilaterali</fullName>
             <default>false</default>
@@ -13087,6 +13147,10 @@
             <fullName>Pagamenti e Rimborsi</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Periodicità</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Periodicità e fattura di chiusura</fullName>
             <default>false</default>
@@ -13103,6 +13167,14 @@
             <fullName>Privacy</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Problemi di fatturazione</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Recapito</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Recesso</fullName>
             <default>false</default>
@@ -13111,18 +13183,46 @@
             <fullName>Ricalcoli</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Richiamo animali/insetti</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Servizio clienti %28call center%2C sportelli%2C altri servizi%29</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Servizi a chiamata</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Servizi di raccolta</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Sicurezza</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Solleciti</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Sospensione e riattivazione</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Spazzamento</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Subentro/Voltura</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Traffico/cantieri</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Validazioni</fullName>
             <default>false</default>
@@ -13139,6 +13239,10 @@
             <fullName>Volture e subentri</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Web</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</fullName>
             <default>false</default>

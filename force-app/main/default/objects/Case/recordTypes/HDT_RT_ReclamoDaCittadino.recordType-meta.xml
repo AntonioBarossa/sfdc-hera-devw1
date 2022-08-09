@@ -7022,10 +7022,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Rettifica Doppia Fatturazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Richiesta di informazioni</fullName>
             <default>false</default>
         </values>
@@ -11022,6 +11018,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Impatti Ambientali</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Mercato</fullName>
             <default>false</default>
         </values>
@@ -11035,6 +11035,14 @@
         </values>
         <values>
             <fullName>Qualità Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Qualità del Servizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Servizio Clienti</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -13020,6 +13028,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Arenile</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Autolettura %28uso della%29</fullName>
             <default>false</default>
         </values>
@@ -13029,6 +13041,10 @@
         </values>
         <values>
             <fullName>Cambio misuratore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centri di Raccolta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13056,6 +13072,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Emissioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Erogazioni</fullName>
             <default>false</default>
         </values>
@@ -13064,11 +13084,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Impatto visivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Indennizzi</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Mancate letture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Materiali/sostanze</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13112,6 +13140,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Richiamo animali/insetti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Servizi a chiamata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Servizi di raccolta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Servizio clienti %28call center%2C sportelli%2C altri servizi%29</fullName>
             <default>false</default>
         </values>
@@ -13121,6 +13161,14 @@
         </values>
         <values>
             <fullName>Sospensione e riattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spazzamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Traffico/cantieri</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13137,6 +13185,10 @@
         </values>
         <values>
             <fullName>Volture e subentri</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13164,6 +13216,10 @@
 		</values>
 		<values>
 			<fullName>Pagamento Unico Annuale TARI</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Reclamo Scritto Da Cittadino</fullName>
 			<default>false</default>
 		</values>
 		<values>

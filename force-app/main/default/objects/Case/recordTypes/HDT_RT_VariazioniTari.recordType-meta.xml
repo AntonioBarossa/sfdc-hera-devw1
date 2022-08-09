@@ -11952,10 +11952,42 @@
     </picklistValues>
     <picklistValues>
         <picklist>Subprocess__c</picklist>
+		<values>
+			<fullName>Agevolazione</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Dati catastali</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Domiciliato in nucleo residente</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>DOM_Coabitazioni</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DOM_Componenti non residenti</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DOM_Componenti residenti</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>NON DOM_ISTAT/Ronchi</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Rid. Agev. Dopo Accertamento</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Superficie</fullName>
+			<default>false</default>
+		</values>
     </picklistValues>
     <picklistValues>
         <picklist>SubscriberType__c</picklist>
