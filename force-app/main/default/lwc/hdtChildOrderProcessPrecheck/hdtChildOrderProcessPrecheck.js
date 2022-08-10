@@ -60,7 +60,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     }
 
     get isCheckAssessmentsVisible(){
-        return this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente' ? true : false;
+        return ["HDT_RT_SubentroAmbiente", "HDT_RT_ModificaTariffaRimozione","HDT_RT_CambioTariffa","HDT_RT_AttivazioneAmbiente", "HDT_RT_AgevolazioniAmbiente"].includes(this.order.RecordType.DeveloperName);
     }
 
     get disabledNext(){
@@ -856,7 +856,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
     @api
     async executeCreditCheckPoll(){
-        if(!this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente'){
+        if(!this.isCheckAssessmentsVisible){
             console.log('hdtChildOrderProcessPrecheck - executeCreditCheckPoll - START');
 
             const setAsyncTimeout = (cb, timeout = 0) => new Promise(resolve => {
