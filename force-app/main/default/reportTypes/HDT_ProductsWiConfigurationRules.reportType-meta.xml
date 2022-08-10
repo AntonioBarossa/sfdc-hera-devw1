@@ -993,11 +993,6 @@
             <field>ExternalId__c</field>
             <table>Product2.SBQQ__ConfigurationRules__r</table>
         </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Cloned__c</field>
-            <table>Product2.SBQQ__ConfigurationRules__r</table>
-        </columns>
         <masterLabel>Configuration Rules</masterLabel>
     </sections>
 </ReportType>
