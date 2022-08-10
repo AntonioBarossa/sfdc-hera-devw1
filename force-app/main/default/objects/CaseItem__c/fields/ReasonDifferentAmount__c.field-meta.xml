@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Reason__c</fullName>
+    <fullName>ReasonDifferentAmount__c</fullName>
     <externalId>false</externalId>
     <label>Motivo differenza importi</label>
     <required>false</required>
@@ -11,14 +11,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>1</fullName>
+                <fullName>Cliente paga un acconto</fullName>
                 <default>false</default>
-                <label>1</label>
+                <label>Cliente paga un acconto</label>
             </value>
             <value>
-                <fullName>2</fullName>
+                <fullName>Incongruenza sui sistemi</fullName>
                 <default>false</default>
-                <label>2</label>
+                <label>Incongruenza sui sistemi</label>
             </value>
         </valueSetDefinition>
     </valueSet>
