@@ -13147,10 +13147,6 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Posizionamento Contenitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Aggiunta Attacco</fullName>
             <default>false</default>
         </values>
@@ -13440,6 +13436,10 @@
         </values>
         <values>
             <fullName>Piano Rateizzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Posizionamento Contenitore</fullName>
             <default>false</default>
         </values>
         <values>

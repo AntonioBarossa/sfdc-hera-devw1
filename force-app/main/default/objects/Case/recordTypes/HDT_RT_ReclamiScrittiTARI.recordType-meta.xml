@@ -11054,10 +11054,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Contratti</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Doppia Fatturazione</fullName>
             <default>false</default>
         </values>
