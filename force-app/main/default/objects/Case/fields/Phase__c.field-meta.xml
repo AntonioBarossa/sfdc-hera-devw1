@@ -515,6 +515,7 @@
             <value>
                 <fullName>In attesa lancio EngageOne</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>In attesa lancio EngageOne</label>
             </value>
             <value>

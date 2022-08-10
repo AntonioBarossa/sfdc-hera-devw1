@@ -64,15 +64,15 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+<!--    <picklistValues>
         <picklist>UnitType__c</picklist>
         <values>
-            <fullName>1</fullName>
+            <fullName>F</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>2</fullName>
+            <fullName>T</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues> -->
 </RecordType>
