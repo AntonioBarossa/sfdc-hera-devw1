@@ -377,13 +377,11 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 name: 'indirizzoFornitura',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
-                || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' || this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
+                processVisibility : ['HDT_RT_ScontiBonus' , 'HDT_RT_Subentro', 'HDT_RT_Attivazione' , 'HDT_RT_AttivazioneConModifica',
+                        'HDT_RT_SwitchIn' , 'HDT_RT_CambioOfferta', 'HDT_RT_CambioUso' , 'HDT_RT_ConnessioneConAttivazione',
+                        'HDT_RT_TemporaneaNuovaAtt' , 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch' , 'HDT_RT_SubentroAmbiente',
+                        'HDT_RT_AgevolazioniAmbiente', "HDT_RT_CambioTariffa", "HDT_RT_AttivazioneAmbiente", 
+                        "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName),
                 data: [
                     new fieldData('Comune','SupplyCity__c', this.typeVisibility('both'), false, true, '',''),                  
                     new fieldData('Via','SupplyStreetName__c', this.typeVisibility('both'), false, true, '',''),                  
@@ -402,12 +400,10 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 name: 'indirizzoResidenzaOsedeLegale',
                 objectApiName: 'Account',
                 recordId: this.order.AccountId,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente' || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
+                processVisibility: ['HDT_RT_Subentro' ,'HDT_RT_Attivazione'  ,'HDT_RT_AttivazioneConModifica' ,'HDT_RT_SwitchIn',
+                    'HDT_RT_CambioUso' ,'HDT_RT_ConnessioneConAttivazione' , 'HDT_RT_TemporaneaNuovaAtt' ,'HDT_RT_CambioOfferta',
+                    'HDT_RT_Voltura' ,'HDT_RT_VolturaConSwitch' ,'HDT_RT_SubentroAmbiente' ,'HDT_RT_AgevolazioniAmbiente',
+                    "HDT_RT_CambioTariffa", "HDT_RT_AttivazioneAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName),
                 data: [
                     new fieldData('Comune','BillingCity', this.typeVisibility('both'), false, false, '',''),  
                     new fieldData('Via','BillingStreetName__c', this.typeVisibility('both'), false, false, '',''),  
@@ -720,13 +716,11 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 name: 'metodoPagamento',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'|| this.order.RecordType.DeveloperName === 'HDT_RT_VAS' 
-                            || this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
-                            || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
-                            || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso'
-                            || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
-                            || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'
-                            || this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente' || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
+                processVisibility: ['HDT_RT_Subentro', 'HDT_RT_VAS'   , 'HDT_RT_ScontiBonus' , 'HDT_RT_Attivazione' , 
+                    'HDT_RT_AttivazioneConModifica' , 'HDT_RT_SwitchIn' , 'HDT_RT_CambioOfferta' , 'HDT_RT_CambioUso' , 
+                    'HDT_RT_ConnessioneConAttivazione' , 'HDT_RT_TemporaneaNuovaAtt' , 'HDT_RT_Voltura' , 'HDT_RT_VolturaConSwitch',
+                    'HDT_RT_SubentroAmbiente' , 'HDT_RT_AgevolazioniAmbiente', "HDT_RT_CambioTariffa",
+                    "HDT_RT_AttivazioneAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName),
                 data: [
                     new fieldData('Modalità di Pagamento','PaymentMode__c',this.typeVisibility('both'), false, false, '',''),
                     new fieldData('IBAN Estero','IbanIsForeign__c',this.typeVisibility('both'), false, false, '',''),
@@ -773,13 +767,12 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 name: 'metodoFirmaCanaleInvio',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS' || (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
-                || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' || this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente'),
+                processVisibility: [
+                    "HDT_RT_VAS", "HDT_RT_Subentro", "HDT_RT_Attivazione", "HDT_RT_AttivazioneConModifica",
+                    "HDT_RT_SwitchIn", "HDT_RT_TemporaneaNuovaAtt", "HDT_RT_CambioUso", "HDT_RT_ConnessioneConAttivazione",
+                    "HDT_RT_CambioOfferta", "HDT_RT_Voltura", "HDT_RT_VolturaConSwitch", "HDT_RT_SubentroAmbiente",
+                    "HDT_RT_AgevolazioniAmbiente", "HDT_RT_CambioTariffa",
+                    "HDT_RT_AttivazioneAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName),
                 data: [
                     new fieldData('Metodo firma','SignatureMethod__c',this.typeVisibility('both'), true, false, '',''),
                     new fieldData('Invio doc','DocSendingMethod__c',this.typeVisibility('both'), true, false, '','')
