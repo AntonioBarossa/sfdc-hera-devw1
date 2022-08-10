@@ -64,7 +64,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+  <!--  <picklistValues>
         <picklist>UnitType__c</picklist>
         <values>
             <fullName>F</fullName> 
@@ -74,5 +74,5 @@
             <fullName>T</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues> -->
 </RecordType>
