@@ -80,7 +80,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                     new fieldData('Codice ATECO','AtecoCode__c', this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', this.order.RateCategory__c=='TATND00001', true,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
                     new fieldData('Codice Ronchi','RonchiCode__c', this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', this.order.RateCategory__c=='TATND00001', true,'',' '),
                     new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', this.order.RateCategory__c=='TATND00001', true,'',''),
-                    new fieldData('Contratto Precedente','ContractReference__c', this.typeVisibility('both'), true, true,'',''),
+                    new fieldData('Contratto Precedente','ContractReference__c', ["HDT_RT_CambioTariffa", "HDT_RT_AgevolazioniAmbiente"].includes(this.order.RecordType.DeveloperName), true, true,'',''),
                     new fieldData('Documentazione consegnata da contribuente','DeliveredDocumentation__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Provenienza richiesta','RequestSource__c', this.typeVisibility('both'), true, false,'','Da contribuente'),
                     new fieldData('Importo mancato dovuto','MissingDueAmount__c', this.typeVisibility('both'), false, false,'',''),
@@ -88,7 +88,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                     new fieldData('Data dichiarazione','DeclarationDate__c', this.typeVisibility('both'), true, false,'', getFormattedDate(new Date())),
                     new fieldData('Data decorrenza','EffectiveDate__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Integrazione alla Dichiarazione (da Gestore)','OperatorDeclarationInfos__c', this.typeVisibility('both'), false, false,'',''),
-                    new fieldData('integrazione Riduzione Agevolazione Esclusione','IntegrationExclusion__c', this.typeVisibility('both'), false, true,'',''),
+                    new fieldData('integrazione Riduzione Agevolazione Esclusione','IntegrationExclusion__c', ["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), false, true,'',''),
                     new fieldData('Allegati obbligatori','MandatoryAttachments__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Allegati aggiuntivi','AdditionalAttachments__c', this.typeVisibility('both'), false, false,'','', function(){console.log("dynamic on change")}),
                     new fieldData('Blocca al calcolo','BlockOnComputation__c', this.order.Account.CompanyOwner__c!=="MMS", false, true,'',''),
@@ -96,7 +96,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                     new fieldData('Inizio periodo ravvedibile','OnerousReviewableStartDate__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Inizio periodo non ravvedibile','OnerousUnreviewableStartDate__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Rifiuta supporto al calcolo del ravvedimento operoso','DeclineComputationSupport__c', this.order.Account.CompanyOwner__c!=="MMS", false, false,'',''),
-                    new fieldData('Superficie Mq','Surface__c', this.typeVisibility('both'), false, false,'','', 
+                    new fieldData('Superficie Mq','Surface__c', ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente"].includes(this.order.RecordType.DeveloperName), false, false,'','', 
                         function(event){
                             if(this.order.RateCategory__c==='TATUDNR001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente' && surf){
                                 const fam = this.template.querySelector("[data-id='FamilyNumber__c']");
@@ -147,7 +147,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 label: 'Dati Catastali',
                 name: 'datiCatastali',
                 hasDatiCatastali: true,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente',
+                processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa"].includes(this.order.RecordType.DeveloperName),
                 data:[
                 ]
             },
@@ -157,8 +157,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 name: 'fatturazione',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente'
-                                    || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
+                processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente'].includes(this.order.RecordType.DeveloperName),
                 data: [
                     new fieldData('Modalità Invio Bolletta', 'BillSendMode__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('Email Invio Bolletta', 'InvoiceEmailAddress__c',this.typeVisibility('both'),false,true,'',''),

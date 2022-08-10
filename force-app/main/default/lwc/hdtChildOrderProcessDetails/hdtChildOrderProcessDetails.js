@@ -242,7 +242,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     break;
                 case 'gas':
                     result = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
-                    break
+                    break;
+                case 'tari':
+                    result = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Ambiente';
+                    break;
                 default:
                     result = true;
                     break;
