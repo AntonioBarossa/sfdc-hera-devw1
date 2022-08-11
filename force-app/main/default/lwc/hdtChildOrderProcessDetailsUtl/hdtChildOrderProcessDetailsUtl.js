@@ -48,7 +48,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 hasVerificaRavv: this.order.Account.CompanyOwner__c!=="MMS",
                 hasAllegatiObbligatori: true,
                 diffObjApi: 'Sale',
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente' || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
+                processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente'].includes(this.order.RecordType.DeveloperName),
                 nextActions : () => 
                     {
                         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
