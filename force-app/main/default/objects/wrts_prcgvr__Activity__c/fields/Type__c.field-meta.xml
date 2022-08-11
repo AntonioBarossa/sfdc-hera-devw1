@@ -551,6 +551,11 @@
                 <label>Richiesta informazioni appuntamento</label>
             </value>
             <value>
+                <fullName>Richiesta Parere</fullName>
+                <default>false</default>
+                <label>Richiesta Parere</label>
+            </value>
+            <value>
                 <fullName>Ripresa formativa CC</fullName>
                 <default>false</default>
                 <label>Ripresa formativa CC</label>
