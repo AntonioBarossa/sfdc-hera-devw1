@@ -3732,6 +3732,16 @@
         <field>AtecoMatrix__c.IstatCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>AtecoMatrix__c.RonchiCode__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>AtecoMatrix__c.RonchiSubcategory__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>AtecoMatrix__c.SubType__c</field>
