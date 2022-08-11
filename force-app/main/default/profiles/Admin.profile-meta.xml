@@ -8240,11 +8240,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.AbnormalReading__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.CaseSource__c</field>
         <readable>true</readable>
     </fieldPermissions>
