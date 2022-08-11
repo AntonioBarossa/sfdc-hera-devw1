@@ -5361,6 +5361,11 @@
         <field>CampaignMemberLeadAssigment__c.ProcessingType__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.AbnormalReading__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Case.AdditionalAttachments__c</field>
@@ -5688,6 +5693,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.AnnualUnicInstallment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.ApplicationInterests__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5918,6 +5928,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.CaseSource__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.CategoryCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6034,6 +6049,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Commodity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.CommunicationType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
