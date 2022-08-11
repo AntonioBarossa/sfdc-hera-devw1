@@ -2833,10 +2833,6 @@
             <fullName>Protocollo - Preventivi</fullName>
             <default>false</default>
         </values>
-        <!--<values>
-            <fullName>Protocollo - Reclami</fullName>
-            <default>false</default>
-        </values>-->
         <values>
             <fullName>Protocollo - VAS</fullName>
             <default>false</default>
@@ -2851,6 +2847,10 @@
         </values>
         <values>
             <fullName>Protocollo - Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
             <default>false</default>
         </values>
     </picklistValues>
