@@ -8268,6 +8268,16 @@
 		<field>CityReimbursmentType__c.ReimbursmentType__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CityTechnicalData__c.KnowledgeArticleLink__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CityTechnicalData__c.CompanyOwner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>CityTechnicalData__c.AttachmentString__c</field>
