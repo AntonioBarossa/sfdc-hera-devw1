@@ -5854,6 +5854,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.BlockOnComputation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.BlockType__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6624,6 +6629,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.FacilityType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Fax__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6968,6 +6978,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.MandatoryAttachments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Case.MarketTypeCode__c</field>
         <readable>true</readable>
@@ -7065,6 +7080,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.OfficeSubjectCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.OnerousReviewableStartDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.OnerousUnreviewableStartDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7729,6 +7754,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.SupplyAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.SupplyCityCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7880,6 +7910,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.TerminationDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.TerminationReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
