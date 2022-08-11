@@ -100,7 +100,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                         function(event){
                             if(this.order.RateCategory__c==='TATUDNR001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente' && surf){
                                 const fam = this.template.querySelector("[data-id='FamilyNumber__c']");
-                                let value = cities[order.ServicePoint__r.SupplyCity__c]?.getResident(event.target.value);
+                                let value = cities[order.ServicePoint__r.SupplyCity__c?.toUpperCase()]?.getResident(event.target.value);
                                 if(value && fam)    fam.value = value;
                             }
                     })
