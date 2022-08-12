@@ -388,6 +388,12 @@
                 <label>Esito KO</label>
             </value>
             <value>
+                <fullName>Esito KO da DBO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Esito KO da DBO</label>
+            </value>
+            <value>
                 <fullName>Esito KO da DL</fullName>
                 <default>false</default>
                 <label>Esito KO da DL</label>
@@ -953,6 +959,11 @@
                 <fullName>Validazione OK DL simulata</fullName>
                 <default>false</default>
                 <label>Validazione OK DL simulata</label>
+            </value>
+            <value>
+                <fullName>Verifica in corso</fullName>
+                <default>false</default>
+                <label>Verifica in corso</label>
             </value>
             <value>
                 <fullName>Verifica in laboratorio</fullName>
