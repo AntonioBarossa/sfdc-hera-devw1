@@ -194,6 +194,9 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
                                         Market__c,
                                         SupplyType__c,
                                         AnnualConsumption__c,
+                                        WithdrawalClass__c,
+                                        EnergyService__c,
+                                        UseCategory__c,
                                         Caliber__c 
                                 FROM Order 
                                 WHERE ParentOrder__c != null];
