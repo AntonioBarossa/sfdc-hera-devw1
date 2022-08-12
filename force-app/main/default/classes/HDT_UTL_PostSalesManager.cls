@@ -496,4 +496,15 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         HDT_UTL_DatabaseService.updateSobject(currentCase);
     }
 
+    public void closeCaseLetturaInseritaInSap(SObject inputCase){
+
+        Case currentCase = (Case) inputCase;
+
+        currentCase.Phase__c = 'Completata';
+        currentCase.Status = 'Closed';
+
+        HDT_UTL_DatabaseService.updateSObject(currentCase);
+
+    }
+
 }
