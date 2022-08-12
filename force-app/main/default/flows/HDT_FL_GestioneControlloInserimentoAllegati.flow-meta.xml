@@ -21,7 +21,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Crea_Attivita_Gestione_Back_Office</targetReference>
+            <targetReference>Aggiornamento_Case</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -70,29 +70,6 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>Crea_Attivita_Gestione_Back_Office</name>
-        <label>Crea Attività &quot;Gestione Back Office&quot;</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
-        <connector>
-            <targetReference>Aggiornamento_Case</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Case__c</field>
-            <value>
-                <elementReference>caseId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type__c</field>
-            <value>
-                <stringValue>Gestione Back Office</stringValue>
-            </value>
-        </inputAssignments>
-        <object>wrts_prcgvr__Activity__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
@@ -139,7 +116,7 @@
         <name>Aggiornamento_Case</name>
         <label>Aggiornamento Case</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>638</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <screens>
