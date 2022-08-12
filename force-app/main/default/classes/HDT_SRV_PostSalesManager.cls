@@ -85,10 +85,6 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
             {
                 psmUtl.advanceInstallmentPlan(sender);
             }
-            when 'closeCaseLetturaInseritaInSap'
-            {
-                psmUtl.closeCaseLetturaInseritaInSap(sender);
-            }
         }
 
         return null;
