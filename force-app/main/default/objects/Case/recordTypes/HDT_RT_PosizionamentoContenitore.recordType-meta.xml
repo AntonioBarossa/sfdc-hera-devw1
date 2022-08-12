@@ -13144,49 +13144,49 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
-        <picklist>Type</picklist>
-		<values>
-			<fullName>Ambiente annullo richiesta senza appuntamento</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Conferimento Centri di Raccolta</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Formulari Richiesta Sconto</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Gestione Rifiuti</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Pagamento Unico Annuale TARI</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Posizionamento Contenitore</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Riduz. superficie rifiuti spec promiscui</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Riduzione Agevolazione dopo Accertamento</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Sconti Collettivi Pap</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Segnalazioni Ambientali</fullName>
-			<default>false</default>
-		</values>
-    </picklistValues>
+	<picklistValues>
+    <picklist>Type</picklist>
+        <values>
+            <fullName>Ambiente annullo richiesta senza appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conferimento Centri di Raccolta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Formulari Richiesta Sconto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Rifiuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamento Unico Annuale TARI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Posizionamento Contenitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riduz. superficie rifiuti spec promiscui</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riduzione Agevolazione dopo Accertamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sconti Collettivi Pap</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni Ambientali</fullName>
+            <default>false</default>
+        </values>
+	</picklistValues>
     <picklistValues>
         <picklist>TypeInstallmentPlan__c</picklist>
         <values>
