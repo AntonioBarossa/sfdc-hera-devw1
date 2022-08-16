@@ -4,7 +4,7 @@
 * @description Class that holds util functions for wrts_prcgvr__Activity__c
 * @history Keltin Mesonjesi – 18/06/2021 – Created class
 */
-@SuppressWarnings('PMD.AvoidDebugStatements')
+@SuppressWarnings('PMD.CyclomaticComplexity, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ActivityCustom {
     
     private FINAL static string APPOINTMENTDEVELOPERNAME = 'HDT_RT_DistributorAppointment';
@@ -16,7 +16,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
-
+    private static HDT_QR_Order orderQr = new HDT_QR_Order();
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
