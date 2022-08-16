@@ -4,7 +4,7 @@
 * @description Class that holds util functions for wrts_prcgvr__Activity__c
 * @history Keltin Mesonjesi – 18/06/2021 – Created class
 */
-@SuppressWarnings('PMD.CyclomaticComplexity, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.AvoidDebugStatements')
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ActivityCustom {
     
     private FINAL static string APPOINTMENTDEVELOPERNAME = 'HDT_RT_DistributorAppointment';
@@ -23,7 +23,8 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     * @date 18/06/2021
     * @description Create new wrts_prcgvr__Activity__c based on passed params
     * @param Map<String,String> params
-    */    
+    */
+    
     @AuraEnabled
     public static boolean riassegnaComCod(string recordId,String causale){
         try{
@@ -207,10 +208,6 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 }
             }
         }
-    }
-
-    public static void executeOnCloseActions(List<wrts_prcgvr__Activity__c> newTriggerList,  Map<Id,SObject> oldTriggerMap){
-        HDT_UTL_ActivityCloseActions.executeOnCloseActions(newTriggerList, oldTriggerMap);
     }
 
     @AuraEnabled
@@ -420,4 +417,61 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             }
         }
     }
+
+    public static void setCompanyName(List<wrts_prcgvr__Activity__c> activities){
+        List<wrts_prcgvr__Activity__c> actToCheckList = new List<wrts_prcgvr__Activity__c>();
+        Set<Id> setActivityId = new Set<Id>();
+        Set<Id> setAccountId = new Set<Id>();
+        Set<Id> setOrderId = new Set<Id>();
+        Set<Id> setCaseId = new Set<Id>();
+        
+        for(wrts_prcgvr__Activity__c act : activities) {
+            if (act.CompanyOwner__c == null){
+    
+                if(act.Account__c!=null)setAccountId.add(act.Account__c);
+                if(act.Order__c!=null)setOrderId.add(act.Order__c);
+                if(act.Case__c!=null)setCaseId.add(act.Case__c);
+                setActivityId.add(act.Id);
+            }
+        }
+        Map <Id, Account> mapAccountToId = new Map <Id, Account> ([SELECT Id, CompanyOwner__c FROM Account WHERE Id IN: setAccountId]);
+        Map <Id, Order> mapOrderToId = new Map <Id, Order> ([SELECT Id, CompanyOwner__c FROM Order WHERE Id IN: setOrderId]);
+        Map <Id, Case> mapCaseToId = new Map <Id, Case> ([SELECT Id, CompanyOwner__c FROM Case WHERE Id IN: setCaseId]);
+        List<wrts_prcgvr__Activity__c> actToUpdateList = [SELECT Id, CompanyOwner__c,Account__c,Order__c,Case__c FROM wrts_prcgvr__Activity__c WHERE Id IN: setActivityId];
+        for(wrts_prcgvr__Activity__c act : actToUpdateList){
+            String companyName = getCompanyName(mapAccountToId.get(act.Account__c), mapOrderToId.get(act.Order__c), mapCaseToId.get(act.Case__c));
+            if(companyName!=null){
+                act.CompanyOwner__c = companyName;
+                
+            }
+            else{
+                act.CompanyOwner__c = Label.CompanyNameLabel;
+                
+            }
+            
+        }
+            
+        if(actToUpdateList.size()>0){
+                update actToUpdateList;
+        }
+    }
+    private static String getCompanyName(Account acc,Order order, Case cas){
+        if(acc!=null){
+            if(acc.CompanyOwner__c != null){
+                return acc.CompanyOwner__c;
+            }
+        }
+        if(order!=null){
+            if(order.CompanyOwner__c != null){
+                return order.CompanyOwner__c;
+            }
+        }
+        if(cas!=null){
+            if(cas.CompanyOwner__c != null){
+            return cas.CompanyOwner__c;
+            }
+        }
+        return null;
+    }
+
 }
