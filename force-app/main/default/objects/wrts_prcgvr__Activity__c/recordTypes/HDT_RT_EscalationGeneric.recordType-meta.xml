@@ -196,6 +196,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HC_CRM_CC_OUT_CV</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HC_CRM_CC_OUT_KN</fullName>
             <default>false</default>
         </values>
@@ -768,6 +772,10 @@
         </values>
         <values>
             <fullName>HC_CRM_CC_OUT_CMDGRP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_CC_OUT_CV</fullName>
             <default>false</default>
         </values>
         <values>
