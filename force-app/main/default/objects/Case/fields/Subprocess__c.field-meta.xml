@@ -286,6 +286,49 @@
             <valueName>CA</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Modifica dati contrattuali</controllingFieldValue>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>Dati catastali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica dati contrattuali</controllingFieldValue>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>DOM_Coabitazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica dati contrattuali</controllingFieldValue>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>DOM_Componenti non residenti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica dati contrattuali</controllingFieldValue>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>DOM_Componenti residenti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica dati contrattuali</controllingFieldValue>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>Domiciliato in nucleo residente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica dati contrattuali</controllingFieldValue>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>NON DOM_ISTAT/Ronchi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica dati contrattuali</controllingFieldValue>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>Superficie</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>Agevolazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>Rid. Agev. Dopo Accertamento</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
             <valueName>IVA - Esenzione</valueName>
         </valueSettings>

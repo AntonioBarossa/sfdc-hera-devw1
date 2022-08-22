@@ -9755,65 +9755,97 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
 		<values>
-			<fullName>Allegati ricevuti</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Cliente contattato</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Consumo effettivo</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Contattare cliente</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Documentazione completa</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Documentazione da verificare sul posto</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Documentazione incompleta</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Errore di lettura</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Fuga da Gestire - In attesa validazione</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>In attesa allegati</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Lettura fatturata</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Lettura inserita in SAP</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Lettura non fatturata</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Lettura non inserita</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Lettura non inserita in SAP</fullName>
-			<default>false</default>
-		</values>
+            <fullName>Allegati ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa risposta cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cliente contattato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consumo effettivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contattare cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione da verificare sul posto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione incompleta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione validata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore di lettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fuga da Gestire - In attesa validazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione risposta cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa allegati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Definitivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lettura fatturata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lettura inserita in SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lettura non fatturata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lettura non inserita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lettura non inserita in SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta ricevuta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica in corso</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
