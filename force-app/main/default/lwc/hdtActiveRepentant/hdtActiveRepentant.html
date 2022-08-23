@@ -10,7 +10,7 @@
                 <lightning-input-field name="EffectiveDate__c" field-name="EffectiveDate__c" data-id='EffectiveDate__c' value={outputWrp.dateDecorrenza}
                     class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
                 <lightning-input-field name="BlockOnComputation__c" field-name="BlockOnComputation__c"  data-id='BlockOnComputation__c' value={outputWrp.bloccoCalcolo}
-                    class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
+                    class="slds-size_1-of-3 fieldsData" variant="label-stacked" disabled> </lightning-input-field>
                 <lightning-input-field if:false={isCase} name="DeclineComputationSupport__c" field-name="DeclineComputationSupport__c" data-id='DeclineComputationSupport__c' value={outputWrp.declineSupport} 
                     class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
                 <lightning-input-field if:true={isCase} name="CustomerRepentanceRefusal__c" field-name="CustomerRepentanceRefusal__c" data-id='CustomerRepentanceRefusal__c' value={outputWrp.declineSupport} 
@@ -19,8 +19,8 @@
                     class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
                 <lightning-input-field name="OnerousUnreviewableStartDate__c" field-name="OnerousUnreviewableStartDate__c" data-id='OnerousUnreviewableStartDate__c' disabled value={outputWrp.dateY}
                     class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
-                <lightning-input-field if:false={isCase} name="MissingDueAmount__c" field-name="MissingDueAmount__c" data-id='MissingDueAmount__c' value={outputWrp.missedDue}
-                    class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
+                <!--<lightning-input-field if:false={isCase} name="MissingDueAmount__c" field-name="MissingDueAmount__c" data-id='MissingDueAmount__c' value={outputWrp.missedDue}
+                    class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>-->
             </div>
         </lightning-record-edit-form>
     </template>

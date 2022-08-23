@@ -38,6 +38,10 @@ public inherited sharing class HDT_QR_CaseValidations {
 
     }
 
+    public List<Case> getCaseByTypeBillingProfile(String processType, Id accountId, String contractAccount){
+        return [SELECT Id FROM Case WHERE Type =: processType AND AccountId =: accountId AND ContractAccountCode__c =:contractAccount];
+    }
+
     public List<ContentDocumentLink> getDocumentByCaseId(String recordId){
 
         List<ContentDocumentLink> attachedDocument = new List<ContentDocumentLink>();

@@ -51,7 +51,7 @@ public with sharing class HDT_LC_ActiveRepentant {
 
     @AuraEnabled
     public static List<TermsAdministration__c> getTerms(String comune){
-        List<TermsAdministration__c> terms =  [SELECT Id, City__c, Day__c, Month__c FROM TermsAdministration__c WHERE City__c = :comune WITH SECURITY_ENFORCED ORDER BY Month__c ASC LIMIT 1];
+        List<TermsAdministration__c> terms =  [SELECT Id, City__c, Day__c, Month__c FROM TermsAdministration__c WHERE City__c = :comune WITH SECURITY_ENFORCED ORDER BY Month__c ASC ];
         return terms;
     }
 
@@ -62,7 +62,8 @@ public with sharing class HDT_LC_ActiveRepentant {
 
     @AuraEnabled
     public static HDT_WRP_Data getTables(String comune, String sottotipo){
-        return new HDT_WRP_Data(getTerms(comune), getPeriods(comune, sottotipo), getCityTecData(comune));
+        //return new HDT_WRP_Data(getTerms(comune), getPeriods(comune, sottotipo), getCityTecData(comune));
+        return new HDT_WRP_Data(null, getPeriods(comune, sottotipo), getCityTecData(comune));
     }
 
 }
