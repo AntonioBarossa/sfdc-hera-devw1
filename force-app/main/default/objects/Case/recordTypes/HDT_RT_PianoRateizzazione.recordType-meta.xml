@@ -8122,6 +8122,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Bolletta Fuga H2O</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errata Domiciliazione%2FNon richiesta%3BDomiciliazione non attiva</fullName>
             <default>false</default>
         </values>

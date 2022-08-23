@@ -8,38 +8,40 @@
 global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     private static Set<String> methods = new Set<String>{
-        'TemporaneaNuovaAttivazioneCreaRich',
-        'Annullamento',
-        'Ripensamento',
-        'SwitchInEECreaRich',
-        'SwitchInGasCreaRich',
-        'AggScontiBonusEECreaRich',
-        'AggScontiBonusGGCreaRich',
-        'SubentroEECreaRich',
-        'AttivazioneEECreaRich',
-        'PrecheckEECreaRich',
-        'SubentroGasCreaRich',
-        'AttivazioneInDeliberaCreaRich',
-        'AttivazioneFuoriDeliberaCreaRich',
-        'PrecheckGasCreaRich',
-        'AttivazioneConModCreaRich',
-        'PreventivoAccettatoSales',
-        'PreventivoRifiutatoSales',
-        'CambioOffertaGasCreaRich',
-        'CambioOffertaEleCreaRich',
-        'CambioUsoCreaRich',
-        'ConnessioneConAttCreaRich',
-        'TempNuovaAttivazionCereaRich',
-        'SConVEECreaRich',
-        'SConVGasCreaRich',
-        'EsecuzioneLavori',
-        'ConfPrev',
-        'SWRipristinatorioEle',
-        'SWRipristinatorioGas',
-        'Voltura',
-        'SubentroAmbiente',
-        'SubentroAmbienteModifica',
-        'AgevolazioneContestuale'
+        'TemporaneaNuovaAttivazioneCreaRich'.toLowerCase(),
+        'Annullamento'.toLowerCase(),
+        'Ripensamento'.toLowerCase(),
+        'SwitchInEECreaRich'.toLowerCase(),
+        'SwitchInGasCreaRich'.toLowerCase(),
+        'AggScontiBonusEECreaRich'.toLowerCase(),
+        'AggScontiBonusGGCreaRich'.toLowerCase(),
+        'SubentroEECreaRich'.toLowerCase(),
+        'AttivazioneEECreaRich'.toLowerCase(),
+        'PrecheckEECreaRich'.toLowerCase(),
+        'SubentroGasCreaRich'.toLowerCase(),
+        'AttivazioneInDeliberaCreaRich'.toLowerCase(),
+        'AttivazioneFuoriDeliberaCreaRich'.toLowerCase(),
+        'PrecheckGasCreaRich'.toLowerCase(),
+        'AttivazioneConModCreaRich'.toLowerCase(),
+        'PreventivoAccettatoSales'.toLowerCase(),
+        'PreventivoRifiutatoSales'.toLowerCase(),
+        'CambioOffertaGasCreaRich'.toLowerCase(),
+        'CambioOffertaEleCreaRich'.toLowerCase(),
+        'CambioUsoCreaRich'.toLowerCase(),
+        'ConnessioneConAttCreaRich'.toLowerCase(),
+        'TempNuovaAttivazionCereaRich'.toLowerCase(),
+        'SConVEECreaRich'.toLowerCase(),
+        'SConVGasCreaRich'.toLowerCase(),
+        'EsecuzioneLavori'.toLowerCase(),
+        'ConfPrev'.toLowerCase(),
+        'SWRipristinatorioEle'.toLowerCase(),
+        'SWRipristinatorioGas'.toLowerCase(),
+        'Voltura'.toLowerCase(),
+        'SubentroAmbiente'.toLowerCase(),
+        'SubentroAmbienteModifica'.toLowerCase(),
+        'AttivazAmbiente'.toLowerCase(),
+        'CambioTariffaAmbiente'.toLowerCase(),
+        'AgevolazioneContestuale'.toLowerCase()
     };
 
     @Testvisible
@@ -51,13 +53,14 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         SObject action = (SObject) argsMap.get('action');
         SObject obj = (sObject) argsMap.get('sender');
         String method = (String) argsMap.get('method');        
-        if(methods.contains(method)) {
+        if(methods.contains(method.toLowerCase())) {
             wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = getMrrObj(argsMap);
             setHeader(multirequestObj);
             System.debug(multirequestObj.requests[0]);
             Integer count = 0;
             List<Integer> indexOfObjectToRemove = new List<Integer>();
             Map<Integer,Integer> indexOffieldToRemove = new Map<Integer,Integer>();
+            Map<String, HDT_CodificaAgevolazione__mdt> codificaAgevolazioni = 'AgevolazioneContestuale'.equalsIgnoreCase(method)? HDT_CodificaAgevolazione__mdt.getAll() : new Map<String, HDT_CodificaAgevolazione__mdt>();
             /**Rimozione OrderItems non necessaria per Analisi consumi */
             String vasType = (String)obj.get('VASType__c');
             if(String.isBlank(vasType) || !vasType.equalsIgnoreCase('VAS Fatturabili'))
@@ -77,6 +80,9 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                     indexOffieldToRemove.put(count,k);
                                 }
                             }
+                            if(f.name.equalsIgnoreCase('AGEVTARI_CODE') && STRING.isNotBlank(f.value) && STRING.isNotBlank(codificaAgevolazioni.get(f.value)?.HerokuTag__c)){
+                                f.name = codificaAgevolazioni.get(f.value)?.HerokuTag__c;
+                            }
                         }
                         if(!find){
                             indexOfObjectToRemove.add(count);
@@ -87,8 +93,10 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                 // for(integer i : indexOffieldToRemove.keyset()){
                 //     multirequestObj.requests[0].objects[i].fields.remove(indexOffieldToRemove.get(i));
                 // }
-                for (integer i = indexOfObjectToRemove.size() - 1 ; i >= 0 ; i--) {
-                    multirequestObj.requests[0].objects.remove(indexOfObjectToRemove[i]);
+                if(!'AgevolazioneContestuale'.equalsIgnoreCase(method)){//Agevolazione deve contenere tutti gli OrderItems
+                    for (integer i = indexOfObjectToRemove.size() - 1 ; i >= 0 ; i--) {
+                        multirequestObj.requests[0].objects.remove(indexOfObjectToRemove[i]);
+                    }
                 }
             }
         

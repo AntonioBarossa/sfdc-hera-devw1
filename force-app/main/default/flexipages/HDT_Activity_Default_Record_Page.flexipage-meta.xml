@@ -196,28 +196,23 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_OffertaApprovata</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND (2 OR 3)</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_ApproveRejectCase}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Approvazione Offerte</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.wrts_prcgvr__Description__c}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_ApprovazioneOfferta}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Gestione Procedurale</rightValue>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_OffertaNonApprovata</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
+                                <booleanFilter>(1 AND 3) OR (2 AND 4)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.HDT_CP_ApproveRejectCase}</leftValue>
                                     <operator>EQUAL</operator>
@@ -234,9 +229,9 @@
                                     <rightValue>Approvazione Bonus Commerciale</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.wrts_prcgvr__Description__c}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_ApprovazioneOfferta}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Gestione Procedurale</rightValue>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
