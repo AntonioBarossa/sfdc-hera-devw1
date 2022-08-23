@@ -10,6 +10,17 @@ global with sharing class ConnectorEntityController {
 
 		try {
 			if((Integer) message.get('ErrorCode') > 0) {
+				
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			list <OrgWideEmailAddress> orgWideAddress = [SELECT Id, DisplayName, Address FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address' WITH SECURITY_ENFORCED LIMIT 1];
+			mail.setOrgWideEmailAddressId(orgWideAddress[0].Id);
+
+                mail.setToAddresses(new String[]{'danilo.penna@nttdata.com'});
+                mail.setSubject('Create Activity Exception Message');
+                String body='JSON Exception messagge: ERROR: errorCode is not 0. Message: ' + JSON.serialize(message) ;
+                mail.setPlainTextBody (body);
+                Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+            
 				return 'ERROR: errorCode is not 0. Message: ' + JSON.serialize(message);
 			}
 
@@ -70,9 +81,20 @@ global with sharing class ConnectorEntityController {
 			result.put('contactId', activity.Contact__c);
 			result.put('leadId', activity.Lead__c);
 		} catch (Exception e) {
+
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			list <OrgWideEmailAddress> orgWideAddress = [SELECT Id, DisplayName, Address FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address' WITH SECURITY_ENFORCED LIMIT 1];
+			mail.setOrgWideEmailAddressId(orgWideAddress[0].Id);
+
+			mail.setToAddresses(new String[]{'danilo.penna@nttdata.com'});
+			mail.setSubject('Create Activity Exception Message');
+			String body='Exception messagge: ERROR: ' + e.getMessage();
+			mail.setPlainTextBody (body);
+			Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+			
 			return 'ERROR: ' + e.getMessage();
 		}
-		
+		system.debug('Result Krist: '+result);
 		return JSON.serialize(result);
 	}
 
@@ -107,6 +129,16 @@ global with sharing class ConnectorEntityController {
 			update activity;
 		} catch (Exception e) {
 			// WIP
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			list <OrgWideEmailAddress> orgWideAddress = [SELECT Id, DisplayName, Address FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address' WITH SECURITY_ENFORCED LIMIT 1];
+			mail.setOrgWideEmailAddressId(orgWideAddress[0].Id);
+
+			mail.setToAddresses(new String[]{'danilo.penna@nttdata.com'});
+			mail.setSubject('Close Activity Exception Message');
+			String body='Exception messagge: ERROR: ' + e.getMessage();
+			mail.setPlainTextBody (body);
+			Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+
 			return 'ERROR: ' + e.getMessage();
 		}
 

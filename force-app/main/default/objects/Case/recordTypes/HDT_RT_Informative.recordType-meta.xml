@@ -6986,6 +6986,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Notifica Addebito/Rimborso Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>VOTIVE Modena/Nuovo contratto</fullName>
             <default>false</default>
         </values>
