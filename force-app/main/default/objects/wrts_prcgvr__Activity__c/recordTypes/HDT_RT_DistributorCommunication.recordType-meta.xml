@@ -2750,6 +2750,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sollecito Distributore</fullName>
             <default>false</default>
         </values>
