@@ -40,10 +40,10 @@ global with sharing class ConnectorEntityController {
 				when 'Outbound' {
 					activity.Type__c = 'Chiamata Outbound';
 					// activity.CallCenterNumber__c = (String) message.get('ANI');
-					//activity.ClientNumber__c = message.get('DNIS') != null ? ((String) message.get('DNIS')).removeStart('0') : null;
-					
+					activity.ClientNumber__c = message.get('DNIS') != null ? ((String) message.get('DNIS')).removeStart('0') : null;
+					//ripristinato removeStart('0') solo per outbound
 					//AF RIMOSSA ISTRUZIONE removeStart('0') in quanto rimuovendo lo 0 non veniva fatto il match con i numeri presenti in SFDC
-					activity.ClientNumber__c = message.get('DNIS') != null ? (String) message.get('DNIS') : null;
+					//activity.ClientNumber__c = message.get('DNIS') != null ? (String) message.get('DNIS') : null;
 				}
 				when 'Inbound' {
 					activity.Type__c = 'Chiamata Inbound';
