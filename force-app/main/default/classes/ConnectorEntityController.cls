@@ -17,7 +17,7 @@ global with sharing class ConnectorEntityController {
 
                 mail.setToAddresses(new String[]{'danilo.penna@nttdata.com'});
                 mail.setSubject('Create Activity Exception Message');
-                String body='JSON Exception messagge: ERROR: errorCode is not 0. Message: ' + JSON.serialize(message) ;
+                String body='JSON Exception messagge: ERROR: errorCode is not 0. Message: ' + JSON.serialize(message) + '   ' +jsonMessage ;
                 mail.setPlainTextBody (body);
                 Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
             
@@ -88,7 +88,7 @@ global with sharing class ConnectorEntityController {
 
 			mail.setToAddresses(new String[]{'danilo.penna@nttdata.com'});
 			mail.setSubject('Create Activity Exception Message');
-			String body='Exception messagge: ERROR: ' + e.getMessage();
+			String body='Exception messagge: ERROR: ' + e.getMessage() + '   ' +jsonMessage;
 			mail.setPlainTextBody (body);
 			Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
 			
@@ -135,7 +135,7 @@ global with sharing class ConnectorEntityController {
 
 			mail.setToAddresses(new String[]{'danilo.penna@nttdata.com'});
 			mail.setSubject('Close Activity Exception Message');
-			String body='Exception messagge: ERROR: ' + e.getMessage();
+			String body='Exception messagge: ERROR: ' + e.getMessage() + '   ' +jsonMessage;
 			mail.setPlainTextBody (body);
 			Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
 
