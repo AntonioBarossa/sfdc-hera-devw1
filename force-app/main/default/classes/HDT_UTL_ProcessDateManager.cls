@@ -1,5 +1,7 @@
 public with sharing class HDT_UTL_ProcessDateManager {
 
+    private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+
 	@AuraEnabled
 	public static Boolean isAfterthoughtDaysZero(Order order){
 		try {
@@ -238,6 +240,10 @@ public with sharing class HDT_UTL_ProcessDateManager {
 					continue;
 				}
 				
+				if(order.DocumentalProcessType__c.equalsIgnoreCase('Voltura') || order.DocumentalProcessType__c.equalsIgnoreCase('Voltura con autolettura') ){
+					order.EffectiveDate__c = orderSrv.addBusinessDay(order.SignedDate__c, 3);
+				}
+
 				if(dateToFrom != null){
                     Boolean founded = false;
 					for(FulfillmentDateMatrix__c singleRecord : dateMatrix){
