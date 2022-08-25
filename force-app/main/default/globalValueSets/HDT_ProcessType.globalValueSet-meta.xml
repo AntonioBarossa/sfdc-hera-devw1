@@ -6,6 +6,11 @@
         <label>Alert</label>
     </customValue>
     <customValue>
+        <fullName>Cambio contatore non registrato - ACQ</fullName>
+        <default>false</default>
+        <label>Cambio contatore non registrato - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Allineamento Anagrafica</fullName>
         <default>false</default>
         <label>Allineamento Anagrafica</label>
