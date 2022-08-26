@@ -872,6 +872,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.FuiAccess__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.CommercialProductLink__c</field>
         <readable>true</readable>
     </fieldPermissions>
