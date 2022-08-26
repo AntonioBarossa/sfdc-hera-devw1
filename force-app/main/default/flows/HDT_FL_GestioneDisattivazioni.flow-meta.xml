@@ -288,8 +288,8 @@
     <assignments>
         <name>Assegna_FT_0</name>
         <label>Assegna FT</label>
-        <locationX>2305</locationX>
-        <locationY>2510</locationY>
+        <locationX>2199</locationX>
+        <locationY>2512</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.OperationCode__c</assignToReference>
             <operator>Assign</operator>
@@ -298,7 +298,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>inviaMA3</targetReference>
+            <targetReference>Need_Documental_Management</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1176,7 +1176,7 @@
         <locationX>2437</locationX>
         <locationY>2390</locationY>
         <defaultConnector>
-            <targetReference>inviaMA3</targetReference>
+            <targetReference>Need_Documental_Management</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1230,8 +1230,8 @@
     <decisions>
         <name>inviaMA3</name>
         <label>inviaMA3?</label>
-        <locationX>2437</locationX>
-        <locationY>2726</locationY>
+        <locationX>2484</locationX>
+        <locationY>2926</locationY>
         <defaultConnector>
             <targetReference>Votive</targetReference>
         </defaultConnector>
@@ -1367,6 +1367,42 @@
                 <targetReference>sendMA3</targetReference>
             </connector>
             <label>Invia MA3</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Need_Documental_Management</name>
+        <label>Need Documental Management</label>
+        <locationX>2433</locationX>
+        <locationY>2599</locationY>
+        <defaultConnectorLabel>Not Needed</defaultConnectorLabel>
+        <rules>
+            <name>Needed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Chiusura Contatore</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.ServicePoint__r.ImplantType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>1105-Antincendio</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>DocumentaleIdrico</targetReference>
+            </connector>
+            <label>Needed</label>
         </rules>
     </decisions>
     <decisions>
@@ -1984,7 +2020,7 @@
     <formulas>
         <name>Fase_Disattivazioni</name>
         <dataType>String</dataType>
-        <expression>IF({!ProcessType}=&apos;Cessazione Scarichi Produttivi&apos;,&apos;In Lavorazione&apos;,&apos;Da Inviare&apos;)</expression>
+        <expression>IF({!ProcessType}=&apos;Cessazione Scarichi Produttivi&apos;,&apos;In Lavorazione&apos;,IF(AND({!ProcessType} = &apos;Chiusura Contatore&apos;,{!Get_Input_Case.CommodityFormula__c}=&apos;Acqua&apos;,TEXT({!Get_Input_Case.ServicePoint__r.ImplantType__c})=&apos;1105-Antincendio&apos;),&apos;Attesa Modulo Firmato&apos;,&apos;Da Inviare&apos;))</expression>
     </formulas>
     <formulas>
         <description>Formula per ottenere il giorno 10 del mese corrente</description>
@@ -2007,6 +2043,16 @@ DATE( YEAR( TODAY() ), MONTH( TODAY() ) + 1, 1 ) - 1)</expression>
         <expression>IF( MONTH( TODAY() ) = 12,
 DATE(YEAR( TODAY()) +1, 1, 31),
 DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
+    </formulas>
+    <formulas>
+        <name>NetxLabel</name>
+        <dataType>String</dataType>
+        <expression>IF(AND({!ProcessType} = &apos;Chiusura Contatore&apos;,{!Get_Input_Case.CommodityFormula__c}=&apos;Acqua&apos;),&apos;Avanti&apos;,&apos;Conferma Pratica&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>NextLabel</name>
+        <dataType>String</dataType>
+        <expression>IF(AND({!ProcessType} = &apos;Chiusura Contatore&apos;,{!Get_Input_Case.CommodityFormula__c}=&apos;Acqua&apos;),&apos;Avanti&apos;,&apos;Conferma Pratica&apos;)</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestioneDisattivazioni {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Disattivazioni</label>
@@ -2600,7 +2646,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Conferma Pratica</stringValue>
+                    <elementReference>NextLabel</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2950,6 +2996,57 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>DocumentaleIdrico</name>
+        <label>DocumentaleIdrico</label>
+        <locationX>2821</locationX>
+        <locationY>2702</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>inviaMA3</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayTextDocumentale</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Input_Case.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Lwc_Documentale</name>
+            <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Get_Input_Case.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Input_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>source</name>
+                <value>
+                    <elementReference>Get_Input_Case.Origin</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Chiusura Contatore</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
