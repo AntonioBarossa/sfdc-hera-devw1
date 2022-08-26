@@ -766,4 +766,9 @@
         <default>false</default>
         <label>Votive Modena Pagamenti Morosità</label>
     </standardValue>
+    <standardValue>
+        <fullName>Adesione Rinuncia Fondo Fughe</fullName>
+        <default>false</default>
+        <label>Adesione Rinuncia Fondo Fughe</label>
+    </standardValue>
 </StandardValueSet>
