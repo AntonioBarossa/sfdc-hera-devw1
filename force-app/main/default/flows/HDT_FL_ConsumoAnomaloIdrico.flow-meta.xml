@@ -41,13 +41,6 @@
                 <elementReference>Scostamento_2000mc</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case.Status</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Aggiornamento_Case</targetReference>
         </connector>
@@ -56,12 +49,19 @@
         <name>Settaggio_Fase_Case_Attesa_Risposta_Cliente_0_0_0</name>
         <label>Settaggio Fase Case &quot;Attesa Risposta Cliente&quot;</label>
         <locationX>50</locationX>
-        <locationY>1094</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Attesa risposta cliente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -72,12 +72,19 @@
         <name>Settaggio_Fase_Case_Risposta_ricevuta</name>
         <label>Settaggio Fase Case &quot;Risposta ricevuta&quot;</label>
         <locationX>314</locationX>
-        <locationY>1094</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Risposta ricevuta</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -160,7 +167,7 @@
         <name>Provenienza_da_Gestore</name>
         <label>Provenienza da Gestore?</label>
         <locationX>182</locationX>
-        <locationY>974</locationY>
+        <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Settaggio_Fase_Case_Risposta_ricevuta</targetReference>
         </defaultConnector>
@@ -179,31 +186,6 @@
                 <targetReference>Settaggio_Fase_Case_Attesa_Risposta_Cliente_0_0_0</targetReference>
             </connector>
             <label>SI</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Scostamento_maggiore_2000mc</name>
-        <label>Scostamento &gt; 2000mc?</label>
-        <locationX>182</locationX>
-        <locationY>638</locationY>
-        <defaultConnector>
-            <targetReference>Provenienza_da_Gestore</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Scostamento_maggiore_2000mc_Si</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Scostamento_2000mc</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>Si</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Creazione_Activity_Contattare_Cliente</targetReference>
-            </connector>
-            <label>Si</label>
         </rules>
     </decisions>
     <dynamicChoiceSets>
@@ -235,29 +217,6 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>Creazione_Activity_Contattare_Cliente</name>
-        <label>Creazione Activity &quot;Contattare Cliente&quot;</label>
-        <locationX>50</locationX>
-        <locationY>758</locationY>
-        <connector>
-            <targetReference>Provenienza_da_Gestore</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Case__c</field>
-            <value>
-                <elementReference>Get_Case.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type__c</field>
-            <value>
-                <stringValue>Contattare il cliente</stringValue>
-            </value>
-        </inputAssignments>
-        <object>wrts_prcgvr__Activity__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
@@ -285,7 +244,7 @@
         <locationX>182</locationX>
         <locationY>518</locationY>
         <connector>
-            <targetReference>Scostamento_maggiore_2000mc</targetReference>
+            <targetReference>Provenienza_da_Gestore</targetReference>
         </connector>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
@@ -293,14 +252,14 @@
         <name>Aggiornamento_Record_Case_0_0_0</name>
         <label>Aggiornamento Record Case</label>
         <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationY>878</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiornamento_Record_Case_0_0_0_0</name>
         <label>Aggiornamento Record Case</label>
         <locationX>50</locationX>
-        <locationY>1214</locationY>
+        <locationY>878</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <screens>

@@ -52,26 +52,6 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>Crea_Activity_Custom_Gestione_Manuale_SAP</name>
-        <label>Crea Activity Custom &quot;Gestione Manuale SAP&quot;</label>
-        <locationX>176</locationX>
-        <locationY>638</locationY>
-        <inputAssignments>
-            <field>Case__c</field>
-            <value>
-                <elementReference>caseId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type__c</field>
-            <value>
-                <stringValue>Gestione Manuale SAP</stringValue>
-            </value>
-        </inputAssignments>
-        <object>wrts_prcgvr__Activity__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <recordLookups>
         <name>Ottieni_Case</name>
         <label>Ottieni Case</label>
@@ -98,9 +78,6 @@
         <label>Aggiornamento Caso</label>
         <locationX>176</locationX>
         <locationY>518</locationY>
-        <connector>
-            <targetReference>Crea_Activity_Custom_Gestione_Manuale_SAP</targetReference>
-        </connector>
         <inputReference>Ottieni_Case</inputReference>
     </recordUpdates>
     <screens>
