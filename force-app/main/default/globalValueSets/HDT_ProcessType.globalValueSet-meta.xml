@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>Cessazione Scarichi Produttivi</fullName>
+        <default>false</default>
+        <label>Cessazione Scarichi Produttivi</label>
+    </customValue>
+    <customValue>
         <fullName>Alert</fullName>
         <default>false</default>
         <label>Alert</label>
