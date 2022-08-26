@@ -7,6 +7,11 @@
         <label>Aggiunta Attacco</label>
     </standardValue>
     <standardValue>
+        <fullName>Cessazione Scarichi Produttivi</fullName>
+        <default>false</default>
+        <label>Cessazione Scarichi Produttivi</label>
+    </standardValue>
+    <standardValue>
         <fullName>Allineamento Anagrafica</fullName>
         <default>false</default>
         <label>Allineamento Anagrafica</label>
