@@ -11,6 +11,11 @@
         <label>Alert</label>
     </customValue>
     <customValue>
+        <fullName>Adesione Rinuncia Fondo Fughe - ACQ</fullName>
+        <default>false</default>
+        <label>Adesione Rinuncia Fondo Fughe - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Cambio contatore non registrato - ACQ</fullName>
         <default>false</default>
         <label>Cambio contatore non registrato - ACQ</label>
