@@ -10765,6 +10765,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esenzione Modifica Fognatura Depurazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esercizio Diritti Privacy</fullName>
             <default>false</default>
         </values>

@@ -11,6 +11,11 @@
         <label>Alert</label>
     </customValue>
     <customValue>
+        <fullName>Esenzione Modifica Fognatura Depurazione - ACQ</fullName>
+        <default>false</default>
+        <label>Esenzione Modifica Fognatura Depurazione - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Adesione Rinuncia Fondo Fughe - ACQ</fullName>
         <default>false</default>
         <label>Adesione Rinuncia Fondo Fughe - ACQ</label>

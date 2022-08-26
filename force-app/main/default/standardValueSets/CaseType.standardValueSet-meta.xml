@@ -217,6 +217,11 @@
         <label>Errore di Fatturazione</label>
     </standardValue>
     <standardValue>
+        <fullName>Esenzione Modifica Fognatura Depurazione</fullName>
+        <default>false</default>
+        <label>Esenzione Modifica Fognatura Depurazione</label>
+    </standardValue>
+    <standardValue>
         <fullName>Esercizio Diritti Privacy</fullName>
         <default>false</default>
         <label>Esercizio Diritti Privacy</label>
