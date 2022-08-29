@@ -819,6 +819,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.FuiAccess__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.AnnullaPrestazioneEnabled__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -16451,6 +16456,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>OrderItem.PrintOnBill__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.ConsumptionAnalysis__c</field>
         <readable>true</readable>
@@ -22997,6 +23007,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.PrintOnBill__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__QuoteLine__c.Agency__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -25553,6 +25568,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__SubscriptionConsumptionSchedule__c.SBQQ__UnitOfMeasure__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.PrintOnBill__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

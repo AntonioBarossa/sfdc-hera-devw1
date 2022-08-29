@@ -10676,6 +10676,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Verifica Interna</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Allineamento Anagrafica</fullName>
             <default>false</default>
         </values>
