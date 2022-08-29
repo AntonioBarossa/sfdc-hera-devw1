@@ -16,6 +16,11 @@
         <label>Alert</label>
     </customValue>
     <customValue>
+        <fullName>Esenzione Modifica Fognatura Depurazione - ACQ</fullName>
+        <default>false</default>
+        <label>Esenzione Modifica Fognatura Depurazione - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Adesione Rinuncia Fondo Fughe - ACQ</fullName>
         <default>false</default>
         <label>Adesione Rinuncia Fondo Fughe - ACQ</label>
@@ -359,6 +364,11 @@
         <fullName>Modifica azzeramento consumo annuo - GAS</fullName>
         <default>false</default>
         <label>Modifica azzeramento consumo annuo - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica Unità Immobiliari/Componenti - ACQ</fullName>
+        <default>false</default>
+        <label>Modifica Unità Immobiliari/Componenti - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Modifica impianto - Preventivo analitico - EE</fullName>

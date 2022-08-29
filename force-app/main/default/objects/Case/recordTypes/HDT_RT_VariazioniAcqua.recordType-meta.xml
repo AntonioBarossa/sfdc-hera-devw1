@@ -10765,6 +10765,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esenzione Modifica Fognatura Depurazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esercizio Diritti Privacy</fullName>
             <default>false</default>
         </values>
@@ -10850,6 +10854,10 @@
         </values>
         <values>
             <fullName>Modifica Tariffa Residente%2FNon Residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Unità Immobiliari%2FComponenti</fullName>
             <default>false</default>
         </values>
         <values>

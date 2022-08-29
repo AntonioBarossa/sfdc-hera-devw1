@@ -217,6 +217,11 @@
         <label>Errore di Fatturazione</label>
     </standardValue>
     <standardValue>
+        <fullName>Esenzione Modifica Fognatura Depurazione</fullName>
+        <default>false</default>
+        <label>Esenzione Modifica Fognatura Depurazione</label>
+    </standardValue>
+    <standardValue>
         <fullName>Esercizio Diritti Privacy</fullName>
         <default>false</default>
         <label>Esercizio Diritti Privacy</label>
@@ -330,6 +335,11 @@
         <fullName>Modifica Impianto</fullName>
         <default>false</default>
         <label>Modifica Impianto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Modifica Unità Immobiliari/Componenti</fullName>
+        <default>false</default>
+        <label>Modifica Unità Immobiliari/Componenti</label>
     </standardValue>
     <standardValue>
         <fullName>Modifica Layout di dettaglio</fullName>
