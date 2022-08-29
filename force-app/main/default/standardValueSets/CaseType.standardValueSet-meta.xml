@@ -722,6 +722,11 @@
         <label>Variazione Tensione</label>
     </standardValue>
     <standardValue>
+        <fullName>Istruttoria</fullName>
+        <default>false</default>
+        <label>Istruttoria</label>
+    </standardValue>
+    <standardValue>
         <fullName>Variazione indirizzo di fornitura</fullName>
         <default>false</default>
         <label>Variazione indirizzo di fornitura</label>

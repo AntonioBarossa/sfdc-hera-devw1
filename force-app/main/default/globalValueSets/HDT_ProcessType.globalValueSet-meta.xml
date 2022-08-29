@@ -11,6 +11,11 @@
         <label>Verifica Interna - ACQ</label>
     </customValue>
     <customValue>
+        <fullName>Istruttoria</fullName>
+        <default>false</default>
+        <label>Istruttoria</label>
+    </customValue>
+    <customValue>
         <fullName>Alert</fullName>
         <default>false</default>
         <label>Alert</label>

@@ -16,6 +16,11 @@
                 <label>Uso domestico residente</label>
             </value>
             <value>
+                <fullName>Uso agricolo e zootecnico</fullName>
+                <default>false</default>
+                <label>Uso agricolo e zootecnico</label>
+            </value>
+            <value>
                 <fullName>Uso domestico non residente</fullName>
                 <default>false</default>
                 <label>Uso domestico non residente</label>
