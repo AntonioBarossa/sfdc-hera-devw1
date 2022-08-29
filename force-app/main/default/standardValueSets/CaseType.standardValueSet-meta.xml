@@ -707,6 +707,11 @@
         <label>Variazione Fase</label>
     </standardValue>
     <standardValue>
+        <fullName>Istruttoria</fullName>
+        <default>false</default>
+        <label>Istruttoria</label>
+    </standardValue>
+    <standardValue>
         <fullName>Variazione Portata</fullName>
         <default>false</default>
         <label>Variazione Portata</label>
