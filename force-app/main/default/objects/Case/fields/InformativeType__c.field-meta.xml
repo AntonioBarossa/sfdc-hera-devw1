@@ -294,21 +294,9 @@
                 <label>Reclamo Scritto/Rich. Info</label>
             </value>
             <value>
-                <fullName>Rettifica Consumi - Errore di Lettura</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Rettifica Consumi - Errore di Lettura</label>
-            </value>
-            <value>
                 <fullName>Rettifica Consumi</fullName>
                 <default>false</default>
                 <label>Rettifica Consumi</label>
-            </value>
-            <value>
-                <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Rettifica Consumi - Errore Stima Consumi</label>
             </value>
             <value>
                 <fullName>Revoca Domiciliazione</fullName>
@@ -694,6 +682,23 @@
                 <fullName>Documentale/Copia Contratto</fullName>
                 <default>false</default>
                 <label>Documentale/Copia Contratto</label>
+            </value>
+            <value>
+                <fullName>Notifica Addebito/Rimborso Canone Rai</fullName>
+                <default>false</default>
+                <label>Notifica Addebito/Rimborso Canone Rai</label>
+            </value>
+            <value>
+                <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Rettifica Consumi - Errore Stima Consumi</label>
+            </value>
+            <value>
+                <fullName>Rettifica Consumi - Errore di Lettura</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Rettifica Consumi - Errore di Lettura</label>
             </value>
         </valueSetDefinition>
     </valueSet>

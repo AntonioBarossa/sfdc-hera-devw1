@@ -196,7 +196,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_OffertaApprovata</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -227,6 +227,11 @@
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Approvazione Bonus Commerciale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_ApprovazioneOfferta}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

@@ -482,6 +482,13 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}
         },
+    'VerificaFugaIdrica' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Segnalazioni'},
+            'Type' => new List<String>
+                {'Consumo Anomalo Idrico'}
+        },
     'VerificaGdm' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>

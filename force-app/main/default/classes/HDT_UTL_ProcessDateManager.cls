@@ -238,6 +238,10 @@ public with sharing class HDT_UTL_ProcessDateManager {
 					continue;
 				}
 				
+				if( order.SignedDate__c != null && ( order.DocumentalProcessType__c.equalsIgnoreCase('Voltura') || order.DocumentalProcessType__c.equalsIgnoreCase('Voltura con autolettura') ) ){
+					order.EffectiveDate__c = order.SignedDate__c.addDays(3);
+				}
+
 				if(dateToFrom != null){
                     Boolean founded = false;
 					for(FulfillmentDateMatrix__c singleRecord : dateMatrix){

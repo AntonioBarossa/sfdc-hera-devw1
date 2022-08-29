@@ -12,146 +12,21 @@
         <controllingField>SecondLevelComplaintClassification__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>Altro</fullName>
                 <default>false</default>
                 <label>Altro</label>
             </value>
             <value>
-                <fullName>Presunti Contratti non Richiesti</fullName>
+                <fullName>Arenile</fullName>
                 <default>false</default>
-                <label>Presunti Contratti non Richiesti</label>
+                <label>Arenile</label>
             </value>
             <value>
-                <fullName>Doppia Fatturazione</fullName>
+                <fullName>Attivazione/Cessazione</fullName>
                 <default>false</default>
-                <label>Doppia Fatturazione</label>
-            </value>
-            <value>
-                <fullName>Fotovoltaico</fullName>
-                <default>false</default>
-                <label>Fotovoltaico</label>
-            </value>
-            <value>
-                <fullName>Periodicità e fattura di chiusura</fullName>
-                <default>false</default>
-                <label>Periodicità e fattura di chiusura</label>
-            </value>
-            <value>
-                <fullName>Consumi stimati errati</fullName>
-                <default>false</default>
-                <label>Consumi stimati errati</label>
-            </value>
-            <value>
-                <fullName>Modulistica</fullName>
-                <default>false</default>
-                <label>Modulistica</label>
-            </value>
-            <value>
-                <fullName>Volture e subentri</fullName>
-                <default>false</default>
-                <label>Volture e subentri</label>
-            </value>
-            <value>
-                <fullName>Privacy</fullName>
-                <default>false</default>
-                <label>Privacy</label>
-            </value>
-            <value>
-                <fullName>Indennizzi</fullName>
-                <default>false</default>
-                <label>Indennizzi</label>
-            </value>
-            <value>
-                <fullName>Servizio clienti (call center, sportelli, altri servizi)</fullName>
-                <default>false</default>
-                <label>Servizio clienti (call center, sportelli, altri servizi)</label>
-            </value>
-            <value>
-                <fullName>Erogazioni</fullName>
-                <default>false</default>
-                <label>Erogazioni</label>
-            </value>
-            <value>
-                <fullName>Cessazioni</fullName>
-                <default>false</default>
-                <label>Cessazioni</label>
-            </value>
-            <value>
-                <fullName>Validazioni</fullName>
-                <default>false</default>
-                <label>Validazioni</label>
-            </value>
-            <value>
-                <fullName>Preventivi/attivazioni/lavori (tempi e costi)</fullName>
-                <default>false</default>
-                <label>Preventivi/attivazioni/lavori (tempi e costi)</label>
-            </value>
-            <value>
-                <fullName>Continuità</fullName>
-                <default>false</default>
-                <label>Continuità</label>
-            </value>
-            <value>
-                <fullName>Mancate letture</fullName>
-                <default>false</default>
-                <label>Mancate letture</label>
-            </value>
-            <value>
-                <fullName>Verifica e ricostruzioni</fullName>
-                <default>false</default>
-                <label>Verifica e ricostruzioni</label>
-            </value>
-            <value>
-                <fullName>Cambio misuratore</fullName>
-                <default>false</default>
-                <label>Cambio misuratore</label>
-            </value>
-            <value>
-                <fullName>Ricalcoli</fullName>
-                <default>false</default>
-                <label>Ricalcoli</label>
-            </value>
-            <value>
-                <fullName>Condizioni economiche nuovi contratti</fullName>
-                <default>false</default>
-                <label>Condizioni economiche nuovi contratti</label>
-            </value>
-            <value>
-                <fullName>Cambio fornitore</fullName>
-                <default>false</default>
-                <label>Cambio fornitore</label>
-            </value>
-            <value>
-                <fullName>Cmor (Corrispettivo morosità pregresse)</fullName>
-                <default>false</default>
-                <label>Cmor (Corrispettivo morosità pregresse)</label>
-            </value>
-            <value>
-                <fullName>Morosità</fullName>
-                <default>false</default>
-                <label>Morosità</label>
-            </value>
-            <value>
-                <fullName>Sospensione e riattivazione</fullName>
-                <default>false</default>
-                <label>Sospensione e riattivazione</label>
-            </value>
-            <value>
-                <fullName>Modifiche unilaterali</fullName>
-                <default>false</default>
-                <label>Modifiche unilaterali</label>
-            </value>
-            <value>
-                <fullName>Recesso</fullName>
-                <default>false</default>
-                <label>Recesso</label>
-            </value>
-            <value>
-                <fullName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</fullName>
-                <default>false</default>
-                <label>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</label>
+                <label>Attivazione/Cessazione</label>
             </value>
             <value>
                 <fullName>Autolettura (uso della)</fullName>
@@ -159,19 +34,89 @@
                 <label>Autolettura (uso della)</label>
             </value>
             <value>
-                <fullName>Pagamenti e Rimborsi</fullName>
+                <fullName>Avviso/Bolletta</fullName>
                 <default>false</default>
-                <label>Pagamenti e Rimborsi</label>
+                <label>Avviso/Bolletta</label>
             </value>
             <value>
-                <fullName>Sicurezza</fullName>
+                <fullName>Calcolo</fullName>
                 <default>false</default>
-                <label>Sicurezza</label>
+                <label>Calcolo</label>
             </value>
             <value>
-                <fullName>Valori della tensione/pressione</fullName>
+                <fullName>Cambio fornitore</fullName>
                 <default>false</default>
-                <label>Valori della tensione/pressione</label>
+                <label>Cambio fornitore</label>
+            </value>
+            <value>
+                <fullName>Cambio misuratore</fullName>
+                <default>false</default>
+                <label>Cambio misuratore</label>
+            </value>
+            <value>
+                <fullName>Centri di Raccolta</fullName>
+                <default>false</default>
+                <label>Centri di Raccolta</label>
+            </value>
+            <value>
+                <fullName>Cessazioni</fullName>
+                <default>false</default>
+                <label>Cessazioni</label>
+            </value>
+            <value>
+                <fullName>Cmor (Corrispettivo morosità pregresse)</fullName>
+                <default>false</default>
+                <label>Cmor (Corrispettivo morosità pregresse)</label>
+            </value>
+            <value>
+                <fullName>Condizioni economiche nuovi contratti</fullName>
+                <default>false</default>
+                <label>Condizioni economiche nuovi contratti</label>
+            </value>
+            <value>
+                <fullName>Consumi stimati errati</fullName>
+                <default>false</default>
+                <label>Consumi stimati errati</label>
+            </value>
+            <value>
+                <fullName>Contestazioni</fullName>
+                <default>false</default>
+                <label>Contestazioni</label>
+            </value>
+            <value>
+                <fullName>Continuità</fullName>
+                <default>false</default>
+                <label>Continuità</label>
+            </value>
+            <value>
+                <fullName>Contratto</fullName>
+                <default>false</default>
+                <label>Contratto</label>
+            </value>
+            <value>
+                <fullName>Doppia Fatturazione</fullName>
+                <default>false</default>
+                <label>Doppia Fatturazione</label>
+            </value>
+            <value>
+                <fullName>Emissioni</fullName>
+                <default>false</default>
+                <label>Emissioni</label>
+            </value>
+            <value>
+                <fullName>Erogazioni</fullName>
+                <default>false</default>
+                <label>Erogazioni</label>
+            </value>
+            <value>
+                <fullName>Fotovoltaico</fullName>
+                <default>false</default>
+                <label>Fotovoltaico</label>
+            </value>
+            <value>
+                <fullName>Impatto visivo</fullName>
+                <default>false</default>
+                <label>Impatto visivo</label>
             </value>
             <value>
                 <fullName>Importi per consumi risalenti a più di due anni</fullName>
@@ -179,7 +124,225 @@
                 <isActive>false</isActive>
                 <label>Importi per consumi risalenti a più di due anni</label>
             </value>
+            <value>
+                <fullName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</fullName>
+                <default>false</default>
+                <label>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</label>
+            </value>
+            <value>
+                <fullName>Indennizzi</fullName>
+                <default>false</default>
+                <label>Indennizzi</label>
+            </value>
+            <value>
+                <fullName>Mancate letture</fullName>
+                <default>false</default>
+                <label>Mancate letture</label>
+            </value>
+            <value>
+                <fullName>Materiali/sostanze</fullName>
+                <default>false</default>
+                <label>Materiali/sostanze</label>
+            </value>
+            <value>
+                <fullName>Modalità di pagamento</fullName>
+                <default>false</default>
+                <label>Modalità di pagamento</label>
+            </value>
+            <value>
+                <fullName>Modifiche unilaterali</fullName>
+                <default>false</default>
+                <label>Modifiche unilaterali</label>
+            </value>
+            <value>
+                <fullName>Modulistica</fullName>
+                <default>false</default>
+                <label>Modulistica</label>
+            </value>
+            <value>
+                <fullName>Morosità</fullName>
+                <default>false</default>
+                <label>Morosità</label>
+            </value>
+            <value>
+                <fullName>Pagamenti e Rimborsi</fullName>
+                <default>false</default>
+                <label>Pagamenti e Rimborsi</label>
+            </value>
+            <value>
+                <fullName>Periodicità</fullName>
+                <default>false</default>
+                <label>Periodicità</label>
+            </value>
+            <value>
+                <fullName>Periodicità e fattura di chiusura</fullName>
+                <default>false</default>
+                <label>Periodicità e fattura di chiusura</label>
+            </value>
+            <value>
+                <fullName>Presunti Contratti non Richiesti</fullName>
+                <default>false</default>
+                <label>Presunti Contratti non Richiesti</label>
+            </value>
+            <value>
+                <fullName>Preventivi/attivazioni/lavori (tempi e costi)</fullName>
+                <default>false</default>
+                <label>Preventivi/attivazioni/lavori (tempi e costi)</label>
+            </value>
+            <value>
+                <fullName>Privacy</fullName>
+                <default>false</default>
+                <label>Privacy</label>
+            </value>
+            <value>
+                <fullName>Problemi di fatturazione</fullName>
+                <default>false</default>
+                <label>Problemi di fatturazione</label>
+            </value>
+            <value>
+                <fullName>Recapito</fullName>
+                <default>false</default>
+                <label>Recapito</label>
+            </value>
+            <value>
+                <fullName>Recesso</fullName>
+                <default>false</default>
+                <label>Recesso</label>
+            </value>
+            <value>
+                <fullName>Ricalcoli</fullName>
+                <default>false</default>
+                <label>Ricalcoli</label>
+            </value>
+            <value>
+                <fullName>Richiamo animali/insetti</fullName>
+                <default>false</default>
+                <label>Richiamo animali/insetti</label>
+            </value>
+            <value>
+                <fullName>Servizi a chiamata</fullName>
+                <default>false</default>
+                <label>Servizi a chiamata</label>
+            </value>
+            <value>
+                <fullName>Servizi di raccolta</fullName>
+                <default>false</default>
+                <label>Servizi di raccolta</label>
+            </value>
+            <value>
+                <fullName>Servizio clienti (call center, sportelli, altri servizi)</fullName>
+                <default>false</default>
+                <label>Servizio clienti (call center, sportelli, altri servizi)</label>
+            </value>
+            <value>
+                <fullName>Sicurezza</fullName>
+                <default>false</default>
+                <label>Sicurezza</label>
+            </value>
+            <value>
+                <fullName>Solleciti</fullName>
+                <default>false</default>
+                <label>Solleciti</label>
+            </value>
+            <value>
+                <fullName>Sospensione e riattivazione</fullName>
+                <default>false</default>
+                <label>Sospensione e riattivazione</label>
+            </value>
+            <value>
+                <fullName>Spazzamento</fullName>
+                <default>false</default>
+                <label>Spazzamento</label>
+            </value>
+            <value>
+                <fullName>Subentro/Voltura</fullName>
+                <default>false</default>
+                <label>Subentro/Voltura</label>
+            </value>
+            <value>
+                <fullName>Traffico/cantieri</fullName>
+                <default>false</default>
+                <label>Traffico/cantieri</label>
+            </value>
+            <value>
+                <fullName>Validazioni</fullName>
+                <default>false</default>
+                <label>Validazioni</label>
+            </value>
+            <value>
+                <fullName>Valori della tensione/pressione</fullName>
+                <default>false</default>
+                <label>Valori della tensione/pressione</label>
+            </value>
+            <value>
+                <fullName>Verifica e ricostruzioni</fullName>
+                <default>false</default>
+                <label>Verifica e ricostruzioni</label>
+            </value>
+            <value>
+                <fullName>Volture e subentri</fullName>
+                <default>false</default>
+                <label>Volture e subentri</label>
+            </value>
+            <value>
+                <fullName>Web</fullName>
+                <default>false</default>
+                <label>Web</label>
+            </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Impatti Ambientali</controllingFieldValue>
+            <valueName>Emissioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Impatti Ambientali</controllingFieldValue>
+            <valueName>Impatto visivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Impatti Ambientali</controllingFieldValue>
+            <valueName>Materiali/sostanze</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Impatti Ambientali</controllingFieldValue>
+            <valueName>Richiamo animali/insetti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Impatti Ambientali</controllingFieldValue>
+            <valueName>Traffico/cantieri</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <valueName>Solleciti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità del Servizio</controllingFieldValue>
+            <valueName>Arenile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità del Servizio</controllingFieldValue>
+            <valueName>Centri di Raccolta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità del Servizio</controllingFieldValue>
+            <valueName>Servizi a chiamata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità del Servizio</controllingFieldValue>
+            <valueName>Servizi di raccolta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità del Servizio</controllingFieldValue>
+            <valueName>Spazzamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio Clienti</controllingFieldValue>
+            <controllingFieldValue>Qualità Commerciale</controllingFieldValue>
+            <valueName>Servizio clienti (call center, sportelli, altri servizi)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio Clienti</controllingFieldValue>
+            <valueName>Web</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Misura</controllingFieldValue>
             <controllingFieldValue>Mercato</controllingFieldValue>
@@ -194,6 +357,14 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Misura</controllingFieldValue>
+            <valueName>Cambio misuratore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Misura</controllingFieldValue>
+            <valueName>Contestazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Misura</controllingFieldValue>
             <valueName>Mancate letture</valueName>
         </valueSettings>
         <valueSettings>
@@ -201,12 +372,12 @@
             <valueName>Verifica e ricostruzioni</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Misura</controllingFieldValue>
-            <valueName>Cambio misuratore</valueName>
+            <controllingFieldValue>Mercato</controllingFieldValue>
+            <valueName>Cambio fornitore</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Mercato</controllingFieldValue>
-            <valueName>Presunti Contratti non Richiesti</valueName>
+            <valueName>Condizioni economiche nuovi contratti</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Mercato</controllingFieldValue>
@@ -215,35 +386,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Mercato</controllingFieldValue>
-            <valueName>Condizioni economiche nuovi contratti</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Mercato</controllingFieldValue>
-            <valueName>Cambio fornitore</valueName>
+            <valueName>Presunti Contratti non Richiesti</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Qualità Commerciale</controllingFieldValue>
             <valueName>Indennizzi</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Qualità Commerciale</controllingFieldValue>
-            <valueName>Servizio clienti (call center, sportelli, altri servizi)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fatturazione</controllingFieldValue>
-            <valueName>Periodicità e fattura di chiusura</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fatturazione</controllingFieldValue>
-            <valueName>Consumi stimati errati</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fatturazione</controllingFieldValue>
-            <valueName>Ricalcoli</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fatturazione</controllingFieldValue>
-            <valueName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione</controllingFieldValue>
@@ -251,11 +398,47 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Avviso/Bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Calcolo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Consumi stimati errati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Modalità di pagamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
             <valueName>Pagamenti e Rimborsi</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Bonus sociale</controllingFieldValue>
-            <valueName>Erogazioni</valueName>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Periodicità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Periodicità e fattura di chiusura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Problemi di fatturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Recapito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Ricalcoli</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Bonus sociale</controllingFieldValue>
@@ -263,11 +446,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Bonus sociale</controllingFieldValue>
+            <valueName>Erogazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bonus sociale</controllingFieldValue>
             <valueName>Validazioni</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Contratti</controllingFieldValue>
-            <valueName>Volture e subentri</valueName>
+            <valueName>Attivazione/Cessazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratti</controllingFieldValue>
+            <valueName>Contratto</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Contratti</controllingFieldValue>
@@ -276,6 +467,14 @@
         <valueSettings>
             <controllingFieldValue>Contratti</controllingFieldValue>
             <valueName>Recesso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratti</controllingFieldValue>
+            <valueName>Subentro/Voltura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratti</controllingFieldValue>
+            <valueName>Volture e subentri</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Altro</controllingFieldValue>
@@ -291,11 +490,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Connessioni, lavori e qualità tecnica</controllingFieldValue>
-            <valueName>Preventivi/attivazioni/lavori (tempi e costi)</valueName>
+            <valueName>Continuità</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Connessioni, lavori e qualità tecnica</controllingFieldValue>
-            <valueName>Continuità</valueName>
+            <valueName>Preventivi/attivazioni/lavori (tempi e costi)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Connessioni, lavori e qualità tecnica</controllingFieldValue>
