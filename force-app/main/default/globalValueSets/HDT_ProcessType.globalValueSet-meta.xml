@@ -6,6 +6,11 @@
         <label>Cessazione Scarichi Produttivi</label>
     </customValue>
     <customValue>
+        <fullName>Verifica Interna - ACQ</fullName>
+        <default>false</default>
+        <label>Verifica Interna - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Alert</fullName>
         <default>false</default>
         <label>Alert</label>

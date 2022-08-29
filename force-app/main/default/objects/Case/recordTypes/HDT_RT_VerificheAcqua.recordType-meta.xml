@@ -7421,6 +7421,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Verifica Interna</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Verifica Pareggio Fittizio Canone Rai</fullName>
             <default>false</default>
         </values>
