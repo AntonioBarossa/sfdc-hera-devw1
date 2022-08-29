@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>Cessazione Scarichi Produttivi</fullName>
+        <default>false</default>
+        <label>Cessazione Scarichi Produttivi</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica Interna - ACQ</fullName>
+        <default>false</default>
+        <label>Verifica Interna - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Alert</fullName>
         <default>false</default>
         <label>Alert</label>
+    </customValue>
+    <customValue>
+        <fullName>Adesione Rinuncia Fondo Fughe - ACQ</fullName>
+        <default>false</default>
+        <label>Adesione Rinuncia Fondo Fughe - ACQ</label>
+    </customValue>
+    <customValue>
+        <fullName>Cambio contatore non registrato - ACQ</fullName>
+        <default>false</default>
+        <label>Cambio contatore non registrato - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Allineamento Anagrafica</fullName>
