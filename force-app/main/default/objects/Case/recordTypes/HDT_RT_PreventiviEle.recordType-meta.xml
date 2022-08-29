@@ -4,8 +4,8 @@
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
     <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
-    <description>RT che racchiude tutti i preventivi Ele</description>
-    <label>Preventivi Ele</label>
+    <description>RT che racchiude tutti i preventivi Ele e Acqua</description>
+    <label>Preventivi Ele - Acqua</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
@@ -10286,6 +10286,10 @@
         <picklist>Type</picklist>
         <values>
             <fullName>Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Istruttoria</fullName>
             <default>false</default>
         </values>
         <values>
