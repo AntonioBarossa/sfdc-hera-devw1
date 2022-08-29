@@ -816,6 +816,11 @@
         <label>Vendita - Contratti</label>
     </customValue>
     <customValue>
+        <fullName>Gestione M01/M02</fullName>
+        <default>false</default>
+        <label>Gestione M01/M02</label>
+    </customValue>
+    <customValue>
         <fullName>Segnalazioni VAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
