@@ -92,7 +92,7 @@ public with sharing class HDT_LC_AttachmentManager {
             cdIdList.add(nextCdl.ContentDocumentId); 
         }        
 
-        List<ContentDocument> contentDocuments = [SELECT Id, Title, FileType,CreatedDate FROM ContentDocument WHERE ContentDocument.Id IN :cdIdList WITH SECURITY_ENFORCED];
+        List<ContentDocument> contentDocuments = [SELECT Id, Title, FileType,CreatedDate FROM ContentDocument WHERE Id IN :cdIdList WITH SECURITY_ENFORCED];
         
         return contentDocuments;
         
