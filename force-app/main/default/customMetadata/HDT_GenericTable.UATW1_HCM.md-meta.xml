@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>UATW1_HCM</label>
+    <protected>false</protected>
+    <values>
+        <field>Mapping__c</field>
+        <value xsi:type="xsd:string">[{
+	&quot;nomesocieta&quot;:&quot;Hera Comm Marche&quot;,
+	&quot;groupname&quot;: &quot;HDT_PG_ApprovatoriPianoRataHCM&quot;,
+	&quot;existsdefault&quot;:false,
+	&quot;defaultusers&quot;: []
+}]</value>
+    </values>
+    <values>
+        <field>Object__c</field>
+        <value xsi:type="xsd:string">00D3N0000008mto</value>
+    </values>
+    <values>
+        <field>TableName__c</field>
+        <value xsi:type="xsd:string">UATW1</value>
+    </values>
+</CustomMetadata>

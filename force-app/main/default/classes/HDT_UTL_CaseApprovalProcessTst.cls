@@ -62,7 +62,7 @@ public with sharing class HDT_UTL_CaseApprovalProcessTst {
 
         Boolean check = false;
         Id selectedUserId = [SELECT Id, ActorId FROM ProcessInstanceWorkitem WHERE ProcessInstance.TargetObjectId = :myCase.Id ][0].ActorId;
-        Group approvalGroup = [SELECT Id, (SELECT Id, UserOrGroupId FROM GroupMembers) FROM Group WHERE DeveloperName = 'HDT_PG_ApprPianoRataHCM'][0]; 
+        Group approvalGroup = [SELECT Id, (SELECT Id, UserOrGroupId FROM GroupMembers) FROM Group WHERE DeveloperName = 'HDT_PG_ApprovatoriPianoRataHCM'][0]; 
 
         for( Integer i=0; i< approvalGroup.GroupMembers.size(); i++ ){
             check = approvalGroup.GroupMembers[i].UserOrGroupId == selectedUserId ? true : check;
