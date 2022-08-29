@@ -10337,10 +10337,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Istruttoria</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Allineamento Anagrafica</fullName>
             <default>false</default>
         </values>
