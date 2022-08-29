@@ -46,7 +46,7 @@
     <actionCalls>
         <name>getIsCommunityValue</name>
         <label>Valorizzazione variabile isCommunity</label>
-        <locationX>8275</locationX>
+        <locationX>8319</locationX>
         <locationY>4526</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
@@ -65,7 +65,7 @@
     <actionCalls>
         <name>getuuid</name>
         <label>getuuid</label>
-        <locationX>8066</locationX>
+        <locationX>8110</locationX>
         <locationY>4766</locationY>
         <actionName>HDT_LC_CtToolbar</actionName>
         <actionType>apex</actionType>
@@ -249,7 +249,7 @@
     <assignments>
         <name>Assegna_Case_Id_0_0_0_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>11754</locationX>
+        <locationX>11798</locationX>
         <locationY>2678</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -336,7 +336,7 @@
     <assignments>
         <name>Assegna_Case_Id_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>11182</locationX>
+        <locationX>11226</locationX>
         <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -352,7 +352,7 @@
     <assignments>
         <name>Assegna_Case_Id_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>11490</locationX>
+        <locationX>11534</locationX>
         <locationY>2678</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -500,7 +500,7 @@
     <assignments>
         <name>Assegna_Case_Id_GenAtt</name>
         <label>Assegna Case Id</label>
-        <locationX>13338</locationX>
+        <locationX>13426</locationX>
         <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -513,7 +513,7 @@
     <assignments>
         <name>Assegna_Case_Id_GenAtt_0</name>
         <label>Assegna Case Id</label>
-        <locationX>13734</locationX>
+        <locationX>13822</locationX>
         <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -693,7 +693,7 @@
     <assignments>
         <name>Assegna_Case_Id_Notifiche_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>12282</locationX>
+        <locationX>12370</locationX>
         <locationY>2006</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -709,7 +709,7 @@
     <assignments>
         <name>Assegna_Case_Id_Notifiche_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>12018</locationX>
+        <locationX>12106</locationX>
         <locationY>2006</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -722,7 +722,7 @@
     <assignments>
         <name>Assegna_Case_Id_Notifiche_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>12810</locationX>
+        <locationX>12898</locationX>
         <locationY>2006</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -738,7 +738,7 @@
     <assignments>
         <name>Assegna_Case_Id_Notifiche_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>12546</locationX>
+        <locationX>12634</locationX>
         <locationY>2006</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -751,7 +751,7 @@
     <assignments>
         <name>Assegna_Case_Id_Notifiche_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>14042</locationX>
+        <locationX>14130</locationX>
         <locationY>2006</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -767,7 +767,7 @@
     <assignments>
         <name>Assegna_Case_Id_Notifiche_0_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>14306</locationX>
+        <locationX>14394</locationX>
         <locationY>2006</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -859,9 +859,25 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssignRecordTypeIdAcqua</name>
+        <label>AssignRecordTypeIdAcqua</label>
+        <locationX>11578</locationX>
+        <locationY>2102</locationY>
+        <assignmentItems>
+            <assignToReference>RecordTypeCalculated</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetAcquaRecordType.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Selezione_Fornitura_00_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignRecordTypeIdEle</name>
         <label>AssignRecordTypeIdEle</label>
-        <locationX>11666</locationX>
+        <locationX>11842</locationX>
         <locationY>2102</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
@@ -877,7 +893,7 @@
     <assignments>
         <name>AssignRecordTypeIdGas</name>
         <label>AssignRecordTypeIdGas</label>
-        <locationX>11138</locationX>
+        <locationX>11050</locationX>
         <locationY>2102</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
@@ -893,7 +909,7 @@
     <assignments>
         <name>AssignRecordTypeIdTari_Var</name>
         <label>AssignRecordTypeIdTari</label>
-        <locationX>11402</locationX>
+        <locationX>11314</locationX>
         <locationY>2102</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
@@ -1067,7 +1083,7 @@
     <assignments>
         <name>Set_Target_Legale</name>
         <label>Target = Legale Rappresentante</label>
-        <locationX>7310</locationX>
+        <locationX>7354</locationX>
         <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>TargetContact</assignToReference>
@@ -1083,7 +1099,7 @@
     <assignments>
         <name>Set_Target_Titolare</name>
         <label>Target = Titolare</label>
-        <locationX>7574</locationX>
+        <locationX>7618</locationX>
         <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>TargetContact</assignToReference>
@@ -1099,7 +1115,7 @@
     <assignments>
         <name>Valorizzazione_Status_Campaign_Member</name>
         <label>Valorizzazione Status Campaign Member</label>
-        <locationX>8275</locationX>
+        <locationX>8319</locationX>
         <locationY>5894</locationY>
         <assignmentItems>
             <assignToReference>CampaignMember_Record.Status</assignToReference>
@@ -1334,7 +1350,7 @@
     <decisions>
         <name>Campaign_Member_presente</name>
         <label>Campaign Member presente?</label>
-        <locationX>7442</locationX>
+        <locationX>7486</locationX>
         <locationY>4166</locationY>
         <defaultConnector>
             <targetReference>Record_Case</targetReference>
@@ -1370,7 +1386,7 @@
     <decisions>
         <name>Case_Annullato</name>
         <label>Case Annullato?</label>
-        <locationX>7807</locationX>
+        <locationX>7851</locationX>
         <locationY>4406</locationY>
         <defaultConnector>
             <targetReference>getIsCommunityValue</targetReference>
@@ -1421,7 +1437,7 @@
     <decisions>
         <name>CaseLastTwoMinutes_Presente_0</name>
         <label>CaseLastTwoMinutes Presente?</label>
-        <locationX>7288</locationX>
+        <locationX>7332</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Cerca_Legale_Rappresentante</targetReference>
@@ -1550,7 +1566,7 @@
     <decisions>
         <name>Check_Legale_Rappresentante_o_Titolare</name>
         <label>Legale Rappresentante o Titolare?</label>
-        <locationX>7442</locationX>
+        <locationX>7486</locationX>
         <locationY>1070</locationY>
         <defaultConnector>
             <targetReference>Set_Target_Titolare</targetReference>
@@ -1738,7 +1754,7 @@
     <decisions>
         <name>CommodityDecision_0_0</name>
         <label>Commodity?</label>
-        <locationX>11402</locationX>
+        <locationX>11446</locationX>
         <locationY>1862</locationY>
         <defaultConnector>
             <targetReference>GetEleRecordType</targetReference>
@@ -1781,6 +1797,21 @@
             </connector>
             <label>Ambiente</label>
         </rules>
+        <rules>
+            <name>Acqua_Var</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Commodity</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetAcquaRecordType</targetReference>
+            </connector>
+            <label>Acqua</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Con_Senza_SelezioneFornitura</name>
@@ -1810,7 +1841,7 @@
     <decisions>
         <name>Confermato</name>
         <label>Confermato?</label>
-        <locationX>7824</locationX>
+        <locationX>7868</locationX>
         <locationY>5126</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
@@ -1861,7 +1892,7 @@
     <decisions>
         <name>Lead_o_Interaction</name>
         <label>Lead o Interaction?</label>
-        <locationX>7442</locationX>
+        <locationX>7486</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Cerca_Legale_Rappresentante</targetReference>
@@ -2288,7 +2319,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>13536</locationX>
+        <locationX>13624</locationX>
         <locationY>1982</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_0</targetReference>
@@ -2320,7 +2351,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>11622</locationX>
+        <locationX>11666</locationX>
         <locationY>2438</locationY>
         <defaultConnector>
             <targetReference>CreaCaseVariazioni_0</targetReference>
@@ -2352,7 +2383,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>12150</locationX>
+        <locationX>12238</locationX>
         <locationY>1766</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_Notifiche_0</targetReference>
@@ -2384,7 +2415,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>12678</locationX>
+        <locationX>12766</locationX>
         <locationY>1766</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_Voltura_0</targetReference>
@@ -2416,7 +2447,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>14174</locationX>
+        <locationX>14262</locationX>
         <locationY>1766</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_Consumo_Anomalo_Idrico_0</targetReference>
@@ -2631,7 +2662,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>11182</locationX>
+        <locationX>11226</locationX>
         <locationY>2798</locationY>
         <defaultConnector>
             <targetReference>Gestione_Variazioni_Subflow</targetReference>
@@ -2786,7 +2817,7 @@
     <decisions>
         <name>Selezione_Fornitura_00</name>
         <label>Selezione Fornitura?</label>
-        <locationX>11402</locationX>
+        <locationX>11446</locationX>
         <locationY>1526</locationY>
         <defaultConnector>
             <targetReference>Selezione_Fornitura_Notifiche_0_0</targetReference>
@@ -2832,7 +2863,7 @@
     <decisions>
         <name>Selezione_Fornitura_000</name>
         <label>Selezione Fornitura?</label>
-        <locationX>13536</locationX>
+        <locationX>13624</locationX>
         <locationY>1526</locationY>
         <defaultConnector>
             <targetReference>Get_RT_Generiche_Attivazioni</targetReference>
@@ -2857,7 +2888,7 @@
     <decisions>
         <name>Selezione_Fornitura_000_0</name>
         <label>Selezione Fornitura?</label>
-        <locationX>13734</locationX>
+        <locationX>13822</locationX>
         <locationY>2342</locationY>
         <defaultConnector>
             <targetReference>Cambio_Uso_Fittizio</targetReference>
@@ -2882,7 +2913,7 @@
     <decisions>
         <name>Selezione_Fornitura_00_0</name>
         <label>Selezione Fornitura?</label>
-        <locationX>11402</locationX>
+        <locationX>11446</locationX>
         <locationY>2318</locationY>
         <defaultConnector>
             <targetReference>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
@@ -2985,7 +3016,7 @@
     <decisions>
         <name>Sono_in_chiamata</name>
         <label>Sono in chiamata?</label>
-        <locationX>8066</locationX>
+        <locationX>8110</locationX>
         <locationY>4886</locationY>
         <defaultConnector>
             <targetReference>CampaignMember_Record</targetReference>
@@ -3010,7 +3041,7 @@
     <decisions>
         <name>Sono_in_Community</name>
         <label>Sono in Community?</label>
-        <locationX>8275</locationX>
+        <locationX>8319</locationX>
         <locationY>4646</locationY>
         <defaultConnector>
             <targetReference>CampaignMember_Record</targetReference>
@@ -3035,7 +3066,7 @@
     <decisions>
         <name>Switch_Subflow</name>
         <label>Switch Subflow</label>
-        <locationX>7442</locationX>
+        <locationX>7486</locationX>
         <locationY>1406</locationY>
         <defaultConnector>
             <targetReference>ErrorScreen_0</targetReference>
@@ -3421,6 +3452,13 @@
                     <stringValue>HDT_RT_VariazioniTari</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_VariazioniAcqua</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Selezione_Fornitura_00</targetReference>
             </connector>
@@ -3600,7 +3638,7 @@
     <recordCreates>
         <name>Crea_Case</name>
         <label>Crea Case</label>
-        <locationX>13338</locationX>
+        <locationX>13426</locationX>
         <locationY>2102</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_GenAtt</targetReference>
@@ -3725,7 +3763,7 @@
     <recordCreates>
         <name>Crea_Case_0</name>
         <label>Crea Case</label>
-        <locationX>13734</locationX>
+        <locationX>13822</locationX>
         <locationY>2102</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_GenAtt_0</targetReference>
@@ -4141,7 +4179,7 @@
     <recordCreates>
         <name>Crea_Case_Autoelettrica</name>
         <label>Crea Case Autoelettrica</label>
-        <locationX>13074</locationX>
+        <locationX>13162</locationX>
         <locationY>1646</locationY>
         <connector>
             <targetReference>Get_Case_Autoelettrica</targetReference>
@@ -4759,7 +4797,7 @@
     <recordCreates>
         <name>Crea_Case_Consumo_Anomalo_Idrico</name>
         <label>Crea Case Consumo Anomalo Idrico</label>
-        <locationX>14042</locationX>
+        <locationX>14130</locationX>
         <locationY>1886</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Notifiche_0_0_0_0_0_0</targetReference>
@@ -4884,7 +4922,7 @@
     <recordCreates>
         <name>Crea_Case_Consumo_Anomalo_Idrico_0</name>
         <label>Crea Case Consumo Anomalo Idrico</label>
-        <locationX>14306</locationX>
+        <locationX>14394</locationX>
         <locationY>1886</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Notifiche_0_0_0_0_0_0_0</targetReference>
@@ -6327,7 +6365,7 @@
     <recordCreates>
         <name>Crea_Case_Notifiche_0</name>
         <label>Crea Case Notifiche</label>
-        <locationX>12282</locationX>
+        <locationX>12370</locationX>
         <locationY>1886</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Notifiche_0_0</targetReference>
@@ -6428,7 +6466,7 @@
     <recordCreates>
         <name>Crea_Case_Notifiche_0_0</name>
         <label>Crea Case Notifiche</label>
-        <locationX>12018</locationX>
+        <locationX>12106</locationX>
         <locationY>1886</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Notifiche_0_0_0</targetReference>
@@ -7493,7 +7531,7 @@
     <recordCreates>
         <name>Crea_Case_Voltura_0</name>
         <label>Crea Case Voltura</label>
-        <locationX>12810</locationX>
+        <locationX>12898</locationX>
         <locationY>1886</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Notifiche_0_0_0_0</targetReference>
@@ -7606,7 +7644,7 @@
     <recordCreates>
         <name>Crea_Case_Voltura_0_0</name>
         <label>Crea Case Voltura</label>
-        <locationX>12546</locationX>
+        <locationX>12634</locationX>
         <locationY>1886</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Notifiche_0_0_0_0_0</targetReference>
@@ -7820,7 +7858,7 @@
     <recordCreates>
         <name>CreaCaseVariazioni_0</name>
         <label>CreaCaseVariazioni</label>
-        <locationX>11754</locationX>
+        <locationX>11798</locationX>
         <locationY>2558</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0_0_0_0_0_0_0_0_0</targetReference>
@@ -7933,7 +7971,7 @@
     <recordCreates>
         <name>CreaCaseVariazioni_0_0</name>
         <label>CreaCaseVariazioni</label>
-        <locationX>11182</locationX>
+        <locationX>11226</locationX>
         <locationY>2438</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
@@ -8028,7 +8066,7 @@
     <recordCreates>
         <name>CreaCaseVariazioni_0_0_0_0</name>
         <label>CreaCaseVariazioni</label>
-        <locationX>11490</locationX>
+        <locationX>11534</locationX>
         <locationY>2558</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
@@ -8153,7 +8191,7 @@
     <recordLookups>
         <name>CampaignMember_Record</name>
         <label>Record Campaign Member</label>
-        <locationX>8275</locationX>
+        <locationX>8319</locationX>
         <locationY>5774</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8195,7 +8233,7 @@
     <recordLookups>
         <name>Cerca_Contatto_Primario</name>
         <label>Cerca Contatto Primario</label>
-        <locationX>7442</locationX>
+        <locationX>7486</locationX>
         <locationY>950</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8237,7 +8275,7 @@
     <recordLookups>
         <name>Cerca_Legale_Rappresentante</name>
         <label>Cerca Legale Rappresentante</label>
-        <locationX>7442</locationX>
+        <locationX>7486</locationX>
         <locationY>830</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8279,7 +8317,7 @@
     <recordLookups>
         <name>Get_Case_Autoelettrica</name>
         <label>Get Case Autoelettrica</label>
-        <locationX>13074</locationX>
+        <locationX>13162</locationX>
         <locationY>1766</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8531,7 +8569,7 @@
     <recordLookups>
         <name>Get_RT_Consumo_Anomalo_Idrico</name>
         <label>Get RT Consumo Anomalo Idrico</label>
-        <locationX>14174</locationX>
+        <locationX>14262</locationX>
         <locationY>1646</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8678,7 +8716,7 @@
     <recordLookups>
         <name>Get_RT_Generiche_Attivazioni</name>
         <label>Get RT Generiche Attivazioni</label>
-        <locationX>13536</locationX>
+        <locationX>13624</locationX>
         <locationY>1862</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8762,7 +8800,7 @@
     <recordLookups>
         <name>Get_RT_Notifiche</name>
         <label>Get RT Annullamento</label>
-        <locationX>12150</locationX>
+        <locationX>12238</locationX>
         <locationY>1646</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8804,7 +8842,7 @@
     <recordLookups>
         <name>Get_RT_PostSalesVas</name>
         <label>Get RT_PostSalesVas</label>
-        <locationX>13074</locationX>
+        <locationX>13162</locationX>
         <locationY>1526</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8846,7 +8884,7 @@
     <recordLookups>
         <name>Get_RT_Voltura</name>
         <label>Get RT Voltura</label>
-        <locationX>12678</locationX>
+        <locationX>12766</locationX>
         <locationY>1646</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8879,6 +8917,27 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>RecordTypeName</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetAcquaRecordType</name>
+        <label>GetAcquaRecordType</label>
+        <locationX>11578</locationX>
+        <locationY>1982</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssignRecordTypeIdAcqua</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_VariazioniAcqua</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -8937,7 +8996,7 @@
     <recordLookups>
         <name>GetCaseLastMinute_0</name>
         <label>GetCaseLastMinute</label>
-        <locationX>7288</locationX>
+        <locationX>7332</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9010,7 +9069,7 @@
     <recordLookups>
         <name>GetEleRecordType</name>
         <label>GetEleRecordType</label>
-        <locationX>11666</locationX>
+        <locationX>11842</locationX>
         <locationY>1982</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9031,7 +9090,7 @@
     <recordLookups>
         <name>GetGasRecordType</name>
         <label>GetGasRecordType</label>
-        <locationX>11138</locationX>
+        <locationX>11050</locationX>
         <locationY>1982</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9052,7 +9111,7 @@
     <recordLookups>
         <name>GetTariRecordType_Var</name>
         <label>GetTariRecordType</label>
-        <locationX>11402</locationX>
+        <locationX>11314</locationX>
         <locationY>1982</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9073,7 +9132,7 @@
     <recordLookups>
         <name>Record_Case</name>
         <label>Record Case</label>
-        <locationX>7807</locationX>
+        <locationX>7851</locationX>
         <locationY>4286</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9124,7 +9183,7 @@
     <recordUpdates>
         <name>Aggiornamento_record_Campaign_Member</name>
         <label>Aggiornamento record Campaign Member</label>
-        <locationX>8275</locationX>
+        <locationX>8319</locationX>
         <locationY>6014</locationY>
         <inputReference>CampaignMember_Record</inputReference>
     </recordUpdates>
@@ -9161,7 +9220,7 @@
     <screens>
         <name>ErrorScreen_0</name>
         <label>ErrorScreen_0</label>
-        <locationX>14570</locationX>
+        <locationX>14658</locationX>
         <locationY>1526</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -9177,7 +9236,7 @@
     <screens>
         <name>ScreenEsitoCampaignMember</name>
         <label>ScreenEsitoCampaignMember</label>
-        <locationX>7824</locationX>
+        <locationX>7868</locationX>
         <locationY>5006</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -9269,7 +9328,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>7316</locationX>
+        <locationX>7360</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Lead_o_Interaction</targetReference>
@@ -9338,7 +9397,7 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_0_0_0</name>
         <label>Arricchimento Dati</label>
-        <locationX>11754</locationX>
+        <locationX>11798</locationX>
         <locationY>2798</locationY>
         <connector>
             <targetReference>Gestione_Variazioni_Subflow</targetReference>
@@ -9597,7 +9656,7 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_Notifiche</name>
         <label>Arricchimento Dati</label>
-        <locationX>12282</locationX>
+        <locationX>12370</locationX>
         <locationY>2126</locationY>
         <connector>
             <targetReference>Gestione_Notifiche</targetReference>
@@ -9626,7 +9685,7 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_Notifiche_0</name>
         <label>Arricchimento Dati</label>
-        <locationX>12810</locationX>
+        <locationX>12898</locationX>
         <locationY>2126</locationY>
         <connector>
             <targetReference>Gestione_Voltura_Tecnica_SubFlow</targetReference>
@@ -9655,7 +9714,7 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_Notifiche_0_0</name>
         <label>Arricchimento Dati</label>
-        <locationX>14306</locationX>
+        <locationX>14394</locationX>
         <locationY>2126</locationY>
         <connector>
             <targetReference>Flow_Gestione_Consumo_Anomalo_Idrico</targetReference>
@@ -9684,7 +9743,7 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_Notifiche_0_0_0</name>
         <label>Arricchimento Dati</label>
-        <locationX>13602</locationX>
+        <locationX>13690</locationX>
         <locationY>2462</locationY>
         <connector>
             <targetReference>Cambio_Uso_Fittizio</targetReference>
@@ -9712,7 +9771,7 @@
     <subflows>
         <name>Cambio_Uso_Fittizio</name>
         <label>Cambio Uso Fittizio</label>
-        <locationX>13734</locationX>
+        <locationX>13822</locationX>
         <locationY>2678</locationY>
         <connector>
             <targetReference>Campaign_Member_presente</targetReference>
@@ -9788,7 +9847,7 @@
     <subflows>
         <name>Compatibilita_0_0_0</name>
         <label>Compatibilita</label>
-        <locationX>11182</locationX>
+        <locationX>11226</locationX>
         <locationY>2678</locationY>
         <connector>
             <targetReference>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
@@ -9888,7 +9947,7 @@
     <subflows>
         <name>Flow_Gestione_Consumo_Anomalo_Idrico</name>
         <label>Flow Gestione Consumo Anomalo Idrico</label>
-        <locationX>14306</locationX>
+        <locationX>14394</locationX>
         <locationY>2246</locationY>
         <connector>
             <targetReference>Campaign_Member_presente</targetReference>
@@ -10069,7 +10128,7 @@
     <subflows>
         <name>Gestione_Notifiche</name>
         <label>Gestione Notifiche</label>
-        <locationX>12282</locationX>
+        <locationX>12370</locationX>
         <locationY>2246</locationY>
         <connector>
             <targetReference>Campaign_Member_presente</targetReference>
@@ -10135,7 +10194,7 @@
     <subflows>
         <name>Gestione_Variazioni_Subflow</name>
         <label>Gestione Variazioni Subflow</label>
-        <locationX>11402</locationX>
+        <locationX>11446</locationX>
         <locationY>3230</locationY>
         <connector>
             <targetReference>Campaign_Member_presente</targetReference>
@@ -10180,7 +10239,7 @@
     <subflows>
         <name>Gestione_Voltura_Tecnica_SubFlow</name>
         <label>Gestione Voltura Tecnica SubFlow</label>
-        <locationX>12810</locationX>
+        <locationX>12898</locationX>
         <locationY>2246</locationY>
         <connector>
             <targetReference>Campaign_Member_presente</targetReference>
@@ -10412,7 +10471,7 @@
     <subflows>
         <name>Selezione_Fornitura_0_0_0_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>13404</locationX>
+        <locationX>13492</locationX>
         <locationY>1646</locationY>
         <connector>
             <targetReference>Get_RT_Generiche_Attivazioni</targetReference>
@@ -10736,7 +10795,7 @@
     <subflows>
         <name>Selezione_Fornitura_Notifiche</name>
         <label>Selezione Fornitura</label>
-        <locationX>12150</locationX>
+        <locationX>12238</locationX>
         <locationY>1526</locationY>
         <connector>
             <targetReference>Get_RT_Notifiche</targetReference>
@@ -10844,7 +10903,7 @@
     <subflows>
         <name>Selezione_Fornitura_Notifiche_0_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>11490</locationX>
+        <locationX>11534</locationX>
         <locationY>1646</locationY>
         <connector>
             <targetReference>CommodityDecision_0_0</targetReference>
@@ -10898,7 +10957,7 @@
     <subflows>
         <name>Selezione_Fornitura_Notifiche_0_0_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>12678</locationX>
+        <locationX>12766</locationX>
         <locationY>1526</locationY>
         <connector>
             <targetReference>Get_RT_Voltura</targetReference>
@@ -10952,7 +11011,7 @@
     <subflows>
         <name>Selezione_Fornitura_Notifiche_0_0_0_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>14174</locationX>
+        <locationX>14262</locationX>
         <locationY>1526</locationY>
         <connector>
             <targetReference>Get_RT_Consumo_Anomalo_Idrico</targetReference>
@@ -11006,7 +11065,7 @@
     <subflows>
         <name>SubFlow_Annullamento</name>
         <label>SubFlow Annullamento</label>
-        <locationX>7604</locationX>
+        <locationX>7648</locationX>
         <locationY>5246</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -11042,7 +11101,7 @@
     <subflows>
         <name>Subflow_Segnalazioni_VAS</name>
         <label>Subflow Segnalazioni VAS</label>
-        <locationX>13074</locationX>
+        <locationX>13162</locationX>
         <locationY>1886</locationY>
         <connector>
             <targetReference>Campaign_Member_presente</targetReference>
