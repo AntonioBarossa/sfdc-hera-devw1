@@ -288,8 +288,8 @@
     <assignments>
         <name>Assegna_FT_0</name>
         <label>Assegna FT</label>
-        <locationX>2305</locationX>
-        <locationY>2510</locationY>
+        <locationX>2199</locationX>
+        <locationY>2512</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.OperationCode__c</assignToReference>
             <operator>Assign</operator>
@@ -298,7 +298,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>inviaMA3</targetReference>
+            <targetReference>Need_Documental_Management</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -474,6 +474,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Process_Type_Scarichi</name>
+        <label>Assegna Process Type</label>
+        <locationX>2741</locationX>
+        <locationY>723</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Cessazione Scarichi Produttivi</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Layout_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>2140</locationX>
@@ -505,7 +521,7 @@
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Da Inviare</stringValue>
+                <elementReference>Fase_Disattivazioni</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -1160,7 +1176,7 @@
         <locationX>2437</locationX>
         <locationY>2390</locationY>
         <defaultConnector>
-            <targetReference>inviaMA3</targetReference>
+            <targetReference>Need_Documental_Management</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1214,8 +1230,8 @@
     <decisions>
         <name>inviaMA3</name>
         <label>inviaMA3?</label>
-        <locationX>2437</locationX>
-        <locationY>2726</locationY>
+        <locationX>2484</locationX>
+        <locationY>2926</locationY>
         <defaultConnector>
             <targetReference>Votive</targetReference>
         </defaultConnector>
@@ -1351,6 +1367,42 @@
                 <targetReference>sendMA3</targetReference>
             </connector>
             <label>Invia MA3</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Need_Documental_Management</name>
+        <label>Need Documental Management</label>
+        <locationX>2433</locationX>
+        <locationY>2599</locationY>
+        <defaultConnectorLabel>Not Needed</defaultConnectorLabel>
+        <rules>
+            <name>Needed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Chiusura Contatore</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.ServicePoint__r.ImplantType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>1105-Antincendio</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>DocumentaleIdrico</targetReference>
+            </connector>
+            <label>Needed</label>
         </rules>
     </decisions>
     <decisions>
@@ -1493,6 +1545,21 @@
                 <targetReference>Assegna_Process_Type_0_0_0_0</targetReference>
             </connector>
             <label>Recesso per Ripensamento</label>
+        </rules>
+        <rules>
+            <name>Cessazione_Scarichi_Produttivi</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cessazione Scarichi Produttivi</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Process_Type_Scarichi</targetReference>
+            </connector>
+            <label>Cessazione Scarichi Produttivi</label>
         </rules>
     </decisions>
     <decisions>
@@ -1951,6 +2018,11 @@
         <expression>IF(ISBLANK({!Get_Input_Case.WrittenReceiptRequestDate__c} ),TODAY(),{!Get_Input_Case.WrittenReceiptRequestDate__c} )</expression>
     </formulas>
     <formulas>
+        <name>Fase_Disattivazioni</name>
+        <dataType>String</dataType>
+        <expression>IF({!ProcessType}=&apos;Cessazione Scarichi Produttivi&apos;,&apos;In Lavorazione&apos;,IF(AND({!ProcessType} = &apos;Chiusura Contatore&apos;,{!Get_Input_Case.CommodityFormula__c}=&apos;Acqua&apos;,TEXT({!Get_Input_Case.ServicePoint__r.ImplantType__c})=&apos;1105-Antincendio&apos;),&apos;Attesa Modulo Firmato&apos;,&apos;Da Inviare&apos;))</expression>
+    </formulas>
+    <formulas>
         <description>Formula per ottenere il giorno 10 del mese corrente</description>
         <name>Formula_Get_10_current_month</name>
         <dataType>Date</dataType>
@@ -1972,6 +2044,16 @@ DATE( YEAR( TODAY() ), MONTH( TODAY() ) + 1, 1 ) - 1)</expression>
 DATE(YEAR( TODAY()) +1, 1, 31),
 DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     </formulas>
+    <formulas>
+        <name>NetxLabel</name>
+        <dataType>String</dataType>
+        <expression>IF(AND({!ProcessType} = &apos;Chiusura Contatore&apos;,{!Get_Input_Case.CommodityFormula__c}=&apos;Acqua&apos;),&apos;Avanti&apos;,&apos;Conferma Pratica&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>NextLabel</name>
+        <dataType>String</dataType>
+        <expression>IF(AND({!ProcessType} = &apos;Chiusura Contatore&apos;,{!Get_Input_Case.CommodityFormula__c}=&apos;Acqua&apos;),&apos;Avanti&apos;,&apos;Conferma Pratica&apos;)</expression>
+    </formulas>
     <interviewLabel>HDT_FL_GestioneDisattivazioni {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Disattivazioni</label>
     <processMetadataValues>
@@ -1983,7 +2065,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -2214,6 +2296,62 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetRecordTypeScarto</name>
+        <label>GetRecordTypeScarto</label>
+        <locationX>61</locationX>
+        <locationY>3086</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CreaActivityScarto</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_Scarto</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>wrts_prcgvr__Activity__c</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetRecordTypeScarto_0</name>
+        <label>GetRecordTypeScarto</label>
+        <locationX>1678</locationX>
+        <locationY>2966</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CreaActivityScarto_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_Scarto</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>wrts_prcgvr__Activity__c</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetRecordTypeVotiveModena</name>
         <label>GetRecordTypeVotiveModena</label>
         <locationX>4007</locationX>
@@ -2274,62 +2412,6 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>GetRecordTypeScarto</name>
-        <label>GetRecordTypeScarto</label>
-        <locationX>61</locationX>
-        <locationY>3086</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>CreaActivityScarto</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>HDT_RT_Scarto</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>SobjectType</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>wrts_prcgvr__Activity__c</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RecordType</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>GetRecordTypeScarto_0</name>
-        <label>GetRecordTypeScarto</label>
-        <locationX>1678</locationX>
-        <locationY>2966</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>CreaActivityScarto_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>HDT_RT_Scarto</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>SobjectType</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>wrts_prcgvr__Activity__c</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -2564,7 +2646,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Conferma Pratica</stringValue>
+                    <elementReference>NextLabel</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2583,6 +2665,12 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
                 <name>labelPreviousButton</name>
                 <value>
                     <stringValue>Indietro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addContentDocument</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -2911,6 +2999,57 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>DocumentaleIdrico</name>
+        <label>DocumentaleIdrico</label>
+        <locationX>2821</locationX>
+        <locationY>2702</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>inviaMA3</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayTextDocumentale</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Input_Case.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Lwc_Documentale</name>
+            <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Get_Input_Case.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Input_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>source</name>
+                <value>
+                    <elementReference>Get_Input_Case.Origin</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Chiusura Contatore</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>FirstTariForm</name>
         <label>FirstTariForm</label>
         <locationX>490</locationX>
@@ -3030,8 +3169,8 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <screens>
         <name>Loading_Spinner_screen</name>
         <label>Loading Spinner screen</label>
-        <locationX>2734</locationX>
-        <locationY>4670</locationY>
+        <locationX>3089</locationX>
+        <locationY>4548</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>

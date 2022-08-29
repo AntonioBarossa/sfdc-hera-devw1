@@ -45,7 +45,7 @@ export default class HdtActiveRepentant extends LightningElement {
 	messageContext;
 
     get showSpinner(){
-        return this.formLoading || this.loading==0;
+        return this.formLoading || this.loading>0;
     }
 
     get isCase(){
@@ -273,7 +273,7 @@ export default class HdtActiveRepentant extends LightningElement {
         } else {
             console.log("Periodo Ravvedibile Y");
             this.periodType ="Y";
-            this.calculateMissedDue(terms, declarationDate);
+            //this.calculateMissedDue(terms, declarationDate);
             this.showMessage("Attenzione!", this.period.PopupY__c, " error", "sticky");
         }
     }
@@ -294,7 +294,7 @@ export default class HdtActiveRepentant extends LightningElement {
             detail: {
                 dateX: this.limitDateX? this.getFormattedDate(this.limitDateX) : null,
                 dateY: this.limitDateY? this.getFormattedDate(this.limitDateY) : null,
-                missedDue: this.missedDueDate,
+                //missedDue: this.missedDueDate,
                 period: this.periodType
             }
         });
@@ -318,8 +318,8 @@ export default class HdtActiveRepentant extends LightningElement {
 
         let isPeriodY = event.detail.period=="Y";
 
-        const missingDueAmount = this.template.querySelector("[data-id='MissingDueAmount__c']");
-        if(missingDueAmount)    missingDueAmount.required = event.detail.missedDue? true : false, missingDueAmount.disabled = !isPeriodY; missingDueAmount.value = isPeriodY? missingDueAmount.value : "";        
+        //const missingDueAmount = this.template.querySelector("[data-id='MissingDueAmount__c']");
+        //if(missingDueAmount)    missingDueAmount.required = event.detail.missedDue? true : false, missingDueAmount.disabled = !isPeriodY; missingDueAmount.value = isPeriodY? missingDueAmount.value : "";        
         
         const decline = this.template.querySelector("[data-id='DeclineComputationSupport__c']");
         if(decline) decline.required = isPeriodY;
@@ -327,7 +327,7 @@ export default class HdtActiveRepentant extends LightningElement {
         const refusal = this.template.querySelector("[data-id='CustomerRepentanceRefusal__c']");
         if(refusal) refusal.required=isPeriodY;
 
-        this.template.querySelector("[data-id='BlockOnComputation__c']").value = isPeriodY? "Y" : "";
+        this.template.querySelector("[data-id='BlockOnComputation__c']").value = isPeriodY? "Y" : "N";
     }
 
     getFormattedDate(date){

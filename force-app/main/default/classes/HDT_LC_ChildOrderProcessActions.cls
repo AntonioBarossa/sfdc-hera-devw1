@@ -66,7 +66,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }
 
         switch on order.RecordType.DeveloperName {
-            when 'HDT_RT_SubentroAmbiente' {
+            when 'HDT_RT_SubentroAmbiente', 'HDT_RT_AttivazioneAmbiente', 'HDT_RT_CambioTariffa' {
                 if(order.AnnualTARIPayment__c=='Attiva'){       order.TaxpayerDeclarationInfos__c='CHIEDO di ricevere ogni anno il bollettino precompilato per il pagamento della TARI - '+order.TaxpayerDeclarationInfos__c;}
                 if(order.AnnualTARIPayment__c=='Disattiva'){    order.TaxpayerDeclarationInfos__c='CHIEDO la revoca della disposizione di pagamento in unica soluzione - '+order.TaxpayerDeclarationInfos__c;}
                 if( currentOrder.RequestSource__c == 'D’ufficio' 
@@ -78,6 +78,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 }else{
                     orderToUpdate.Phase__c='In attesa perfezionamento documentazione';
                 }
+            }
+            when 'HDT_RT_ModificaTariffaRimozione', 'HDT_RT_AgevolazioniAmbiente'{
+                orderToUpdate.Phase__c = '1 - Avviso di servizio'.equalsIgnoreCase(currentOrder.ApprovalType__c)? 'In Attesa Approvazione' : 'Documentazione Validata';
             }
             when 'HDT_RT_Subentro' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
