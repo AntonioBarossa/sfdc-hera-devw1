@@ -10857,6 +10857,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Modifica Unità Immobilitri%2FComponenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Modifica%2FAzzeramento Consumo Annuo</fullName>
             <default>false</default>
         </values>
