@@ -11,14 +11,29 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>1</fullName>
+                <fullName>COM solo Gas_10</fullName>
                 <default>false</default>
-                <label>1</label>
+                <label>COM solo Gas_10</label>
             </value>
             <value>
-                <fullName>2</fullName>
+                <fullName>Da scad più vecchia</fullName>
                 <default>false</default>
-                <label>2</label>
+                <label>Da scad più vecchia</label>
+            </value>
+            <value>
+                <fullName>SPA solo Acqua_11</fullName>
+                <default>false</default>
+                <label>SPA solo Acqua_11</label>
+            </value>
+            <value>
+                <fullName>SPA solo TIA_12</fullName>
+                <default>false</default>
+                <label>SPA solo TIA_12</label>
+            </value>
+            <value>
+                <fullName>SPA solo TLR_14</fullName>
+                <default>false</default>
+                <label>SPA solo TLR_14</label>
             </value>
         </valueSetDefinition>
     </valueSet>

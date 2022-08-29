@@ -70,77 +70,100 @@ export default class HdtAdvancedSearch extends LightningElement {
             console.log('processType non popolato');
             this.showbuttonforniture=true;
         }
-        else{
+
+        else { 
             this.postSales = true;
             console.log('targetObject'+ JSON.stringify(this.targetobject));
             console.log('processType'+ JSON.stringify(this.processtype));
-            console.log('additionalFilter'+ JSON.stringify(this.additionalfilter));
+            
             getCustomMetadata({processType:this.processtype}).then(data =>{
                 console.log('data custom metadata '+JSON.stringify(data));
                 console.log('data.FornitureCliente__c  '+JSON.stringify(data.FornitureCliente__c ));
                 console.log('data.StatoContratto__c  '+JSON.stringify(data.StatoContratto__c ));
                 console.log('data.ContrattiCliente__c '+ JSON.stringify(data.ContrattiCliente__c ));
                 console.log('data.statoFornitura '+ JSON.stringify(data.StatoFornitura__c ));
+                console.log('data.Disalimentable__c '+ JSON.stringify(data.Disalimentable__c ));
+                console.log('data.RateCategory__c '+ JSON.stringify(data.RateCategory__c ));
 
                 let statusSplit=[];
                 let TipoServizioSplit=[];
-                
+                let RateCategorySplit=[];
+
+                if(this.additionalfilter===undefined){
+                    this.additionalfilter='';
+                }
+                console.log('additionalFilter'+ JSON.stringify(this.additionalfilter));
+
                 if(data.FornitureCliente__c == 'SI')
                 {
                     console.log('entra in forniture cliente == SI');
 
                     if(data.StatoFornitura__c != undefined && data.StatoFornitura__c!='')
                     {
-
                         statusSplit = data.StatoFornitura__c.split(",");
                         console.log('statusSplit in statoFornitura *****'+JSON.stringify(statusSplit));
-                        console.log('statusSplit in statoFornitura *****'+JSON.stringify(statusSplit));
-
-                        if(statusSplit.length > 1 && statusSplit.length < 3){
-                
-                            this.additionalfilter= ' AND (MeterStatus__c =\''+statusSplit[0]+'\''+'OR MeterStatus__c = \''+statusSplit[1]+'\''+ 'OR MeterStatus__c = \'\')';
-                            console.log('entra in lenght==1 ');
                         
-                    }
-                    else if(statusSplit.length > 2){
-                        
-                        this.additionalfilter= ' AND (MeterStatus__c =\''+statusSplit[0]+'\''+'OR MeterStatus__c = \''+statusSplit[1]+'\''+'OR MeterStatus__c = \''+statusSplit[2]+'\''+ 'OR MeterStatus__c = \'\')';
-                        console.log('entra in lenght>2 si');
-                    
+                        this.additionalfilter+=' AND MeterStatus__c IN('
+                        for(let i=0; i<statusSplit.length-1;i++) {
+                            this.additionalfilter+='\''+ statusSplit[i]+'\',';
                         }
-                    else if(statusSplit.length > 0)
-                    {
-            
-                            this.additionalfilter= 'AND (MeterStatus__c =\''+data.StatoFornitura__c+'\''+ 'OR MeterStatus__c = \'\')'; 
-                    }
+                        this.additionalfilter+= '\''+ statusSplit[statusSplit.length-1]+'\'';
+                        this.additionalfilter+=')';
+                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
                     }
                     
-                    if(data.TipoServizio__c!= undefined&&data.TipoServizio__c!='')
+                    if(data.TipoServizio__c!= undefined && data.TipoServizio__c!='')
                     {
                         TipoServizioSplit = data.TipoServizio__c.split(",");
                         console.log('TipoServizioSplit *****'+JSON.stringify(TipoServizioSplit));
-                        //this.submitFornitura();
+                        
+                        this.additionalfilter+=' AND CommoditySector__c IN('
+                        for(let i=0; i<TipoServizioSplit.length-1;i++) {
+                            this.additionalfilter+='\''+ TipoServizioSplit[i]+'\',';
+                        }
+                        this.additionalfilter+= '\''+ TipoServizioSplit[TipoServizioSplit.length-1]+'\'';
+                        this.additionalfilter+=')';
+                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
+                    }
+                            
+                    if(data.Disalimentabile__c!= undefined && data.Disalimentabile__c!=''){
+                        this.additionalfilter+=' AND Disconnectable__c = \''+Disconnectable__c+'\'';
+                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
+                    }
+
+                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && this.processtype !='Chiusura Contatore' && this.processtype != 'Esenz./modifica Fognatura Depurazione'){
+                        RateCategorySplit = data.RateCategory__c.split(",");
+                        console.log('RateCategorySplit *****'+JSON.stringify(RateCategorySplit));
+
+                            this.additionalfilter+=' AND RateCategory__c IN('
+                            for(let i=0; i<RateCategorySplit.length-1;i++) {
+                                this.additionalfilter+='\''+ RateCategorySplit[i]+'\',';
+                            }
+                            this.additionalfilter+= '\''+ RateCategorySplit[RateCategorySplit.length-1]+'\'';
+                            this.additionalfilter+=')';
+                            console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
+                    }
+
+                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && this.processtype ==='Chiusura Contatore' || this.processtype === 'Esenz./modifica Fognatura Depurazione'){
+                        RateCategorySplit = data.RateCategory__c.split(",");
+                        console.log('RateCategorySplit *****'+JSON.stringify(RateCategorySplit));
+
+                            this.additionalfilter+=' AND RateCategory__c NOT IN('
+                            for(let i=0; i<RateCategorySplit.length-1;i++) {
+                                this.additionalfilter+='\''+ RateCategorySplit[i]+'\',';
+                            }
+                            this.additionalfilter+= '\''+ RateCategorySplit[RateCategorySplit.length-1]+'\'';
+                            this.additionalfilter+=')';
+
+                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
                     }
                     
-                
-
-
-                    if(TipoServizioSplit.length >1){
-
-                        this.additionalfilter+=' AND (CommoditySector__c = \''+TipoServizioSplit[0]+'\''+'OR CommoditySector__c = \''+TipoServizioSplit[1]+'\')';
-                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    }
-                    else
-                    {     
-                        this.additionalfilter+=' AND CommoditySector__c = \''+data.TipoServizio__c+'\'';
-                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    }
-                
                     console.log('additionalFilter pre final :  '+ this.additionalfilter);
                     this.additionalFilterFinal = this.additionalfilter;
                     console.log('additionalFilter post final :  '+ this.additionalFilterFinal);
                     this.submitFornitura();
                 }
+
             });
         }
 
@@ -598,7 +621,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         let servPoint = this.rowToSend;
         let pointCode = servPoint['Codice Punto'];
         let implantCode = servPoint['Impianto SAP'];
-        let codeCallApi = servPoint['Codice Punto'] != null && servPoint['Codice Punto'] != undefined && servPoint['Codice Punto'] != ''?pointCode:implantCode;
+        let codeCallApi = servPoint['Codice Punto'] !== null && servPoint['Codice Punto'] !== undefined && servPoint['Codice Punto'] !== ''?pointCode:!implantCode ? '' : implantCode;
         this.callApi(codeCallApi, 'confirm').then(() => {
             this.preloading = true;
             this.closeModal();

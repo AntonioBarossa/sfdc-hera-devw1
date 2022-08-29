@@ -7759,6 +7759,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Elaborazione Manuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità OK</fullName>
             <default>false</default>
         </values>
@@ -10182,6 +10186,10 @@
         <picklist>Type</picklist>
         <values>
             <fullName>Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cessazione Scarichi Produttivi</fullName>
             <default>false</default>
         </values>
         <values>
