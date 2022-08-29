@@ -7421,10 +7421,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Verifica Interna</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Verifica Pareggio Fittizio Canone Rai</fullName>
             <default>false</default>
         </values>
@@ -10677,6 +10673,10 @@
         <picklist>Type</picklist>
         <values>
             <fullName>Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Interna</fullName>
             <default>false</default>
         </values>
         <values>
