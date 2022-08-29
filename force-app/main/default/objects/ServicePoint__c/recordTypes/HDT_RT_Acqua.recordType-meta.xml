@@ -623,27 +623,11 @@
     <picklistValues>
         <picklist>SupplyTypeTemp__c</picklist>
         <values>
-            <fullName>Altri usi</fullName>
+            <fullName>Domestico</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Usi industriali che scaricano in pubblica fognatura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso civile domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso civile non domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso diverso da domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso domestico</fullName>
+            <fullName>Non Domestico</fullName>
             <default>false</default>
         </values>
     </picklistValues>
