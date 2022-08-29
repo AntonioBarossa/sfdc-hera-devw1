@@ -22,10 +22,10 @@ jobs:
 
     - name: Call Jenkins
     
-      # uses: appleboy/jenkins-action@master
-      # with:
-        # url: "https://hdt-jenkins.esf.eng.it/"
-        # user: "heraadmin"
-        # token: ${{ secrets.TOKEN }}
-        # job: "HDT_Salesforce/Wave1/Align_Branches_From_master"
-      run: echo "Test ${{ github.event.inputs.name }}"
+      uses: appleboy/jenkins-action@master
+      with:
+        url: "https://hdt-jenkins.esf.eng.it/"
+        user: "heraApiUser"
+        token: ${{ secrets.JENKINS_TOKEN }}
+        job: "HDT_Salesforce/Wave1/Align_Branches_From_master"
+      # run: echo "Test ${{ github.event.inputs.name }}"
