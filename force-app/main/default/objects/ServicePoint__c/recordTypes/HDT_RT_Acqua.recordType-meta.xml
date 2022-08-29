@@ -619,10 +619,6 @@
             <fullName>Uso pubblico disalimentabile</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Uso pubblico non disalimentabile</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SupplyTypeTemp__c</picklist>
