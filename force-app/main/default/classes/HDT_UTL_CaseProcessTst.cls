@@ -69,8 +69,26 @@ public with sharing class HDT_UTL_CaseProcessTst {
         nonReqContr.RelatedCase__c = caseList[0].Id;
         nonReqContr.Type = 'Contratto Non Richiesto';
         insert nonReqContr;
-        
 
+        //START MODIFICA marco.arci@webresults.it
+        List<Contract> fakeContracts = HDT_UTL_DataFactoryTst.createContract(2, false, accList[0].id);
+        fakeContracts[0].BillingCity = 'casaVar';
+        fakeContracts[0].BillingStreet = 'via testVar';
+
+        fakeContracts[1].BillingCity = 'casaCes';
+        fakeContracts[1].BillingStreet = 'via testCes';
+        insert fakeContracts;
+
+        list<Case> listFakeCases = HDT_UTL_DataFactoryTst.createCase(2, false, accList[0].Id, null, null, null, null);
+        listFakeCases[0].Type = 'Modifica post accertamento';
+        listFakeCases[0].SupplyCity__c = 'casaVar';
+        listFakeCases[0].SupplyStreetName__c = 'via testVar';
+
+        listFakeCases[1].Type = 'Cessazione post accertamento';
+        listFakeCases[1].SupplyCity__c = 'casaCes';
+        listFakeCases[1].SupplyStreetName__c = 'via testCes';
+        insert listFakeCases;
+        //END MODIFICA marco.arci@webresults.it
     }
     
     
@@ -301,4 +319,13 @@ public with sharing class HDT_UTL_CaseProcessTst {
 
     }
 
+    //START MODIFICA marco.arci@webresults.it
+    @isTest
+    private static void createActivityFromContractTest(){
+        list<Case> testCases = [SELECT Id, AccountId, ServicePoint__c, SupplyCity__c, SupplyStreetName__c, Type FROM Case WHERE Type IN ('Modifica post accertamento','Cessazione post accertamento')];
+        Test.startTest();
+            HDT_UTL_CaseProcess.createActivityFromContract(testCases);
+        Test.stopTest();
+    }
+    //END MODIFICA marco.arci@webresults.it
 }

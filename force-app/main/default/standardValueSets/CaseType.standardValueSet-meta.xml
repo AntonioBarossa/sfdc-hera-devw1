@@ -217,6 +217,11 @@
         <label>Errore di Fatturazione</label>
     </standardValue>
     <standardValue>
+        <fullName>Esenzione Modifica Fognatura Depurazione</fullName>
+        <default>false</default>
+        <label>Esenzione Modifica Fognatura Depurazione</label>
+    </standardValue>
+    <standardValue>
         <fullName>Esercizio Diritti Privacy</fullName>
         <default>false</default>
         <label>Esercizio Diritti Privacy</label>
@@ -330,6 +335,11 @@
         <fullName>Modifica Impianto</fullName>
         <default>false</default>
         <label>Modifica Impianto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Modifica Unità Immobiliari/Componenti</fullName>
+        <default>false</default>
+        <label>Modifica Unità Immobiliari/Componenti</label>
     </standardValue>
     <standardValue>
         <fullName>Modifica Layout di dettaglio</fullName>
@@ -712,6 +722,11 @@
         <label>Variazione Tensione</label>
     </standardValue>
     <standardValue>
+        <fullName>Istruttoria</fullName>
+        <default>false</default>
+        <label>Istruttoria</label>
+    </standardValue>
+    <standardValue>
         <fullName>Variazione indirizzo di fornitura</fullName>
         <default>false</default>
         <label>Variazione indirizzo di fornitura</label>
@@ -735,6 +750,11 @@
         <fullName>Verifica GDM</fullName>
         <default>false</default>
         <label>Verifica GDM</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Verifica Interna</fullName>
+        <default>false</default>
+        <label>Verifica Interna</label>
     </standardValue>
     <standardValue>
         <fullName>Verifica Pareggio Fittizio Canone Rai</fullName>

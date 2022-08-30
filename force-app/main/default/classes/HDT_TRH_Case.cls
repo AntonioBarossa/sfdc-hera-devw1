@@ -5,7 +5,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         HDT_UTL_CaseProcess.setCloseStatusForAll(Trigger.new);
         markCasesFromCurrentUser();
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
-
+        HDT_UTL_CaseProcess.predefaultCaseValues((List<Case>)Trigger.new,null);
     }
 
  	//public override void beforeDelete(){}
@@ -53,7 +53,8 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 
         HDT_UTL_CaseProcess.updateServiceRequest(trigger.new, trigger.old);
         
-        HDT_UTL_Dependencies.processSequentializationBefore(Trigger.newMap,Trigger.oldMap,'Case'); 
+        HDT_UTL_Dependencies.processSequentializationBefore(Trigger.newMap,Trigger.oldMap,'Case');
+        HDT_UTL_CaseProcess.predefaultCaseValues((List<Case>)Trigger.new,Trigger.oldMap);
 
     }
 

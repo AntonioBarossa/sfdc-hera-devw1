@@ -1863,6 +1863,30 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G1 - MMS Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G2 - MMS Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G3 - MMS Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 - MMS Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G5 - MMS Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 - MMS Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>GENESI-Altro</fullName>
             <default>false</default>
         </values>
