@@ -121,6 +121,15 @@ public inherited sharing class HDT_UTL_Case {
             }
             output.count = output.servicePointId.size();
         }
+        else if('RemoveFacilityBundle'.equalsIgnoreCase(process)){
+            boolean result = true;
+            List<OrderItem> items = new HDT_QR_OrderItem().getItemsFromQuote(inputs[0].quoteId);
+            for(OrderItem item : items){
+                if(item.SBQQ__OrderedQuantity__c>0){result=false;break;}
+            }
+            result&=items.isEmpty();
+            output.isCompatible = result? '' : 'NO';
+        }
 
 
         outputs.add(output);
@@ -150,6 +159,8 @@ public inherited sharing class HDT_UTL_Case {
         public String cancellationNote;
         @InvocableVariable
         public String genericInputString;
+        @InvocableVariable
+        public String quoteId;
 
 
     }
