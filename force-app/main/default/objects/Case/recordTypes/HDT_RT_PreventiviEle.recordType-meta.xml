@@ -988,10 +988,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>Commodity__c</picklist>
-        <!-- <values>
+        <values>
             <fullName>Acqua</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <!-- <values>
             <fullName>Ambiente</fullName>
             <default>false</default>
