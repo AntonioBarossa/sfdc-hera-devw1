@@ -8,7 +8,7 @@ public inherited sharing class HDT_UTL_Case {
 
     private static HDT_QR_AccountContactRelation accountContactRelationQr = new HDT_QR_AccountContactRelation();
 
-    @InvocableMethod(label='Predefault')
+    @InvocableMethod(label='HDT_UTL_Case caseFlowPredefaults')
     public static List<HDT_UTL_FlowOutputs> caseFlowPredefaults(List<HDT_UTL_FlowInputs> inputs){
 
         HDT_QR_Case caseQr = new HDT_QR_Case();
@@ -50,28 +50,34 @@ public inherited sharing class HDT_UTL_Case {
                 }
                 
                 // output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
-                switch on city.SDV__c {
-                    when 'HCM' {
-                        output.salesCompanyCode = '10V0000160';
-                        output.salesCompany = 'Hera Comm Marche';
-                    }
-                    when 'HC' {
-                        output.salesCompanyCode = '13V0000000';
-                        output.salesCompany = 'Hera Comm S.p.A.';
-                    }
-                    when 'EENE'{
-                        if(currentCase.Commodity__c!= null && currentCase.Commodity__c.equalsIgnoreCase('Energia Elettrica')){
-                            output.salesCompanyCode = '13V0000170';
-                        }else {
-                            output.salesCompanyCode = '10V0000263';
+                if(String.isNotBlank(currentCase.Commodity__c) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
+                    output.salesCompanyCode = '11-HERASPA';
+                    output.salesCompany = 'Hera Comm S.p.A';
+                }else {
+                    switch on city.SDV__c {
+                        when 'HCM' {
+                            output.salesCompanyCode = '10V0000160';
+                            output.salesCompany = 'Hera Comm Marche';
                         }
-                        output.salesCompany = 'ESTENERGY SPA';
-                    }
-                    when else {
-                        output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
-                        output.salesCompany = city.SDV__c;
+                        when 'HC' {
+                            output.salesCompanyCode = '13V0000000';
+                            output.salesCompany = 'Hera Comm S.p.A.';
+                        }
+                        when 'EENE'{
+                            if(currentCase.Commodity__c!= null && currentCase.Commodity__c.equalsIgnoreCase('Energia Elettrica')){
+                                output.salesCompanyCode = '13V0000170';
+                            }else {
+                                output.salesCompanyCode = '10V0000263';
+                            }
+                            output.salesCompany = 'ESTENERGY SPA';
+                        }
+                        when else {
+                            output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
+                            output.salesCompany = city.SDV__c;
+                        }
                     }
                 }
+                
                 //output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
                 //output.salesCompany = city.SDV__c;
             }
