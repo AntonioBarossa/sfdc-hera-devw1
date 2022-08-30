@@ -392,29 +392,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Aggiorna_Fase_in_Elaborazione_Manuale</name>
-        <label>Aggiorna Fase in Elaborazione Manuale</label>
-        <locationX>4141</locationX>
-        <locationY>1716</locationY>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Elaborazione Manuale</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetInputCaseAggiornato.Status</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Aggiorna_Case_0_0_0_0_0_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Aggiorna_Fase_in_Elaborazione_Manuale_0</name>
         <label>Aggiorna Fase in Elaborazione Manuale</label>
         <locationX>4765</locationX>
@@ -435,6 +412,49 @@
         </assignmentItems>
         <connector>
             <targetReference>GetCaseAggiornatoMancataLettura</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema</name>
+        <label>Aggiorna Fase in Elaborazione Manuale</label>
+        <locationX>4022</locationX>
+        <locationY>1761</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Elaborazione Manuale</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCaseAggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0</name>
+        <label>Aggiorna Fase in Elaborazione Manuale</label>
+        <locationX>3382</locationX>
+        <locationY>2730</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoFondoFughe.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoFondoFughe.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -887,6 +907,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Valori_Fondo_Fughe</name>
+        <label>Assegna Valori</label>
+        <locationX>3669</locationX>
+        <locationY>1620</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SupplyType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__r.SupplyType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_Fondo_Fughe</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaFoundOtherCase</name>
         <label>Assegna FoundOtherCase</label>
         <locationX>534</locationX>
@@ -1089,8 +1125,8 @@
     <decisions>
         <name>Avanzamento_Lettura</name>
         <label>Avanzamento Lettura</label>
-        <locationX>3823</locationX>
-        <locationY>1328</locationY>
+        <locationX>3834</locationX>
+        <locationY>1178</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_Reading</name>
@@ -1126,6 +1162,50 @@
             </conditions>
             <connector>
                 <targetReference>Annulla_Prestazione_0_0_0_0_0_0_0</targetReference>
+            </connector>
+            <label>Annullamento</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Avanzamento_Lettura_FondoFughe</name>
+        <label>Avanzamento Lettura</label>
+        <locationX>3376</locationX>
+        <locationY>2361</locationY>
+        <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
+        <rules>
+            <name>Conferma_Reading_FondoFughe</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtSelfReadingFondoFughe.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtSelfReadingFondoFughe.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetCaseAggiornatoFondoFughe</targetReference>
+            </connector>
+            <label>Conferma</label>
+        </rules>
+        <rules>
+            <name>Annullamento_Reading_FondoFughe</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtSelfReadingFondoFughe.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annulla_Prestazione_FondoFughe</targetReference>
             </connector>
             <label>Annullamento</label>
         </rules>
@@ -1337,11 +1417,8 @@
     <decisions>
         <name>InRete_o_ExtraRete</name>
         <label>InRete o ExtraRete?</label>
-        <locationX>4009</locationX>
-        <locationY>1596</locationY>
-        <defaultConnector>
-            <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale</targetReference>
-        </defaultConnector>
+        <locationX>4013</locationX>
+        <locationY>1600</locationY>
         <defaultConnectorLabel>ExtraRete</defaultConnectorLabel>
         <rules>
             <name>InRete</name>
@@ -1357,6 +1434,21 @@
                 <targetReference>Calcolo_Codice_Causale_0_0</targetReference>
             </connector>
             <label>InRete</label>
+        </rules>
+        <rules>
+            <name>ExtraSistema</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema</targetReference>
+            </connector>
+            <label>ExtraSistema</label>
         </rules>
     </decisions>
     <decisions>
@@ -1844,10 +1936,61 @@
         </rules>
     </decisions>
     <decisions>
+        <name>OutcomeFormFondoFughe</name>
+        <label>OutcomeFormFondoFughe</label>
+        <locationX>3376</locationX>
+        <locationY>2001</locationY>
+        <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
+        <rules>
+            <name>AnnullataFondoFughe</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditFormFondoFughe.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditFormFondoFughe.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annulla_Prestazione_FondoFughe</targetReference>
+            </connector>
+            <label>Annullata</label>
+        </rules>
+        <rules>
+            <name>ConfermaFondoFughe</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditFormFondoFughe.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditFormFondoFughe.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Autolettura_FondoFughe</targetReference>
+            </connector>
+            <label>Conferma</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Quale_Processo</name>
         <label>Quale Processo?</label>
         <locationX>3660</locationX>
-        <locationY>618</locationY>
+        <locationY>617</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Fiscale</name>
@@ -2055,6 +2198,21 @@
             </connector>
             <label>Variazioni Tari</label>
         </rules>
+        <rules>
+            <name>Adesione_Rinuncia_Fondo_Fughe</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Adesione Rinuncia Fondo Fughe</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Valori_Fondo_Fughe</targetReference>
+            </connector>
+            <label>Adesione Rinuncia Fondo Fughe</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Seleziona_Documenti</name>
@@ -2140,7 +2298,7 @@
     <formulas>
         <name>DistributorNoteFormula</name>
         <dataType>String</dataType>
-        <expression>TEXT({!GetCaseAggiornato.ChangeDate__c}) &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.ReadingDate__c}) &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.NewMeterCode__c})</expression>
+        <expression>TEXT({!GetCaseAggiornato.ChangeDate__c}) &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.ReadingDate__c}) &amp; &quot;;&quot; &amp; {!GetCaseAggiornato.MeterCodeNew__c}</expression>
     </formulas>
     <formulas>
         <name>NextLabel</name>
@@ -2660,6 +2818,27 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetCaseAggiornatoFondoFughe</name>
+        <label>GetCaseAggiornatoFondoFughe</label>
+        <locationX>3382</locationX>
+        <locationY>2554</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetCaseAggiornatoMancataLettura</name>
         <label>GetCaseAggiornatoMancataLettura</label>
         <locationX>4765</locationX>
@@ -2916,8 +3095,11 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>4141</locationX>
-        <locationY>1836</locationY>
+        <locationX>4021</locationX>
+        <locationY>1924</locationY>
+        <connector>
+            <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema</targetReference>
+        </connector>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -2955,12 +3137,29 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0</name>
+        <label>Aggiorna Case</label>
+        <locationX>3382</locationX>
+        <locationY>2890</locationY>
+        <inputReference>GetCaseAggiornatoFondoFughe</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Aggiorna_Case_Billing_Profile</name>
         <label>Aggiorna Case Billing  Profile</label>
         <locationX>4898</locationX>
         <locationY>978</locationY>
         <connector>
             <targetReference>Screen_Selezione_Indirizzo_0</targetReference>
+        </connector>
+        <inputReference>GetInputCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_Fondo_Fughe</name>
+        <label>Aggiorna Case</label>
+        <locationX>3669</locationX>
+        <locationY>1808</locationY>
+        <connector>
+            <targetReference>Screen_Input_Fiscale_Fondo_Fughe</targetReference>
         </connector>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
@@ -3373,6 +3572,94 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Screen_Autolettura_FondoFughe</name>
+        <label>Screen Autolettura</label>
+        <locationX>3384</locationX>
+        <locationY>2203</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Avanzamento_Lettura_FondoFughe</targetReference>
+        </connector>
+        <fields>
+            <name>hdtSelfReadingFondoFughe</name>
+            <extensionName>c:hdtSelfReading</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>allowSmallerReading</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>commodity</name>
+                <value>
+                    <elementReference>GetInputCase.CommodityFormula__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>disabledReadingDate</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>object</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetInputCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>resumedFromDraft</name>
+                <value>
+                    <elementReference>ResumeFromDraft</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>servicePointId</name>
+                <value>
+                    <elementReference>GetInputCase.ServicePoint__r.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showBackButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showCancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showDraftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Screen_Criteri_Eleggibilita</name>
         <label>Screen Criteri Eleggibilita</label>
         <locationX>2032</locationX>
@@ -3508,6 +3795,123 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Input_Fiscale_Fondo_Fughe</name>
+        <label>Screen Input Fiscale Fondo Fughe</label>
+        <locationX>3669</locationX>
+        <locationY>1999</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>OutcomeFormFondoFughe</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayTextFondoFughe</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compila manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtRecordEditFormFondoFughe</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelPreviousButton</name>
+                <value>
+                    <stringValue>Indietro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addContentDocument</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>ProcessTypeCambioCont</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetInputCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>GetInputCase.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
@@ -5221,6 +5625,31 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <name>ProcessType</name>
             <value>
                 <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annulla_Prestazione_FondoFughe</name>
+        <label>Annulla Prestazione</label>
+        <locationX>3111</locationX>
+        <locationY>2088</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
             </value>
         </inputAssignments>
     </subflows>
