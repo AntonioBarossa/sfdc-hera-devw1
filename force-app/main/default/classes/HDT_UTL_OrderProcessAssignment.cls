@@ -204,7 +204,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         system.debug(LoggingLevel.DEBUG, 'getAvailableProcesses - isReseller: ' +isReseller);
 
         for (ProcessMatrix__c process : allProcesses) {
-            if (
+            if(ord.Commodity__c == 'Ambiente'){
+                availableProcesses.add(process);
+            }
+            else if (
                 //process.meterStatus.contains(ord.ServicePoint__r.MeterStatus__c) && 
                 process.marketOrigin__c.contains(ord.MarketOrigin__c) // || process.marketOrigin__c.isEmpty())
                 && (process.plugPresence__c == plugPresence || process.commodity__c.containsIgnoreCase('Gas') )//aggiustamento plug presence gas
