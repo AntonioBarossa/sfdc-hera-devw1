@@ -1288,6 +1288,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.allSubmitedFields['MeterClass__c'] === undefined || this.allSubmitedFields['MeterClass__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Classe Contatore, ');
             }
+            if (this.allSubmitedFields['Disconnectable__c'] === 'No' && (this.allSubmitedFields['DisconnectibilityType__c'] === undefined || this.allSubmitedFields['DisconnectibilityType__c'] === '')) {
+                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
+            }
         }
         else if (this.allSubmitedFields['CommoditySector__c'] == 'Gas') {
 
@@ -1395,6 +1398,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             if (this.allSubmitedFields['MeterClass__c'] === undefined || this.allSubmitedFields['MeterClass__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Classe Contatore, ');
+            }
+            if (this.allSubmitedFields['Disconnectable__c'] === 'No' && (this.allSubmitedFields['DisconnectibilityType__c'] === undefined || this.allSubmitedFields['DisconnectibilityType__c'] === '')) {
+                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
             }
         }
         else if (this.allSubmitedFields['CommoditySector__c'] == 'Gas') {
