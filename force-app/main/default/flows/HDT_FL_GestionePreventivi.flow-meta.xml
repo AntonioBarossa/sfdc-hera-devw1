@@ -1591,6 +1591,45 @@
         </rules>
     </decisions>
     <decisions>
+        <name>NecessitaDocumentale</name>
+        <label>Necessita Documentale</label>
+        <locationX>1903</locationX>
+        <locationY>7862</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Documentale</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Si</defaultConnectorLabel>
+        <rules>
+            <name>NotNeeded</name>
+            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Istruttoria</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Nuovo Impianto</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Prestazione_Distrubutore</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Nuovo_Impianto_0</name>
         <label>Nuovo Impianto</label>
         <locationX>2079</locationX>
@@ -1783,31 +1822,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Processo_Istruttoria</name>
-        <label>Processo Istruttoria?</label>
-        <locationX>1903</locationX>
-        <locationY>7862</locationY>
-        <defaultConnector>
-            <targetReference>Screen_Documentale</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Altri Processi</defaultConnectorLabel>
-        <rules>
-            <name>Is_Istruttoria</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Input_Case.Type</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Istruttoria</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Prestazione_Distrubutore</targetReference>
-            </connector>
-            <label>Istruttoria</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Riprendi_Case</name>
         <label>Riprendi Case</label>
         <locationX>3676</locationX>
@@ -1897,7 +1911,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Processo_Istruttoria</targetReference>
+                <targetReference>NecessitaDocumentale</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
