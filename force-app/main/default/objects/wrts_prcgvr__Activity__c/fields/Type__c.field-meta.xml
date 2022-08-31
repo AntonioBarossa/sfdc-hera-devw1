@@ -291,6 +291,11 @@
                 <label>Esito ricevuto su richiesta chiusa</label>
             </value>
             <value>
+                <fullName>Gestione Back Office</fullName>
+                <default>false</default>
+                <label>Gestione Back Office</label>
+            </value>
+            <value>
                 <fullName>Gestione dati discordanti</fullName>
                 <default>false</default>
                 <label>Gestione dati discordanti</label>
@@ -339,6 +344,11 @@
                 <fullName>Gestione Votive</fullName>
                 <default>false</default>
                 <label>Gestione Votive</label>
+            </value>
+            <value>
+                <fullName>Gestire fuga</fullName>
+                <default>false</default>
+                <label>Gestire fuga</label>
             </value>
             <value>
                 <fullName>Giro contatore da gestire</fullName>
@@ -484,6 +494,11 @@
                 <fullName>Protocollo - Reclami</fullName>
                 <default>false</default>
                 <label>Protocollo - Reclami</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Segnalazioni</fullName>
+                <default>false</default>
+                <label>Protocollo - Segnalazioni</label>
             </value>
             <value>
                 <fullName>Protocollo - Reclami Contratti</fullName>

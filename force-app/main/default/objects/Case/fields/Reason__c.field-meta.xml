@@ -377,9 +377,21 @@
             <value>
                 <fullName>Bolletta Fuga H2O</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>Bolletta Fuga H2O</label>
             </value>
+            <value>
+                <fullName>Servizio Avviso Sms/mail</fullName>
+                <default>false</default>
+                <isActive>true</isActive>
+                <label>Servizio Avviso Sms/mail</label>
+            </value>
+            <value>
+                <fullName>Delibera 2018</fullName>
+                <default>false</default>
+                <isActive>true</isActive>
+                <label>Delibera 2018</label>
+            </value>	
             <value>
                 <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
                 <default>false</default>
@@ -426,6 +438,14 @@
         <valueSettings>
             <controllingFieldValue>Modifica/Azzeramento Consumo Annuo</controllingFieldValue>
             <valueName>Edificio in ristrutturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lettura Acqua Avviso al Cliente</controllingFieldValue>
+            <valueName>Servizio Avviso Sms/mail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lettura Acqua Avviso al Cliente</controllingFieldValue>
+            <valueName>Delibera 2018</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Modifica/Azzeramento Consumo Annuo</controllingFieldValue>
@@ -502,6 +522,10 @@
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>Assistenza Sociale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
+            <valueName>Bolletta Fuga H2O</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>

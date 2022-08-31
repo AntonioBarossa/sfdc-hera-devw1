@@ -242,7 +242,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     break;
                 case 'gas':
                     result = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
-                    break
+                    break;
+                case 'tari':
+                    result = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Ambiente';
+                    break;
                 default:
                     result = true;
                     break;
@@ -1200,7 +1203,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         
         let isPeriodY = event.detail.period=="Y";
         this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = isPeriodY;
-        this.template.querySelector("[data-id='BlockOnComputation__c']").value = isPeriodY? "Y" : "", this.sectionDataToSubmit["BlockOnComputation__c"]=isPeriodY? "Y" : "";
+        this.template.querySelector("[data-id='BlockOnComputation__c']").value = isPeriodY? "Y" : "", this.sectionDataToSubmit["BlockOnComputation__c"]=isPeriodY? "Y" : "N";
     }
     
 }

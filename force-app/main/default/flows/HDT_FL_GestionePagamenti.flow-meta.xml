@@ -31,7 +31,7 @@
         <label>checkTari</label>
         <locationX>7662</locationX>
         <locationY>1310</locationY>
-        <actionName>HDT_UTL_ManageTARI</actionName>
+        <actionName>HDT_UTL_ManageTari</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Validazione_Check_Tari</targetReference>
