@@ -50,7 +50,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 hasVerificaRavv: this.order.Account.CompanyOwner__c!=="MMS",
                 hasAllegatiObbligatori: true,
                 diffObjApi: 'Sale',
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente' || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
+                processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente'].includes(this.order.RecordType.DeveloperName),
                 nextActions : () => 
                     {
                         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
@@ -102,7 +102,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                         function(event){
                             if(this.order.RateCategory__c==='TATUDNR001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente' && surf){
                                 const fam = this.template.querySelector("[data-id='FamilyNumber__c']");
-                                let value = cities[order.ServicePoint__r.SupplyCity__c]?.getResident(event.target.value);
+                                let value = cities[order.ServicePoint__r.SupplyCity__c?.toUpperCase()]?.getResident(event.target.value);
                                 if(value && fam)    fam.value = value;
                             }
                     })
