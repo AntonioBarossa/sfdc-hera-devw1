@@ -246,10 +246,32 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 case 'tari':
                     result = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Ambiente';
                     break;
+                case 'acqua':
+                    result = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Acqua';
+                    break;
                 default:
                     result = true;
                     break;
             }
+        }
+        return result;
+    }
+
+    rateCategoryVisibility(evaluationRateCategories)
+    {
+        let evaluationType = evaluationRateCategories.evaluationType;
+        let rateCategories = evaluationRateCategories.rateCategories;
+
+        if(this.order.ServicePoint__r.RecordType.DeveloperName !== 'HDT_RT_Acqua') return true;
+        if(!Array.isArray(rateCategories)) return true;
+        if(evaluationType !== 'visible' && evaluationType !== 'notvisible') return true;
+
+        let rateCategory = this.order.RateCategory__c
+        let result = evaluationType === 'notvisible';
+        for(let rate of rateCategories)
+        {
+            if(rate === rateCategory && evaluationType === 'visible') result = true;
+            if(rate === rateCategory && evaluationType === 'notvisible') result = false;
         }
         return result;
     }

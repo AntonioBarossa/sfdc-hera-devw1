@@ -255,6 +255,11 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.NumeratorGroup__c = servicePoint.NumeratorGroup__c;
         orderToUpdate.isSTG__c = servicePoint.isSTG__c;
         orderToUpdate.surface__c= servicePoint.AreaDeclaredTARI__c;
+        /**@silonghi 2022-08-31
+         * Aggiunta valorizzazione
+         * ATO
+         */
+        orderToUpdate.ATO__c = servicePoint.ATO__c;
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId, Order orderOld){
@@ -378,6 +383,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         if(!orderItemList.isEmpty()){
             if(orderItemList[0].Product2.Family.equalsIgnoreCase('Offerta commerciale')){
                 orderToUpdate.CommercialProductCode__c = orderItemList[0].Product2.ProductCode;
+                orderToUpdate.RateCategory__c = orderItemList[0].Product2.ProductCode;
             }  
             else{
                 orderToUpdate.CommercialProductCode__c = orderItemList[0].Product2.DescriptionSAP__c;

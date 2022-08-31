@@ -36,6 +36,8 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
         return date.getFullYear()+'-'+month+'-'+day;
     }
 
+    const ANNUAL_CONSUM =  { evaluationType: 'notvisible', rateCategories: ['APSCARPRO0'] };
+
     const handleSections = function() {
         this.fields = [
             {
@@ -315,7 +317,16 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 new fieldData('Settore merceologico','CommodityFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Distributore','DistributorFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Mercato di provenienza','MarketOrigin__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Consumi Anno','AnnualConsumption__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('Consumi Anno','AnnualConsumption__c', this.typeVisibility('both') && this.rateCategoryVisibility(ANNUAL_CONSUM), false, true, '',''),
+                new fieldData('Addebito Spese Contrattuali','ContractExpenses__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, true, '',''),
+                new fieldData('Data differita','DeferredDate__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, true, '',''),
+                new fieldData('Data Decorrenza','EffectiveDate__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, true, false, '',''),
+                new fieldData('Tipo Impianto','ImplantType__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, false, '',''),
+                new fieldData('Tipo Fornitura','SupplyType__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, false, '',''),
+                new fieldData('ATO','ATO__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, false, '',''),
+                new fieldData('Conto contrattuale','ContractAccountCode__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, true, '',''),
+                new fieldData('Tariffa','RateCategory__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, true, '',''),
+                new fieldData('Classe Contatore','MeterClass__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, true, '',''),
                 new fieldData('Potenza impegnata','PowerCommitted__c', this.typeVisibility('ele'), false, true, '',''),
                 new fieldData('Potenza disponibile','PowerAvailable__c', this.typeVisibility('ele'), false, true, '',''),
                 new fieldData('Potenza richiesta','PowerRequested__c', this.typeVisibility('ele'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', '',''),

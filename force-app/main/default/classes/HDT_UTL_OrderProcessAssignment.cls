@@ -204,8 +204,16 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         system.debug(LoggingLevel.DEBUG, 'getAvailableProcesses - isReseller: ' +isReseller);
 
         for (ProcessMatrix__c process : allProcesses) {
-            if(ord.Commodity__c == 'Ambiente'){
+            if(ord.Commodity__c == 'Ambiente' && process.Commodity__c == 'Ambiente'){
                 availableProcesses.add(process);
+            }
+            else if(ord.Commodity__c == 'Acqua' && process.Commodity__c == 'Acqua')
+            {
+                availableProcesses.add(process);
+            }
+            else if(process.Commodity__c == 'Acqua' || process.Commodity__c == 'Ambiente')
+            {
+                continue;
             }
             else if (
                 //process.meterStatus.contains(ord.ServicePoint__r.MeterStatus__c) && 

@@ -2407,6 +2407,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ContractExpenses__c</picklist>
+        <values>
+            <fullName>Nessuno Sconto</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Nessun Addebito</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Priority__c</picklist>
         <values>
             <fullName>1</fullName>
@@ -2429,6 +2440,10 @@
         </values>
         <values>
             <fullName>Subentro Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro Acqua</fullName>
             <default>false</default>
         </values>
     </picklistValues>
