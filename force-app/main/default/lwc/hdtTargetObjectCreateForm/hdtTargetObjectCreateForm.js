@@ -312,7 +312,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     fieldsDataObject.push(
                         {
                             fieldname: element,
-                            required: true,
+                            required: false,
                             value: this.servicePointRetrievedData[element],
                             disabled: true
                         }
@@ -445,7 +445,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 } 
-                else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas' || this.recordtype.label === 'Punto Idrico' ) && element === 'SAPImplantCode__c') {
+                else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas' || this.recordtype.label === 'Punto Idrico' || this.recordtype.label === 'Punto Ambiente' ) && element === 'SAPImplantCode__c') {
                     fieldsDataObject.push(
                         {
                             fieldname: element,
