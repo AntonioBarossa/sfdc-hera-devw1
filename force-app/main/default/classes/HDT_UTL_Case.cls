@@ -84,7 +84,7 @@ public inherited sharing class HDT_UTL_Case {
             } 
             catch (Exception e) 
             {   
-                output.isCompatible = 'NON COMPATIBILE';
+                output.isCompatible = e.getMessage();
                 System.debug(LoggingLevel.DEBUG,'Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());    
             }
             
