@@ -600,7 +600,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         alignAccountFields(orderToUpdate, order.AccountId, order);
 
-        alignSaleFields(orderToUpdate, order.Sale__c);
+        if(order.Sale__c != null){
+            alignSaleFields(orderToUpdate, order.Sale__c);
+        }
 
         if(order.SBQQ__Quote__c != null) {
             //alignPrimaryProduct(orderToUpdate, order.SBQQ__Quote__c);
