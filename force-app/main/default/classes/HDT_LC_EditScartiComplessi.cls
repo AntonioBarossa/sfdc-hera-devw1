@@ -5,7 +5,7 @@ public with sharing class HDT_LC_EditScartiComplessi {
         Map<String,Object> responseMap = new Map<String,Object>{'annullamento' => 'NO'};
         Boolean hasOwnership = true;
         try {
-            wrts_prcgvr__Activity__c activity = (wrts_prcgvr__Activity__c)HDT_QR_GenericQuery.getGenericRecords('Id,Case__c, AnnulmentManagement__c, Type__c, isUserActivity__c, Order__c,Order__r.ParentOrder__c,Order__r.ParentOrder__r.AccountId, Order__r.ParentOrder__r.Sale__c,Order__r.Sale__c, Order__r.AccountId,Order__r.ServicePoint__r.Account__c, Order__r.ServicePoint__r.CommoditySector__c,Order__r.RecordType.DeveloperName, Order__r.SwitchOutDate__c', 'wrts_prcgvr__Activity__c', 'Id =\''+recordId+'\'')[0];
+            wrts_prcgvr__Activity__c activity = (wrts_prcgvr__Activity__c)HDT_QR_GenericQuery.getGenericRecords('Id,Case__c, AnnulmentManagement__c, Type__c, isUserActivity__c, Order__c,Order__r.ParentOrder__c, Order__r.PrecheckResultSII__c, Order__r.ParentOrder__r.AccountId, Order__r.ParentOrder__r.Sale__c,Order__r.Sale__c, Order__r.AccountId,Order__r.ServicePoint__r.Account__c, Order__r.ServicePoint__r.CommoditySector__c,Order__r.RecordType.DeveloperName, Order__r.SwitchOutDate__c', 'wrts_prcgvr__Activity__c', 'Id =\''+recordId+'\'')[0];
             if(!activity.isUserActivity__c){
                 hasOwnership=false;
             }
@@ -104,13 +104,13 @@ public with sharing class HDT_LC_EditScartiComplessi {
             }
             when 'HDT_RT_VolturaConSwitch'{
                 step = setStepForVoltureWithSwitch(ord.ServicePoint__r, ord.AccountId);
+                ord.PrecheckResultSII__c = 'KO'.equalsIgnoreCase(ord.PrecheckResultSII__c) ? '' : ord.PrecheckResultSII__c; 
             }
             when 'HDT_RT_SwitchIn'{
                 step = setStepSwitchIn(ord, ord.ServicePoint__r);
             }
         }
-        
-        if (!HDT_UTL_DatabaseService.updateSObject(new Order(Id =  activity.Order__c, Step__c = step))){
+        if (!HDT_UTL_DatabaseService.updateSObject(new Order(Id =  activity.Order__c, Step__c = step, PrecheckResultSII__c = ord.PrecheckResultSII__c))){
             throw new AuraHandledException('Errore Nell\'aggiornamento dell\'order');
         }
     }
@@ -125,9 +125,9 @@ public with sharing class HDT_LC_EditScartiComplessi {
     @TestVisible
     private static Double setStepForVoltureWithSwitch(ServicePoint__c serv, Id accountId){
         Double step = 4;
-        if (serv != null && serv.Account__c != null && serv.Account__c != accountId){
+        /* if (serv != null && serv.Account__c != null && serv.Account__c != accountId){
             step = null;
-        }else if (serv != null && 'Energia Elettrica'.equalsIgnoreCase(serv.CommoditySector__c)){
+        }else  */if (serv != null && 'Energia Elettrica'.equalsIgnoreCase(serv.CommoditySector__c)){
             step = 3;
         }
         return step;

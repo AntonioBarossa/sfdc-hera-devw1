@@ -20,7 +20,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     @api statementType;
     @api defaultRequestObj;
     @track accountData;
-    @track columns;//++++ = columns;
+    columns;//++++ = columns;
     @track joinFilterModal = false;
     //@track error; // to show error message from apex controller.
     @track hasRendered = true;
@@ -40,9 +40,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     allDataFiltered;
     filterOn = false;
     filteredData;
-    amountField;
-    totAmountStored = 0;
-    totAmount = 0;
+    //amountField; montors fix 07/07/2022
+    //totAmountStored = 0; montors fix 07/07/2022
+    //totAmount = 0;montors fix 07/07/2022
     checkboxCount = 0;
     @track showPrintModal = false;
     //error;
@@ -125,9 +125,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 }
             });
 
-            if(idlist.length > 0){
+            //if(idlist.length > 0){
                 this.selectCheckbox();
-            }
+            //}
 
         }
     }
@@ -152,7 +152,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             console.log('# Get Columns from Apex #');
 
             if(result.success){
-                this.columns = result.columnObj;
+                //this.columns = result.columnObj;
+                this.columns = JSON.parse(JSON.stringify(result.columnObj));
+
                 this.confObj = result.confObj.buttonList;
                 console.log('>>> customerCode: ' + result.confObj.customerCode);
                 this.techObj.customerCode = result.confObj.customerCode;
@@ -169,10 +171,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                     this.interObj[i.fieldName] = '';   
                 });
 
-                if(result.confObj.hasAmountField){
-                    this.amountField = this.columns.filter(c => { return c.detail.isAmount == true })[0].fieldName;
-                    console.log('>>> Amount metadata name: ' + this.amountField);
-                }
+                //montors fix 07/07/2022
+                //if(result.confObj.hasAmountField){
+                //    this.amountField = this.columns.filter(c => { return c.detail.isAmount == true })[0].fieldName;
+                //    console.log('>>> Amount metadata name: ' + this.amountField);
+                //}
 
                 this.uniqueId = 'id';
                 this.detailTable = result.confObj.secondLevelApiName;//'secondoLivello';
@@ -440,7 +443,12 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.totRecs = this.allData.length;
         this.setPages(this.allData.length);
         this.onFirst();
-        this.totAmount = this.totAmountStored;
+        //montors fix 07/07/2022
+        //this.totAmount = this.totAmountStored;
+        this.columns.forEach((column) => {
+            column.detail.totAmount = column.detail.totAmountStored;
+        });
+        //montors fix 07/07/2022
         this.showAccountData = true;
         this.avoidSort = '';
         //this.showFile = false;
@@ -673,21 +681,24 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             });
         });
 
-        if(this.accountData.length == count){
-            const checked = Array.from(
-                this.template.querySelectorAll('lightning-input')
-            ).filter(element => element.name == 'headerCheckbox');
-            checked[0].checked = true;
-        } else {
-            const checked = Array.from(
-                this.template.querySelectorAll('lightning-input')
-            ).filter(element => element.name == 'headerCheckbox');
-            checked[0].checked = false;            
+        if(this.accountData != undefined){
+            if(this.accountData.length == count){
+                const checked = Array.from(
+                    this.template.querySelectorAll('lightning-input')
+                ).filter(element => element.name == 'headerCheckbox');
+                checked[0].checked = true;
+            } else {
+                const checked = Array.from(
+                    this.template.querySelectorAll('lightning-input')
+                ).filter(element => element.name == 'headerCheckbox');
+                checked[0].checked = false;            
+            }
         }
     }
 
     checkboxHeaderHandler(event){
         console.log('## checkboxHeaderHandler #');
+
         // Query the DOM
         const checked = Array.from(
             this.template.querySelectorAll('lightning-input')
@@ -699,30 +710,34 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
         let totalResidual = 0.0;
 
-        this.accountData.forEach((i) => {
-            this.template.querySelectorAll('lightning-input').forEach(li => {
-                
+        if(this.accountData != undefined){
 
-                if ( li.type == 'checkbox' && li.name == i[this.uniqueId]) {
-                    if(checked[0]){
-                        li.checked = true;
+            this.accountData.forEach((i) => {
+                this.template.querySelectorAll('lightning-input').forEach(li => {
+                    
 
-                        if(!idlist.includes(i[this.uniqueId])){
-                            idlist.push(i[this.uniqueId]);
-                            totalResidual += parseFloat(i["residuo"]);
+                    if ( li.type == 'checkbox' && li.name == i[this.uniqueId]) {
+                        if(checked[0]){
+                            li.checked = true;
+
+                            if(!idlist.includes(i[this.uniqueId])){
+                                idlist.push(i[this.uniqueId]);
+                                totalResidual += parseFloat(i["residuo"]);
+                            }
+
+                        } else {
+                            li.checked = false;
+                            idlist.splice(idlist.indexOf(i[this.uniqueId]), 1);
+                            totalResidual -= parseFloat(i["residuo"]);
                         }
-
-                    } else {
-                        li.checked = false;
-                        idlist.splice(idlist.indexOf(i[this.uniqueId]), 1);
-                        totalResidual -= parseFloat(i["residuo"]);
                     }
-                }
-                
+                    
+                });
             });
-        });
+        }
         this.residualSelected = (parseFloat(this.residualSelected) + totalResidual).toFixed(2);
         this.checkboxCount = idlist.length.toString();
+
     }
 
     checkboxHandler(event){
@@ -831,7 +846,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                    }
 
                    if(this.showSecondLevel){
-                    this.refreshSecondLevelToChild();
+                    //this.refreshSecondLevelToChild();
                    }
 
                    this.filterOn = false;
@@ -858,17 +873,38 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             return;
         }
 
-        this.totAmount = 0;
-        if(this.amountField != null && this.amountField != ''){
-            obj.data.forEach((e) => { 
-                e.id = e['idPrimoLivelloSAP'];
-                this.totAmount += parseFloat(e[this.amountField]);
+        //montors fix 07/07/2022
+
+        //this.totAmount = 0;
+        //if(this.amountField != null && this.amountField != ''){
+        //    obj.data.forEach((e) => { 
+        //        e.id = e['idPrimoLivelloSAP'];
+        //        this.totAmount += parseFloat(e[this.amountField]);
+        //    });
+        //} else {
+        //    obj.data.forEach((e) => { 
+        //        e.id = e['idPrimoLivelloSAP'];
+        //    });
+        //}
+
+        this.columns.forEach((column) => {
+            column.detail.totAmount = 0;
+        });
+
+        obj.data.forEach((e) => { 
+            e.id = e['idPrimoLivelloSAP'];
+
+            this.columns.forEach((column) => {
+                if(column.showAmount == true && column.detail.type == 'number'){
+                    column.detail.totAmount += parseFloat(e[column.fieldName]);
+                }
             });
-        } else {
-            obj.data.forEach((e) => { 
-                e.id = e['idPrimoLivelloSAP'];
-            });
-        }
+        });
+
+        this.columns.forEach((column) => {
+            column.detail.totAmountStored = column.detail.totAmount;
+        });
+        //montors fix 07/07/2022
 
         this.allData = obj.data;//result.data;
 
@@ -878,7 +914,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             this.accountData = this.allData;
         }
 
-        this.totAmountStored = this.totAmount;
+        //this.totAmountStored = this.totAmount; //montors fix 07/07/2022
         this.firstLevel = obj.data[0];
         this.secondLevelList = obj.data[0][this.detailTable];
         this.totRecs = this.allData.length;
@@ -1069,7 +1105,12 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         var interObj = JSON.parse(event.detail.value);
         this.firstLevelFilterObj = interObj;
         console.log('interObj ' + event.detail.value);
-        this.totAmount = 0;
+        // montors fix 07/07/2022
+        //this.totAmount = 0;
+        this.columns.forEach((column) => {
+            column.detail.totAmount = 0;
+        });
+        // montors fix 07/07/2022
 
         try {
 
@@ -1176,9 +1217,20 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
             this.firstLevel = this.allDataFiltered[0];
             this.secondLevelList = this.allDataFiltered[0][this.detailTable];
-            if(this.amountField != null && this.amountField != ''){
-                this.allDataFiltered.forEach((element) => { this.totAmount +=  parseFloat(element[this.amountField]) });
-            }
+
+            //-------------------
+            //if(this.amountField != null && this.amountField != ''){
+            //    this.allDataFiltered.forEach((element) => { this.totAmount +=  parseFloat(element[this.amountField]) });
+            //}
+
+            this.allDataFiltered.forEach((element) => {
+                this.columns.forEach((column) => {
+                    if(column.showAmount == true && column.detail.type == 'number'){
+                        column.detail.totAmount += parseFloat(element[column.fieldName]);
+                    }
+                });
+            });
+            //******************* */
             var firstRowId = this.allDataFiltered[0][this.uniqueId];
 
             if(this.allDataFiltered.length < this.perpage){

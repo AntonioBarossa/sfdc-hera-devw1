@@ -16,6 +16,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    private static HDT_QR_Order orderQr = new HDT_QR_Order();
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 18/06/2021
@@ -155,6 +156,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             ord.DocumentPackage__c = 'Validato';
             ord.phase__c = 'Registrazione validata';
             ord.SignedDate__c = Date.today();
+            ord.DocumentalPhase__c = 'Plico firmato';
             //ord.status = 'Activated';
         }
         else{
@@ -265,6 +267,8 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                  Order ord = new Order();
                  ord.id = oldActivity.order__c;
                  ord.DocumentPackage__c = 'Validato';
+                 ord.SignedDate__c = Date.today();
+                 ord.DocumentalPhase__c = 'Plico firmato';
                  if(oldActivity.Type__c.containsIgnoreCase('Vocal Order'))
                  {
                      ord.Phase__c = 'Registrazione validata';
@@ -365,10 +369,10 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         Map<Id,Case> caseFieldProcessMap = new Map<Id,Case>();
         Map<Id,Order> orderFieldProcessMap = new Map<Id,Order>();
         if (!caseId.isEmpty()){
-            caseFieldProcessMap = new Map<Id,Case>([SELECT id,Cluster__c,Type,Subprocess__c  FROM Case WHERE Id IN: caseId WITH SECURITY_ENFORCED]);
+            caseFieldProcessMap = new Map<Id,Case>([SELECT id,Cluster__c,Type,Subprocess__c,AccountId  FROM Case WHERE Id IN: caseId WITH SECURITY_ENFORCED]);
         }
         if (!orderId.isEmpty()){
-            orderFieldProcessMap = new Map<Id,Order>([SELECT id,ProcessType__c,Subprocess__c FROM Order WHERE Id IN: orderId WITH SECURITY_ENFORCED]);
+            orderFieldProcessMap = new Map<Id,Order>([SELECT id,Cluster__c, Process__c, ProcessType__c,Subprocess__c,AccountId FROM Order WHERE Id IN: orderId WITH SECURITY_ENFORCED]);
         }
         if (!caseFieldProcessMap.isEmpty() || !orderFieldProcessMap.isEmpty()){
             setAllProcessFields(newActivities, caseFieldProcessMap, orderFieldProcessMap);
@@ -394,12 +398,79 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 act.ParentCluster__c = c.Cluster__c;
                 act.ParentProcess__c = c.Type;
                 act.ParentSubprocess__c = c.Subprocess__c;
+                if(c.AccountId==null){
+                    if(act.Type__c !='Chiamata outbound' && act.Type__c !='Sportello' && act.Type__c !='Chiamata inbound' && act.Type__c !='Richiesta non identificata'){
+                        act.Account__c = c.AccountId;
+                    }
+                }
             }else if (act.Order__c != null && orderFieldProcessMap.containsKey(act.Order__c)){
                 Order o = orderFieldProcessMap.get(act.Order__c);
-                act.ParentCluster__c = null;
-                act.ParentProcess__c = o.ProcessType__c;
-                act.ParentSubprocess__c = o.Subprocess__c;
+                act.ParentCluster__c = o.Cluster__c;
+                act.ParentProcess__c = o.Process__c;
+                act.ParentSubprocess__c = 'Voltura'.equalsIgnoreCase(act.ParentProcess__c)? o.Subprocess__c :  o.ProcessType__c;
+                if(o.AccountId==null){
+                    if(act.Type__c !='Chiamata outbound' && act.Type__c !='Sportello' && act.Type__c !='Chiamata inbound' && act.Type__c !='Richiesta non identificata'){
+                        act.Account__c = o.AccountId;
+                    }
+                }
             }
         }
     }
+
+    public static void setCompanyName(List<wrts_prcgvr__Activity__c> activities){
+        List<wrts_prcgvr__Activity__c> actToCheckList = new List<wrts_prcgvr__Activity__c>();
+        Set<Id> setActivityId = new Set<Id>();
+        Set<Id> setAccountId = new Set<Id>();
+        Set<Id> setOrderId = new Set<Id>();
+        Set<Id> setCaseId = new Set<Id>();
+        
+        for(wrts_prcgvr__Activity__c act : activities) {
+            if (act.CompanyOwner__c == null){
+    
+                if(act.Account__c!=null)setAccountId.add(act.Account__c);
+                if(act.Order__c!=null)setOrderId.add(act.Order__c);
+                if(act.Case__c!=null)setCaseId.add(act.Case__c);
+                setActivityId.add(act.Id);
+            }
+        }
+        Map <Id, Account> mapAccountToId = new Map <Id, Account> ([SELECT Id, CompanyOwner__c FROM Account WHERE Id IN: setAccountId]);
+        Map <Id, Order> mapOrderToId = new Map <Id, Order> ([SELECT Id, CompanyOwner__c FROM Order WHERE Id IN: setOrderId]);
+        Map <Id, Case> mapCaseToId = new Map <Id, Case> ([SELECT Id, CompanyOwner__c FROM Case WHERE Id IN: setCaseId]);
+        List<wrts_prcgvr__Activity__c> actToUpdateList = [SELECT Id, CompanyOwner__c,Account__c,Order__c,Case__c FROM wrts_prcgvr__Activity__c WHERE Id IN: setActivityId];
+        for(wrts_prcgvr__Activity__c act : actToUpdateList){
+            String companyName = getCompanyName(mapAccountToId.get(act.Account__c), mapOrderToId.get(act.Order__c), mapCaseToId.get(act.Case__c));
+            if(companyName!=null){
+                act.CompanyOwner__c = companyName;
+                
+            }
+            else{
+                act.CompanyOwner__c = Label.CompanyNameLabel;
+                
+            }
+            
+        }
+            
+        if(actToUpdateList.size()>0){
+                update actToUpdateList;
+        }
+    }
+    private static String getCompanyName(Account acc,Order order, Case cas){
+        if(acc!=null){
+            if(acc.CompanyOwner__c != null){
+                return acc.CompanyOwner__c;
+            }
+        }
+        if(order!=null){
+            if(order.CompanyOwner__c != null){
+                return order.CompanyOwner__c;
+            }
+        }
+        if(cas!=null){
+            if(cas.CompanyOwner__c != null){
+            return cas.CompanyOwner__c;
+            }
+        }
+        return null;
+    }
+
 }

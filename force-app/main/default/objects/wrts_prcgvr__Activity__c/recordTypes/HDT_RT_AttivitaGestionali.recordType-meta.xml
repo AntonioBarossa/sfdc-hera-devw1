@@ -2762,6 +2762,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Validazione Documentale</fullName>
             <default>false</default>
         </values>
@@ -2793,7 +2797,7 @@
         </values>
         <values>
             <fullName>3</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>

@@ -2741,6 +2741,10 @@
             <fullName>Preavviso Cessazione</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Validation__c</picklist>

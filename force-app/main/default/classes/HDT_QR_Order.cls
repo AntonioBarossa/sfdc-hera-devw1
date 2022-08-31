@@ -616,6 +616,7 @@ public inherited sharing class HDT_QR_Order {
             WHERE ParentOrder__c IN :parentOrderIds
             AND Phase__c NOT IN ('Annullato')
             AND ProcessType__c != ''
+            AND ProcessType__c != 'VAS'
             WITH SECURITY_ENFORCED
         ];
     }
@@ -631,6 +632,7 @@ public inherited sharing class HDT_QR_Order {
         return [
             SELECT
             Phase__c,
+            PhaseStory__c,
             isTransition__c ,
             recordtype.developername,
             AutorizationVolturaThirdTrader__c,
@@ -1282,7 +1284,7 @@ public inherited sharing class HDT_QR_Order {
         FROM Order
         WHERE ParentOrder__c = :parentOrderId
         AND QualityCall__c = true
-        AND VasSubtype__c != 'Analisi Consumi'
+        AND (VasSubtype__c != 'Analisi Consumi' OR ComfortCallDaysDue__c != NULL)
         AND Phase__c NOT IN ('Completata','Annullato')
         WITH SECURITY_ENFORCED
         ];
@@ -1330,6 +1332,7 @@ public inherited sharing class HDT_QR_Order {
         return [
             Select 
             id,
+            Phase__c,
             AgencyCode__c
             from Order 
             Where id = :id

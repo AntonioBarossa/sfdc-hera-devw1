@@ -6986,6 +6986,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Notifica Addebito/Rimborso Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>VOTIVE Modena/Nuovo contratto</fullName>
             <default>false</default>
         </values>
@@ -9112,6 +9116,14 @@
         </values>
         <values>
             <fullName>CC_KN_team13</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Staff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Staff</fullName>
             <default>false</default>
         </values>
         <values>
