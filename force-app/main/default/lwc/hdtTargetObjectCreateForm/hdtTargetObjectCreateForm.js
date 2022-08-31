@@ -343,7 +343,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         {
                             fieldname: element,
                             required: true,
-                            value: this.servicePointRetrievedData[element],
+                            value: 'Regolamentato',
                             disabled: false
                         }
                     )
@@ -602,12 +602,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     )
                 }
 
-                else if(this.recordtype.label === 'Punto Idrico' && element === 'MarketOrigin__c' && this.allSubmitedFields['CommoditySector__c'] == 'Acqua'){
+                else if(this.recordtype.label === 'Punto Idrico' && element === 'MarketOrigin__c'){
                     fieldsDataObject.push(
                         {
                             fieldname: element,
                             required: false,
-                            value: this.servicePointRetrievedData[element],
+                            value: 'Regolamentato',
                             disabled: false
                         }
                     )
