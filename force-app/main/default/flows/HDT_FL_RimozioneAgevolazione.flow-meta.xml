@@ -126,6 +126,20 @@
                 <elementReference>getRecordTypeChild.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Assign_Parent_Order.ContractReference__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ContrattoAgevolazione.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Assign_Parent_Order.ServicePoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ContrattoAgevolazione.ServicePoint__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Assign_Parent_Order</targetReference>
         </connector>
