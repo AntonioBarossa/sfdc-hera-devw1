@@ -25,7 +25,8 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         List<String> notCancelBillable = new List<String>{
             'Comunicazione verso Heroku Ok',
             'Completata',
-            'Comunicazione verso Heroku'
+            'Comunicazione verso Heroku',
+            'Caricamento Siebel OK'
         };
 
         RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
