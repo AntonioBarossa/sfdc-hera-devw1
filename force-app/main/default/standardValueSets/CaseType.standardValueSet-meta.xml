@@ -337,9 +337,9 @@
         <label>Modifica Impianto</label>
     </standardValue>
     <standardValue>
-        <fullName>Modifica Unità Immobiliari/Componenti</fullName>
+        <fullName>Modifica Unita Immobiliari Componenti</fullName>
         <default>false</default>
-        <label>Modifica Unità Immobiliari/Componenti</label>
+        <label>Modifica Unita Immobiliari Componenti</label>
     </standardValue>
     <standardValue>
         <fullName>Modifica Layout di dettaglio</fullName>
