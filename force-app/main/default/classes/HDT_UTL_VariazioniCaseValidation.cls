@@ -8,7 +8,7 @@ public with sharing class HDT_UTL_VariazioniCaseValidation implements HDT_UTL_Ca
         String caseType = currentCase.Type;
         List<ContentDocumentLink> attachedDocument = new List<ContentDocumentLink>();
         String result;
-        Set<String> processesWithRequiredAttachment = new Set<String>{'Adesione Rinuncia Fondo Fughe'};
+        Set<String> processesWithRequiredAttachment = new Set<String>{'Adesione Rinuncia Fondo Fughe', 'Esenzione Modifica Fognatura Depurazione'};
 
         attachedDocument = caseValidationQr.getDocumentByCaseId(recordId);
 
