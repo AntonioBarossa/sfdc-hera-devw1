@@ -1031,6 +1031,41 @@
         <label>Verifica Fuga Idrica - Acqua</label>
     </customValue>
     <customValue>
+        <fullName>Cambio Tariffa - AMB</fullName>
+        <default>false</default>
+        <label>Cambio Tariffa - AMB</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica Tariffa - AMB</fullName>
+        <default>false</default>
+        <label>Modifica Tariffa - AMB</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica Tariffa - Rimozione Agevolazione - AMB</fullName>
+        <default>false</default>
+        <label>Modifica Tariffa - Rimozione Agevolazione - AMB</label>
+    </customValue>
+    <customValue>
+        <fullName>Subentro Cambio Cat.Tariffa - AMB</fullName>
+        <default>false</default>
+        <label>Subentro Cambio Cat.Tariffa - AMB</label>
+    </customValue>
+    <customValue>
+        <fullName>Subentro - AMB</fullName>
+        <default>false</default>
+        <label>Subentro - AMB</label>
+    </customValue>
+    <customValue>
+        <fullName>Prima Attivazione - AMB</fullName>
+        <default>false</default>
+        <label>Prima Attivazione - AMB</label>
+    </customValue>
+    <customValue>
+        <fullName> </fullName>
+        <default>false</default>
+        <label></label>
+    </customValue>
+    <customValue>
         <fullName>Testo contratto in bolletta - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>

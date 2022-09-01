@@ -146,14 +146,34 @@
         <label>Cambio Offerta Gas</label>
     </customValue>
     <customValue>
-        <fullName>Subentro Acqua</fullName>
+        <fullName>Subentro</fullName>
         <default>false</default>
-        <label>Subentro Acqua</label>
+        <label>Subentro</label>
     </customValue>
     <customValue>
-        <fullName>Prima Attivazione Acqua</fullName>
+        <fullName>Prima Attivazione</fullName>
         <default>false</default>
-        <label>Prima Attivazione Acqua</label>
+        <label>Prima Attivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Cambio Tariffa</fullName>
+        <default>false</default>
+        <label>Cambio Tariffa</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica Tariffa</fullName>
+        <default>false</default>
+        <label>Modifica Tariffa</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica Tariffa - Rimozione Agevolazione</fullName>
+        <default>false</default>
+        <label>Modifica Tariffa - Rimozione Agevolazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Subentro Cambio Cat.Tariffa</fullName>
+        <default>false</default>
+        <label>Subentro Cambio Cat.Tariffa</label>
     </customValue>
     <description>Lista Processi Ordine</description>
     <masterLabel>Processo Ordine</masterLabel>
