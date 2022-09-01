@@ -32912,7 +32912,12 @@
         <editable>false</editable>
         <field>Lead.PurchaseDate__c</field>
         <readable>false</readable>
-    </fieldPermissions>
+</fieldPermissions>
+<fieldPermissions>
+    <editable>true</editable>
+    <field>Order.AnnualTARIPayment__c</field>
+    <readable>true</readable>
+</fieldPermissions>
 <fieldPermissions>
         <editable>false</editable>
         <field>Order.IsMassive__c</field>
