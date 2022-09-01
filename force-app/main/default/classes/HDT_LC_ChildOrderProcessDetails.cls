@@ -115,10 +115,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                 }
             }
             exeChecks(orderToUpdate);
-            
-            if( orderToUpdate.DeferredDate__c != null &&
-                orderToUpdate.DeferredDate__c < orderSrv.addBusinessDay(System.today(),5) && 
-                orderToUpdate.DeferredDate__c > orderSrv.addBusinessDay(System.today(),120) ){
+
+            if( orderToUpdate.DeferredDate__c != null && (
+                orderToUpdate.DeferredDate__c < orderSrv.addBusinessDay(System.today(),5) || 
+                orderToUpdate.DeferredDate__c > orderSrv.addBusinessDay(System.today(),120) ) ){
 
                 throw new AuraHandledException('La data differita popolata erroneamente');
                 

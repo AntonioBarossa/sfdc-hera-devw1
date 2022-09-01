@@ -639,6 +639,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 }
             }
             if(currentSectionName === 'dettaglioImpianto'){
+                if( this.checkFieldAvailable('EffectiveDate__c', true) === '' && this.typeVisibility('acqua'))
+                {
+                    this.showMessage('Errore', 'Popolare il campo Data Decorrenza', 'error');
+                    return;
+                }
                 if( this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
                 {
                     this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');

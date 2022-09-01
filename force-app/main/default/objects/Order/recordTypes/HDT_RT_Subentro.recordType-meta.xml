@@ -2295,7 +2295,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito Consuntivazione KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO DBO</fullName>
             <default>false</default>
         </values>
         <values>
