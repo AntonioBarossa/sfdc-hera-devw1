@@ -116,7 +116,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             }
             exeChecks(orderToUpdate);
 
-            if( orderToUpdate.DeferredDate__c != null && (
+            if( !('Prima Attivazione Acqua'.equalsIgnoreCase(currentOrder.ProcessType__c)) && orderToUpdate.DeferredDate__c != null && (
                 orderToUpdate.DeferredDate__c < orderSrv.addBusinessDay(System.today(),5) || 
                 orderToUpdate.DeferredDate__c > orderSrv.addBusinessDay(System.today(),120) ) ){
 

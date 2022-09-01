@@ -145,6 +145,16 @@
         <default>false</default>
         <label>Cambio Offerta Gas</label>
     </customValue>
+    <customValue>
+        <fullName>Subentro Acqua</fullName>
+        <default>false</default>
+        <label>Subentro Acqua</label>
+    </customValue>
+    <customValue>
+        <fullName>Prima Attivazione Acqua</fullName>
+        <default>false</default>
+        <label>Prima Attivazione Acqua</label>
+    </customValue>
     <description>Lista Processi Ordine</description>
     <masterLabel>Processo Ordine</masterLabel>
     <sorted>false</sorted>
