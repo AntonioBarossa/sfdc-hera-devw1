@@ -474,4 +474,10 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         return null;
     }
 
+    public static void executeOnCloseActions(List<wrts_prcgvr__Activity__c> newTriggerList,  Map<Id,SObject> oldTriggerMap){
+
+        HDT_UTL_ActivityCloseActions.executeOnCloseActions(newTriggerList, oldTriggerMap);
+
+    }
+
 }

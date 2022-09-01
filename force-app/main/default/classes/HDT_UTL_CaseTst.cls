@@ -134,6 +134,48 @@ public with sharing class HDT_UTL_CaseTst {
         System.assert(inputs != null,  'Attenzione, inputs non può essere null!');
         
     }
+
+    @isTest
+    static void removeFacilityBundle(){
+
+        Test.startTest();
+        List<Account> accs = [Select id FROM Account];
+        HDT_UTL_DataFactoryTst.pClickInstance();
+		HDT_UTL_DataFactoryTst.pClickOrderPhase();
+        Id pricebookId = Test.getStandardPricebookId();
+        
+        List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, true, accs[0].id, 'Bozza');
+        
+        List<ServicePoint__c> points = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
+        points[0].CommoditySector__c = 'Gas';
+        insert points;
+        Test.stopTest();
+        
+        List<Order> orders = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1, false, accs[0].id, sales, pricebookId);
+        orders[0].ServicePointCode__c = 'servicepointcode';
+        orders[0].HerokuPracticeCode__c = 'herokucode';
+        orders[0].SupplyType__c = 'Domestico';
+        orders[0].ServicePoint__c = points[0].id;
+        insert orders;
+        
+        List<Product2> prods = HDT_UTL_DataFactoryTst.createProduct2(1, false);
+        prods[0].Family = 'Bonus Percentuale';
+        prods[0].Name = 'Bonus Percentuale GAS Pippo';
+        prods[0].Version__c = 'V1';
+        insert prods;
+        
+        List<PricebookEntry> entries = HDT_UTL_DataFactoryTst.createPricebookEntry(prods, true, pricebookId);
+        
+        HDT_UTL_DataFactoryTst.createOrderItem(1, true, orders[0].id, points[0].id, prods[0].id, entries[0].id);
+
+        List<HDT_UTL_Case.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Case.HDT_UTL_FlowInputs>();
+        HDT_UTL_Case.HDT_UTL_FlowInputs myInput = new HDT_UTL_Case.HDT_UTL_FlowInputs();
+
+        myInput.process = 'RemoveFacilityBundle';
+        myInput.quoteId='';
+        inputs.add(myInput);
+        System.assert(HDT_UTL_Case.caseFlowPredefaults(inputs) != null, 'Attenzione, result non può essere null!');
+    }
     
     @isTest
     private static void createActivityTest(){

@@ -312,7 +312,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     fieldsDataObject.push(
                         {
                             fieldname: element,
-                            required: true,
+                            required: false,
                             value: this.servicePointRetrievedData[element],
                             disabled: true
                         }
@@ -343,7 +343,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         {
                             fieldname: element,
                             required: true,
-                            value: this.servicePointRetrievedData[element],
+                            value: 'Regolamentato',
                             disabled: false
                         }
                     )
@@ -445,7 +445,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 } 
-                else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas' || this.recordtype.label === 'Punto Idrico' ) && element === 'SAPImplantCode__c') {
+                else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas' || this.recordtype.label === 'Punto Idrico' || this.recordtype.label === 'Punto Ambiente' ) && element === 'SAPImplantCode__c') {
                     fieldsDataObject.push(
                         {
                             fieldname: element,
@@ -602,12 +602,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     )
                 }
 
-                else if(this.recordtype.label === 'Punto Idrico' && element === 'MarketOrigin__c' && this.allSubmitedFields['CommoditySector__c'] == 'Acqua'){
+                else if(this.recordtype.label === 'Punto Idrico' && element === 'MarketOrigin__c'){
                     fieldsDataObject.push(
                         {
                             fieldname: element,
                             required: false,
-                            value: this.servicePointRetrievedData[element],
+                            value: 'Regolamentato',
                             disabled: false
                         }
                     )
@@ -1288,6 +1288,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.allSubmitedFields['MeterClass__c'] === undefined || this.allSubmitedFields['MeterClass__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Classe Contatore, ');
             }
+            if (this.allSubmitedFields['Disconnectable__c'] === 'No' && (this.allSubmitedFields['DisconnectibilityType__c'] === undefined || this.allSubmitedFields['DisconnectibilityType__c'] === '')) {
+                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
+            }
         }
         else if (this.allSubmitedFields['CommoditySector__c'] == 'Gas') {
 
@@ -1395,6 +1398,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             if (this.allSubmitedFields['MeterClass__c'] === undefined || this.allSubmitedFields['MeterClass__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Classe Contatore, ');
+            }
+            if (this.allSubmitedFields['Disconnectable__c'] === 'No' && (this.allSubmitedFields['DisconnectibilityType__c'] === undefined || this.allSubmitedFields['DisconnectibilityType__c'] === '')) {
+                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
             }
         }
         else if (this.allSubmitedFields['CommoditySector__c'] == 'Gas') {
