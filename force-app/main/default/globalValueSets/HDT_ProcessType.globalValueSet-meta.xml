@@ -1061,11 +1061,6 @@
         <label>Prima Attivazione - AMB</label>
     </customValue>
     <customValue>
-        <fullName> </fullName>
-        <default>false</default>
-        <label></label>
-    </customValue>
-    <customValue>
         <fullName>Testo contratto in bolletta - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
