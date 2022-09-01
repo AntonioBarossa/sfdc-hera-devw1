@@ -821,6 +821,26 @@
         <label>Gestione M01/M02</label>
     </customValue>
     <customValue>
+        <fullName>Esito KO da DL/SII</fullName>
+        <default>false</default>
+        <label>Esito KO da DL/SII</label>
+    </customValue>
+    <customValue>
+        <fullName>Comunicazioni con DL</fullName>
+        <default>false</default>
+        <label>Comunicazioni con DL</label>
+    </customValue>
+    <customValue>
+        <fullName>Annullamento Allineamento</fullName>
+        <default>false</default>
+        <label>Annullamento Allineamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Eseguire Gestione Manuale SAP</fullName>
+        <default>false</default>
+        <label>Eseguire Gestione Manuale SAP</label>
+    </customValue>
+    <customValue>
         <fullName>Segnalazioni VAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
