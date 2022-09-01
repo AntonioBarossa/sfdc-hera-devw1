@@ -5838,6 +5838,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>DocumentPaymentMethod__c</field>
+            <value>
+                <elementReference>DocumentPaymentMethod</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Email__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>

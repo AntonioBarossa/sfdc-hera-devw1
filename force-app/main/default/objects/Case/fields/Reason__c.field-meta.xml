@@ -90,11 +90,6 @@
                 <label>Informazione su doppio pagamento/incasso</label>
             </value>
             <value>
-                <fullName>Assistenza Sociale</fullName>
-                <default>false</default>
-                <label>Assistenza Sociale</label>
-            </value>
-            <value>
                 <fullName>Calamità Naturali</fullName>
                 <default>false</default>
                 <label>Calamità Naturali</label>
@@ -350,6 +345,21 @@
                 <label>Firma falsa</label>
             </value>
             <value>
+                <fullName>Assistenza sociale (cliente)</fullName>
+                <default>false</default>
+                <label>Assistenza sociale (cliente)</label>
+            </value>
+            <value>
+                <fullName>Assistenza sociale (ente)</fullName>
+                <default>false</default>
+                <label>Assistenza sociale (ente)</label>
+            </value>
+            <value>
+                <fullName>Assistenza Sociale</fullName>
+                <default>false</default>
+                <label>Assistenza Sociale (DEPRECATO)</label>
+            </value>
+            <value>
                 <fullName>Agevolazioni non Energy indirette</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -476,10 +486,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
-            <valueName>Assistenza Sociale</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>Calamità Naturali</valueName>
         </valueSettings>
         <valueSettings>
@@ -537,6 +543,14 @@
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>Piano Straordinario</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
+            <valueName>Assistenza sociale (cliente)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
+            <valueName>Assistenza sociale (ente)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
