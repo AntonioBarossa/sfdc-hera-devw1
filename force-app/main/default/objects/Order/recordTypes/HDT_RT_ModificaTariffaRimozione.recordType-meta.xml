@@ -2689,6 +2689,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Modifica Tariffa - Rimozione Agevolazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Prima Attivazione Ele</fullName>
             <default>false</default>
         </values>

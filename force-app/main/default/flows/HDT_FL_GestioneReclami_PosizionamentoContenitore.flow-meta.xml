@@ -114,7 +114,7 @@
             <assignToReference>getAfterAddress.SupplyStreetNumberExtension__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>AddressForm_0.theCase.SupplyStreetNumberExtension__c</elementReference>
+                <elementReference>AddressForm_0.theCase.InvoicingStreetNumberExtension__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>

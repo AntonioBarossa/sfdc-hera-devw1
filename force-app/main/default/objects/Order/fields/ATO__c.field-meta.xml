@@ -3,7 +3,7 @@
     <fullName>ATO__c</fullName>
     <externalId>false</externalId>
     <label>ATO</label>
-    <length>255</length>
+    <length>50</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <type>Text</type>

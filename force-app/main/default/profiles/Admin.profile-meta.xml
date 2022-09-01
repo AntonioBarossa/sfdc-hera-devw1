@@ -494,6 +494,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>OrderItem.PrintOnBill__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.ConsumptionAnalysis__c</field>
         <readable>true</readable>
@@ -905,7 +910,32 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.AnnualTARIPayment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.CommercialProductLink__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ATO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ContractExpenses__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.DeferredDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.FuiAccess__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7181,6 +7211,46 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.MultiContractBill__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.IntendedUse__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Case.CartographyDetail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.AreaDeclaredTARI__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AdminPriceQuote__c.IntendedUse__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AdminPriceQuote__c.RealEstateUnits__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AdminPriceQuote__c.SupplyUseType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.SupplyUseType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>	
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Case.UseSubCategory__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -23002,6 +23072,11 @@
 	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.PrintOnBill__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__QuoteLine__c.Agency__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -25533,6 +25608,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__SubscriptionConsumptionSchedule__c.SBQQ__UnitOfMeasure__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.PrintOnBill__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -36272,6 +36352,10 @@
         <recordType>Case.HDT_RT_VariazioniEle</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-HDT_VariazioniAcqua</layout>
+        <recordType>Case.HDT_RT_VariazioniAcqua</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-HDT_VerificaTitolaritaPodPdr</layout>
         <recordType>Case.HDT_RT_VerificaTitolaritaPodPdr</recordType>
     </layoutAssignments>
@@ -36286,6 +36370,10 @@
     <layoutAssignments>
         <layout>Case-HDT_VerificheGas</layout>
         <recordType>Case.HDT_RT_VerificheGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VerificheAcqua</layout>
+        <recordType>Case.HDT_RT_VerificheAcqua</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_VotiveModena</layout>
@@ -39616,6 +39704,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>Case.HDT_RT_VariazioniAcqua</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Case.HDT_RT_VerificaDatiAlDl</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -39632,6 +39725,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_VerificheGas</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Case.HDT_RT_VerificheAcqua</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

@@ -1873,6 +1873,30 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G1 - MMS Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G2 - MMS Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G3 - MMS Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 - MMS Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G5 - MMS Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 - MMS Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>GENESI-Altro</fullName>
             <default>false</default>
         </values>
@@ -10765,6 +10789,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esenzione Modifica Fognatura Depurazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esercizio Diritti Privacy</fullName>
             <default>false</default>
         </values>
@@ -10850,6 +10878,10 @@
         </values>
         <values>
             <fullName>Modifica Tariffa Residente%2FNon Residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Unita Immobiliari Componenti</fullName>
             <default>false</default>
         </values>
         <values>
