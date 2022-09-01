@@ -21,7 +21,6 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         List<wrts_prcgvr__ActivityTemplate__c> templates =  HDT_UTL_DataFactoryTst.createActivityTemplate(1, false);
         templates[0].Name = 'Valori non corrispondenti';
         templates[0].wrts_prcgvr__ObjectType__c = 'Order';
-        templates[0].wrts_prcgvr__IsRequired__c = true;
         insert templates;
 
         //Create 1 order one for the parent and one for the child 1
