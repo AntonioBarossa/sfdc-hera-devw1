@@ -2681,6 +2681,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cambio Tariffa</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Connessione con Attivazione</fullName>
             <default>false</default>
         </values>
