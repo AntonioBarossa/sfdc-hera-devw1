@@ -24,5 +24,4 @@ public with sharing class HDT_UTL_VariazioniCaseValidation implements HDT_UTL_Ca
         return result;
 
     }
-
 }

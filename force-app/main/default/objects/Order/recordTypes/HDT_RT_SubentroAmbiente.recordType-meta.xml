@@ -2709,7 +2709,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Subentro</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Subentro Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro Cambio Cat.Tariffa</fullName>
             <default>false</default>
         </values>
         <values>

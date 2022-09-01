@@ -2024,7 +2024,7 @@
             <default>true</default>
         </values>
         <values>
-            <fullName>Y</fullName>
+            <fullName>S</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2295,7 +2295,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito Consuntivazione KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO DBO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2407,6 +2415,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ContractExpenses__c</picklist>
+        <values>
+            <fullName>Nessuno Sconto</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Nessun Addebito</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Priority__c</picklist>
         <values>
             <fullName>1</fullName>
@@ -2429,6 +2448,10 @@
         </values>
         <values>
             <fullName>Subentro Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -151,8 +151,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                     'ALTRO' => 'Altro'
                         };
 
-        servicePointSrv.checkReadAccess('NumeratorGroup__c,CommoditySector__c,IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,SupplyTypeTemp__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyStreetNumberExtension__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
-        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'SupplyStreetName__c,isSTG__c,NumeratorGroup__c,SwitchOutDate__c,SupplyStreetNumberExtension__c,SupplyTypeTemp__c,exciseEle__c,ExciseGas__c,Vat__c,CommoditySector__c,IsRemoteManaged__c,MeterType__c,SwitchInWinback__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,ImplantTypeTemp__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,Pressure__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c,MeterStatus__c,AreaDeclaredTARI__c');
+        servicePointSrv.checkReadAccess('NumeratorGroup__c,ATO__C,CommoditySector__c,IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,SupplyTypeTemp__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyStreetNumberExtension__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'SupplyStreetName__c,ATO__c,isSTG__c,NumeratorGroup__c,SwitchOutDate__c,SupplyStreetNumberExtension__c,SupplyTypeTemp__c,exciseEle__c,ExciseGas__c,Vat__c,CommoditySector__c,IsRemoteManaged__c,MeterType__c,SwitchInWinback__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,ImplantTypeTemp__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,Pressure__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c,MeterStatus__c,AreaDeclaredTARI__c');
 
         ServicePoint__c servicePoint = servicePointList[0];
         
@@ -255,6 +255,11 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.NumeratorGroup__c = servicePoint.NumeratorGroup__c;
         orderToUpdate.isSTG__c = servicePoint.isSTG__c;
         orderToUpdate.surface__c= servicePoint.AreaDeclaredTARI__c;
+        /**@silonghi 2022-08-31
+         * Aggiunta valorizzazione
+         * ATO
+         */
+        orderToUpdate.ATO__c = servicePoint.ATO__c;
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId, Order orderOld){
@@ -378,6 +383,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         if(!orderItemList.isEmpty()){
             if(orderItemList[0].Product2.Family.equalsIgnoreCase('Offerta commerciale')){
                 orderToUpdate.CommercialProductCode__c = orderItemList[0].Product2.ProductCode;
+                orderToUpdate.RateCategory__c = orderItemList[0].Product2.ProductCode;
             }  
             else{
                 orderToUpdate.CommercialProductCode__c = orderItemList[0].Product2.DescriptionSAP__c;
