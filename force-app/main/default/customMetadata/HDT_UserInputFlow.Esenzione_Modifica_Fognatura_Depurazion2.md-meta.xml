@@ -10,20 +10,15 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {
-&quot;FieldName&quot;: &quot;UseSubCategory__c&quot;,
+&quot;FieldName&quot;: &quot;&quot;,
 &quot;Required&quot;: true,
 &quot;Column&quot;: 1
-},
-{
-&quot;FieldName&quot;: &quot;CustomerRequestDate__c&quot;,
-&quot;Required&quot;: false,
-&quot;Column&quot;: 2
 }
 ]</value>
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Esenzione Modifica Fognatura Depurazione Modifica Fognatura e Depurazione Acqua</value>
+        <value xsi:type="xsd:string">Esenzione Modifica Fognatura Depurazione DGRER569/19 non Allacciato / Uso Irriguo Acqua</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
@@ -42,7 +37,7 @@
 },
 {
 &quot;FieldName&quot;: &quot;AddressFormula__c&quot;,
-&quot;Column&quot;: 2
+&quot;Column&quot;: 1
 },
 {
 &quot;FieldName&quot;: &quot;SewerPay__c&quot;,
@@ -50,6 +45,10 @@
 },
 {
 &quot;FieldName&quot;: &quot;PurificationPay__c&quot;,
+&quot;Column&quot;: 2
+},
+{
+&quot;FieldName&quot;: &quot;UseSubCategory__c&quot;,
 &quot;Column&quot;: 2
 }
 ]</value>
