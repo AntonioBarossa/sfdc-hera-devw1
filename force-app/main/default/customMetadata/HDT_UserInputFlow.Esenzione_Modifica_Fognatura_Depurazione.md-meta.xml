@@ -56,6 +56,6 @@
     </values>
     <values>
         <field>ValidateClass__c</field>
-        <value xsi:type="xsd:string">HDT_UTL_AttachmentValidation</value>
+        <value xsi:type="xsd:string">HDT_UTL_VariazioniCaseValidation</value>
     </values>
 </CustomMetadata>

@@ -1,5 +1,5 @@
-public with sharing class HDT_UTL_AttachmentValidation implements HDT_UTL_CaseValidationInterface {
-
+public with sharing class HDT_UTL_VariazioniCaseValidation implements HDT_UTL_CaseValidationInterface {
+    
     HDT_QR_CaseValidations caseValidationQr = new HDT_QR_CaseValidations();
 
     public String validate(String fields, String recordId){
