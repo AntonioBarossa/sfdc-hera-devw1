@@ -99,6 +99,11 @@
                 <label>Dati catastali</label>
             </value>
             <value>
+                <fullName>DGRER569/19 non Allacciato / Uso Irriguo</fullName>
+                <default>false</default>
+                <label>DGRER569/19 non Allacciato / Uso Irriguo</label>
+            </value>
+            <value>
                 <fullName>DOM_Coabitazioni</fullName>
                 <default>false</default>
                 <label>DOM_Coabitazioni</label>
@@ -112,6 +117,11 @@
                 <fullName>DOM_Componenti residenti</fullName>
                 <default>false</default>
                 <label>DOM_Componenti residenti</label>
+            </value>
+            <value>
+                <fullName>Domestico Residente</fullName>
+                <default>false</default>
+                <label>Domestico Residente</label>
             </value>
             <value>
                 <fullName>Domiciliato in nucleo residente</fullName>
@@ -189,6 +199,11 @@
                 <label>Modifica Dati Fiscali</label>
             </value>
             <value>
+                <fullName>Modifica Fognatura e Depurazione</fullName>
+                <default>false</default>
+                <label>Modifica Fognatura e Depurazione</label>
+            </value>
+            <value>
                 <fullName>Mortis Causa</fullName>
                 <default>false</default>
                 <label>Mortis Causa</label>
@@ -227,6 +242,11 @@
                 <fullName>Processo M03</fullName>
                 <default>false</default>
                 <label>Processo M03</label>
+            </value>
+            <value>
+                <fullName>Promiscuo</fullName>
+                <default>false</default>
+                <label>Promiscuo</label>
             </value>
             <value>
                 <fullName>Recupero</fullName>
@@ -428,6 +448,22 @@
         <valueSettings>
             <controllingFieldValue>Istruttoria</controllingFieldValue>
             <valueName>Parere Preventivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>DGRER569/19 non Allacciato / Uso Irriguo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Modifica Fognatura e Depurazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica Unita Immobiliari Componenti</controllingFieldValue>
+            <valueName>Domestico Residente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica Unita Immobiliari Componenti</controllingFieldValue>
+            <valueName>Promiscuo</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
