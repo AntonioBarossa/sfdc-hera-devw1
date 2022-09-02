@@ -81,9 +81,24 @@
         <label>Bonus_Sconti_Promo</label>
     </customValue>
     <customValue>
+        <fullName>CA01 - non eseguita causa cliente</fullName>
+        <default>false</default>
+        <label>CA01 - non eseguita causa cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>CA02 - non eseguita causa HC</fullName>
+        <default>false</default>
+        <label>CA02 - non eseguita causa HC</label>
+    </customValue>
+    <customValue>
         <fullName>Cambio contatore</fullName>
         <default>false</default>
         <label>Cambio contatore</label>
+    </customValue>
+    <customValue>
+        <fullName>cambio contatore gestito in ritardo</fullName>
+        <default>false</default>
+        <label>cambio contatore gestito in ritardo</label>
     </customValue>
     <customValue>
         <fullName>Cancellazione dati</fullName>
@@ -196,9 +211,39 @@
         <label>CRM (sportelli) - Comportamento, informazioni non corrette</label>
     </customValue>
     <customValue>
+        <fullName>CT01 - componente economica/contrattuale</fullName>
+        <default>false</default>
+        <label>CT01 - componente economica/contrattuale</label>
+    </customValue>
+    <customValue>
+        <fullName>CT02 - errata attribuzione tariffa/tipologia utenza</fullName>
+        <default>false</default>
+        <label>CT02 - errata attribuzione tariffa/tipologia utenza</label>
+    </customValue>
+    <customValue>
+        <fullName>CT03 - cambio opzione Residente / Non Residente</fullName>
+        <default>false</default>
+        <label>CT03 - cambio opzione Residente / Non Residente</label>
+    </customValue>
+    <customValue>
+        <fullName>CT04 - modifica indirizzo di fornitura</fullName>
+        <default>false</default>
+        <label>CT04 - modifica indirizzo di fornitura</label>
+    </customValue>
+    <customValue>
         <fullName>CTS</fullName>
         <default>false</default>
         <label>CTS</label>
+    </customValue>
+    <customValue>
+        <fullName>CV01 - non eseguito per mancata presentazione della documentazione</fullName>
+        <default>false</default>
+        <label>CV01 - non eseguito per mancata presentazione della documentazione</label>
+    </customValue>
+    <customValue>
+        <fullName>CV02 - gestito in ritardo</fullName>
+        <default>false</default>
+        <label>CV02 - gestito in ritardo</label>
     </customValue>
     <customValue>
         <fullName>Decorrenza voltura</fullName>
@@ -256,6 +301,11 @@
         <label>Emissione prima bolletta</label>
     </customValue>
     <customValue>
+        <fullName>Evoluzioni automatiche</fullName>
+        <default>false</default>
+        <label>Evoluzioni automatiche</label>
+    </customValue>
+    <customValue>
         <fullName>Falso procuratore</fullName>
         <default>false</default>
         <label>Falso procuratore</label>
@@ -281,9 +331,169 @@
         <label>Fatturazione in stima/acconto</label>
     </customValue>
     <customValue>
+        <fullName>FB01 - chiarezza bolletta</fullName>
+        <default>false</default>
+        <label>FB01 - chiarezza bolletta</label>
+    </customValue>
+    <customValue>
+        <fullName>FB02 - recapito bolletta e relativi costi</fullName>
+        <default>false</default>
+        <label>FB02 - recapito bolletta e relativi costi</label>
+    </customValue>
+    <customValue>
+        <fullName>FB03 - periodicità bolletta</fullName>
+        <default>false</default>
+        <label>FB03 - periodicità bolletta</label>
+    </customValue>
+    <customValue>
+        <fullName>FB04 - tariffe diverse dalle aspettative</fullName>
+        <default>false</default>
+        <label>FB04 - tariffe diverse dalle aspettative</label>
+    </customValue>
+    <customValue>
+        <fullName>FB05 - avviso/bolletta errato</fullName>
+        <default>false</default>
+        <label>FB05 - avviso/bolletta errato</label>
+    </customValue>
+    <customValue>
+        <fullName>FC01 - addebito vuotature/litri</fullName>
+        <default>false</default>
+        <label>FC01 - addebito vuotature/litri</label>
+    </customValue>
+    <customValue>
+        <fullName>FC02 - acconto</fullName>
+        <default>false</default>
+        <label>FC02 - acconto</label>
+    </customValue>
+    <customValue>
+        <fullName>FC03 - conguaglio</fullName>
+        <default>false</default>
+        <label>FC03 - conguaglio</label>
+    </customValue>
+    <customValue>
+        <fullName>FC04 - riduzioni/sconti</fullName>
+        <default>false</default>
+        <label>FC04 - riduzioni/sconti</label>
+    </customValue>
+    <customValue>
+        <fullName>FC05 - metratura</fullName>
+        <default>false</default>
+        <label>FC05 - metratura</label>
+    </customValue>
+    <customValue>
+        <fullName>FC06 - periodo</fullName>
+        <default>false</default>
+        <label>FC06 - periodo</label>
+    </customValue>
+    <customValue>
+        <fullName>FC07 - imposte</fullName>
+        <default>false</default>
+        <label>FC07 - imposte</label>
+    </customValue>
+    <customValue>
+        <fullName>FC08 - altre voci</fullName>
+        <default>false</default>
+        <label>FC08 - altre voci</label>
+    </customValue>
+    <customValue>
+        <fullName>FF01 - frequenza di fatturazione</fullName>
+        <default>false</default>
+        <label>FF01 - frequenza di fatturazione</label>
+    </customValue>
+    <customValue>
+        <fullName>FI01 - assegno erede</fullName>
+        <default>false</default>
+        <label>FI01 - assegno erede</label>
+    </customValue>
+    <customValue>
+        <fullName>FI02 - problemi emissione assegno</fullName>
+        <default>false</default>
+        <label>FI02 - problemi emissione assegno</label>
+    </customValue>
+    <customValue>
+        <fullName>FM01 - modalità di pagamento</fullName>
+        <default>false</default>
+        <label>FM01 - modalità di pagamento</label>
+    </customValue>
+    <customValue>
+        <fullName>FM02 - rimborso</fullName>
+        <default>false</default>
+        <label>FM02 - rimborso</label>
+    </customValue>
+    <customValue>
+        <fullName>FM03 - rateizzazione</fullName>
+        <default>false</default>
+        <label>FM03 - rateizzazione</label>
+    </customValue>
+    <customValue>
+        <fullName>FP01 - doppia fatturazione</fullName>
+        <default>false</default>
+        <label>FP01 - doppia fatturazione</label>
+    </customValue>
+    <customValue>
+        <fullName>FP02 - mancato addebito avviso/bolletta</fullName>
+        <default>false</default>
+        <label>FP02 - mancato addebito avviso/bolletta</label>
+    </customValue>
+    <customValue>
+        <fullName>FR01 - consegna in ritardo</fullName>
+        <default>false</default>
+        <label>FR01 - consegna in ritardo</label>
+    </customValue>
+    <customValue>
+        <fullName>FR02 - mancato recapito causa errato indirizzo</fullName>
+        <default>false</default>
+        <label>FR02 - mancato recapito causa errato indirizzo</label>
+    </customValue>
+    <customValue>
+        <fullName>FR03 - mancato recapito causa vettore</fullName>
+        <default>false</default>
+        <label>FR03 - mancato recapito causa vettore</label>
+    </customValue>
+    <customValue>
         <fullName>Frequenza fatturazione</fullName>
         <default>false</default>
         <label>Frequenza fatturazione</label>
+    </customValue>
+    <customValue>
+        <fullName>IE01 - fumi/pulviscolo provenienti da contenitori/dotazioni</fullName>
+        <default>false</default>
+        <label>IE01 - fumi/pulviscolo provenienti da contenitori/dotazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>IE02 - fumi/pulviscolo provenienti da Centri di Raccolta</fullName>
+        <default>false</default>
+        <label>IE02 - fumi/pulviscolo provenienti da Centri di Raccolta</label>
+    </customValue>
+    <customValue>
+        <fullName>IE03 - fumi da tubi di scappamento di automezzi aziendali</fullName>
+        <default>false</default>
+        <label>IE03 - fumi da tubi di scappamento di automezzi aziendali</label>
+    </customValue>
+    <customValue>
+        <fullName>IE04 - cattivi odori provenienti da Centri di Raccolta</fullName>
+        <default>false</default>
+        <label>IE04 - cattivi odori provenienti da Centri di Raccolta</label>
+    </customValue>
+    <customValue>
+        <fullName>IE05 - cattivi odori provenienti da contenitori/dotazioni</fullName>
+        <default>false</default>
+        <label>IE05 - cattivi odori provenienti da contenitori/dotazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>II01 - rifiuti abbandonati per cause imputabili al gestore</fullName>
+        <default>false</default>
+        <label>II01 - rifiuti abbandonati per cause imputabili al gestore</label>
+    </customValue>
+    <customValue>
+        <fullName>II02 - rifiuti abbandonati per cause non imputabili al gestore</fullName>
+        <default>false</default>
+        <label>II02 - rifiuti abbandonati per cause non imputabili al gestore</label>
+    </customValue>
+    <customValue>
+        <fullName>IM01 - perdita di liquidi/olii da automezzi aziendali</fullName>
+        <default>false</default>
+        <label>IM01 - perdita di liquidi/olii da automezzi aziendali</label>
     </customValue>
     <customValue>
         <fullName>Impianti fuganti</fullName>
@@ -309,6 +519,26 @@
         <fullName>Invito verifica cassa metrica</fullName>
         <default>false</default>
         <label>Invito verifica cassa metrica</label>
+    </customValue>
+    <customValue>
+        <fullName>IR01 - presenza di animali o insetti nei pressi di contenitori/dotazioni</fullName>
+        <default>false</default>
+        <label>IR01 - presenza di animali o insetti nei pressi di contenitori/dotazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>IR02 - presenza di animali o insetti nei pressi di Centri di Raccolta</fullName>
+        <default>false</default>
+        <label>IR02 - presenza di animali o insetti nei pressi di Centri di Raccolta</label>
+    </customValue>
+    <customValue>
+        <fullName>IT01 - rumore prodotto da automezzi/attrezzature</fullName>
+        <default>false</default>
+        <label>IT01 - rumore prodotto da automezzi/attrezzature</label>
+    </customValue>
+    <customValue>
+        <fullName>IT02 - rallentamenti del traffico provocati da automezzi aziendali</fullName>
+        <default>false</default>
+        <label>IT02 - rallentamenti del traffico provocati da automezzi aziendali</label>
     </customValue>
     <customValue>
         <fullName>IVA</fullName>
@@ -396,6 +626,11 @@
         <label>Mancato utilizzo letture Distributore</label>
     </customValue>
     <customValue>
+        <fullName>MC01 - contestazioni su n. vuotature/conferimenti/litri presenti su web</fullName>
+        <default>false</default>
+        <label>MC01 - contestazioni su n. vuotature/conferimenti/litri presenti su web</label>
+    </customValue>
+    <customValue>
         <fullName>Modalità autolettura</fullName>
         <default>false</default>
         <label>Modalità autolettura</label>
@@ -414,6 +649,16 @@
         <fullName>Modifiche unilaterali</fullName>
         <default>false</default>
         <label>Modifiche unilaterali</label>
+    </customValue>
+    <customValue>
+        <fullName>MS01 - sollecito non dovuto</fullName>
+        <default>false</default>
+        <label>MS01 - sollecito non dovuto</label>
+    </customValue>
+    <customValue>
+        <fullName>MS02 - storno spese di sollecito</fullName>
+        <default>false</default>
+        <label>MS02 - storno spese di sollecito</label>
     </customValue>
     <customValue>
         <fullName>MUI_ disconoscimento parziale</fullName>
@@ -456,6 +701,11 @@
         <label>PdR errato sui sistemi</label>
     </customValue>
     <customValue>
+        <fullName>PdR errato sulla fornitura</fullName>
+        <default>false</default>
+        <label>PdR errato sulla fornitura</label>
+    </customValue>
+    <customValue>
         <fullName>Penali</fullName>
         <default>false</default>
         <label>Penali</label>
@@ -479,6 +729,11 @@
         <fullName>POD errato sui sistemi</fullName>
         <default>false</default>
         <label>POD errato sui sistemi</label>
+    </customValue>
+    <customValue>
+        <fullName>POD errato sulla fornitura</fullName>
+        <default>false</default>
+        <label>POD errato sulla fornitura</label>
     </customValue>
     <customValue>
         <fullName>Portabilità dei dati</fullName>
@@ -556,9 +811,89 @@
         <label>Proposto del. 231</label>
     </customValue>
     <customValue>
+        <fullName>QA01- pulizia spiaggia</fullName>
+        <default>false</default>
+        <label>QA01- pulizia spiaggia</label>
+    </customValue>
+    <customValue>
+        <fullName>QC01 - orari di apertura non rispettati</fullName>
+        <default>false</default>
+        <label>QC01 - orari di apertura non rispettati</label>
+    </customValue>
+    <customValue>
+        <fullName>QC02 - comportamenti/attività operatore</fullName>
+        <default>false</default>
+        <label>QC02 - comportamenti/attività operatore</label>
+    </customValue>
+    <customValue>
+        <fullName>QC03 - malfunzionamento dispositivo di identificazione/pesa</fullName>
+        <default>false</default>
+        <label>QC03 - malfunzionamento dispositivo di identificazione/pesa</label>
+    </customValue>
+    <customValue>
+        <fullName>QR01 - mancato svuotamento contenitori stradali</fullName>
+        <default>false</default>
+        <label>QR01 - mancato svuotamento contenitori stradali</label>
+    </customValue>
+    <customValue>
+        <fullName>QR02 - mancata consegna dotazioni</fullName>
+        <default>false</default>
+        <label>QR02 - mancata consegna dotazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>QR03 - manutenzioni contenitori/dotazioni</fullName>
+        <default>false</default>
+        <label>QR03 - manutenzioni contenitori/dotazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>QR04 - comportamenti/attività operatore</fullName>
+        <default>false</default>
+        <label>QR04 - comportamenti/attività operatore</label>
+    </customValue>
+    <customValue>
+        <fullName>QR05 - lavaggio contenitori</fullName>
+        <default>false</default>
+        <label>QR05 - lavaggio contenitori</label>
+    </customValue>
+    <customValue>
+        <fullName>QR06 - mancato svuotamento domiciliare</fullName>
+        <default>false</default>
+        <label>QR06 - mancato svuotamento domiciliare</label>
+    </customValue>
+    <customValue>
+        <fullName>QR07 - sollecito di servizio</fullName>
+        <default>false</default>
+        <label>QR07 - sollecito di servizio</label>
+    </customValue>
+    <customValue>
+        <fullName>QS01 - mancata raccolta / errato prelievo per servizi su appuntamento gratuiti</fullName>
+        <default>false</default>
+        <label>QS01 - mancata raccolta / errato prelievo per servizi su appuntamento gratuiti</label>
+    </customValue>
+    <customValue>
+        <fullName>QS02 - comportamenti/attività operatore</fullName>
+        <default>false</default>
+        <label>QS02 - comportamenti/attività operatore</label>
+    </customValue>
+    <customValue>
+        <fullName>QS03 - mancata raccolta / errato prelievo per servizi a pagamento</fullName>
+        <default>false</default>
+        <label>QS03 - mancata raccolta / errato prelievo per servizi a pagamento</label>
+    </customValue>
+    <customValue>
         <fullName>Quote fisse</fullName>
         <default>false</default>
         <label>Quote fisse</label>
+    </customValue>
+    <customValue>
+        <fullName>QZ01 - pulizia strade/marciapiedi, cestini, aree cani</fullName>
+        <default>false</default>
+        <label>QZ01 - pulizia strade/marciapiedi, cestini, aree cani</label>
+    </customValue>
+    <customValue>
+        <fullName>QZ02 - comportamenti/attività operatore</fullName>
+        <default>false</default>
+        <label>QZ02 - comportamenti/attività operatore</label>
     </customValue>
     <customValue>
         <fullName>Rateizzazione - diniego piano di rientro</fullName>
@@ -616,6 +951,16 @@
         <label>Rimborsi</label>
     </customValue>
     <customValue>
+        <fullName>Rimborsi - assegno</fullName>
+        <default>false</default>
+        <label>Rimborsi - assegno</label>
+    </customValue>
+    <customValue>
+        <fullName>Rimborsi - mancato accredito/doppio pagamento</fullName>
+        <default>false</default>
+        <label>Rimborsi - mancato accredito/doppio pagamento</label>
+    </customValue>
+    <customValue>
         <fullName>Ripensamento gestito</fullName>
         <default>false</default>
         <label>Ripensamento gestito</label>
@@ -634,6 +979,26 @@
         <fullName>Ritardo/KO Distributore</fullName>
         <default>false</default>
         <label>Ritardo/KO Distributore</label>
+    </customValue>
+    <customValue>
+        <fullName>SC01 - attesa al telefono</fullName>
+        <default>false</default>
+        <label>SC01 - attesa al telefono</label>
+    </customValue>
+    <customValue>
+        <fullName>SC02 - comportamenti/attività operatore</fullName>
+        <default>false</default>
+        <label>SC02 - comportamenti/attività operatore</label>
+    </customValue>
+    <customValue>
+        <fullName>SC03 - risposta non chiara</fullName>
+        <default>false</default>
+        <label>SC03 - risposta non chiara</label>
+    </customValue>
+    <customValue>
+        <fullName>SC04 - difficoltà nel contatto</fullName>
+        <default>false</default>
+        <label>SC04 - difficoltà nel contatto</label>
     </customValue>
     <customValue>
         <fullName>Scivoli</fullName>
@@ -674,6 +1039,26 @@
         <fullName>Spese di sollecito/interessi</fullName>
         <default>false</default>
         <label>Spese di sollecito/interessi</label>
+    </customValue>
+    <customValue>
+        <fullName>SS01 - tempi di attesa</fullName>
+        <default>false</default>
+        <label>SS01 - tempi di attesa</label>
+    </customValue>
+    <customValue>
+        <fullName>SS02 - comportamenti/attività operatore</fullName>
+        <default>false</default>
+        <label>SS02 - comportamenti/attività operatore</label>
+    </customValue>
+    <customValue>
+        <fullName>SS03 - risposta non chiara</fullName>
+        <default>false</default>
+        <label>SS03 - risposta non chiara</label>
+    </customValue>
+    <customValue>
+        <fullName>SW01 - malfunzionamento</fullName>
+        <default>false</default>
+        <label>SW01 - malfunzionamento</label>
     </customValue>
     <customValue>
         <fullName>Tariffa al kwh</fullName>
@@ -771,34 +1156,10 @@
         <label>Voltura con richiesta accessoria</label>
     </customValue>
     <customValue>
-        <fullName>Evoluzioni automatiche</fullName>
+        <fullName>Falso procurato</fullName>
         <default>false</default>
-        <label>Evoluzioni automatiche</label>
-    </customValue>
-    <customValue>
-        <fullName>PdR errato sulla fornitura</fullName>
-        <default>false</default>
-        <label>PdR errato sulla fornitura</label>
-    </customValue>
-    <customValue>
-        <fullName>POD errato sulla fornitura</fullName>
-        <default>false</default>
-        <label>POD errato sulla fornitura</label>
-    </customValue>
-    <customValue>
-        <fullName>Rimborsi - assegno</fullName>
-        <default>false</default>
-        <label>Rimborsi - assegno</label>
-    </customValue>
-    <customValue>
-        <fullName>Rimborsi - mancato accredito/doppio pagamento</fullName>
-        <default>false</default>
-        <label>Rimborsi - mancato accredito/doppio pagamento</label>
-    </customValue>
-    <customValue>
-        <fullName>cambio contatore gestito in ritardo</fullName>
-        <default>false</default>
-        <label>cambio contatore gestito in ritardo</label>
+        <isActive>false</isActive>
+        <label>Falso procurato</label>
     </customValue>
     <customValue>
         <fullName>Modifica Contratto Preattivazione</fullName>
@@ -806,7 +1167,13 @@
         <isActive>false</isActive>
         <label>Modifica Contratto Preattivazione</label>
     </customValue>
+    <customValue>
+        <fullName>Prelivo abusivo</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Prelivo abusivo</label>
+    </customValue>
     <description>Classificazione Quarto Livello (cluster Reclami)</description>
     <masterLabel>4° Livello</masterLabel>
-    <sorted>false</sorted>
+    <sorted>true</sorted>
 </GlobalValueSet>

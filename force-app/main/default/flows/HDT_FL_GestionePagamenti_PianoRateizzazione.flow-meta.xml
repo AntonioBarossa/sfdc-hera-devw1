@@ -99,9 +99,27 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>applicazioneInteressi</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>customerCode</name>
             <value>
                 <elementReference>CaseInput.Account.CustomerCode__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>motivazione</name>
+            <value>
+                <stringValue>Disagio Economico</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>provenienzaRichiesta</name>
+            <value>
+                <stringValue>Da contribuente</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -218,7 +236,7 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Fase_0</name>
+        <name>Assegna_Fase_0_0</name>
         <label>Assegna Fase</label>
         <locationX>842</locationX>
         <locationY>7250</locationY>
@@ -260,14 +278,14 @@
         <locationX>3856</locationX>
         <locationY>638</locationY>
         <assignmentItems>
-            <assignToReference>GetCaseNonBozza.Phase__c</assignToReference>
+            <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Da Inviare</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCaseNonBozza.Status</assignToReference>
+            <assignToReference>Get_Case.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
@@ -345,6 +363,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>InstallmentAmount</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.ApprovalProcess__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <connector>
@@ -1033,6 +1058,56 @@
                 <targetReference>Is_TARI_Process</targetReference>
             </connector>
             <label>Superiore</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_TARI_Process</name>
+        <label>Is TARI Process</label>
+        <locationX>2459</locationX>
+        <locationY>2162</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Case_Layout_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Is TARI Process</defaultConnectorLabel>
+        <rules>
+            <name>Is_Not_TARI_Process</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Check_If_Process_Is_TARI</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Case_Layout</targetReference>
+            </connector>
+            <label>Is Not TARI Process</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_TARI_Process_0_0</name>
+        <label>Is TARI Process</label>
+        <locationX>3025</locationX>
+        <locationY>1586</locationY>
+        <defaultConnector>
+            <targetReference>Predefault_Valori_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Is TARI Process</defaultConnectorLabel>
+        <rules>
+            <name>Is_Not_TARI_Process_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Check_If_Process_Is_TARI</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Predefault_Valori</targetReference>
+            </connector>
+            <label>Is Not TARI Process</label>
         </rules>
     </decisions>
     <decisions>
@@ -1874,7 +1949,7 @@ OR(
         <locationY>7130</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Assegna_Fase_0_0_0</targetReference>
+            <targetReference>Attesa_Modulo_Firmato_0_0_0_0_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>

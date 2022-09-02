@@ -332,9 +332,8 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             //wrts_prcgvr__Activity__c activity = createActivity('Sblocco Voltura');
             activity.Order__c = currentCase.VulturePracticeReference__c;
             //HDT_UTL_DatabaseService.insertSObject(activity);
+            HDT_UTL_DatabaseService.insertSObject(activity);
         }
-        HDT_UTL_DatabaseService.insertSObject(activity);
-
     }
 
     public void changePaymentMethod(SObject inputCase){
@@ -480,11 +479,29 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
     }
 
+    public void advanceInstallmentPlan(SObject inputCase)
+    {
+        Case currentCase = (Case) inputCase;
+        if(currentCase.TypeInstallmentPlan__c.equalsIgnoreCase('Personalizzato') && (currentCase.InstallmentNumberRequired__c > 3 || currentCase.AmountToPayInInstallments__c > 2000 || currentCase.Reason__c.containsIgnoreCase('Disoccupato/Cassintegrato')))
+        {
+            currentCase.Phase__c = 'Attesa Modulo Firmato';
+        }
+    }
+
     @Future
     private static void updateFuture(String serializedCase)
     {
         Case currentCase  = (Case) JSON.deserialize(serializedCase, Case.class);
         HDT_UTL_DatabaseService.updateSobject(currentCase);
     }
+    public void closeCaseLetturaInseritaInSap(SObject inputCase){
 
+        Case currentCase = (Case) inputCase;
+
+        currentCase.Phase__c = 'Completata';
+        currentCase.Status = 'Closed';
+
+        HDT_UTL_DatabaseService.updateSObject(currentCase);
+
+    }
 }
