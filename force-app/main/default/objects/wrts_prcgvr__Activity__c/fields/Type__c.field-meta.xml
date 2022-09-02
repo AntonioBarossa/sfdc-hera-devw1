@@ -346,6 +346,11 @@
                 <label>Giro contatore da gestire</label>
             </value>
             <value>
+                <fullName>In gestione</fullName>
+                <default>false</default>
+                <label>In gestione</label>
+            </value>
+            <value>
                 <fullName>Inviare Comunicazione Disconoscimento</fullName>
                 <default>false</default>
                 <label>Inviare Comunicazione Disconoscimento</label>
@@ -569,6 +574,11 @@
                 <fullName>Risposta Inviata - Attesa Rettifica</fullName>
                 <default>false</default>
                 <label>Risposta Inviata - Attesa Rettifica</label>
+            </value>
+            <value>
+                <fullName>Risposta Motivata Con Allegato</fullName>
+                <default>false</default>
+                <label>Risposta Motivata Con Allegato</label>
             </value>
             <value>
                 <fullName>BonusSociale</fullName>
