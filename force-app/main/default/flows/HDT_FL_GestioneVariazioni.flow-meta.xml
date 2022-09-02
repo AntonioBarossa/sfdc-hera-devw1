@@ -460,18 +460,21 @@
     <assignments>
         <name>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0</name>
         <label>Aggiorna Fase in Elaborazione Manuale</label>
-        <locationX>5057</locationX>
-        <locationY>2112</locationY>
+        <locationX>4905</locationX>
+        <locationY>2231</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoEsenzioneModificaFognature.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Da Inviare</stringValue>
+                <stringValue>Elaborazione Manuale</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoEsenzioneModificaFognature.Status</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
@@ -498,6 +501,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0_0_0</name>
+        <label>Aggiorna Fase in Elaborazione Manuale</label>
+        <locationX>5231</locationX>
+        <locationY>2256</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoEsenzioneModificaFognature.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoEsenzioneModificaFognature.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -961,6 +987,13 @@
                 <elementReference>GetInputCase.SupplyType__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Subprocess__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Seleziona_la_sotto_tipologia_processo_0_0</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_Esenzione_Modifica_Fognatura_Depurazione</targetReference>
         </connector>
@@ -1053,11 +1086,29 @@
         </connector>
     </assignments>
     <choices>
+        <description>DGRER569/19 non Allacciato / Uso Irriguo</description>
+        <name>DGRER569_19_non_Allacciato_UsoIrriguo</name>
+        <choiceText>DGRER569/19 non Allacciato / Uso Irriguo</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>DGRER569/19 non Allacciato / Uso Irriguo</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>Domestico_Residente</name>
         <choiceText>Domestico Residente</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>Domestico Residente</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <description>Modifica Fognatura e Depurazione</description>
+        <name>Modifica_Fognatura_e_Depurazione</name>
+        <choiceText>Modifica Fognatura e Depurazione</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Modifica Fognatura e Depurazione</stringValue>
         </value>
     </choices>
     <choices>
@@ -2565,7 +2616,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Valori_0_0_0_0_0_0_0</targetReference>
+                <targetReference>Scelta_Sottotipologia_Processo_0</targetReference>
             </connector>
             <label>Esenzione/Modifica Fognatura Depurazione</label>
         </rules>
@@ -2622,6 +2673,43 @@
                 <targetReference>Seleziona_Documenti_Screen</targetReference>
             </connector>
             <label>Seleziona Documenti</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Split_sottoprocesso</name>
+        <label>Split sottoprocesso</label>
+        <locationX>5047</locationX>
+        <locationY>2077</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>DGRER569_19_non_Allacciato_Uso_Irriguo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseAggiornatoEsenzioneModificaFognature.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>DGRER569/19 non Allacciato / Uso Irriguo</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0</targetReference>
+            </connector>
+            <label>DGRER569/19 non Allacciato / Uso Irriguo</label>
+        </rules>
+        <rules>
+            <name>Modifica_Fognatura_e_Depurazione_subproc</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseAggiornatoEsenzioneModificaFognature.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica Fognatura e Depurazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0_0_0</targetReference>
+            </connector>
+            <label>Modifica Fognatura e Depurazione</label>
         </rules>
     </decisions>
     <decisions>
@@ -2702,6 +2790,11 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>SubprocessType</name>
         <dataType>String</dataType>
         <expression>TEXT({!GetInputCase.Type}) &amp; &quot; &quot; &amp; {!Seleziona_la_sotto_tipologia_processo_0} &amp; &quot; &quot; &amp; {!GetInputCase.CommodityFormula__c}</expression>
+    </formulas>
+    <formulas>
+        <name>SubprocessType_0</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!GetInputCase.Type}) &amp; &quot; &quot; &amp; {!Seleziona_la_sotto_tipologia_processo_0_0} &amp; &quot; &quot; &amp; {!GetInputCase.CommodityFormula__c}</expression>
     </formulas>
     <formulas>
         <name>VariazioneFiscalePhase</name>
@@ -3208,7 +3301,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <locationY>1933</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0</targetReference>
+            <targetReference>Split_sottoprocesso</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -3593,8 +3686,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>5061</locationX>
-        <locationY>2267</locationY>
+        <locationX>4902</locationX>
+        <locationY>2480</locationY>
         <inputReference>GetCaseAggiornatoEsenzioneModificaFognature</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -3603,6 +3696,13 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <locationX>506</locationX>
         <locationY>2374</locationY>
         <inputReference>GetCaseAggiornatoModificaUnitaImmobiliari_0</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
+        <label>Aggiorna Case</label>
+        <locationX>5230</locationX>
+        <locationY>2472</locationY>
+        <inputReference>GetCaseAggiornatoEsenzioneModificaFognature</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_Billing_Profile</name>
@@ -3657,7 +3757,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>DisplayTextEsenzio</name>
         <label>Screen Input Fiscale Esenzione Fognature</label>
-        <locationX>5101</locationX>
+        <locationX>5100</locationX>
         <locationY>1178</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3737,7 +3837,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>ProcessTypeCambioCont</elementReference>
+                    <elementReference>SubprocessType_0</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -4096,6 +4196,34 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <name>Seleziona_la_sotto_tipologia_processo_0</name>
             <choiceReferences>Domestico_Residente</choiceReferences>
             <choiceReferences>Promiscuo</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Seleziona la sotto tipologia processo:</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Scelta_Sottotipologia_Processo_0</name>
+        <label>Scelta Sottotipologia Processo</label>
+        <locationX>4802</locationX>
+        <locationY>771</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Assegna_Valori_0_0_0_0_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayTextSelezioneSottoprocesso_0</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Compila manualmente i dati sottostanti&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Seleziona_la_sotto_tipologia_processo_0_0</name>
+            <choiceReferences>Modifica_Fognatura_e_Depurazione</choiceReferences>
+            <choiceReferences>DGRER569_19_non_Allacciato_UsoIrriguo</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Seleziona la sotto tipologia processo:</fieldText>
             <fieldType>DropdownBox</fieldType>
