@@ -2866,6 +2866,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In gestione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>KO Fornitore</fullName>
             <default>false</default>
         </values>
