@@ -2271,6 +2271,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito Consuntivazione KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO da DL</fullName>
             <default>false</default>
         </values>
@@ -2400,6 +2408,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>ProcessType__c</picklist>
+        <values>
+            <fullName>Cambio Offerta</fullName>
+            <default>true</default>
+        </values>
         <values>
             <fullName>Cambio Offerta Ele</fullName>
             <default>true</default>

@@ -253,15 +253,6 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
             },
             {
                 step: 4,
-                label: 'Autolettura',
-                name: 'reading',
-                objectApiName: '',
-                recordId: '',
-                isReading: true,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
-            },
-            {
-                step: 4,
                 label: 'Dati precedente intestatario',
                 name: 'datiPrecedenteIntestatario',
                 objectApiName: 'Order',
@@ -348,7 +339,15 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 new fieldData('Tipo Apparechiatura','MeterType__c',this.typeVisibility('ele') && (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'),false, true, '','')
                ]
             },
-
+            {
+                step: 6,
+                label: 'Autolettura',
+                name: 'reading',
+                objectApiName: '',
+                recordId: '',
+                isReading: true,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.ServicePoint__r.CommoditySector__c==='Acqua')
+            },
             {
                 step: 5,
                 label: 'Riepilogo Dati',
