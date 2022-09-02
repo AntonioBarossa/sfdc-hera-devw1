@@ -1,5 +1,5 @@
-public with sharing class HDT_UTL_AttachmentValidation implements HDT_UTL_CaseValidationInterface {
-
+public with sharing class HDT_UTL_VariazioniCaseValidation implements HDT_UTL_CaseValidationInterface {
+    
     HDT_QR_CaseValidations caseValidationQr = new HDT_QR_CaseValidations();
 
     public String validate(String fields, String recordId){
@@ -8,7 +8,7 @@ public with sharing class HDT_UTL_AttachmentValidation implements HDT_UTL_CaseVa
         String caseType = currentCase.Type;
         List<ContentDocumentLink> attachedDocument = new List<ContentDocumentLink>();
         String result;
-        Set<String> processesWithRequiredAttachment = new Set<String>{'Adesione Rinuncia Fondo Fughe'};
+        Set<String> processesWithRequiredAttachment = new Set<String>{'Adesione Rinuncia Fondo Fughe', 'Esenzione Modifica Fognatura Depurazione'};
 
         attachedDocument = caseValidationQr.getDocumentByCaseId(recordId);
 
