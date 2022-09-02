@@ -8,9 +8,23 @@
         <booleanFilter xsi:nil="true"/>
         <duplicateRuleFilterItems>
             <field>LeadSource</field>
-            <operation>equals</operation>
+            <operation>notEqual</operation>
             <value>Lead freddo</value>
             <sortOrder>1</sortOrder>
+            <table>Lead</table>
+        </duplicateRuleFilterItems>
+        <duplicateRuleFilterItems>
+            <field>LeadSource</field>
+            <operation>notEqual</operation>
+            <value>Creazione manuale, DBU</value>
+            <sortOrder>2</sortOrder>
+            <table>Lead</table>
+        </duplicateRuleFilterItems>
+        <duplicateRuleFilterItems>
+            <field>Status</field>
+            <operation>notEqual</operation>
+            <value>Expired</value>
+            <sortOrder>3</sortOrder>
             <table>Lead</table>
         </duplicateRuleFilterItems>
     </duplicateRuleFilter>
@@ -44,7 +58,7 @@
         </objectMapping>
     </duplicateRuleMatchRules>
     <isActive>true</isActive>
-    <masterLabel>Caricatore Massivo</masterLabel>
+    <masterLabel>Custom Lead Duplicate Rule</masterLabel>
     <securityOption>EnforceSharingRules</securityOption>
-    <sortOrder>5</sortOrder>
+    <sortOrder>6</sortOrder>
 </DuplicateRule>
