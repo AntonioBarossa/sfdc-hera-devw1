@@ -98,6 +98,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HC_CRM_CC_OUT_CV</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HCM_DISCO</fullName>
             <default>false</default>
         </values>
@@ -670,6 +674,10 @@
         </values>
         <values>
             <fullName>HCM_CRE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_CC_OUT_CV</fullName>
             <default>false</default>
         </values>
         <values>
