@@ -841,6 +841,11 @@
         <label>Eseguire Gestione Manuale SAP</label>
     </customValue>
     <customValue>
+        <fullName>Risposta Motivata Con Allegato</fullName>
+        <default>false</default>
+        <label>Risposta Motivata Con Allegato</label>
+    </customValue>
+    <customValue>
         <fullName>Segnalazioni VAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
