@@ -616,7 +616,7 @@
         <defaultConnectorLabel>NO</defaultConnectorLabel>
         <rules>
             <name>Skip_Si</name>
-            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+            <conditionLogic>1 OR (2 AND 3) OR 4</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
@@ -636,6 +636,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Interventi con Verifica</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Verifica Rottura Impianto Cliente</stringValue>
                 </rightValue>
             </conditions>
             <connector>

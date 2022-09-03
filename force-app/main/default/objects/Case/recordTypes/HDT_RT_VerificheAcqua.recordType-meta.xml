@@ -8535,6 +8535,14 @@
     <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
+            <fullName>Ripristino Sigilli / Piombi Rotti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripiombatura Post Collaudo Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CLIENTE NON TROVATO</fullName>
             <default>false</default>
         </values>
@@ -10737,6 +10745,14 @@
         </values>
         <values>
             <fullName>Verifica Interna</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Generica GDM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Rottura Impianto Cliente</fullName>
             <default>false</default>
         </values>
         <values>
