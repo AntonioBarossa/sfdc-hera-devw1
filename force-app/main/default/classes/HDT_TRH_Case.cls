@@ -18,7 +18,9 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
             for(Case caseNew : (List<Case>) Trigger.new){
                 HDT_UTL_CaseProcess.setCloseStatus(caseNew);
                 Case caseOld = (Case) Trigger.oldMap.get(caseNew.Id);
-                if(caseOld.Amount__c != null && caseNew.Amount__c != caseOld.Amount__c && caseOld.QuotationType__c == 'Rapido'){
+                
+                //AF W2 Inserito controllo sulla fase Bozza
+                if(caseOld.Amount__c != null && caseNew.Amount__c != caseOld.Amount__c && caseOld.QuotationType__c == 'Rapido' && caseNew.Phase__c != 'Bozza' && caseNew.Phase__c != 'Da Inviare'){
                     caseNew.QuotationType__c = 'Predeterminabile';
                 }
                 //Inserito questo controllo per gestire la casistica di un Preventivo Analitico che riceve più ammissibilità causa esecuzione lavori.

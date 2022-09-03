@@ -7085,6 +7085,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AdminPriceQuote__c.Subprocess__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>QuoteManagement__c.Subprocess__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.MotivatedResponseSendMode__c</field>
         <readable>true</readable>
     </fieldPermissions>
