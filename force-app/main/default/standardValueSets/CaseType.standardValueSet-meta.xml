@@ -672,6 +672,11 @@
         <label>Unificazione POD</label>
     </standardValue>
     <standardValue>
+        <fullName>Interventi con Verifica</fullName>
+        <default>false</default>
+        <label>Interventi con Verifica</label>
+    </standardValue>
+    <standardValue>
         <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
         <default>false</default>
         <label>Unificazione/Separazione BP-CA-Bolletta</label>

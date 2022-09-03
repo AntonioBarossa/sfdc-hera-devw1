@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Verifiche - Verifica Interna</label>
+    <label>Verifiche - Interventi con Verifica</label>
     <protected>false</protected>
     <values>
         <field>Commodity__c</field>
@@ -33,7 +33,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Verifica Interna</value>
+        <value xsi:type="xsd:string">Interventi con Verifica</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>

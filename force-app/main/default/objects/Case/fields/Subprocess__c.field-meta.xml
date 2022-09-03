@@ -219,6 +219,46 @@
                 <label>Nuovo Allaccio</label>
             </value>
             <value>
+                <fullName>Verifica interna inversione contatore</fullName>
+                <default>false</default>
+                <label>Verifica interna inversione contatore</label>
+            </value>
+            <value>
+                <fullName>Verifica interna apertura contatore chiuso</fullName>
+                <default>false</default>
+                <label>Verifica interna apertura contatore chiuso</label>
+            </value>
+            <value>
+                <fullName>Verifica interna SISMA chiusura contatore</fullName>
+                <default>false</default>
+                <label>Verifica interna SISMA chiusura contatore</label>
+            </value>
+            <value>
+                <fullName>Sostituzione Contatore per Incuria</fullName>
+                <default>false</default>
+                <label>Sostituzione Contatore per Incuria</label>
+            </value>
+            <value>
+                <fullName>Lettura su Contratto Aperto</fullName>
+                <default>false</default>
+                <label>Lettura su Contratto Aperto</label>
+            </value>
+            <value>
+                <fullName>Verifica interna lettura a carico HERA</fullName>
+                <default>false</default>
+                <label>Verifica interna lettura a carico HERA</label>
+            </value>
+            <value>
+                <fullName>Verifica interna sul posto gratuita</fullName>
+                <default>false</default>
+                <label>Verifica interna sul posto gratuita</label>
+            </value>
+            <value>
+                <fullName>Verifica interna consumo abusivo</fullName>
+                <default>false</default>
+                <label>Verifica interna consumo abusivo</label>
+            </value>
+            <value>
                 <fullName>Ordinaria</fullName>
                 <default>false</default>
                 <label>Ordinaria</label>
@@ -304,6 +344,38 @@
                 <label>Variazione Portata</label>
             </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Interventi con Verifica</controllingFieldValue>
+            <valueName>Sostituzione Contatore per Incuria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Interventi con Verifica</controllingFieldValue>
+            <valueName>Lettura su Contratto Aperto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna inversione contatore</valueName>
+        </valueSettings>
+		<valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna apertura contatore chiuso</valueName>
+        </valueSettings>
+		<valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna lettura a carico HERA</valueName>
+        </valueSettings>
+		<valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna sul posto gratuita</valueName>
+        </valueSettings>
+		<valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna consumo abusivo</valueName>
+        </valueSettings>
+		<valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna SISMA chiusura contatore</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
             <valueName>In Continuità</valueName>
