@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>FornitureCliente__c</field>
-        <value xsi:nil="true"/>SI</value>
+        <value xsi:nil="true">SI</value>
     </values>
     <values>
         <field>RateCategory__c</field>
