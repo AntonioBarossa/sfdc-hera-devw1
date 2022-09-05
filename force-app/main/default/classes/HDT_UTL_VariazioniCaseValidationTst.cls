@@ -1,11 +1,10 @@
 @isTest
-@SuppressWarnings('PMD.UnusedLocalVariable')
-public with sharing class HDT_UTL_AttachmentValidationTst {
-   
+public with sharing class HDT_UTL_VariazioniCaseValidationTst {
+    
     //DEBUG
-    public static final String TEST_NAME = 'HDT_UTL_AttachmentValidationTst';
+    public static final String TEST_NAME = 'HDT_UTL_VariazioniCaseValidationTst';
 
-    private static HDT_UTL_AttachmentValidation caseAttachmentUtl = new HDT_UTL_AttachmentValidation();
+    private static HDT_UTL_VariazioniCaseValidation caseAttachmentUtl = new HDT_UTL_VariazioniCaseValidation();
 
     @TestSetup
     static void setup(){
@@ -39,7 +38,7 @@ public with sharing class HDT_UTL_AttachmentValidationTst {
         Case myCase1 = [Select Id, Type from Case where Type = 'Adesione Rinuncia Fondo Fughe'];
 
         String recordId1 = myCase1.Id;
-        HDT_UTL_AttachmentValidation attachValidation = new HDT_UTL_AttachmentValidation();
+        HDT_UTL_VariazioniCaseValidation attachValidation = new HDT_UTL_VariazioniCaseValidation();
 
         String result = attachValidation.validate(null, recordId1);
         

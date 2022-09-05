@@ -281,7 +281,7 @@ public inherited sharing class HDT_QR_OrderItem {
         return [
             Select SBQQ__OrderedQuantity__c
             From OrderItem
-            WHERE
+            WHERE 
                 Order.SBQQ__Quote__c =:quoteId
             WITH SECURITY_ENFORCED
         ];

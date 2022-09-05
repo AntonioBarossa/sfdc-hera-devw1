@@ -312,7 +312,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     fieldsDataObject.push(
                         {
                             fieldname: element,
-                            required: true,
+                            required: false,
                             value: this.servicePointRetrievedData[element],
                             disabled: true
                         }
@@ -343,7 +343,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         {
                             fieldname: element,
                             required: true,
-                            value: this.servicePointRetrievedData[element],
+                            value: 'Regolamentato',
                             disabled: false
                         }
                     )
@@ -445,7 +445,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 } 
-                else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas' || this.recordtype.label === 'Punto Idrico' ) && element === 'SAPImplantCode__c') {
+                else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas' || this.recordtype.label === 'Punto Idrico' || this.recordtype.label === 'Punto Ambiente' ) && element === 'SAPImplantCode__c') {
                     fieldsDataObject.push(
                         {
                             fieldname: element,
@@ -602,12 +602,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     )
                 }
 
-                else if(this.recordtype.label === 'Punto Idrico' && element === 'MarketOrigin__c' && this.allSubmitedFields['CommoditySector__c'] == 'Acqua'){
+                else if(this.recordtype.label === 'Punto Idrico' && element === 'MarketOrigin__c'){
                     fieldsDataObject.push(
                         {
                             fieldname: element,
                             required: false,
-                            value: this.servicePointRetrievedData[element],
+                            value: 'Regolamentato',
                             disabled: false
                         }
                     )
@@ -924,9 +924,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 else
                 {
                     console.log('## this.selectedservicepoint ' + JSON.stringify(this.selectedservicepoint));
-                    var implantCode = this.selectedservicepoint['Impianto SAP'] !== null && this.selectedservicepoint['Impianto SAP'] == undefined? this.selectedservicepoint['Impianto SAP']:'';
-                    var codeToSearch = this.selectedservicepoint['Codice Punto'] !== null && this.selectedservicepoint['Codice Punto'] !== undefined? this.selectedservicepoint['Codice Punto']:implantCode;
+                    let implantCode = this.selectedservicepoint['Impianto SAP'] !== null && this.selectedservicepoint['Impianto SAP'] == undefined? this.selectedservicepoint['Impianto SAP']:'';
+                    let codeToSearch = this.selectedservicepoint['Codice Punto'] !== null && this.selectedservicepoint['Codice Punto'] !== undefined? this.selectedservicepoint['Codice Punto']:implantCode;
                     /** Casistica service point esistente su SFDC */
+                    if(!codeToSearch)
+                    {
+                        codeToSearch = this.selectedservicepoint['ServicePointId'];
+                    }
                     getServicePoint({ code: codeToSearch, fields: queryFields.join() }).then(data => {
 
                         this.handleCallServiceSap(this.selectedservicepoint);
