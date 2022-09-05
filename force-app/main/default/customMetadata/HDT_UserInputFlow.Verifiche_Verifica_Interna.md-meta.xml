@@ -4,11 +4,16 @@
     <protected>false</protected>
     <values>
         <field>Commodity__c</field>
-        <value xsi:type="xsd:string">Energia Elettrica</value>
+        <value xsi:type="xsd:string">Acqua</value>
     </values>
     <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
+{
+&quot;FieldName&quot; : &quot;Type&quot;,
+&quot;ReadOnly&quot; : true,
+&quot;Column&quot; : 1
+},
 {
 &quot;FieldName&quot; : &quot;Subprocess__c&quot;,
 &quot;Required&quot; : true,
@@ -54,11 +59,11 @@
       &quot;Column&quot;:1
    },
    {
-      &quot;FieldName&quot;:&quot;Market__c&quot;,
+      &quot;FieldName&quot;:&quot;MeterCode__c&quot;,
       &quot;Column&quot;:1
    },
    {
-      &quot;FieldName&quot;:&quot;SupplyType__c&quot;,
+      &quot;FieldName&quot;:&quot;Caliber__c&quot;,
       &quot;Column&quot;:1
    },
    {

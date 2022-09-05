@@ -2028,7 +2028,7 @@
             <default>true</default>
         </values>
         <values>
-            <fullName>Y</fullName>
+            <fullName>S</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2469,6 +2469,10 @@
         </values>
         <values>
             <fullName>Connessione con Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione</fullName>
             <default>false</default>
         </values>
         <values>

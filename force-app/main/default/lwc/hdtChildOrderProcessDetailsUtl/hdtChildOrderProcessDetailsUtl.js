@@ -36,6 +36,8 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
         return date.getFullYear()+'-'+month+'-'+day;
     }
 
+    const ANNUAL_CONSUM =  { evaluationType: 'notvisible', rateCategories: ['APSCARPRO0'] };
+
     const handleSections = function() {
         this.fields = [
             {
@@ -303,19 +305,27 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 new fieldData('ConnectionMandate__c','ConnectionMandate__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica', '',''),
                 new fieldData('Fase richiesta','RequestPhase__c', this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', true, false, '',''),
                 new fieldData('Muc', 'IsMuc__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',false,false, '',''),
+                new fieldData('Addebito Spese Contrattuali','ContractExpenses__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, false, '',''),
+                new fieldData('Data Differita','DeferredDate__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, false, '',''),
+                new fieldData('Data Decorrenza','EffectiveDate__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, true, false, '',''),
+                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), this.order.ProcessType__c!=='Prima Attivazione Ele' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica', !(this.order.ProcessType__c!=='Prima Attivazione Ele' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica'),'',''),
                 new fieldData('Codice Ateco','AtecoCode__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('SurfaceServed__c','SurfaceServed__c', this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'), true, false, '',''),
                 new fieldData('Convenzione/Associazione','ConventionAssociation__c', this.typeVisibility('both') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt') && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '',''),
                 new fieldData('Livello pressione','PressureLevel__c', this.typeVisibility('gas'), true, false, '',''),
                 new fieldData('Servizio Energetico','EnergyService__c', this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'), false, false, '',''),
                 new fieldData('Tipo Voltura','VoltureType__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch', true, false, '',''),
-                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), this.order.ProcessType__c!=='Prima Attivazione Ele' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica', !(this.order.ProcessType__c!=='Prima Attivazione Ele' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica'),'',''),
                 new fieldData('POD/PdR','ServicePointCodeFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Tipo Mercato','Market__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Settore merceologico','CommodityFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Distributore','DistributorFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Mercato di provenienza','MarketOrigin__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Consumi Anno','AnnualConsumption__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('Consumi Anno','AnnualConsumption__c', this.typeVisibility('both') && this.rateCategoryVisibility(ANNUAL_CONSUM), false, true, '',''),
+                new fieldData('Tipo Fornitura','SupplyType__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, true, '',''),
+                new fieldData('ATO','ATO__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, true, '',''),
+                new fieldData('Conto contrattuale','ContractAccountCode__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, true, '',''),
+                new fieldData('Tariffa','RateCategory__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, true, '',''),
+                new fieldData('Classe Contatore','MeterClass__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, true, '',''),
                 new fieldData('Potenza impegnata','PowerCommitted__c', this.typeVisibility('ele'), false, true, '',''),
                 new fieldData('Potenza disponibile','PowerAvailable__c', this.typeVisibility('ele'), false, true, '',''),
                 new fieldData('Potenza richiesta','PowerRequested__c', this.typeVisibility('ele'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', '',''),

@@ -56,6 +56,11 @@ public inherited sharing class HDT_UTL_Order {
     public static boolean calculateRateCategory(Order ord){
         HDT_QR_Order orQr = new HDT_QR_Order();
         Order o = orQr.getRecordById(ord.id);
+
+        if( 'Acqua'.equalsIgnoreCase(o.Commodity__c) ) {
+            return true;
+        }
+        
         boolean res = false;
         String code = '';
         List<RateCategory__c> listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__c != null ? o.ServicePoint__r.CommoditySector__c : 'Energia Elettrica',o.ServicePoint__r.distributor__r.code__c,o.CommercialProduct__c,o.SupplyType__c != null ? o.SupplyType__c : o.supplyTypeTechnical__c);
