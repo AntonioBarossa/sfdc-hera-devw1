@@ -2970,6 +2970,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Risposta Motivata Con Allegato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Segnalazioni Commissioni Agenzie</fullName>
             <default>false</default>
         </values>
