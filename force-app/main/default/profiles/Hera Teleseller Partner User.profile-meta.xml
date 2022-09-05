@@ -8479,6 +8479,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ContactPointEmail.Email_SOL_Old__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ContactPointEmail.GlobalMigrationKey__c</field>
         <readable>true</readable>
     </fieldPermissions>
