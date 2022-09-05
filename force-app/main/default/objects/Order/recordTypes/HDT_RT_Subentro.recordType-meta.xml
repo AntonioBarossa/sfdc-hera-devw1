@@ -2335,6 +2335,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In attesa esito SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
@@ -2452,6 +2456,10 @@
         </values>
         <values>
             <fullName>Subentro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura - Subentro Scarico produttivo</fullName>
             <default>false</default>
         </values>
     </picklistValues>

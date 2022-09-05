@@ -1066,6 +1066,11 @@
         <label>Cambio Offerta - ACQ</label>
     </customValue>
     <customValue>
+        <fullName>Voltura - Subentro Scarico produttivo - ACQ</fullName>
+        <default>false</default>
+        <label>Voltura - Subentro Scarico produttivo - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Testo contratto in bolletta - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>

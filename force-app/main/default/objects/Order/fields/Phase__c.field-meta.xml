@@ -439,6 +439,11 @@
                 <label>In attesa esito documentale da E1</label>
             </value>
             <value>
+                <fullName>In attesa esito SAP</fullName>
+                <default>false</default>
+                <label>In attesa esito SAP</label>
+            </value>
+            <value>
                 <fullName>In Attesa Legge 80</fullName>
                 <default>false</default>
                 <label>In Attesa Legge 80</label>
