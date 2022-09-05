@@ -393,14 +393,23 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
     @TestVisible
     private static wrts_prcgvr.MRR_1_0.MultiRequest changeMeterCode(wrts_prcgvr.MRR_1_0.MultiRequest mrrList, String meterCode)
     {
+        Boolean changeField = false;
         for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects){
             if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('ServicePoint__c')){
                 for(wrts_prcgvr.MRR_1_0.Field f : obj.fields){
                     if(f.name.equalsIgnoreCase('SERNR')){
                         f.value = meterCode;
+                        changeField = true;
                         break;
                     }
-                }                
+                }
+                if (!changeField){
+                    wrts_prcgvr.MRR_1_0.Field meterCodeField = new wrts_prcgvr.MRR_1_0.Field();
+                    meterCodeField.name = 'SERNR';
+                    meterCodeField.fieldType = 'STRING';
+                    meterCodeField.value = meterCode;
+                    obj.fields.add(meterCodeField);
+                }            
                 break;
             }
         }
