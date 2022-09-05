@@ -17,7 +17,12 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         serviceSp.checkReadAccess(fields);
         if(code != null && code.startsWith('4') && code.length() == 10){
             return servicePointQuery.getRecordByImplantCode(code, fields);
-        }else{
+        }
+        else if(code instanceof Id)
+        {
+            return servicePointQuery.getRecordById(code, fields);
+        }
+        else{
             return servicePointQuery.getRecordByCode(code, fields);
         }
     }
