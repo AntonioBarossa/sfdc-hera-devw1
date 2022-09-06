@@ -465,6 +465,11 @@
     </customSettingAccesses>    
     <fieldPermissions>
         <editable>true</editable>
+        <field>DocumentSelected__c.CommoditySector__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AmministrazioneFrodi__c.BpNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
