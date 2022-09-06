@@ -59,7 +59,6 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
          * Caricamento manuale in Siebel
          */
         if ( isTransition && regexPattern.matcher(acc[0].CustomerMarking__c).matches() ){
-            siebelLoadingActivity(sale.Id, sale.Account__c, 'Sale__c');
             message = true;
         }
         
@@ -111,7 +110,42 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
      */
     @AuraEnabled
     public static void updateSale(Sale__c sale){
+        List<SObject> sobjToUpdate = new List<SObject>();
+        /**@frpanico se ci sono vendite a transitorio
+         * ibride
+         * Assicurarsi che tutte le vendite siano marcate a transitorio
+         */
+        List<SBQQ__Quote__c> quoteList = [SELECT Id, Sale__r.Account__r.CustomerMarking__c, IsTransition__c FROM SBQQ__Quote__c WHERE Sale__c = :sale.Id WITH SECURITY_ENFORCED];
+        if(!quoteList.isEmpty())
+        {
+            Boolean newCustomerMarking = false;
+            Boolean isTransition = false;
+            for(SBQQ__Quote__c quote : quoteList)
+            {
+                if(quote.isTransition__c)
+                {
+                    isTransition = true;
+                    break;
+                }
+            }
+            String regex = '^D[0-9] - .*';
+            Pattern regexPattern = Pattern.compile(regex);
+            if(regexPattern.matcher(quoteList[0].Sale__r.Account__r.CustomerMarking__c).matches())
+            {
+                newCustomerMarking = true;
+            }
+            if(!newCustomerMarking && isTransition)
+            {
+                for(SBQQ__Quote__c quote : quoteList)
+                {
+                    quote.IsTransition__c = true;
+                    sobjToUpdate.add(quote);
+                }
+                sale.IsTransition__c = true;
+            }
+        }
+        sobjToUpdate.add(sale);
         system.debug(sale.CurrentStep__c);
-        saleSrv.updateRecord(sale);
+        HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
     }
 }

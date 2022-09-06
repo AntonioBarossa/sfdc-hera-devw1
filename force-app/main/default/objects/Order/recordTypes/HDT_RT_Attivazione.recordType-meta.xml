@@ -25,6 +25,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ActivationType__c</picklist>
+        <values>
+            <fullName>Primo soggetto passivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro precedente soggetto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura obbligato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>AggregateBilling__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -60,10 +75,6 @@
             <fullName>Bolletta per e-mail</fullName>
             <default>false</default>
         </values>
-        <!--<values>
-            <fullName>Bolletta per e-mail %2B Carta</fullName>
-            <default>false</default>
-        </values>-->
         <values>
             <fullName>Cartaceo</fullName>
             <default>false</default>
@@ -572,7 +583,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>CALL BACK WEB NEOEN</fullName>
+            <fullName>CALL BACK WEB</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2009,6 +2020,17 @@
             <fullName>Imposta usi non domestici iva 22%25 %28Cod%2E G_ICC%29</fullName>
             <default>false</default>
         </values>
+    </picklistValues>    
+    <picklistValues>
+        <picklist>FuiAccess__c</picklist>
+        <values>
+            <fullName>N</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>S</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Instance326__c</picklist>
@@ -2148,10 +2170,6 @@
           <fullName>Accettazione pagamento a DL</fullName>
             <default>false</default>
         </values>
- <!--   <values>
-            <fullName>Amm%2E Precheck OK SII</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
@@ -2200,10 +2218,6 @@
             <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>
         </values>
-        <!-- <values>
-            <fullName>Annullamento - Revocato</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
             <default>false</default>
@@ -2400,10 +2414,6 @@
             <fullName>Ripensamento - Inviato al SII</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>Ripensamento - Revocato</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Ripensato</fullName>
             <default>false</default>
@@ -2459,6 +2469,10 @@
         </values>
         <values>
             <fullName>Connessione con Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione</fullName>
             <default>false</default>
         </values>
         <values>

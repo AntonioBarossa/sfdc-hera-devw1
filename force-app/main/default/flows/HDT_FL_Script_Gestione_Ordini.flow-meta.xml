@@ -334,7 +334,7 @@
         <connector>
             <targetReference>OrdiniFigliAssign</targetReference>
         </connector>
-        <filterLogic>1 AND 2 AND 3 AND 4 AND 5 AND (6 OR 7)</filterLogic>
+        <filterLogic>1 AND 2 AND 3 AND 4 AND 5 AND (6 OR 7 OR 8 OR 9)</filterLogic>
         <filters>
             <field>ParentOrder__c</field>
             <operator>EqualTo</operator>
@@ -382,6 +382,20 @@
             <operator>Contains</operator>
             <value>
                 <elementReference>ProdottoOffertaRicalcolata</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CommercialProduct__c</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>PzNettoDefault</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CategoryFamilyFormula__c</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>famigliaProdottoOffertaInput</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -555,6 +569,23 @@
         <isOutput>true</isOutput>
         <value>
             <elementReference>famigliaProdottoOffertaInput</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <name>OfferNameCollection</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>PzNettoDefault</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Pz Netto</stringValue>
         </value>
     </variables>
     <variables>

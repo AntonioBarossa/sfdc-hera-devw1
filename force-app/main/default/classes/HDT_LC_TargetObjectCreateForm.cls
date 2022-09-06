@@ -14,10 +14,17 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
 
     @AuraEnabled
     public static List<ServicePoint__c> getServicePoint(String code, String fields) {
-        
         serviceSp.checkReadAccess(fields);
-
-        return servicePointQuery.getRecordByCode(code, fields);
+        if(code != null && code.startsWith('4') && code.length() == 10){
+            return servicePointQuery.getRecordByImplantCode(code, fields);
+        }
+        else if(code instanceof Id)
+        {
+            return servicePointQuery.getRecordById(code, fields);
+        }
+        else{
+            return servicePointQuery.getRecordByCode(code, fields);
+        }
     }
 
     @AuraEnabled
@@ -66,6 +73,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
             Sale__c s = new Sale__c();
             HDT_QR_Sale saQr = new HDT_QR_Sale();
 
+            
             if(listSale != null && !listSale.isEmpty()){
                 s.id = listSale[0].opportunity__r.Sale__c;
                 s = saQr.getRecordById(listSale[0].opportunity__r.Sale__c,'id,Account__r.Category__c,Account__r.CompanyOwner__c');
@@ -98,7 +106,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                 }
             }
 
-            if(isTransitorio){
+            //if(isTransitorio){
                 HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
                 if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                     if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
@@ -108,7 +116,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                         }
                     }
                 }
-            }
+            //}
         }
         serviceSp.updateRecord(servicePo);
     }
@@ -125,7 +133,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
             }
             if(sa != null){
                 boolean isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
-                if(isTransitorio){
+                //if(isTransitorio){
                     HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
                     if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                         if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
@@ -135,7 +143,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                             }
                         }
                     }
-                }
+                //}
             }
         }
         serviceSp.createRecord(servicePo);
@@ -192,6 +200,21 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     }
 
     @AuraEnabled
+    public static String getAto(String comune){
+
+        List<TownATOTable__c> myRecordList = [Select id, ATO__c, Town__c from TownATOTable__c where Town__c =:comune WITH SECURITY_ENFORCED];
+        if(!myRecordList.isEmpty()){
+            if(myRecordList[0].ATO__c !=null ){
+                return myRecordList[0].ATO__C;
+            }else{
+                return '';
+            }
+        }else{
+            return '';
+        }
+    }
+
+    @AuraEnabled
     public static Boolean checkFieldCoerenceSpGas(Map<String, Object> inputFieldMap){
 
         Boolean hasCoerence = false;
@@ -199,4 +222,11 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
 
         return hasCoerence;
     }
+
+    @AuraEnabled
+    public static string checkCoerenceServicePoint(Map<String, Object> servicePoint, Map<String, Object> inputFieldMap)
+    {
+        return JSON.serialize(HDT_SRV_FieldCoerenceServicePoint.checkCoerenceServicePoint(servicePoint, inputFieldMap));
+    }
+
 }

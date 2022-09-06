@@ -238,17 +238,23 @@ private class HDT_UTL_HandleTechnicalDataTst {
                               SAPContractCode__c,
                               MeterStatus__c,
                               Status__c,
+                              RecordTypeId,
                               ServicePointCode__c
-                                
-
                              FROM ServicePoint__c LIMIT 1];
-
+    Account acc = [SELECT Id FROM Account LIMIT 1];
+    String recordTypeId = Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Gas').getRecordTypeId();
+    service.RecordTypeId = recordTypeId;
+    service.CommoditySector__c = 'Gas';
+    update service;
     HDT_UTL_HandleTechnicalData handleTechnicalData = new HDT_UTL_HandleTechnicalData();
     handleTechnicalData.sp= service;
     handleTechnicalData.handleCompletata(new Map<String,String>{
         'ANLAGE'=>'10',
         'VERTRAG'=>'20',
-        'ANLAGE_ST'=>'Open'
+        'ANLAGE_ST'=>'Open',
+        'supplyType' => 'A-Domestico',
+        'implantType' => '1004-Riscaldamento promiscuo',
+        'NuovoAccount' => acc.Id
    
     });
     

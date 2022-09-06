@@ -15,6 +15,11 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
     String bozzaCase = 'Bozza';
     String autoletturaCase = 'Autolettura';
 
+    List<String> typesCase = new List<String>{'Modifica post accertamento','Cessazione post accertamento'};
+    List<String> caseRt = new List<String>{'HDT_RT_DisattivazioniTari','HDT_RT_VariazioniTari'};
+    String phaseInLavorazione = 'In Lavorazione';
+
+
     public List<Knowledge__kav> getExpiredArticle(){
 
         return [SELECT Id,
@@ -85,6 +90,19 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
     }
 
     public List<Case> getAutoletturaBozzaCase(){
+
+        String whereConditionFieldValue1 = 'Autolettura';
+        String queryString = 'SELECT id, Type__c, NumberOfDays__c FROM CS_DaysToExpiration__c where Type__c = \'' + String.escapeSingleQuotes(whereConditionFieldValue1) + '\'';
+        SObject mySobj = database.query(queryString);
+
+        if(mySobj == null)
+        {
+            return new List<Case>();
+        }
+
+        Integer numberOfDays = Integer.valueOf(((CS_DaysToExpiration__c) mySobj).NumberOfDays__c);
+        Date limitDate = (System.today()).addDays(- numberOfDays);
+
         return [SELECT Id,
         Type,
         Phase__c,
@@ -99,11 +117,69 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         FROM Case
         WHERE Phase__c = :this.bozzaCase
         AND Cluster__c = : this.autoletturaCase
+        AND CreatedDate < :limitDate
         WITH SECURITY_ENFORCED
         ];
     }
 
+    public List<Case> getSegnalazioniBozzaCase(){
+        Id processTypeId = (new Case()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
+        CS_DaysToExpiration__c cs = CS_DaysToExpiration__c.getInstance('Segnalazioni_Ambiente');
+        Integer strNumberOfDays = integer.valueof(STRING.isBlank(cs?.NumberOfDays__c)? '0' : cs.NumberOfDays__c);
+        strNumberOfDays=-strNumberOfDays;
+        Date d = Date.today().addDays(strNumberOfDays);
+        return [SELECT 
+            Id,
+            Type,
+            Phase__c,
+            Cluster__c
+            FROM Case
+            WHERE 
+            RecordTypeId = :processTypeId
+            AND Phase__c = :this.bozzaCase
+            AND Type ='Segnalazioni Ambientali'
+            AND CreatedDate < :d
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Case> getRifiutiBozzaCase(){
+        Id processTypeId = (new Case()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
+        CS_DaysToExpiration__c cs = CS_DaysToExpiration__c.getInstance('Gestione_Rifiuti');
+        Integer strNumberOfDays = integer.valueof(STRING.isBlank(cs?.NumberOfDays__c)? '0' : cs.NumberOfDays__c);
+        strNumberOfDays=-strNumberOfDays;
+        Date d = Date.today().addDays(strNumberOfDays);
+        return [SELECT 
+            Id,
+            Type,
+            Phase__c,
+            Cluster__c
+            FROM Case
+            WHERE 
+            RecordTypeId = :processTypeId
+            AND (
+                ( Phase__c = :this.bozzaCase AND CreatedDate < :d) 
+                OR ( Phase__c ='Inviata a SAP' AND StartAppointment__c!=null AND StartAppointment__c < TODAY)
+            )
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     public List<Case> getPostSalesBozzaCase(){
+        Id segnalazioniRtId = (new Case()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
+
+        String whereConditionFieldValue2 = 'PostSales';
+        String queryString = 'SELECT id, Type__c, NumberOfDays__c FROM CS_DaysToExpiration__c where Type__c = \'' + String.escapeSingleQuotes(whereConditionFieldValue2) + '\'';
+        SObject mySobj = database.query(queryString);
+
+        if(mySobj == null)
+        {
+            return new List<Case>();
+        }
+
+        Integer numberOfDays = Integer.valueOf(((CS_DaysToExpiration__c) mySobj).NumberOfDays__c);
+        Date limitDate = (System.today()).addDays(- numberOfDays);
+
         return [SELECT Id,
         Type,
         Phase__c,
@@ -118,6 +194,28 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         FROM Case
         WHERE Phase__c = :this.bozzaCase
         AND Cluster__c != : this.autoletturaCase
+        AND RecordTypeId != :segnalazioniRtId
+        AND Type != 'Contenitore Morosità'
+        AND CreatedDate < :limitDate
+        WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Case> getPostAccertamentoCase(){
+        return [SELECT Id,
+        Type,
+        Phase__c,
+        Cluster__c,
+        AccountId,
+        SupplyCity__c,
+        SupplyStreetName__c,
+        ServicePoint__c,
+        CreatedDate
+        FROM Case
+        WHERE Phase__c =: this.phaseInLavorazione
+        AND RecordType.DeveloperName IN :this.caseRt
+        AND Type IN: this.typesCase
+        AND Id Not IN (Select Case__c from wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c = 'Aperta' AND Type__c IN ('Aprire variazione','Aprire Cessazione'))
         WITH SECURITY_ENFORCED
         ];
     }

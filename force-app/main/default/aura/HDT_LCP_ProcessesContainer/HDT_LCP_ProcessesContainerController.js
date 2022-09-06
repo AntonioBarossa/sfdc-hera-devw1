@@ -19,8 +19,8 @@
                 var res = response.getReturnValue();
                 var check = res.check;
                 var accountid = res.accountId;
-                var orderParentId = res.orderParentId;
                 var saleId = res.saleId;
+                var orderParentId = !(saleId || res.orderParent)? orderId : res.orderParent;
                 console.log('********'+res);
                 if(check){
 

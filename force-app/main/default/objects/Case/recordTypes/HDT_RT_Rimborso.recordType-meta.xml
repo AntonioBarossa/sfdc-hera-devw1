@@ -870,6 +870,48 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ClientType__c</picklist>
+		<values>
+			<fullName>Alberghi Bar Ristoranti</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Bagnini</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Cliente privato in suolo privato</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Cliente privato in suolo pubblico</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Ditte</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Enti Associazioni</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Scuole</fullName>
+			<default>false</default>
+		</values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ClientTypology__c</picklist>
+		<values>
+			<fullName>Domestico</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Non Domestico</fullName>
+			<default>false</default>
+		</values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Cluster__c</picklist>
         <values>
             <fullName>Annullamento</fullName>
@@ -1842,6 +1884,30 @@
         </values>
         <values>
             <fullName>FUTURENERGY-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1 - MMS Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G2 - MMS Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G3 - MMS Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 - MMS Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G5 - MMS Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 - MMS Associazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7622,6 +7688,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>OperationType__c</picklist>
+		<values>
+			<fullName>Modifica dati contr. stesso Cli</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Separazione CA</fullName>
             <default>false</default>
@@ -10194,6 +10264,10 @@
             <fullName>Altre Verifiche</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Ambiente annullo richiesta senza appuntamento</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Annullamento Contratti</fullName>
             <default>false</default>
@@ -10258,6 +10332,10 @@
             <fullName>Condizioni Contrattuali Errate</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Conferimento Centri di Raccolta</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Consegna copia chiave GdM</fullName>
             <default>false</default>
@@ -10318,6 +10396,10 @@
             <fullName>Fiscale</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Formulari Richiesta Sconto</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Gestione Bonus Sociale</fullName>
             <default>false</default>
@@ -10330,6 +10412,10 @@
             <fullName>Gestione Disalimentabilità</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Gestione Rifiuti</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>HVAC</fullName>
             <default>false</default>
@@ -10414,6 +10500,10 @@
             <fullName>Pagamento Online</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Pagamento Unico Annuale TARI</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Paperless</fullName>
             <default>false</default>
@@ -10486,6 +10576,14 @@
             <fullName>Ricostruzione Consumi</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Riduz. superficie rifiuti spec promiscui</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Riduzione Agevolazione dopo Accertamento</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Rimborso</fullName>
             <default>false</default>
@@ -10518,6 +10616,14 @@
             <fullName>Ritorno a Fatturazione Bimestrale%2FMensile</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Sconti Collettivi Pap</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Segnalazioni Ambientali</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Segnalazioni VAS</fullName>
             <default>false</default>

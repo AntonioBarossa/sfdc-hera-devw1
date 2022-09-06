@@ -25,6 +25,7 @@
 
     <!--Attributo per innesco da Campagne-->
     <aura:attribute name="campaignId" type="String"/>
+    <aura:attribute name="campaignMemberId" type="String"/>
 
     <!-- id del Lead oggetto del processo. -->
     <aura:attribute name="leadId" type="String"/>

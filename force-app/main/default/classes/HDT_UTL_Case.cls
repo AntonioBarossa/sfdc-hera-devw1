@@ -8,7 +8,7 @@ public inherited sharing class HDT_UTL_Case {
 
     private static HDT_QR_AccountContactRelation accountContactRelationQr = new HDT_QR_AccountContactRelation();
 
-    @InvocableMethod(label='Predefault')
+    @InvocableMethod(label='HDT_UTL_Case caseFlowPredefaults')
     public static List<HDT_UTL_FlowOutputs> caseFlowPredefaults(List<HDT_UTL_FlowInputs> inputs){
 
         HDT_QR_Case caseQr = new HDT_QR_Case();
@@ -26,6 +26,7 @@ public inherited sharing class HDT_UTL_Case {
         Case currentCase = inputs[0].currentCase;
         String cancellationNote = inputs[0].cancellationNote;
         String inputString = inputs[0].genericInputString;
+        String joinBottomAdhesion = inputs[0].joinBottomAdhesion;
         
         
 
@@ -43,15 +44,43 @@ public inherited sharing class HDT_UTL_Case {
                 City__c city = (City__c)companyInfosMap.get('cityObj');
 
 
-                AtecoMatrix__c atecoMatrix = [SELECT AtecoCode__c, City__c FROM AtecoMatrix__c WHERE City__c =: currentCase.SupplyCity__c WITH SECURITY_ENFORCED LIMIT 1];
+                List<AtecoMatrix__c> atecoMatrixList = [SELECT AtecoCode__c, City__c FROM AtecoMatrix__c WHERE City__c =: currentCase.SupplyCity__c WITH SECURITY_ENFORCED LIMIT 1];
 
-
-                output.atecoCode = atecoMatrix.AtecoCode__c;
-
+                if(!atecoMatrixList.isEmpty()){
+                    output.atecoCode = atecoMatrixList[0].AtecoCode__c;
+                }
                 
                 // output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
-                output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
-                output.salesCompany = city.SDV__c;
+                if(String.isNotBlank(currentCase.Commodity__c) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
+                    output.salesCompanyCode = '11-HERASPA';
+                    output.salesCompany = 'Hera Comm S.p.A';
+                }else {
+                    switch on city.SDV__c {
+                        when 'HCM' {
+                            output.salesCompanyCode = '10V0000160';
+                            output.salesCompany = 'Hera Comm Marche';
+                        }
+                        when 'HC' {
+                            output.salesCompanyCode = '13V0000000';
+                            output.salesCompany = 'Hera Comm S.p.A.';
+                        }
+                        when 'EENE'{
+                            if(currentCase.Commodity__c!= null && currentCase.Commodity__c.equalsIgnoreCase('Energia Elettrica')){
+                                output.salesCompanyCode = '13V0000170';
+                            }else {
+                                output.salesCompanyCode = '10V0000263';
+                            }
+                            output.salesCompany = 'ESTENERGY SPA';
+                        }
+                        when else {
+                            output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
+                            output.salesCompany = city.SDV__c;
+                        }
+                    }
+                }
+                
+                //output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
+                //output.salesCompany = city.SDV__c;
             }
         } 
         else if(process.equalsIgnoreCase('Compatibilita'))
@@ -99,7 +128,37 @@ public inherited sharing class HDT_UTL_Case {
             }
             output.count = output.servicePointId.size();
         }
+        else if('RemoveFacilityBundle'.equalsIgnoreCase(process)){
+            boolean result = true;
+            List<OrderItem> items = new HDT_QR_OrderItem().getItemsFromQuote(inputs[0].quoteId);
+            for(OrderItem item : items){
+                if(item.SBQQ__OrderedQuantity__c>0){result=false;break;}
+            }
+            result&=items.isEmpty();
+            output.isCompatible = result? '' : 'NO';
+        }else if (process.equalsIgnoreCase('Adesione Rinuncia Fondo Fughe')){
 
+            try {
+                
+                Case curCase = [SELECT Contract__r.StartDate FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
+
+                Date startDate = curCase.Contract__r.StartDate;
+                if (startDate != null){
+
+                    if('Y'.equals(joinBottomAdhesion) || ('N'.equals(joinBottomAdhesion) && startDate.addDays(365) > Date.today())){
+                        output.dataInizioVariazione = Date.today();
+                    }else if ('N'.equals(joinBottomAdhesion) && startDate.addDays(365) < Date.today()){
+                            output.dataInizioVariazione = startDate;
+                    }
+                }
+
+            } catch (Exception e) {
+                System.debug(LoggingLevel.DEBUG,'Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());  
+            }
+
+        }/*else if (process.equalsIgnoreCase('Modifica Unita Immobiliari Componenti')){
+
+        }*/
 
         outputs.add(output);
 
@@ -128,7 +187,10 @@ public inherited sharing class HDT_UTL_Case {
         public String cancellationNote;
         @InvocableVariable
         public String genericInputString;
-
+        @InvocableVariable
+        public String quoteId;
+        @InvocableVariable
+        public String joinBottomAdhesion;
 
     }
 
@@ -156,6 +218,8 @@ public inherited sharing class HDT_UTL_Case {
         public List<String> servicePointId;
         @InvocableVariable
         public Integer count;
+        @InvocableVariable
+        public Date dataInizioVariazione;
 
     }
 
@@ -293,6 +357,24 @@ public inherited sharing class HDT_UTL_Case {
         }
     }
 
-
-
+    public static List<ServiceRequest__c> createServiceRequestFromCases(List<Case> caseList)
+    {
+        List<ServiceRequest__c> serviceRequestList = new List<ServiceRequest__c>();
+        String processType = 'Allineamento anagrafica';
+        String status = 'Bozza';
+        String type = 'Case';
+        for(Case singleCase : caseList)
+        {
+            ServiceRequest__c srRequest = new ServiceRequest__c();
+            srRequest.Case__c = singleCase.Id;
+            srRequest.CommoditySector__c = singleCase.CommodityFormula__c;
+            srRequest.ProcessType__c = processType;
+            srRequest.ServicePointCode__c = singleCase.PODPDRFormula__c;
+            srRequest.ServicePoint__c = singleCase.ServicePoint__c;
+            srRequest.Status__c = status;
+            srRequest.Type__c = type;
+            serviceRequestList.add(srRequest);
+        }
+        return serviceRequestList;
+    }
 }

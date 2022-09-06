@@ -18,13 +18,19 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
         HDT_UTL_DataFactoryTst.pClickCasePhase();//
 
+        List<wrts_prcgvr__ActivityTemplate__c> templates =  HDT_UTL_DataFactoryTst.createActivityTemplate(1, false);
+        templates[0].Name = 'Valori non corrispondenti';
+        templates[0].wrts_prcgvr__ObjectType__c = 'Order';
+        templates[0].wrts_prcgvr__IsRequired__c = true;
+        insert templates;
+
         //Create 1 order one for the parent and one for the child 1
         //Create 2 OrderItems (to test loop with more than one item)
         List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
 		List<Sale__c> saleList=HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Attiva');
 		List<Order> orderList=HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].Id, 'Bozza');
         List<Contract> contractList=HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].Id);//
-        List<BillingProfile__c> BillingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);//
+        List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);//
         List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList=HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);  
         spList[0].CommoditySector__c = 'Energia Elettrica';
@@ -52,8 +58,8 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         childOrderList[0].Channel__c = 'Agenzie';
         childOrderList[0].ServicePoint__c = spList[0].Id;
         childOrderList[0].LoginWorkstation__c = 'CC_LT_Staff';
-        childOrderList[0].Email__c = 'assistenza@servizioclienti.com';
-        childOrderList[0].BillingProfile__c = BillingProfileList[0].Id;
+        //childOrderList[0].Email__c = 'assistenza@servizioclienti.com';
+        childOrderList[0].BillingProfile__c = billingProfileList[0].Id;
         childOrderList[0].ServicePointCode__c = 'IT001E00032928';
         childOrderList[0].SapContractCode__c = '3001002003';
         childOrderList[0].Commodity__c = 'Energia Elettrica';
@@ -482,6 +488,17 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         System.assertEquals(HDT_SRV_VoltureChangeManager.volturaTecnicaPhase, caseListUpdated[0].Phase__c,'Fase non correttamente aggiornata');
     }
 
+    @isTest
+    static void calloutVoltureTst()
+    {
+        List<Order> childOrder = [SELECT Id, ParentOrder__r.OrderNumber, OrderNumber, ServicePointCode__c, SapContractCode__c,HerokuPracticeCode__c,DocumentalProcessType__c FROM Order WHERE ParentOrder__c != NULL];
+        Test.setMock(HttpCalloutMock.class, new HDT_UTL_TestMockBloccoVoltura());
+        Test.startTest();
+            String result = HDT_SRV_VoltureChangeManager.calloutVolture(childOrder[0], 'B0');
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(result), 'test callout volture fallito');
+    }
+
     public class HDT_UTL_TestMockVolturaTecnica implements HTTPCalloutMock{
 
         public HTTPResponse respond(HTTPRequest request){
@@ -504,6 +521,24 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
             +'{"campo": "ACCISE","valore": "0.02270000"},'
             +'{"campo": "CODICE_ATECO","valore": "999999"}'
             +']}}';
+            statusCode = 200;
+
+            response.setHeader('Content-Type', 'application/json');
+            response.setBody(bodyResponse);
+            response.setStatusCode(statusCode);
+            response.setStatus('OK');
+            return response;
+        }
+    }
+    public class HDT_UTL_TestMockBloccoVoltura implements HttpCalloutMock
+    {
+        public HTTPResponse respond(HTTPRequest request){
+
+            HttpResponse response = new HttpResponse();
+            String bodyResponse;
+            Integer statusCode;
+
+            bodyResponse = '{"status": "success","correlationId": "f4e2fdd0-f7b9-11ec-bb2a-069652b1ba9e","timestamp": "2022-06-29T16:44:20","prestazione": {"rds": "O-00000804","rdo": "O-00000803","pod": "10110000280279","contratto": "3019583323","tipoAttivita": "Blocco inserito","note": "Blocco richiesto L8 ma il contratto 3019583323 risulta già bloccato"}}';
             statusCode = 200;
 
             response.setHeader('Content-Type', 'application/json');

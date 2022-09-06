@@ -4,6 +4,8 @@
     <columns>MasterLabel</columns>
     <columns>DeveloperName</columns>
     <columns>ProcessType__c</columns>
+    <columns>Commodity__c</columns>
     <filterScope>Everything</filterScope>
     <label>InputFlows</label>
+    <language>en_US</language>
 </ListView>

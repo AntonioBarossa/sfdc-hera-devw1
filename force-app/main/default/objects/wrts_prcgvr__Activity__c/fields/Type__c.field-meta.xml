@@ -141,6 +141,11 @@
                 <label>Chiamata outbound</label>
             </value>
             <value>
+                <fullName>Comfort Call</fullName>
+                <default>false</default>
+                <label>Comfort Call</label>
+            </value>
+            <value>
                 <fullName>Comunicazione da DL</fullName>
                 <default>false</default>
                 <label>Comunicazione da DL</label>
@@ -286,6 +291,11 @@
                 <label>Esito ricevuto su richiesta chiusa</label>
             </value>
             <value>
+                <fullName>Gestione Back Office</fullName>
+                <default>false</default>
+                <label>Gestione Back Office</label>
+            </value>
+            <value>
                 <fullName>Gestione dati discordanti</fullName>
                 <default>false</default>
                 <label>Gestione dati discordanti</label>
@@ -299,6 +309,11 @@
                 <fullName>Gestione M01/M02</fullName>
                 <default>false</default>
                 <label>Gestione M01/M02</label>
+            </value>
+            <value>
+                <fullName>Gestione manuale</fullName>
+                <default>false</default>
+                <label>Gestione manuale</label>
             </value>
             <value>
                 <fullName>Gestione Manuale SAP</fullName>
@@ -329,6 +344,11 @@
                 <fullName>Gestione Votive</fullName>
                 <default>false</default>
                 <label>Gestione Votive</label>
+            </value>
+            <value>
+                <fullName>Gestire fuga</fullName>
+                <default>false</default>
+                <label>Gestire fuga</label>
             </value>
             <value>
                 <fullName>Giro contatore da gestire</fullName>
@@ -401,6 +421,11 @@
                 <label>Modifica Contratti PreAttivazione</label>
             </value>
             <value>
+                <fullName>Pratica non gestita per il DL</fullName>
+                <default>false</default>
+                <label>Pratica non gestita per il DL</label>
+            </value>
+            <value>
                 <fullName>Preavviso Cessazione</fullName>
                 <default>false</default>
                 <label>Preavviso cessazione</label>
@@ -434,16 +459,6 @@
                 <fullName>Protocollo - Da tipizzare</fullName>
                 <default>false</default>
                 <label>Protocollo - Da tipizzare</label>
-            </value>
-            <value>
-                <fullName>Protocollo - Reclami Contratti</fullName>
-                <default>false</default>
-                <label>Protocollo - Reclami Contratti</label>
-            </value>
-			<value>
-                <fullName>Protocollo - Reclami Post Vendita</fullName>
-                <default>false</default>
-                <label>Protocollo - Reclami Post Vendita</label>
             </value>
             <value>
                 <fullName>Protocollo - Disattivazioni</fullName>
@@ -481,6 +496,21 @@
                 <label>Protocollo - Reclami</label>
             </value>
             <value>
+                <fullName>Protocollo - Segnalazioni</fullName>
+                <default>false</default>
+                <label>Protocollo - Segnalazioni</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Reclami Contratti</fullName>
+                <default>false</default>
+                <label>Protocollo - Reclami Contratti</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Reclami Post Vendita</fullName>
+                <default>false</default>
+                <label>Protocollo - Reclami Post Vendita</label>
+            </value>
+            <value>
                 <fullName>Protocollo - Variazioni</fullName>
                 <default>false</default>
                 <label>Protocollo - Variazioni</label>
@@ -499,6 +529,11 @@
                 <fullName>Protocollo - Voltura</fullName>
                 <default>false</default>
                 <label>Protocollo - Voltura</label>
+            </value>
+            <value>
+                <fullName>Quality Call</fullName>
+                <default>false</default>
+                <label>Quality Call</label>
             </value>
             <value>
                 <fullName>Rapporti con i distributori e SII</fullName>

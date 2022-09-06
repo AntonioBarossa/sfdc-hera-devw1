@@ -27,13 +27,20 @@ public inherited sharing class HDT_QR_CaseValidations {
         Contract__r.StartDate,
         ClientCategory__c,
         ShipmentAddressAssign__c,
-        TemporaryConnectionEndDate__c
+        TemporaryConnectionEndDate__c,
+        Description,
+        SupplyCity__c,
+        InvoicingCity__c
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED
         LIMIT 1
         ];
 
+    }
+
+    public List<Case> getCaseByTypeBillingProfile(String processType, Id accountId, String contractAccount){
+        return [SELECT Id FROM Case WHERE Type =: processType AND AccountId =: accountId AND ContractAccountCode__c =:contractAccount];
     }
 
     public List<ContentDocumentLink> getDocumentByCaseId(String recordId){

@@ -204,7 +204,18 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         system.debug(LoggingLevel.DEBUG, 'getAvailableProcesses - isReseller: ' +isReseller);
 
         for (ProcessMatrix__c process : allProcesses) {
-            if (
+            if(ord.Commodity__c == 'Ambiente' && process.Commodity__c == 'Ambiente'){
+                availableProcesses.add(process);
+            }
+            else if(ord.Commodity__c == 'Acqua' && process.Commodity__c == 'Acqua')
+            {
+                availableProcesses.add(process);
+            }
+            else if(process.Commodity__c == 'Acqua' || process.Commodity__c == 'Ambiente')
+            {
+                continue;
+            }
+            else if (
                 //process.meterStatus.contains(ord.ServicePoint__r.MeterStatus__c) && 
                 process.marketOrigin__c.contains(ord.MarketOrigin__c) // || process.marketOrigin__c.isEmpty())
                 && (process.plugPresence__c == plugPresence || process.commodity__c.containsIgnoreCase('Gas') )//aggiustamento plug presence gas
@@ -365,12 +376,32 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         String res = '';
         List<String> listRes = new List<String>();
         List<SaleServiceItem__c> transitionlist =saleItQr.getRecordsBySaleIdFilter(sale.id);
+        Set<String> energySet = new Set<String>{'Energia Elettrica', 'Gas'};
+        Set<String> nonEnergySet = new Set<String>{'Acqua', 'Ambiente'};
+        Boolean isMms = sal.Account__r.customerMarking__c.containsIgnoreCase('MMS');
+        Boolean checkEnergy = false;
+        Boolean checkNonEnergy = true;
         System.debug('*****MAVUOIANNA:'+ transitionlist);
         if(sal.isTransition__c){
                 //Map<String,
             // String sub = 'Subentro';
             boolean r = false;
             for(SaleServiceItem__c ser :transitionlist ){
+                if(isMms)
+                {
+                    if(energySet.contains(ser.ServicePoint__r.CommoditySector__c))
+                    {
+                        checkEnergy = true;
+                    }
+                    else if(nonEnergySet.contains(ser.ServicePoint__r.CommoditySector__c))
+                    {
+                        checkNonEnergy = true;
+                    }
+                    if(checkEnergy && checkNonEnergy)
+                    {
+                        return 'MmsMisto';
+                    }
+                }
                 if((ser.ServicePoint__r.PlugPresence__c== 'NO')||(ser.ServicePoint__r.PowerRequested__c != null && (ser.ServicePoint__r.PowerRequested__c!= ser.ServicePoint__r.PowerContractual__c))){
                 //Sale__c s = new Sale__c(Id=sale.Id);
                     s.isTransition__c=true;

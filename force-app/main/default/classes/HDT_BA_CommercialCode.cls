@@ -1,41 +1,33 @@
-public with sharing class HDT_BA_CommercialCode implements Database.Batchable<Commercial_Code_Batch_Context__c> {
+public with sharing class HDT_BA_CommercialCode implements Database.Batchable<CampaignMember> {
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
 
     public Integer startNumber;
     public Integer numberLength;
-    public List<String> campaignIds= new List<String>() ;
-    public List<String> campaignMembers= new List<String>();
     
-    //START>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
-    //public HDT_BA_CommercialCode(Map<String,List<String>> allMembers) {
     public HDT_BA_CommercialCode() {
         this.numberLength = 4;
         this.startNumber = 1;
     }
 
-    public Iterable<Commercial_Code_Batch_Context__c> start(Database.BatchableContext bc) {
-        List<Commercial_Code_Batch_Context__c> context = [SELECT Id, CampaignId__c, CampaignMemberId__c 
-                                                            FROM Commercial_Code_Batch_Context__c 
-                                                            WHERE CommercialCodeDone__c = FALSE AND BollettaDone__c = FALSE];
+    public Iterable<CampaignMember> start(Database.BatchableContext bc) {
+        System.debug('@@@@ HDT_BA_CommercialCode start');
+        List<CampaignMember> context = [
+            SELECT Id, FirstName, LastName, CampaignId,Campaign.MaxNumberEECodeUse__c,Campaign.MaxNumberGASCodeUse__c,Campaign.MaxNumberVASCodeUse__c , PromoCommercialCode__c, Campaign.CodeManagementModel__c, Campaign.PrefixCode__c, Campaign.CodeGenerationRule__c, PromoCommercialCode__r.FullCode__c 
+            FROM CampaignMember 
+            WHERE Campaign.CodeGenerationRule__c != 'Manuale'
+            AND Campaign.CodeManagementModel__c IN ('Per singolo Campaign Member','Porta un amico')
+            AND (PromoCommercialCode__c = null OR PromoCommercialCode__c = '')];
+        System.debug('@@@@ found '+context.size()+' CampaignMembers to update');
         return context;
     }
 
-    public void execute(Database.BatchableContext bc, List<Commercial_Code_Batch_Context__c> context) {
-        Map<String,List<String>> allMembers = new Map<String,List<String>>();
-        for(Commercial_Code_Batch_Context__c curObj : context){
-            List<String> temp = allMembers.get(curObj.CampaignId__c);
-            if(temp != null) temp.add(curObj.CampaignMemberId__c);
-			else temp = new List<String>{curObj.CampaignMemberId__c};
-            allMembers.put(curObj.CampaignId__c, temp);
+    public void execute(Database.BatchableContext bc, List<CampaignMember> context) {
+        System.debug('@@@@ HDT_BA_CommercialCode start');
+        System.debug('@@@@ working on '+context.size()+' CampaignMembers');
+        List<String> campaignIds = new List<String>();
+        for(CampaignMember curCm : context){
+            if(!campaignIds.contains(curCm.CampaignId)) campaignIds.add(curCm.CampaignId);
         }
-        
-        this.campaignIds.addAll(allMembers.keySet());
-        for (List<String> members : allMembers.values()) {
-            this.campaignMembers.addAll(members);
-        }
-        String queryStr = 'Select Id, FirstName, LastName, CampaignId,Campaign.MaxNumberEECodeUse__c,Campaign.MaxNumberGASCodeUse__c,Campaign.MaxNumberVASCodeUse__c , PromoCommercialCode__c, Campaign.CodeManagementModel__c, Campaign.PrefixCode__c, Campaign.CodeGenerationRule__c, PromoCommercialCode__r.FullCode__c FROM CampaignMember WHERE Id IN :campaignMembers AND Campaign.CodeGenerationRule__c != \'Manuale\' AND Campaign.CodeManagementModel__c IN (\'Per singolo Campaign Member\',\'Porta un amico\')';
-        List<CampaignMember> scope = Database.query(queryStr);
-        //get existing campaginMembers
         Database.QueryLocator query = Database.getQueryLocator('Select Id, FirstName, LastName, CampaignId, PromoCommercialCode__c, Campaign.CodeManagementModel__c, Campaign.PrefixCode__c, Campaign.CodeGenerationRule__c, PromoCommercialCode__r.FullCode__c FROM CampaignMember WHERE CampaignId IN :campaignIds AND Campaign.CodeGenerationRule__c != \'Manuale\' AND PromoCommercialCode__c  != \'\' AND Campaign.CodeManagementModel__c IN (\'Per singolo Campaign Member\',\'Porta un amico\')');
         Database.QueryLocatorIterator existingMembers =  query.iterator();
 
@@ -65,7 +57,7 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<Co
         List<CommercialCode__c> ccList = new List<CommercialCode__c>();
         Map<String,String> memberCode = new Map<String,String>();
         Map<String,String> codeId = new Map<String,String>();
-        for(CampaignMember cm : scope) {
+        for(CampaignMember cm : context) {
             String newCode = '';
             Integer startNumber = campaignIdMemberTotal.get(cm.CampaignId) != null ? campaignIdMemberTotal.get(cm.CampaignId) : 0;
             if (cm.Campaign.CodeGenerationRule__c == 'PrefissoProgressivo') {
@@ -97,7 +89,7 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<Co
             codeId.put(cc.FullCode__c, cc.Id);
         }
 
-        for (CampaignMember cm : scope) {
+        for (CampaignMember cm : context) {
             CampaignMember newCm = new CampaignMember();
             String cd = memberCode.get(cm.Id);
             newCm.Id = cm.Id;
@@ -109,10 +101,6 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<Co
             System.debug('@@@@ updating '+membersToUpdate.size()+' CampaignMembers');
             update membersToUpdate;
         }
-
-        for(Commercial_Code_Batch_Context__c curObj : context) curObj.CommercialCodeDone__c = true;
-        update context;
-        System.debug('@@@@ finish executing context' + context);
     }
 
     public void finish(Database.BatchableContext bc){
