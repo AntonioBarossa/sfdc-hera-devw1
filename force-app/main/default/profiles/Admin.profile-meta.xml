@@ -36190,6 +36190,10 @@
         <layout>Case-Case Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>HDT_ConsumoAnomaloIdrico</layout>
+        <recordType>Case.HDT_RT_ConsumoAnomaloIdrico</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-Case Layout</layout>
         <recordType>Case.HDT_RT_AttivazionePODVariazionePDR</recordType>
     </layoutAssignments>
@@ -39500,6 +39504,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_AlertDisassociazioneUtenteWeb</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Case.HDT_RT_ConsumoAnomaloIdrico</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
