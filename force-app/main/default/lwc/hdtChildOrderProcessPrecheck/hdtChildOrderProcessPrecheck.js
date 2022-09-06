@@ -47,7 +47,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     get isCreditCheckVisible(){
         return this.order.Step__c >= 2 && 
         (
-            this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
+            ( this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' && this.order.ProcessType__c !== 'Voltura - Subentro Scarico produttivo')
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
@@ -387,7 +387,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          console.log('# Full Condition >>> ' + (this.selectedProcessObject.RecordTypeName__c === 'HDT_RT_VAS' && this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c ) || (['HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.RecordTypeName__c) && this.selectedProcessObject.processType !== 'Switch in Ripristinatorio'));
         //if((this.selectedProcessObject.RecordTypeName__c === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.RecordTypeName__c) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
         console.log('# ProcessType >>> ' + this.selectedProcessObject.processType);
-        if( (['HDT_RT_VAS','HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.RecordTypeName__c) && this.selectedProcessObject.ProcessName__c != 'Switch in Ripristinatorio')){
+        if( (['HDT_RT_VAS','HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.RecordTypeName__c) && ( this.selectedProcessObject.ProcessName__c != 'Switch in Ripristinatorio' || this.selectedProcessObject.ProcessName__c != 'Voltura - Subentro Scarico produttivo' ))){
             this.callCreditCheckSAP();
         }
         console.log('****13');

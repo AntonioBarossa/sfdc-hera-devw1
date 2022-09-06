@@ -1061,6 +1061,11 @@
         <label>Prima Attivazione - AMB</label>
     </customValue>
     <customValue>
+        <fullName>Prima Attivazione - ACQ</fullName>
+        <default>false</default>
+        <label>Prima Attivazione - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Cambio Offerta - ACQ</fullName>
         <default>false</default>
         <label>Cambio Offerta - ACQ</label>
