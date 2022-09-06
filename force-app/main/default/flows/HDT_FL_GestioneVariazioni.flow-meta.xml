@@ -159,7 +159,7 @@
         <inputParameters>
             <name>joinBottomAdhesion</name>
             <value>
-                <stringValue>N</stringValue>
+                <elementReference>GetInputCase.JointBottomAdhesion__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
