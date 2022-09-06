@@ -53,13 +53,13 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(3, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         caseList[0].Type = 'Sollecito Emissione Bolletta';
         caseList[0].EarlyRecess__c = true;
-        caseList[0].MeterCode__c = 'R0000002';
+        caseList[0].MeterCode__c = 'R0000001';
         caseList[1].Type = 'Unificazione/Separazione BP-CA-Bolletta';
         caseList[1].EarlyRecess__c = true;
         caseList[1].MeterCode__c = 'R0000002';
         caseList[2].Type = 'RImborso';
         caseList[2].EarlyRecess__c = true;
-        caseList[2].MeterCode__c = 'R0000002';
+        caseList[2].MeterCode__c = 'R0000003';
 
         insert caseList;
 
@@ -67,7 +67,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         List<Case> caseList2 = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         caseList2[0].ParentId = parentCase.Id;
         caseList2[0].Type = 'Sospensione Fornitura';
-        caseList[0].MeterCode__c = 'R0000002';
+        caseList[0].MeterCode__c = 'R0000004';
         insert caseList2;
 
         List<ContentVersion> contentVersionList = HDT_UTL_DataFactoryTst.createContentVersion(1, true, 'Callout_Template', 
@@ -76,6 +76,13 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         +'{"name": "CaseNumber","label": "RIF_RICH"},'
         +'{"name": "Type","label": "TIPO_OPERAZIONE"},'
         +'{"name": "Id","label": "RECORD_ID"}'
+        +'],"objects" : ['
+        +'{"name": "ServicePoint__c", "label": "Fornitura","sObjectType": "ServicePoint__c","relationshipName": "ServicePoint__r", "queryable": true, "fields": ['
+        +'{"name": "MeterSN__c","label": "SERNR"}'
+        +'],"objects" : [] },'
+        +'{"name": "BillingProfile__c", "label": "Billing Profile","sObjectType": "BillingProfile__c","relationshipName": "BillingProfile__r", "queryable": true, "fields": ['
+        +'{"name": "IbanCountry__c","label": "PAESE_IBAN"}'
+        +'],"objects" : [] }'
         +']}'
         ,'Callout_Template.json');
         List<wrts_prcgvr__CalloutTemplate__c> calloutTemplates = HDT_UTL_DataFactoryTst.createCalloutTemplate(1,true,'Callout_Prova','prova',true,'Case','Flat',contentVersionList[0].ContentDocumentId);
