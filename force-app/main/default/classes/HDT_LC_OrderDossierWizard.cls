@@ -192,6 +192,20 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         return mapResponse;
     }
 
+    @AuraEnabled
+    public static Map<String, Object> initWihoutSale(String orderParentId) {
+        Map<String,Object> mapResponse = new Map<String,Object>();
+
+        Order parentOrder = orderQr.getRecordById(orderParentId);
+        mapResponse.put('check',true);
+        mapResponse.put('orderParent',parentOrder.Id);
+        mapResponse.put('orderParentRecord',parentOrder);
+        mapResponse.put('orderParentName',parentOrder.Name);
+        mapResponse.put('accountId',parentOrder.AccountId);
+        return mapResponse;
+
+    }
+
     private static List<OrderItem> handleNotAmendBonus(List<Id> listOrdersId){
         List<OrderItem> bonusToUpdate = new List<OrderItem>();
         List<OrderItem> allBonuses = orderItemQr.getRecordsByOrderIdFilteredFamilyBonus(listOrdersId);

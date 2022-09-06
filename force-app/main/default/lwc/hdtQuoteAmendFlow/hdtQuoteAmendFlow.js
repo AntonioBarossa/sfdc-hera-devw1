@@ -7,6 +7,7 @@ export default class HdtQuoteAmendFlow extends HdtQuoteAmendContract {
     @api contractId;
     @api isCommunity;
     @api availableActions = [];
+    title="Rimozione Agevolazione";
 
     handleCloseModal(){
         if(this.availableActions.find(action => action === 'NEXT')){
