@@ -463,6 +463,11 @@
     </customSettingAccesses>    
     <fieldPermissions>
         <editable>true</editable>
+        <field>DocumentSelected__c.CommoditySector__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.IntendedUse__c</field>
         <readable>true</readable>
     </fieldPermissions>
