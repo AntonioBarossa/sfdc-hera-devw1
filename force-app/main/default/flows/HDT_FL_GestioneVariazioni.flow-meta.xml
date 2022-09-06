@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
         <name>Check_Criterio_Eleggibilita</name>
         <label>Check Criterio Eleggibilita</label>
@@ -135,6 +135,37 @@
             <name>inputCase</name>
             <value>
                 <elementReference>GetCaseAggiornato_0_0_0_0</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>HDT_UTL_Case</name>
+        <label>HDT_UTL_Case</label>
+        <locationX>4440</locationX>
+        <locationY>1086</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Assegna_Valori_Fondo_Fughe</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>GetInputCase</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>joinBottomAdhesion</name>
+            <value>
+                <elementReference>GetInputCase.JointBottomAdhesion__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>Adesione Rinuncia Fondo Fughe</stringValue>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -392,6 +423,82 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Aggiorna_Fase_in_Da_Inviare_0_0_0_0_0_0</name>
+        <label>Aggiorna Fase in Da Inviare</label>
+        <locationX>502</locationX>
+        <locationY>2356</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Aggiorna_Fase_in_Da_Inviare_0_0_0_0_0_0_0</name>
+        <label>Aggiorna Fase in Da Inviare</label>
+        <locationX>4455</locationX>
+        <locationY>2995</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoFondoFughe.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoFondoFughe.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoFondoFughe.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>MA1</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Aggiorna_Fase_in_Da_Inviare_0_0_0_0_0_0_0_0</name>
+        <label>Aggiorna Fase in Da Inviare</label>
+        <locationX>5202</locationX>
+        <locationY>2500</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoEsenzioneModificaFognature.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoEsenzioneModificaFognature.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Aggiorna_Fase_in_Elaborazione_Manuale_0</name>
         <label>Aggiorna Fase in Elaborazione Manuale</label>
         <locationX>5546</locationX>
@@ -435,69 +542,26 @@
         </assignmentItems>
     </assignments>
     <assignments>
-        <name>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0</name>
-        <label>Aggiorna Fase in Elaborazione Manuale</label>
-        <locationX>4288</locationX>
-        <locationY>2876</locationY>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornatoFondoFughe.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Da Inviare</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornatoFondoFughe.Status</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0</name>
         <label>Aggiorna Fase in Elaborazione Manuale</label>
-        <locationX>5057</locationX>
-        <locationY>2112</locationY>
+        <locationX>4902</locationX>
+        <locationY>2288</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoEsenzioneModificaFognature.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Da Inviare</stringValue>
+                <stringValue>Elaborazione Manuale</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoEsenzioneModificaFognature.Status</assignToReference>
             <operator>Assign</operator>
-        </assignmentItems>
-        <connector>
-            <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0_0</name>
-        <label>Aggiorna Fase in Elaborazione Manuale</label>
-        <locationX>506</locationX>
-        <locationY>2176</locationY>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Da Inviare</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Status</assignToReference>
-            <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
+            <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -645,6 +709,75 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Fase_in_Da_Inviare_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Codice_Causale_0_0_0_0</name>
+        <label>Assegna Codice Causale</label>
+        <locationX>506</locationX>
+        <locationY>2224</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calcolo_Codice_Causale_ModUnitImm.CausalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.OperationCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calcolo_Codice_Causale_ModUnitImm.OperationCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Fase_in_Da_Inviare_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Codice_Causale_0_0_0_0_0</name>
+        <label>Assegna Codice Causale</label>
+        <locationX>4455</locationX>
+        <locationY>2857</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoFondoFughe.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calcolo_Codice_Causale_FondoFughe.CausalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoFondoFughe.OperationCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calcolo_Codice_Causale_FondoFughe.OperationCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Fase_in_Da_Inviare_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Codice_Causale_0_0_0_0_0_0</name>
+        <label>Assegna Codice Causale</label>
+        <locationX>5202</locationX>
+        <locationY>2358</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoEsenzioneModificaFognature.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calcolo_Codice_Causale_EsModFognature.CausalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoEsenzioneModificaFognature.OperationCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calcolo_Codice_Causale_EsModFognature.OperationCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Fase_in_Da_Inviare_0_0_0_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -961,6 +1094,13 @@
                 <elementReference>GetInputCase.SupplyType__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Subprocess__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Seleziona_la_sotto_tipologia_processo_0_0</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_Esenzione_Modifica_Fognatura_Depurazione</targetReference>
         </connector>
@@ -969,12 +1109,19 @@
         <name>Assegna_Valori_Fondo_Fughe</name>
         <label>Assegna Valori</label>
         <locationX>4438</locationX>
-        <locationY>1619</locationY>
+        <locationY>1395</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>GetInputCase.ServicePoint__r.SupplyType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.ResidenceChangeDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>HDT_UTL_Case.dataInizioVariazione</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -991,6 +1138,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>GetInputCase.ServicePoint__r.SupplyType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Subprocess__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Seleziona_la_sotto_tipologia_processo_0</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1045,11 +1199,64 @@
             <targetReference>ScreenInputFiscale_0_0_0_0</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <description>DGRER569/19 non Allacciato / Uso Irriguo</description>
+        <name>DGRER569_19_non_Allacciato_UsoIrriguo</name>
+        <choiceText>DGRER569/19 non Allacciato / Uso Irriguo</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>DGRER569/19 non Allacciato / Uso Irriguo</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Domestico_Residente</name>
+        <choiceText>Domestico Residente</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Domestico Residente</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <description>Modifica Fognatura e Depurazione</description>
+        <name>Modifica_Fognatura_e_Depurazione</name>
+        <choiceText>Modifica Fognatura e Depurazione</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Modifica Fognatura e Depurazione</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Promiscuo</name>
+        <choiceText>Promiscuo</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Promiscuo</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Variazione_Domestico_Residente</name>
+        <choiceText>Variazione: Domestico Residente</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Modifica Unita Immobiliari Componenti - DR</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Variazione_Promiscuo</name>
+        <choiceText>Variazione: Promiscuo</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Modifica Unita Immobiliari Componenti - PM</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Adesione_Fondo_Fughe</name>
         <label>Adesione Fondo Fughe</label>
         <locationX>4292</locationX>
         <locationY>2286</locationY>
+        <defaultConnector>
+            <targetReference>GetCaseAggiornatoFondoFughe</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>AdesioneFondoFughe_Si</name>
@@ -1065,21 +1272,6 @@
                 <targetReference>Screen_Autolettura_FondoFughe</targetReference>
             </connector>
             <label>Si</label>
-        </rules>
-        <rules>
-            <name>AdesioneFondoFughe_No</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>GetCaseAggiornatoFondoFughe_0.JointBottomAdhesion__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>No</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0</targetReference>
-            </connector>
-            <label>No</label>
         </rules>
     </decisions>
     <decisions>
@@ -2241,7 +2433,7 @@
         <name>OutcomeFormModificaUnitaImmobiliari</name>
         <label>OutcomeFormModificaUnitaImmobiliari</label>
         <locationX>502</locationX>
-        <locationY>1155</locationY>
+        <locationY>1199</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
             <name>AnnullataModificaUnitaImmobiliari</name>
@@ -2511,7 +2703,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Valori_Fondo_Fughe</targetReference>
+                <targetReference>HDT_UTL_Case</targetReference>
             </connector>
             <label>Adesione Rinuncia Fondo Fughe</label>
         </rules>
@@ -2526,7 +2718,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Valori_0_0_0_0_0_0_0</targetReference>
+                <targetReference>Scelta_Sottotipologia_Processo_0</targetReference>
             </connector>
             <label>Esenzione/Modifica Fognatura Depurazione</label>
         </rules>
@@ -2541,7 +2733,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Valori_ModificaUnitaImmobiliari</targetReference>
+                <targetReference>Scelta_Sottotipologia_Processo</targetReference>
             </connector>
             <label>Modifica Unita Immobiliari Componenti</label>
         </rules>
@@ -2586,6 +2778,43 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Split_sottoprocesso</name>
+        <label>Split sottoprocesso</label>
+        <locationX>5047</locationX>
+        <locationY>2077</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>DGRER569_19_non_Allacciato_Uso_Irriguo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseAggiornatoEsenzioneModificaFognature.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>DGRER569/19 non Allacciato / Uso Irriguo</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0</targetReference>
+            </connector>
+            <label>DGRER569/19 non Allacciato / Uso Irriguo</label>
+        </rules>
+        <rules>
+            <name>Modifica_Fognatura_e_Depurazione_subproc</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseAggiornatoEsenzioneModificaFognature.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica Fognatura e Depurazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Calcolo_Codice_Causale_EsModFognature</targetReference>
+            </connector>
+            <label>Modifica Fognatura e Depurazione</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Stesso_Indirizzo</name>
         <label>Stesso Indirizzo?</label>
         <locationX>3032</locationX>
@@ -2611,6 +2840,14 @@
         </rules>
     </decisions>
     <description>Flow per la gestione dei processi del Cluster Variazioni</description>
+    <dynamicChoiceSets>
+        <name>PicklistSceltaSottotipologia</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Subprocess__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
     <formulas>
         <name>ActivityTemplateName</name>
         <dataType>String</dataType>
@@ -2650,6 +2887,16 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>ProcessTypeCambioCont</name>
         <dataType>String</dataType>
         <expression>TEXT({!GetInputCase.Type}) &amp; &quot; &quot; &amp; {!GetInputCase.CommodityFormula__c}</expression>
+    </formulas>
+    <formulas>
+        <name>SubprocessType</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!GetInputCase.Type}) &amp; &quot; &quot; &amp; {!Seleziona_la_sotto_tipologia_processo_0} &amp; &quot; &quot; &amp; {!GetInputCase.CommodityFormula__c}</expression>
+    </formulas>
+    <formulas>
+        <name>SubprocessType_0</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!GetInputCase.Type}) &amp; &quot; &quot; &amp; {!Seleziona_la_sotto_tipologia_processo_0_0} &amp; &quot; &quot; &amp; {!GetInputCase.CommodityFormula__c}</expression>
     </formulas>
     <formulas>
         <name>VariazioneFiscalePhase</name>
@@ -2891,6 +3138,132 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <operator>EqualTo</operator>
             <value>
                 <elementReference>GetCaseAggiornato_0_0_0_0_0_0.CommodityFormula__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Calcolo_Codice_Causale_EsModFognature</name>
+        <label>Calcolo Codice Causale</label>
+        <locationX>5202</locationX>
+        <locationY>2223</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Codice_Causale_0_0_0_0_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoEsenzioneModificaFognature.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoEsenzioneModificaFognature.Type</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Subprocess__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoEsenzioneModificaFognature.Subprocess__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoEsenzioneModificaFognature.CommodityFormula__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Calcolo_Codice_Causale_FondoFughe</name>
+        <label>Calcolo Codice Causale</label>
+        <locationX>4455</locationX>
+        <locationY>2673</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Codice_Causale_0_0_0_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoFondoFughe.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoFondoFughe.Type</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Subprocess__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoFondoFughe.Subprocess__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoFondoFughe.CommodityFormula__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Calcolo_Codice_Causale_ModUnitImm</name>
+        <label>Calcolo Codice Causale</label>
+        <locationX>506</locationX>
+        <locationY>2104</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Codice_Causale_0_0_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Type</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Subprocess__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Subprocess__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.CommodityFormula__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -3156,7 +3529,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <locationY>1933</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0</targetReference>
+            <targetReference>Split_sottoprocesso</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -3177,7 +3550,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <locationY>2510</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0</targetReference>
+            <targetReference>Calcolo_Codice_Causale_FondoFughe</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -3240,7 +3613,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <locationY>1969</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0_0</targetReference>
+            <targetReference>Calcolo_Codice_Causale_ModUnitImm</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -3534,23 +3907,30 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>4288</locationX>
-        <locationY>3069</locationY>
+        <locationX>4454</locationX>
+        <locationY>3149</locationY>
         <inputReference>GetCaseAggiornatoFondoFughe</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>5061</locationX>
-        <locationY>2267</locationY>
+        <locationX>4902</locationX>
+        <locationY>2480</locationY>
         <inputReference>GetCaseAggiornatoEsenzioneModificaFognature</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>506</locationX>
-        <locationY>2374</locationY>
+        <locationX>502</locationX>
+        <locationY>2554</locationY>
         <inputReference>GetCaseAggiornatoModificaUnitaImmobiliari_0</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
+        <label>Aggiorna Case</label>
+        <locationX>5203</locationX>
+        <locationY>2654</locationY>
+        <inputReference>GetCaseAggiornatoEsenzioneModificaFognature</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_Billing_Profile</name>
@@ -3576,7 +3956,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Aggiorna_Case_Fondo_Fughe</name>
         <label>Aggiorna Case</label>
         <locationX>4438</locationX>
-        <locationY>1808</locationY>
+        <locationY>1693</locationY>
         <connector>
             <targetReference>Screen_Input_Fiscale_Fondo_Fughe</targetReference>
         </connector>
@@ -3586,7 +3966,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Aggiorna_Case_ModificaUnitaImmobiliari</name>
         <label>Aggiorna Case</label>
         <locationX>510</locationX>
-        <locationY>826</locationY>
+        <locationY>795</locationY>
         <connector>
             <targetReference>Screen_Input_Fiscale_Fondo_Fughe_0</targetReference>
         </connector>
@@ -3605,7 +3985,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>DisplayTextEsenzio</name>
         <label>Screen Input Fiscale Esenzione Fognature</label>
-        <locationX>5101</locationX>
+        <locationX>5100</locationX>
         <locationY>1178</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3685,7 +4065,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>ProcessTypeCambioCont</elementReference>
+                    <elementReference>SubprocessType_0</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -3717,7 +4097,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>documentSelectorDettaglio</name>
@@ -4025,6 +4405,62 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Scelta_Sottotipologia_Processo</name>
+        <label>Scelta Sottotipologia Processo</label>
+        <locationX>771</locationX>
+        <locationY>640</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Assegna_Valori_ModificaUnitaImmobiliari</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayTextSelezioneSottoprocesso</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Compila manualmente i dati sottostanti&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Seleziona_la_sotto_tipologia_processo_0</name>
+            <choiceReferences>Domestico_Residente</choiceReferences>
+            <choiceReferences>Promiscuo</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Seleziona la sotto tipologia processo:</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Scelta_Sottotipologia_Processo_0</name>
+        <label>Scelta Sottotipologia Processo</label>
+        <locationX>4802</locationX>
+        <locationY>771</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Assegna_Valori_0_0_0_0_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayTextSelezioneSottoprocesso_0</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Compila manualmente i dati sottostanti&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Seleziona_la_sotto_tipologia_processo_0_0</name>
+            <choiceReferences>Modifica_Fognatura_e_Depurazione</choiceReferences>
+            <choiceReferences>DGRER569_19_non_Allacciato_UsoIrriguo</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Seleziona la sotto tipologia processo:</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Screen_Autolettura</name>
         <label>Screen Autolettura</label>
         <locationX>4790</locationX>
@@ -4129,6 +4565,11 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <targetReference>Avanzamento_Lettura_Esenzione_Modifica_Fognatura</targetReference>
         </connector>
         <fields>
+            <name>HeaderNomeProcesso_0</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compila manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
             <name>hdtSelfReadingEsenzioneModificaFognature</name>
             <extensionName>c:hdtSelfReading</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -4203,7 +4644,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Screen_Autolettura_FondoFughe</name>
@@ -4216,6 +4657,11 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <connector>
             <targetReference>Avanzamento_Lettura_FondoFughe</targetReference>
         </connector>
+        <fields>
+            <name>HeaderNomeProcesso</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compila manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>hdtSelfReadingFondoFughe</name>
             <extensionName>c:hdtSelfReading</extensionName>
@@ -4291,19 +4737,24 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Screen_Autolettura_ModificaUnitaImmobiliari</name>
         <label>Screen Autolettura</label>
         <locationX>506</locationX>
-        <locationY>1554</locationY>
+        <locationY>1529</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
             <targetReference>Avanzamento_Lettura_ModificaUnitaImmobiliari</targetReference>
         </connector>
+        <fields>
+            <name>DiplayTextModificaUnitaImmobiliari</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compila manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>hdtSelfReadingModificaUnitaImmobiliari</name>
             <extensionName>c:hdtSelfReading</extensionName>
@@ -4379,7 +4830,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Screen_Criteri_Eleggibilita</name>
@@ -4640,7 +5091,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Screen_Input_Fiscale_Fondo_Fughe_0</name>
         <label>Screen Input Fiscale Fondo Fughe</label>
         <locationX>510</locationX>
-        <locationY>984</locationY>
+        <locationY>973</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4719,7 +5170,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>ProcessTypeCambioCont</elementReference>
+                    <elementReference>SubprocessType</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -4731,7 +5182,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>recordType</name>
                 <value>
-                    <elementReference>GetInputCase.RecordTypeId</elementReference>
+                    <elementReference>GetInputCaseFiscale.RecordTypeId</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -6520,8 +6971,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <subflows>
         <name>Annulla_Prestazione_FondoFughe_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>50</locationX>
-        <locationY>1156</locationY>
+        <locationX>32</locationX>
+        <locationY>1198</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -6659,6 +7110,13 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <value>
             <booleanValue>false</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>Scelta_Sottotipologia_Processo_Modifica_Unita_Imm</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>serviceCatalogId</name>

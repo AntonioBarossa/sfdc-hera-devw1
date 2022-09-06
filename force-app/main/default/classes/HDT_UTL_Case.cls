@@ -26,6 +26,7 @@ public inherited sharing class HDT_UTL_Case {
         Case currentCase = inputs[0].currentCase;
         String cancellationNote = inputs[0].cancellationNote;
         String inputString = inputs[0].genericInputString;
+        String joinBottomAdhesion = inputs[0].joinBottomAdhesion;
         
         
 
@@ -135,8 +136,29 @@ public inherited sharing class HDT_UTL_Case {
             }
             result&=items.isEmpty();
             output.isCompatible = result? '' : 'NO';
-        }
+        }else if (process.equalsIgnoreCase('Adesione Rinuncia Fondo Fughe')){
 
+            try {
+                
+                Case curCase = [SELECT Contract__r.StartDate FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
+
+                Date startDate = curCase.Contract__r.StartDate;
+                if (startDate != null){
+
+                    if('Y'.equals(joinBottomAdhesion) || ('N'.equals(joinBottomAdhesion) && startDate.addDays(365) > Date.today())){
+                        output.dataInizioVariazione = Date.today();
+                    }else if ('N'.equals(joinBottomAdhesion) && startDate.addDays(365) < Date.today()){
+                            output.dataInizioVariazione = startDate;
+                    }
+                }
+
+            } catch (Exception e) {
+                System.debug(LoggingLevel.DEBUG,'Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());  
+            }
+
+        }/*else if (process.equalsIgnoreCase('Modifica Unita Immobiliari Componenti')){
+
+        }*/
 
         outputs.add(output);
 
@@ -167,7 +189,8 @@ public inherited sharing class HDT_UTL_Case {
         public String genericInputString;
         @InvocableVariable
         public String quoteId;
-
+        @InvocableVariable
+        public String joinBottomAdhesion;
 
     }
 
@@ -195,6 +218,8 @@ public inherited sharing class HDT_UTL_Case {
         public List<String> servicePointId;
         @InvocableVariable
         public Integer count;
+        @InvocableVariable
+        public Date dataInizioVariazione;
 
     }
 

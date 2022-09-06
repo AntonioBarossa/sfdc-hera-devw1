@@ -23,7 +23,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Esenzione Modifica Fognatura Depurazione Acqua</value>
+        <value xsi:type="xsd:string">Esenzione Modifica Fognatura Depurazione Modifica Fognatura e Depurazione Acqua</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
