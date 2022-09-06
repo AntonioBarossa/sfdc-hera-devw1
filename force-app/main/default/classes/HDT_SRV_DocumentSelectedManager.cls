@@ -430,6 +430,30 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
     }
     
     @TestVisible
+    private static Double calculateRaiFee(List<Object> secondoLivelloList){
+        if(secondoLivelloList==null || secondoLivelloList.size()<=0) {
+            return null;
+        }
+        
+        try {
+            Double raiFee = 0;
+            for(Object singleRecord : secondoLivelloList){
+                Map<String, Object> secondolivello = (Map<String, Object>) singleRecord;
+                String tipoDocumento = (String) secondolivello.get('tipoDocumento');
+                String motivoPareggio = (String) secondolivello.get('motivoDiPareggio');
+                Double importo = Double.valueOf(secondolivello.get('importo'));
+                if(tipoDocumento.equalsIgnoreCase('VR') && (String.isBlank(motivoPareggio) || String.isEmpty(motivoPareggio))){
+                    raiFee += importo;
+                }
+            }
+            return raiFee;
+        } catch (Exception ex) {
+            System.debug(LoggingLevel.DEBUG, 'Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage());
+            return null;
+        }
+    }
+
+    @TestVisible
     private static String getRiferimentoFattura(List<Object> secondoLivelloList){
         if(secondoLivelloList == null || secondoLivelloList.size() <= 0) {
             return null;

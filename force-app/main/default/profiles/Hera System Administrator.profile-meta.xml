@@ -35583,7 +35583,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <layoutAssignments>
-        <layout>HDT_ConsumoAnomaloIdrico</layout>
+        <layout>Case-HDT_ConsumoAnomaloIdrico</layout>
         <recordType>Case.HDT_RT_ConsumoAnomaloIdrico</recordType>
     </layoutAssignments>
     <layoutAssignments>
