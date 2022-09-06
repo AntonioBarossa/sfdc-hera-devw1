@@ -75,7 +75,8 @@ public with sharing class HDT_UTL_TariManagement {
         MandatoryAttachments__c thereHasToBeOne = mattachments[0];
         if(thereHasToBeOne.UnicPaymentAnnuity__c > crDate) response.annuality = crDate;
         else response.annuality = crDate.addYears(1);
-        
+        response.limitDate = thereHasToBeOne.UnicPaymentAnnuity__c;
+
         responseList.add(response);
         return responseList;
     }
@@ -87,6 +88,9 @@ public with sharing class HDT_UTL_TariManagement {
         
         @InvocableVariable
         public Date annuality;
+
+        @InvocableVariable
+        public Date limitDate;
     }
 
     public class HDT_WRP_TariManagementRequest{

@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Calcola_annualit</name>
-        <label>Calcola annualità</label>
-        <locationX>380</locationX>
-        <locationY>1430</locationY>
-        <actionName>HDT_UTL_ManageTARI</actionName>
+        <name>calcAnnualita</name>
+        <label>calcAnnualita</label>
+        <locationX>743</locationX>
+        <locationY>1766</locationY>
+        <actionName>HDT_UTL_TariManagement</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>View_annualit</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
-            <name>caseIds</name>
+            <name>method</name>
+            <value>
+                <stringValue>calculateAnnualPaymentEffectiveness</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
             <value>
                 <elementReference>Get_Process_Case.Id</elementReference>
             </value>
@@ -23,8 +29,8 @@
     <assignments>
         <name>Aggiorna_Case_In_attesa</name>
         <label>Aggiorna Case In attesa</label>
-        <locationX>248</locationX>
-        <locationY>2246</locationY>
+        <locationX>611</locationX>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>Get_Process_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -39,8 +45,8 @@
     <assignments>
         <name>Aggiorna_Fase_e_Stato_0</name>
         <label>Aggiorna Case Da Inviare</label>
-        <locationX>512</locationX>
-        <locationY>2246</locationY>
+        <locationX>875</locationX>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>Get_Process_Case.Status</assignToReference>
             <operator>Assign</operator>
@@ -62,8 +68,8 @@
     <assignments>
         <name>Bozza_annullata</name>
         <label>Bozza annullata</label>
-        <locationX>314</locationX>
-        <locationY>758</locationY>
+        <locationX>578</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>Get_Process_Case.Status</assignToReference>
             <operator>Assign</operator>
@@ -83,10 +89,60 @@
         </connector>
     </assignments>
     <decisions>
+        <name>avanti</name>
+        <label>quale step</label>
+        <locationX>248</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>Compatibilit</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>annullata</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Selezione_fornitura.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>annulla_processo</targetReference>
+            </connector>
+            <label>annullata</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>avanti_0</name>
+        <label>quale step</label>
+        <locationX>545</locationX>
+        <locationY>1646</locationY>
+        <defaultConnector>
+            <targetReference>calcAnnualita</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>annullata_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordEditForm.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>annulla_processo_0</targetReference>
+            </connector>
+            <label>annullata</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Avviso_anno_prossimo</name>
         <label>Avviso anno prossimo</label>
-        <locationX>380</locationX>
-        <locationY>1670</locationY>
+        <locationX>743</locationX>
+        <locationY>2006</locationY>
         <defaultConnector>
             <targetReference>Inserimento_allegato</targetReference>
         </defaultConnector>
@@ -95,10 +151,10 @@
             <name>Mostra_avviso</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Calcola_annualit</leftValueReference>
-                <operator>GreaterThan</operator>
+                <leftValueReference>calcAnnualita.annuality</leftValueReference>
+                <operator>NotEqualTo</operator>
                 <rightValue>
-                    <elementReference>Get_Process_Case.CreatedDate</elementReference>
+                    <elementReference>Get_Process_Case.CustomerRequestDate__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -110,8 +166,8 @@
     <decisions>
         <name>Is_Compatibile</name>
         <label>Is Compatibile?</label>
-        <locationX>182</locationX>
-        <locationY>638</locationY>
+        <locationX>446</locationX>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Bozza_annullata</targetReference>
         </defaultConnector>
@@ -135,8 +191,8 @@
     <decisions>
         <name>Quale_fase</name>
         <label>Perfezionamento documentazione</label>
-        <locationX>380</locationX>
-        <locationY>2126</locationY>
+        <locationX>743</locationX>
+        <locationY>2462</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Fase_e_Stato_0</targetReference>
         </defaultConnector>
@@ -145,10 +201,10 @@
             <name>Si</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Process_Case.CustomerRequestDate__c</leftValueReference>
+                <leftValueReference>caseId</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Calcola_annualit</elementReference>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -160,7 +216,7 @@
     <decisions>
         <name>Quale_stato</name>
         <label>Quale stato?</label>
-        <locationX>380</locationX>
+        <locationX>545</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Campi_input_operatore</targetReference>
@@ -206,7 +262,7 @@
     <recordLookups>
         <name>Get_Process_Case</name>
         <label>Get Process Case</label>
-        <locationX>380</locationX>
+        <locationX>545</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -227,28 +283,28 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>314</locationX>
-        <locationY>878</locationY>
+        <locationX>578</locationX>
+        <locationY>998</locationY>
         <inputReference>Get_Process_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Salva_Case</name>
         <label>Salva Case</label>
-        <locationX>380</locationX>
-        <locationY>2462</locationY>
+        <locationX>743</locationX>
+        <locationY>2798</locationY>
         <inputReference>Get_Process_Case</inputReference>
     </recordUpdates>
     <runInMode>DefaultMode</runInMode>
     <screens>
         <name>Campi_input_operatore</name>
         <label>Campi input operatore</label>
-        <locationX>380</locationX>
-        <locationY>1310</locationY>
+        <locationX>545</locationX>
+        <locationY>1526</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Calcola_annualit</targetReference>
+            <targetReference>avanti_0</targetReference>
         </connector>
         <fields>
             <name>testata_sezione</name>
@@ -313,6 +369,18 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva in bozza</stringValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -323,25 +391,76 @@
     <screens>
         <name>Inserimento_allegato</name>
         <label>Inserimento allegato</label>
-        <locationX>380</locationX>
-        <locationY>2006</locationY>
+        <locationX>743</locationX>
+        <locationY>2342</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
             <targetReference>Quale_fase</targetReference>
         </connector>
+        <fields>
+            <name>navigazione</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>Brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Process_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
         <showFooter>false</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Screen_avviso_anno_prossimo</name>
         <label>Screen avviso anno prossimo</label>
-        <locationX>248</locationX>
-        <locationY>1790</locationY>
+        <locationX>611</locationX>
+        <locationY>2126</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
+        <backButtonLabel>Indietro</backButtonLabel>
         <connector>
             <targetReference>Inserimento_allegato</targetReference>
         </connector>
@@ -350,45 +469,142 @@
             <fieldText>&lt;p&gt;&lt;i style=&quot;color: rgb(199, 7, 20); font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Oxygen, Ubuntu, &amp;quot;Fira Sans&amp;quot;, &amp;quot;Droid Sans&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, sans-serif; font-size: 14px; background-color: rgba(235, 236, 240, 0.592);&quot;&gt;&lt;u&gt;Attenzione: avvisare il cliente che la rata unica sarà attiva dall’anno prossimo.&lt;/u&gt;&lt;/i&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>false</showFooter>
+        <nextOrFinishButtonLabel>Avanti</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>View_annualit</name>
         <label>View annualità</label>
-        <locationX>380</locationX>
-        <locationY>1550</locationY>
+        <locationX>743</locationX>
+        <locationY>1886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
+        <backButtonLabel>Indietro</backButtonLabel>
         <connector>
             <targetReference>Avviso_anno_prossimo</targetReference>
         </connector>
         <fields>
             <name>Annuity</name>
-            <fieldText>&lt;p&gt;Data limite: {!Calcola_annualit}&lt;/p&gt;&lt;p&gt;Annualità: {!Get_Process_Case.AnnualConsumption__c}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Data limite: &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!calcAnnualita.limitDate}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Annualità: {!calcAnnualita.annuality}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>true</showFooter>
+        <fields>
+            <name>nav</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>Brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Process_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <nextOrFinishButtonLabel>Avanti</nextOrFinishButtonLabel>
+        <showFooter>false</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>254</locationX>
+        <locationX>419</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Process_Case</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
+    <subflows>
+        <name>annulla_processo</name>
+        <label>annulla processo</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Get_Process_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>annulla_processo_0</name>
+        <label>annulla processo</label>
+        <locationX>347</locationX>
+        <locationY>1766</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>caseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <subflows>
         <name>Arricchimento_Dati</name>
         <label>Arricchimento Dati</label>
-        <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationX>314</locationX>
+        <locationY>878</locationY>
         <connector>
             <targetReference>Campi_input_operatore</targetReference>
         </connector>
         <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Selezione_fornitura.Contract</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>InputCase</name>
             <value>
@@ -405,8 +621,8 @@
     <subflows>
         <name>Compatibilit</name>
         <label>Compatibilità</label>
-        <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationX>446</locationX>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Is_Compatibile</targetReference>
         </connector>
@@ -422,10 +638,10 @@
     <subflows>
         <name>Selezione_fornitura</name>
         <label>Selezione fornitura</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>398</locationY>
         <connector>
-            <targetReference>Compatibilit</targetReference>
+            <targetReference>avanti</targetReference>
         </connector>
         <flowName>HDT_FL_SupplySelection</flowName>
         <inputAssignments>
