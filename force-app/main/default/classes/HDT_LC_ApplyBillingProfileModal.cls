@@ -174,7 +174,7 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
                     AND (SBQQ__Quote__r.AmendmentAllowed__c = null OR SBQQ__Quote__r.AmendmentAllowed__c = false)
                     )
                 )
-            AND SBQQ__Product__r.Name NOT IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura','Punto Fornitura Ambiente', 'Analisi Consumi')
+            AND SBQQ__Product__r.Name NOT IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura','Punto Fornitura Ambiente')
             AND SBQQ__ProductFamily__c IN('VAS Fatturabili','VAS Prodotto','VAS Servizio')
          )
         )
