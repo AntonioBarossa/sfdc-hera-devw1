@@ -494,6 +494,12 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>Order__c</field>
+            <value>
+                <elementReference>CreateParentOrder</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Status</field>
             <value>
                 <stringValue>In Lavorazione</stringValue>

@@ -52,7 +52,6 @@ public inherited sharing class HDT_UTL_CityDataTariValidation implements HDT_UTL
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error',cityData.CityNotManagedAlert__c));
         }
 
-        //conttrollo solo flag //mes: cityData.CityNotManagedAlert__c
         return null;
     }
 
