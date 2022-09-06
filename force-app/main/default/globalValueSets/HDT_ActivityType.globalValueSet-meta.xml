@@ -846,6 +846,141 @@
         <label>Vocal Order non validato</label>
     </customValue>
     <customValue>
+        <fullName>Documenti non validati</fullName>
+        <default>false</default>
+        <label>Documenti non validati</label>
+    </customValue>
+    <customValue>
+        <fullName>Elaborazione Manuale</fullName>
+        <default>false</default>
+        <label>Elaborazione Manuale</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore Comunicazione e-BDM</fullName>
+        <default>false</default>
+        <label>Errore Comunicazione e-BDM</label>
+    </customValue>
+    <customValue>
+        <fullName>Esito OK da DL</fullName>
+        <default>false</default>
+        <label>Esito OK da DL</label>
+    </customValue>
+    <customValue>
+        <fullName>Esito OK Riduzione Potenza</fullName>
+        <default>false</default>
+        <label>Esito OK Riduzione Potenza</label>
+    </customValue>
+    <customValue>
+        <fullName>KO gestito</fullName>
+        <default>false</default>
+        <label>KO gestito</label>
+    </customValue>
+    <customValue>
+        <fullName>Pratica gestita</fullName>
+        <default>false</default>
+        <label>Pratica gestita</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto su migrazione</fullName>
+        <default>false</default>
+        <label>Supporto su migrazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Blocco Sollecito</fullName>
+        <default>false</default>
+        <label>Blocco Sollecito</label>
+    </customValue>
+    <customValue>
+        <fullName>Correzione dati</fullName>
+        <default>false</default>
+        <label>Correzione dati</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore Consu. e-BDM</fullName>
+        <default>false</default>
+        <label>Errore Consu. e-BDM</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore e-BDM gestito</fullName>
+        <default>false</default>
+        <label>Errore e-BDM gestito</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore tecnico interno</fullName>
+        <default>false</default>
+        <label>Errore tecnico interno</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore tecnico SDD</fullName>
+        <default>false</default>
+        <label>Errore tecnico SDD</label>
+    </customValue>
+    <customValue>
+        <fullName>Inviata comunicazione</fullName>
+        <default>false</default>
+        <label>Inviata comunicazione</label>
+    </customValue>
+    <customValue>
+        <fullName>KO definitivo</fullName>
+        <default>false</default>
+        <label>KO definitivo</label>
+    </customValue>
+    <customValue>
+        <fullName>Note_di gestione pratica</fullName>
+        <default>false</default>
+        <label>Note_di gestione pratica</label>
+    </customValue>
+    <customValue>
+        <fullName>Note_il cliente dice</fullName>
+        <default>false</default>
+        <label>Note_il cliente dice</label>
+    </customValue>
+    <customValue>
+        <fullName>Pratica avviata</fullName>
+        <default>false</default>
+        <label>Pratica avviata</label>
+    </customValue>
+    <customValue>
+        <fullName>Pratica Fuori Flusso</fullName>
+        <default>false</default>
+        <label>Pratica Fuori Flusso</label>
+    </customValue>
+    <customValue>
+        <fullName>Pratica non gestita</fullName>
+        <default>false</default>
+        <label>Pratica non gestita</label>
+    </customValue>
+    <customValue>
+        <fullName>Sblocco Voltura</fullName>
+        <default>false</default>
+        <label>Sblocco Voltura</label>
+    </customValue>
+    <customValue>
+        <fullName>Sollecito cli da gestire</fullName>
+        <default>false</default>
+        <label>Sollecito cli da gestire</label>
+    </customValue>
+    <customValue>
+        <fullName>Sollecito gestito</fullName>
+        <default>false</default>
+        <label>Sollecito gestito</label>
+    </customValue>
+    <customValue>
+        <fullName>Valutazione Penale</fullName>
+        <default>false</default>
+        <label>Valutazione Penale</label>
+    </customValue>
+    <customValue>
+        <fullName>Istruttoria Creata/Non necessaria</fullName>
+        <default>false</default>
+        <label>Istruttoria Creata/Non necessaria</label>
+    </customValue>
+    <customValue>
+        <fullName>Riaperture urgenti errori DL</fullName>
+        <default>false</default>
+        <label>Riaperture urgenti errori DL</label>
+    </customValue>
+    <customValue>
         <fullName>Segnalazioni VAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -940,18 +1075,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Gestione proroga</label>
-    </customValue>
-    <customValue>
-        <fullName>Istruttoria Creata/Non necessaria</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Istruttoria Creata/Non necessaria</label>
-    </customValue>
-    <customValue>
-        <fullName>Riaperture urgenti errori DL</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Riaperture urgenti errori DL</label>
     </customValue>
     <customValue>
         <fullName>Gestione richiesta variazione BP/CA</fullName>
@@ -1062,12 +1185,6 @@
         <label>Supporto credito Credit Management – affidi ADR</label>
     </customValue>
     <customValue>
-        <fullName>Documenti non validati</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Documenti non validati</label>
-    </customValue>
-    <customValue>
         <fullName>Amm. Precheck KO SII, Precheck KO precedente intestatario</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -1126,12 +1243,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Supporto Verifiche contratti</label>
-    </customValue>
-    <customValue>
-        <fullName>Pratica avviata</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Pratica avviata</label>
     </customValue>
     <customValue>
         <fullName>Protocollo - Reclami</fullName>
