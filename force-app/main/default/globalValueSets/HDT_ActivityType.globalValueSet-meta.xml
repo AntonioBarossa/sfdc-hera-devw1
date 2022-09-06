@@ -846,6 +846,46 @@
         <label>Vocal Order non validato</label>
     </customValue>
     <customValue>
+        <fullName>Documenti non validati</fullName>
+        <default>false</default>
+        <label>Documenti non validati</label>
+    </customValue>
+    <customValue>
+        <fullName>Elaborazione Manuale</fullName>
+        <default>false</default>
+        <label>Elaborazione Manuale</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore Comunicazione e-BDM</fullName>
+        <default>false</default>
+        <label>Errore Comunicazione e-BDM</label>
+    </customValue>
+    <customValue>
+        <fullName>Esito OK da DL</fullName>
+        <default>false</default>
+        <label>Esito OK da DL</label>
+    </customValue>
+    <customValue>
+        <fullName>Esito OK Riduzione Potenza</fullName>
+        <default>false</default>
+        <label>Esito OK Riduzione Potenza</label>
+    </customValue>
+    <customValue>
+        <fullName>KO gestito</fullName>
+        <default>false</default>
+        <label>KO gestito</label>
+    </customValue>
+    <customValue>
+        <fullName>Pratica gestita</fullName>
+        <default>false</default>
+        <label>Pratica gestita</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto su migrazione</fullName>
+        <default>false</default>
+        <label>Supporto su migrazione</label>
+    </customValue>
+    <customValue>
         <fullName>Segnalazioni VAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -1060,12 +1100,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Supporto credito Credit Management – affidi ADR</label>
-    </customValue>
-    <customValue>
-        <fullName>Documenti non validati</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Documenti non validati</label>
     </customValue>
     <customValue>
         <fullName>Amm. Precheck KO SII, Precheck KO precedente intestatario</fullName>
