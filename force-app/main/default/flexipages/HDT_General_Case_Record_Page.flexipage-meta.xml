@@ -301,6 +301,38 @@
                 </visibilityRule>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>AcquaReadings__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.CommodityFormula__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Acqua</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
         <mode>Replace</mode>
         <name>detailTabContent</name>
         <type>Facet</type>

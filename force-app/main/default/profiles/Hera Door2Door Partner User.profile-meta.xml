@@ -7032,6 +7032,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Reading__c.CaseAcqua__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Reading__c.OrderAcqua__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.AreaDeclaredTARI__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -34658,6 +34668,10 @@
     <layoutAssignments>
         <layout>MandatoryAttachments__c-Allegati Obbligatori Layout</layout>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>Reading__c-HDT_LetturaAcqua</layout>
+        <recordType>Reading__c.HDT_RT_LetturaAcqua</recordType>
+    </layoutAssignments>
     <loginFlows>
         <flow>HDT_FL_UserLoginFlow</flow>
         <flowType>UI</flowType>
@@ -36996,6 +37010,11 @@
         <object>MandatoryAttachments__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Reading__c.HDT_RT_LetturaAcqua</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_ConsumoAnomaloIdrico</recordType>
