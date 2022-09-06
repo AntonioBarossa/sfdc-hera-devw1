@@ -981,6 +981,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Segnalazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Variazioni</fullName>
             <default>false</default>
         </values>
