@@ -214,7 +214,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             else if(process.Commodity__c == 'Acqua' || process.Commodity__c == 'Ambiente')
             {
                 continue;
-            }            
+            }   
             else if(ord.RateCategory__c == 'APSCARPRO0' && process.ProcessName__c == 'Voltura - Subentro Scarico produttivo')
             {
                 availableProcesses.add(process);
@@ -380,11 +380,6 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         String res = '';
         List<String> listRes = new List<String>();
         List<SaleServiceItem__c> transitionlist =saleItQr.getRecordsBySaleIdFilter(sale.id);
-        Set<String> energySet = new Set<String>{'Energia Elettrica', 'Gas'};
-        Set<String> nonEnergySet = new Set<String>{'Acqua', 'Ambiente'};
-        Boolean isMms = sal.Account__r.customerMarking__c.containsIgnoreCase('MMS');
-        Boolean checkEnergy = false;
-        Boolean checkNonEnergy = true;
         System.debug('*****MAVUOIANNA:'+ transitionlist);
         if(sal.isTransition__c){
                 //Map<String,

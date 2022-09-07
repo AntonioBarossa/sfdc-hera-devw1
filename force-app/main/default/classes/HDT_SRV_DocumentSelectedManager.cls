@@ -25,6 +25,9 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     when 'InstallmentsView', 'EC7' {
                         return manageDocumentsCreditViews(inputs);
                     }
+                    when 'Paperless' {
+                        return manageDocumentsPaperless(inputs);
+                    }
                     when else {
                         return null;
                     }
