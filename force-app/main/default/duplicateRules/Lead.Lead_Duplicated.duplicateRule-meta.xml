@@ -23,7 +23,7 @@
     </duplicateRuleFilter>
     <duplicateRuleMatchRules>
         <matchRuleSObjectType>Lead</matchRuleSObjectType>
-        <matchingRule>Lead_Matching_2</matchingRule>
+        <matchingRule>Lead_Matching_3</matchingRule>
         <objectMapping xsi:nil="true"/>
     </duplicateRuleMatchRules>
     <duplicateRuleMatchRules>
