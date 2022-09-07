@@ -372,9 +372,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     fieldsDataObject.push(
                         {
                             fieldname: element,
-                            required: false,
-                            value: 'No',
-                            disabled: true
+                            required: true,
+                            value: this.servicePointRetrievedData[element],
+                            disabled: false
                         }
                     )
                 }
@@ -683,9 +683,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     fieldsDataObject.push(
                         {
                             fieldname: element,
-                            required: false,
-                            value: 'No',
-                            disabled: true
+                            required: true,
+                            value: '',
+                            disabled: false
                         }
                     )
                 }
