@@ -2882,6 +2882,11 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore Comunicazione e-BDM</fullName>
+            <default>false</default>
+        </values>
+        
+        <values>
             <fullName>Esito Da Gestire</fullName>
             <default>false</default>
         </values>
@@ -2897,6 +2902,14 @@
             <fullName>Esito Lavori</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK Riduzione Potenza</fullName>
+            <default>false</default>
+        </values>   
         <values>
             <fullName>Gestione Iva e Accise</fullName>
             <default>false</default>
@@ -2946,11 +2959,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>KO gestito</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Lavorazione Reclamo Post Survey</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Modifica Contratti PreAttivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica gestita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2977,6 +2998,11 @@
             <fullName>Risposta Motivata Con Allegato</fullName>
             <default>false</default>
         </values>
+
+
+
+
+        
         <values>
             <fullName>Segnalazioni Commissioni Agenzie</fullName>
             <default>false</default>
