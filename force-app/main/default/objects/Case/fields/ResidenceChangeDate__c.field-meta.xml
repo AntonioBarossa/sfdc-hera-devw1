@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ResidenceChangeDate__c</fullName>
-    <description>Data inizio variazione residenza</description>
+    <description>Data inizio variazione</description>
     <externalId>false</externalId>
-    <label>Data inizio variazione residenza</label>
+    <label>Data inizio variazione</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

@@ -154,9 +154,17 @@ public with sharing class HDT_UTL_ServicePoint {
                 spNew.CommoditySector__c = 'Energia Elettrica';
                 spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Ele'); //21/08/2021 - gabriele.rota@webresults.it
             }
-            else{
+            else if(mapRes.get('DESCRCOMM')== 'Gas'){
                 spNew.CommoditySector__c = 'Gas';
                 spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Gas'); //21/08/2021 - gabriele.rota@webresults.it
+            }
+            else if(mapRes.get('DESCRCOMM')== 'Acqua'){
+                spNew.CommoditySector__c = 'Acqua';
+                spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Acqua'); //21/08/2021 - gabriele.rota@webresults.it
+            }
+            else if(mapRes.get('DESCRCOMM')== 'Ambiente'){
+                spNew.CommoditySector__c = 'Ambiente';
+                spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Ambiente'); //21/08/2021 - gabriele.rota@webresults.it
             }
         }
         if(mapRes.get('MOTGARANZIAFORN')==null){            
@@ -214,11 +222,103 @@ public with sharing class HDT_UTL_ServicePoint {
             HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
             spNew.ImplantType__c = dataEnrich.getPicklistValue('ServicePoint__c', 'ImplantType__c', mapRes.get('TIPOIMPIANTO'));
         }
+        if(mapRes.get('MODPAGUSCITA')!=null && !String.isBlank(mapRes.get('MODPAGUSCITA'))){
+            HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
+            spNew.MethodsForOutgoingPayments__c = dataEnrich.getPicklistValue('ServicePoint__c', 'MethodsForOutgoingPayments__c', mapRes.get('MODPAGUSCITA'));
+        }
+        if(mapRes.get('AFPAG_FFUG')!=null && !String.isBlank(mapRes.get('AFPAG_FFUG'))){
+            HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
+            spNew.JointBottomAdhesion__c = dataEnrich.getPicklistValue('ServicePoint__c', 'JointBottomAdhesion__c', mapRes.get('AFPAG_FFUG'));
+        }
+        if(mapRes.get('AFPAGA_DEP')!=null && !String.isBlank(mapRes.get('AFPAGA_DEP'))){
+            if(mapRes.get('AFPAGA_DEP')=='0.0000000'){
+                spNew.PayPurification__c = 'No - Esente';                
+            }
+            if(mapRes.get('AFPAGA_DEP')=='1.0000000'){
+                spNew.PayPurification__c = 'Si - Paga';                
+            }
+            if(mapRes.get('AFPAGA_DEP')=='2.0000000'){
+                spNew.PayPurification__c = 'Si - Ridotta';                
+            }
+        }
+        if(mapRes.get('AFPAGA_FOG')!=null && !String.isBlank(mapRes.get('AFPAGA_FOG'))){
+            if(mapRes.get('AFPAGA_FOG')=='0.0000000'){
+                spNew.PaySewer__c = 'No - Esente';                
+            }
+            if(mapRes.get('AFPAGA_FOG')=='1.0000000'){
+                spNew.PaySewer__c = 'Si - Paga';                
+            }
+        }
+        if(mapRes.get('AFP_DEP355')!=null && !String.isBlank(mapRes.get('AFP_DEP355'))){
+            if(mapRes.get('AFP_DEP355')=='0.0000000'){
+                spNew.PurificationInfoOnTheInvoice__c = 'No - Esente';                
+            }
+            if(mapRes.get('AFP_DEP355')=='1.0000000'){
+                spNew.PurificationInfoOnTheInvoice__c = 'Si - Paga';                
+            }
+            if(mapRes.get('AFP_DEP355')=='2.0000000'){
+                spNew.PurificationInfoOnTheInvoice__c = 'Si - Ridotta';                
+            }
+        }
+        if(mapRes.get('TRATAUNICA')!=null && !String.isBlank(mapRes.get('TRATAUNICA'))){
+            spNew.SingleInstallmentOperating__c = mapRes.get('TRATAUNICA');
+        }
+        if(mapRes.get('DI_TRATAUNICA')!=null && !String.isBlank(mapRes.get('DI_TRATAUNICA'))){
+            spNew.SingleInstallmentValidityDate__c = date.parse(mapRes.get('DI_TRATAUNICA'));
+        }
+        if(mapRes.get('AFVASCA_AC')!=null && !String.isBlank(mapRes.get('AFVASCA_AC'))){
+            spNew.HasAccumulationTanks__c = Boolean.valueOf(mapRes.get('AFVASCA_AC'));
+        }
         if(mapRes.get('CONSUMOCAPDR')!=null && !String.isBlank(mapRes.get('CONSUMOCAPDR'))){            
             spNew.AnnualConsumption__c = integer.valueOf(Decimal.valueOf(mapRes.get('CONSUMOCAPDR')));
         }
         if(mapRes.get('CONSUMOANNUOEE')!=null && !String.isBlank(mapRes.get('CONSUMOANNUOEE'))){         
             spNew.AnnualConsumption__c = integer.valueOf(Decimal.valueOf(mapRes.get('CONSUMOANNUOEE')));
+        }
+        if(mapRes.get('AQCNS_ANNO')!=null && !String.isBlank(mapRes.get('AQCNS_ANNO'))){         
+            spNew.AnnualConsumption__c = integer.valueOf(Decimal.valueOf(mapRes.get('AQCNS_ANNO')));
+        }
+        if(mapRes.get('TFNCE0000')!=null){         
+            spNew.NumberOfTARIMembers__c = (mapRes.get('TFNCE0000'));
+        } 
+        if(mapRes.get('TFNCDC000')!=null){         
+            spNew.NumberOfTARIMembers__c = (mapRes.get('TFNCDC000'));
+        }        
+        if(mapRes.get('AFNUM_COMP')!=null && !String.isBlank(mapRes.get('AFNUM_COMP'))){         
+            spNew.NumberOfCommunityMembers__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFNUM_COMP')));
+        }        
+        if(mapRes.get('AFUADRS')!=null && !String.isBlank(mapRes.get('AFUADRS'))){         
+            spNew.ResidentDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUADRS')));
+        }
+        if(mapRes.get('AFUADNR')!=null && !String.isBlank(mapRes.get('AFUADNR'))){         
+            spNew.NotResidentDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUADNR')));
+        }
+        if(mapRes.get('AFUND')!=null && !String.isBlank(mapRes.get('AFUND'))){         
+            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUND')));
+        }
+        if(mapRes.get('AFUNDA')!=null && !String.isBlank(mapRes.get('AFUNDA'))){         
+            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDA')));
+        }
+        if(mapRes.get('AFUNDC')!=null && !String.isBlank(mapRes.get('AFUNDC'))){         
+            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDC')));
+        }
+        if(mapRes.get('AFUNDI')!=null && !String.isBlank(mapRes.get('AFUNDI'))){         
+            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDI')));
+        }
+        if(mapRes.get('AFUNDZ')!=null && !String.isBlank(mapRes.get('AFUNDZ'))){         
+            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDZ')));
+        }
+        if(mapRes.get('AFBI_DIAM1')!=null && !String.isBlank(mapRes.get('AFBI_DIAM1'))){         
+            spNew.HydrantMouthsNumberA__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFBI_DIAM1')));
+        }
+        if(mapRes.get('AFBI_DIAM2')!=null && !String.isBlank(mapRes.get('AFBI_DAFBI_DIAM2IAM1'))){         
+            spNew.HydrantMouthsNumberB__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFBI_DIAM2')));
+        }
+        if(mapRes.get('AF_BOC_IDR')!=null && !String.isBlank(mapRes.get('AF_BOC_IDR'))){         
+            spNew.HydrantMouthsNumber__c = integer.valueOf(Decimal.valueOf(mapRes.get('AF_BOC_IDR')));
+        }
+        if(mapRes.get('TFRS000000')!=null && !String.isBlank(mapRes.get('TFRS000000'))){         
+            spNew.AreaDeclaredTARI__c = integer.valueOf(Decimal.valueOf(mapRes.get('AF_BOC_IDR')));
         }
         if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
             String mercato = mapRes.get('MERCATO').substring(0,1) + mapRes.get('MERCATO').substring(1,mapRes.get('MERCATO').length()).toLowerCase();
@@ -310,6 +410,9 @@ public with sharing class HDT_UTL_ServicePoint {
 
         if(servizio.equalsIgnoreCase('Energia Elettrica')){
             tipoFornitura = tipoImpianto != null && tipoImpianto.equalsIgnoreCase('13A0-Usi di Abitazione BT') ? 'Domestico' : 'Non Domestico';
+        }
+        else if(servizio.equalsIgnoreCase('Acqua')){
+            tipoFornitura = tipoImpianto != null && tipoImpianto.equalsIgnoreCase('1101-Domestico') ? 'Uso domestico' : 'Uso diverso da domestico';    
         }
         else {
             String fields = 'Id, SupplyType__c';

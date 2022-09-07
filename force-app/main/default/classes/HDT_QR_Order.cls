@@ -361,6 +361,7 @@ public inherited sharing class HDT_QR_Order {
             AnnualTARIPayment__c,
             RequestSource__c,
             DeliveredDocumentation__c,
+            ApprovalType__c,
             AdditionalAttachments__c
             FROM Order 
             WHERE Id = :orderId

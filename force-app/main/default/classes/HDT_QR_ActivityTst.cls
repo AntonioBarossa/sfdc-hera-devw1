@@ -26,6 +26,26 @@ public class HDT_QR_ActivityTst{
 			custActivity[0].wrts_prcgvr__Status__c='Aperta';
 			custActivity[0].Sale__c=sales[0].Id;
 			insert custActivity;
+
+			//START MODIFICA marco.arci@webresults.it
+			list<Case> listFakeCases = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].Id, null, null, null, null);
+            insert listFakeCases;
+
+			List<Order> listFakeOrders =  HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].Id, 'Bozza');
+            insert listFakeOrders;
+
+			List<wrts_prcgvr__Activity__c> testActivityCase=HDT_UTL_DataFactoryTst.createActivityCustom(1, false, accList[0].Id);
+			testActivityCase[0].Type__c='Aprire Variazione';
+			testActivityCase[0].wrts_prcgvr__Status__c='Aperta';
+			testActivityCase[0].Case__c=listFakeCases[0].Id;
+			insert testActivityCase;
+
+			List<wrts_prcgvr__Activity__c> testActivityOrder=HDT_UTL_DataFactoryTst.createActivityCustom(1, false, accList[0].Id);
+			testActivityOrder[0].Type__c='Aprire Cessazione';
+			testActivityOrder[0].wrts_prcgvr__Status__c='Aperta';
+			testActivityOrder[0].Order__c=listFakeOrders[0].Id;
+			insert testActivityOrder;
+			//END MODIFICA marco.arci@webresults.it
 		}
 	}
 
@@ -58,6 +78,7 @@ public class HDT_QR_ActivityTst{
 		}
 	}
 
+	
 @isTest
 	public static void testGetActivityFromIdList(){
 
@@ -89,6 +110,21 @@ public class HDT_QR_ActivityTst{
 			System.assertNotEquals(false, tActivityL[0].Id!=null, 'Activity not found');
 		}
 	}
+//START MODIFICA marco.arci@webresults.it
+	@isTest
+	public static void testgetActivityFromTypeList(){
+		List<wrts_prcgvr__Activity__c> resultListActCase = new List<wrts_prcgvr__Activity__c>();
+		List<wrts_prcgvr__Activity__c> resultListActOrder = new List<wrts_prcgvr__Activity__c>();
+		String caseId = [SELECT Id FROM Case].Id;
+		Test.startTest();
+		resultListActCase = HDT_QR_Activity.getActivityFromTypeList(new List<String>{caseId}, new Set<String>{'Aprire Variazione'});
 
+		system.assertEquals(1, resultListActCase.size());
 
+		String orderId = [SELECT Id FROM Order].Id;
+		resultListActOrder = HDT_QR_Activity.getActivityFromTypeList(new List<String>{orderId}, new Set<String>{'Aprire Cessazione'});
+		Test.stopTest();
+		system.assertEquals(1, resultListActOrder.size());
+	}
+//END MODIFICA marco.arci@webresults.it
 }

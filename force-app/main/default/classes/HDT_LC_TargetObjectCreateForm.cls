@@ -14,10 +14,17 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
 
     @AuraEnabled
     public static List<ServicePoint__c> getServicePoint(String code, String fields) {
-        
         serviceSp.checkReadAccess(fields);
-
-        return servicePointQuery.getRecordByCode(code, fields);
+        if(code != null && code.startsWith('4') && code.length() == 10){
+            return servicePointQuery.getRecordByImplantCode(code, fields);
+        }
+        else if(code instanceof Id)
+        {
+            return servicePointQuery.getRecordById(code, fields);
+        }
+        else{
+            return servicePointQuery.getRecordByCode(code, fields);
+        }
     }
 
     @AuraEnabled
@@ -195,9 +202,16 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     @AuraEnabled
     public static String getAto(String comune){
 
-        TownATOTable__c myRecord = [Select id, ATO__c, Town__c from TownATOTable__c where Town__c =:comune WITH SECURITY_ENFORCED];
-        String ato = myRecord.ATO__C;
-        return ato;
+        List<TownATOTable__c> myRecordList = [Select id, ATO__c, Town__c from TownATOTable__c where Town__c =:comune WITH SECURITY_ENFORCED];
+        if(!myRecordList.isEmpty()){
+            if(myRecordList[0].ATO__c !=null ){
+                return myRecordList[0].ATO__C;
+            }else{
+                return '';
+            }
+        }else{
+            return '';
+        }
     }
 
     @AuraEnabled
