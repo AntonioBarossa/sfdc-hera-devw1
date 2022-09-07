@@ -592,11 +592,11 @@
     <picklistValues>
         <picklist>SupplySubtype__c</picklist>
         <values>
-            <fullName>Altri usi</fullName>
+            <fullName>Uso agricolo e zootecnico</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Uso artigianale e commerciale</fullName>
+            <fullName>Uso pubblico non disalimentabile</fullName>
             <default>false</default>
         </values>
         <values>
@@ -619,29 +619,9 @@
             <fullName>Uso pubblico disalimentabile</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Uso pubblico non disalimentabile</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SupplyTypeTemp__c</picklist>
-        <values>
-            <fullName>A-Domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>B-Condominio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>C-Aziende di pubblica utilita</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>D-Altri usi</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Domestico</fullName>
             <default>false</default>

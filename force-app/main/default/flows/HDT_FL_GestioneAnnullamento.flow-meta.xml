@@ -484,8 +484,8 @@
     <assignments>
         <name>Assegna_Fase_Precedente_Annullamento_Extra_Sistema</name>
         <label>Assegna Fase Precedente Annullamento Extra Sistema</label>
-        <locationX>1727</locationX>
-        <locationY>2596</locationY>
+        <locationX>1742</locationX>
+        <locationY>2770</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.PreviousPhase__c</assignToReference>
             <operator>Assign</operator>
@@ -1345,14 +1345,12 @@
     <decisions>
         <name>Processo</name>
         <label>Processo?</label>
-
-        <locationX>1603</locationX>
-        <locationY>1114</locationY>
-
+        <locationX>1710</locationX>
+        <locationY>1203</locationY>
         <defaultConnectorLabel>Annullamento Passivo</defaultConnectorLabel>
         <rules>
             <name>AnnullamentoPrestazione</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
@@ -1371,21 +1369,7 @@
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Modifica dati contrattuali</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
                     <stringValue>Annullamento doppi pagamenti</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Modifica post accertamento</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -1399,35 +1383,7 @@
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Variazione indirizzo di fornitura tari</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Cessazione</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Cessazione post accertamento</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Posizionamento contenitore</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Annullamento segnalazioni</stringValue>
+                    <stringValue>Annullamento errore fatturazione</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2204,7 +2160,7 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <name>Motivo_Annullamento_Screen</name>
         <label>Motivo Annullamento Screen</label>
         <locationX>1166</locationX>
-        <locationY>1231</locationY>
+        <locationY>1233</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2822,7 +2778,7 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <name>Chiudi_Activity_Custom_Ripristino_Fase_Case</name>
         <label>Chiudi Activity Custom Ripristino Fase Case</label>
         <locationX>3111</locationX>
-        <locationY>1789</locationY>
+        <locationY>1790</locationY>
         <connector>
             <targetReference>Aggiorna_Ripristino_Fase</targetReference>
         </connector>

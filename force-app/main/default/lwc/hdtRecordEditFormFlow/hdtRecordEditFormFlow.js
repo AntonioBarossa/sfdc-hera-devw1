@@ -440,6 +440,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         console.log('Inside Condition Installments');
                         let payType = this.selector('PaymentType__c');
                         let workStatus = this.selector('WorkStatus__c');
+                        let refundableEscape = this.selector('RefundableEscape__c');
                         console.log('#Valore payType -> ' + payType.value);
                         if(reason.value.localeCompare('Assistenza Sociale') === 0 && payType != null){
                             payType.disabled = false;
@@ -449,6 +450,9 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         }else if(reason.value.localeCompare('Fattura SD') === 0 && workStatus != null){
                             workStatus.disabled = false;
                             workStatus.required = true;
+                        }else if(reason.value.localeCompare('Bolletta Fuga H2O') === 0 && refundableEscape != null){
+                            refundableEscape.disabled = false;
+                            refundableEscape.required = false;
                         } 
                         else {
                             payType.disabled = true;
