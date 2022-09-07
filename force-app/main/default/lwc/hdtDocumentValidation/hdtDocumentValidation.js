@@ -3,7 +3,6 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 
 import SUBPROCESS from '@salesforce/schema/Case.Subprocess__c';
-import PROCESS from '@salesforce/schema/Case.Type';
 
 
 
@@ -18,7 +17,6 @@ export default class HdtDocumentValidation extends LightningElement {
     @track isValidated;
     @track subprocess;
     @track columns;
-    @track process;
 
     @track completeButton = 'Completa';
     @track closeButton = 'Chiudi';
@@ -53,25 +51,15 @@ export default class HdtDocumentValidation extends LightningElement {
         {id:9, name:'AtecoCode', label: 'Codice Ateco'},
     ];
 
-    columnsConsumoIdrico = 
-    [
-        {id:1, name:'AttachmentHandle', label: 'Allegati Ricevuti'}
-    ]
-
-    @wire(getRecord, { recordId: '$recordId', fields: [SUBPROCESS,PROCESS] })
+    @wire(getRecord, { recordId: '$recordId', fields: SUBPROCESS })
     wiredCase({error, data}){
         if(data){
 
             this.subprocess = getFieldValue(data, SUBPROCESS);
-            this.process = getFieldValue(data, PROCESS);
 
             console.log('LWC_Subprocess--> '+this.subprocess);
-            console.log('LWC Process' + this.process);
-            if(this.process!== null && this.process === 'Consumo Anomalo Idrico')
-            {
-                this.columns = this.columnsConsumoIdrico;
-            }
-            else if(this.subprocess!= null && this.subprocess.includes('IVA')){
+
+            if(this.subprocess!= null && this.subprocess.includes('IVA')){
 
                 this.columns = this.columnsIva;
 
@@ -121,7 +109,7 @@ export default class HdtDocumentValidation extends LightningElement {
 
             }
 
-            const validated = {isValidated: this.isValidated, subprocess: this.subprocess, process: this.process};
+            const validated = {isValidated: this.isValidated, subprocess: this.subprocess};
 
             this.dispatchEvent(new CustomEvent('complete', {detail: { validated }}));
 

@@ -38,33 +38,4 @@ public inherited sharing class HDT_LC_CaseDocumentValidation {
         HDT_UTL_DatabaseService.updateSObject(currentCase);
 
     }
-
-    @AuraEnabled
-    public static void saveValidation(String caseId, String subprocess, Boolean allValidated, String process){
-        Case currentCase = new Case();
-        String phase;
-
-        currentCase.Id = caseId;
-
-        if(allValidated){
-            if (process.equalsIgnoreCase('Consumo Anomalo Idrico'))
-            {
-                phase = 'Allegati ricevuti';
-            }
-            else if(subprocess == 'Accise - Energia Elettrica'){
-                phase = 'Elaborazione Manuale';
-            } else {
-                phase = 'Da Inviare';
-            }
-            currentCase.Phase__c = phase;
-            currentCase.CompletedDocumentationDate__c = System.today();
-        } else {
-
-            currentCase.Phase__c = 'In attesa Documentazione';
-
-        }
-
-        HDT_UTL_DatabaseService.updateSObject(currentCase);
-
-    }
 }
