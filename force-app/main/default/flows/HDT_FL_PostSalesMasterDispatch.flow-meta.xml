@@ -47,7 +47,7 @@
         <name>getIsCommunityValue</name>
         <label>Valorizzazione variabile isCommunity</label>
         <locationX>8451</locationX>
-        <locationY>4526</locationY>
+        <locationY>4646</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -63,10 +63,29 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
+        <name>getIsCommunityValue_0</name>
+        <label>Valorizzazione variabile isCommunity</label>
+        <locationX>7618</locationX>
+        <locationY>4166</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>CheckIsCommunity</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>getuuid</name>
         <label>getuuid</label>
         <locationX>8242</locationX>
-        <locationY>4766</locationY>
+        <locationY>4886</locationY>
         <actionName>HDT_LC_CtToolbar</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -761,7 +780,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1133,7 +1152,7 @@
         <name>Valorizzazione_Status_Campaign_Member</name>
         <label>Valorizzazione Status Campaign Member</label>
         <locationX>8451</locationX>
-        <locationY>5894</locationY>
+        <locationY>6014</locationY>
         <assignmentItems>
             <assignToReference>CampaignMember_Record.Status</assignToReference>
             <operator>Assign</operator>
@@ -1368,7 +1387,7 @@
         <name>Campaign_Member_presente</name>
         <label>Campaign Member presente?</label>
         <locationX>7618</locationX>
-        <locationY>4166</locationY>
+        <locationY>4286</locationY>
         <defaultConnector>
             <targetReference>Record_Case</targetReference>
         </defaultConnector>
@@ -1397,6 +1416,13 @@
                     <stringValue>HDT_RT_VariazioneAnagraficaCliente</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>getIsCommunityValue_0.isCommunity</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <label>NO</label>
         </rules>
     </decisions>
@@ -1404,7 +1430,7 @@
         <name>Case_Annullato</name>
         <label>Case Annullato?</label>
         <locationX>7983</locationX>
-        <locationY>4406</locationY>
+        <locationY>4526</locationY>
         <defaultConnector>
             <targetReference>getIsCommunityValue</targetReference>
         </defaultConnector>
@@ -1859,7 +1885,7 @@
         <name>Confermato</name>
         <label>Confermato?</label>
         <locationX>8000</locationX>
-        <locationY>5126</locationY>
+        <locationY>5246</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
             <name>Annulla</name>
@@ -3056,7 +3082,7 @@
         <name>Sono_in_chiamata</name>
         <label>Sono in chiamata?</label>
         <locationX>8242</locationX>
-        <locationY>4886</locationY>
+        <locationY>5006</locationY>
         <defaultConnector>
             <targetReference>CampaignMember_Record</targetReference>
         </defaultConnector>
@@ -3081,7 +3107,7 @@
         <name>Sono_in_Community</name>
         <label>Sono in Community?</label>
         <locationX>8451</locationX>
-        <locationY>4646</locationY>
+        <locationY>4766</locationY>
         <defaultConnector>
             <targetReference>CampaignMember_Record</targetReference>
         </defaultConnector>
@@ -6672,6 +6698,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>DocumentPaymentMethod__c</field>
+            <value>
+                <elementReference>DocumentPaymentMethod</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Email__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
@@ -8374,7 +8406,7 @@
         <name>CampaignMember_Record</name>
         <label>Record Campaign Member</label>
         <locationX>8451</locationX>
-        <locationY>5774</locationY>
+        <locationY>5894</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Valorizzazione_Status_Campaign_Member</targetReference>
@@ -9315,7 +9347,7 @@
         <name>Record_Case</name>
         <label>Record Case</label>
         <locationX>7983</locationX>
-        <locationY>4286</locationY>
+        <locationY>4406</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_Annullato</targetReference>
@@ -9366,7 +9398,7 @@
         <name>Aggiornamento_record_Campaign_Member</name>
         <label>Aggiornamento record Campaign Member</label>
         <locationX>8451</locationX>
-        <locationY>6014</locationY>
+        <locationY>6134</locationY>
         <inputReference>CampaignMember_Record</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -9419,7 +9451,7 @@
         <name>ScreenEsitoCampaignMember</name>
         <label>ScreenEsitoCampaignMember</label>
         <locationX>8000</locationX>
-        <locationY>5006</locationY>
+        <locationY>5126</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -9956,7 +9988,7 @@
         <locationX>14086</locationX>
         <locationY>2678</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_CambioUso</flowName>
         <inputAssignments>
@@ -10132,7 +10164,7 @@
         <locationX>14658</locationX>
         <locationY>2246</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_ConsumoAnomaloIdrico</flowName>
         <inputAssignments>
@@ -10148,7 +10180,7 @@
         <locationX>10522</locationX>
         <locationY>2366</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -10170,7 +10202,7 @@
         <locationX>8454</locationX>
         <locationY>2702</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestioneAutoletture</flowName>
         <inputAssignments>
@@ -10186,7 +10218,7 @@
         <locationX>9642</locationX>
         <locationY>2678</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestioneCanoneRai</flowName>
         <inputAssignments>
@@ -10202,7 +10234,7 @@
         <locationX>11050</locationX>
         <locationY>2246</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestioneContrattoNonRichiesto</flowName>
         <inputAssignments>
@@ -10218,7 +10250,7 @@
         <locationX>4318</locationX>
         <locationY>3950</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestioneFatturazione</flowName>
         <inputAssignments>
@@ -10252,7 +10284,7 @@
         <locationX>9026</locationX>
         <locationY>2246</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestioneInformative</flowName>
         <inputAssignments>
@@ -10274,7 +10306,7 @@
         <locationX>5770</locationX>
         <locationY>3902</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestioneModificheAnagrafiche</flowName>
         <inputAssignments>
@@ -10296,7 +10328,7 @@
         <locationX>3658</locationX>
         <locationY>2246</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestioneMorosita</flowName>
         <inputAssignments>
@@ -10313,7 +10345,7 @@
         <locationX>12634</locationX>
         <locationY>2246</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestioneNotifiche</flowName>
         <inputAssignments>
@@ -10329,7 +10361,7 @@
         <locationX>3042</locationX>
         <locationY>3134</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestionePreventivi</flowName>
         <inputAssignments>
@@ -10346,7 +10378,7 @@
         <locationX>2162</locationX>
         <locationY>2918</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestionePreventivi</flowName>
         <inputAssignments>
@@ -10363,7 +10395,7 @@
         <locationX>7134</locationX>
         <locationY>3014</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestioneReclami</flowName>
         <inputAssignments>
@@ -10379,7 +10411,7 @@
         <locationX>11710</locationX>
         <locationY>3230</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestioneVariazioni</flowName>
         <inputAssignments>
@@ -10407,7 +10439,7 @@
         <locationX>446</locationX>
         <locationY>2582</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestioneVerifiche</flowName>
         <inputAssignments>
@@ -10424,7 +10456,7 @@
         <locationX>13162</locationX>
         <locationY>2246</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_VolturaTecnica</flowName>
         <inputAssignments>
@@ -11248,7 +11280,7 @@
         <name>SubFlow_Annullamento</name>
         <label>SubFlow Annullamento</label>
         <locationX>7780</locationX>
-        <locationY>5246</locationY>
+        <locationY>5366</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -11269,7 +11301,7 @@
         <locationX>1106</locationX>
         <locationY>2462</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestioneDisattivazioni</flowName>
         <inputAssignments>
@@ -11286,7 +11318,7 @@
         <locationX>13426</locationX>
         <locationY>1886</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_SegnalazioniVAS</flowName>
         <inputAssignments>
@@ -11303,7 +11335,7 @@
         <locationX>1634</locationX>
         <locationY>2342</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestionePagamenti</flowName>
         <inputAssignments>
@@ -11344,7 +11376,7 @@
         <locationX>7794</locationX>
         <locationY>2126</locationY>
         <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
+            <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestioneVotiveModena</flowName>
         <inputAssignments>

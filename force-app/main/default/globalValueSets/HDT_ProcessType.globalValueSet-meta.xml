@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>Verifica Generica GDM - ACQ</fullName>
+        <default>false</default>
+        <label>Verifica Generica GDM - ACQ</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica Rottura Impianto Cliente - ACQ</fullName>
+        <default>false</default>
+        <label>Verifica Rottura Impianto Cliente - ACQ</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica GDM - ACQ</fullName>
+        <default>false</default>
+        <label>Verifica GDM - ACQ</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica Pressione - ACQ</fullName>
+        <default>false</default>
+        <label>Verifica Pressione - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Cessazione Scarichi Produttivi</fullName>
         <default>false</default>
         <label>Cessazione Scarichi Produttivi</label>
+    </customValue>
+    <customValue>
+        <fullName>Interventi con Verifica - ACQ</fullName>
+        <default>false</default>
+        <label>Interventi con Verifica - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Verifica Interna - ACQ</fullName>
@@ -1059,6 +1084,21 @@
         <fullName>Prima Attivazione - AMB</fullName>
         <default>false</default>
         <label>Prima Attivazione - AMB</label>
+    </customValue>
+    <customValue>
+        <fullName>Prima Attivazione - ACQ</fullName>
+        <default>false</default>
+        <label>Prima Attivazione - ACQ</label>
+    </customValue>
+    <customValue>
+        <fullName>Cambio Offerta - ACQ</fullName>
+        <default>false</default>
+        <label>Cambio Offerta - ACQ</label>
+    </customValue>
+    <customValue>
+        <fullName>Voltura - Subentro Scarico produttivo - ACQ</fullName>
+        <default>false</default>
+        <label>Voltura - Subentro Scarico produttivo - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Testo contratto in bolletta - GAS</fullName>

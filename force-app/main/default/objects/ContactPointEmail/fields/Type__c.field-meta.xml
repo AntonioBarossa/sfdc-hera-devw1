@@ -26,6 +26,11 @@
                 <default>false</default>
                 <label>E-mail Bolletta</label>
             </value>
+            <value>
+                <fullName>E-mail SOL Old</fullName>
+                <default>false</default>
+                <label>E-mail SOL Old</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

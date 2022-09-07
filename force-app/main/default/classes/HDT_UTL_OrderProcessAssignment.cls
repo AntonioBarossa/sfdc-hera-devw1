@@ -202,7 +202,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAmendmentAllowed: ' + isAmendmentAllowed);
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isWinBack: ' + ord.IsWinback__c);
         system.debug(LoggingLevel.DEBUG, 'getAvailableProcesses - isReseller: ' +isReseller);
-
+        
         for (ProcessMatrix__c process : allProcesses) {
             if(ord.Commodity__c == 'Ambiente' && process.Commodity__c == 'Ambiente'){
                 availableProcesses.add(process);
@@ -214,6 +214,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             else if(process.Commodity__c == 'Acqua' || process.Commodity__c == 'Ambiente')
             {
                 continue;
+            }   
+            else if(ord.RateCategory__c == 'APSCARPRO0' && process.ProcessName__c == 'Voltura - Subentro Scarico produttivo')
+            {
+                availableProcesses.add(process);
             }
             else if (
                 //process.meterStatus.contains(ord.ServicePoint__r.MeterStatus__c) && 

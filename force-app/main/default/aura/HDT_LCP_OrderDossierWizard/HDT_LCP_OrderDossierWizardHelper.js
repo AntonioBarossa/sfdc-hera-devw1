@@ -1,10 +1,26 @@
 ({
     helperInit : function(component,event,helper,saleId,accountId) {
-		var action = component.get('c.controllerInit');
-        console.log('saleId - helperInit '+saleId);
-        action.setParams({
-            "saleId" : saleId,
-        });
+        if(saleId){         
+            var macroProcessType = component.get("v.macroProcessType");
+            console.log('saleId - helperInit '+saleId);
+            console.log('macroProcessType - helperInit ' + macroProcessType);
+            helper.executeInitAction(component, "c.controllerInit", {"saleId" : saleId, "macroProcessType": macroProcessType}, saleId);
+        }else{
+            var orderId;
+            if (component.get('v.isCommunity')){
+                console.log('community set orderParentId on link');
+                orderId = new URL(window.location.href).searchParams.get('c__ordineVendita');    
+            }else{
+                console.log('crm set orderParentId on link');
+                orderId = component.get("v.pageReference").state.c__ordineVendita;
+            }
+            helper.executeInitAction(component, "c.initWihoutSale", {"orderParentId" : orderId});
+        }
+    },
+
+    executeInitAction : function(component, functionName, params, saleId) {
+		var action = component.get(functionName);
+        action.setParams(params);
         action.setCallback(this, function(response) {
             var state = response.getState();
 

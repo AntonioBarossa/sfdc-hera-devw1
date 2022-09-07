@@ -662,6 +662,16 @@
         <label>Testo Contratto in Bolletta</label>
     </standardValue>
     <standardValue>
+        <fullName>Verifica Generica GDM</fullName>
+        <default>false</default>
+        <label>Verifica Generica GDM</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Verifica Rottura Impianto Cliente</fullName>
+        <default>false</default>
+        <label>Verifica Rottura Impianto Cliente</label>
+    </standardValue>
+    <standardValue>
         <fullName>Trasmissione Dati Cliente Finale SII</fullName>
         <default>false</default>
         <label>Trasmissione Dati Cliente Finale SII</label>
@@ -670,6 +680,11 @@
         <fullName>Unificazione POD</fullName>
         <default>false</default>
         <label>Unificazione POD</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interventi con Verifica</fullName>
+        <default>false</default>
+        <label>Interventi con Verifica</label>
     </standardValue>
     <standardValue>
         <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
@@ -795,5 +810,10 @@
         <fullName>Adesione Rinuncia Fondo Fughe</fullName>
         <default>false</default>
         <label>Adesione Rinuncia Fondo Fughe</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Promessa di Pagamento Ente</fullName>
+        <default>false</default>
+        <label>Promessa di Pagamento Ente</label>
     </standardValue>
 </StandardValueSet>

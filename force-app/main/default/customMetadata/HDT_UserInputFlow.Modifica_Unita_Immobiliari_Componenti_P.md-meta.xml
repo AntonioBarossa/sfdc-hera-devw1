@@ -10,8 +10,13 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {
+&quot;FieldName&quot;: &quot;Unita_Abitative__c&quot;,
+&quot;Required&quot;: true,
+&quot;Column&quot;: 1
+},
+{
 &quot;FieldName&quot;: &quot;ResidentMembers__c&quot;,
-&quot;Required&quot;: false,
+&quot;Required&quot;: true,
 &quot;Column&quot;: 1
 },
 {

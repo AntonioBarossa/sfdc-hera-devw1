@@ -16,6 +16,14 @@
     <aura:attribute name="vatNumber" type="String"/>
     <aura:attribute name="columnsDocumenti" type="List"/>
     
+    <!--@frpanico 2022-07-22
+        Aggiunta nuovo attributo
+        Per discriminare la pressione dei due bottoni
+        * Gestisci Processi
+        * Gestisci Processi Tari 
+    -->
+    <aura:attribute name='macroProcessType' type="String"/>
+
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     
     <lightning:navigation aura:id="navService"/>
@@ -39,7 +47,7 @@
     </aura:if>
     
     <!-- Dati firma -->
-    <aura:if isTrue="{!v.orderParentRecord}">
+    <aura:if isTrue="{!and(v.orderParentRecord, v.saleId)}">
         <div class="slds-m-top_small">
             <!--<c:hdtOrderDossierWizardSignature orderParentRecord="{!v.orderParentRecord}" onorderrefresh="{!c.handleOrderRefreshEvent}" ontablerefresh="{!c.handleTableRefreshEvent}"></c:hdtOrderDossierWizardSignature>-->
             <c:hdtDocumentalSignatureManagerOrderDossier recordId="{!v.orderParentRecord.Id}" orderParentRecord="{!v.orderParentRecord}" onorderrefresh="{!c.handleOrderRefreshEvent}" ontablerefresh="{!c.handleTableRefreshEvent}"></c:hdtDocumentalSignatureManagerOrderDossier>
