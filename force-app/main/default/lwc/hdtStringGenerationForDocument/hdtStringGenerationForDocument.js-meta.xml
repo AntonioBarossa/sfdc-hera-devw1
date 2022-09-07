@@ -13,6 +13,7 @@
             <property name="caseSubProcess" type="String" label="caseSubProcess" description="caseSubProcess" role="inputOnly"/>
             <property name="numComponenti" type="String" label="numComponenti" description="numComponenti" role="inputOnly"/>
             <property name="interviewId" type="String" label="interviewId" description="interviewId" role="inputOnly"/>
+            <property name="isRequired" type="Boolean" label="isRequired" default="true" role="inputOnly"/>
 
             <property name="resultString" type="String" label="resultString" description="resultString" role="outputOnly"/> 
             <property name="errorMessage" type="String" label="errorMessage" description="valida il component" role="outputOnly"/> 
