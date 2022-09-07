@@ -107,7 +107,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                 throw new AuraHandledException('La data fine connessione temporanea non puo essere precedente alla data inizio!');
             }
 
-            if((currentOrder.RecordType.DeveloperName == 'HDT_RT_ScontiBonus' || (currentOrder.VasSubtype__c != null && currentOrder.VasSubtype__c.equalsIgnoreCase('Analisi Consumi')))&& orderToUpdate.EffectiveDate__c != null )
+            if( currentOrder.RecordType.DeveloperName == 'HDT_RT_CambioOfferta' 
+            && 'Acqua'.equalsIgnoreCase(currentOrder.ServicePoint__r.CommoditySector__c) 
+            && orderToUpdate.EffectiveDate__c != null && orderToUpdate.EffectiveDate__c < System.Today() )
+            {
+                orderToUpdate.RetroactiveDate__c = orderToUpdate.EffectiveDate__c;
+            }
+
+            if((currentOrder.RecordType.DeveloperName == 'HDT_RT_ScontiBonus' || (currentOrder.VasSubtype__c != null && currentOrder.VasSubtype__c.equalsIgnoreCase('Analisi Consumi'))) && orderToUpdate.EffectiveDate__c != null )
             {
                 if(((String)currentOrder.get('NumeratorGroup__c')).equalsIgnoreCase('ELPVEDM') && orderToUpdate.EffectiveDate__c.day() != 1)
                 {
@@ -115,6 +122,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                 }
             }
             exeChecks(orderToUpdate);
+
+            if( !( 'Prima Attivazione'.equalsIgnoreCase(currentOrder.ProcessType__c) && 'Acqua'.equalsIgnoreCase(currentOrder.ServicePoint__r.CommoditySector__c) ) && orderToUpdate.DeferredDate__c != null && (
+                orderToUpdate.DeferredDate__c < orderSrv.addBusinessDay(System.today(),5) || 
+                orderToUpdate.DeferredDate__c > orderSrv.addBusinessDay(System.today(),120) ) ){
+
+                throw new AuraHandledException('La data differita popolata erroneamente');
+                
+            }
 
             orderSrv.updateRecord(orderToUpdate);
         }

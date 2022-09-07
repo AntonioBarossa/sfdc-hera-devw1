@@ -157,6 +157,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     {
                         newOrder.EffectiveDate__c = getEffectiveDateBonus(orderId);
                     }
+                }                
+                when 'HDT_RT_CambioOfferte'
+                {
+                    if('Acqua'.equalsIgnoreCase(order.Commodity__c))
+                    {
+                        newOrder.EffectiveDate__c = System.Today();
+                    }
                 }
 
             }

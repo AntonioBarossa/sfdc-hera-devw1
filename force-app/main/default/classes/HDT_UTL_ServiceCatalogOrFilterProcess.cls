@@ -506,6 +506,11 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Type' => new List<String>
                 {'Unificazione/Separazione BP-CA-Bolletta','Allineamento Canone Rai'}
         },
+    'Cessazione' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Reclamo Scritto/Rich. Info', 'Cessazione Post Accertamento'}
+        },
     'CessazionePostAccertamento' => new Map<String,List<String>>
         {
             'Type' => new List<String>

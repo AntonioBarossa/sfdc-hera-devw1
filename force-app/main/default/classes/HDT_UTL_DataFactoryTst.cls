@@ -3491,4 +3491,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 		return eligibCriteriaList;
 	}
+
+	//@author marco.arci@webresults.it 06/09/2022
+	public static List<CityTechnicalData__c> createCityTechnicalData(Integer numberRecords, Boolean doInsert, String city, Date startDate, Date endDate, Date endCutOver, String errorMessage){
+		List<CityTechnicalData__c> cityTechnicalData = new List<CityTechnicalData__c>();
+
+		for(Integer i=0; i<numberRecords; i++){
+			CityTechnicalData__c singleData = new CityTechnicalData__c();
+			singleData.TARIManagingStartDate__c = startDate;
+			singleData.TARIManagingEndDate__c = endDate;
+			singleData.CutOverEndDate__c = endCutOver;
+			singleData.CadastralCity__c = city;
+			singleData.CityNotManagedAlert__c = errorMessage;
+			cityTechnicalData.add(singleData);
+		}
+
+		if(doInsert){
+			insert cityTechnicalData;
+		}
+		return cityTechnicalData;
+	}
+	
 }
