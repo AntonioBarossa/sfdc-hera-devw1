@@ -196,6 +196,10 @@
                 <behavior>Readonly</behavior>
                 <field>Unita_Abitative__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Note__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

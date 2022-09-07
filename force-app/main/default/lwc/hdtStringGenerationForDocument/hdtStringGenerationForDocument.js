@@ -21,6 +21,7 @@ export default class HdtStringGenerationForDocument extends LightningElement {
     @api numComponenti;
     @api resultString;
     @api interviewId;
+    @api isRequired;
 
     @api errorMessage;
 

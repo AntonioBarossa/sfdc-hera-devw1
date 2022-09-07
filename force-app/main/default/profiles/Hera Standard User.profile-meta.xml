@@ -476,6 +476,11 @@
         <field>Case.CartographyDetail__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.DataUltimoAllineamentoGAA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
         <field>Case.UseSubCategory__c</field>
@@ -28062,6 +28067,41 @@
 		<field>StaticStringForDocuments__c.Subprocess__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Subtypology_Of_Use_Table__c.Attivo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Subtypology_Of_Use_Table__c.Codice_Rate_Category__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Subtypology_Of_Use_Table__c.Data_Fine_Validita__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Subtypology_Of_Use_Table__c.Data_Inizio_Validita__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Subtypology_Of_Use_Table__c.Sottotipologia_D_uso__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Subtypology_Of_Use_Table__c.Societa__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Subtypology_Of_Use_Table__c.Tipologia_D_uso__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>SurveyCRM__c.Question10__c</field>
