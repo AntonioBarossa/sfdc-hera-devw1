@@ -10477,6 +10477,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Promessa di Pagamento Ente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Proroga Temporanea</fullName>
             <default>false</default>
         </values>

@@ -523,6 +523,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Assistenza sociale %28cliente%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistenza sociale %28ente%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bolletta Fuga H2O</fullName>
             <default>false</default>
         </values>

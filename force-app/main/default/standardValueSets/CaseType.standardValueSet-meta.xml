@@ -766,4 +766,9 @@
         <default>false</default>
         <label>Votive Modena Pagamenti Morosità</label>
     </standardValue>
+    <standardValue>
+        <fullName>Promessa di Pagamento Ente</fullName>
+        <default>false</default>
+        <label>Promessa di Pagamento Ente</label>
+    </standardValue>
 </StandardValueSet>

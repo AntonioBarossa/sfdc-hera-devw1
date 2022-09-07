@@ -928,7 +928,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
         });
     }
-    
+
     isCorrectlyFilled(){
         let wrapAddressObject = [];
         wrapAddressObject = this.template.querySelector(`c-hdt-target-object-address-fields[data-sec="${this.choosenSection}"]`).handleAddressFields();

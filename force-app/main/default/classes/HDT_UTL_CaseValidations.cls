@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 07-07-2022
+ * @last modified on  : 09-07-2022
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.CyclomaticComplexity')
@@ -109,6 +109,11 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         {
             Date currentEndDate = currentCase.TemporaryConnectionEndDate__c;
             result = validateEndDate(fields, currentEndDate, currentCase);
+        
+        }else if(caseType == 'Promessa di Pagamento Ente')
+        {
+            result = validatePromessaDiPagamentoENte(currentCase);
+           
         }else if(cluster.equalsIgnoreCase('Attivazioni'))
         {
             result = validateAttivazioniPostSales(fields);
@@ -119,7 +124,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         
         else {
 
-        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
         }
 
@@ -149,12 +154,24 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         System.debug(LoggingLevel.DEBUG,getFieldValue(fields, 'Type'));
 
         if(caseType == 'Piano Rateizzazione'){
+            
+            String reason = getFieldValue(fields, 'Reason__c');
+
+            if(String.isNotBlank(reason) && reason.equals('Assistenza sociale (ente)')){
+                List<PermissionSetAssignment> psa = [SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId= :UserInfo.getUserId() AND PermissionSet.Name = 'HDT_AssistenzaSocialeEnte'];
+                if(psa.size()==0) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Utente non abilitato ad Assistenza sociale (ente)'));
+                String depositPaymentMode = getFieldValue(fields, 'DepositPaymentMode__c');
+                if(String.isBlank(result) && String.isNotBlank(depositPaymentMode) && depositPaymentMode.equals('Promessa di pagamento')) {
+                    List<PermissionSetAssignment> psas = [SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId= :UserInfo.getUserId() AND PermissionSet.Name = 'HDT_PromessaPagamentoEnte'];
+                    if(psas.size()==0) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Utente non abilitato a promessa di pagamento'));
+                }
+            }     
 
             Boolean attachmentManagement = (getFieldValue(fields, 'AttachmentManagement__c') != null && getFieldValue(fields, 'AttachmentManagement__c') != '')
                 ? Boolean.valueOf(getFieldValue(fields, 'AttachmentManagement__c'))
                 : null;
 
-            if(attachmentManagement != null ){
+            if(attachmentManagement != null && String.isBlank(result)){
                 //result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
                 if(attachmentManagement){
                     List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
@@ -1375,6 +1392,17 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     public String getFieldValue(String fields, String fieldToGet){
         Map<String, Object> fieldsMap = (Map<String, Object>) JSON.deserializeUntyped(fields);
         return String.valueOf(fieldsMap.get(fieldToGet));
+    }
+
+    public String validatePromessaDiPagamentoENte(Case currentCase){
+        String result='';
+        List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+        if(attachedDocument.size() == 0){
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
+        }else{
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        }
+        return result;
     }
 
 }

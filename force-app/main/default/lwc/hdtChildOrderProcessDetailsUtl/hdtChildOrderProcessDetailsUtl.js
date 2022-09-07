@@ -560,7 +560,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                     new fieldData('POD/PDR',                'ServicePointCode__c',  true, false, true, ''),
                     new fieldData('Tipo VAS',               'VASType__c',           true, false, true, ''),
                     new fieldData('Sottotipo VAS',          'VasSubtype__c',        true, false, true, ''),
-                    new fieldData('Recapito Telefonico',    'PhoneNumber__c',       true, false, true, '')
+                    new fieldData('Recapito Telefonico',    'PhoneNumber__c',       true, false, false, '')
 
                 ]
             },
