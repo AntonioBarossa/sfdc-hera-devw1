@@ -15,6 +15,16 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Ripristino Sigilli / Piombi Rotti</fullName>
+                <default>false</default>
+                <label>Ripristino Sigilli / Piombi Rotti</label>
+            </value>
+            <value>
+                <fullName>Ripiombatura Post Collaudo Antincendio</fullName>
+                <default>false</default>
+                <label>Ripiombatura Post Collaudo Antincendio</label>
+            </value>
+            <value>
                 <fullName>Cliente paga un acconto</fullName>
                 <default>false</default>
                 <label>Cliente paga un acconto</label>
@@ -445,6 +455,14 @@
                 <label>TCP Comune no Int</label>
             </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Verifica Generica GDM</controllingFieldValue>
+            <valueName>Ripristino Sigilli / Piombi Rotti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Generica GDM</controllingFieldValue>
+            <valueName>Ripiombatura Post Collaudo Antincendio</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Modifica/Azzeramento Consumo Annuo</controllingFieldValue>
             <valueName>Edificio in ristrutturazione</valueName>

@@ -3,7 +3,7 @@
     <fullName>CommodityFormula__c</fullName>
     <description>Settore merceologico preso in Lookup dal Service Point</description>
     <externalId>false</externalId>
-    <formula>text(ServicePoint__r.CommoditySector__c)</formula>
+    <formula>IF(TEXT(ServicePoint__r.CommoditySector__c) != &apos;&apos;,TEXT(ServicePoint__r.CommoditySector__c), TEXT(Commodity__c))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Servizio</label>
     <required>false</required>

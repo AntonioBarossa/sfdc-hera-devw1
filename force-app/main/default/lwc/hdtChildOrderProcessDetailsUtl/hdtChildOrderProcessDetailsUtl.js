@@ -36,6 +36,8 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
         return date.getFullYear()+'-'+month+'-'+day;
     }
 
+    const ANNUAL_CONSUM =  { evaluationType: 'notvisible', rateCategories: ['APSCARPRO0'] };
+
     const handleSections = function() {
         this.fields = [
             {
@@ -44,11 +46,11 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 name: 'variabiliDiProcesso',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                hasCodiceRonchiButton: this.order.RateCategory__c=='TATND00001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente',
+                hasCodiceRonchiButton: this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName),
                 hasVerificaRavv: this.order.Account.CompanyOwner__c!=="MMS",
                 hasAllegatiObbligatori: true,
                 diffObjApi: 'Sale',
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente' || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
+                processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),
                 nextActions : () => 
                     {
                         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
@@ -77,14 +79,14 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                     new fieldData('Impianto SAP','SAPImplantCode__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Tipo Impianto','ImplantType__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Residente','Resident__c', this.typeVisibility('both'), false, true,'',''),
-                    new fieldData('Codice ATECO','AtecoCode__c', this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', this.order.RateCategory__c=='TATND00001', true,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
-                    new fieldData('Codice Ronchi','RonchiCode__c', this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', this.order.RateCategory__c=='TATND00001', true,'',' '),
-                    new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', this.order.RateCategory__c=='TATND00001', true,'',''),
-                    new fieldData('Contratto Precedente','ContractReference__c', ["HDT_RT_CambioTariffa", "HDT_RT_AgevolazioniAmbiente"].includes(this.order.RecordType.DeveloperName), true, true,'',''),
+                    new fieldData('Codice ATECO','AtecoCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', true,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
+                    new fieldData('Codice Ronchi','RonchiCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', true,'',' '),
+                    new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', true,'',''),
+                    new fieldData('Contratto Precedente','ContractReference__c', ["HDT_RT_CambioTariffa", "HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), true, true,'',''),
                     new fieldData('Documentazione consegnata da contribuente','DeliveredDocumentation__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Provenienza richiesta','RequestSource__c', this.typeVisibility('both'), true, false,'','Da contribuente'),
                     new fieldData('Importo mancato dovuto','MissingDueAmount__c', this.typeVisibility('both'), false, false,'',''),
-                    new fieldData('Pagamento Unico Annuale TARI','AnnualTARIPayment__c', this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', false, false,'',''),
+                    new fieldData('Pagamento Unico Annuale TARI','AnnualTARIPayment__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), false, false,'',''),
                     new fieldData('Data dichiarazione','DeclarationDate__c', this.typeVisibility('both'), true, false,'', getFormattedDate(new Date())),
                     new fieldData('Data decorrenza','EffectiveDate__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Integrazione alla Dichiarazione (da Gestore)','OperatorDeclarationInfos__c', this.typeVisibility('both'), false, false,'',''),
@@ -100,7 +102,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                         function(event){
                             if(this.order.RateCategory__c==='TATUDNR001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente' && surf){
                                 const fam = this.template.querySelector("[data-id='FamilyNumber__c']");
-                                let value = cities[order.ServicePoint__r.SupplyCity__c]?.getResident(event.target.value);
+                                let value = cities[order.ServicePoint__r.SupplyCity__c?.toUpperCase()]?.getResident(event.target.value);
                                 if(value && fam)    fam.value = value;
                             }
                     })
@@ -114,7 +116,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 recordId: this.order.Id,
                 diffObjApi: 'Account',
                 diffRecordId: this.order.AccountId,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente' || this.order.RecordType.DeveloperName === 'HDT_RT_AgevolazioniAmbiente',
+                processVisibility: ['HDT_RT_SubentroAmbiente', 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),
                 nextActions: () => 
                     {
                         const famNumb =this.template.querySelector("[data-id='FamilyNumber__c']");
@@ -157,7 +159,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 name: 'fatturazione',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente'].includes(this.order.RecordType.DeveloperName),
+                processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),
                 data: [
                     new fieldData('Modalità Invio Bolletta', 'BillSendMode__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('Email Invio Bolletta', 'InvoiceEmailAddress__c',this.typeVisibility('both'),false,true,'',''),
@@ -221,6 +223,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                     new fieldData('','SignedDate__c',this.order.ParentOrder__r.SignedDate__c != null,true,true,'',this.order.ParentOrder__r.SignedDate__c),
                     new fieldData('','NotRegisteredMeterCase__c',this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,false,'',''),
                     new fieldData('','MaxRequiredPotential__c',this.typeVisibility('gas'),this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,'',''),
+                    new fieldData('','FuiAccess__c', this.typeVisibility('gas'), false, false,'',''),
                     new fieldData('','AccountId',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','PhoneNumber__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','Email__c',this.typeVisibility('both'),false,true,'',''),
@@ -247,15 +250,6 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                     new fieldData('Categoria uso','UseCategory__c', this.typeVisibility('gas'), true, true,'',''),
                     new fieldData('Conferma contratto cliente','ConfirmCustomerContract__c', this.typeVisibility('ele') && this.order.Account.RecordType.DeveloperName !== 'HDT_RT_Business', false, false,'','')
                 ]
-            },
-            {
-                step: 4,
-                label: 'Autolettura',
-                name: 'reading',
-                objectApiName: '',
-                recordId: '',
-                isReading: true,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
             },
             {
                 step: 4,
@@ -302,19 +296,29 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 new fieldData('ConnectionMandate__c','ConnectionMandate__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica', '',''),
                 new fieldData('Fase richiesta','RequestPhase__c', this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', true, false, '',''),
                 new fieldData('Muc', 'IsMuc__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',false,false, '',''),
+                new fieldData('Addebito Spese Contrattuali','ContractExpenses__c', this.typeVisibility('acqua'), false, false, '',''),
+                new fieldData('Data Differita','DeferredDate__c', this.typeVisibility('acqua') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro') , false, false, '',''),
+                new fieldData('Data Decorrenza','EffectiveDate__c', this.typeVisibility('acqua'), true, false, '',''),
+                new fieldData('','Note__c', this.typeVisibility('acqua') && (this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.ProcessType__c === 'Voltura - Subentro Scarico produttivo' ), false, false, '',''),
+                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), this.order.ProcessType__c!=='Prima Attivazione Ele' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica', !(this.order.ProcessType__c!=='Prima Attivazione Ele' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica'),'',''),
                 new fieldData('Codice Ateco','AtecoCode__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('SurfaceServed__c','SurfaceServed__c', this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'), true, false, '',''),
                 new fieldData('Convenzione/Associazione','ConventionAssociation__c', this.typeVisibility('both') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt') && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '',''),
                 new fieldData('Livello pressione','PressureLevel__c', this.typeVisibility('gas'), true, false, '',''),
                 new fieldData('Servizio Energetico','EnergyService__c', this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'), false, false, '',''),
                 new fieldData('Tipo Voltura','VoltureType__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch', true, false, '',''),
-                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), this.order.ProcessType__c!=='Prima Attivazione Ele' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica', !(this.order.ProcessType__c!=='Prima Attivazione Ele' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica'),'',''),
+                new fieldData('','ContractReference__c', this.typeVisibility('acqua') && this.order.ProcessType__c === 'Voltura - Subentro Scarico produttivo', false, true, '',''),
                 new fieldData('POD/PdR','ServicePointCodeFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Tipo Mercato','Market__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Settore merceologico','CommodityFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Distributore','DistributorFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Mercato di provenienza','MarketOrigin__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Consumi Anno','AnnualConsumption__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('Consumi Anno','AnnualConsumption__c', this.typeVisibility('both') && this.rateCategoryVisibility(ANNUAL_CONSUM), false, true, '',''),
+                new fieldData('Tipo Fornitura','SupplyType__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, true, '',''),
+                new fieldData('ATO','ATO__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, true, '',''),
+                new fieldData('Conto contrattuale','ContractAccountCode__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, true, '',''),
+                new fieldData('Tariffa','RateCategory__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, true, '',''),
+                new fieldData('Classe Contatore','MeterClass__c', this.typeVisibility('acqua') /* && this.rateCategoryVisibility(ANNUAL_CONSUM, 'notvisible') */, false, true, '',''),
                 new fieldData('Potenza impegnata','PowerCommitted__c', this.typeVisibility('ele'), false, true, '',''),
                 new fieldData('Potenza disponibile','PowerAvailable__c', this.typeVisibility('ele'), false, true, '',''),
                 new fieldData('Potenza richiesta','PowerRequested__c', this.typeVisibility('ele'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', '',''),
@@ -337,7 +341,15 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 new fieldData('Tipo Apparechiatura','MeterType__c',this.typeVisibility('ele') && (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'),false, true, '','')
                ]
             },
-
+            {
+                step: 6,
+                label: 'Autolettura',
+                name: 'reading',
+                objectApiName: '',
+                recordId: '',
+                isReading: true,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.ServicePoint__r.CommoditySector__c==='Acqua')
+            },
             {
                 step: 5,
                 label: 'Riepilogo Dati',

@@ -346,10 +346,16 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                                             && (myOrder.PhaseStory__c.containsIgnoreCase('Attesa Credit Check')
                                                             || myOrder.PhaseStory__c.containsIgnoreCase('Credit Check KO'))
                                                             && myOrder.PhaseStory__c.containsIgnoreCase('Accettazione Voltura') ? false : true; 
+
+                    String newPhase = (myOrder.ProcessType__c == 'Voltura') && isNotVoltureAcceptanceWorked ? 'Accettazione Voltura': HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione';
+                    newPhase = myOrder.ProcessType__c == 'Voltura - Subentro Scarico produttivo'? 'In attesa esito SAP' : newPhase;
+
                     childOrdersDocValid.add(new Order(
                         Id = myOrder.Id,
                     // phase__c = 'In attesa validazione'
-                        phase__c = (myOrder.ProcessType__c == 'Voltura') && isNotVoltureAcceptanceWorked ? 'Accettazione Voltura': HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione'));
+                        phase__c = newPhase
+                    ));
+                        
                 }
             }
             if(ordersFullList != null && !ordersFullList.isEmpty()){
@@ -711,7 +717,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 else{
                     if (childOrder.Phase__c == currentPhase
                         //@frpanico 06/09/2021 added voltura condition
-                        && childOrder.ProcessType__c != 'Voltura' ) {
+                        && childOrder.ProcessType__c != 'Voltura'
+                        && childOrder.ImplantType__c != '1107-Colonnetta' ) {
                         Order orderToUpdate = new Order(
                             Id = childOrder.Id,
                                 Phase__c = newPhase
@@ -721,7 +728,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
         }
-        orderSrv.updateRecords(childOrdersToUpdate);
+        //orderSrv.updateRecords(childOrdersToUpdate);
         return vasOrdersToUpdate;
     }
 

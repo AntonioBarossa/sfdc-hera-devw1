@@ -7,6 +7,11 @@
         <label>Aggiunta Attacco</label>
     </standardValue>
     <standardValue>
+        <fullName>Cessazione Scarichi Produttivi</fullName>
+        <default>false</default>
+        <label>Cessazione Scarichi Produttivi</label>
+    </standardValue>
+    <standardValue>
         <fullName>Allineamento Anagrafica</fullName>
         <default>false</default>
         <label>Allineamento Anagrafica</label>
@@ -212,6 +217,11 @@
         <label>Errore di Fatturazione</label>
     </standardValue>
     <standardValue>
+        <fullName>Esenzione Modifica Fognatura Depurazione</fullName>
+        <default>false</default>
+        <label>Esenzione Modifica Fognatura Depurazione</label>
+    </standardValue>
+    <standardValue>
         <fullName>Esercizio Diritti Privacy</fullName>
         <default>false</default>
         <label>Esercizio Diritti Privacy</label>
@@ -325,6 +335,11 @@
         <fullName>Modifica Impianto</fullName>
         <default>false</default>
         <label>Modifica Impianto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Modifica Unita Immobiliari Componenti</fullName>
+        <default>false</default>
+        <label>Modifica Unita Immobiliari Componenti</label>
     </standardValue>
     <standardValue>
         <fullName>Modifica Layout di dettaglio</fullName>
@@ -647,6 +662,16 @@
         <label>Testo Contratto in Bolletta</label>
     </standardValue>
     <standardValue>
+        <fullName>Verifica Generica GDM</fullName>
+        <default>false</default>
+        <label>Verifica Generica GDM</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Verifica Rottura Impianto Cliente</fullName>
+        <default>false</default>
+        <label>Verifica Rottura Impianto Cliente</label>
+    </standardValue>
+    <standardValue>
         <fullName>Trasmissione Dati Cliente Finale SII</fullName>
         <default>false</default>
         <label>Trasmissione Dati Cliente Finale SII</label>
@@ -655,6 +680,11 @@
         <fullName>Unificazione POD</fullName>
         <default>false</default>
         <label>Unificazione POD</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interventi con Verifica</fullName>
+        <default>false</default>
+        <label>Interventi con Verifica</label>
     </standardValue>
     <standardValue>
         <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
@@ -707,6 +737,11 @@
         <label>Variazione Tensione</label>
     </standardValue>
     <standardValue>
+        <fullName>Istruttoria</fullName>
+        <default>false</default>
+        <label>Istruttoria</label>
+    </standardValue>
+    <standardValue>
         <fullName>Variazione indirizzo di fornitura</fullName>
         <default>false</default>
         <label>Variazione indirizzo di fornitura</label>
@@ -730,6 +765,11 @@
         <fullName>Verifica GDM</fullName>
         <default>false</default>
         <label>Verifica GDM</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Verifica Interna</fullName>
+        <default>false</default>
+        <label>Verifica Interna</label>
     </standardValue>
     <standardValue>
         <fullName>Verifica Pareggio Fittizio Canone Rai</fullName>
@@ -765,6 +805,11 @@
         <fullName>Votive Modena Pagamenti Morosità</fullName>
         <default>false</default>
         <label>Votive Modena Pagamenti Morosità</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Adesione Rinuncia Fondo Fughe</fullName>
+        <default>false</default>
+        <label>Adesione Rinuncia Fondo Fughe</label>
     </standardValue>
     <standardValue>
         <fullName>Promessa di Pagamento Ente</fullName>

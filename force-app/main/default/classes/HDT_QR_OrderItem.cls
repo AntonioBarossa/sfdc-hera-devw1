@@ -276,4 +276,14 @@ public inherited sharing class HDT_QR_OrderItem {
         ordItemList = [SELECT Id, OrderId, Product2.CancelableQC__c FROM OrderItem WHERE OrderId IN :ordIdList WITH SECURITY_ENFORCED];
         return ordItemList;
     }
+
+    public List<OrderItem> getItemsFromQuote(String quoteId){
+        return [
+            Select SBQQ__OrderedQuantity__c
+            From OrderItem
+            WHERE 
+                Order.SBQQ__Quote__c =:quoteId
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }

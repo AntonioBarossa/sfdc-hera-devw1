@@ -246,10 +246,32 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 case 'tari':
                     result = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Ambiente';
                     break;
+                case 'acqua':
+                    result = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Acqua';
+                    break;
                 default:
                     result = true;
                     break;
             }
+        }
+        return result;
+    }
+
+    rateCategoryVisibility(evaluationRateCategories)
+    {
+        let evaluationType = evaluationRateCategories.evaluationType;
+        let rateCategories = evaluationRateCategories.rateCategories;
+
+        if(this.order.ServicePoint__r.RecordType.DeveloperName !== 'HDT_RT_Acqua') return true;
+        if(!Array.isArray(rateCategories)) return true;
+        if(evaluationType !== 'visible' && evaluationType !== 'notvisible') return true;
+
+        let rateCategory = this.order.RateCategory__c
+        let result = evaluationType === 'notvisible';
+        for(let rate of rateCategories)
+        {
+            if(rate === rateCategory && evaluationType === 'visible') result = true;
+            if(rate === rateCategory && evaluationType === 'notvisible') result = false;
         }
         return result;
     }
@@ -617,6 +639,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 }
             }
             if(currentSectionName === 'dettaglioImpianto'){
+                if( this.checkFieldAvailable('EffectiveDate__c', true) === '' && this.typeVisibility('acqua'))
+                {
+                    this.showMessage('Errore', 'Popolare il campo Data Decorrenza', 'error');
+                    return;
+                }
                 if( this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
                 {
                     this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
@@ -1078,7 +1105,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.getFirstStepName();
         this.loadAccordion();
 
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+        if( this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || 
+        ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.ServicePoint__r.CommoditySector__c == 'Acqua' ) ){
             this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
             || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
             console.log('IsVolture--> '+this.isVolture);
