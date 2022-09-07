@@ -19,7 +19,7 @@ global inherited sharing class HDT_UTL_ServiceCatalogOrFilter implements wrts_pr
         }
         else if(objectType == 'Sale__c')
         {
-            res = HDT_UTL_ServiceCatalogOrFilterProcess.checkSalesTari((String)sb.get('Id'));
+            res = HDT_UTL_ServiceCatalogOrFilterProcess.checkSalesTari((String)sb.get('Id'), method);
         }
         return res;
     }

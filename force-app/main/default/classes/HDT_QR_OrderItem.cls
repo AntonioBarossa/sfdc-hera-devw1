@@ -65,7 +65,7 @@ public inherited sharing class HDT_QR_OrderItem {
             OrderItem 
             WHERE
             OrderId IN :listOrderId 
-            AND (Product2.Name IN ('PDR','POD','Punto Fornitura Acqua','Punto Fornitura') OR (Product2.Family IN  :famils AND (NOT Product2.Description LIKE '%Sconto%')) OR BillingProfile__c != NULL)
+            AND (Product2.Name IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura','Punto Fornitura Ambiente') OR (Product2.Family IN  :famils AND (NOT Product2.Description LIKE '%Sconto%')) OR BillingProfile__c != NULL)
             WITH SECURITY_ENFORCED
         ];
     }
