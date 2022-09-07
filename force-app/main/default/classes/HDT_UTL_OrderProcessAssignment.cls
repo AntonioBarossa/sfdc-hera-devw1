@@ -380,12 +380,32 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         String res = '';
         List<String> listRes = new List<String>();
         List<SaleServiceItem__c> transitionlist =saleItQr.getRecordsBySaleIdFilter(sale.id);
+        Set<String> energySet = new Set<String>{'Energia Elettrica', 'Gas'};
+        Set<String> nonEnergySet = new Set<String>{'Acqua', 'Ambiente'};
+        Boolean isMms = sal.Account__r.customerMarking__c.containsIgnoreCase('MMS');
+        Boolean checkEnergy = false;
+        Boolean checkNonEnergy = true;
         System.debug('*****MAVUOIANNA:'+ transitionlist);
         if(sal.isTransition__c){
                 //Map<String,
             // String sub = 'Subentro';
             boolean r = false;
             for(SaleServiceItem__c ser :transitionlist ){
+                if(isMms)
+                {
+                    if(energySet.contains(ser.ServicePoint__r.CommoditySector__c))
+                    {
+                        checkEnergy = true;
+                    }
+                    else if(nonEnergySet.contains(ser.ServicePoint__r.CommoditySector__c))
+                    {
+                        checkNonEnergy = true;
+                    }
+                    if(checkEnergy && checkNonEnergy)
+                    {
+                        return 'MmsMisto';
+                    }
+                }	
                 if((ser.ServicePoint__r.PlugPresence__c== 'NO')||(ser.ServicePoint__r.PowerRequested__c != null && (ser.ServicePoint__r.PowerRequested__c!= ser.ServicePoint__r.PowerContractual__c))){
                 //Sale__c s = new Sale__c(Id=sale.Id);
                     s.isTransition__c=true;
@@ -410,6 +430,21 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 if(ser.ServicePoint__r.CommoditySector__c == 'Gas'){
                     spListId.add(ser.ServicePoint__c);
                 }
+                if(isMms)
+                {
+                    if(energySet.contains(ser.ServicePoint__r.CommoditySector__c))
+                    {
+                        checkEnergy = true;
+                    }
+                    else if(nonEnergySet.contains(ser.ServicePoint__r.CommoditySector__c))
+                    {
+                        checkNonEnergy = true;
+                    }
+                    if(checkEnergy && checkNonEnergy)
+                    {
+                        return 'MmsMisto';
+                    }
+                }	
             }
             List<ServicePoint__c> spList = srQr.getRecordByIdList(spListId,'id,CommoditySector__c,SupplyCity__c,distributor__r.code__c');
             Map<String,HDT_WRP_RemiUbd> mapRemiCode = new Map<String,HDT_WRP_RemiUbd>();
