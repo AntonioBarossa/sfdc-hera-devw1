@@ -588,6 +588,13 @@
                 <elementReference>Get_Tari_Recordtype.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_0.Note__c</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>; Importo Minimo Singola Rata: €{!Calcola_parametri_rate.importoMinimoSingolaRata}</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_case_record</targetReference>
         </connector>
@@ -2548,7 +2555,7 @@ OR(
         </fields>
         <fields>
             <name>Importo_Minimo_Singola_Rata</name>
-            <fieldText>&lt;p&gt;Importo Minimo Singola Rata&lt;/p&gt;&lt;p&gt;{!Calcola_parametri_rate.importoMinimoSingolaRata}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Importo Minimo Singola Rata&lt;/p&gt;&lt;p&gt;€{!Calcola_parametri_rate.importoMinimoSingolaRata}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2776,7 +2783,7 @@ OR(
         </fields>
         <fields>
             <name>Importo_da_rateizzare</name>
-            <fieldText>&lt;p&gt;Importo da Rateizzare&lt;/p&gt;&lt;p&gt;{!GetCaseImporto.AmountToPayInInstallments__c}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Importo da Rateizzare&lt;/p&gt;&lt;p&gt;€{!GetCaseImporto.AmountToPayInInstallments__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
