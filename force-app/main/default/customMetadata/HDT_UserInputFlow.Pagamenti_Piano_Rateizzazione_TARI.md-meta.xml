@@ -3,56 +3,60 @@
     <label>Pagamenti - Piano Rateizzazione TARI</label>
     <protected>false</protected>
     <values>
+        <field>Commodity__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
-    {
-        &quot;FieldName&quot;: &quot;UseCategory__c&quot;,
-        &quot;Required&quot;: true,
-        &quot;Column&quot;: 1
-    },
-    {
-        &quot;FieldName&quot;: &quot;ApplicationInterests__c&quot;,
-        &quot;Required&quot;: false,
-        &quot;Column&quot;: 1
-    },
-    {
-        &quot;FieldName&quot;: &quot;FirstExpirationDateTari__c&quot;,
-        &quot;Required&quot;: true,
-        &quot;Column&quot;: 1
-    },
-    {
-        &quot;FieldName&quot;: &quot;Type&quot;,
-        &quot;Required&quot;: true,
-        &quot;ReadOnly&quot;: true,
-        &quot;Column&quot;: 1
-    },
-    {
-        &quot;FieldName&quot;: &quot;AmountToPayInInstallments__c&quot;,
-        &quot;Required&quot;: true,
-        &quot;ReadOnly&quot;: true,
-        &quot;Column&quot;: 1
-    },
-    {
-        &quot;FieldName&quot;: &quot;InstallmentNumberRequired__c&quot;,
-        &quot;Required&quot;: true,
-        &quot;Column&quot;: 2
-    },
-    {
-        &quot;FieldName&quot;: &quot;CustomerWrittenRequestWithdrawn__c&quot;,
-        &quot;Required&quot;: true,
-        &quot;Column&quot;: 2
-    },
-    {
-        &quot;FieldName&quot;: &quot;RequestSource__c&quot;,
-        &quot;Required&quot;: true,
-        &quot;Column&quot;: 2
-    },
-    {
-        &quot;FieldName&quot;: &quot;Reason__c&quot;,
-        &quot;Required&quot;: true,
-        &quot;Column&quot;: 2
-    }
-]</value>
+            {
+                &quot;FieldName&quot;: &quot;UseCategory__c&quot;,
+                &quot;Required&quot;: true,
+                &quot;Column&quot;: 1
+            },
+            {
+                &quot;FieldName&quot;: &quot;ApplicationInterests__c&quot;,
+                &quot;Required&quot;: false,
+                &quot;Column&quot;: 1
+            },
+            {
+                &quot;FieldName&quot;: &quot;ExpirationDate__c&quot;,
+                &quot;Required&quot;: true,
+                &quot;Column&quot;: 1
+            },
+            {
+                &quot;FieldName&quot;: &quot;Type&quot;,
+                &quot;Required&quot;: true,
+                &quot;ReadOnly&quot;: true,
+                &quot;Column&quot;: 1
+            },
+            {
+                &quot;FieldName&quot;: &quot;AmountToPayInInstallments__c&quot;,
+                &quot;Required&quot;: true,
+                &quot;ReadOnly&quot;: true,
+                &quot;Column&quot;: 1
+            },
+            {
+                &quot;FieldName&quot;: &quot;InstallmentNumberRequired__c&quot;,
+                &quot;Required&quot;: true,
+                &quot;Column&quot;: 2
+            },
+            {
+                &quot;FieldName&quot;: &quot;CustomerWrittenRequestWithdrawn__c&quot;,
+                &quot;Required&quot;: true,
+                &quot;Column&quot;: 2
+            },
+            {
+                &quot;FieldName&quot;: &quot;RequestSource__c&quot;,
+                &quot;Required&quot;: true,
+                &quot;Column&quot;: 2
+            },
+            {
+                &quot;FieldName&quot;: &quot;Reason__c&quot;,
+                &quot;Required&quot;: true,
+                &quot;Column&quot;: 2
+            }
+        ]</value>
     </values>
     <values>
         <field>ProcessType__c</field>
