@@ -35,6 +35,7 @@
                 <elementReference>GetCaseImporto.Id</elementReference>
             </value>
         </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <name>Check_If_Process_Is_TARI</name>
@@ -99,27 +100,9 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>applicazioneInteressi</name>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
             <name>customerCode</name>
             <value>
                 <elementReference>CaseInput.Account.CustomerCode__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>motivazione</name>
-            <value>
-                <stringValue>Disagio Economico</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>provenienzaRichiesta</name>
-            <value>
-                <stringValue>Da contribuente</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -236,7 +219,7 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Fase_0_0</name>
+        <name>Assegna_Fase_0</name>
         <label>Assegna Fase</label>
         <locationX>842</locationX>
         <locationY>7250</locationY>
@@ -278,14 +261,14 @@
         <locationX>3856</locationX>
         <locationY>638</locationY>
         <assignmentItems>
-            <assignToReference>Get_Case.Phase__c</assignToReference>
+            <assignToReference>GetCaseNonBozza.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Da Inviare</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Case.Status</assignToReference>
+            <assignToReference>GetCaseNonBozza.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
@@ -363,13 +346,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>InstallmentAmount</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case.ApprovalProcess__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <connector>
@@ -1111,56 +1087,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Is_TARI_Process</name>
-        <label>Is TARI Process</label>
-        <locationX>2459</locationX>
-        <locationY>2162</locationY>
-        <defaultConnector>
-            <targetReference>Screen_Case_Layout_0_0_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Is TARI Process</defaultConnectorLabel>
-        <rules>
-            <name>Is_Not_TARI_Process</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Check_If_Process_Is_TARI</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Screen_Case_Layout</targetReference>
-            </connector>
-            <label>Is Not TARI Process</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_TARI_Process_0_0</name>
-        <label>Is TARI Process</label>
-        <locationX>3025</locationX>
-        <locationY>1586</locationY>
-        <defaultConnector>
-            <targetReference>Predefault_Valori_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Is TARI Process</defaultConnectorLabel>
-        <rules>
-            <name>Is_Not_TARI_Process_0_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Check_If_Process_Is_TARI</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Predefault_Valori</targetReference>
-            </connector>
-            <label>Is Not TARI Process</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Modalit_Acconto_Bonifico</name>
         <label>Modalità Acconto: Bonifico?</label>
         <locationX>710</locationX>
@@ -1651,7 +1577,7 @@
     <formulas>
         <name>checkSingleInstallmentAmount</name>
         <dataType>Boolean</dataType>
-        <expression>{!Get_Case_Tari_Layout.MinAmountForSingleInstalment__c} &lt; ({!Get_Case_Tari_Layout.AmountToPayInInstallments__c} / {!Get_Case_Tari_Layout.InstallmentNumberRequired__c})</expression>
+        <expression>{!Calcola_parametri_rate.importoMinimoSingolaRata} &lt; ({!Get_Case_Tari_Layout.AmountToPayInInstallments__c} / {!Get_Case_Tari_Layout.InstallmentNumberRequired__c})</expression>
     </formulas>
     <formulas>
         <name>DataPrimaScadenza</name>
@@ -1799,7 +1725,7 @@ OR(
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>HDT_RT_PianoRateizzazioneTari</stringValue>
+                <stringValue>HDT_RT_PianoRateizzazione</stringValue>
             </value>
         </filters>
         <filters>
@@ -1949,7 +1875,7 @@ OR(
         <locationY>7130</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Attesa_Modulo_Firmato_0_0_0_0_0</targetReference>
+            <targetReference>Assegna_Fase_0_0_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2621,6 +2547,11 @@ OR(
             <isRequired>true</isRequired>
         </fields>
         <fields>
+            <name>Importo_Minimo_Singola_Rata</name>
+            <fieldText>&lt;p&gt;Importo Minimo Singola Rata&lt;/p&gt;&lt;p&gt;{!Calcola_parametri_rate.importoMinimoSingolaRata}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
             <name>hdtRecordEditForm_0_tari</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -3171,7 +3102,7 @@ OR(
         </connector>
         <fields>
             <name>Alert_importo_singola_rata</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;In base al &lt;strong style=&quot;color: rgb(22, 50, 92); font-family: &amp;quot;Salesforce Sans&amp;quot;, Arial, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt;Numero Rate Richieste&lt;/strong&gt;&lt;span style=&quot;color: rgb(22, 50, 92); font-family: &amp;quot;Salesforce Sans&amp;quot;, Arial, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt; il valore di ogni silgola rata risulta infiriore al minimo consentito di {!Get_Case_Tari_Layout.MinAmountForSingleInstalment__c}.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;In base al &lt;strong style=&quot;color: rgb(22, 50, 92); font-family: &amp;quot;Salesforce Sans&amp;quot;, Arial, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt;Numero Rate Richieste&lt;/strong&gt;&lt;span style=&quot;color: rgb(22, 50, 92); font-family: &amp;quot;Salesforce Sans&amp;quot;, Arial, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt; il valore di ogni silgola rata risulta infiriore al minimo consentito di {!Calcola_parametri_rate.importoMinimoSingolaRata}.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>

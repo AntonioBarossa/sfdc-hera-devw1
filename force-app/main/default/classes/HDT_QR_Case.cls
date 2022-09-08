@@ -47,7 +47,6 @@ public inherited sharing class HDT_QR_Case {
             RecordType.DeveloperName,
             MaxInstallmentsNumber__c,
             MinInstallmentAmount__c,
-            MinAmountForSingleInstalment__c,
             MandatoryAttachments__c
             FROM Case
             where Id = :Id
