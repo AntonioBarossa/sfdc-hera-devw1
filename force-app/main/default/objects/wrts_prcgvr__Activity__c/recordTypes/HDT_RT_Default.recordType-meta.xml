@@ -2798,6 +2798,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Acconto scaduto non pagato da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Approvazione Offerte</fullName>
             <default>false</default>
         </values>
