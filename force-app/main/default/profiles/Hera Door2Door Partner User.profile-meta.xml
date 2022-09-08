@@ -465,6 +465,11 @@
     </customSettingAccesses>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.WasteCommodityType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.DataUltimoAllineamentoGAA__c</field>
         <readable>true</readable>
     </fieldPermissions>
