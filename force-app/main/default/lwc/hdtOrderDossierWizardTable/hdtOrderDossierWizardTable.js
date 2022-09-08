@@ -113,37 +113,39 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
     @api
     setTableData(){
         this.loading = true;
-        getTableData({orderParentId: this.orderParentRecord.Id}).then(data =>{
+        setTimeout(() =>{
+            getTableData({orderParentId: this.orderParentRecord.Id}).then(data =>{
 
-            this.loading = false;
-            
-            this.childOrdersList = data.childOrdersList;// let orderList = results.orderList;
-            this.orderItemList = data.orderItemList;
+                this.loading = false;
+                
+                this.childOrdersList = data.childOrdersList;// let orderList = results.orderList;
+                this.orderItemList = data.orderItemList;
 
-            this.childOrdersList.forEach(ord => {
-                if(ord.RecordType){
-                    ord.recordtypename = ord.RecordType.Name;
-                }
-                ord.pod = '';
-                //ord.CustomerName__c = '/lightning/r/Order/' + ord.Id + '/view';
-                ord.pod = ord.ServicePoint__c !== undefined ? ord.ServicePoint__r.ServicePointCode__c : '';
-                ord.disabledCancellationActionButton = this.disabledInput || ord.Step__c === 20 || ord.Phase__c === 'Annullato' || ord.recordtypename === 'Default';
-                ord.disabledActionButton = this.disabledInput || ord.Step__c === 20 || ord.Phase__c === 'Annullato';
-                ord.offerta = data.primeQuoteLineMap[ord.Id]
+                this.childOrdersList.forEach(ord => {
+                    if(ord.RecordType){
+                        ord.recordtypename = ord.RecordType.Name;
+                    }
+                    ord.pod = '';
+                    //ord.CustomerName__c = '/lightning/r/Order/' + ord.Id + '/view';
+                    ord.pod = ord.ServicePoint__c !== undefined ? ord.ServicePoint__r.ServicePointCode__c : '';
+                    ord.disabledCancellationActionButton = this.disabledInput || ord.Step__c === 20 || ord.Phase__c === 'Annullato' || ord.recordtypename === 'Default';
+                    ord.disabledActionButton = this.disabledInput || ord.Step__c === 20 || ord.Phase__c === 'Annullato';
+                    ord.offerta = data.primeQuoteLineMap[ord.Id]
 
+                });
+
+                console.log('this.childOrdersList: ', JSON.parse(JSON.stringify(this.childOrdersList)));
+
+            }).catch(error => {
+                this.loaded = true;
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: error.message,
+                    variant: 'error'
+                });
+                this.dispatchEvent(toastErrorMessage);
             });
-
-            console.log('this.childOrdersList: ', JSON.parse(JSON.stringify(this.childOrdersList)));
-
-        }).catch(error => {
-            this.loaded = true;
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: error.message,
-                variant: 'error'
-            });
-            this.dispatchEvent(toastErrorMessage);
-        });
+        }, 3000);
     }
 
     handleRowAction(event){
