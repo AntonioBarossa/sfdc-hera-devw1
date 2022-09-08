@@ -29,7 +29,7 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
         Set<Id> canceledOrderQuotesIds = new Set<Id>();
         for (Order newOrder : (List<Order>)newMap.values()) {
             Order oldOrder = (Order) oldMap.get(newOrder.Id);
-            if (newOrder.RecordTypeId!=VAS_RT && newOrder.RecordTypeId!=SCONTIBONUS_RT && (newOrder.Status==STATUS_CANCELLED && oldOrder.Status!=STATUS_CANCELLED)) {
+            if (newOrder.RecordTypeId!=VAS_RT && newOrder.RecordTypeId!=SCONTIBONUS_RT && ((newOrder.Status==STATUS_CANCELLED && oldOrder.Status!=STATUS_CANCELLED) || ('Voltura Rifiutata'.equalsIgnoreCase(newOrder.Phase__c) && !newOrder.Phase__c.equalsIgnoreCase(oldOrder.Phase__c)) )) {
                 canceledOrderIds.add( newOrder.Id );
                 if (newOrder.SBQQ__Quote__c != null){
                     canceledOrderQuotesIds.add(newOrder.SBQQ__Quote__c);
