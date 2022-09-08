@@ -362,7 +362,8 @@ public inherited sharing class HDT_QR_Order {
             RequestSource__c,
             DeliveredDocumentation__c,
             ApprovalType__c,
-            AdditionalAttachments__c
+            AdditionalAttachments__c,
+            WasteCommodityType__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>Verifica Generica GDM - ACQ</fullName>
+        <fullName>Verifica Integrita Sigilli - ACQ</fullName>
         <default>false</default>
-        <label>Verifica Generica GDM - ACQ</label>
+        <label>Verifica Integrita Sigilli - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Verifica Rottura Impianto Cliente - ACQ</fullName>

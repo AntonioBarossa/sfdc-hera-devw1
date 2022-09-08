@@ -61,7 +61,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     @wire(getPicklistValue,{objectApiName: 'Order', fieldApiName: 'SignMode__c'})
     activeValue;
 
-    @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD,OLDSIGN_FIELD, CHANNEL_FIELD,RequestSource] })
+    @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD,OLDSIGN_FIELD, CHANNEL_FIELD,RequestSource,WasteCommodityType] })
     wiredParentOrder({ error, data }) {
         if (error) {
             let message = 'Unknown error';
