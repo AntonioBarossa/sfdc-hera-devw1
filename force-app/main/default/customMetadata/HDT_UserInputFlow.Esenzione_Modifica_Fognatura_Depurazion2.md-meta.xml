@@ -10,7 +10,7 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {
-&quot;FieldName&quot;: &quot;&quot;,
+&quot;FieldName&quot;: &quot;Reason__c&quot;,
 &quot;Required&quot;: true,
 &quot;Column&quot;: 1
 }

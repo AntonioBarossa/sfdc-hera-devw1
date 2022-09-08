@@ -2,13 +2,14 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SignalOutcome__c</fullName>
     <externalId>false</externalId>
-    <label>Esito Segnalazione</label>
+    <label>Esito Richiesta</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>Type</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
@@ -37,6 +38,62 @@
                 <default>false</default>
                 <label>Segnalato fornitore</label>
             </value>
+            <value>
+                <fullName>Richiesta accolta</fullName>
+                <default>false</default>
+                <label>Richiesta accolta</label>
+            </value>
+            <value>
+                <fullName>Accolta fognatura</fullName>
+                <default>false</default>
+                <label>Accolta fognatura</label>
+            </value>
+            <value>
+                <fullName>Accolta depurazione</fullName>
+                <default>false</default>
+                <label>Accolta depurazione</label>
+            </value>
+            <value>
+                <fullName>Non Accolta</fullName>
+                <default>false</default>
+                <label>Non Accolta</label>
+            </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni VAS</controllingFieldValue>
+            <valueName>Eseguita sostituzione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni VAS</controllingFieldValue>
+            <valueName>Eseguita riparazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni VAS</controllingFieldValue>
+            <valueName>Id commerciale venditore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni VAS</controllingFieldValue>
+            <valueName>Respito no cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni VAS</controllingFieldValue>
+            <valueName>Segnalato fornitore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Richiesta accolta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Accolta fognatura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Accolta depurazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Non Accolta</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>
