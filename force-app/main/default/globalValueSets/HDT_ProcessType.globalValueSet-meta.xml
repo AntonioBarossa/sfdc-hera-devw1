@@ -994,6 +994,11 @@
         <fullName>Voltura - GAS</fullName>
         <default>false</default>
         <label>Voltura - GAS</label>
+    </customValue>    
+    <customValue>
+        <fullName>Voltura - ACQ</fullName>
+        <default>false</default>
+        <label>Voltura - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Voltura con autolettura - GAS</fullName>
