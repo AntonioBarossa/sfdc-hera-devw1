@@ -65,7 +65,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
         //Get servicePoint data start
         servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
-        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SalesCompanyCode__c,Vendor__c,SwitchInWinback__c,ServicePointCode__c,SupplyType__c,SupplyTypeTemp__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c, isReseller__c');
+        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SalesCompanyCode__c,Vendor__c,SwitchInWinback__c,ServicePointCode__c,SupplyType__c,SupplyTypeTemp__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,ImplantTypeTemp__c,ATO__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c, isReseller__c');
         servicePoint = existingServicePoint[0];
         //Get servicePoint data end
 
@@ -208,6 +208,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 ConsumptionRangeGAS__c = consumptionRangeGas,
                 PowerFlow__c = powerFlow,
                 MarketOrigin__c = servicePoint.MarketOrigin__c,
+                AtoReference__c = servicePoint.ATO__c,
+                ImplantType__c = servicePoint.ImplantTypeTemp__c,
                 ResidentDeliveryAddress__c = residentDeliveryAddress,
                 MeterType__c = servicePoint.MeterType__c,
                 SupplyProvince__c = servicePoint.SupplyProvince__c,
@@ -253,7 +255,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         if(!servicePoint.SwitchInWinback__c){
             servicePointSrv.updateRecord(new ServicePoint__c(
                 Id = servicePoint.Id,
-                SwitchInWinback__c = HDT_UTL_Sales.isWinback(servicePoint.Id)
+                SwitchInWinback__c = HDT_UTL_Sales.isWinback(servicePoint.Id, servicePoint.ServicePointCode__c)
             ));
         }
         //winback check end
@@ -373,6 +375,16 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 }else{
                     Name = 'Energia Elettrica Non Domestico';
                 }
+            }
+            when 'Acqua'{
+                if(sp.SupplyTypeTemp__c=='Domestico'){
+                    Name = 'Acqua Domestico';
+                }else{
+                    Name = 'Acqua Non Domestico';
+                }
+            }
+            when 'Ambiente'{
+                Name = 'Ambiente';
             }
         }
         system.debug('Pricebook Name '+name);

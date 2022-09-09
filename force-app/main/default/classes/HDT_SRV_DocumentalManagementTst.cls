@@ -59,6 +59,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         HDT_UTL_DataFactoryTst.pClickInstance();
         
         HDT_UTL_DataFactoryTst.newPhaseTransition('Attesa conferma preventivo cliente', 'Bozza', caseList[0].Id, 'HDT_RT_Default');
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione EngageOne KO', 'Documentazione Gestita', utlconstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlconstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER);
 
         
         
@@ -337,7 +338,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         String outcome = requestBody.outcome;
         String transactionId = 'idPlico_0';
         SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
-        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId,SupplyType__c  FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
         HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate[0],requestBody, transactionId);
         //HDT_SRV_DocumentalManagement.handleRadioGroup(record,listOfRadio,envelopeId);
 
@@ -352,7 +353,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         String outcome = requestBody.outcome;
         String transactionId = 'idPlico_0';
         SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
-        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId,SupplyType__c  FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
         HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate[0],requestBody, transactionId);
         //HDT_SRV_DocumentalManagement.handleRadioGroup(record,listOfRadio,envelopeId);
 
@@ -368,7 +369,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         String outcome = requestBody.outcome;
         String transactionId = 'idPlico_0';
         SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
-        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId,SupplyType__c  FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
         HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate[0],requestBody, transactionId);
         //HDT_SRV_DocumentalManagement.handleRadioGroup(record,listOfRadio,envelopeId);
 
@@ -384,10 +385,20 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         String outcome = requestBody.outcome;
         String transactionId = 'idPlico_0';
         SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
-        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId,SupplyType__c FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
         HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate[0],requestBody, transactionId);
         //HDT_SRV_DocumentalManagement.handleRadioGroup(record,listOfRadio,envelopeId);
 
+    }
+
+    @isTest
+    static void testLogDiscardPhase() {
+        Order ord = [SELECT Id FROM Order LIMIT 1];
+        Test.startTest();
+        HDT_SRV_DocumentalManagement.logDiscardPhase(ord.Id);
+        ord = [SELECT Id,Phase__c FROM Order LIMIT 1];
+        System.assertEquals('Comunicazione EngageOne KO', ord.Phase__c, 'Errore nel funzionamento di logDiscardPhase');
+        Test.stopTest();
     }
 /*
     @isTest
@@ -572,5 +583,58 @@ static void testgeneratePayloadEstrattoConto(){
             
         }
     }
-    
+
+    @isTest
+    static void logEmailForAccountStatementTst()
+    {
+        List<Account> accList = [SELECT Id FROM Account];
+        String formParams = '{"email": "testEmail@email.com"}';
+        Test.startTest();
+            HDT_SRV_DocumentalManagement.logEmailForAccountStatement(accList[0].Id, formParams);
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(formParams), 'Form params vuoto');
+    }
+    @isTest
+    static void createIntesaDocumentalActivityTst()
+    {
+        List<Order> orderList = [SELECT Id FROM Order];
+        HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest req = new HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest();
+        req.status = 'completed';
+        String transactionId = '109dkasodk01';
+        Test.startTest();
+            HDT_SRV_DocumentalManagement.createIntesaDocumentalActivity(orderList[0], req, transactionId);
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(transactionId), 'TransactionId vuoto');
+    }
+    @isTest
+    static void getTransactionId()
+    {
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_DocumentalMock());
+        Test.startTest();
+            String result = HDT_SRV_DocumentalManagement.getTransactionId('asdojiasod');
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(result), 'TransactionId vuoto');
+    }
+
+    public class HDT_WS_DocumentalMock implements HttpCalloutMock
+    {
+        
+        public HTTPResponse respond(HTTPRequest request){
+
+            HttpResponse response = new HttpResponse();
+            String bodyResponse;
+            Integer statusCode;
+
+            bodyResponse = '{"data": {"transactionId": "asdjjads"}}';
+            statusCode = 200;
+
+            response.setHeader('Content-Type', 'application/json');
+            response.setBody(bodyResponse);
+            response.setStatusCode(statusCode);
+            response.setStatus('OK');
+            return response;
+        }
+    }
+
 }
+

@@ -56,7 +56,7 @@ public with sharing class HDT_SRV_SelfReadings {
         System.debug(LoggingLevel.DEBUG, 'readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
         
         String readingFields = 'Id';
-        if (readingCase.CommodityFormula__c == 'Gas') {
+        if (readingCase.CommodityFormula__c == 'Gas' || readingCase.CommodityFormula__c == 'Acqua') {
             readingFields += ',ReadingRegisterMeter__c,ReadingRegisterCorrector__c,ReadingValueMeter__c,ReadingValueCorrector__c';
         } else {
             String fieldsTemplate = ',ReadingRegister{0}__c,ReadingValue{0}__c';
@@ -80,7 +80,7 @@ public with sharing class HDT_SRV_SelfReadings {
         gen.writeFieldName('position');
         gen.writeStartArray();
         
-        if (readingCase.CommodityFormula__c == 'Gas') {
+        if (readingCase.CommodityFormula__c == 'Gas' || readingCase.CommodityFormula__c == 'Acqua') {
             gen.writeStartObject();
             gen.writeStringField('register', reading.ReadingRegisterMeter__c);
             gen.writeStringField('reading', String.valueOf(reading.ReadingValueMeter__c));
@@ -330,6 +330,24 @@ public with sharing class HDT_SRV_SelfReadings {
 
     }
 
+    private static String getErrorMessage(HDT_WRP_GenericSapIntegration sapIntegration){
+        String errorMessage = '';
+        try{
+            Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
+            Map<String,Object> dataBody = body.get('data') != null? (Map<String, Object>) body.get('data') : new Map<String,Object>();
+            List<Object> errorDetails = (List<Object>) body.get('errorDetails');
+            if(errorDetails != null && !errorDetails.isEmpty()) {
+                Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
+                errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
+            }else{
+                errorMessage = (String)dataBody.get('message');
+            }
+        }catch (Exception e){
+            errorMessage = (sapIntegration.responseCode != null || String.isNotBlank(sapIntegration.responseStatus) )?sapIntegration.responseCode+' - ' + sapIntegration.responseStatus : 'Nessuna risposta dal server';
+        }
+        return errorMessage;
+    }
+
     private static HDT_WRP_SelfReadingResponse handleResponseInvioLetture(HDT_WRP_GenericSapIntegration sapIntegration, String checkAutoletturaDescription) {
 
         String caseId = sapIntegration.recordId;
@@ -381,6 +399,7 @@ public with sharing class HDT_SRV_SelfReadings {
 
         if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
             retWrap.isResponseOk = false;
+            retWrap.checkAutoletturaDescription = getErrorMessage(sapIntegration);
         } else {
             readingCaseToUpdate.Phase__c = 'Inviata a SAP';
             String serializedCase = JSON.serialize(readingCaseToUpdate);

@@ -162,7 +162,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 when 'Ammissibilità KO' {
                                     
 
-                                    ord.DiscardReason__c = discardReasonString;
+                                    ord.DiscardReason__c = String.isNotBlank(discardReasonString) && discardReasonString.length()>255 ? discardReasonString.substring(0,255) : discardReasonString;
                                     ord.CausalCode__c = mapRequestFields.get('CODERR');
                                     //ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG'); campo sostituito
                                     ord.DiscardCodeHeroku__c = mapRequestFields.get('CODERR_AEEG');
@@ -269,7 +269,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
                                     appService.updateExtraSystemAppointment('Esito KO da DL', ord.Id, discardReasonString,mapActivityField);
                                     //fine Gestione Esito Appuntamento;
-                                    ord.DiscardReason__c = discardReasonString;
+                                    ord.DiscardReason__c = String.isNotBlank(discardReasonString) && discardReasonString.length()>255 ? discardReasonString.substring(0,255) : discardReasonString;
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                     ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                     ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
@@ -329,10 +329,16 @@ public with sharing class HDT_SRV_SalesHandler {
                                     }
                                 }
                                 when 'Amm. Precheck KO SII' {
-                                    ord.PrecheckReasonSII__c = mapRequestFields.get('DES_ERR_ES');
-                                    ord.CausalCode__c = mapRequestFields.get('CODERR_ES');
+                                    ord.PrecheckReasonSII__c = String.isBlank(mapRequestFields.get('DES_ERR_AEEG')) ? 
+                                                                        mapRequestFields.get('TESTO_ERRR') : 
+                                                                        mapRequestFields.get('DES_ERR_AEEG');
+                                    ord.CausalCode__c = String.isBlank(mapRequestFields.get('CODERR_AEEG')) ? 
+                                                                        mapRequestFields.get('CODERR_ES') : 
+                                                                        mapRequestFields.get('CODERR_AEEG');
                                     ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                    ord.DiscardReason__c = (String.isNotBlank(ord.PrecheckReasonSII__c) && String.isNotBlank(ord.CausalCode__c))? ord.CausalCode__c+' - '+ord.PrecheckReasonSII__c 
+                                        : (String.isBlank(ord.CausalCode__c))? ord.PrecheckReasonSII__c : ord.CausalCode__c;
 
                                     if(mapRequestFields.get('CODERR_ES') == '003' || mapRequestFields.get('CODERR_ES') == '103'){
                                         ord.IsTechnicalTransfer__c = true;
@@ -348,7 +354,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     }
                                 }
                                 when 'Esito KO da SII' {
-                                    ord.DiscardReason__c =  discardReasonString;
+                                    ord.DiscardReason__c =  String.isNotBlank(discardReasonString) && discardReasonString.length()>255 ? discardReasonString.substring(0,255) : discardReasonString;
                                     ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                     ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
@@ -416,18 +422,18 @@ public with sharing class HDT_SRV_SalesHandler {
                                     }
                                 }
                                 when 'Errore lavorazione SAP' {
-                                    ord.DiscardReason__c = discardReasonString;
+                                    ord.DiscardReason__c = String.isNotBlank(discardReasonString) && discardReasonString.length()>255 ? discardReasonString.substring(0,255) : discardReasonString;
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 }
                                 when 'Dati discordanti'{
                                     ord.phase__c = mapRequestFields.get('FASE');
-                                    ord.DiscardReason__c = discardReasonString;
+                                    ord.DiscardReason__c = String.isNotBlank(discardReasonString) && discardReasonString.length()>255 ? discardReasonString.substring(0,255) : discardReasonString;
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 }
                                 /**@frpanico 2022-05-27
                                  * Aggiunta casistica Dati TIMOE Ricevuti
                                  */
-                                when 'Dati TIMOE Ricevuti'
+                                when 'Dati TIMOE ricevuti'
                                 {
                                     String description = '';
                                     if(mapRequestFields.get('STATO_SOSP') != null && mapRequestFields.get('STATO_SOSP') != '')
@@ -563,6 +569,14 @@ public with sharing class HDT_SRV_SalesHandler {
                                             }
                                             if(ordRetrieved.ProcessType__c.containsIgnoreCase('Subentro') || (ordRetrieved.ProcessType__c.containsIgnoreCase('Voltura') && !ordRetrieved.PhaseStory__c.containsIgnoreCase('Voltura Rifiutata'))){
                                                 mapRequestFields.put('NuovoAccount',ordRetrieved.AccountId);
+                                            }
+                                            if(ordRetrieved.SupplyType__c != null)
+                                            {
+                                                mapRequestFields.put('supplyType',ordRetrieved.SupplyType__c);
+                                            }
+                                            if(ordRetrieved.ImplantType__c != null)
+                                            {
+                                                mapRequestFields.put('implantType', ordRetrieved.ImplantType__c);
                                             }
 
                                             HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();

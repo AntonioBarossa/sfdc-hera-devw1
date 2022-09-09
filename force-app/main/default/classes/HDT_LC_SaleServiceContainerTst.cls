@@ -10,6 +10,9 @@ public with sharing class HDT_LC_SaleServiceContainerTst{
 	@testSetup
 	static void setup(){
 
+		HDT_UTL_DataFactoryTst.pClickOrderPhase();
+		HDT_UTL_DataFactoryTst.pClickInstance();
+
 		Id rtServPoint=constants.SERVICEPOINT_RECORDTYPEID_PELETRICCO;
 
 		City__c city=HDT_UTL_DataFactoryTst.createCity()[0];
@@ -121,5 +124,15 @@ public with sharing class HDT_LC_SaleServiceContainerTst{
 		System.assertEquals('testUpdate', tSale2.Name, 'Sale not Updated');
 		System.assertNotEquals('testSaleName0', tSale2.Name, 'updateSale did not work correctly');
 		Test.stopTest();
+	}
+
+	@isTest
+	static void siebelLoadingActivityTst()
+	{
+		List<Order> orderList = [SELECT Id, AccountId FROM Order];
+		Test.startTest();
+			String result = HDT_LC_SaleServiceContainer.siebelLoadingActivity(orderList[0].Id, orderList[0].AccountId, 'Order');
+		Test.stopTest();
+		System.assertEquals(true, String.isNotBlank(result), 'Activity Non Creata');
 	}
 }

@@ -123,6 +123,12 @@ public class HDT_UTL_SalesTst {
         phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da inviare to Documentazione da firmare',
             'Documentazione da firmare',null,null,null,false, 'Documentazione da inviare', null,null,
             utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
+        phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da inviare to Documentazione da firmare',
+            'Registrazione validata',null,null,null,false, 'Documentazione da inviare', null,null,
+            utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
+        phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da inviare to Documentazione da firmare',
+            'Registrazione da validare',null,null,null,false, 'Registrazione validata', null,null,
+            utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
 
         insert phaseTransitions;
 
@@ -305,30 +311,23 @@ public class HDT_UTL_SalesTst {
     @IsTest
     static void validationActivityPhaseTransitionTelefono(){
 
-        List<String> ordIds = new List<String>();
-        List<Sale__c> sales = new List<Sale__c>();
+        List<Order> orders = [SELECT Id, Sale__c FROM Order WHERE ParentOrder__c = NULL AND Phase__c = 'Documentazione da inviare'];
+        Sale__c sale = new Sale__c();
+        sale.Id = orders[0].Sale__c;
+        sale.Channel__c = 'Telefono';
 
-        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name LIMIT 1]) {
-            ordIds.add(ord.Id);
-            sales.add(new Sale__c(Id = ord.Sale__c, Channel__c = 'Telefono'));
-        }
-
-        update sales;
+        update sale;
         
-        List<Order> orders = (new HDT_QR_Order()).getRecordsByIds(ordIds);
+        List<Order> orderList = (new HDT_QR_Order()).getRecordsByIds(new List<String>{orders[0].Id});
 
-        for (order ord : orders) {
+        for (order ord : orderList) {
             ord.SignatureMethod__c = 'Vocal Order';
         }
         
         Test.startTest();
-
-            System.assertEquals(false, HDT_UTL_Sales.validationActivityPhaseTransition(orders).isEmpty(), 'List of Orders is empty');
-            
-            orders.get(0).Phase__c = 'Documentazione da inviare';
-            System.assertEquals(true, HDT_UTL_Sales.validationActivityPhaseTransition(orders.get(0)) != null, 'The Order was not updated');
-
+            Order orderResult = HDT_UTL_Sales.validationActivityPhaseTransition(orderList[0]);
         Test.stopTest();
+        System.assertEquals('Registrazione Validata', orderResult.Phase__c, 'Fase non aggiornata correttamente');
         
     }
 

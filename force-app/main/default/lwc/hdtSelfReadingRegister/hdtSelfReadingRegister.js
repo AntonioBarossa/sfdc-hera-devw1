@@ -42,6 +42,18 @@ export default class HdtSelfReadingRegister extends LightningElement {
         {id: 9, name: "readingDigitNumber", label:"Cifre Lettura", type: "text", value: null, disabled:true, visible:false}
     ];
 
+    registerObjAcqua = [
+        {id: 1, name: "readingDate", label:"Data Ultima Lettura ", type: "date", value: null, disabled:true, visible:true},
+        {id: 2, name: "readingOldValue", label:"Ultima Lettura ", type: "number", value: null, disabled:true, visible:true},
+        {id: 3, name: "readingValue", label:"Nuova Lettura ", type: "number", value: null, disabled:false, visible:true},
+        {id: 4, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:true},
+        {id: 5, name: "readingType", label:"Tipo ", type: "text", value: null, disabled:true, visible:false},
+        {id: 6, name: "readingBand", label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
+        {id: 7, name: "readingRegister", label:"Registro", type: "text", value: null, disabled:true, visible:false},
+        {id: 8, name: "readingUnit", label:"Unita di Misura", type: "text", value: null, disabled:true, visible:false},
+        {id: 9, name: "readingDigitNumber", label:"Cifre Lettura", type: "text", value: null, disabled:true, visible:false}
+    ];
+
     @track registerObj = [];
 
     @track registerRet = [];
@@ -51,10 +63,12 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
     connectedCallback(){
 
-        this.registerObj = this.commodity === 'Energia Elettrica' ? this.registerObjEle : this.registerObjGas;
+        this.registerObj = this.commodity === 'Energia Elettrica' ? this.registerObjEle : this.commodity === 'Gas' ? this.registerObjGas : this.registerObjAcqua;
 
-        console.log(this.rowObj.number);
-
+        console.log('Register ' + this.rowObj.number);
+        console.log('Register this.commodity' + this.commodity);
+        console.log('Register length' + this.registerObj.length);
+        
         if(this.commodity === 'Energia Elettrica'){
 
             for(let i=0; i<Object.keys(this.registerObj).length; ++i){
@@ -67,17 +81,15 @@ export default class HdtSelfReadingRegister extends LightningElement {
                 }
 
             }
-        } else if(this.commodity === 'Gas'){
+        } else if(this.commodity === 'Gas' || this.commodity === 'Acqua'){
 
             for(let i=0; i<Object.keys(this.registerObj).length; ++i){
-
                 if(this.registerObj[i].name === 'readingDate'
                 || this.registerObj[i].name === 'readingSerialNumber'
                 || this.registerObj[i].name === 'readingOldValue'
                 || this.registerObj[i].name === 'readingValue'){
 
                     this.registerObj[i].label += this.rowObj.number;
-
                 }
 
             }
@@ -142,14 +154,18 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         console.log('Gestione lettura: ' + JSON.stringify(readingObj));
         console.log('rowObj: ' + JSON.stringify(this.rowObj));
+        console.log('Object length >>> ' + readingObj.length);
 
         if (this.commodity === 'Energia Elettrica') {
             this.isVisible = (this.rowObj.id <= readingObj.length);
             var indexSerialNumberEle = this.registerObj.findIndex(p => p.name === 'readingSerialNumber');
             this.registerObj[indexSerialNumberEle].disabled = !this.isProcessReading;
         } else if (this.commodity === 'Gas') {
-            this.isVisible = (this.rowObj.id === 'Meter' || (this.rowObj.id === 'Corrector' && readingObj.length === 2));
+            this.isVisible = (this.rowObj.id === 'Meter' || (this.rowObj.id === 'Corrector' && readingObj.length >= 2));
+        }else if(this.commodity === 'Acqua'){
+            this.isVisible = true;
         }
+        console.log('IsVisible >>> ' + this.isVisible);
 
         
         // Per l'autolettura da processo la matricola deve poter essere inseribile da operatore.
@@ -225,7 +241,8 @@ export default class HdtSelfReadingRegister extends LightningElement {
     handleSave(readingCustomerDate){
 
         try {
-            if (!this.isProcessReading) {
+            if (!this.isProcessReading){
+                console.log('#RegisterObj >>> ' + JSON.stringify(this.registerObj));
                 this.registerObj.forEach(element => {
                     if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
                         this.advanceError = 'Impossibile procedere: Nuova Lettura deve essere valorizzata.';

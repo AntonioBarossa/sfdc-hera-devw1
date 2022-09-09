@@ -20,7 +20,9 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         scope.addAll(postsalesQr.getPostSalesBozzaCase());
         scope.addAll(postsalesQr.getCaseVolturaTecnica());
         scope.addAll(postsalesQr.getExpiredArticle());
-
+        scope.addAll(postsalesQr.getPostAccertamentoCase());
+        scope.addAll(postsalesQr.getSegnalazioniBozzaCase());
+        scope.addAll(postsalesQr.getRifiutiBozzaCase());
 
         return scope;
 
@@ -35,25 +37,9 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
     @SuppressWarnings('PMD.AvoidDebugStatements')
     public void execute(Database.BatchableContext bc, List<SObject> scope){
 
-        Sobject mySobj2;
-        Sobject mySobj3;
-
-        try{
-            //Get Data for source Custom Setting
-            String whereConditionFieldValue1 = 'Autolettura';
-            String queryString1 = 'SELECT id, Type__c, NumberOfDays__c FROM CS_DaysToExpiration__c where Type__c = \'' + String.escapeSingleQuotes(whereConditionFieldValue1) + '\'';
-            mySobj2 = database.query(queryString1);
-
-            String whereConditionFieldValue2 = 'PostSales';
-            String queryString2 = 'SELECT id, Type__c, NumberOfDays__c FROM CS_DaysToExpiration__c where Type__c = \'' + String.escapeSingleQuotes(whereConditionFieldValue2) + '\'';
-            mySobj3 = database.query(queryString2);
-
-        }catch(Exception e){
-            System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
-        }
-
         List<Case> myCurrentCaseList = new List<Case>();
-        List<HDT_PEV_NonReqContract__e> eventsToPublish = new List<HDT_PEV_NonReqContract__e>();
+        //List<HDT_PEV_NonReqContract__e> eventsToPublish = new List<HDT_PEV_NonReqContract__e>();
+        List<Case> casesToCheck = new List<Case>();
 
         for(SObject sobj : scope){
 
@@ -63,10 +49,11 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                     when Case currentCase{
                         
                         //ANNULLAMENTO CASE BOZZA AUTOLETTURA OLTRE SCADENZA
-                        if(currentCase.Phase__c.equalsIgnoreCase('Bozza') && mySobj2 != null && mySobj3 != null){
-
-                            if(currentCase.Cluster__c.equalsIgnoreCase('Autolettura')){
-                                //Get data from Days to Expiration Custom Setting
+                        if(currentCase.Phase__c.equalsIgnoreCase('Bozza')){
+                            currentCase.Phase__c = 'Bozza Annullata';
+                            myCurrentCaseList.add(currentCase);
+                            /*if(currentCase.Cluster__c.equalsIgnoreCase('Autolettura')){
+                              //Get data from Days to Expiration Custom Setting
                                 CS_DaysToExpiration__c myCS1 = (CS_DaysToExpiration__c)mySobj2;
                                 Integer strNumberOfDays = integer.valueof(myCS1.NumberOfDays__c);
 
@@ -75,6 +62,10 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                     myCurrentCaseList.add(currentCase);
                                     continue;
                                 }
+                            } else if(currentCase.Type == 'Segnalazioni Ambientali' || currentCase.Type == 'Gestione Rifiuti'){
+                                currentCase.Phase__c = 'Bozza Annullata';
+                                myCurrentCaseList.add(currentCase);
+                                continue;
                             } else {
                                 //Get data from Days to Expiration Custom Setting
                                 CS_DaysToExpiration__c myCS2 = (CS_DaysToExpiration__c)mySobj3;
@@ -85,37 +76,26 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                     myCurrentCaseList.add(currentCase);
                                     continue;
                                 }
-                            }
+                            }*/
                         }
-                        
-                        if( currentCase.Type.equalsIgnoreCase('Piano Rateizzazione') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
 
-                                currentCase.Phase__c = 'Da Inviare';
-                                HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
-                                event.SerializedCase__c = JSON.serialize(currentCase);
-                                eventsToPublish.add(event);
+                        if(currentCase.Type.equalsIgnoreCase('Gestione Rifiuti') && currentCase.Phase__c.equalsIgnoreCase('Inviata a SAP') ){
+                            currentCase.Phase__c = 'Completata';
+                            myCurrentCaseList.add(currentCase);
+                        }else if( currentCase.Type.equalsIgnoreCase('Piano Rateizzazione') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
+
+                            currentCase.Phase__c = 'Da Inviare';
+                            myCurrentCaseList.add(currentCase);
 
                         }else if( currentCase.Type.equalsIgnoreCase('Blocco Sollecito/Interessi') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
 
-                                currentCase.Phase__c = 'In Lavorazione';
-                                HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
-                                event.SerializedCase__c = JSON.serialize(currentCase);
-                                eventsToPublish.add(event);
+                            currentCase.Phase__c = 'In Lavorazione';
+                            myCurrentCaseList.add(currentCase);
 
                         }else if( (currentCase.Cluster__c.equalsIgnoreCase('Preventivi') || currentCase.Cluster__c.equalsIgnoreCase('Verifiche')) && currentCase.Phase__c.equalsIgnoreCase('Attesa conferma preventivo cliente') ){
 
                             currentCase.Phase__c = 'Preventivo scaduto';
-                            HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
-                            event.SerializedCase__c = JSON.serialize(currentCase);
-                            Database.SaveResult sr = EventBus.publish(event);
-                            if (sr.isSuccess()) {
-                                System.debug(LoggingLevel.DEBUG, 'Successfully published event.');
-                                continue;
-                            } else {
-                                for (Database.Error err : sr.getErrors()) {
-                                    System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
-                                }
-                            }
+                            myCurrentCaseList.add(currentCase);
 
                         }else if(currentCase.Type.equalsIgnoreCase('Contratto Non Richiesto') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
                             HDT_QR_PostSalesMasterBatch postsalesQr = new HDT_QR_PostSalesMasterBatch();
@@ -123,36 +103,23 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                             if(relatedOrder!= null){
                                 if(relatedOrder.EffectiveDate__c < System.today()){
                                     currentCase.Phase__c = 'Da Inviare';
-                                    //Fire del platform event per inviare il flusso ad Heroku
-                                    HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
-                                    event.SerializedCase__c = JSON.serialize(currentCase);
-                                    Database.SaveResult sr = EventBus.publish(event);
-                                    if (sr.isSuccess()) {
-                                        System.debug(LoggingLevel.DEBUG, 'Successfully published event.');
-                                        continue;
-                                    } else {
-                                        for (Database.Error err : sr.getErrors()) {
-                                            System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
-                                        }
-                                    }
+                                    myCurrentCaseList.add(currentCase);
                                 }
                             }
                         }else if( currentCase.Type.equalsIgnoreCase('Voltura Tecnica') && currentCase.Phase__c.equalsIgnoreCase('In attesa Data Decorrenza') ){
                             currentCase.EffectiveDate__c = HDT_UTL_Case.addBusinessDay(System.today(),3);
                             currentCase.Phase__c = 'Da Inviare';
-                            
-                            HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
-                            event.SerializedCase__c = JSON.serialize(currentCase);
-                            Database.SaveResult sr = EventBus.publish(event);
-                            if (sr.isSuccess()) {
-                                System.debug(LoggingLevel.DEBUG, 'Successfully published event.');
-                                continue;
-                            } else {
-                                for (Database.Error err : sr.getErrors()) {
-                                    System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
-                                }
-                            }
-                        }               
+                            myCurrentCaseList.add(currentCase); 
+                        //START MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
+                        }else if('In Lavorazione'.equalsIgnoreCase(currentCase.Phase__c) && ('Cessazione post accertamento'.equalsIgnoreCase(currentCase.Type) || 'Modifica post accertamento'.equalsIgnoreCase(currentCase.Type))){
+                            casesToCheck.add(currentCase);
+                            system.debug('@@@@ currcase Type: '+currentCase.Type);
+                            //system.debug('@@@@ currcase AccountId: '+currentCase.AccountId);
+                            system.debug('@@@@ currcase AccountId: '+currentCase.Id);
+                            system.debug('@@@@ currcase AccountId: '+currentCase.Phase__c);
+
+                        }     
+                        //END MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto              
                     }
                     when Knowledge__kav article{
                         if(article.ExpirationDate__c != null){
@@ -167,23 +134,30 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                 continue;
             }
         }
-        if(!eventsToPublish.isEmpty()){
-            //EventBus.publish(eventsToPublish);
-            List<Database.SaveResult> srList = EventBus.publish(eventsToPublish);
-            for (Database.SaveResult sr : srList ) {
-                if (sr.isSuccess()) {
-                    System.debug(LoggingLevel.DEBUG, 'Successfully published events.');
-                } else {
-                    for (Database.Error err : sr.getErrors()) {
-                        System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
-                    }
-                }
-            }
-        }        
+        // if(!eventsToPublish.isEmpty()){
+        //     //EventBus.publish(eventsToPublish);
+        //     List<Database.SaveResult> srList = EventBus.publish(eventsToPublish);
+        //     for (Database.SaveResult sr : srList ) {
+        //         if (sr.isSuccess()) {
+        //             System.debug(LoggingLevel.DEBUG, 'Successfully published events.');
+        //         } else {
+        //             for (Database.Error err : sr.getErrors()) {
+        //                 System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+        //             }
+        //         }
+        //     }
+        // }        
         if(!myCurrentCaseList.isEmpty()){
             updateObjectList(myCurrentCaseList);
             //HDT_UTL_DatabaseService.updateSObject(myCurrentCaseList);
         }
+        //START MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
+        if(!casesToCheck.isEmpty()){
+            system.debug('@@@: Start Logica Post Accertamento');
+            HDT_UTL_CaseProcess.createActivityFromContract(casesToCheck);
+        }
+        //END MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
+          
     }
 
     public void updateObjectList(List<SObject> caseToUpdate){
@@ -197,7 +171,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                         System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
                     }
                 }
-            }
+            }        
         }
     }
 

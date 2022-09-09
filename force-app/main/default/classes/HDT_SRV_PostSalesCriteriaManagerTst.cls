@@ -82,6 +82,39 @@ public class HDT_SRV_PostSalesCriteriaManagerTst {
         
     }
 
+    @isTest
+    static void isRapidoToAnaliticoTest()
+    {
+        HDT_SRV_PostSalesCriteriaManager psc = new HDT_SRV_PostSalesCriteriaManager();
+        List<Order> orderList = [Select Id FROM Order];
+        Test.startTest();
+            Boolean result = psc.evaluate(setArgs('isRapidoToAnalitico', orderList[0]));
+        Test.stopTest();
+        System.assertEquals(false, result, 'IsRapidoToAnalitico fallito');
+    }
+    @isTest
+    static void totalResidueNotNullTest()
+    {
+        HDT_SRV_PostSalesCriteriaManager psc = new HDT_SRV_PostSalesCriteriaManager();
+        List<Case> caseList = [SELECT Id, TotalResidue__c FROM Case];
+        Test.startTest();
+            Boolean result = psc.evaluate(setArgs('totalResidueNotNull', caseList[0]));
+        Test.stopTest();
+        System.assertEquals(false, result, 'totalResidueNotNull fallito');
+    }
+    @isTest
+    static void totalResidueNullTest()
+    {
+        HDT_SRV_PostSalesCriteriaManager psc = new HDT_SRV_PostSalesCriteriaManager();
+        List<Case> caseList = [SELECT Id, TotalResidue__c FROM Case];
+        Test.startTest();
+            Boolean result = psc.evaluate(setArgs('totalResidueNull', caseList[0]));
+        Test.stopTest();
+        System.assertEquals(true, result, 'totalResidueNull fallito');
+    }
+
+
+
     public static Map<String, Object> setArgs (String method, SObject record) {
         
         SObject transition;
@@ -94,5 +127,15 @@ public class HDT_SRV_PostSalesCriteriaManagerTst {
         args.put('record', record);
 
         return args;
+    }
+    @isTest
+    static void areActivityOpenTest()
+    {
+        HDT_SRV_PostSalesCriteriaManager psc = new HDT_SRV_PostSalesCriteriaManager();
+        List<Order> orderList = [Select Id FROM Order];
+        Test.startTest();
+            Boolean result = psc.evaluate(setArgs('areActivityOpen', orderList[0]));
+        Test.stopTest();
+        System.assertEquals(true, result, 'areActivityOpen riuscito');
     } 
 }

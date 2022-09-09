@@ -9,6 +9,7 @@ export default class hdtSaleServiceContainer extends LightningElement {
     @api saleRecord;
     @api processType;
     @api accountId;
+    @api customercode;
     @api targetObject;
     @api addititionalParam;
     @track servicePoint;
@@ -80,7 +81,7 @@ export default class hdtSaleServiceContainer extends LightningElement {
 
             this.refreshTileData();
             this.dispatchEvent(new CustomEvent('newtile'));
-            if(data.isTransition){
+            if(data.isTransition && data.message === false){
                 const toastWarning = new ShowToastEvent({
                     title: 'Warning',
                     message: 'E stato creato un caso transitorio!',
@@ -88,7 +89,17 @@ export default class hdtSaleServiceContainer extends LightningElement {
                 });
                 this.dispatchEvent(toastWarning);
     
-            }else{
+            }
+            else if(data.isTransition && data.message === true)
+            {
+                const toastWarning = new ShowToastEvent({
+                    title: 'Warning',
+                    message: 'E stato creato un caso transitorio! Verrà creata un\'activity di tracciamento per il caricamento della vendita in Siebel',
+                    variant: 'warning'
+                });
+                this.dispatchEvent(toastWarning);
+            }
+            else{
                 const toastSuccessMessage = new ShowToastEvent({
                     title: 'Successo',
                     message: 'Service Point confermato con successo',
@@ -166,7 +177,18 @@ export default class hdtSaleServiceContainer extends LightningElement {
                 });
                 this.dispatchEvent(toastErrorMessage);
                 this.updateSaleRecord({Id: this.saleRecord.Id, CurrentStep__c: this.nextStep});  
-            }else{
+            }
+            else if(data === 'MmsMisto')
+            {
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Per clienti con Marcatura MMS non è possibile eseguire vendite miste Energy/Non Energy',
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            }
+            else{
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
                     message: 'Transitorio: Processo non Innescabile da Salesforce Per i Seguenti Punti Di Fornitura:' + data,

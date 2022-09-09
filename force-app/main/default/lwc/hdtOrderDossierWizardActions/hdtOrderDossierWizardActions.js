@@ -15,10 +15,12 @@ import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendD
 import { getRecord } from 'lightning/uiRecordApi';
 import SIGN_FIELD from '@salesforce/schema/Order.SignatureMethod__c';
 import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';import getPicklistValue from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.getActivePicklistValue';
-
+import RequestSource from '@salesforce/schema/Order.RequestSource__c';
+import WasteCommodityType from '@salesforce/schema/Order.WasteCommodityType__c';
 import SIGNED_FIELD from '@salesforce/schema/Order.ContractSigned__c';
 //Il seguente campo è stato utilizzato per tracciare l'ultimo SignatureMethod inviato a docusign.
 import OLDSIGN_FIELD from '@salesforce/schema/Order.SignMode__c';
+import CHANNEL_FIELD from '@salesforce/schema/Order.Channel__c';
 import isOnlyAmend from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.isOnlyAmend';
 // TOOLBAR STUFF
 import { loadScript } from 'lightning/platformResourceLoader';
@@ -32,6 +34,9 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     isPreviewForbidden = false;
     currentStep = 2;
     loading = false;
+    channel = '';
+    provenienza = '';
+    commodityType='';
     signatureMethod = '';
     isSaveButtonDisabled = false;
     isCancelButtonDisabled = false;
@@ -46,7 +51,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     isCommunity=false;
 
     get disablePrintButtonFunction() {
-        return this.isPrintButtonDisabled  || (this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare'));
+        return this.isPrintButtonDisabled  || (this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare' && (this.channel !== null && this.channel == 'Teleselling Outbound')));
     }
 
     get disablePreviewButton(){
@@ -56,7 +61,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     @wire(getPicklistValue,{objectApiName: 'Order', fieldApiName: 'SignMode__c'})
     activeValue;
 
-    @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD,OLDSIGN_FIELD] })
+    @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD,OLDSIGN_FIELD, CHANNEL_FIELD,RequestSource,WasteCommodityType] })
     wiredParentOrder({ error, data }) {
         if (error) {
             let message = 'Unknown error';
@@ -76,10 +81,17 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             this.parentOrder = data;
             //var signed = this.parentOrder.fields.ContractSigned__c.value;
             this.signatureMethod = data.fields.SignatureMethod__c.value;
+            this.channel = data.fields.Channel__c.value;
+            this.commodityType = data.fields.WasteCommodityType__c.value 
+            this.provenienza = data.fields.RequestSource__c.value;
             // 28/12/2021: commentata logica che disabilita il component documentale, poichè deve sempre essere visibile nel wizard.
             //this.enableDocumental = !signed;
             console.log('### Signature method >>> ' + this.signatureMethod)
-            this.enableDocumental = this.signatureMethod !== 'Contratto già firmato'
+            console.log('### ParentOrder Channel >>> ' + this.channel);
+            this.enableDocumental = this.signatureMethod !== 'Contratto già firmato';
+            if(this.commodityType && this.provenienza && this.commodityType === 'Ambiente' && this.provenienza != 'Da contribuente'){
+                this.enableDocumental = false;
+            }
         }
     }
 
@@ -268,7 +280,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                         this.loading = false;
                         this.showMessage('Attenzione','Errore nella composizione del plico','error');
                     }
-                    if(this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare')){
+                    if(this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare' && (this.channel !== null && this.channel == 'Telefono Outbound'))){
                         const toastSuccessMessage = new ShowToastEvent({
                             title: 'Successo',
                             message: 'Ordine sottomesso, in attesa validazione',
@@ -283,14 +295,15 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                     console.log('ERROR 1');
                     this.loading = false;
                     const toastSuccessMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Errore nella procedura di creazione dell\'activity.',
-                        variant: 'error',
-                        mode: 'sticky'
+                        title: 'Attenzione!',
+                        message: 'La dimesione del plico è superiore al limite consentito per la preview. Procedere con l\'invio dei documenti al cliente',
+                        variant: 'warning',
+                        mode: 'pester'
                     });
                     this.dispatchEvent(toastSuccessMessage);
                     console.error(error);
-                    this.isPreviewForbidden = false;
+                    this.previewExecuted = true;
+                    this.isPrintButtonDisabled = false;
                 });
             }).catch(error => {
                 console.log('ERROR 2');
@@ -485,9 +498,15 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         }).catch(error => {
             this.loading = false;
             console.log((error.body.message !== undefined) ? error.body.message : error.message);
+            let errorMessage;
+            try{
+                errorMessage = error.body.pageErrors[0].message;
+            }catch (e){
+                errorMessage = (error.body.message !== undefined) ? error.body.message : error.message;
+            }
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                message: errorMessage,
                 variant: 'error',
                 mode: 'sticky'
             });
@@ -501,7 +520,6 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
 
     handleDialogResponse(event){
         if(event.detail.status == true){
-
             this.callCancel(event.detail.choice);
 
         } else {

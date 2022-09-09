@@ -171,9 +171,12 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     HDT_UTL_DatabaseService.insertSObject(act);
                     outputRecordId = act.Id;
                 }
-                when 'selfReading'{
+                when 'selfReading','discardSelfReading'{
                     Map <String, Object> mapParam=new Map<String,object>();
                     case c=new case(Id=inputParam[0].objectId);
+                    if ('discardSelfReading'.equalsIgnoreCase(inputParam[0].methodName)){
+                        System.enqueueJob(new HDT_QBL_SelfReadingsCallouts(c,'InvioLettureForzato',true));
+                    }
                     Map <String,String> reqType=new Map <String, String>();
                     reqType.put('requestType', 'InvioLettureForzato');
                     mapParam.put('sender', c);
@@ -488,11 +491,12 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
             if(Schema.Order.SObjectType == recordId.getSobjectType()){
                 //Gestione Scarti SAP il processField per l'order è sempre il type ed il controlField è sempre il DiscardReason
-                List<Order> parentOrder = [SELECT Id,ProcessType__c,DiscardReason__c, ServicePoint__r.CommoditySector__c FROM Order WHERE Id =:recordId WITH SECURITY_ENFORCED];
+                List<Order> parentOrder = [SELECT Id,ProcessType__c,DiscardReason__c,Subprocess__c, ServicePoint__r.CommoditySector__c FROM Order WHERE Id =:recordId WITH SECURITY_ENFORCED];
                 if(!parentOrder.isEmpty()){
-                    processField = parentOrder.get(0).ProcessType__c;
-                    ctrField = String.isNotBlank(discardMessage) ? discardMessage : parentOrder.get(0).DiscardReason__c;
-                    commodity = (parentOrder.get(0).ServicePoint__r == null) ? '' : parentOrder.get(0).ServicePoint__r.CommoditySector__c;
+                    Order ord = parentOrder.get(0);
+                    processField = ('Voltura'.equalsIgnoreCase(ord.ProcessType__c) && 'Con Autolettura'.equalsIgnoreCase(ord.Subprocess__c)) ? 'Voltura con Autolettura' : ord.ProcessType__c;
+                    ctrField = String.isNotBlank(discardMessage) ? discardMessage : ord.DiscardReason__c;
+                    commodity = (ord.ServicePoint__r == null) ? '' : ord.ServicePoint__r.CommoditySector__c;
                 }
             }
             if (String.isNotEmpty(processField) && String.isNotEmpty(ctrField)){
@@ -997,7 +1001,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                             ClosedByUsername__c=u[0].Username,
                                             ClosingCreatorGroup__c = u[0].CreatorGroup__c,
                                             ClosingUserChannel__c = u[0].LoginChannel__c,
-                                            Place__c = u[0].Station__c,
+                                            //@ealpi valorizzato in apertura activity --> Place__c = u[0].Station__c,
                                             ActivityEndTime__c = DateTime.now());
     }
 
@@ -1219,5 +1223,24 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 HDT_UTL_DatabaseService.updateSObject(activitiesToUpdate);
             }
         }
+    }
+
+    public static void createActivity(Id caseId, String activityType, String errorMessage) {
+        if ('Esito KO da SAP'.equalsIgnoreCase(activityType) || 'Esito KO pre-MDM'.equalsIgnoreCase(activityType)){
+            String objectName = 'wrts_prcgvr__ActivityTemplate__c';
+            String templateName = activityType.equalsIgnoreCase('Esito KO pre-MDM') ? 'CBS_AUT004__ESITO_KO_PRE-MDM' : 'CBS_AUT002__ESITO_KO_DA_SAP';
+            String queryStringTemplate = 'Select Id from wrts_prcgvr__ActivityTemplate__c  where Name = \''+templateName+'\'';
+            Id actRecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
+            wrts_prcgvr__ActivityTemplate__c templateActivity = (wrts_prcgvr__ActivityTemplate__c)(HDT_QR_GenericQuery.getGenericRecords(queryStringTemplate, objectName).get(0));
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+            activity.wrts_prcgvr__ActivityTemplate__c = templateActivity.Id;
+            activity.Case__c = caseId;
+            activity.Type__c = activityType;
+            activity.DiscardCategory__c = 'Scarto complesso';
+            activity.RecordTypeId=actRecordTypeId;
+            activity.wrts_prcgvr__Description__c = errorMessage;
+            HDT_UTL_DatabaseService.insertSObject(activity);
+        }
+        
     }
 }

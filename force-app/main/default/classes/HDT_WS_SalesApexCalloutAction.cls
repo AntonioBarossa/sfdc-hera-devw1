@@ -7,44 +7,60 @@
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
+    private static Set<String> methods = new Set<String>{
+        'TemporaneaNuovaAttivazioneCreaRich'.toLowerCase(),
+        'Annullamento'.toLowerCase(),
+        'Ripensamento'.toLowerCase(),
+        'SwitchInEECreaRich'.toLowerCase(),
+        'SwitchInGasCreaRich'.toLowerCase(),
+        'AggScontiBonusEECreaRich'.toLowerCase(),
+        'AggScontiBonusGGCreaRich'.toLowerCase(),
+        'SubentroEECreaRich'.toLowerCase(),
+        'AttivazioneEECreaRich'.toLowerCase(),
+        'PrecheckEECreaRich'.toLowerCase(),
+        'SubentroGasCreaRich'.toLowerCase(),
+        'AttivazioneInDeliberaCreaRich'.toLowerCase(),
+        'AttivazioneFuoriDeliberaCreaRich'.toLowerCase(),
+        'PrecheckGasCreaRich'.toLowerCase(),
+        'AttivazioneConModCreaRich'.toLowerCase(),
+        'PreventivoAccettatoSales'.toLowerCase(),
+        'PreventivoRifiutatoSales'.toLowerCase(),
+        'CambioOffertaGasCreaRich'.toLowerCase(),
+        'CambioOffertaEleCreaRich'.toLowerCase(),
+        'CambioUsoCreaRich'.toLowerCase(),
+        'ConnessioneConAttCreaRich'.toLowerCase(),
+        'TempNuovaAttivazionCereaRich'.toLowerCase(),
+        'SConVEECreaRich'.toLowerCase(),
+        'SConVGasCreaRich'.toLowerCase(),
+        'EsecuzioneLavori'.toLowerCase(),
+        'ConfPrev'.toLowerCase(),
+        'SWRipristinatorioEle'.toLowerCase(),
+        'SWRipristinatorioGas'.toLowerCase(),
+        'Voltura'.toLowerCase(),
+        'SubentroAmbiente'.toLowerCase(),
+        'SubentroAmbienteModifica'.toLowerCase(),
+        'AttivazAmbiente'.toLowerCase(),
+        'CambioTariffaAmbiente'.toLowerCase(),
+        'AgevolazioneContestuale'.toLowerCase()
+    };
+
     @Testvisible
     private static HDT_WS_SalesApexCalloutActionMock mock;
 
     global Object execute(Object args) {
 
         Map<String,Object> argsMap = (Map<String,Object>) args;
-        SObject transition = (SObject) argsMap.get('transition');
-        String idTemplate = (String)transition.get('wrts_prcgvr__CalloutTemplate__c');
-        wrts_prcgvr__CalloutTemplate__c tm = [select id, wrts_prcgvr__Code__c, wrts_prcgvr__ConfigurationFile__c, wrts_prcgvr__IncludeNullFields__c,wrts_prcgvr__ObjectType__c, wrts_prcgvr__Structure__c from wrts_prcgvr__CalloutTemplate__c where wrts_prcgvr__Code__c = :idTemplate][0];
         SObject action = (SObject) argsMap.get('action');
-        String method = (String) argsMap.get('method');
         SObject obj = (sObject) argsMap.get('sender');
-        wrts_prcgvr.MRR_1_0.field headerAddValue = new  wrts_prcgvr.MRR_1_0.field();
-        headerAddValue.fieldType = 'STRING';
-        headerAddValue.name = 'PROCESS_CATEGORY';
-        headerAddValue.value = 'sales';
-        list<wrts_prcgvr.MRR_1_0.field> headerAttributetoAdd = new list<wrts_prcgvr.MRR_1_0.field>{headerAddValue};
-        Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
-        
-        if('TemporaneaNuovaAttivazioneCreaRich'.equalsIgnoreCase(method) || 'Annullamento'.equalsIgnoreCase(method) || 'Ripensamento'.equalsIgnoreCase(method) || 'SwitchInEECreaRich'.equalsIgnoreCase(method) || 'SwitchInGasCreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusEECreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusGGCreaRich'.equalsIgnoreCase(method) || 'SubentroEECreaRich'.equalsIgnoreCase(method) || 'AttivazioneEECreaRich'.equalsIgnoreCase(method) || 'PrecheckEECreaRich'.equalsIgnoreCase(method) || 'SubentroGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneInDeliberaCreaRich'.equalsIgnoreCase(method) || 'AttivazioneFuoriDeliberaCreaRich'.equalsIgnoreCase(method) || 'PrecheckGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneConModCreaRich'.equalsIgnoreCase(method) || 'PreventivoAccettatoSales'.equalsIgnoreCase(method) || 'PreventivoRifiutatoSales'.equalsIgnoreCase(method) || 'CambioOffertaGasCreaRich'.equalsIgnoreCase(method) || 'CambioOffertaEleCreaRich'.equalsIgnoreCase(method) || 'CambioUsoCreaRich'.equalsIgnoreCase(method) || 'ConnessioneConAttCreaRich'.equalsIgnoreCase(method) || 'TempNuovaAttivazionCereaRich'.equalsIgnoreCase(method) || 'SConVEECreaRich'.equalsIgnoreCase(method) || 'SConVGasCreaRich'.equalsIgnoreCase(method) || 'EsecuzioneLavori'.equalsIgnoreCase(method) || 'ConfPrev'.equalsIgnoreCase(method) || 'SWRipristinatorioEle'.equalsIgnoreCase(method) || 'SWRipristinatorioGas'.equalsIgnoreCase(method) || 'Voltura'.equalsIgnoreCase(method)) {
-            
-            wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration endpointUtils = ( wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration)  wrts_prcgvr.VersionManager.newClassInstance('EndpointRulesIntegration');
-            String endpoint = endpointUtils.getEndpoint(obj);
-        
-            Map<String,Object> inputTemplateFunction = new Map<String,Object>();
-            inputTemplateFunction.put('sender',obj);
-            inputTemplateFunction.put('template',tm);
-            inputTemplateFunction.put('parameters',parameters);
-        
-            wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng templateEngine = (wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng) wrts_prcgvr.VersionManager.newClassInstance('CalloutTemplateMng');
-            Object objTemp = templateEngine.getTemplate(inputTemplateFunction);
-            Map<String,Object> templateReturn = (Map<String,Object>)templateEngine.applyTemplate(objTemp);
-            wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = (wrts_prcgvr.MRR_1_0.MultiRequest)templateReturn.get('multirequest');
-            multirequestObj.requests[0].header.fields = headerAttributetoAdd;
+        String method = (String) argsMap.get('method');        
+        if(methods.contains(method.toLowerCase())) {
+            wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = getMrrObj(argsMap);
+            setHeader(multirequestObj);
             System.debug(multirequestObj.requests[0]);
             Integer count = 0;
             List<Integer> indexOfObjectToRemove = new List<Integer>();
             Map<Integer,Integer> indexOffieldToRemove = new Map<Integer,Integer>();
+            Map<String, HDT_CodificaAgevolazione__mdt> codificaAgevolazioni = 'AgevolazioneContestuale'.equalsIgnoreCase(method)? HDT_CodificaAgevolazione__mdt.getAll() : new Map<String, HDT_CodificaAgevolazione__mdt>();
             /**Rimozione OrderItems non necessaria per Analisi consumi */
             String vasType = (String)obj.get('VASType__c');
             if(String.isBlank(vasType) || !vasType.equalsIgnoreCase('VAS Fatturabili'))
@@ -64,6 +80,9 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                     indexOffieldToRemove.put(count,k);
                                 }
                             }
+                            if(f.name.equalsIgnoreCase('AGEVTARI_CODE') && STRING.isNotBlank(f.value) && STRING.isNotBlank(codificaAgevolazioni.get(f.value)?.HerokuTag__c)){
+                                f.name = codificaAgevolazioni.get(f.value)?.HerokuTag__c;
+                            }
                         }
                         if(!find){
                             indexOfObjectToRemove.add(count);
@@ -74,29 +93,16 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                 // for(integer i : indexOffieldToRemove.keyset()){
                 //     multirequestObj.requests[0].objects[i].fields.remove(indexOffieldToRemove.get(i));
                 // }
-                for (integer i = indexOfObjectToRemove.size() - 1 ; i >= 0 ; i--) {
-                    multirequestObj.requests[0].objects.remove(indexOfObjectToRemove[i]);
+                if(!'AgevolazioneContestuale'.equalsIgnoreCase(method)){//Agevolazione deve contenere tutti gli OrderItems
+                    for (integer i = indexOfObjectToRemove.size() - 1 ; i >= 0 ; i--) {
+                        multirequestObj.requests[0].objects.remove(indexOfObjectToRemove[i]);
+                    }
                 }
             }
-            Map<String,Object> inputClientFunction = new Map<String,Object>();
-            inputClientFunction.put('endpoint',endpoint);
-            inputClientFunction.put('timeout',60000);
-            inputClientFunction.put('payload',multirequestObj);
-            inputClientFunction.put('clientType','REST');
-            inputClientFunction.put('contentType','application/json');
-            wrts_prcgvr.Interfaces_1_0.ICalloutClient client = (wrts_prcgvr.Interfaces_1_0.ICalloutClient) wrts_prcgvr.VersionManager.newClassInstance ('CalloutClient');
         
             try{
                 map<String,String> fieldValueResponse = new map<String,String>();
-                wrts_prcgvr.MRR_1_0.MultiResponse responseService;
-                if (Test.isRunningTest()){
-                     wrts_prcgvr.MRR_1_0.MultiResponse responseServiceTemp = (wrts_prcgvr.MRR_1_0.MultiResponse)mock.respond(action);
-                     responseService = responseServiceTemp;
-                }
-                else{
-                     wrts_prcgvr.MRR_1_0.MultiResponse responseServiceTemp = (wrts_prcgvr.MRR_1_0.MultiResponse)client.send(inputClientFunction);
-                     responseService = responseServiceTemp;
-                }
+                wrts_prcgvr.MRR_1_0.MultiResponse responseService= makeCallout(multirequestObj, action, getEndpoint(obj));
                 
                 Order ord = new Order();
                 ord.id = (id)obj.get('Id');
@@ -192,9 +198,15 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
                                         }
                                         when 'Amm. Precheck KO SII' {
-                                            ord.PrecheckReasonSII__c = fieldValueResponse.get('DES_ERR_ES');
-                                            ord.CausalCode__c = fieldValueResponse.get('CODERR_ES');
+                                            ord.PrecheckReasonSII__c = String.isBlank(fieldValueResponse.get('DES_ERR_AEEG')) ? 
+                                                                                        fieldValueResponse.get('TESTO_ERRR') : 
+                                                                                        fieldValueResponse.get('DES_ERR_AEEG');
+                                            ord.CausalCode__c = String.isBlank(fieldValueResponse.get('CODERR_AEEG')) ? 
+                                                                                        fieldValueResponse.get('CODERR_ES') : 
+                                                                                        fieldValueResponse.get('CODERR_AEEG');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            ord.DiscardReason__c = (String.isNotBlank(ord.PrecheckReasonSII__c) && String.isNotBlank(ord.CausalCode__c))? ord.CausalCode__c+' - '+ord.PrecheckReasonSII__c 
+                                                : (String.isBlank(ord.CausalCode__c))? ord.PrecheckReasonSII__c : ord.CausalCode__c;
                                             if(fieldValueResponse.get('CODERR_ES') == '003' || fieldValueResponse.get('CODERR_ES') == '103'){
                                                 ord.IsTechnicalTransfer__c = true;
                                             }
@@ -260,7 +272,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                             ord.description = fieldValueResponse.get('errorMessage');
                             if(fieldValueResponse.get('errorMessage').contains('Venditore')){
                                 wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c();
-                                act.Type__c = 'Venditore Non Definito';
+                                act.Type__c = 'Caricamento Manuale Siebel';
+                                act.DiscardCategory__c = 'Manuale';
                                 act.RecordTypeId = Schema.getGlobalDescribe().get('wrts_prcgvr__Activity__c').getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
                                 act.Order__c = ord.Id;
                                 act.Account__c = ord.AccountId;
@@ -317,5 +330,58 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         response.success = true;
         response.message = 'OK';
         return response;
+    }
+
+    public wrts_prcgvr.MRR_1_0.MultiRequest getMrrObj(Map<String,Object> argsMap){
+
+        SObject transition = (SObject) argsMap.get('transition');
+        SObject obj = (sObject) argsMap.get('sender');
+        String idTemplate = (String)transition.get('wrts_prcgvr__CalloutTemplate__c');
+        wrts_prcgvr__CalloutTemplate__c tm = [select id, wrts_prcgvr__Code__c, wrts_prcgvr__ConfigurationFile__c, wrts_prcgvr__IncludeNullFields__c,wrts_prcgvr__ObjectType__c, wrts_prcgvr__Structure__c from wrts_prcgvr__CalloutTemplate__c where wrts_prcgvr__Code__c = :idTemplate][0];
+        Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
+
+        
+
+        Map<String,Object> inputTemplateFunction = new Map<String,Object>();
+        inputTemplateFunction.put('sender',obj);
+        inputTemplateFunction.put('template',tm);
+        inputTemplateFunction.put('parameters',parameters);
+
+        wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng templateEngine = (wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng) wrts_prcgvr.VersionManager.newClassInstance('CalloutTemplateMng');
+        Object objTemp = templateEngine.getTemplate(inputTemplateFunction);
+        Map<String,Object> templateReturn = (Map<String,Object>)templateEngine.applyTemplate(objTemp);
+        return (wrts_prcgvr.MRR_1_0.MultiRequest)templateReturn.get('multirequest');        
+    }
+
+    public void setHeader(wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj){
+        wrts_prcgvr.MRR_1_0.field headerAddValue = new  wrts_prcgvr.MRR_1_0.field();
+        headerAddValue.fieldType = 'STRING';
+        headerAddValue.name = 'PROCESS_CATEGORY';
+        headerAddValue.value = 'sales';
+        list<wrts_prcgvr.MRR_1_0.field> headerAttributetoAdd = new list<wrts_prcgvr.MRR_1_0.field>{headerAddValue};
+        multirequestObj.requests[0].header.fields = headerAttributetoAdd;
+    }
+
+    public wrts_prcgvr.MRR_1_0.MultiResponse makeCallout(wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj, SObject action, String endpoint){
+        Map<String,Object> inputClientFunction = new Map<String,Object>();
+        inputClientFunction.put('endpoint',endpoint);
+        inputClientFunction.put('timeout',60000);
+        inputClientFunction.put('payload',multirequestObj);
+        inputClientFunction.put('clientType','REST');
+        inputClientFunction.put('contentType','application/json');
+        wrts_prcgvr.MRR_1_0.MultiResponse responseServiceTemp;
+        wrts_prcgvr.Interfaces_1_0.ICalloutClient client = (wrts_prcgvr.Interfaces_1_0.ICalloutClient) wrts_prcgvr.VersionManager.newClassInstance ('CalloutClient');
+        if (Test.isRunningTest()){
+            responseServiceTemp = (wrts_prcgvr.MRR_1_0.MultiResponse)mock.respond(action);
+        }else{
+            responseServiceTemp = (wrts_prcgvr.MRR_1_0.MultiResponse) client.send(inputClientFunction);
+        }
+        return responseServiceTemp;
+    }
+
+    public String getEndpoint(SObject sender){
+        wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration endpointUtils = ( wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration)  wrts_prcgvr.VersionManager.newClassInstance('EndpointRulesIntegration');
+        String endpoint = endpointUtils.getEndpoint(sender);
+        return endpoint;
     }
 }

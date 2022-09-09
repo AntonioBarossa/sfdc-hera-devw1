@@ -24,6 +24,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ActivationType__c</picklist>
+        <values>
+            <fullName>Primo soggetto passivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro precedente soggetto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura obbligato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>AggregateBilling__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -59,10 +74,6 @@
             <fullName>Bolletta per e-mail</fullName>
             <default>false</default>
         </values>
-        <!--<values>
-            <fullName>Bolletta per e-mail %2B Carta</fullName>
-            <default>false</default>
-        </values>-->
         <values>
             <fullName>Cartaceo</fullName>
             <default>false</default>
@@ -416,7 +427,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>CALL BACK WEB NEOEN</fullName>
+            <fullName>CALL BACK WEB</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1853,6 +1864,17 @@
             <fullName>Imposta usi non domestici iva 22%25 %28Cod%2E G_ICC%29</fullName>
             <default>false</default>
         </values>
+    </picklistValues>    
+    <picklistValues>
+        <picklist>FuiAccess__c</picklist>
+        <values>
+            <fullName>N</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>S</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Instance326__c</picklist>
@@ -2007,14 +2029,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
-<!--         <values>
-            <fullName>Accettazione pagamento a DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Amm%2E Precheck OK SII</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
@@ -2023,14 +2037,6 @@
             <fullName>Ammissibilità OK</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>Ammissibilità conformità KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ammissibilità conformità OK</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Annullamento - Ammissibilità KO</fullName>
             <default>false</default>
@@ -2063,18 +2069,6 @@
             <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>
         </values>
-  <!--       <values>
-            <fullName>Annullamento - Revocato</fullName>
-            <default>false</default>
-        </values> -->
- <!--        <values>
-            <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento SII - Ricezione</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Annullamento dal SII</fullName>
             <default>false</default>
@@ -2083,10 +2077,6 @@
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>Annullato SII</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Attesa conferma preventivo cliente</fullName>
             <default>false</default>
@@ -2111,22 +2101,6 @@
             <fullName>Comunicazione verso Heroku OK</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>Conferma Appuntamento KO</fullName>
-            <default>false</default>
-        </values> -->
-<!--         <values>
-            <fullName>DL Documentazione completa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DL accertamento OK</fullName>
-            <default>false</default>
-        </values> -->
-<!--         <values>
-            <fullName>DL documentazione incompleta</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Da Inviare</fullName>
             <default>false</default>
@@ -2139,14 +2113,6 @@
             <fullName>Errore lavorazione SAP</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>Esecuzione Appuntamento KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esecuzione Appuntamento OK</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Esito KO da DL</fullName>
             <default>false</default>
@@ -2155,10 +2121,6 @@
             <fullName>Esito OK da DL</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>Gestione appuntamento su portale DL</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>In Lavorazione</fullName>
             <default>false</default>
@@ -2167,22 +2129,6 @@
             <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
         </values>
- <!--        <values>
-            <fullName>In attesa appuntamento DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa conferma cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa esecuzione appuntamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa tempi di ripensamento</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>In attesa validazione</fullName>
             <default>false</default>
@@ -2203,22 +2149,10 @@
             <fullName>Caricamento Siebel KO</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>In sequenzializzazione</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
-  <!--       <values>
-            <fullName>Invio allegato a DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OK SAP</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Preventivo Accettato</fullName>
             <default>false</default>
@@ -2267,14 +2201,6 @@
             <fullName>Ripensamento - Inviato al SII</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>Ripensamento - Revocato</fullName>
-            <default>false</default>
-        </values> -->
-<!--         <values>
-            <fullName>Ripensato</fullName>
-            <default>false</default>
-        </values> -->
     </picklistValues>
     <picklistValues>
         <picklist>PressureLevel__c</picklist>

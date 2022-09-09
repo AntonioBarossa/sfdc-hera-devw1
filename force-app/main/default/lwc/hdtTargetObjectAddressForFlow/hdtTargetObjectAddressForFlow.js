@@ -14,16 +14,20 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
 
     @api
     validate() {
-        let address = this.getAddress();
-        let validity = this.validateAddress(address);
-        if (validity.isValid === true) {
-            this.populateCase(address);
-            //lanciare evento per inviare oggetto theCase;
-            //integrare coi campi del BP (non fare update diretto da apex, torna un nuovo case)
-            //Gestire salva in bozza in cui saltiamo i controlli dell'input ma poi siamo anche in grado di riprenderli (sfrutta funzionalità clona bp)
-            //anche per cb indirizzi, abilita sempre il tasto per verifica indirizzi
+        if(!this.cancelCase){
+            let address = this.getAddress();
+            let validity = this.validateAddress(address);
+            if (validity.isValid === true) {
+                this.populateCase(address);
+                //lanciare evento per inviare oggetto theCase;
+                //integrare coi campi del BP (non fare update diretto da apex, torna un nuovo case)
+                //Gestire salva in bozza in cui saltiamo i controlli dell'input ma poi siamo anche in grado di riprenderli (sfrutta funzionalità clona bp)
+                //anche per cb indirizzi, abilita sempre il tasto per verifica indirizzi
+            }
+            return validity;
+        }else{
+            return {isValid: true};
         }
-        return validity;
     }
 
     @api
@@ -96,11 +100,13 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
         if(lwcIndirizzi==null)  return;
         this.stopRendered=true;
         let wrapperAddress = {};
-        if(this.theCase["InvoicingStreetName__c"] != undefined){
-            wrapperAddress['Via'] = this.theCase["InvoicingStreetName__c"];
-        }
         if(this.theCase["InvoicingCity__c"] != undefined){
             wrapperAddress['Comune'] = this.theCase["InvoicingCity__c"];
+        }else{
+            return;
+        }
+        if(this.theCase["InvoicingStreetName__c"] != undefined){
+            wrapperAddress['Via'] = this.theCase["InvoicingStreetName__c"];
         }
         if(this.theCase["InvoicingPostalCode__c"] != undefined){
             wrapperAddress['CAP'] = this.theCase["InvoicingPostalCode__c"];
@@ -116,6 +122,9 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
         }
         if(this.theCase["InvoicingStreetNumber__c"] != undefined){
             wrapperAddress['Civico'] = this.theCase["InvoicingStreetNumber__c"];
+        }
+        if(this.theCase["InvoicingPlace__c"] != undefined){
+            wrapperAddress['Localita'] = this.theCase["InvoicingPlace__c"];
         }
         //wrapperAddress["AbilitaVerifica"]=false;//abilita il tasto verifica
         wrapperAddress["Flag Verificato"]=true;//questi due abilitano la check "verificata"
@@ -158,9 +167,9 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
         this.theCase["InvoicingPostalCode__c"] = address['CAP'];
         this.theCase["InvoicingCountry__c"] = address['Stato'];
         this.theCase["InvoicingProvince__c"] = address['Provincia'];
-        this.theCase["InvoicingStreetNumberExtension__c"] =  address['Estens.Civico'];
+        this.theCase["InvoicingStreetNumberExtension__c"] =  address['Estens.Civico']? address['Estens.Civico'] : null;
         this.theCase["InvoicingStreetNumber__c"] = address['Civico'];
-        this.theCase["InvoicingPlace__c"] = address['Localita'];
+        this.theCase["InvoicingPlace__c"] = address['Localita']? address['Localita'] : null;
     }
 
     handleNext(event){

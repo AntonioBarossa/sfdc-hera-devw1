@@ -3453,4 +3453,63 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 		return menageQuoteList;
 	}
+
+	//@Author Davide Viola - 29/06/2022
+	@SuppressWarnings('PMD.ExcessiveParameterList')
+	public static List<SBQQ__ConfigurationAttribute__c> createConfigurationAttribute(Integer amount, Boolean doInsert, String targetField, String prodId){
+
+		List<SBQQ__ConfigurationAttribute__c> configAttribList = new List<SBQQ__ConfigurationAttribute__c>();
+
+		for(Integer i=0; i<amount; i++){
+
+			SBQQ__ConfigurationAttribute__c configAttrib = new SBQQ__ConfigurationAttribute__c();
+			configAttrib.SBQQ__TargetField__c = targetField;
+			configAttrib.SBQQ__Product__c = prodId;
+			configAttribList.add(configAttrib);
+		}
+
+		if(doInsert){
+			insert configAttribList;
+		}
+		return configAttribList;
+	}
+
+	//@Author Davide Viola - 29/06/2022
+	public static List<EligibilityCriteria__c> createEligibilityCriteria(Integer amount, Boolean doInsert, String prodId){
+
+		List<EligibilityCriteria__c> eligibCriteriaList = new List<EligibilityCriteria__c>();
+
+		for(Integer i=0; i<amount; i++){
+
+			EligibilityCriteria__c eligibCriteria = new EligibilityCriteria__c();
+			eligibCriteria.Product__c = prodId;
+			eligibCriteriaList.add(eligibCriteria);
+		}
+
+		if(doInsert){
+			insert eligibCriteriaList;
+		}
+		return eligibCriteriaList;
+	}
+
+	//@author marco.arci@webresults.it 06/09/2022
+	public static List<CityTechnicalData__c> createCityTechnicalData(Integer numberRecords, Boolean doInsert, String city, Date startDate, Date endDate, Date endCutOver, String errorMessage){
+		List<CityTechnicalData__c> cityTechnicalData = new List<CityTechnicalData__c>();
+
+		for(Integer i=0; i<numberRecords; i++){
+			CityTechnicalData__c singleData = new CityTechnicalData__c();
+			singleData.TARIManagingStartDate__c = startDate;
+			singleData.TARIManagingEndDate__c = endDate;
+			singleData.CutOverEndDate__c = endCutOver;
+			singleData.CadastralCity__c = city;
+			singleData.CityNotManagedAlert__c = errorMessage;
+			cityTechnicalData.add(singleData);
+		}
+
+		if(doInsert){
+			insert cityTechnicalData;
+		}
+		return cityTechnicalData;
+	}
+	
 }

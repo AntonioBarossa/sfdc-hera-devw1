@@ -22,6 +22,7 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
     public static Case handleResponse(String serializedResponse, Case currentCase, Set<String> dataEnrichmentFields){
         HDT_QR_DataEnrichmentPostSales depsQr = new HDT_QR_DataEnrichmentPostSales();
         HDT_SRV_DataEnrichmentPostSales depsSrv = new HDT_SRV_DataEnrichmentPostSales();
+        HDT_QR_AnagAlignment anagAlignQr = new HDT_QR_AnagAlignment();
         List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> positions = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
         List<HDT_DataEnrichmentTransocode__mdt> transcodeConfigList = new List<HDT_DataEnrichmentTransocode__mdt>();
         Map<String, Object> transcodeMap = new Map<String, Object>();
@@ -38,6 +39,8 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         String salesCompanyCode;
         String salesCompany;
         String method;
+        String sottoTipologiaDuso;
+
         /*
 			@Author: Davide Viola - 20/10/2021
 			Description: PMD -> Commentata variabile non utilizzata.
@@ -52,7 +55,30 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
 
         for(HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni position : positions){
             for(HDT_DataEnrichmentTransocode__mdt transcodeConfig : transcodeConfigList){
-                if(position.campo == transcodeConfig.SapField__c){
+                if('DATAULTIMAGAA'.equals(position.campo) && !String.isBlank(position.valore)){
+                    transcodeMap.put('DataUltimoAllineamentoGAA__c',depsSrv.getDateFromString(position.valore));
+                }
+                else if('DATAPRIMAGAA'.equals(position.campo) && !String.isBlank(position.valore)){
+                    transcodeMap.put('DataUltimoAllineamentoGAA__c',depsSrv.getDateFromString(position.valore));
+                }else if('AFPAG_FFUG'.equals(position.campo) && !String.isBlank(position.valore)){
+                    String trueOut = position.valore == '0.0000000' ? '1' : '0';
+                    trueOut = HDT_SRV_DataEnrichmentPostSales.transCodeSiNo(trueOut);
+                    System.debug(LoggingLevel.DEBUG, 'La transcodifica di AFPAG_FFUG risulta: ' + trueOut);
+                    transcodeMap.put('JointBottomAdhesion__c',trueOut);
+                }else if('AFPAGA_DEP'.equals(position.campo) && !String.isBlank(position.valore)){
+                    String payPurification = '';
+                    if(position.valore =='0.0000000'){
+                        payPurification = 'Esente';                
+                    }
+                    if(position.valore =='1.0000000'){
+                        payPurification = 'Intera';                
+                    }
+                    if(position.valore =='2.0000000'){
+                        payPurification = 'Ridotta';                
+                    }
+                    System.debug(LoggingLevel.DEBUG, 'payPurification: ' + payPurification);
+                    transcodeMap.put('PurificationPay__c',payPurification);
+                }else if(position.campo == transcodeConfig.SapField__c){
                     if(transcodeConfig.IsNumber__c){
                         if(transcodeConfig.Precision__c == 0){
                             try{
@@ -193,6 +219,19 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         } catch(Exception e){
             System.debug(LoggingLevel.DEBUG, 'Errore Set Lookup Contract -> ' + e.getMessage());
         }
+        //Accise & Addizionale Regionale
+        String taxes = (String)transcodeMap.get('Taxes__c') != null ? (String)transcodeMap.get('Taxes__c') : '';
+        if(String.isBlank(String.valueOf(transcodeMap.get('Excises__c'))) && String.isNotBlank(taxes))
+        {
+            List<HDT_ExciseTranscode__mdt> exciseTranscode = [SELECT Id, Excise__c FROM HDT_ExciseTranscode__mdt WHERE ExciseString__c = :taxes WITH SECURITY_ENFORCED];
+            Double excises = !exciseTranscode.isEmpty() ? exciseTranscode[0].Excise__c : 0.0;
+            transcodeMap.put('Excises__c', excises);
+        }
+        if(String.isBlank(String.valueOf(transcodeMap.get('RegionalAdditional__c'))) && String.isNotBlank(taxes))
+        {
+            Double regionalAdditional = anagAlignQr.findRegionalAdditional(taxes, (String)transcodeMap.get('SupplyCity__c'), '');
+            transcodeMap.put('RegionalAdditional__c', regionalAdditional);
+        }
 
         //SALESCOMPANY
         salesCompanyCode = (String) transcodeMap.get('SalesCompanyCode__c');
@@ -200,6 +239,31 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         transcodeMap.put('SalesCompany__c', salesCompany);
 
         dataEnrichmentFields.addAll(transcodeMap.keySet());
+
+         //SOTTOTIPOLOGIA D'USO
+        try{
+            String prodCodeInput = null;
+            List <Case> prodCodeList = [SELECT RateCategory__c FROM Case WHERE id=:currentCase.Id WITH SECURITY_ENFORCED];
+            
+            if(prodCodeList.size() > 0) {
+                prodCodeInput = prodCodeList[0].RateCategory__c;
+            }
+
+            String salesCompInput=null;
+            List <Case> salesCompList = [SELECT SalesCompany__c FROM Case WHERE id=:currentCase.Id WITH SECURITY_ENFORCED];
+            
+            if(salesCompList.size()>0){
+                salesCompInput = salesCompList[0].SalesCompany__c;
+            }
+
+            sottoTipologiaDuso = HDT_SRV_DataEnrichmentPostSales.handleSubType(salesCompInput, prodCodeInput);
+            System.debug(LoggingLevel.DEBUG, sottoTipologiaDuso);
+
+            transcodeMap.put('UseSubCategory__c',sottoTipologiaDuso);
+
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Errore nell arricchimento della Sottotipologia D uso!-> ' + e.getMessage());
+        }
 
         return depsSrv.populateCase(transcodeMap, currentCase);
     }
@@ -214,7 +278,6 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         caseList.add(handleResponse(serializedResponse, currentCase));
         return caseList;
     }
-
 
     public class HDT_UTL_FlowInput{
 

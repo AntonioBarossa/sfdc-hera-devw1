@@ -5,6 +5,11 @@ import getFields from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.getF
 import validateRecord from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.validateRecord';
 import getContentDocs from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.getContentDocs';
 import { updateRecord } from 'lightning/uiRecordApi';
+import { getRecord } from 'lightning/uiRecordApi';
+
+import ASSISTED from '@salesforce/schema/Case.CutomerAssisted__c';
+import TYPE from '@salesforce/schema/Case.Type';
+import ACCOUNTID from '@salesforce/schema/Case.AccountId';
 
 export default class HdtRecordEditFormFlow extends LightningElement {
 
@@ -53,6 +58,26 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     //@track notificationType = '';
     //@track delay = 3000;
     @track show = false;
+    showCustomLabels= false;
+
+    get customLabelClass(){
+        if(this.density)    return "slds-form-element "+(this.density=="comfy"? "slds-form-element_stacked" : "slds-form-element_horizontal");
+        let clist = this.template.querySelector('lightning-input-field.slds-form-element')?.classList?.value;
+        return clist? clist : "slds-form-element slds-form-element_horizontal";
+    }
+
+    @track assisted;
+    @track type;
+    @track caseAccId;
+    @wire(getRecord, { recordId: '$recordId', fields: [ASSISTED,TYPE,ACCOUNTID] })
+    wiredRecord({ error, data }) {
+        if (data) {
+            this.assisted = data.fields.CutomerAssisted__c.value;
+            this.type = data.fields.Type.value;
+            this.caseAccId = data.fields.AccountId.value;
+        }
+    }
+
 
     @wire(getFields, { processType: '$processType' }) 
         wiredFieldsJSON ({ error, data }) {
@@ -226,7 +251,9 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         var fields = record[this.recordId].fields;
         this.installmentsLogic();
         console.log('Edit Form Loaded ' + fields);
+        
         }
+        this.showCustomLabels=true;
     }
 
     handleError(event){
@@ -352,16 +379,58 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         : this.secondColumn.filter(element => element['FieldName'] === fieldName);
     }
 
-    handleChange(event){
+    virtualValidate(event){
+        return;
+    }
 
+    handleChange(event){
+        this.virtualValidate(event);
         //Reclami customizations
         this.complaintsLogic();
         //PianoRata customizations
         this.installmentsLogic();
+        //Comunicazione pagamenti customizations
+        this.paymentLogic();
         //RimborsoCustomization
         this.reimbursmentLogic();
         //DisconnectableLogic
         this.disconnectableLogic();
+        //Variazioni customLogic
+        this.variationsLogic();     //MODIFICA 21/07/22 marco.arci@webresults.it Logica form compilazione Variazioni
+    }
+
+    variationsLogic(){
+        //Sottoprocessi di varaiazioni
+        if(['AGEVOLAZIONE','COMPONENTI RESIDENTI','COMPONENTI NON RESIDENTI','COABITAZIONI','DATI CATASTALI',
+            'ISTAT/RONCHI','SUPERFICIE','DOMICILIATO IN NUCLEO RESIDENTE','RID. AGEV. DOPO ACCERTAMENTO'].includes(this.processType.toUpperCase())){
+            let RequestSource = this.selector('RequestSource__c');
+            let SubscriberType = this.selector('SubscriberType__c');
+            if(RequestSource.value.toUpperCase() != 'DA CONTRIBUENTE'){
+                SubscriberType.required = false;
+                SubscriberType.value = null;
+                SubscriberType.disabled = true;
+            } else {
+                SubscriberType.required = true;
+                SubscriberType.disabled = false;
+            }
+        }
+    }
+
+    paymentLogic(){ 
+        if(this.type == 'Comunicazione Pagamento'){
+            let accountholderTypeBeneficiary = this.selector('AccountholderTypeBeneficiary__c');
+            console.log('#accountholderTypeBeneficiary : ' + accountholderTypeBeneficiary.value);
+            if(accountholderTypeBeneficiary != null){
+                let beneficiaryAccount = this.selector('BeneficiaryAccount__c');
+                if(accountholderTypeBeneficiary.value !== '' && accountholderTypeBeneficiary.value !== undefined && accountholderTypeBeneficiary !== null && accountholderTypeBeneficiary.value == 'Stesso Sottoscrittore'){
+                    beneficiaryAccount.disabled = true;
+                    console.log('#accountId : ' + this.caseAccId);
+                    beneficiaryAccount.value = this.caseAccId;
+                }else{
+                    beneficiaryAccount.disabled = false;
+                }
+            }
+        }
     }
 
     complaintsLogic(){
@@ -374,10 +443,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             console.log('#Valore quinto livello -->' +fifthLevel.value)
             if(fifthLevel != null){
                 let soldBy = this.selector('SoldBy__c');
-                if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
-                    soldBy.disabled = false;
-                }else{
-                    soldBy.disabled = true;
+                if(soldBy != null){
+                    if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
+                        soldBy.disabled = false;
+                    }else{
+                        soldBy.disabled = true;
+                    }
                 }
             }
         } else if(!(Object.keys(channel).length === 0)){
@@ -393,6 +464,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
 
     installmentsLogic(){
+        console.log('Rec ' + this.type);
         let reasonObj =  this.objSelector('Reason__c');
         console.log('#Reason --> ' + JSON.stringify(reasonObj));
         let paymentType = this.objSelector('PaymentType__c');
@@ -406,15 +478,32 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         console.log('Inside Condition Installments');
                         let payType = this.selector('PaymentType__c');
                         let workStatus = this.selector('WorkStatus__c');
+                        let refundableEscape = this.selector('RefundableEscape__c');
                         console.log('#Valore payType -> ' + payType.value);
-                        if(reason.value.localeCompare('Assistenza Sociale') === 0 && payType != null){
-                            payType.disabled = false;
+                        if(reason.value.localeCompare('Assistenza sociale (cliente)') === 0 && payType != null){
+                            if(this.assisted){
+                                payType.disabled = true;
+                                payType.value = 'Totalmente dal Cliente';
+                            }
+                            else payType.disabled = false;
+                            workStatus.disabled = true;
+                            workStatus.required = false;
+                            workStatus.value = '';
+                        }else if(reason.value.localeCompare('Assistenza sociale (ente)') === 0 && payType != null){
+                            if(this.assisted){
+                                payType.disabled = true;
+                                payType.value = 'In compartecipazione o totalmente da istituzioni pubbliche';
+                            }
+                            else payType.disabled = false;
                             workStatus.disabled = true;
                             workStatus.required = false;
                             workStatus.value = '';
                         }else if(reason.value.localeCompare('Fattura SD') === 0 && workStatus != null){
                             workStatus.disabled = false;
                             workStatus.required = true;
+                        }else if(reason.value.localeCompare('Bolletta Fuga H2O') === 0 && refundableEscape != null){
+                            refundableEscape.disabled = false;
+                            refundableEscape.required = false;
                         } 
                         else {
                             payType.disabled = true;

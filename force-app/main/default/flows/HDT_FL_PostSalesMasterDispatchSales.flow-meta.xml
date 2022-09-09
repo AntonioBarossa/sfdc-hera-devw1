@@ -722,7 +722,7 @@
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Ripristina Fase</stringValue>
+                    <stringValue>Ripristina fase</stringValue>
                 </rightValue>
             </conditions>
             <connector>

@@ -84,7 +84,6 @@ public with sharing class HDT_LC_AccountSelectorController {
 	public static String search(String queryString, String recordId) {
 		HDT_UTL_Struct result = new HDT_UTL_Struct();
 		if(queryString.isNumeric()) {
-			queryString = queryString + '%';
 			if( queryString.startsWith('100') ){
 				//BP
 				result.accounts = getAccountByBPCode(queryString);
@@ -104,7 +103,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 			if( queryString.contains('@') ){
 				//mail
 				result=getContactsAndLeads(result, queryString,'Email', recordId);
-			} else if( queryString.length() == 16 ){
+			} else if( queryString.length() == 18 ){
 				//CF
 				result=getContactsAndLeads(result, queryString,'FiscalCode__c', recordId);
 			} else { //Name

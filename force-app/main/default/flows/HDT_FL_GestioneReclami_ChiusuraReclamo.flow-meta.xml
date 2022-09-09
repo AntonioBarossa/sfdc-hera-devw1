@@ -119,13 +119,13 @@
                 <elementReference>$User.LoginChannel__c</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
+        <!--assignmentItems>
             <assignToReference>Get_Activity.Place__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>$User.Station__c</elementReference>
             </value>
-        </assignmentItems>
+        </assignmentItems-->
         <connector>
             <targetReference>Aggiorna_Activity</targetReference>
         </connector>
@@ -568,6 +568,13 @@
     </variables>
     <variables>
         <name>InputCase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ParentRecordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

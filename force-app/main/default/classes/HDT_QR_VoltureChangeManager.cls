@@ -240,6 +240,7 @@ public with sharing class HDT_QR_VoltureChangeManager {
             VoltureType__c,
             EffectiveDate__c,
             RetroactiveDate__c,
+            ProcessType__c,
             Subprocess__c,
             PreviousCustomer__r.Account.RecordType.DeveloperName,
             Account.CustomerMarking__c,
@@ -247,7 +248,8 @@ public with sharing class HDT_QR_VoltureChangeManager {
             ServicePoint__r.CommoditySector__c,
             RecordType.DeveloperName,
             NumeratorGroup__c,
-            VASSubtype__c
+            VASSubtype__c,
+            Phase__c
             FROM Order
             WHERE Id = :orderId]);
     

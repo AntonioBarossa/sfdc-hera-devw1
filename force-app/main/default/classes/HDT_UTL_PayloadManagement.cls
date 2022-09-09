@@ -1026,7 +1026,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             payloadSection += String.join(record, div);
 
             for (Integer i = 0; i < docList.size(); i++) {
-                ContentDocumentLink doc = docList[0];
+                ContentDocumentLink doc = docList[i];
                 if (doc.ContentDocument != null) {
                     record = new List<String>();
                     record.add('00310');
@@ -1066,7 +1066,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             Decimal indemnityDueBillingCorrectionDecimal = String.isNotBlank(indemnityDueBillingCorrection) ? Decimal.valueOf(indemnityDueBillingCorrection) : 0;
             String correctionRight = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionRight__c', 0, inputs, formParams);
             String correctionDocumentEmissionDate = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionDocumentEmissionDay__c', 0, inputs, formParams);
-            Boolean expiredCorrection = indemnityDueBillingCorrection != null;
+            Boolean expiredCorrection = indemnityDueBillingCorrection != null && indemnityDueBillingCorrectionDecimal > 0;
 
             String[] record = new List<String>();
             record.add('00310');
@@ -1142,6 +1142,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         // Check finale se indennizzo già inviato in stesso anno
         if (!indemnityConfirmed && indemnityMotivation == 'Altro indennizzo stesso anno solare') {
             boxType = '6';
+        }
+
+        if(indemnityDueSendResponse == 0 && !expiredCorrection)
+        {
+            boxType = '';
         }
 
         System.debug(LoggingLevel.DEBUG, 'calculateIndemnityBox inputs: ' + complaintClassification + ', ' + indemnityConfirmed + ', ' + indemnityMotivation + ', ' + correctionRight + ', ' + expiredCorrection + ', ' + correctionDocumentEmissionDate + ', ' + indemnityDueSendResponse);
@@ -1238,7 +1243,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
     // Restituisce la data nel formato richiesto da Engage1
     private static String getFormattedDate(Date dateToFormat) {
-        Datetime dt = dateToFormat;
+        Datetime dt;
+        if(dateToFormat != null){
+            dt = dateToFormat;
+        }else{
+            dt = date.Today();
+        }
         String formattedDate = dt.format('dd/MM/y');
         return formattedDate;
     }
