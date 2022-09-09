@@ -163,11 +163,11 @@ public inherited sharing class HDT_UTL_Case {
                 List<AllineamentoGAA__c> listAllineamentoGaa = [SELECT Frequenza__c FROM AllineamentoGAA__c WHERE Comune__c =: newCurrentCase.SupplyCity__c AND Rate_Category__c =: newCurrentCase.RateCategory__c WITH SECURITY_ENFORCED];
 
                 if(listAllineamentoGaa.size() > 0){
-                    output.allineamentoGAA = 'Y';
+                    output.allineamentoGaa = 'Y';
                     System.debug(LoggingLevel.DEBUG, 'Frequenza__c: ' + listAllineamentoGaa.get(0).Frequenza__c);
-                    output.frequenzaAllineamentoGAA = listAllineamentoGaa.get(0).Frequenza__c;
+                    output.frequenzaAllineamentoGaa = listAllineamentoGaa.get(0).Frequenza__c;
                 }else{
-                    output.allineamentoGAA = 'N';
+                    output.allineamentoGaa = 'N';
                 }
             }
         }
@@ -233,9 +233,9 @@ public inherited sharing class HDT_UTL_Case {
         @InvocableVariable
         public Date dataInizioVariazione;
         @InvocableVariable
-        public String allineamentoGAA;
+        public String allineamentoGaa;
         @InvocableVariable
-        public String frequenzaAllineamentoGAA;
+        public String frequenzaAllineamentoGaa;
         @InvocableVariable
         public String isDomestico;
 
