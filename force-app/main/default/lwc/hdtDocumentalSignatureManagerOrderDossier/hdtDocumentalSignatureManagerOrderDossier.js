@@ -528,28 +528,39 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         if(this.isVisibleAmbiente && !this.loadData){
             this.loading = true;
             var provenienzaRichiesta = this.template.querySelector("[data-id='RequestSource__c']").value;
-            fields['RequestSource__c'] = provenienzaRichiesta;
-            const recordUpdate = { fields };
-            updateRecord(recordUpdate)
-                    .then(goNext => {
-                        next({orderUpdates: this.dataToSubmit}).then(data =>{
-                            getRecordNotifyChange([{recordId: this.recordId}])
-                            console.log('### Inside Notify Then ###')
-                            this.loading = false;
-                            this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
-                            this.dispatchEvent(new CustomEvent('tablerefresh'));
-                        }).catch(error => {
-                            this.loading = false;
-                            console.log((error.body.message !== undefined) ? error.body.message : error.message);
-                            const toastErrorMessage = new ShowToastEvent({
-                                title: 'Errore',
-                                message: (error.body.message !== undefined) ? error.body.message : error.message,
-                                variant: 'error',
-                                mode: 'sticky'
+            if(!provenienzaRichiesta){
+                this.loading = false;
+                const errorProvenienza = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Popolare il campo Provenienza Richiesta',
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(errorProvenienza);
+            }else{
+                fields['RequestSource__c'] = provenienzaRichiesta;
+                const recordUpdate = { fields };
+                updateRecord(recordUpdate)
+                        .then(goNext => {
+                            next({orderUpdates: this.dataToSubmit}).then(data =>{
+                                getRecordNotifyChange([{recordId: this.recordId}])
+                                console.log('### Inside Notify Then ###')
+                                this.loading = false;
+                                this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
+                                this.dispatchEvent(new CustomEvent('tablerefresh'));
+                            }).catch(error => {
+                                this.loading = false;
+                                console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                                const toastErrorMessage = new ShowToastEvent({
+                                    title: 'Errore',
+                                    message: (error.body.message !== undefined) ? error.body.message : error.message,
+                                    variant: 'error',
+                                    mode: 'sticky'
+                                });
+                                this.dispatchEvent(toastErrorMessage);
                             });
-                            this.dispatchEvent(toastErrorMessage);
-                        });
-                    })
+                        })
+            }
         }else{
             if(dataFirma != null){
                 dataFirmaDate = new Date(dataFirma); //dd-mm-YYYY

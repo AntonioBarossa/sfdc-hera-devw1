@@ -2595,6 +2595,10 @@
 			<fullName>Documentazione Validata</fullName>
 			<default>false</default>
 		</values>
+        <values>
+			<fullName>In attesa Validazione</fullName>
+			<default>false</default>
+		</values>
 		<values>
 			<fullName>Esito KO Da SAP</fullName>
 			<default>false</default>
