@@ -47,7 +47,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 parentOrderToUpdate.Status = 'Completed';
             }else{
                 parentOrderToUpdate.Phase__c = 'Documentazione da inviare';
-                parentOrderToUpdate.Status = 'In Lavorazione';
             }
             HDT_UTL_DatabaseService.updateSObject(parentOrderToUpdate);
             return;
