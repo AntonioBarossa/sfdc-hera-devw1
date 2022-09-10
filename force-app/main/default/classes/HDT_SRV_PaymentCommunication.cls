@@ -21,7 +21,7 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
         System.debug(LoggingLevel.DEBUG, 'SRV_PaymenCommunication Case--> '+currentCase);
         System.debug(LoggingLevel.DEBUG, 'SRV_PaymentCommunication Documetns--> '+documents);
 
-        modalitaPagamento = (currentCase.DocumentPaymentMethod__c.equalsIgnoreCase('Virtual Account'));
+        modalitaPagamento = (String.isNotBlank(currentCase.DocumentPaymentMethod__c) && currentCase.DocumentPaymentMethod__c.equalsIgnoreCase('Virtual Account'));
         Map<String, Object> caseMap;
         if(String.valueOf(currentCase.Type).equalsIgnoreCase('Promessa di Pagamento Ente')){
             caseMap = new Map<String, Object>{
@@ -89,7 +89,4 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
 
         return pretty;
     }
-
-
-
 }
