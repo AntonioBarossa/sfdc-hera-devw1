@@ -372,9 +372,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     fieldsDataObject.push(
                         {
                             fieldname: element,
-                            required: false,
-                            value: 'No',
-                            disabled: true
+                            required: true,
+                            value: this.servicePointRetrievedData[element],
+                            disabled: false
                         }
                     )
                 }
@@ -683,9 +683,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     fieldsDataObject.push(
                         {
                             fieldname: element,
-                            required: false,
-                            value: 'No',
-                            disabled: true
+                            required: true,
+                            value: '',
+                            disabled: false
                         }
                     )
                 }
@@ -1294,6 +1294,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             if (this.allSubmitedFields['Disconnectable__c'] === 'No' && (this.allSubmitedFields['DisconnectibilityType__c'] === undefined || this.allSubmitedFields['DisconnectibilityType__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
+            }
+            if ((this.allSubmitedFields['PlugPresence__c'] === undefined || this.allSubmitedFields['PlugPresence__c'] === '')) {
+                concatPointErrorFields = concatPointErrorFields.concat('Presenza Allaccio, ');
             }
         }
         else if (this.allSubmitedFields['CommoditySector__c'] == 'Gas') {

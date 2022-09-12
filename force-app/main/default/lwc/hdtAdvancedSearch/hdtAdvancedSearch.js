@@ -127,7 +127,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                     }
                             
                     if(data.Disalimentabile__c!= undefined && data.Disalimentabile__c!=''){
-                        this.additionalfilter+=' AND Disconnectable__c = \''+Disconnectable__c+'\'';
+                        this.additionalfilter+=' AND Disconnectable__c = \''+data.Disalimentabile__c+'\'';
                         console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
                     }
 
@@ -144,7 +144,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                             console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
                     }
 
-                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && this.processtype ==='Chiusura Contatore' || this.processtype === 'Esenz./modifica Fognatura Depurazione'){
+                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && (this.processtype ==='Chiusura Contatore' || this.processtype === 'Esenz./modifica Fognatura Depurazione')){
                         RateCategorySplit = data.RateCategory__c.split(",");
                         console.log('RateCategorySplit *****'+JSON.stringify(RateCategorySplit));
 

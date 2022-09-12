@@ -324,6 +324,21 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}
         },
+    'Istruttoria' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}
+        },
+    'ModificaImpianto' => new Map<String,List<String>>
+    {
+        'Cluster__c' => new List<String>
+            {'Reclami', 'Preventivi'}
+    },
+    'RimozioneImpianto' => new Map<String,List<String>>
+    {
+        'Cluster__c' => new List<String>
+            {'Reclami', 'Preventivi'}
+    },
     'RipristinoFornituraInterrotta' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
@@ -494,6 +509,53 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi', 'Fatturazione'}
         },
+    'VerificaInterna' => new Map<String,List<String>>
+    {
+        'Cluster__c' => new List<String>
+            {'Reclami', 'Preventivi', 'Fatturazione'}
+    },
+    'VerificaIntegritaSigilli' => new Map<String,List<String>>
+    {
+        'Cluster__c' => new List<String>
+            {'Reclami', 'Preventivi', 'Fatturazione'}
+    },
+    'InterventiConVerifica' => new Map<String,List<String>>
+    {
+        'Cluster__c' => new List<String>
+            {'Reclami', 'Preventivi', 'Fatturazione'}
+    },
+    'VerificaRotturaImpiantoCliente' => new Map<String,List<String>>
+    {
+        'Cluster__c' => new List<String>
+            {'Reclami', 'Preventivi', 'Fatturazione'}
+    },
+    'adesionerinunciafondofughe' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami','Fatturazione'}
+        },
+    'modificaunitaimmobiliaricomponenti' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami','Fatturazione'}
+        },
+    'esenzionemodificafognatura' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami','Fatturazione'}
+        },
+        'letturaacquaavvisocliente' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Segnalazioni'}
+        },
+    'cessazionescarichiproduttivi' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Variazioni'},
+                'Type' => new List<String>
+                {'Gestione Calamità', 'Informative','Comunicazione di Fallimento','Annullamento Contratti'}
+        },
     'VerificaTensionePressione' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
@@ -553,7 +615,12 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
     'ComunicazionePagamento' => new Map<String,List<String>>
         {
             'Context__c' => new List<String>
-                {'EC1L','InstallmentsView'}
+                {'EC1L','InstallmentsView', 'Paperless'}
+        },
+    'PromessaPagamentoEnte' => new Map<String,List<String>>
+        {
+            'Context__c' => new List<String>
+                {'EC1L','InstallmentsView','Paperless'}
         }
     };
 

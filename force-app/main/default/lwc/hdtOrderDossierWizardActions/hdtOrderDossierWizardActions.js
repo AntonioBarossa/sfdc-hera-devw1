@@ -15,7 +15,8 @@ import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendD
 import { getRecord } from 'lightning/uiRecordApi';
 import SIGN_FIELD from '@salesforce/schema/Order.SignatureMethod__c';
 import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';import getPicklistValue from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.getActivePicklistValue';
-
+import RequestSource from '@salesforce/schema/Order.RequestSource__c';
+import WasteCommodityType from '@salesforce/schema/Order.WasteCommodityType__c';
 import SIGNED_FIELD from '@salesforce/schema/Order.ContractSigned__c';
 //Il seguente campo è stato utilizzato per tracciare l'ultimo SignatureMethod inviato a docusign.
 import OLDSIGN_FIELD from '@salesforce/schema/Order.SignMode__c';
@@ -34,6 +35,8 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     currentStep = 2;
     loading = false;
     channel = '';
+    provenienza = '';
+    commodityType='';
     signatureMethod = '';
     isSaveButtonDisabled = false;
     isCancelButtonDisabled = false;
@@ -58,7 +61,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     @wire(getPicklistValue,{objectApiName: 'Order', fieldApiName: 'SignMode__c'})
     activeValue;
 
-    @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD,OLDSIGN_FIELD, CHANNEL_FIELD] })
+    @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD,OLDSIGN_FIELD, CHANNEL_FIELD,RequestSource,WasteCommodityType] })
     wiredParentOrder({ error, data }) {
         if (error) {
             let message = 'Unknown error';
@@ -79,11 +82,16 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             //var signed = this.parentOrder.fields.ContractSigned__c.value;
             this.signatureMethod = data.fields.SignatureMethod__c.value;
             this.channel = data.fields.Channel__c.value;
+            this.commodityType = data.fields.WasteCommodityType__c.value 
+            this.provenienza = data.fields.RequestSource__c.value;
             // 28/12/2021: commentata logica che disabilita il component documentale, poichè deve sempre essere visibile nel wizard.
             //this.enableDocumental = !signed;
             console.log('### Signature method >>> ' + this.signatureMethod)
             console.log('### ParentOrder Channel >>> ' + this.channel);
-            this.enableDocumental = this.signatureMethod !== 'Contratto già firmato'
+            this.enableDocumental = this.signatureMethod !== 'Contratto già firmato';
+            if(this.commodityType && this.provenienza && this.commodityType === 'Ambiente' && this.provenienza != 'Da contribuente'){
+                this.enableDocumental = false;
+            }
         }
     }
 
