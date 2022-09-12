@@ -2141,6 +2141,18 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>In attesa Verifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Rilavorato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In attesa di quality call</fullName>
             <default>false</default>
         </values>
