@@ -361,6 +361,11 @@
         <label>Gestione Calamità - GAS</label>
     </customValue>
     <customValue>
+        <fullName>Gestione Calamità - ACQ</fullName>
+        <default>false</default>
+        <label>Gestione Calamità - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Gestione disalimentabilità - EE</fullName>
         <default>false</default>
         <label>Gestione disalimentabilità - EE</label>
@@ -914,6 +919,11 @@
         <fullName>Variazione indirizzo di fornitura - Ambiente</fullName>
         <default>false</default>
         <label>Variazione indirizzo di fornitura - Ambiente</label>
+    </customValue>
+    <customValue>
+        <fullName>Variazione indirizzo di fornitura - ACQ</fullName>
+        <default>false</default>
+        <label>Variazione indirizzo di fornitura - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Variazione portata - Preventivo analitico - GAS</fullName>
