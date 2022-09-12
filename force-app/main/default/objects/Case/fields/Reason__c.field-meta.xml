@@ -100,11 +100,6 @@
                 <label>Informazione su doppio pagamento/incasso</label>
             </value>
             <value>
-                <fullName>Assistenza Sociale</fullName>
-                <default>false</default>
-                <label>Assistenza Sociale</label>
-            </value>
-            <value>
                 <fullName>Calamità Naturali</fullName>
                 <default>false</default>
                 <label>Calamità Naturali</label>
@@ -360,6 +355,21 @@
                 <label>Firma falsa</label>
             </value>
             <value>
+                <fullName>Assistenza sociale (cliente)</fullName>
+                <default>false</default>
+                <label>Assistenza sociale (cliente)</label>
+            </value>
+            <value>
+                <fullName>Assistenza sociale (ente)</fullName>
+                <default>false</default>
+                <label>Assistenza sociale (ente)</label>
+            </value>
+            <value>
+                <fullName>Assistenza Sociale</fullName>
+                <default>false</default>
+                <label>Assistenza Sociale (DEPRECATO)</label>
+            </value>
+            <value>
                 <fullName>Mancata erogazione Bonus con domanda di attivazione/rinnovo su contratto Energy</fullName>
                 <default>false</default>
                 <label>Mancata erogazione Bonus con domanda di attivazione/rinnovo su contratto Energy</label>
@@ -446,11 +456,11 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>Verifica Generica GDM</controllingFieldValue>
+            <controllingFieldValue>Verifica Integrita Sigilli</controllingFieldValue>
             <valueName>Ripristino Sigilli / Piombi Rotti</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Verifica Generica GDM</controllingFieldValue>
+            <controllingFieldValue>Verifica Integrita Sigilli</controllingFieldValue>
             <valueName>Ripiombatura Post Collaudo Antincendio</valueName>
         </valueSettings>
         <valueSettings>
@@ -604,6 +614,14 @@
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>Piano Straordinario</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
+            <valueName>Assistenza sociale (cliente)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
+            <valueName>Assistenza sociale (ente)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>

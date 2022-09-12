@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>Verifica Generica GDM - ACQ</fullName>
+        <fullName>Verifica Integrita Sigilli - ACQ</fullName>
         <default>false</default>
-        <label>Verifica Generica GDM - ACQ</label>
+        <label>Verifica Integrita Sigilli - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Verifica Rottura Impianto Cliente - ACQ</fullName>
@@ -16,6 +16,21 @@
         <label>Verifica GDM - ACQ</label>
     </customValue>
     <customValue>
+        <fullName>Conferimento Centri di Raccolta</fullName>
+        <default>false</default>
+        <label>Conferimento Centri di Raccolta</label>
+    </customValue>
+    <customValue>
+        <fullName>Formulari Richiesta Sconto</fullName>
+        <default>false</default>
+        <label>Formulari Richiesta Sconto</label>
+    </customValue>
+    <customValue>
+        <fullName>Sconti Collettivi Pap</fullName>
+        <default>false</default>
+        <label>Sconti Collettivi Pap</label>
+    </customValue>
+    <customValue>
         <fullName>Verifica Pressione - ACQ</fullName>
         <default>false</default>
         <label>Verifica Pressione - ACQ</label>
@@ -24,6 +39,16 @@
         <fullName>Cessazione Scarichi Produttivi</fullName>
         <default>false</default>
         <label>Cessazione Scarichi Produttivi</label>
+    </customValue>
+    <customValue>
+        <fullName>Cessazione</fullName>
+        <default>false</default>
+        <label>Cessazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica dati contrattuali</fullName>
+        <default>false</default>
+        <label>Modifica dati contrattuali</label>
     </customValue>
     <customValue>
         <fullName>Interventi con Verifica - ACQ</fullName>
@@ -74,6 +99,16 @@
         <fullName>Annullamento contratti</fullName>
         <default>false</default>
         <label>Annullamento contratti</label>
+    </customValue>
+    <customValue>
+        <fullName>Pagamento Unico Annuale TARI</fullName>
+        <default>false</default>
+        <label>Pagamento Unico Annuale TARI</label>
+    </customValue>
+    <customValue>
+        <fullName>Riduz. superficie rifiuti spec promiscui</fullName>
+        <default>false</default>
+        <label>Riduz. superficie rifiuti spec promiscui</label>
     </customValue>
     <customValue>
         <fullName>Annullamento passivo dal SII</fullName>
@@ -324,6 +359,11 @@
         <fullName>Gestione Calamità - GAS</fullName>
         <default>false</default>
         <label>Gestione Calamità - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione Calamità - ACQ</fullName>
+        <default>false</default>
+        <label>Gestione Calamità - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Gestione disalimentabilità - EE</fullName>
@@ -876,6 +916,16 @@
         <label>Variazione indirizzo di fornitura - GAS</label>
     </customValue>
     <customValue>
+        <fullName>Variazione indirizzo di fornitura - Ambiente</fullName>
+        <default>false</default>
+        <label>Variazione indirizzo di fornitura - Ambiente</label>
+    </customValue>
+    <customValue>
+        <fullName>Variazione indirizzo di fornitura - ACQ</fullName>
+        <default>false</default>
+        <label>Variazione indirizzo di fornitura - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Variazione portata - Preventivo analitico - GAS</fullName>
         <default>false</default>
         <label>Variazione portata - Preventivo analitico - GAS</label>
@@ -954,6 +1004,11 @@
         <fullName>Voltura - GAS</fullName>
         <default>false</default>
         <label>Voltura - GAS</label>
+    </customValue>    
+    <customValue>
+        <fullName>Voltura - ACQ</fullName>
+        <default>false</default>
+        <label>Voltura - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Voltura con autolettura - GAS</fullName>

@@ -202,22 +202,26 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAmendmentAllowed: ' + isAmendmentAllowed);
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isWinBack: ' + ord.IsWinback__c);
         system.debug(LoggingLevel.DEBUG, 'getAvailableProcesses - isReseller: ' +isReseller);
-
+        
         for (ProcessMatrix__c process : allProcesses) {
             if(ord.Commodity__c == 'Ambiente' && process.Commodity__c == 'Ambiente'){
                 availableProcesses.add(process);
             }
-            else if(ord.Commodity__c == 'Acqua' && process.Commodity__c == 'Acqua')
+/*             else if(ord.Commodity__c == 'Acqua' && process.Commodity__c == 'Acqua')
             {
                 availableProcesses.add(process);
             }
             else if(process.Commodity__c == 'Acqua' || process.Commodity__c == 'Ambiente')
             {
                 continue;
+            }      */       
+            else if(ord.RateCategory__c == 'APSCARPRO0' && process.ProcessName__c == 'Voltura - Subentro Scarico produttivo')
+            {
+                availableProcesses.add(process);
             }
             else if (
                 //process.meterStatus.contains(ord.ServicePoint__r.MeterStatus__c) && 
-                process.marketOrigin__c.contains(ord.MarketOrigin__c) // || process.marketOrigin__c.isEmpty())
+                ( process.marketOrigin__c != null && process.marketOrigin__c.contains(ord.MarketOrigin__c)) // || process.marketOrigin__c.isEmpty())
                 && (process.plugPresence__c == plugPresence || process.commodity__c.containsIgnoreCase('Gas') )//aggiustamento plug presence gas
                 && (process.isOwnAccount__c == isOwnAccount || process.isOwnAccount__c == null || (process.processName__c.containsIgnoreCase('Voltura Ele') && ord.ServicePoint__r.Account__c == null))
                 && process.isChangeUse__c == isChangeUse 
@@ -401,7 +405,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                     {
                         return 'MmsMisto';
                     }
-                }
+                }	
                 if((ser.ServicePoint__r.PlugPresence__c== 'NO')||(ser.ServicePoint__r.PowerRequested__c != null && (ser.ServicePoint__r.PowerRequested__c!= ser.ServicePoint__r.PowerContractual__c))){
                 //Sale__c s = new Sale__c(Id=sale.Id);
                     s.isTransition__c=true;
@@ -426,6 +430,21 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 if(ser.ServicePoint__r.CommoditySector__c == 'Gas'){
                     spListId.add(ser.ServicePoint__c);
                 }
+                if(isMms)
+                {
+                    if(energySet.contains(ser.ServicePoint__r.CommoditySector__c))
+                    {
+                        checkEnergy = true;
+                    }
+                    else if(nonEnergySet.contains(ser.ServicePoint__r.CommoditySector__c))
+                    {
+                        checkNonEnergy = true;
+                    }
+                    if(checkEnergy && checkNonEnergy)
+                    {
+                        return 'MmsMisto';
+                    }
+                } 
             }
             List<ServicePoint__c> spList = srQr.getRecordByIdList(spListId,'id,CommoditySector__c,SupplyCity__c,distributor__r.code__c');
             Map<String,HDT_WRP_RemiUbd> mapRemiCode = new Map<String,HDT_WRP_RemiUbd>();
