@@ -359,7 +359,9 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             if(tabValue.equalsIgnoreCase('EC7')){
                 serviceCatalog.Context__c = 'EC7';
             }
-
+            if(tabValue.equalsIgnoreCase('paperless')){
+                serviceCatalog.Context__c = 'Paperless';
+            }
             /*
                 1° livello
                     - Single Record:
