@@ -203,6 +203,141 @@ public with sharing class HDT_UTL_ServicePointTst {
             position.valore = 'IT';
             positions.add(position);
 
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'MODPAGUSCITA';
+            position.valore = 'Rate';
+            positions.add(position);
+			
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFPAG_FFUG';
+            position.valore = '1.0000000';
+            positions.add(position);
+                        
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFPAGA_FOG';
+            position.valore = '0.0000000';
+            positions.add(position);
+
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFPAGA_DEP';
+            position.valore = '0.0000000';
+            positions.add(position);
+                        
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFP_DEP355';
+            position.valore = '2.0000000';
+            positions.add(position);
+                        
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'TRATAUNICA';
+            position.valore = 'CheckTrauta';
+            positions.add(position);
+                        
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'DI_TRATAUNICA';
+            position.valore = '11/11/1992';
+            positions.add(position);
+                        
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'TFNCE0000';
+            position.valore = '2';
+            positions.add(position);
+                        
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'TFNCDC0000';
+            position.valore = '2';
+            positions.add(position);
+                        
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFNUM_COMP';
+            position.valore = '4.0';
+            positions.add(position);
+
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFUADNR';
+            position.valore = '6.0';
+            positions.add(position);
+
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFUADRS';
+            position.valore = '7.0';
+            positions.add(position);
+                        
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFUND';
+            position.valore = '8.0';
+            positions.add(position);
+
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFUNDA';
+            position.valore = '9.0';
+            positions.add(position);
+
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFUNDC';
+            position.valore = '9.5';
+            positions.add(position);
+
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFUNDI';
+            position.valore = '9.9';
+            positions.add(position);
+
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFUNDA';
+            position.valore = '9.0';
+            positions.add(position);
+                
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFUNDZ';
+            position.valore = '10.0';
+            positions.add(position);
+                        
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFBI_DIAM1';
+            position.valore = '11.0';
+            positions.add(position);
+                
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFBI_DIAM2';
+            position.valore = '12.0';
+            positions.add(position);
+                
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AF_BOC_IDR';
+            position.valore = '13.0';
+            positions.add(position);
+                        
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'TFRS000000';
+            position.valore = '14.0';
+            positions.add(position);
+
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AQCNS_ANNO';
+            position.valore = '15.0';
+            positions.add(position);
+                
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFNCOMP';
+            position.valore = '3.0';
+            positions.add(position);
+                        
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFUADRS';
+            position.valore = '6.0';
+            positions.add(position);
+                
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFUADNR';
+            position.valore = '6.0';
+            positions.add(position);
+                          
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'AFVASCA_AC';
+            position.valore = '1';
+            positions.add(position);
+
             response.data.posizioni = positions;
 
             List<ServicePoint__c> spList = [SELECT Id, MeterStatus__c, Distributor__c, Account__c FROM ServicePoint__c WHERE Name='testServicePoint0' LIMIT 1];

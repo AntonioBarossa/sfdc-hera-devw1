@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Traccia Informativa</label>
+    <label>Genera Bonifico</label>
     <protected>false</protected>
     <values>
         <field>Accesskey__c</field>
@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>ButtonOrder__c</field>
-        <value xsi:type="xsd:double">9.0</value>
+        <value xsi:type="xsd:double">7.0</value>
     </values>
     <values>
         <field>ButtonType__c</field>
@@ -29,11 +29,11 @@
     <values>
         <field>Parameters__c</field>
         <value xsi:type="xsd:string">{
-&quot;context&quot;: &quot;PaperlessList&quot;,
-&quot;processType&quot;: &quot;Informative&quot;,
-&quot;recordTypeName&quot;: &quot;HDT_RT_Informative&quot;,
+&quot;processType&quot;: &quot;Paperless&quot;,
+&quot;recordTypeName&quot;: &quot;HDT_RT_AltriProcessiPagamenti&quot;,
 &quot;flowName&quot;: &quot;HDT_FL_PostSalesMasterDispatch&quot;,
-&quot;createDocuments&quot;: true
+&quot;createDocuments&quot;: true,
+&quot;documentPaymentMethod&quot;: &quot;Bonifico Paperless&quot;
 }</value>
     </values>
     <values>

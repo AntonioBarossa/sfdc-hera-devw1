@@ -65,7 +65,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
         //Get servicePoint data start
         servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
-        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SalesCompanyCode__c,Vendor__c,SwitchInWinback__c,ServicePointCode__c,SupplyType__c,SupplyTypeTemp__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,ImplantTypeTemp__c,ATO__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c, isReseller__c');
+        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SalesCompanyCode__c,RateCategory__c,Vendor__c,SwitchInWinback__c,ServicePointCode__c,SupplyType__c,SupplyTypeTemp__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,ImplantTypeTemp__c,ATO__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c, isReseller__c');
         servicePoint = existingServicePoint[0];
         //Get servicePoint data end
 
@@ -377,9 +377,11 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 }
             }
             when 'Acqua'{
-                if(sp.SupplyTypeTemp__c=='Domestico'){
+                if( sp.RateCategory__c == 'ACAUNOPOT0' ){ //non potabile
+                    Name = 'Acqua (Altri usi - uso non potabile)';
+                } else if ( sp.SupplyTypeTemp__c == 'Domestico' ){
                     Name = 'Acqua Domestico';
-                }else{
+                } else {
                     Name = 'Acqua Non Domestico';
                 }
             }
