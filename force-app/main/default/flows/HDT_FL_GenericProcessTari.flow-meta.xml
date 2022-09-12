@@ -47,7 +47,7 @@
             <assignToReference>theCase.Commodity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Tari</stringValue>
+                <stringValue>Ambiente</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -140,7 +140,7 @@
             <assignToReference>theCase.Commodity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Tari</stringValue>
+                <stringValue>Ambiente</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -233,7 +233,7 @@
             <assignToReference>theCase.Commodity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Tari</stringValue>
+                <stringValue>Ambiente</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -319,7 +319,7 @@
             <assignToReference>theCase.Commodity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Tari</stringValue>
+                <stringValue>Ambiente</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -405,7 +405,7 @@
             <assignToReference>theCase.Commodity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Tari</stringValue>
+                <stringValue>Ambiente</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -663,6 +663,7 @@
             <label>Rifiuti Promiscui</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>CaseIdServizio</name>
         <dataType>String</dataType>
@@ -791,6 +792,7 @@
         <locationX>842</locationX>
         <locationY>1886</locationY>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Next_Step</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
@@ -910,6 +912,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>wizardLwc</name>
