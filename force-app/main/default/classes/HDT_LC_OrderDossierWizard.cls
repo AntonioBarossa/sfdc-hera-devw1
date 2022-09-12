@@ -90,6 +90,9 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         /* Create Order Parent */
         String saleOrder = macroProcessType.equalsIgnoreCase('handleProcess') ? 'a' : 'b';
         Order parentOrder = createOrderParent(sale, saleOrder, contactId);
+        if(macroProcessType != null && macroProcessType.equalsIgnoreCase('handleProcessTari')){
+            parentOrder.WasteCommodityType__c = 'Ambiente';
+        }
         orderSrv.createRecord(parentOrder);
         /* Loop add child orders to listOrderIds */
         for(Order o : listOrder){

@@ -368,33 +368,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if (!childOrdersDocValid.isEmpty()) {
                 orderSrv.updateRecords(childOrdersDocValid);
             }
-            /**@frpanico 03/03/2022
-             * Nel caso in cui il trigger gira sull'order padre
-             * il codice dalla riga 320 alla rgia 337 non funziona
-             * in quanto l'order figlio ancora non è stato aggiornato
-             * nella fase Documentazione validata.
-             * La gestione degli order figli è stata spostata
-             * alla riga 345
-             */
-            /*List<Order> ordersHeroku = new List<Order>();
-            List<Order> ordersSiebel = new List<Order>();
-
-            for(Order o:filtered){
-                if(o.sale__r.isTransition__c==true){
-                    ordersSiebel.add(o);
-                }else{
-                    ordersHeroku.add(o);
-                }
-            }
-            Map<Id, String> vasOrdersToUpdate = 
-                updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Esportazione VS Siebel ','Documentazione Validata','Esportazione VS Siebel ');
-            vasOrdersToUpdate.putAll(
-                updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS')
-            );
-            if(!vasOrdersToUpdate.isEmpty()){
-                system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(vasOrdersToUpdate));
-            }
-            */
         }
         /**@frpanico 03/03/2022
          * Nel caso il trigger giri sugli order figli
@@ -1346,8 +1319,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Set<Id> parentOrderIds = new Set<Id>();
         Map<Id,String> mapVasPhase = new Map<Id,String>();
         Map<Id,String> mapVasStatus = new Map<Id,String>();
-        Set<String> negativeOutcomes = new Set<String>{'Annullato','KO definitivo','Eliminato','KO','Pratica Rifiutata'};
-        Set<String> positiveOutcomes = new Set<String>{'Pratica gestita','KO gestito'};
+        Set<String> negativeOutcomes = new Set<String>{'Annullato','KO definitivo','Eliminato','KO','Pratica Rifiutata','KO gestito'};
+        Set<String> positiveOutcomes = new Set<String>{'Pratica gestita'};
         for(Order newOrder : (List<Order>) newOrderList)
         {
             String oldPhase = newOrder.Phase__c;

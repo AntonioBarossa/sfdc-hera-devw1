@@ -354,12 +354,19 @@
         <defaultConnectorLabel>Doppi Pagamenti/Incassi</defaultConnectorLabel>
         <rules>
             <name>Comunicazione_Pagamento</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>GetCaseAggiornato.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Comunicazione Pagamento</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Promessa di Pagamento Ente</stringValue>
                 </rightValue>
             </conditions>
             <connector>

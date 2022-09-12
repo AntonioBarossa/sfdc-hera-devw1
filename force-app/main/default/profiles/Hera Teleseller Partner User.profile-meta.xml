@@ -8909,6 +8909,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contact.MktCloudTstSyncAllowed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contact.MobilePhone</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13117,6 +13122,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Lead.LeadValidityEndDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.MktCloudTstSyncAllowed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -33370,6 +33380,11 @@
         <field>MandatoryAttachments__c.SubscriberType__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.WasteCommodityType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
     <layoutAssignments>
         <layout>Case-HDT_ConsumoAnomaloIdrico</layout>
         <recordType>Case.HDT_RT_ConsumoAnomaloIdrico</recordType>
@@ -37398,6 +37413,66 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Reading__c.HDT_RT_LetturaAcqua</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_GenericheTari</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_PagamentoUnicoAnnuale_TARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_Segnalazioni</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
