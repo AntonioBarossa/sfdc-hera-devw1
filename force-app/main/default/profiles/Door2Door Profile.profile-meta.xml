@@ -1848,11 +1848,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.Cemetery__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.ChannelOfPayment__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -2003,11 +1998,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.DistributorServiceCode__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.Distributor__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -2034,11 +2024,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Email__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.EnergyService__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2179,16 +2164,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Mobile__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.ModeSendPaperlessCode__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.NameBankOrPostOffice__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2493,11 +2468,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.TotalForInstallments__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.TotalPaidCustomerToPay__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -2519,11 +2489,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.TotalToPay__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.TraceabilityCode__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5261,11 +5226,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Product2.PowerFlow__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Product2.PriceBonusGas__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9141,11 +9101,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.QuoteLine__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.Status__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
