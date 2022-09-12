@@ -3,6 +3,10 @@
     <label>Reclami - Riclassificazione Ambiente</label>
     <protected>false</protected>
     <values>
+        <field>Commodity__c</field>
+        <value xsi:type="xsd:string">Energia Elettrica</value>
+    </values>
+    <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;ComplaintType__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;FirstLevelComplaintClassification__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1}]</value>
     </values>

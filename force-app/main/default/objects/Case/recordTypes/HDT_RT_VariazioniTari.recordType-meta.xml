@@ -2980,6 +2980,30 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G1 - MMS Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G2 - MMS Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G3 - MMS Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 - MMS Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G5 - MMS Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 - MMS Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>GENESI-Altro</fullName>
             <default>false</default>
         </values>
@@ -11952,10 +11976,42 @@
     </picklistValues>
     <picklistValues>
         <picklist>Subprocess__c</picklist>
+		<values>
+			<fullName>Agevolazione</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Dati catastali</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Domiciliato in nucleo residente</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>DOM_Coabitazioni</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DOM_Componenti non residenti</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DOM_Componenti residenti</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>NON DOM_ISTAT/Ronchi</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Rid. Agev. Dopo Accertamento</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Superficie</fullName>
+			<default>false</default>
+		</values>
     </picklistValues>
     <picklistValues>
         <picklist>SubscriberType__c</picklist>

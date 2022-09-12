@@ -269,7 +269,22 @@ public inherited sharing class HDT_LC_ConfigureProduct {
     public static void updateSaleNext(Sale__c sale){
         performChecks(sale);
         updateQuotesOnNext(sale.Id);
+        checkRateCategory(sale.Id);
         saleSrv.updateRecord(sale);
+    }
+
+    @AuraEnabled
+    public static void checkRateCategory( id saleId ){
+
+        List<sbqq__quoteline__c> qlList = [SELECT ServicePoint__c, ServicePoint__r.RateCategory__c, SBQQ__Product__r.service__c, SBQQ__Product__c, SBQQ__ProductFamily__c, SBQQ__ProductName__c, SBQQ__ProductCode__c 
+                                            FROM sbqq__quoteline__c 
+                                            WHERE sbqq__Quote__r.Sale__c = :saleId AND SBQQ__Product__r.service__c ='Acqua' WITH SECURITY_ENFORCED ];
+        for( sbqq__quoteline__c ql: qlList ){
+            if( ql.ServicePoint__r.RateCategory__c != null && 'ACAUNOPOT0'.equalsIgnoreCase(ql.SBQQ__ProductCode__c) && ql.SBQQ__ProductCode__c != ql.ServicePoint__r.RateCategory__c ){
+                throw new AuraHandledException('Errore sulla RateCategory');
+            }
+        }
+ 
     }
 
     @AuraEnabled

@@ -324,6 +324,21 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}
         },
+    'Istruttoria' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}
+        },
+    'ModificaImpianto' => new Map<String,List<String>>
+    {
+        'Cluster__c' => new List<String>
+            {'Reclami', 'Preventivi'}
+    },
+    'RimozioneImpianto' => new Map<String,List<String>>
+    {
+        'Cluster__c' => new List<String>
+            {'Reclami', 'Preventivi'}
+    },
     'RipristinoFornituraInterrotta' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
@@ -482,10 +497,64 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}
         },
+    'VerificaFugaIdrica' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Segnalazioni'},
+            'Type' => new List<String>
+                {'Consumo Anomalo Idrico'}
+        },
     'VerificaGdm' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi', 'Fatturazione'}
+        },
+    'VerificaInterna' => new Map<String,List<String>>
+    {
+        'Cluster__c' => new List<String>
+            {'Reclami', 'Preventivi', 'Fatturazione'}
+    },
+    'VerificaIntegritaSigilli' => new Map<String,List<String>>
+    {
+        'Cluster__c' => new List<String>
+            {'Reclami', 'Preventivi', 'Fatturazione'}
+    },
+    'InterventiConVerifica' => new Map<String,List<String>>
+    {
+        'Cluster__c' => new List<String>
+            {'Reclami', 'Preventivi', 'Fatturazione'}
+    },
+    'VerificaRotturaImpiantoCliente' => new Map<String,List<String>>
+    {
+        'Cluster__c' => new List<String>
+            {'Reclami', 'Preventivi', 'Fatturazione'}
+    },
+    'adesionerinunciafondofughe' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami','Fatturazione'}
+        },
+    'modificaunitaimmobiliaricomponenti' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami','Fatturazione'}
+        },
+    'esenzionemodificafognatura' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami','Fatturazione'}
+        },
+        'letturaacquaavvisocliente' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Segnalazioni'}
+        },
+    'cessazionescarichiproduttivi' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Variazioni'},
+                'Type' => new List<String>
+                {'Gestione Calamità', 'Informative','Comunicazione di Fallimento','Annullamento Contratti'}
         },
     'VerificaTensionePressione' => new Map<String,List<String>>
         {
@@ -498,6 +567,11 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
                 {'Reclami', 'Preventivi', 'Fatturazione', 'Morosità', 'Variazioni'},
             'Type' => new List<String>
                 {'Unificazione/Separazione BP-CA-Bolletta','Allineamento Canone Rai'}
+        },
+    'Cessazione' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Reclamo Scritto/Rich. Info', 'Cessazione Post Accertamento'}
         },
     'CessazionePostAccertamento' => new Map<String,List<String>>
         {
@@ -541,7 +615,12 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
     'ComunicazionePagamento' => new Map<String,List<String>>
         {
             'Context__c' => new List<String>
-                {'EC1L','InstallmentsView'}
+                {'EC1L','InstallmentsView', 'Paperless'}
+        },
+    'PromessaPagamentoEnte' => new Map<String,List<String>>
+        {
+            'Context__c' => new List<String>
+                {'EC1L','InstallmentsView','Paperless'}
         }
     };
 
@@ -617,9 +696,37 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
         return res;
     }
 
-    public static Boolean checkSalesTari(String saleId)
+    public static Boolean checkSalesTari(String saleId, String method)
     {
-        List<SBQQ__QuoteLine__c> quoteLines = [Select Id, ServicePoint__r.CommoditySector__c FROM SBQQ__QuoteLine__c WHERE SBQQ__Quote__r.Sale__c = :saleId AND ServicePoint__c != null AND ServicePoint__r.CommoditySector__c = 'Ambiente'];
-		return !quoteLines.isEmpty();
+        Boolean res = false;
+        Boolean checkTari = false;
+        Boolean checkStandard = false;
+        List<SBQQ__QuoteLine__c> quoteLines = [SELECT Id, ServicePoint__c, ServicePoint__r.CommoditySector__c 
+        FROM SBQQ__QuoteLine__c 
+        WHERE SBQQ__Quote__r.Sale__c = :saleId
+        WITH SECURITY_ENFORCED];
+
+        for(SBQQ__QuoteLine__c quoteLine : quoteLines)
+        {
+            if(quoteLine.ServicePoint__c != null && quoteLine.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Ambiente'))
+            {
+                checkTari = true;
+            }
+            else if(quoteLine.ServicePoint__c != null && !quoteLine.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Ambiente'))
+            {
+                checkStandard = true;
+            }
+            
+        }
+
+        if(method.equalsIgnoreCase('tari') && checkTari)
+        {
+            res = true;
+        }
+        else if(method.equalsIgnoreCase('standard') && checkStandard)
+        {
+            res = true;
+        }
+        return res;
     }
 }

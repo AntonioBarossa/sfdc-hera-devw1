@@ -413,7 +413,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__RequiredBy__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__c = :quoteId
-            AND SBQQ__Product__r.Name IN ('POD','PDR')
+            AND SBQQ__Product__r.Name IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura','Punto Fornitura Ambiente')
             WITH SECURITY_ENFORCED
         ];
 
@@ -542,7 +542,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
-            AND SBQQ__Product__r.Name IN ('POD','PDR')
+            AND SBQQ__Product__r.Name IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura','Punto Fornitura Ambiente')
             WITH SECURITY_ENFORCED
         ];
 
@@ -633,7 +633,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             AND SBQQ__Quote__r.ContractReference__c != null
             AND (SBQQ__Quote__r.AllowChangeUse__c = null OR SBQQ__Quote__r.AllowChangeUse__c = false)
             AND (SBQQ__Quote__r.AmendmentAllowed__c = null OR SBQQ__Quote__r.AmendmentAllowed__c = false)
-            AND SBQQ__Product__r.Name NOT IN ('PDR','POD','Analisi Consumi')
+            AND SBQQ__Product__r.Name NOT IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura','Punto Fornitura Ambiente','Analisi Consumi')
             AND (SBQQ__ProductFamily__c = 'VAS Fatturabili' OR SBQQ__ProductFamily__c = 'VAS Prodotto' OR SBQQ__ProductFamily__c = 'VAS Servizio')
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED

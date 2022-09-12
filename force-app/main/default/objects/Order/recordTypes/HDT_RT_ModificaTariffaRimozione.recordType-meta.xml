@@ -2599,6 +2599,10 @@
 			<fullName>Esito KO Da SAP</fullName>
 			<default>false</default>
 		</values>
+        <values>
+			<fullName>In attesa Approvazione</fullName>
+			<default>false</default>
+		</values>
 		<values>
 			<fullName>In attesa esito documentale da E1</fullName>
 			<default>false</default>
@@ -2682,6 +2686,10 @@
         </values>
         <values>
             <fullName>Connessione con Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Tariffa - Rimozione Agevolazione</fullName>
             <default>false</default>
         </values>
         <values>

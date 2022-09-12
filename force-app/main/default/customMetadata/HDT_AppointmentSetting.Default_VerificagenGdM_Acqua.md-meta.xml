@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Default_VerificagenGdM_Acqua</label>
+    <protected>false</protected>
+    <values>
+        <field>Flag__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Type__c</field>
+        <value xsi:type="xsd:string">Appuntamento AtoA</value>
+    </values>
+    <values>
+        <field>Value1__c</field>
+        <value xsi:type="xsd:string">VerificagenGdM</value>
+    </values>
+    <values>
+        <field>Value2__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Value3__c</field>
+        <value xsi:type="xsd:string">Acqua</value>
+    </values>
+</CustomMetadata>

@@ -11,7 +11,7 @@ public with sharing class HDT_UTL_RuleAssociation {
 
         List<String> whereConditionList = new List<String>();
         if(!String.isEmpty(filterProduct.Name)){
-            whereConditionList.add('Name LIKE \'%' + String.escapeSingleQuotes(filterProduct.Name) + '%\'');
+            whereConditionList.add('Name = \'' + String.escapeSingleQuotes(filterProduct.Name) + '\'');
         }
 
         if(!String.isEmpty(filterProduct.TypeOffer__c)){
@@ -19,7 +19,7 @@ public with sharing class HDT_UTL_RuleAssociation {
         }
 
         if(!String.isEmpty(filterProduct.ProductCode)){
-            whereConditionList.add('ProductCode LIKE \'%' + String.escapeSingleQuotes(filterProduct.ProductCode) + '%\'');
+            whereConditionList.add('ProductCode = \'' + String.escapeSingleQuotes(filterProduct.ProductCode) + '\'');
         }
 
         //if(!String.isEmpty(filterProduct.Family)){
@@ -27,7 +27,7 @@ public with sharing class HDT_UTL_RuleAssociation {
         //}
 
         if(!String.isEmpty(filterProduct.Version__c)){
-            whereConditionList.add('Version__c LIKE \'%' + String.escapeSingleQuotes(filterProduct.Version__c) + '%\'');
+            whereConditionList.add('Version__c = \'' + String.escapeSingleQuotes(filterProduct.Version__c) + '\'');
         }
 
         if(!String.isEmpty(filterProduct.Status__c)){
@@ -35,7 +35,7 @@ public with sharing class HDT_UTL_RuleAssociation {
         }
 
         if(!String.isEmpty(filterProduct.DescriptionSAP__c)){
-            whereConditionList.add('DescriptionSAP__c LIKE \'%' + String.escapeSingleQuotes(filterProduct.DescriptionSAP__c) + '%\'');
+            whereConditionList.add('DescriptionSAP__c = \'' + String.escapeSingleQuotes(filterProduct.DescriptionSAP__c) + '\'');
         }
 
         if(!String.isEmpty(filterProduct.CategoryFamily__c)){
@@ -44,6 +44,14 @@ public with sharing class HDT_UTL_RuleAssociation {
 
         if(!String.isEmpty(filterProduct.Service__c)){
             whereConditionList.add('Service__c=\'' + String.escapeSingleQuotes(filterProduct.Service__c) + '\'');
+        }
+
+        if(!String.isEmpty(filterProduct.SupplyType__c)){
+            whereConditionList.add('SupplyType__c=\'' + String.escapeSingleQuotes(filterProduct.SupplyType__c) + '\'');
+        }
+
+        if(filterProduct.NoSellable__c != null){
+            whereConditionList.add('NoSellable__c=' + String.valueOf(filterProduct.NoSellable__c) + '');
         }
 
         queryString += 'FROM Product2 ';
@@ -67,6 +75,7 @@ public with sharing class HDT_UTL_RuleAssociation {
         //}
 
         //queryString += ;
+        System.debug(LoggingLevel.Debug, '@@@@@@Query ' + queryString);
 
         return queryString;
     }

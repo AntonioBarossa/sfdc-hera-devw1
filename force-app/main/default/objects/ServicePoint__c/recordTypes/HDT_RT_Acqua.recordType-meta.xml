@@ -97,10 +97,10 @@
             <fullName>02- Pubblica utilità</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Rilevanza continuità serv%2E GAS</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Sempre ap%2E - Elettromedicale</fullName>
             <default>false</default>
@@ -592,11 +592,11 @@
     <picklistValues>
         <picklist>SupplySubtype__c</picklist>
         <values>
-            <fullName>Altri usi</fullName>
+            <fullName>Uso agricolo e zootecnico</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Uso artigianale e commerciale</fullName>
+            <fullName>Uso pubblico non disalimentabile</fullName>
             <default>false</default>
         </values>
         <values>
@@ -619,35 +619,15 @@
             <fullName>Uso pubblico disalimentabile</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Uso pubblico non disalimentabile</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SupplyTypeTemp__c</picklist>
         <values>
-            <fullName>Altri usi</fullName>
+            <fullName>Domestico</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Usi industriali che scaricano in pubblica fognatura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso civile domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso civile non domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso diverso da domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso domestico</fullName>
+            <fullName>Non Domestico</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -681,27 +661,11 @@
     <picklistValues>
         <picklist>SupplyType__c</picklist>
         <values>
-            <fullName>Altri usi</fullName>
+            <fullName>Domestico</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Usi industriali che scaricano in pubblica fognatura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso civile domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso civile non domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso diverso da domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso domestico</fullName>
+            <fullName>Non Domestico</fullName>
             <default>false</default>
         </values>
     </picklistValues>

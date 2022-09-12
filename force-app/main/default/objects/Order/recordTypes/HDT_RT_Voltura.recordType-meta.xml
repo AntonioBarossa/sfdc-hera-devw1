@@ -1994,6 +1994,17 @@
             <fullName>Imposta usi non domestici iva 22%25 %28Cod%2E G_ICC%29</fullName>
             <default>false</default>
         </values>
+    </picklistValues>    
+    <picklistValues>
+        <picklist>FuiAccess__c</picklist>
+        <values>
+            <fullName>N</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>S</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Instance326__c</picklist>
@@ -2129,6 +2140,18 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
+        <values>
+            <fullName>In attesa Verifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Rilavorato</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>In attesa di quality call</fullName>
             <default>false</default>
