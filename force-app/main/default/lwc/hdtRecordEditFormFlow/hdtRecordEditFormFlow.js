@@ -417,7 +417,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
 
     paymentLogic(){ 
-        if(this.type == 'Comunicazione Pagamento'){
+        if(this.type == 'Comunicazione Pagamento' || this.type == 'Promessa di Pagamento Ente'){
             let accountholderTypeBeneficiary = this.selector('AccountholderTypeBeneficiary__c');
             console.log('#accountholderTypeBeneficiary : ' + accountholderTypeBeneficiary.value);
             if(accountholderTypeBeneficiary != null){

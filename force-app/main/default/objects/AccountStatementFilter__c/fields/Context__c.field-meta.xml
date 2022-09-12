@@ -31,6 +31,11 @@
                 <default>false</default>
                 <label>EC7</label>
             </value>
+            <value>
+                <fullName>Paperless</fullName>
+                <default>false</default>
+                <label>Paperless</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

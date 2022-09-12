@@ -558,7 +558,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
     'PromessaPagamentoEnte' => new Map<String,List<String>>
         {
             'Context__c' => new List<String>
-                {'EC1L','InstallmentsView'}
+                {'EC1L','InstallmentsView','Paperless'}
         }
     };
 
