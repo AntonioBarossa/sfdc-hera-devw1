@@ -9114,6 +9114,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>1101-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>13A0-Usi di Abitazione BT</fullName>
             <default>false</default>
         </values>
