@@ -1,0 +1,52 @@
+<template>
+    <template if:false={isLoading}>
+        <div class="slds-m-around_small">
+            <p class="slds-text-body_regular">Inserisci l'ABI o il Nome della banca e premi INVIO</p>
+        </div>
+        <div onkeyup={handleCustomSearch}>
+            <lightning-input
+                name="enter-search"
+                label="Premi Invio per avviare la ricerca"
+                type="search"
+            ></lightning-input>
+        </div>
+        <lightning-datatable
+                        key-field="id"
+                        data={data}
+                        columns={columns}
+                        resize-column-disabled=true
+                        max-row-selection=1
+                        
+        ></lightning-datatable>
+    </template>
+    <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
+        <div class="actionsLeft">
+        </div>
+        <div class="actionsRight">
+            <template if:true={saveButton}> 
+                <lightning-button
+                    class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                    variant="brand" type="button" onclick={handleNext} name="save" label={labelSaveButton} disabled={disabledSaveButton}>
+                </lightning-button>
+            </template>
+            <template if:true={previousButton}> 
+                <lightning-button
+                    class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                    variant="neutral" type="button" name="previous" label={labelPreviousButton} onclick={handlePrevious}>
+                </lightning-button>
+            </template>
+            <template if:true={draftButton}> 
+                <lightning-button
+                    class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                    variant="neutral" type="button" name="draft" label={labelDraftButton} onclick={handleNext}>
+                </lightning-button>
+            </template>
+            <template if:true={cancelButton}> 
+                <lightning-button
+                    class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                    variant="brand" type="button" name="cancel" label={labelCancelButton} onclick={handleNext}>
+                </lightning-button>
+            </template>
+        </div>
+    </div>
+</template>
