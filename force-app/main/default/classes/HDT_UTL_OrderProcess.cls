@@ -1319,8 +1319,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Set<Id> parentOrderIds = new Set<Id>();
         Map<Id,String> mapVasPhase = new Map<Id,String>();
         Map<Id,String> mapVasStatus = new Map<Id,String>();
-        Set<String> negativeOutcomes = new Set<String>{'Annullato','KO definitivo','Eliminato','KO','Pratica Rifiutata'};
-        Set<String> positiveOutcomes = new Set<String>{'Pratica gestita','KO gestito'};
+        Set<String> negativeOutcomes = new Set<String>{'Annullato','KO definitivo','Eliminato','KO','Pratica Rifiutata','KO gestito'};
+        Set<String> positiveOutcomes = new Set<String>{'Pratica gestita'};
         for(Order newOrder : (List<Order>) newOrderList)
         {
             String oldPhase = newOrder.Phase__c;
