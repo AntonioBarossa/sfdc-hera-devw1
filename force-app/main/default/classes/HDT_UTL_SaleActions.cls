@@ -9,7 +9,6 @@ public with sharing class HDT_UTL_SaleActions
     private static final String NON_TARI_KEY = 'nonTari';
     private static final String QUOTE_PROCESS_NAME = 'Vendita Guidata Offerte';
 
-
     /**@frpanico 2022-09-08
      * This method creates the GroupLines to perform order split
      * It takes in input the SaleId
@@ -53,6 +52,7 @@ public with sharing class HDT_UTL_SaleActions
         }
         Map<String,HDT_WRP_PrimaryGroup> quoteLineGroupObj = createQuoteLineGroups(groupingMap);
         allQuoteLines = associateQuoteLinesToGroups(quoteLineGroupObj, allQuoteLines);
+        allQuoteLines = associateServicePointToQuoteLines(quoteLineGroupObj, allQuoteLines);
 
         HDT_UTL_DatabaseService.updateSObject(allQuoteLines);
 
@@ -234,10 +234,37 @@ public with sharing class HDT_UTL_SaleActions
             if(isTari && quoteLine.Id == quoteLineGroupObj.get(key).mainQuoteLineId && quoteLine.BillingProfile__c == null)
             {
                 quoteLine.BillingProfile__c = quoteLine.SBQQ__RequiredBy__r.BillingProfile__c;
-                quoteLine.ServicePoint__c = quoteLine.SBQQ__RequiredBy__r.ServicePoint__c;
+                
             }
         }
 
+        return quoteLines;
+    }
+
+    private static List<SBQQ__QuoteLine__c> associateServicePointToQuoteLines(Map<String, HDT_WRP_PrimaryGroup> quoteLineGroupObj, List<SBQQ__QuoteLine__c> quoteLines)
+    {
+        Map<Id, Id> quoteLineServicePointMap = new Map<Id, Id>();
+        for(SBQQ__QuoteLine__c quoteLine : quoteLines)
+        {
+            if(quoteLine.ServicePoint__c != null && quoteLine.SBQQ__Product__r.Service__c != null  && quoteLine.SBQQ__Product__r.Service__c.equalsIgnoreCase('Ambiente'))
+            {
+                quoteLineServicePointMap.put(quoteLine.SBQQ__RequiredBy__c, quoteLine.ServicePoint__c);
+            }
+        }
+        for(SBQQ__QuoteLine__c quoteLine : quoteLines)
+        {
+            Boolean isTari = quoteLine.SBQQ__Product__r.Service__c != null && quoteLine.SBQQ__Product__r.Service__c.equalsIgnoreCase('Ambiente');
+            if(!isTari)
+            {
+                continue;
+            }
+            String key = quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c);
+            if((quoteLineGroupObj.get(key)).mainQuoteLineId == quoteLine.Id && quoteLine.ServicePoint__c == null)
+            {
+                quoteLine.ServicePoint__c = quoteLineServicePointMap.get(quoteLine.SBQQ__RequiredBy__c);
+            }
+        }
+        
         return quoteLines;
     }
 
