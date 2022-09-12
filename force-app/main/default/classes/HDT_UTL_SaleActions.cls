@@ -38,21 +38,27 @@ public with sharing class HDT_UTL_SaleActions
             SBQQ__Quote__r.Sale__r.Account__c,
             SBQQ__RequiredBy__r.BillingProfile__c,
             SBQQ__RequiredBy__r.Name,
-            SBQQ__RequiredBy__r.SBQQ__RequiredBy__r.Name
+            SBQQ__RequiredBy__r.SBQQ__RequiredBy__r.Name,
+            SBQQ__RequiredBy__r.ServicePoint__c
             FROM SBQQ__QuoteLine__c 
             WHERE SBQQ__Quote__r.Sale__c = :saleId 
             WITH SECURITY_ENFORCED];
 
-            Map<String, List<SBQQ__QuoteLine__c>> groupingMap = identifyPrimaryQuoteLines(allQuoteLines);
-            List<SBQQ__QuoteLine__c> quoteLinesWithoutBilling = checkBillingProfileAssociation(groupingMap);
-            if(!quoteLinesWithoutBilling.isEmpty())
-            {
-                result.errorMessage = 'Attenzione! Ai bundle “' + String.join(quoteLinesWithoutBilling, ',') +'” non è stato associato un Metodo di Pagamento';
-                return result;
-            }
-            Map<String,HDT_WRP_PrimaryGroup> quoteLineGroupObj = createQuoteLineGroups(groupingMap);
-            allQuoteLines = associateQuoteLinesToGroups(quoteLineGroupObj, allQuoteLines);
-            System.debug(JSON.serialize(allQuoteLines));
+        Map<String, List<SBQQ__QuoteLine__c>> groupingMap = identifyPrimaryQuoteLines(allQuoteLines);
+        List<SBQQ__QuoteLine__c> quoteLinesWithoutBilling = checkBillingProfileAssociation(groupingMap);
+        if(!quoteLinesWithoutBilling.isEmpty())
+        {
+            result.errorMessage = 'Attenzione! Ai bundle “' + String.join(quoteLinesWithoutBilling, ',') +'” non è stato associato un Metodo di Pagamento';
+            return result;
+        }
+        Map<String,HDT_WRP_PrimaryGroup> quoteLineGroupObj = createQuoteLineGroups(groupingMap);
+        allQuoteLines = associateQuoteLinesToGroups(quoteLineGroupObj, allQuoteLines);
+
+        HDT_UTL_DatabaseService.updateSObject(allQuoteLines);
+
+        result.quoteLineGrouped = allQuoteLines;
+        result.errorMessage = '';
+
 
         return result;
     }
@@ -228,22 +234,12 @@ public with sharing class HDT_UTL_SaleActions
             if(isTari && quoteLine.Id == quoteLineGroupObj.get(key).mainQuoteLineId && quoteLine.BillingProfile__c == null)
             {
                 quoteLine.BillingProfile__c = quoteLine.SBQQ__RequiredBy__r.BillingProfile__c;
+                quoteLine.ServicePoint__c = quoteLine.SBQQ__RequiredBy__r.ServicePoint__c;
             }
         }
 
         return quoteLines;
     }
-    // private static Boolean existGroupName(String groupName, List<HDT_WRP_PrimaryGroup> groups)
-    // {
-    //     for(HDT_WRP_PrimaryGroup singleGroup : groups)
-    //     {
-    //         if(singleGroup.groupName.equalsIgnoreCase(groupName))
-    //         {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
 
     public class HDT_WRP_SaleActions
     {
