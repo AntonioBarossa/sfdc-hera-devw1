@@ -4,6 +4,17 @@
     <active>true</active>
     <label>HDT_RT_AgevolazioniAmbiente</label>
     <picklistValues>
+        <picklist>RequestSource__c</picklist>
+        <values>
+            <fullName>Da contribuente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D'ufficio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>AccountholderTypeBeneficiary__c</picklist>
         <values>
             <fullName>Beneficiario Alternativo</fullName>
@@ -2870,17 +2881,6 @@
         </values>
         <values>
             <fullName>Trifase</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>RequestSource__c</picklist>
-        <values>
-            <fullName>D%E2%80%99ufficio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Da contribuente</fullName>
             <default>false</default>
         </values>
     </picklistValues>
