@@ -663,7 +663,6 @@
             <label>Rifiuti Promiscui</label>
         </rules>
     </decisions>
-    <environments>Default</environments>
     <formulas>
         <name>CaseIdServizio</name>
         <dataType>String</dataType>
@@ -912,7 +911,6 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>wizardLwc</name>
