@@ -436,6 +436,11 @@
         <label>Modifica azzeramento consumo annuo - GAS</label>
     </customValue>
     <customValue>
+        <fullName>Modifica azzeramento consumo annuo - ACQ</fullName>
+        <default>false</default>
+        <label>Modifica azzeramento consumo annuo - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Modifica Unita Immobiliari Componenti - ACQ</fullName>
         <default>false</default>
         <label>Modifica Unita Immobiliari Componenti - ACQ</label>
