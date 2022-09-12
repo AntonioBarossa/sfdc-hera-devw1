@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Consumo Annuo</label>
+    <label>Promessa di Pagamento Ente</label>
     <protected>false</protected>
     <values>
-        <field>IsNumber__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <field>CausalCode__c</field>
+        <value xsi:type="xsd:string">PPE</value>
     </values>
     <values>
-        <field>IsTranscode__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <field>Cluster__c</field>
+        <value xsi:type="xsd:string">Pagamenti</value>
     </values>
     <values>
-        <field>Method__c</field>
+        <field>Commodity__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>
-        <field>Precision__c</field>
+        <field>OperationCode__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>
-        <field>SapField__c</field>
-        <value xsi:type="xsd:string">AQCNS_ANNO</value>
+        <field>Process__c</field>
+        <value xsi:type="xsd:string">Promessa di Pagamento Ente</value>
     </values>
     <values>
-        <field>SfdcField__c</field>
-        <value xsi:type="xsd:string">AnnualConsumption__c</value>
+        <field>Subprocess__c</field>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>
