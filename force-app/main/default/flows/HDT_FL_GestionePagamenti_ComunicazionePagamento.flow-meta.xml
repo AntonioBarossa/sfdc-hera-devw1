@@ -39,6 +39,45 @@
     </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>
+        <name>Assegna_Versato_all_Ente_sbagliato_1</name>
+        <label>Assegna Versato all’Ente sbagliato 1</label>
+        <locationX>803</locationX>
+        <locationY>2078</locationY>
+        <assignmentItems>
+            <assignToReference>versatoEnteS</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Versato_all_Ente_sbagliato</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>notaEsistente</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseInput.Note__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_Note_2</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Versato_all_Ente_sbagliato_2</name>
+        <label>Assegna Versato all’Ente sbagliato 2</label>
+        <locationX>803</locationX>
+        <locationY>2318</locationY>
+        <assignmentItems>
+            <assignToReference>CaseInput.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>notaCompleta</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_Note_3</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaPredefault</name>
         <label>AssegnaPredefault</label>
         <locationX>1837</locationX>
@@ -268,6 +307,22 @@
             <targetReference>AggiornaCase_0_0_0</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>NO_Picklist_Option</name>
+        <choiceText>NO</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>NO</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>SI_Picklist_Option</name>
+        <choiceText>SI</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>SI</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Case_In_Bozza_Question</name>
         <label>Case In Bozza?</label>
@@ -1025,7 +1080,7 @@
         <name>Salva_In_Bozza_o_vai_Avanti_0_0_0_0_0_0_0_0</name>
         <label>Salva In Bozza o vai Avanti?</label>
         <locationX>803</locationX>
-        <locationY>1958</locationY>
+        <locationY>2678</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_CaseItem_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1062,7 +1117,7 @@
         <name>Salva_In_Bozza_o_vai_Avanti_0_0_0_0_0_0_0_0_0</name>
         <label>Salva In Bozza o vai Avanti?</label>
         <locationX>1469</locationX>
-        <locationY>2318</locationY>
+        <locationY>3038</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Avanti_0_0_0_0_0_0_0_0_0</name>
@@ -1113,7 +1168,7 @@
         <name>Salva_In_Bozza_o_vai_Avanti_0_0_0_0_0_0_0_0_0_0</name>
         <label>Salva In Bozza o vai Avanti?</label>
         <locationX>886</locationX>
-        <locationY>2798</locationY>
+        <locationY>3518</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Avanti_0_0_0_0_0_0_0_0_0_0</name>
@@ -1304,7 +1359,7 @@
         <name>Valore_Motivo_differenza_importi_0_0</name>
         <label>Valore Motivo differenza importi</label>
         <locationX>1128</locationX>
-        <locationY>2558</locationY>
+        <locationY>3278</locationY>
         <defaultConnector>
             <targetReference>CercaDocumento</targetReference>
         </defaultConnector>
@@ -1338,6 +1393,11 @@
         <dataType>Currency</dataType>
         <expression>{!GetCaseAggiornato.TotalResidue__c} - {!GetCaseAggiornato.PaidAmount__c}</expression>
         <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>notaCompleta</name>
+        <dataType>String</dataType>
+        <expression>{!notaEsistente}+{!testoDefaultNote}+{!versatoEnteS}+&quot;;&quot;</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestionePagamenti_ComunicazionePagamento {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Comunicazione Pagamento</label>
@@ -1615,7 +1675,7 @@
         <name>Aggiorna_CaseItem_0_0_0_0</name>
         <label>Aggiorna CaseItem</label>
         <locationX>1469</locationX>
-        <locationY>2078</locationY>
+        <locationY>2798</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Dettaglio_documento_fattura_0_0_0_0_0_0_0</targetReference>
@@ -1636,7 +1696,7 @@
         <name>Aggiorna_CaseItem_0_0_0_0_0</name>
         <label>Aggiorna CaseItem</label>
         <locationX>1128</locationX>
-        <locationY>2438</locationY>
+        <locationY>3158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Valore_Motivo_differenza_importi_0_0</targetReference>
@@ -1849,6 +1909,36 @@
         <object>CaseItem__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Aggiorna_Case_Note_1</name>
+        <label>Aggiorna Case Note 1</label>
+        <locationX>803</locationX>
+        <locationY>1958</locationY>
+        <connector>
+            <targetReference>Assegna_Versato_all_Ente_sbagliato_1</targetReference>
+        </connector>
+        <inputReference>CaseInput</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_Note_2</name>
+        <label>Aggiorna Case Note 2</label>
+        <locationX>803</locationX>
+        <locationY>2198</locationY>
+        <connector>
+            <targetReference>Assegna_Versato_all_Ente_sbagliato_2</targetReference>
+        </connector>
+        <inputReference>CaseInput</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_Note_3</name>
+        <label>Aggiorna Case Note 3</label>
+        <locationX>803</locationX>
+        <locationY>2438</locationY>
+        <connector>
+            <targetReference>Test_Campo_NOTE</targetReference>
+        </connector>
+        <inputReference>CaseInput</inputReference>
+    </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_In_Lavorazione</name>
         <label>Aggiorna In Lavorazione</label>
@@ -2643,12 +2733,22 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Salva_In_Bozza_o_vai_Avanti_0_0_0_0_0_0_0_0</targetReference>
+            <targetReference>Aggiorna_Case_Note_1</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_0_0_0_0_0_0_0_0_0_0_0_0</name>
             <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Dettaglio documento/fattura&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Versato_all_Ente_sbagliato</name>
+            <choiceReferences>SI_Picklist_Option</choiceReferences>
+            <choiceReferences>NO_Picklist_Option</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>NO_Picklist_Option</defaultSelectedChoiceReference>
+            <fieldText>Versato all’Ente sbagliato</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
         </fields>
         <fields>
             <name>hdtRecordEditForm_4_0_0</name>
@@ -2761,7 +2861,7 @@
         <name>Dettaglio_documento_fattura_0_0_0_0_0_0_0</name>
         <label>Dettaglio documento/fattura</label>
         <locationX>1469</locationX>
-        <locationY>2198</locationY>
+        <locationY>2918</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2884,7 +2984,7 @@
         <name>Dettaglio_documento_fattura_0_0_0_0_0_0_0_0</name>
         <label>Dettaglio documento/fattura</label>
         <locationX>886</locationX>
-        <locationY>2678</locationY>
+        <locationY>3398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3798,6 +3898,25 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Test_Campo_NOTE</name>
+        <label>Test Campo NOTE</label>
+        <locationX>803</locationX>
+        <locationY>2558</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Salva_In_Bozza_o_vai_Avanti_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>Test_Note</name>
+            <fieldText>&lt;p&gt;{!CaseInput.Note__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
         <locationX>2262</locationX>
         <locationY>0</locationY>
@@ -4035,7 +4154,7 @@
         <name>Annullamento_Prestazione_0_0_0_0_0_0_0_0_0_0</name>
         <label>Annullamento Prestazione</label>
         <locationX>138</locationX>
-        <locationY>2078</locationY>
+        <locationY>2798</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -4060,7 +4179,7 @@
         <name>Annullamento_Prestazione_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Annullamento Prestazione</label>
         <locationX>1546</locationX>
-        <locationY>2438</locationY>
+        <locationY>3158</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -4085,7 +4204,7 @@
         <name>Annullamento_Prestazione_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Annullamento Prestazione</label>
         <locationX>842</locationX>
-        <locationY>2918</locationY>
+        <locationY>3638</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -4183,6 +4302,13 @@
         </value>
     </variables>
     <variables>
+        <name>notaEsistente</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>RealCollection</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
@@ -4205,11 +4331,28 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>testoDefaultNote</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue> Versato all&apos;Ente sbagliato: </stringValue>
+        </value>
+    </variables>
+    <variables>
         <name>varDocumentSelected</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>DocumentSelected__c</objectType>
+    </variables>
+    <variables>
+        <name>versatoEnteS</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>
