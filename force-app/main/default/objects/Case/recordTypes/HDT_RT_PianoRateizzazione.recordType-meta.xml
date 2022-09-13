@@ -8546,6 +8546,10 @@
             <fullName>SMS</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Altra comunicazione</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>ServiceEnergy__c</picklist>

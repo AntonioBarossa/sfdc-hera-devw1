@@ -57,29 +57,37 @@ export default class HdtAbiCodeSelector extends LightningElement {
         const isEnterKey = event.keyCode === 13;
         if (isEnterKey) {
             let searchText = event.target.value;
-            this.isLoading = true;
-            getData({searchString:searchText})
-            .then(data => {
-                console.log('Data -> ' + JSON.stringify(data) + ' ' + data);
-                if(!data){
-                    console.log('Inside No Record Condition')
-                    this.isLoading = false;
-                    const event = new ShowToastEvent({
-                                title: 'Nessun Record',
-                                message:
-                                    'Modifica i parametri di ricerca.',
-                            });
-                            this.dispatchEvent(event);
-                } else {
-                    this.data = data;
-                    this.isLoading = false;
-                }
-            })
-            .catch(error => {
-                console.log('Error In Retrievieng data -> ' + JSON.stringify(error));
-            })
+            if(searchText.length<3 && searchText.length>0){
+                const event = new ShowToastEvent({
+                    title: 'Attenzione',
+                    message:
+                        'Inserisci almeno 3 caratteri oppure svuota il campo di ricerca e premi invio per ottenere tutte le banche',
+                });
+                this.dispatchEvent(event);
+            }else{
+                this.isLoading = true;
+                getData({searchString:searchText})
+                .then(data => {
+                    console.log('Data -> ' + JSON.stringify(data) + ' ' + data);
+                    if(!data){
+                        console.log('Inside No Record Condition');
+                        this.isLoading = false;
+                        const event = new ShowToastEvent({
+                                    title: 'Nessun Record',
+                                    message:
+                                        'Modifica i parametri di ricerca.',
+                                });
+                                this.dispatchEvent(event);
+                    } else {
+                        this.data = data;
+                        this.isLoading = false;
+                    }
+                })
+                .catch(error => {
+                    console.log('Error In Retrievieng data -> ' + JSON.stringify(error));
+                })
+            }
         }
-        
     }
     handleNext(event) {
         let dataTable = this.template.querySelector('lightning-datatable');

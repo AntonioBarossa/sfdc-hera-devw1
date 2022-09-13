@@ -404,6 +404,8 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             let canalePagamento = this.selector('ChannelOfPayment__c');
             if(canalePagamento && canalePagamento.value === 'Banca BONIFICO'){
                 this.labelSaveButton  = 'Avanti';
+            }else{
+                this.labelSaveButton  = 'Conferma Pratica';
             }
         }
     }
@@ -509,7 +511,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                     depositamount.disabled = false;
                     depositDate.disabled = false;
                 }
-                if(depositPaymentMode.value === 'Paperless' && !depositPaymentMode.disabled){
+                if((depositPaymentMode.value === 'Paperless' || depositPaymentMode.value === 'Bonifico Paperless') && !depositPaymentMode.disabled){
                     sendPaperlessCode.disabled = false;
                 }
             }
@@ -521,7 +523,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             console.log('#DepositPaymentMode -> ' + depositPaymentMode.value)
             if(depositPaymentMode.value !== null && depositPaymentMode.value !== undefined){
                 let paperlessCode = this.selector('SendPaperlessCodeMode__c');
-                if(depositPaymentMode.value === 'Paperless'){
+                if(depositPaymentMode.value === 'Paperless' || depositPaymentMode.value === 'Bonifico Paperless'){
                     paperlessCode.disabled = false;
                 } else {
                     paperlessCode.disabled = true;
