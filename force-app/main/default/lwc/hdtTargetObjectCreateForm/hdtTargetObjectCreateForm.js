@@ -1396,7 +1396,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
         }
         else if (this.allSubmitedFields['CommoditySector__c'] == 'Acqua') {            
-            
+            if (this.allSubmitedFields['PlugPresence__c'] === undefined || this.allSubmitedFields['PlugPresence__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Presenza Allaccio, ');
+            }
             if (this.allSubmitedFields['SupplyType__c'] === undefined || this.allSubmitedFields['SupplyType__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Tipo Fornitura, ');
             }
