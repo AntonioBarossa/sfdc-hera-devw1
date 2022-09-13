@@ -123,6 +123,20 @@
                 <elementReference>ModalitaPagamento</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.AccountholderTypeBeneficiary__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TitolareConto</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.BeneficiaryAccount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BeneficiaryAccount.recordId</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiornamento_Case_Fine_Bozza</targetReference>
         </connector>
@@ -1003,70 +1017,98 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>TitolareConto</name>
-            <choiceReferences>Pagatore_Alternativo</choiceReferences>
-            <choiceReferences>Stesso_Sottoscrittore</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Titolare del conto o Beneficiario</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>BeneficiaryAccount</name>
-            <extensionName>flowruntime:lookup</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>objectApiName</name>
-                <value>
-                    <stringValue>Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Account Erede/Beneficiario</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>fieldApiName</name>
-                <value>
-                    <stringValue>BeneficiaryAccount__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>maxValues</name>
-                <value>
-                    <numberValue>1.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>GetCaseAggiornato.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>TitolareConto</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Pagatore_Alternativo</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Bonifico_da_effettuare_verso_il_virtual_Account</name>
-            <choiceReferences>Si</choiceReferences>
-            <choiceReferences>No</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Bonifico da effettuare verso il Virtual Account?</fieldText>
-            <fieldType>RadioButtons</fieldType>
-            <isRequired>true</isRequired>
+            <name>Virtual_Account_0_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Virtual_Account_0_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>TitolareConto</name>
+                    <choiceReferences>Pagatore_Alternativo</choiceReferences>
+                    <choiceReferences>Stesso_Sottoscrittore</choiceReferences>
+                    <dataType>String</dataType>
+                    <defaultSelectedChoiceReference>Stesso_Sottoscrittore</defaultSelectedChoiceReference>
+                    <fieldText>Titolare del conto o Beneficiario</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>BeneficiaryAccount</name>
+                    <extensionName>flowruntime:lookup</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value>
+                            <stringValue>Case</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>label</name>
+                        <value>
+                            <stringValue>Account Erede/Beneficiario</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>fieldApiName</name>
+                        <value>
+                            <stringValue>BeneficiaryAccount__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>maxValues</name>
+                        <value>
+                            <numberValue>1.0</numberValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>required</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>TitolareConto</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>Pagatore_Alternativo</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Virtual_Account_0_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Bonifico_da_effettuare_verso_il_virtual_Account</name>
+                    <choiceReferences>Si</choiceReferences>
+                    <choiceReferences>No</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Bonifico da effettuare verso il Virtual Account?</fieldText>
+                    <fieldType>RadioButtons</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
         </fields>
         <fields>
             <name>AbiCodeSelector</name>
