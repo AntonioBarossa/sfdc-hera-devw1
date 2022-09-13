@@ -22,8 +22,13 @@ public class HDT_SRV_DataEnrichmentPostSalesTst {
         billingProfileList[0].InvoicingProvince__c = 'RM';
         billingProfileList[0].InvoicingPostalCode__c = '10190';
         billingProfileList[0].InvoicingCountry__c = 'ITALIA';
-
         insert billingProfileList;
+
+        Subtypology_Of_Use_Table__c subTable = new Subtypology_Of_Use_Table__c();
+        subTable.Societa__c='5010';
+        subTable.Sottotipologia_D_uso__c='Uso domestico non residen';
+        subTable.Data_Fine_Validita__c=date.today().addDays(10);
+        insert subTable;
 
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
         List<Contract> contractListTwo = HDT_UTL_DataFactoryTst.createContract(1, true, accList[1].id);
@@ -282,6 +287,29 @@ public class HDT_SRV_DataEnrichmentPostSalesTst {
         Test.stopTest();
         
     }
+
+    //PROVVISORIO
+    @isTest
+    static void testHandleSubTyp() {
+        Test.startTest();
+        String checkHandleSub = HDT_SRV_DataEnrichmentPostSales.handleSubType('Hera S.p.A.','');
+		System.assertEquals('Uso domestico non residen', checkHandleSub , 'testHandleSubTyp FALLITO');
+		Test.stopTest();
+    }
+
+    @isTest
+    static void testTransCodeSiNo0(){
+        Test.startTest();
+        String checkZero = HDT_SRV_DataEnrichmentPostSales.transCodeSiNo('0');
+        System.assertEquals('No',checkZero,'testTransCodeSiNo0 Fallito');
+        String checkOne = HDT_SRV_DataEnrichmentPostSales.transCodeSiNo('1');
+        System.assertEquals('Si', checkOne, 'testTransCodeSiNo1 Fallito');
+        String checkTwo = HDT_SRV_DataEnrichmentPostSales.transCodeSiNo('2');
+        System.assertEquals('Si - Ridotta', checkTwo , 'testTransCodeSiNo2 Fallito');
+        Test.stopTest();
+   }
+
+
 
     //FINE Test method per classe HDT_SRV_DataEnrichmentPostSales
 

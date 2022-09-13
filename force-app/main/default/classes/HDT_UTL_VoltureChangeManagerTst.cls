@@ -586,7 +586,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
 
         newOrder.NotRegisteredMeterCase__c = false;
         newOrder.VoltureType__c = 'Ordinaria';
-        newOrder.EffectiveDate__c = System.today();
+        newOrder.EffectiveDate__c = System.today().addDays(6);
         newOrder.Subprocess__c = 'Standard';
 
         Boolean isReading = false;
