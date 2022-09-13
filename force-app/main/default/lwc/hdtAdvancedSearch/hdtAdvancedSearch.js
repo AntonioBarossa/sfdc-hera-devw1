@@ -131,7 +131,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                         console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
                     }
 
-                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && this.processtype !='Chiusura Contatore' && this.processtype != 'Esenz./modifica Fognatura Depurazione'){
+                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && this.processtype !='Chiusura Contatore' && this.processtype != 'Esenzione Modifica Fognatura Depurazione'){
                         RateCategorySplit = data.RateCategory__c.split(",");
                         console.log('RateCategorySplit *****'+JSON.stringify(RateCategorySplit));
 
@@ -144,7 +144,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                             console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
                     }
 
-                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && (this.processtype ==='Chiusura Contatore' || this.processtype === 'Esenz./modifica Fognatura Depurazione')){
+                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && (this.processtype ==='Chiusura Contatore' || this.processtype === 'Esenzione Modifica Fognatura Depurazione')){
                         RateCategorySplit = data.RateCategory__c.split(",");
                         console.log('RateCategorySplit *****'+JSON.stringify(RateCategorySplit));
 
