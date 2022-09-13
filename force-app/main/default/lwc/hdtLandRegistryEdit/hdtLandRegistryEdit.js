@@ -149,7 +149,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
             //controllo se abilitare o meno il salva in base ai campi required
             this.disableSalva = false;
             if(this._required){
-                let inputList = this.template.querySelectorAll('lightning-input-field');
+                let inputList = this.template.querySelectorAll('lightning-input-field:not(.slds-hide)');
                 inputList.forEach(input => {
                     if(input.fieldName != "CodeMissingRegistryData__c" && ( input.value == null || input.value == "")) this.disableSalva = true;
                 });
