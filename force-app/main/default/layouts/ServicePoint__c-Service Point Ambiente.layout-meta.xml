@@ -241,6 +241,11 @@
             <actionType>StandardButton</actionType>
             <sortOrder>15</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ServicePoint__c.HDT_GaaView</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>16</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <relatedLists>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
@@ -282,7 +287,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000003GWNm</masterLabel>
+        <masterLabel>00h1w000000TS8k</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
