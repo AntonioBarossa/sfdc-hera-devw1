@@ -54,7 +54,7 @@
             <assignToReference>theCase.OperationType__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Modifica dati contr.stesso Cli</stringValue>
+                <stringValue>Modifica dati contr. stesso Cli</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -147,7 +147,7 @@
             <assignToReference>theCase.OperationType__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Modifica dati contr.stesso Cli</stringValue>
+                <stringValue>Modifica dati contr. stesso Cli</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -240,7 +240,7 @@
             <assignToReference>theCase.OperationType__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Modifica dati contr.stesso Cli</stringValue>
+                <stringValue>Modifica dati contr. stesso Cli</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -326,7 +326,7 @@
             <assignToReference>theCase.OperationType__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Modifica dati contr.stesso Cli</stringValue>
+                <stringValue>Modifica dati contr. stesso Cli</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -412,7 +412,7 @@
             <assignToReference>theCase.OperationType__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Modifica dati contr.stesso Cli</stringValue>
+                <stringValue>Modifica dati contr. stesso Cli</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
