@@ -14,6 +14,22 @@
             </value>
         </assignmentItems>
         <connector>
+            <targetReference>Assegna_Account_Erede_Beneficiario</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Titolare_Conto</name>
+        <label>Assegna Titolare Conto</label>
+        <locationX>50</locationX>
+        <locationY>1934</locationY>
+        <assignmentItems>
+            <assignToReference>BeneficiaryAccount.recordId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCaseAggiornato.Account.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
             <targetReference>CalcoloCodiceCausale</targetReference>
         </connector>
     </assignments>
@@ -50,7 +66,7 @@
         <name>AssegnaVariabili</name>
         <label>AssegnaVariabili</label>
         <locationX>380</locationX>
-        <locationY>2030</locationY>
+        <locationY>2366</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -177,7 +193,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>CalcoloCodiceCausale</targetReference>
+            <targetReference>Assegna_Account_Erede_Beneficiario</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -197,11 +213,27 @@
         </value>
     </choices>
     <choices>
+        <name>Pagatore_Alternativo</name>
+        <choiceText>Pagatore Alternativo</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Pagatore Alternativo</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>Si</name>
         <choiceText>Si</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>Si</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Stesso_Sottoscrittore</name>
+        <choiceText>Stesso Sottoscrittore</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Stesso Sottoscrittore</stringValue>
         </value>
     </choices>
     <choices>
@@ -212,6 +244,31 @@
             <stringValue>Virtual Account</stringValue>
         </value>
     </choices>
+    <decisions>
+        <name>Assegna_Account_Erede_Beneficiario</name>
+        <label>Assegna Account Erede Beneficiario</label>
+        <locationX>182</locationX>
+        <locationY>1814</locationY>
+        <defaultConnector>
+            <targetReference>CalcoloCodiceCausale</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Stesso_Sottoscrittore</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TitolareConto</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Stesso_Sottoscrittore</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Titolare_Conto</targetReference>
+            </connector>
+            <label>Is Stesso Sottoscrittore</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Bonifico_da_effettuare_verso_VA</name>
         <label>Bonifico da effettuare verso VA?</label>
@@ -254,6 +311,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Banca BONIFICO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Comunicazione Pagamento</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -402,7 +466,7 @@
         <name>CalcoloCodiceCausale</name>
         <label>CalcoloCodiceCausale</label>
         <locationX>380</locationX>
-        <locationY>1910</locationY>
+        <locationY>2246</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaVariabili</targetReference>
@@ -523,7 +587,7 @@
         <name>Aggiornamento_Case_Fine_Bozza</name>
         <label>Aggiornamento In Da Inviare</label>
         <locationX>380</locationX>
-        <locationY>2150</locationY>
+        <locationY>2486</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
@@ -630,7 +694,7 @@
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
         <locationX>380</locationX>
-        <locationY>2270</locationY>
+        <locationY>2606</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -937,6 +1001,63 @@
             <name>Header</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>TitolareConto</name>
+            <choiceReferences>Pagatore_Alternativo</choiceReferences>
+            <choiceReferences>Stesso_Sottoscrittore</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Titolare del conto o Beneficiario</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>BeneficiaryAccount</name>
+            <extensionName>flowruntime:lookup</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Account Erede/Beneficiario</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>fieldApiName</name>
+                <value>
+                    <stringValue>BeneficiaryAccount__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxValues</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetCaseAggiornato.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>TitolareConto</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Pagatore_Alternativo</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Bonifico_da_effettuare_verso_il_virtual_Account</name>
