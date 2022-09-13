@@ -580,7 +580,6 @@ public with sharing class HDT_UTL_Sales {
                     }
                 //}
             }
-            throw new HDT_UTL_HeraException('Prova Invio Errore');
             
         }catch(Exception ex){
             sendEmail(ex,order,orderOriginal);
