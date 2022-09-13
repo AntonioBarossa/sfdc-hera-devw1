@@ -662,9 +662,9 @@
         <label>Testo Contratto in Bolletta</label>
     </standardValue>
     <standardValue>
-        <fullName>Verifica Generica GDM</fullName>
+        <fullName>Verifica Integrita Sigilli</fullName>
         <default>false</default>
-        <label>Verifica Generica GDM</label>
+        <label>Verifica Integrita Sigilli</label>
     </standardValue>
     <standardValue>
         <fullName>Verifica Rottura Impianto Cliente</fullName>
@@ -810,5 +810,10 @@
         <fullName>Adesione Rinuncia Fondo Fughe</fullName>
         <default>false</default>
         <label>Adesione Rinuncia Fondo Fughe</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Promessa di Pagamento Ente</fullName>
+        <default>false</default>
+        <label>Promessa di Pagamento Ente</label>
     </standardValue>
 </StandardValueSet>

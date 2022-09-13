@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Subentro Acqua</value>
+        <value xsi:type="xsd:string">Subentro</value>
     </values>
     <values>
         <field>ServiceRequestType__c</field>

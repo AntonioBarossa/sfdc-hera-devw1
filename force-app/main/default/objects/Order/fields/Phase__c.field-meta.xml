@@ -364,6 +364,11 @@
                 <label>Esito DL OK</label>
             </value>
             <value>
+                <fullName>Esito KO da DBO</fullName>
+                <default>false</default>
+                <label>Esito KO da DBO</label>
+            </value>
+            <value>
                 <fullName>Esito KO da DL</fullName>
                 <default>false</default>
                 <label>Esito KO da DL</label>
@@ -377,11 +382,6 @@
                 <fullName>Esito KO da SII</fullName>
                 <default>false</default>
                 <label>Esito KO da SII</label>
-            </value>
-            <value>
-                <fullName>Esito KO DBO</fullName>
-                <default>false</default>
-                <label>Esito KO DBO</label>
             </value>
             <value>
                 <fullName>Esito OK da DL</fullName>
@@ -439,6 +439,11 @@
                 <label>In attesa esito documentale da E1</label>
             </value>
             <value>
+                <fullName>In attesa esito SAP</fullName>
+                <default>false</default>
+                <label>In attesa esito SAP</label>
+            </value>
+            <value>
                 <fullName>In Attesa Legge 80</fullName>
                 <default>false</default>
                 <label>In Attesa Legge 80</label>
@@ -462,6 +467,11 @@
                 <fullName>In attesa validazione</fullName>
                 <default>false</default>
                 <label>In attesa validazione</label>
+            </value>
+            <value>
+                <fullName>In attesa Verifica</fullName>
+                <default>false</default>
+                <label>In attesa Verifica</label>
             </value>
             <value>
                 <fullName>In Corso caricamento Siebel</fullName>

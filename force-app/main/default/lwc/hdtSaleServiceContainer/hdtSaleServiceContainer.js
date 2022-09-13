@@ -81,6 +81,17 @@ export default class hdtSaleServiceContainer extends LightningElement {
 
             this.refreshTileData();
             this.dispatchEvent(new CustomEvent('newtile'));
+            
+            console.log('isMeterRelation ---> '+ data.isMeterRelation);
+            if( data.isMeterRelation ){
+                const toastWarning = new ShowToastEvent({
+                    title: 'Warning',
+                    message: 'Relazione Contatore non nullo!',
+                    variant: 'warning'
+                });
+                this.dispatchEvent(toastWarning);
+            }
+
             if(data.isTransition && data.message === false){
                 const toastWarning = new ShowToastEvent({
                     title: 'Warning',
@@ -177,7 +188,18 @@ export default class hdtSaleServiceContainer extends LightningElement {
                 });
                 this.dispatchEvent(toastErrorMessage);
                 this.updateSaleRecord({Id: this.saleRecord.Id, CurrentStep__c: this.nextStep});  
-            }else{
+            }
+            else if(data === 'MmsMisto')
+            {
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Per clienti con Marcatura MMS non è possibile eseguire vendite miste Energy/Non Energy',
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            }
+            else{
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
                     message: 'Transitorio: Processo non Innescabile da Salesforce Per i Seguenti Punti Di Fornitura:' + data,

@@ -56,7 +56,7 @@ public with sharing class HDT_SRV_SelfReadings {
         System.debug(LoggingLevel.DEBUG, 'readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
         
         String readingFields = 'Id';
-        if (readingCase.CommodityFormula__c == 'Gas') {
+        if (readingCase.CommodityFormula__c == 'Gas' || readingCase.CommodityFormula__c == 'Acqua') {
             readingFields += ',ReadingRegisterMeter__c,ReadingRegisterCorrector__c,ReadingValueMeter__c,ReadingValueCorrector__c';
         } else {
             String fieldsTemplate = ',ReadingRegister{0}__c,ReadingValue{0}__c';
@@ -80,7 +80,7 @@ public with sharing class HDT_SRV_SelfReadings {
         gen.writeFieldName('position');
         gen.writeStartArray();
         
-        if (readingCase.CommodityFormula__c == 'Gas') {
+        if (readingCase.CommodityFormula__c == 'Gas' || readingCase.CommodityFormula__c == 'Acqua') {
             gen.writeStartObject();
             gen.writeStringField('register', reading.ReadingRegisterMeter__c);
             gen.writeStringField('reading', String.valueOf(reading.ReadingValueMeter__c));

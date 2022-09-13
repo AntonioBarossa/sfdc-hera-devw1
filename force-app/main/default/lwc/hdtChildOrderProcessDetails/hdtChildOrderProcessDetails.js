@@ -639,6 +639,22 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 }
             }
             if(currentSectionName === 'dettaglioImpianto'){
+                console.log( 'RealEstateUnit__c ---> ' + this.template.querySelector("[data-id='RealEstateUnit__c']").value);
+                console.log( 'ImplantType__c includes Promiscuo ---> ' + this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') );
+                console.log( 'ImplantType__c value ---> ' + this.template.querySelector("[data-id='ImplantType__c']").value );
+                if( this.template.querySelector("[data-id='RealEstateUnit__c']") !== null && this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' )
+                {
+                    if( this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value < 2 )
+                    {
+                        this.showMessage('Errore', 'In caso di Tipo Impianto Promiscuo è necessario che il numero delle Unita Immobiliari sia maggiore di 1', 'error');
+                        return;
+                    }
+                    if( !this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value > 1 )
+                    {
+                        this.showMessage('Errore', 'Per indicare un numero di Unita Immobiliari maggiore di 1 è necessario modificare il Tipo Impianto in Promiscuo', 'error');
+                        return;
+                    }
+                }
                 if( this.checkFieldAvailable('EffectiveDate__c', true) === '' && this.typeVisibility('acqua'))
                 {
                     this.showMessage('Errore', 'Popolare il campo Data Decorrenza', 'error');
@@ -955,7 +971,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
         });
     }
-    
+
     isCorrectlyFilled(){
         let wrapAddressObject = [];
         wrapAddressObject = this.template.querySelector(`c-hdt-target-object-address-fields[data-sec="${this.choosenSection}"]`).handleAddressFields();
@@ -1105,7 +1121,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.getFirstStepName();
         this.loadAccordion();
 
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+        if( this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || 
+        ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.ServicePoint__r.CommoditySector__c == 'Acqua' ) ){
             this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
             || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
             console.log('IsVolture--> '+this.isVolture);

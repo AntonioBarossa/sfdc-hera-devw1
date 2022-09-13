@@ -120,6 +120,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
         Case c = new Case();
         Reading__c r = new Reading__c();
         Boolean isGas = request.commodity.equals('Gas') || request.commodity.equals('G');
+        Boolean isAcqua = request.commodity.equals('Acqua') || request.commodity.equals('A');
 
         if (String.isNotBlank(request.id)) {
             c.Id = request.id;
@@ -154,7 +155,19 @@ public inherited sharing class HDT_UTL_SelfReadings {
         c.MeterCode__c = request.serialNumber;
         c.ReadingDate__c = request.readingDate != null ? request.readingDate : System.today();
         c.DistributorCode__c = inputContract.ServicePoint__r.Distributor__r.Code__c;
-        c.SalesCompanyCode__c = isGas ? '10V0000160' : '13V0000000'; // TODO WAVE 2: adeguare con le altre company in ambito.
+        //c.SalesCompanyCode__c = isGas ? '10V0000160' : '13V0000000'; // TODO WAVE 2: adeguare con le altre company in ambito.
+        /**
+         * Autor: AF
+         * Note: Commentata riga precedente e inserita gestione Acqua.
+         * Codice da modificare in W3 per gestione di tutte le società di vendita
+         * **/
+        if(isGas){
+            c.SalesCompanyCode__c = '10V0000160';
+        }else if(isAcqua){
+            c.SalesCompanyCode__c = '11-HERASPA';
+        }else {
+            c.SalesCompanyCode__c = '13V0000000';
+        }
 
         HDT_QR_CausalCodeCalculation causalCodeHandler = new HDT_QR_CausalCodeCalculation();
         HDT_CausalCodeCalculation__mdt causalCodeMdt = causalCodeHandler.calculateCausalCode(c.Cluster__c, c.Type, '', request.commodity);
@@ -192,6 +205,25 @@ public inherited sharing class HDT_UTL_SelfReadings {
         if (isGas) {
             r.CaseGas__c = c.Id;
             r.RecordTypeId = rtQueryHandler.getRecordTypeIdByName('HDT_RT_LetturaGas');
+            r.ReadingDigitNumberMeter__c = request.readings.digits1;
+            r.ReadingDigitNumberCorrector__c = request.readings.digits2;
+            r.ReadingDateMeter__c = request.readings.date1;
+            r.ReadingDateCorrector__c = request.readings.date2;
+            r.ReadingBandMeter__c = request.readings.band1;
+            r.ReadingBandCorrector__c = request.readings.band2;
+            r.ReadingValueMeter__c = request.readings.value1;
+            r.ReadingValueCorrector__c = request.readings.value2;
+            r.ReadingSerialNumberMeter__c = request.readings.serialNumber1;
+            r.ReadingSerialNumber2__c = request.readings.serialNumber2;
+            r.ReadingRegisterMeter__c = request.readings.register1;
+            r.ReadingRegisterCorrector__c = request.readings.register2;
+            r.ReadingTypeMeter__c = request.readings.type1;
+            r.ReadingTypeCorrector__c = request.readings.type2;
+            r.ReadingUnitMeter__c = request.readings.unit1;
+            r.ReadingUnitCorrector__c = request.readings.unit2;
+        } else if (isAcqua) {
+            r.CaseGas__c = c.Id;
+            r.RecordTypeId = rtQueryHandler.getRecordTypeIdByName('HDT_RT_LetturaAcqua');
             r.ReadingDigitNumberMeter__c = request.readings.digits1;
             r.ReadingDigitNumberCorrector__c = request.readings.digits2;
             r.ReadingDateMeter__c = request.readings.date1;

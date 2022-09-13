@@ -360,6 +360,11 @@
     </customSettingAccesses>   
     <fieldPermissions>
         <editable>true</editable>
+        <field>DocumentSelected__c.CommoditySector__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CampaignMember.Ext_Agency_Name__c</field>
         <readable>true</readable>
     </fieldPermissions> 
@@ -7120,6 +7125,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Reading__c.CaseAcqua__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Reading__c.OrderAcqua__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>QuoteManagement__c.Subprocess__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8966,6 +8981,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.MailingStreetToponym__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.MktCloudTstSyncAllowed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13287,6 +13307,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Lead.MktCloudTstSyncAllowed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Lead.MobilePhone</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -15667,6 +15692,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.RealEstateUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.RecessNotice__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -16688,6 +16718,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.NewClient__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.NumberRateMonthly__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -33622,6 +33657,11 @@
         <field>MandatoryAttachments__c.SubscriberType__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.WasteCommodityType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
     <layoutAssignments>
         <layout>Case-HDT_ConsumoAnomaloIdrico</layout>
         <recordType>Case.HDT_RT_ConsumoAnomaloIdrico</recordType>
@@ -34325,6 +34365,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>MandatoryAttachments__c-Allegati Obbligatori Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Reading__c-HDT_LetturaAcqua</layout>
+        <recordType>Reading__c.HDT_RT_LetturaAcqua</recordType>
     </layoutAssignments>
     <objectPermissions>
         <allowCreate>false</allowCreate>
@@ -37421,6 +37465,71 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_VisitaD2D</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Reading__c.HDT_RT_LetturaAcqua</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_GenericheTari</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_PagamentoUnicoAnnuale_TARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_Segnalazioni</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>

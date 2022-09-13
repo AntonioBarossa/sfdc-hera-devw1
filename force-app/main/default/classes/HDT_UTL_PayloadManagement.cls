@@ -213,6 +213,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         
         if (processType == 'Paperless' || (processType == 'Piano Rateizzazione' && depositPaymentMode == 'Paperless')){
             isPaperless = 'Y';
+            if(depositPaymentMode == 'Bonifico Paperless'){
+                isPaperless = 'B';
+            }
         }
         return isPaperless;
     }
@@ -1026,7 +1029,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             payloadSection += String.join(record, div);
 
             for (Integer i = 0; i < docList.size(); i++) {
-                ContentDocumentLink doc = docList[0];
+                ContentDocumentLink doc = docList[i];
                 if (doc.ContentDocument != null) {
                     record = new List<String>();
                     record.add('00310');

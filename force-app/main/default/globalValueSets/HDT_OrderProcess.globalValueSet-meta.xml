@@ -175,6 +175,11 @@
         <default>false</default>
         <label>Subentro Cambio Cat.Tariffa</label>
     </customValue>
+    <customValue>
+        <fullName>Voltura - Subentro Scarico produttivo</fullName>
+        <default>false</default>
+        <label>Voltura - Subentro Scarico produttivo</label>
+    </customValue>
     <description>Lista Processi Ordine</description>
     <masterLabel>Processo Ordine</masterLabel>
     <sorted>false</sorted>
