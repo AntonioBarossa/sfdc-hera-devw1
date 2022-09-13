@@ -1055,12 +1055,6 @@
                         </value>
                     </inputParameters>
                     <inputParameters>
-                        <name>maxValues</name>
-                        <value>
-                            <numberValue>1.0</numberValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
                         <name>required</name>
                         <value>
                             <booleanValue>true</booleanValue>
