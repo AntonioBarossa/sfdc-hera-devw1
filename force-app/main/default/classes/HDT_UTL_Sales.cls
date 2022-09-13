@@ -545,7 +545,6 @@ public with sharing class HDT_UTL_Sales {
         }
     }
 
-    @AuraEnabled
     public static void handleContractVariation(Order order,Order orderOriginal){
         String processType = '';
         String contractId = '';
