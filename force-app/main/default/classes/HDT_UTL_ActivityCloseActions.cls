@@ -150,7 +150,8 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         }
         return null;
     }
-
+    
+	@TestVisible
     private static HDT_WRP_Actions getOnCloseActions(Order selectedOrder, wrts_prcgvr__Activity__c activity, String activityType){
         String approved = activity.Approved__c;
         String activityName=STRING.isNotBlank(activity.Name)? activity.Name : ''; 

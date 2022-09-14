@@ -88,6 +88,25 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         Test.stopTest();
 
     }
+    
+    
+    @isTest 
+    static void approvazioneAgevolazioneTst(){
+
+        Order ord = new Order(ProcessType__c='Modifica Tariffa', Phase__c='In attesa Approvazione');
+        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+        activity.Approved__c = 'no';
+        String activityType = 'Approvazione Agevolazione';
+
+        Test.startTest();
+        HDT_UTL_ActivityCloseActions.HDT_WRP_Actions action = HDT_UTL_ActivityCloseActions.getOnCloseActions(ord, activity, activityType);
+        system.assertEquals(action.activityType, 'Contattare Cliente');
+		activity.Approved__c = 'si';
+        action= HDT_UTL_ActivityCloseActions.getOnCloseActions(ord, activity, activityType);
+        system.assertEquals(action.phase, 'Documentazione Validata');
+        Test.stopTest();
+
+    }
 
     @isTest 
     static void queueFakeTest(){
