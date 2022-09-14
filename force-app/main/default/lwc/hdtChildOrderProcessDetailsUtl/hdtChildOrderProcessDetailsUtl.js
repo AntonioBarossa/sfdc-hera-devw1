@@ -36,6 +36,12 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
         return date.getFullYear()+'-'+month+'-'+day;
     }
 
+    function equalsIgnoreCase(str1, str2){
+        return typeof str1 === 'string' && typeof str2 === 'string'? 
+                    str1.localeCompare(str2, undefined, { sensitivity: 'accent' }) === 0
+                    : str1 === str2;
+    }
+
     const ANNUAL_CONSUM =  { evaluationType: 'notvisible', rateCategories: ['APSCARPRO0'] };
 
     const handleSections = function() {
@@ -128,7 +134,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                             for(let wrp of [new wrp2Infos('CustomerName__c', "FirstName__c"), new wrp2Infos('CustomerLastName__c', "LastName__c"),new wrp2Infos('BirthPlace__c', "BirthProvince__c"),new wrp2Infos('BirthDate__c', "BirthDate__c")]){
                                 let node = this.template.querySelector(`[data-id='${wrp.val1}']`);
                                 if(!node)   return;
-                                let value = event.target.value=== "Soggetto Passivo"? this.order.Account[wrp.val2] : "";
+                                let value = equalsIgnoreCase(event.target.value, "Soggetto Passivo")? this.order.Account[wrp.val2] : "";
                                 node.value=value;
                                 this.sectionDataToSubmit[wrp.val1]=value;
                             }
