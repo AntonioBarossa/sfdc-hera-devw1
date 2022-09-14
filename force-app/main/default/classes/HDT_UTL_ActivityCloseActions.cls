@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : federico.defelice@webresults.it
  * @group             : WR
- * @last modified on  : 28-07-2022
+ * @last modified on  : 14-09-2022
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.CyclomaticComplexity , PMD.NcssMethodCount')
@@ -146,6 +146,19 @@ public with sharing class HDT_UTL_ActivityCloseActions {
     }
 
     private static HDT_WRP_Actions getOnCloseActions(Order selectedOrder, wrts_prcgvr__Activity__c activity, String activityType){
+        String approved = activity.Approved__c;
+        String activityName=STRING.isNotBlank(activity.Name)? activity.Name : ''; 
+        String orderActualPhase=STRING.isNotBlank(selectedOrder.Phase__c)? selectedOrder.Phase__c : '';
+
+        if(approved == 'Si'){
+            if (activityName == 'Approvazione Agevolazione' && orderActualPhase == 'In attesa Approvazione'){
+                return new HDT_WRP_Actions('Documentazione Validata');
+            }
+        }else{
+            if (activityName == 'Approvazione Agevolazione' && orderActualPhase == 'In attesa Approvazione'){
+                return new HDT_WRP_Actions('Contattare Cliente');
+            }
+        }
         return null;
     }
 }
