@@ -55,6 +55,10 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                     }
                 }else if(objectApiName=='Asset' || objectApiName== 'Case' || objectApiName== 'Contact' || objectApiName== 'Opportunity' ){
                     accountIds.add(String.valueOf(s.get('AccountId')));
+                    if(objectApiName == 'Case' && s.get('Lead__c') != null)
+                    {
+                        leadIds.add(String.valueOf(s.get('Lead__c')));
+                    }
                 }else if(objectApiName=='BillingProfile__c' || objectApiName=='SolTracking__c' || objectApiName=='DocumentSendTracking__c'){
                     accountIds.add(String.valueOf(s.get('Account__c')));
                 }else if(objectApiName=='wrts_prcgvr__Activity__c'){
@@ -125,6 +129,11 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                     if(accountsMap.containsKey(String.valueOf(s.get('AccountId')))){
                         Account ac= accountsMap.get(String.valueOf(s.get('AccountId')));
                         s.put('CompanyOwner__c', ac.CompanyOwner__c);
+                    }
+                    if(!leadsMap.isEmpty() && leadsMap.containsKey(String.valueOf(s.get('Lead__c'))))
+                    {
+                        Lead l = leadsMap.get(String.valueOf(s.get('Lead__c')));
+                        s.put('CompanyOwner__c',l.CompanyOwner__c);
                     }
                 }else if(objectApiName=='BillingProfile__c' || objectApiName=='SolTracking__c' ||objectApiName=='DocumentSendTracking__c'){
                     if(accountsMap.containsKey(String.valueOf(s.get('Account__c')))){
