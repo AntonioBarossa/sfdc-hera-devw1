@@ -52,7 +52,14 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
 
         }
 
-        HDT_UTL_DataFactoryTst.assignPermissionSet(currentUser, 'HDT_OmniSupervisor', true);
+        String omniPermission = 'HDT_OmniSupervisor';
+        String omniPermissionId = HDT_UTL_DataFactoryTst.getPermissionSetId(omniPermission);
+        List<PermissionSetAssignment> psAssigment = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSetId = :omniPermissionId AND AssigneeId = :currentUser.Id];
+
+        if(psAssigment.isEmpty())
+        {
+            HDT_UTL_DataFactoryTst.assignPermissionSet(currentUser, 'HDT_OmniSupervisor', true);
+        }
 
         Id profileId = HDT_UTL_DataFactoryTst.getProfileId(constantsUtl.HERA_STANDARD_USER_NAME);
         User user = HDT_UTL_DataFactoryTst.createInternalUser(profileId, false);
