@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>SapField__c</field>
-        <value xsi:type="xsd:string">AFPAG_FFUG (1=SI 0=NO)</value>
+        <value xsi:type="xsd:string">AFPAG_FFUG</value>
     </values>
     <values>
         <field>SfdcField__c</field>

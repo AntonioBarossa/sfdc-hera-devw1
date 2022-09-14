@@ -12,6 +12,7 @@
         <restricted>true</restricted>
         <valueSetName>HDT_CategoryTypeClient</valueSetName>
         <valueSettings>
+            
             <controllingFieldValue>D6 - Associazione</controllingFieldValue>
             <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
             <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>

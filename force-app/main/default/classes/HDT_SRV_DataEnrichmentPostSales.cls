@@ -346,4 +346,47 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
     }
 
+    public static String handleSubType (String salesComp, String prodCode) {
+
+        List <HDT_HeraCompany__mdt> compCodeList = [SELECT CompanyCode__c FROM HDT_HeraCompany__mdt  WHERE MasterLabel =: salesComp WITH SECURITY_ENFORCED];
+            
+        String campCode = null;
+        
+        if(compCodeList.size() > 0) {
+            campCode = compCodeList[0].CompanyCode__c;
+        }
+        
+        System.debug(LoggingLevel.DEBUG, campCode);
+    
+        List <Subtypology_Of_Use_Table__c> subTypList = [SELECT Sottotipologia_D_uso__c FROM Subtypology_Of_Use_Table__c where Societa__c=: campCode AND
+            Codice_Rate_Category__c=: prodCode AND Attivo__c=TRUE WITH SECURITY_ENFORCED];
+        
+        String subTyp = null;
+        
+        if(subTypList.size() > 0){
+            subTyp = subTypList[0].Sottotipologia_D_uso__c;
+        }
+        
+        System.debug(LoggingLevel.DEBUG, subTyp);
+        return subTyp;
+    
+    }
+
+    public static String transCodeSiNo (String  sapOp) {
+
+        String outPut= null;
+
+        if (sapOp=='0') {
+            outPut = 'No';
+        }else if (sapOp=='1') {
+            outPut = 'Si';
+        }else if (sapOp=='2') {
+            outPut = 'Si - Ridotta';
+        }
+
+        System.debug(LoggingLevel.DEBUG, 'La conversione SI / NO è: ' + outPut);
+        return outPut;
+    
+    }
+
 }
