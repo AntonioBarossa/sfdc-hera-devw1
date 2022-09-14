@@ -23,7 +23,6 @@
     <customValue>
         <fullName>Bolletta per e-mail + Carta</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Bolletta per e-mail + Carta</label>
     </customValue>
     <masterLabel>Modalità Invio Bolletta</masterLabel>
