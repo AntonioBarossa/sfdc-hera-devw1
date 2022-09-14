@@ -8,8 +8,10 @@
 @SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.CyclomaticComplexity , PMD.NcssMethodCount')
 public with sharing class HDT_UTL_ActivityCloseActions {
 
+    @TestVisible
     private inherited sharing class HDT_WRP_Actions extends HDT_UTL_ActivityTemplate.HDT_WRP_Infos {
 
+        @TestVisible
         private String phase;
         private String parentSObjectPhase;
         HDT_WRP_Actions(String phase, String activityType, Boolean isMandatory, String actualPhase){
@@ -25,10 +27,13 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         }
     }
 
+    @TestVisible
     private inherited sharing class HDT_WRP_Queue implements Queueable{
 
         Map<Id, HDT_WRP_Actions> actionsCase;
         Map<Id, HDT_WRP_Actions> actionsOrder;
+        
+        @TestVisible
         HDT_WRP_Queue(Map<Id, HDT_WRP_Actions> actionsCase, Map<Id, HDT_WRP_Actions> actionsOrder){
             this.actionsCase=actionsCase;
             this.actionsOrder=actionsOrder;
@@ -118,6 +123,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         return result;
     }
 
+    @TestVisible
     private static HDT_WRP_Actions getOnCloseActions(Case selectedCase, wrts_prcgvr__Activity__c activity, String activityType){
         String approved = activity.Approved__c;
         String caseType = selectedCase.Type;
