@@ -198,6 +198,7 @@ public inherited sharing class HDT_QR_QuoteLine {
     **/
     public List<SBQQ__QuoteLine__c> getRecordsByQuoteFilteredFamilyBonus(String quoteId){
         Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
+        famils.remove('Promozione');
         return [
             SELECT
             Id,
@@ -212,7 +213,8 @@ public inherited sharing class HDT_QR_QuoteLine {
             BillingProfile__r.Name
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__c = :quoteId
-            AND SBQQ__ProductFamily__c IN :famils AND SBQQ__RequiredBy__r.SBQQ__ProductFamily__c!='Promozione'
+            AND SBQQ__ProductFamily__c IN :famils 
+            AND SBQQ__RequiredBy__r.SBQQ__ProductFamily__c!='Promozione'
             AND SBQQ__Quote__r.SBQQ__Type__c != 'Amendment'
             WITH SECURITY_ENFORCED
             Order by BillingProfile__c NULLS LAST, Name

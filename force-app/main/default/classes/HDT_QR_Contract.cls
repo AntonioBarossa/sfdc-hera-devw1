@@ -34,6 +34,9 @@ public inherited sharing class HDT_QR_Contract {
         String filter = 'Activated';
         List<Contract> con= new List<Contract>();
         Contract c = new Contract();
+        if(code==null){
+            code = '';
+        }
         if(isSuperUser==true){
             // fixed because throws error: no viable alternative at character '\'
             // String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status,CreatedDate FROM Contract  WHERE ServicePoint__r.ServicePointCode__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' +' LIMIT 1';      
