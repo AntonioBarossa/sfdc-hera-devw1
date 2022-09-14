@@ -100,10 +100,10 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
 
         Test.startTest();
         HDT_UTL_ActivityCloseActions.HDT_WRP_Actions action = HDT_UTL_ActivityCloseActions.getOnCloseActions(ord, activity, activityType);
-        system.assertEquals(action.activityType, 'Contattare Cliente');
+        system.assertEquals(action.activityType, 'Contattare Cliente', 'Unexpected Logic');
 		activity.Approved__c = 'si';
         action= HDT_UTL_ActivityCloseActions.getOnCloseActions(ord, activity, activityType);
-        system.assertEquals(action.phase, 'Documentazione Validata');
+        system.assertEquals(action.phase, 'Documentazione Validata', 'Unexpected Logic');
         Test.stopTest();
 
     }
