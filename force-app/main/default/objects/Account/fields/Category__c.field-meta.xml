@@ -9,6 +9,7 @@
     <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
+        
         <controllingField>CustomerMarking__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>HDT_CategoryTypeClient</valueSetName>
