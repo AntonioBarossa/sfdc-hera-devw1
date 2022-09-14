@@ -108,12 +108,12 @@
                 <default>false</default>
                 <label>PostSales VAS</label>
             </value>
-			<value>
+            <value>
                 <fullName>Generiche Attivazioni</fullName>
                 <default>false</default>
                 <label>Generiche Attivazioni</label>
             </value>
-			<value>
+            <value>
                 <fullName>Generiche VAS</fullName>
                 <default>false</default>
                 <label>Generiche VAS</label>

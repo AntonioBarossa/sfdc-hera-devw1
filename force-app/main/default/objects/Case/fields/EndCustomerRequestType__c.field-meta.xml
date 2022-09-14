@@ -37,6 +37,12 @@
                 <default>false</default>
                 <label>Richiesta info Telefonica</label>
             </value>
+            <value>
+                <fullName>Richiesta info</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Richiesta info</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

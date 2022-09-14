@@ -13,16 +13,40 @@
         <restricted>true</restricted>
         <valueSetName>HDT_FourthLevelComplaintClassification</valueSetName>
         <valueSettings>
-            <controllingFieldValue>Impatto visivo</controllingFieldValue>
-            <valueName>II01 - rifiuti abbandonati per cause imputabili al gestore</valueName>
+            <controllingFieldValue>Modalità di pagamento</controllingFieldValue>
+            <valueName>FM01 - modalità di pagamento</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Impatto visivo</controllingFieldValue>
-            <valueName>II02 - rifiuti abbandonati per cause non imputabili al gestore</valueName>
+            <controllingFieldValue>Modalità di pagamento</controllingFieldValue>
+            <valueName>FM02 - rimborso</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Materiali/sostanze</controllingFieldValue>
-            <valueName>IM01 - perdita di liquidi/olii da automezzi aziendali</valueName>
+            <controllingFieldValue>Modalità di pagamento</controllingFieldValue>
+            <valueName>FM03 - rateizzazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Periodicità</controllingFieldValue>
+            <valueName>FF01 - frequenza di fatturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Problemi di fatturazione</controllingFieldValue>
+            <valueName>FP01 - doppia fatturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Problemi di fatturazione</controllingFieldValue>
+            <valueName>FP02 - mancato addebito avviso/bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recapito</controllingFieldValue>
+            <valueName>FR01 - consegna in ritardo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recapito</controllingFieldValue>
+            <valueName>FR02 - mancato recapito causa errato indirizzo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recapito</controllingFieldValue>
+            <valueName>FR03 - mancato recapito causa vettore</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Richiamo animali/insetti</controllingFieldValue>
@@ -31,52 +55,6 @@
         <valueSettings>
             <controllingFieldValue>Richiamo animali/insetti</controllingFieldValue>
             <valueName>IR02 - presenza di animali o insetti nei pressi di Centri di Raccolta</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Traffico/cantieri</controllingFieldValue>
-            <valueName>IT01 - rumore prodotto da automezzi/attrezzature</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Traffico/cantieri</controllingFieldValue>
-            <valueName>IT02 - rallentamenti del traffico provocati da automezzi aziendali</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Contestazioni</controllingFieldValue>
-            <valueName>MC01 - contestazioni su n. vuotature/conferimenti/litri presenti su web</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Solleciti</controllingFieldValue>
-            <valueName>MS01 - sollecito non dovuto</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Solleciti</controllingFieldValue>
-            <valueName>MS02 - storno spese di sollecito</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Arenile</controllingFieldValue>
-            <controllingFieldValue>Attivazione/Cessazione</controllingFieldValue>
-            <valueName>CA01 - non eseguita causa cliente</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Arenile</controllingFieldValue>
-            <controllingFieldValue>Attivazione/Cessazione</controllingFieldValue>
-            <valueName>CA02 - non eseguita causa HC</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Arenile</controllingFieldValue>
-            <valueName>QA01- pulizia spiaggia</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Centri di Raccolta</controllingFieldValue>
-            <valueName>QC01 - orari di apertura non rispettati</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Centri di Raccolta</controllingFieldValue>
-            <valueName>QC02 - comportamenti/attività operatore</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Centri di Raccolta</controllingFieldValue>
-            <valueName>QC03 - malfunzionamento dispositivo di identificazione/pesa</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Servizi a chiamata</controllingFieldValue>
@@ -119,6 +97,30 @@
             <valueName>QR07 - sollecito di servizio</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Solleciti</controllingFieldValue>
+            <valueName>MS01 - sollecito non dovuto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Solleciti</controllingFieldValue>
+            <valueName>MS02 - storno spese di sollecito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Spazzamento</controllingFieldValue>
+            <valueName>QZ01 - pulizia strade/marciapiedi, cestini, aree cani</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Spazzamento</controllingFieldValue>
+            <valueName>QZ02 - comportamenti/attività operatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Subentro/Voltura</controllingFieldValue>
+            <valueName>CV01 - non eseguito per mancata presentazione della documentazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Subentro/Voltura</controllingFieldValue>
+            <valueName>CV02 - gestito in ritardo</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Indennizzi</controllingFieldValue>
             <controllingFieldValue>Erogazioni</controllingFieldValue>
             <controllingFieldValue>Cessazioni</controllingFieldValue>
@@ -147,12 +149,12 @@
             <valueName>Mancata/ritardata erogazione</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Spazzamento</controllingFieldValue>
-            <valueName>QZ01 - pulizia strade/marciapiedi, cestini, aree cani</valueName>
+            <controllingFieldValue>Traffico/cantieri</controllingFieldValue>
+            <valueName>IT01 - rumore prodotto da automezzi/attrezzature</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Spazzamento</controllingFieldValue>
-            <valueName>QZ02 - comportamenti/attività operatore</valueName>
+            <controllingFieldValue>Traffico/cantieri</controllingFieldValue>
+            <valueName>IT02 - rallentamenti del traffico provocati da automezzi aziendali</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
@@ -809,28 +811,34 @@
             <valueName>Tensione</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Contratto</controllingFieldValue>
-            <valueName>CT01 - componente economica/contrattuale</valueName>
+            <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
+            <valueName>Causa Arera</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Contratto</controllingFieldValue>
-            <valueName>CT02 - errata attribuzione tariffa/tipologia utenza</valueName>
+            <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
+            <valueName>Causa Cliente</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Contratto</controllingFieldValue>
-            <valueName>CT03 - cambio opzione Residente / Non Residente</valueName>
+            <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
+            <valueName>Causa Distributore</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Contratto</controllingFieldValue>
-            <valueName>CT04 - modifica indirizzo di fornitura</valueName>
+            <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
+            <valueName>Causa Venditore</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Subentro/Voltura</controllingFieldValue>
-            <valueName>CV01 - non eseguito per mancata presentazione della documentazione</valueName>
+            <controllingFieldValue>Arenile</controllingFieldValue>
+            <controllingFieldValue>Attivazione/Cessazione</controllingFieldValue>
+            <valueName>CA01 - non eseguita causa cliente</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Subentro/Voltura</controllingFieldValue>
-            <valueName>CV02 - gestito in ritardo</valueName>
+            <controllingFieldValue>Arenile</controllingFieldValue>
+            <controllingFieldValue>Attivazione/Cessazione</controllingFieldValue>
+            <valueName>CA02 - non eseguita causa HC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Arenile</controllingFieldValue>
+            <valueName>QA01- pulizia spiaggia</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Avviso/Bolletta</controllingFieldValue>
@@ -885,40 +893,36 @@
             <valueName>FC08 - altre voci</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Modalità di pagamento</controllingFieldValue>
-            <valueName>FM01 - modalità di pagamento</valueName>
+            <controllingFieldValue>Centri di Raccolta</controllingFieldValue>
+            <valueName>QC01 - orari di apertura non rispettati</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Modalità di pagamento</controllingFieldValue>
-            <valueName>FM02 - rimborso</valueName>
+            <controllingFieldValue>Centri di Raccolta</controllingFieldValue>
+            <valueName>QC02 - comportamenti/attività operatore</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Modalità di pagamento</controllingFieldValue>
-            <valueName>FM03 - rateizzazione</valueName>
+            <controllingFieldValue>Centri di Raccolta</controllingFieldValue>
+            <valueName>QC03 - malfunzionamento dispositivo di identificazione/pesa</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Periodicità</controllingFieldValue>
-            <valueName>FF01 - frequenza di fatturazione</valueName>
+            <controllingFieldValue>Contestazioni</controllingFieldValue>
+            <valueName>MC01 - contestazioni su n. vuotature/conferimenti/litri presenti su web</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Problemi di fatturazione</controllingFieldValue>
-            <valueName>FP01 - doppia fatturazione</valueName>
+            <controllingFieldValue>Contratto</controllingFieldValue>
+            <valueName>CT01 - componente economica/contrattuale</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Problemi di fatturazione</controllingFieldValue>
-            <valueName>FP02 - mancato addebito avviso/bolletta</valueName>
+            <controllingFieldValue>Contratto</controllingFieldValue>
+            <valueName>CT02 - errata attribuzione tariffa/tipologia utenza</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Recapito</controllingFieldValue>
-            <valueName>FR01 - consegna in ritardo</valueName>
+            <controllingFieldValue>Contratto</controllingFieldValue>
+            <valueName>CT03 - cambio opzione Residente / Non Residente</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Recapito</controllingFieldValue>
-            <valueName>FR02 - mancato recapito causa errato indirizzo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Recapito</controllingFieldValue>
-            <valueName>FR03 - mancato recapito causa vettore</valueName>
+            <controllingFieldValue>Contratto</controllingFieldValue>
+            <valueName>CT04 - modifica indirizzo di fornitura</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Emissioni</controllingFieldValue>
@@ -939,6 +943,18 @@
         <valueSettings>
             <controllingFieldValue>Emissioni</controllingFieldValue>
             <valueName>IE05 - cattivi odori provenienti da contenitori/dotazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Impatto visivo</controllingFieldValue>
+            <valueName>II01 - rifiuti abbandonati per cause imputabili al gestore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Impatto visivo</controllingFieldValue>
+            <valueName>II02 - rifiuti abbandonati per cause non imputabili al gestore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Materiali/sostanze</controllingFieldValue>
+            <valueName>IM01 - perdita di liquidi/olii da automezzi aziendali</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

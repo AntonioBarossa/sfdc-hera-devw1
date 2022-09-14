@@ -1246,6 +1246,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CartographyDetail__c</picklist>
+        <values>
+            <fullName>Accesso agli atti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Certificazione esistenza%2Finesistenza fogna</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risanamento Ambientale nulla osta NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risanamento Ambientale nulla osta SI</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CaseSource__c</picklist>
         <values>
             <fullName>Gestore</fullName>
@@ -3315,6 +3334,17 @@
         </values>
         <values>
             <fullName>S - Dettaglio 2</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DeviationOver2000mc__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8815,7 +8845,64 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>IntendedUse__c</picklist>
+        <values>
+            <fullName>Alberghi%2Fpensioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attività di intratten%2E e altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completamento allacciamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NO DOM TEMPOR%2E %3E40kW-FIERA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ospedali%2Fcase di cura%2F</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stralcio di allac%2E - Uso cant%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>IsSameReasonComplaint__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>JointBottomAdhesion__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Lettura_inserita_in_SAP__c</picklist>
         <values>
             <fullName>No</fullName>
             <default>false</default>
@@ -9600,7 +9687,7 @@
     <picklistValues>
         <picklist>OperationType__c</picklist>
         <values>
-            <fullName>Modifica dati contr. stesso Cli</fullName>
+            <fullName>Modifica dati contr%2E stesso Cli</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10970,7 +11057,7 @@
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
-            <fullName>D%E2%80%99ufficio</fullName>
+            <fullName>D%27ufficio</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12764,6 +12851,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>SupplyUseType__c</picklist>
+        <values>
+            <fullName>ACQUEDOTTO CIVILE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ACQUEDOTTO INDUSTRIALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FOGNATURA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TELERISCALDAMENTO</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>SuspensionMotivation__c</picklist>
         <values>
             <fullName>Sospeso contatto cliente</fullName>
@@ -13170,42 +13276,46 @@
     </picklistValues>
     <picklistValues>
         <picklist>Type</picklist>
-		<values>
-			<fullName>Ambiente annullo richiesta senza appuntamento</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Conferimento Centri di Raccolta</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Formulari Richiesta Sconto</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Gestione Rifiuti</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Pagamento Unico Annuale TARI</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Riduz. superficie rifiuti spec promiscui</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Riduzione Agevolazione dopo Accertamento</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Sconti Collettivi Pap</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Segnalazioni Ambientali</fullName>
-			<default>false</default>
-		</values>
+        <values>
+            <fullName>Ambiente annullo richiesta senza appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conferimento Centri di Raccolta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Formulari Richiesta Sconto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Rifiuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamento Unico Annuale TARI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riduz%2E superficie rifiuti spec promiscui</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riduzione Agevolazione dopo Accertamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione Contrattuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sconti Collettivi Pap</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni Ambientali</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>TypeInstallmentPlan__c</picklist>
@@ -13641,6 +13751,45 @@
         </values>
         <values>
             <fullName>013-Uso Condizionam%2E%2BRiscald%2E</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>UseSubCategory__c</picklist>
+        <values>
+            <fullName>Altri usi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso agricolo e zootecnico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso artigianale e commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso condominiale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico non residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso industriale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico disalimentabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico non disalimentabile</fullName>
             <default>false</default>
         </values>
     </picklistValues>
