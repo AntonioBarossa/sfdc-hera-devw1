@@ -104,7 +104,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
 
         if (allActivity.isEmpty())    return new Map<String,List<wrts_prcgvr__Activity__c>>();
         Map<String,List<wrts_prcgvr__Activity__c>> result = new Map<String,List<wrts_prcgvr__Activity__c>>();
-        List<wrts_prcgvr__Activity__c> activities = [SELECT Case__r.Id, Case__r.Type, Case__r.Phase__c, Case__r.RelatedCase__c, Case__r.PhaseStory__c, Order__r.Id, Order__r.Type, Order__r.Phase__c, Order__r.PhaseStory__c, wrts_prcgvr__ActivityTemplate__r.Name FROM wrts_prcgvr__Activity__c WHERE Id IN :allActivity  WITH Security_Enforced];
+        List<wrts_prcgvr__Activity__c> activities = [SELECT Case__r.Id, Case__r.Type, Case__r.Phase__c, Case__r.RelatedCase__c, Case__r.PhaseStory__c, Order__r.Id, Order__r.ProcessType__c, Order__r.Phase__c, Order__r.PhaseStory__c, wrts_prcgvr__ActivityTemplate__r.Name FROM wrts_prcgvr__Activity__c WHERE Id IN :allActivity  WITH Security_Enforced];
         List<wrts_prcgvr__Activity__c> caseActivities  = new List<wrts_prcgvr__Activity__c>();
         List<wrts_prcgvr__Activity__c> orderActivities = new List<wrts_prcgvr__Activity__c>();
         
@@ -149,15 +149,14 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         String approved = activity.Approved__c;
         String activityName=STRING.isNotBlank(activity.Name)? activity.Name : ''; 
         String orderActualPhase=STRING.isNotBlank(selectedOrder.Phase__c)? selectedOrder.Phase__c : '';
-
-        if(approved == 'Si'){
-            if (activityName == 'Approvazione Agevolazione' && orderActualPhase == 'In attesa Approvazione'){
-                return new HDT_WRP_Actions('Documentazione Validata');
-            }
-        }else{
-            if (activityName == 'Approvazione Agevolazione' && orderActualPhase == 'In attesa Approvazione'){
-                return new HDT_WRP_Actions('Contattare Cliente');
-            }
+        String orderType = selectedOrder.ProcessType__c;
+        
+        if( 
+            'Approvazione Agevolazione'.containsIgnoreCase(activityName)
+            && new set<String>{'Modifica Tariffa', 'Modifica Tariffa - Rimozione Agevolazione'}.contains(orderType)
+        ){
+            if(approved.equalsIgnoreCase('no')) return new HDT_WRP_Actions(null, 'Contattare Cliente', false, orderActualPhase);
+            if ('In attesa Approvazione'.equalsIgnoreCase(orderActualPhase))   return new HDT_WRP_Actions('Documentazione Validata');
         }
         return null;
     }
