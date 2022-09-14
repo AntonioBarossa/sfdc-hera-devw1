@@ -255,6 +255,7 @@ public with sharing class HDT_SRV_SelfReadings {
         String caseId = sapIntegration.recordId;
         HDT_WRP_SelfReadingResponse retWrap = new HDT_WRP_SelfReadingResponse();
         retWrap.isResponseOk = true;
+        HDT_QR_Case queryCase = new HDT_QR_Case();
         List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description,CommodityFormula__c');
         Boolean enableTurbobilling = String.isNotBlank(System.Label.TRB_Enable) && 'Y'.equalsIgnoreCase(System.Label.TRB_Enable)?true:false;
         Boolean isEnergy = !cases.isEmpty() && ('Gas'.equalsIgnoreCase(cases[0].CommodityFormula__c) || 'Energia Elettrica'.equalsIgnoreCase(cases[0].CommodityFormula__c))? true:false;
@@ -280,7 +281,7 @@ public with sharing class HDT_SRV_SelfReadings {
                 readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari KO';
             }
             
-            HDT_QR_Case queryCase = new HDT_QR_Case();
+            
             
             if(!cases.isEmpty()) {
                 Case currentReadingCase = cases[0];
