@@ -13,7 +13,7 @@ public with sharing class HDT_BA_UpdateActivitiesStatus implements Database.Batc
     public void execute(Database.BatchableContext BC, List<wrts_prcgvr__Activity__c> scope) {
         List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
         for (wrts_prcgvr__Activity__c activity : scope) {
-           activity.wrts_prcgvr__Status__c = 'Completata';
+           activity.wrts_prcgvr__Status__c = 'Chiusa';
            actToUpdate.add(activity);
         }
         if (actToUpdate!=null && actToUpdate.size()>0) {
