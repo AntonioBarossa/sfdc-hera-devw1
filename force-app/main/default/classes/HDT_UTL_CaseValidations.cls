@@ -260,7 +260,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile selezionare \"'+ sendPaperlessMode + '\" se Email non valorizzata'));
 
-                }else if(currentCase.Reason__c != null && currentCase.Reason__c.equalsIgnoreCase('Bolletta Fuga H2O')){
+                }else if(reason != null && reason.equalsIgnoreCase('Bolletta Fuga H2O')){
                     List<Case> caseToCheck;
                     caseToCheck = caseValidationQr.getCaseByTypeBillingProfile('Consumo Anomalo Idrico',currentCase.AccountId,currentCase.ContractAccountCode__c);
                     if(caseToCheck != null && caseToCheck.isEmpty()){
@@ -268,7 +268,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     }else {
                         result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
                     }
-                }else if(currentCase.Reason__c.equalsIgnoreCase('Malfunzione Gruppo di misura')){
+                }else if( reason != null && reason.equalsIgnoreCase('Malfunzione Gruppo di misura')){
                     List<Case> caseToCheck;
                     caseToCheck = caseValidationQr.getCaseByTypeBillingProfile('Verifica GDM',currentCase.AccountId,currentCase.ContractAccountCode__c);
                     if(caseToCheck != null && caseToCheck.isEmpty()){

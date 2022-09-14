@@ -121,7 +121,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
         Reading__c r = new Reading__c();
         Boolean isGas = request.commodity.equals('Gas') || request.commodity.equals('G');
         Boolean isAcqua = request.commodity.equals('Acqua') || request.commodity.equals('A');
-
+        Boolean enableTurbobilling = String.isNotBlank(System.Label.TRB_Enable) && 'Y'.equalsIgnoreCase(System.Label.TRB_Enable)?true:false;
         if (String.isNotBlank(request.id)) {
             c.Id = request.id;
         }
@@ -165,6 +165,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
             c.SalesCompanyCode__c = '10V0000160';
         }else if(isAcqua){
             c.SalesCompanyCode__c = '11-HERASPA';
+            c.DistributorCode__c = '11-HERASPA';
         }else {
             c.SalesCompanyCode__c = '13V0000000';
         }
@@ -175,10 +176,19 @@ public inherited sharing class HDT_UTL_SelfReadings {
 
         switch on request.outcome {
             when 'OK' {
-                c.Phase__c = 'Check preliminari OK';
+                if(enableTurbobilling && !isAcqua){
+                    c.Phase__c = 'Esito OK da SAP';
+                }else{
+                    c.Phase__c = 'Check preliminari OK';
+                }
             }
             when 'KO' {
-                c.Phase__c = 'Check preliminari KO';
+                if(enableTurbobilling && !isAcqua){
+                    c.Phase__c = 'Esisto KO da SAP';
+                }else {
+                    c.Phase__c = 'Check preliminari KO';
+                }
+                
                 HDT_UTL_DatabaseService.upsertSObject(c); // necessario per doppia transizione di fase.
                 String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
                 c.Description = nowDateFormat + ': '  + request.outcomeDescription;
@@ -320,8 +330,14 @@ public inherited sharing class HDT_UTL_SelfReadings {
         HDT_UTL_DatabaseService.upsertSObject(r);
         response.readingId = r.Id;
         if('Bozza'.equalsIgnoreCase(c.Phase__c)){
-            c.Phase__c = 'Attesa check preliminari';
-            HDT_UTL_DatabaseService.upsertSObject(c);
+            if(enableTurbobilling && !isAcqua){
+                c.Phase__c = 'Inviata a SAP';
+                HDT_UTL_DatabaseService.upsertSObject(c);
+            }else{
+                c.Phase__c = 'Attesa check preliminari';
+                HDT_UTL_DatabaseService.upsertSObject(c);
+            }
+            
         } 
     }
 
