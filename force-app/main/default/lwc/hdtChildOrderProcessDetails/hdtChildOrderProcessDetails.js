@@ -219,6 +219,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
     } 
 
+    landSelected(event){
+        this.landRedistrySelected=true;
+    }
+
     handleShowInviaModulistica(caliber = ''){
         if(this.order.ServicePoint__c !== undefined && this.order.ServicePoint__r.MeterClass__c !== undefined){
             let meterClass = caliber !== '' ? caliber : this.order.ServicePoint__r.MeterClass__c;
