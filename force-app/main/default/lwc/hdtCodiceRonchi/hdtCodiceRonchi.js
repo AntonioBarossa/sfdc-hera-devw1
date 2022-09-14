@@ -1,4 +1,4 @@
-import { LightningElement } from 'lwc';
+import { api } from 'lwc';
 import HdtCodiceAteco from 'c/hdtCodiceAteco';
 import saveAtecoRonchiCode from '@salesforce/apex/HDT_LC_CodiceAteco.saveAtecoRonchiCode';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -7,6 +7,8 @@ export default class HdtCodiceRonchi extends HdtCodiceAteco {
 
     ronchiCode;
     ronchiSubcategory;
+    @api order; 
+    @api title;
 
 
     columns = [

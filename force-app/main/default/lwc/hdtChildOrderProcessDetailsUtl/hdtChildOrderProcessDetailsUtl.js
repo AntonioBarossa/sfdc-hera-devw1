@@ -150,6 +150,12 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 name: 'datiCatastali',
                 hasDatiCatastali: true,
                 processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa"].includes(this.order.RecordType.DeveloperName),
+                nextActions : () => {
+                    if(!this.landRedistrySelected){
+                        this.showMessage('Errore', 'Salvare il dato catastale', 'error');
+                        return true;
+                    }   
+                },
                 data:[
                 ]
             },
