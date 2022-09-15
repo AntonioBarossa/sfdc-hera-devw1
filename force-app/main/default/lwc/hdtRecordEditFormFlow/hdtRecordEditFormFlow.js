@@ -407,6 +407,10 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             }else{
                 this.labelSaveButton  = 'Conferma Pratica';
             }
+        }else if(this.type == 'Promessa di Pagamento Ente'){
+            let canalePagamento2 = this.selector('ChannelOfPayment__c');
+            canalePagamento2.disabled = true;
+            canalePagamento2.value = 'Banca BONIFICO';
         }
     }
 

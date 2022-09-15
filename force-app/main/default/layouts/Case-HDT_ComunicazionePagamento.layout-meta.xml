@@ -37,7 +37,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>BeneficiaryAccount__c</field>
+                <field>BankAccountSignatoryFirstName__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>BankAccountSignatoryLastName__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -68,6 +72,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>AccountholderTypeBeneficiary__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>BankAccountSignatoryFiscalCode__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
