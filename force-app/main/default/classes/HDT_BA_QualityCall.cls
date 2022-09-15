@@ -3,7 +3,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
     private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
-    public List<Order> ordersToUpdate = new List<Order>();
+    //public List<Order> ordersToUpdate = new List<Order>();
     public Map<String, List<String>> parentToChildOrderMap = new Map<String, List<String>>();
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
@@ -25,9 +25,11 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         List<String> notCancelBillable = new List<String>{
             'Comunicazione verso Heroku Ok',
             'Completata',
-            'Comunicazione verso Heroku'
+            'Comunicazione verso Heroku',
+            'Caricamento Siebel OK'
         };
 
+        List<Order> ordersToUpdate = new List<Order>();
         RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
         List<wrts_prcgvr__Activity__c> activityVas = new List<wrts_prcgvr__Activity__c>();
         List<wrts_prcgvr__Activity__c> callActivities = new List<wrts_prcgvr__Activity__c>();
@@ -120,7 +122,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     parentToChildOrderMap.get(ord.ParentOrder__c).add(ord.OrderNumber);
                 }
 
-                if ((ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))) {
+                /* if ((ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))) {
                     
                     String ordIdToAssoc = ord.Id;
 
@@ -133,7 +135,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                         Order__c = ordIdToAssoc,
                         wrts_prcgvr__Description__c = 'Non è stato possibile procedere all’annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS'
                     ));
-                }                
+                } */                
                 ordersToUpdate.add(ordToUpd);
             }
             else {
@@ -194,13 +196,13 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         callActivities.addAll(mapActivitiesParent.values());
 
         if (!ordersToUpdate.isEmpty()) {
-            update ordersToUpdate;
+            Database.update(ordersToUpdate, false);
         }
         if (!callActivities.isEmpty()) {
-            insert callActivities;
+            Database.insert(callActivities, false);
         }
         if(activitiesToClose.size() > 0){
-            update activitiesToClose;
+            Database.update(activitiesToClose, false);
         }
 
         List<String> contactList = new List<String>();
@@ -271,13 +273,13 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         List<CampaignMember> campNotDuplicateList = notDuplicatedCampToIns.values();
 
         if(!campNotDuplicateList.isEmpty()) {
-            insert notDuplicatedCampToIns.values();
+            Database.insert(notDuplicatedCampToIns.values(), false);
         }
         if(!campaignMembersUpdate.isEmpty()){
-            update campaignMembersUpdate.values();
+            Database.update(campaignMembersUpdate.values(), false);
         }
         if (!activityVas.isEmpty()) {
-            insert activityVas;
+            Database.insert(activityVas, false);
         }
     }
 

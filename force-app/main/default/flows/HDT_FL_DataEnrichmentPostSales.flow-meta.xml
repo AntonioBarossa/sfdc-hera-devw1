@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Arricchimento_Dati</name>
         <label>Arricchimento Dati</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationX>182</locationX>
+        <locationY>854</locationY>
         <actionName>HDT_WS_ArricchimentoDatiTemp</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -18,9 +18,15 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>impianto</name>
+            <value>
+                <elementReference>codiceImpianto</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>pod</name>
             <value>
-                <elementReference>GetServicePoint.ServicePointCode__c</elementReference>
+                <elementReference>pod</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -28,8 +34,8 @@
     <actionCalls>
         <name>HandleResponseDataEnrichment</name>
         <label>Handle Response Data Enrichment</label>
-        <locationX>308</locationX>
-        <locationY>758</locationY>
+        <locationX>314</locationX>
+        <locationY>1094</locationY>
         <actionName>HDT_UTL_DataEnrichmentPostSales</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -57,8 +63,8 @@
     <assignments>
         <name>Assegna_Altri_Dati</name>
         <label>Assegna Altri Dati</label>
-        <locationX>308</locationX>
-        <locationY>878</locationY>
+        <locationX>314</locationX>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
             <operator>Assign</operator>
@@ -70,11 +76,89 @@
             <targetReference>Aggiorna_Case</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assegna_parametri_servizio</name>
+        <label>Assegna parametri servizio</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>pod</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetServicePoint.ServicePointCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>codiceImpianto</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Arricchimento_Dati</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_Assegna_parametri_servizio</name>
+        <label>Copy 1 of Assegna parametri servizio</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>pod</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>codiceImpianto</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetServicePoint.SAPImplantCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Arricchimento_Dati</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Parametri_di_chiamata</name>
+        <label>Parametri di chiamata</label>
+        <locationX>182</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>Copy_1_of_Assegna_parametri_servizio</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Energy</defaultConnectorLabel>
+        <rules>
+            <name>Energy</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>GetServicePoint.CommoditySector__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Energia Elettrica</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetServicePoint.CommoditySector__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gas</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_parametri_servizio</targetReference>
+            </connector>
+            <label>Energy</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Response_Vuota</name>
         <label>Response Vuota?</label>
-        <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationX>182</locationX>
+        <locationY>974</locationY>
         <defaultConnector>
             <targetReference>HandleResponseDataEnrichment</targetReference>
         </defaultConnector>
@@ -124,7 +208,7 @@
     <recordLookups>
         <name>GetContract</name>
         <label>GetContract</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -145,11 +229,11 @@
     <recordLookups>
         <name>GetInputCase</name>
         <label>GetInputCase</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Arricchimento_Dati</targetReference>
+            <targetReference>Parametri_di_chiamata</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -166,7 +250,7 @@
     <recordLookups>
         <name>GetServicePoint</name>
         <label>GetServicePoint</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -187,18 +271,25 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>308</locationX>
-        <locationY>998</locationY>
+        <locationX>314</locationX>
+        <locationY>1334</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetContract</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>codiceImpianto</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>ContractId</name>
         <dataType>String</dataType>
@@ -211,6 +302,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>pod</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

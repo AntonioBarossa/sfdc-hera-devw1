@@ -22,7 +22,7 @@
                 <fullName>Bonifico</fullName>
                 <default>false</default>
                 <isActive>true</isActive>
-                <label>Bonifico</label>
+                <label>Bonifico Pagato</label>
             </value>
             <value>
                 <fullName>POS Sportello</fullName>
@@ -53,6 +53,21 @@
                 <default>false</default>
                 <isActive>true</isActive>
                 <label>Totalmente Dal Cliente</label>
+            </value>
+            <value>
+                <fullName>Acconto Assistiti</fullName>
+                <default>false</default>
+                <label>Acconto Assistiti</label>
+            </value>
+            <value>
+                <fullName>Promessa di pagamento</fullName>
+                <default>false</default>
+                <label>Promessa di pagamento</label>
+            </value>
+            <value>
+                <fullName>Bonifico Paperless</fullName>
+                <default>false</default>
+                <label>Bonifico Paperless</label>
             </value>
         </valueSetDefinition>
     </valueSet>

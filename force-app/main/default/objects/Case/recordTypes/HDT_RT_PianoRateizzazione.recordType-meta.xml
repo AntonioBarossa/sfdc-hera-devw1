@@ -1887,6 +1887,30 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G1 - MMS Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G2 - MMS Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G3 - MMS Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 - MMS Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G5 - MMS Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 - MMS Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>GENESI-Altro</fullName>
             <default>false</default>
         </values>
@@ -2060,6 +2084,10 @@
     <picklistValues>
         <picklist>DepositPaymentMode__c</picklist>
         <values>
+            <fullName>Acconto Assistiti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bollettino postale</fullName>
             <default>false</default>
         </values>
@@ -2068,11 +2096,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Bonifico Paperless</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>POS Sportello</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Paperless</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Promessa di pagamento</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7715,6 +7751,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In compartecipazione o totalmente da istituzioni pubbliche</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Totalmente da Istituzioni Pubbliche</fullName>
             <default>false</default>
         </values>
@@ -8034,7 +8074,11 @@
     <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
-            <fullName>Assistenza Sociale</fullName>
+            <fullName>Assistenza sociale %28cliente%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistenza sociale %28ente%29</fullName>
             <default>false</default>
         </values>
         <values>

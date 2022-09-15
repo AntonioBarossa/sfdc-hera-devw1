@@ -337,9 +337,9 @@
         <label>Modifica Impianto</label>
     </standardValue>
     <standardValue>
-        <fullName>Modifica Unità Immobiliari/Componenti</fullName>
+        <fullName>Modifica Unita Immobiliari Componenti</fullName>
         <default>false</default>
-        <label>Modifica Unità Immobiliari/Componenti</label>
+        <label>Modifica Unita Immobiliari Componenti</label>
     </standardValue>
     <standardValue>
         <fullName>Modifica Layout di dettaglio</fullName>
@@ -552,6 +552,11 @@
         <label>Ripristino Fornitura Interrotta</label>
     </standardValue>
     <standardValue>
+        <fullName>Risoluzione Contrattuale</fullName>
+        <default>false</default>
+        <label>Risoluzione Contrattuale</label>
+    </standardValue>
+    <standardValue>
         <fullName>Risoluzione No Disalimentabile</fullName>
         <default>false</default>
         <label>Risoluzione No Disalimentabile</label>
@@ -662,6 +667,16 @@
         <label>Testo Contratto in Bolletta</label>
     </standardValue>
     <standardValue>
+        <fullName>Verifica Integrita Sigilli</fullName>
+        <default>false</default>
+        <label>Verifica Integrita Sigilli</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Verifica Rottura Impianto Cliente</fullName>
+        <default>false</default>
+        <label>Verifica Rottura Impianto Cliente</label>
+    </standardValue>
+    <standardValue>
         <fullName>Trasmissione Dati Cliente Finale SII</fullName>
         <default>false</default>
         <label>Trasmissione Dati Cliente Finale SII</label>
@@ -670,6 +685,11 @@
         <fullName>Unificazione POD</fullName>
         <default>false</default>
         <label>Unificazione POD</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interventi con Verifica</fullName>
+        <default>false</default>
+        <label>Interventi con Verifica</label>
     </standardValue>
     <standardValue>
         <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
@@ -720,6 +740,11 @@
         <fullName>Variazione Tensione</fullName>
         <default>false</default>
         <label>Variazione Tensione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Istruttoria</fullName>
+        <default>false</default>
+        <label>Istruttoria</label>
     </standardValue>
     <standardValue>
         <fullName>Variazione indirizzo di fornitura</fullName>
@@ -790,5 +815,10 @@
         <fullName>Adesione Rinuncia Fondo Fughe</fullName>
         <default>false</default>
         <label>Adesione Rinuncia Fondo Fughe</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Promessa di Pagamento Ente</fullName>
+        <default>false</default>
+        <label>Promessa di Pagamento Ente</label>
     </standardValue>
 </StandardValueSet>

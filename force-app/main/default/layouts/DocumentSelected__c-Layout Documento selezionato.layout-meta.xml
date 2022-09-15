@@ -85,6 +85,10 @@
                 <behavior>Readonly</behavior>
                 <field>DocumentNumber__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CommoditySector__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

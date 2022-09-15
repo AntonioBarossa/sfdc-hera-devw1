@@ -2023,7 +2023,7 @@
             <default>true</default>
         </values>
         <values>
-            <fullName>Y</fullName>
+            <fullName>S</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2271,6 +2271,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito Consuntivazione KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO da DL</fullName>
             <default>false</default>
         </values>
@@ -2399,10 +2407,55 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>SeasonUse__c</picklist>
+        <values>
+            <fullName>Nessuna stagionalita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso stagionale estate Giu/Ago</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso stagionale estate Apr/Set</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PayPurification__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PaySewer__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ProcessType__c</picklist>
         <values>
-            <fullName>Cambio Offerta Ele</fullName>
+            <fullName>Cambio Offerta</fullName>
             <default>true</default>
+        </values>
+        <values>
+            <fullName>Cambio Offerta Ele</fullName>
+            <default>false</default>
         </values>
         <values>
             <fullName>Cambio Offerta Gas</fullName>

@@ -48,6 +48,9 @@
 
     <!-- id dell'Order oggetto del processo. -->
     <aura:attribute name="orderId" type="String"/>
+    
+    <!-- attributo del processo paperless -->
+    <aura:attribute name="documentPaymentMethod" type="String"/>
 
     <!--Attributo per gestire la presenza di activity obbligatorie-->
     <aura:attribute name="thereIsActivity" type="Boolean"/>

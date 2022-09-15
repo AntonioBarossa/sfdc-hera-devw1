@@ -8,6 +8,7 @@ public with sharing class HDT_WS_ArricchimentoDatiTempTst
         HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoFlowInputs input = new HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoFlowInputs();
         input.contractCode = '3026175385';
         input.pod = '00882102210891';
+        input.impianto = '40592092894';
         inputs.add(input);
         Test.setMock(HttpCalloutMock.class, new HDT_WS_ArricchimentoMock());
         Test.startTest();

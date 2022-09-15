@@ -1873,6 +1873,30 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G1 - MMS Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G2 - MMS Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G3 - MMS Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 - MMS Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G5 - MMS Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 - MMS Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>GENESI-Altro</fullName>
             <default>false</default>
         </values>
@@ -9086,6 +9110,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>1102-Non domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1101-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>13A0-Usi di Abitazione BT</fullName>
             <default>false</default>
         </values>
@@ -10857,7 +10889,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Modifica Unità Immobiliari%2FComponenti</fullName>
+            <fullName>Modifica Unita Immobiliari Componenti</fullName>
             <default>false</default>
         </values>
         <values>

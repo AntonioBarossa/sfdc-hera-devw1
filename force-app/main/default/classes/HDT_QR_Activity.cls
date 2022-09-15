@@ -44,6 +44,14 @@ public inherited sharing class HDT_QR_Activity {
         return actList;
     }
 
+
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @description metodo per prelevare le activity del tipo scelto e correlate ai parent passati come parametri
+    * @date 18/05/2022
+    * @param1 List<String> lista di Id dei parent delle activity (Case o Order)
+    * @param2 List<Case> lista dei tipi di activiti che si vogliono cercare
+    */
     public static List<wrts_prcgvr__Activity__c> getActivityFromTypeList(List<String> parentIds, Set<String> actTypes){
         
         List<wrts_prcgvr__Activity__c> actList = new List<wrts_prcgvr__Activity__c>();

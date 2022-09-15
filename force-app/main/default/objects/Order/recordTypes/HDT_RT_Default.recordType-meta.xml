@@ -6,6 +6,17 @@
     <description>Record Tyope di defulat ordini Figli, utilizzato prima della selezione del processo</description>
     <label>Default</label>
     <picklistValues>
+        <picklist>RequestSource__c</picklist>
+        <values>
+            <fullName>Da contribuente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D'ufficio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>AccountholderTypeBeneficiary__c</picklist>
         <values>
             <fullName>Beneficiario Alternativo</fullName>
@@ -2024,7 +2035,7 @@
             <default>true</default>
         </values>
         <values>
-            <fullName>Y</fullName>
+            <fullName>S</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>Disalimentabile__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:nil="true">SI</value>
     </values>
     <values>
         <field>FornitureCliente__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:nil="true">SI</value>
     </values>
     <values>
         <field>RateCategory__c</field>

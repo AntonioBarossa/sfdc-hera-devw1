@@ -60,7 +60,7 @@ export default class HdtCheckAssessments extends LightningElement {
         handleSearch({
             cfPiva : this.fiscalCode,
             comuneFornitura : this.supplyCity,
-            tipoPersona : this.CustomerMarking,
+            tipoPersona : this.customerMarking,
         }).then(result =>{
             if (!result){
                 console.log('result ->' + this.result);

@@ -139,7 +139,7 @@ export default class HdtActiveRepentant extends LightningElement {
         if (dateDecorrenza && new Date(dateDecorrenza).getTime() <= new Date().getTime() && dateDichiarazione && new Date(dateDecorrenza).getTime() <= new Date(dateDichiarazione).getTime()) {
             this.dateDichiarazione = dateDichiarazione;
             this.dateDecorrenza = dateDecorrenza;
-            if(this.checkComuniNonAffidatari(new Date(this.dateDecorrenza))) return;
+            if(this.checkComuniNonAffidatari(new Date(this.dateDecorrenza), new Date(this.dateDichiarazione))) return;
             this.handleRepentant();
         } else {
             this.showMessage(
@@ -152,7 +152,17 @@ export default class HdtActiveRepentant extends LightningElement {
         }
     }
 
-    checkComuniNonAffidatari(dateDecorrenza){
+    checkComuniNonAffidatari(dateDecorrenza, dateDichiarazione){
+        if(this.cityData?.CutOverEndDate__c && dateDichiarazione.getTime() > new Date(this.cityData?.CutOverEndDate__c).getTime()){
+            this.showMessage(
+                "Attenzione!",
+                "La data di contatto è successiva a quella di fine cut-over",
+                "error"
+            );
+            this.dateDichiarazione=null;
+            this.disabled=false;
+            return true;
+        }
         if(this.cityData?.TARIManagingStartDate__c && this.cityData?.TARIManagingEndDate__c && (dateDecorrenza.getTime() < new Date(this.cityData?.TARIManagingStartDate__c).getTime() || dateDecorrenza.getTime() > new Date(this.cityData?.TARIManagingEndDate__c).getTime())){
             this.showMessage(
                 "Attenzione!",
@@ -292,8 +302,8 @@ export default class HdtActiveRepentant extends LightningElement {
     finish() {
         const evt = CustomEvent("end_algorithm", {
             detail: {
-                dateX: this.limitDateX? this.getFormattedDate(this.limitDateX) : null,
-                dateY: this.limitDateY? this.getFormattedDate(this.limitDateY) : null,
+                dateX: this.limitDateX? this.getFormattedDate(this.limitDateX.setDate(this.limitDateX.getDate() + 1)) : null,
+                dateY: this.limitDateY? this.getFormattedDate(this.limitDateY.setDate(this.limitDatey.getDate() + 1)) : null,
                 //missedDue: this.missedDueDate,
                 period: this.periodType
             }

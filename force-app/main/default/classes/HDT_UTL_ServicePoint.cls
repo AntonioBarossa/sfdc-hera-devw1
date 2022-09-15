@@ -231,16 +231,34 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.JointBottomAdhesion__c = dataEnrich.getPicklistValue('ServicePoint__c', 'JointBottomAdhesion__c', mapRes.get('AFPAG_FFUG'));
         }
         if(mapRes.get('AFPAGA_DEP')!=null && !String.isBlank(mapRes.get('AFPAGA_DEP'))){
-            HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
-            spNew.PayPurification__c = dataEnrich.getPicklistValue('ServicePoint__c', 'PayPurification__c', mapRes.get('AFPAGA_DEP'));
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_DEP')))== 0) {
+                spNew.PayPurification__c = 'No - Esente';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_DEP')))== 1) {
+                spNew.PayPurification__c = 'Si - Paga';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_DEP')))== 2) {
+                spNew.PayPurification__c = 'Si - Ridotta';                
+            }
         }
         if(mapRes.get('AFPAGA_FOG')!=null && !String.isBlank(mapRes.get('AFPAGA_FOG'))){
-            HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
-            spNew.PaySewer__c = dataEnrich.getPicklistValue('ServicePoint__c', 'PaySewer__c', mapRes.get('AFPAGA_FOG'));
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_FOG')))== 0) {
+                spNew.PaySewer__c = 'No - Esente';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_FOG')))== 1) {
+                spNew.PaySewer__c = 'Si - Paga';                
+            }
         }
         if(mapRes.get('AFP_DEP355')!=null && !String.isBlank(mapRes.get('AFP_DEP355'))){
-            HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
-            spNew.PurificationInfoOnTheInvoice__c = dataEnrich.getPicklistValue('ServicePoint__c', 'PurificationInfoOnTheInvoice__c', mapRes.get('AFP_DEP355'));
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 0) {
+                spNew.PurificationInfoOnTheInvoice__c = 'No - Esente';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 1) {
+                spNew.PurificationInfoOnTheInvoice__c = 'Si - Paga';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 2) {
+                spNew.PurificationInfoOnTheInvoice__c = 'Si - Ridotta';                
+            }
         }
         if(mapRes.get('TRATAUNICA')!=null && !String.isBlank(mapRes.get('TRATAUNICA'))){
             spNew.SingleInstallmentOperating__c = mapRes.get('TRATAUNICA');

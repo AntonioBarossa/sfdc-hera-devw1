@@ -19,8 +19,9 @@
                 var res = response.getReturnValue();
                 var check = res.check;
                 var accountid = res.accountId;
-                var orderParentId = res.orderParentId;
                 var saleId = res.saleId;
+                var macroProcessType = res.macroProcessType;
+                var orderParentId = !(saleId || res.orderParent)? orderId : res.orderParent;
                 console.log('********'+res);
                 if(check){
 
@@ -43,7 +44,8 @@
                                 state: {
                                     "c__venditaId": saleId,
                                     "c__accountId" : accountid,
-                                    "c__ordineVendita": orderParentId
+                                    "c__ordineVendita": orderParentId,
+                                    "c__macroProcessType": macroProcessType
                                 }
                             };
         
@@ -70,7 +72,8 @@
                                         state: {
                                             "c__venditaId": saleId,
                                             "c__accountId" : accountid,
-                                            "c__ordineVendita": orderParentId
+                                            "c__ordineVendita": orderParentId,
+                                            "c__macroProcessType": macroProcessType
                                         }
                                     },
                                     focus: true

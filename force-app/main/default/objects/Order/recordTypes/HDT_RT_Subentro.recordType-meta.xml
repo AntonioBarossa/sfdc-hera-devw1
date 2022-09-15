@@ -2024,7 +2024,7 @@
             <default>true</default>
         </values>
         <values>
-            <fullName>Y</fullName>
+            <fullName>S</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2295,7 +2295,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito Consuntivazione KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DBO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2324,6 +2332,10 @@
         </values>
         <values>
             <fullName>In attesa esecuzione appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa esito SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2392,6 +2404,47 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>SeasonUse__c</picklist>
+        <values>
+            <fullName>Nessuna stagionalita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso stagionale estate Giu/Ago</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso stagionale estate Apr/Set</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PayPurification__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PaySewer__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>PressureLevel__c</picklist>
         <values>
             <fullName>AP</fullName>
@@ -2403,6 +2456,17 @@
         </values>
         <values>
             <fullName>MP</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ContractExpenses__c</picklist>
+        <values>
+            <fullName>Nessuno Sconto</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Nessun Addebito</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2429,6 +2493,14 @@
         </values>
         <values>
             <fullName>Subentro Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura - Subentro Scarico produttivo</fullName>
             <default>false</default>
         </values>
     </picklistValues>

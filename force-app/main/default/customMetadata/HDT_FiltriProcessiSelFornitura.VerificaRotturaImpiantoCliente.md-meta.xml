@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Verifica Generica GDM</label>
+    <label>Verifica Rottura Impianto Cliente</label>
     <protected>false</protected>
     <values>
         <field>ContrattiCliente__c</field>
@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>Disalimentabile__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:nil="true">SI</value>
     </values>
     <values>
         <field>FornitureCliente__c</field>
-        <value xsi:type="xsd:string">SI</value>
+        <value xsi:nil="true">SI</value>
     </values>
     <values>
         <field>RateCategory__c</field>
@@ -24,14 +24,14 @@
     </values>
     <values>
         <field>StatoFornitura__c</field>
-        <value xsi:type="xsd:string">Atttivo,Bozza</value>
+        <value xsi:type="xsd:string">Attivo,Bozza</value>
     </values>
     <values>
         <field>TipoProcesso__c</field>
-        <value xsi:type="xsd:string">Verifica Generica GDM</value>
+        <value xsi:type="xsd:string">Verifica Rottura Impianto Cliente</value>
     </values>
     <values>
         <field>TipoServizio__c</field>
-        <value xsi:type="xsd:string">Ambiente</value>
+        <value xsi:type="xsd:string">Acqua</value>
     </values>
 </CustomMetadata>

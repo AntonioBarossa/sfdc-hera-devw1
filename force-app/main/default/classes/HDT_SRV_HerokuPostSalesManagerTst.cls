@@ -10,6 +10,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
         servPointList[0].ServicePointCode__c = 'IT001E46371811';
+        servPointList[0].MeterSN__c = 'R0000000';
         insert servPointList;
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
         ordList[0].DistributorPracticeCode__c = 'A00000000288_DL';
@@ -49,17 +50,24 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         actTempList.add(actTemplate2);
         insert actTempList;
 
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(2, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(3, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         caseList[0].Type = 'Sollecito Emissione Bolletta';
         caseList[0].EarlyRecess__c = true;
+        caseList[0].MeterCode__c = 'R0000001';
         caseList[1].Type = 'Unificazione/Separazione BP-CA-Bolletta';
         caseList[1].EarlyRecess__c = true;
+        caseList[1].MeterCode__c = 'R0000002';
+        caseList[2].Type = 'RImborso';
+        caseList[2].EarlyRecess__c = true;
+        caseList[2].MeterCode__c = 'R0000003';
+
         insert caseList;
 
         Case parentCase = [SELECT Id FROM Case WHERE Type = 'Sollecito Emissione Bolletta'];
         List<Case> caseList2 = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         caseList2[0].ParentId = parentCase.Id;
         caseList2[0].Type = 'Sospensione Fornitura';
+        caseList[0].MeterCode__c = 'R0000004';
         insert caseList2;
 
         List<ContentVersion> contentVersionList = HDT_UTL_DataFactoryTst.createContentVersion(1, true, 'Callout_Template', 
@@ -68,6 +76,13 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         +'{"name": "CaseNumber","label": "RIF_RICH"},'
         +'{"name": "Type","label": "TIPO_OPERAZIONE"},'
         +'{"name": "Id","label": "RECORD_ID"}'
+        +'],"objects" : ['
+        +'{"name": "ServicePoint__c", "label": "Fornitura","sObjectType": "ServicePoint__c","relationshipName": "ServicePoint__r", "queryable": true, "fields": ['
+        +'{"name": "MeterSN__c","label": "SERNR"}'
+        +'],"objects" : [] },'
+        +'{"name": "BillingProfile__c", "label": "Billing Profile","sObjectType": "BillingProfile__c","relationshipName": "BillingProfile__r", "queryable": true, "fields": ['
+        +'{"name": "IbanCountry__c","label": "PAESE_IBAN"}'
+        +'],"objects" : [] }'
         +']}'
         ,'Callout_Template.json');
         List<wrts_prcgvr__CalloutTemplate__c> calloutTemplates = HDT_UTL_DataFactoryTst.createCalloutTemplate(1,true,'Callout_Prova','prova',true,'Case','Flat',contentVersionList[0].ContentDocumentId);
@@ -365,7 +380,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         //Assertions
         List<Case> richPassCase = [SELECT CaseNumber, Phase__c, Type FROM Case WHERE Type != :testCase.Type];
         System.assertEquals(200, statusCode, 'statusCode != 200');
-        System.assertEquals(5, richPassCase.size(), 'richPassCase.size() != 5');
+        System.assertEquals(6, richPassCase.size(), 'richPassCase.size() != 5');
     }
     
     @isTest
@@ -426,7 +441,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         //Assertions
         List<Case> richPassCase = [SELECT CaseNumber, Phase__c, Type FROM Case WHERE Type != :testCase.Type];
         System.assertEquals(200, statusCode, 'statusCode != 200');
-        System.assertEquals(2, richPassCase.size(), 'richPassCase.size() != 2');
+        System.assertEquals(3, richPassCase.size(), 'richPassCase.size() != 2');
     }
 
     @isTest
@@ -781,5 +796,24 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
     }
 
     //FINE Test Costruttori classe HDT_WRP_HerokuPostSalesManager
+    @isTest
+    static void executeTstRimborso()
+    {
+        HDT_SRV_HerokuPostSalesManager herokuSrv = new HDT_SRV_HerokuPostSalesManager();
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
+        Case testCase = [SELECT Id, CaseNumber,RecordTypeId, Type, Phase__c, Status FROM Case WHERE Type = 'Rimborso' LIMIT 1];
+
+        wrts_prcgvr.MRR_1_0.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
+        Test.startTest();
+        //response = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) herokuSrv.execute(args);
+        testCase.Phase__c = 'Da Inviare';
+        update testCase;
+        Test.stopTest();
+        Case testCaseUpd = [SELECT Id,HerokuPracticeCode__c,CaseNumber, Type, Phase__c, TecnicalPhase__c, Status FROM Case WHERE Id =: testCase.Id LIMIT 1];
+        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.TecnicalPhase__c, 'TecnicalPhase__c != Comunicazione verso Heroku OK');
+        System.assertEquals('00002349', testCaseUpd.HerokuPracticeCode__c, 'HerokuPracticeCode__c != 00002349');
+        
+    }
+
 
 }

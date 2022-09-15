@@ -148,6 +148,33 @@
     <navType>Console</navType>
     <profileActionOverrides>
         <actionName>View</actionName>
+        <content>HDT_SegnalazioniCase</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Segnalazioni</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_SegnalazioniCase</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Segnalazioni</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_SegnalazioniCase</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Segnalazioni</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
         <content>Account_Service_Console</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Account</pageOrSobjectType>
@@ -749,14 +776,22 @@
     <tabs>BillingProfile__c</tabs>
     <tabs>standard-OmniSupervisorLightning</tabs>
     <tabs>standard-OmnichannelInventory</tabs>
+    <tabs>AllineamentoGAA__c</tabs>
+    <tabs>TariAppointment__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Hera_Service_Console_UtilityBar</utilityBar>
     <workspaceConfig>
+        <mappings>
+            <tab>AllineamentoGAA__c</tab>
+        </mappings>
         <mappings>
             <tab>BillingProfile__c</tab>
         </mappings>
         <mappings>
             <tab>ServicePoint__c</tab>
+        </mappings>
+        <mappings>
+            <tab>TariAppointment__c</tab>
         </mappings>
         <mappings>
             <tab>standard-Account</tab>

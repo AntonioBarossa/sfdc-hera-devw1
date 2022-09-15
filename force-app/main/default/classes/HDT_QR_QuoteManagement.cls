@@ -1,6 +1,6 @@
 public inherited sharing class HDT_QR_QuoteManagement {
 
-    public static QuoteManagement__c queryAddInformation(String commodity, String operationType){
+    public static QuoteManagement__c queryAddInformation(String commodity, String operationType,String subprocess){
 
         return [SELECT CausalCode__c, OperationCode__c, QuoteType__c 
         
@@ -13,6 +13,10 @@ public inherited sharing class HDT_QR_QuoteManagement {
                 AND 
                 
                 Operation_type__c = :operationType
+
+                AND
+
+                (Subprocess__c =: subprocess OR Subprocess__c = null)
 
                 WITH SECURITY_ENFORCED
 

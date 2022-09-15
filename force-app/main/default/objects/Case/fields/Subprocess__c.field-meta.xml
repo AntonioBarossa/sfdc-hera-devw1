@@ -44,6 +44,21 @@
                 <label>Agevolazione</label>
             </value>
             <value>
+                <fullName>Aggiunta Attacco</fullName>
+                <default>false</default>
+                <label>Aggiunta Attacco</label>
+            </value>
+            <value>
+                <fullName>Antincendio</fullName>
+                <default>false</default>
+                <label>Antincendio</label>
+            </value>
+            <value>
+                <fullName>Autorizzazione allo scarico</fullName>
+                <default>false</default>
+                <label>Autorizzazione allo scarico</label>
+            </value>
+            <value>
                 <fullName>Billing Profile</fullName>
                 <default>false</default>
                 <label>Billing Profile</label>
@@ -72,6 +87,11 @@
                 <fullName>Cambio Intest/Indirizzo Amministratore</fullName>
                 <default>false</default>
                 <label>Cambio Intest/Indirizzo Amministratore</label>
+            </value>
+            <value>
+                <fullName>Cartografia</fullName>
+                <default>false</default>
+                <label>Cartografia</label>
             </value>
             <value>
                 <fullName>Dati catastali</fullName>
@@ -114,6 +134,11 @@
                 <label>Errore Stima Consumi</label>
             </value>
             <value>
+                <fullName>Fognatura</fullName>
+                <default>false</default>
+                <label>Fognatura</label>
+            </value>
+            <value>
                 <fullName>In Continuità</fullName>
                 <default>false</default>
                 <label>In Continuità</label>
@@ -142,6 +167,11 @@
                 <fullName>IVA - Revoca Esenzione</fullName>
                 <default>false</default>
                 <label>IVA - Revoca Esenzione</label>
+            </value>
+            <value>
+                <fullName>Lettura su Contratto Aperto</fullName>
+                <default>false</default>
+                <label>Lettura su Contratto Aperto</label>
             </value>
             <value>
                 <fullName>Modifica Dati di Contatto</fullName>
@@ -174,9 +204,19 @@
                 <label>NON DOM_ISTAT/Ronchi</label>
             </value>
             <value>
+                <fullName>Nuovo Allaccio</fullName>
+                <default>false</default>
+                <label>Nuovo Allaccio</label>
+            </value>
+            <value>
                 <fullName>Ordinaria</fullName>
                 <default>false</default>
                 <label>Ordinaria</label>
+            </value>
+            <value>
+                <fullName>Parere Preventivo</fullName>
+                <default>false</default>
+                <label>Parere Preventivo</label>
             </value>
             <value>
                 <fullName>Processo M01</fullName>
@@ -219,6 +259,26 @@
                 <label>Rid. Agev. Dopo Accertamento</label>
             </value>
             <value>
+                <fullName>Sezionamento Allacciamento</fullName>
+                <default>false</default>
+                <label>Sezionamento Allacciamento</label>
+            </value>
+            <value>
+                <fullName>Soppressione Attacco</fullName>
+                <default>false</default>
+                <label>Soppressione Attacco</label>
+            </value>
+            <value>
+                <fullName>Sostituzione Contatore per Incuria</fullName>
+                <default>false</default>
+                <label>Sostituzione Contatore per Incuria</label>
+            </value>
+            <value>
+                <fullName>Spostamento Impianto</fullName>
+                <default>false</default>
+                <label>Spostamento Impianto</label>
+            </value>
+            <value>
                 <fullName>Superficie</fullName>
                 <default>false</default>
                 <label>Superficie</label>
@@ -227,6 +287,41 @@
                 <fullName>Variazione Gruppo IVA</fullName>
                 <default>false</default>
                 <label>Variazione Gruppo IVA</label>
+            </value>
+            <value>
+                <fullName>Variazione Portata</fullName>
+                <default>false</default>
+                <label>Variazione Portata</label>
+            </value>
+            <value>
+                <fullName>Verifica interna apertura contatore chiuso</fullName>
+                <default>false</default>
+                <label>Verifica interna apertura contatore chiuso</label>
+            </value>
+            <value>
+                <fullName>Verifica interna consumo abusivo</fullName>
+                <default>false</default>
+                <label>Verifica interna consumo abusivo</label>
+            </value>
+            <value>
+                <fullName>Verifica interna inversione contatore</fullName>
+                <default>false</default>
+                <label>Verifica interna inversione contatore</label>
+            </value>
+            <value>
+                <fullName>Verifica interna lettura a carico HERA</fullName>
+                <default>false</default>
+                <label>Verifica interna lettura a carico HERA</label>
+            </value>
+            <value>
+                <fullName>Verifica interna SISMA chiusura contatore</fullName>
+                <default>false</default>
+                <label>Verifica interna SISMA chiusura contatore</label>
+            </value>
+            <value>
+                <fullName>Verifica interna sul posto gratuita</fullName>
+                <default>false</default>
+                <label>Verifica interna sul posto gratuita</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -286,6 +381,32 @@
             <valueName>CA</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
+            <controllingFieldValue>Nuovo Impianto - Aggiunta Attacco</controllingFieldValue>
+            <valueName>Aggiunta Attacco</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
+            <controllingFieldValue>Nuovo Impianto - Aggiunta Attacco</controllingFieldValue>
+            <valueName>Nuovo Allaccio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica Impianto</controllingFieldValue>
+            <valueName>Spostamento Impianto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica Impianto</controllingFieldValue>
+            <valueName>Variazione Portata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rimozione Impianto</controllingFieldValue>
+            <valueName>Sezionamento Allacciamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rimozione Impianto</controllingFieldValue>
+            <valueName>Soppressione Attacco</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Modifica dati contrattuali</controllingFieldValue>
             <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
             <valueName>Dati catastali</valueName>
@@ -327,6 +448,58 @@
         <valueSettings>
             <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
             <valueName>Rid. Agev. Dopo Accertamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna apertura contatore chiuso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna consumo abusivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna inversione contatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna lettura a carico HERA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna SISMA chiusura contatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna sul posto gratuita</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Istruttoria</controllingFieldValue>
+            <valueName>Antincendio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Istruttoria</controllingFieldValue>
+            <valueName>Autorizzazione allo scarico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Istruttoria</controllingFieldValue>
+            <valueName>Cartografia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Istruttoria</controllingFieldValue>
+            <valueName>Fognatura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Istruttoria</controllingFieldValue>
+            <valueName>Parere Preventivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Interventi con Verifica</controllingFieldValue>
+            <valueName>Lettura su Contratto Aperto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Interventi con Verifica</controllingFieldValue>
+            <valueName>Sostituzione Contatore per Incuria</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>

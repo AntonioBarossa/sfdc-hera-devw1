@@ -22,7 +22,42 @@ public with sharing class HDT_UTL_CaseProcess {
         accountSrv.updateRecordsWithCheck(accountsToUpdate);
         //update accountsToUpdate; 
     }
+    public static void predefaultCaseValues(List<Case> caseList, Map<Id,SObject> caseOldMap){
+        //variable allocation
+        String servicePoint = '';
+        String servicePointOld = '';
+        String commodity = '';
+        Boolean enableSearch = false;
 
+        //First check if is from Insert or Update
+        //1. Is From insert
+        if(caseList != null && !caseList.isEmpty() && caseOldMap == null){
+            //Commodity Management
+            servicePoint = caseList[0].ServicePoint__c;
+            commodity = caseList[0].Commodity__c;
+            if (servicePoint != null && String.isNotBlank(servicePoint) && String.isBlank(commodity)) {
+                enableSearch = true;
+            }
+        }
+        //2. Is From Updated
+        else if(caseList != null && !caseList.isEmpty() && caseOldMap != null) {
+            //Commodity Management
+            Case caseNew = caseList[0];
+		    Case caseOld = (Case) caseOldMap.get(caseNew.Id);
+            servicePoint = caseNew.ServicePoint__c;
+            servicePointOld = caseOld.ServicePoint__c;
+            if((String.isBlank(commodity) && String.isBlank(servicePointOld) && String.isNotBlank(servicePoint)) || (String.isNotBlank(servicePointOld) && String.isNotBlank(servicePoint) && servicePoint != servicePointOld)){
+                enableSearch = true;
+            }
+        }
+        if(enableSearch && String.isNotBlank(servicePoint)){
+            HDT_QR_ServicePoint spQrClass = new HDT_QR_ServicePoint();
+            List<ServicePoint__c> spList = spQrClass.getRecordById(servicePoint,'Id,CommoditySector__c');
+            if(!spList.isEmpty()){
+                caseList[0].Commodity__c = spList[0].CommoditySector__c;
+            }
+        }
+    }
     public static void caseBpcaSieManagement(Map<Id, Sobject> newCasesMap, Map<Id, Sobject> oldCasesMap) {
         Set<Id> accountIdsBpca = new Set<Id>();
         for(Case caseNew : (List<Case>) newCasesMap.values()){

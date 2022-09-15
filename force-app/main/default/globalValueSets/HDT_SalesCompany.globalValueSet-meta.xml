@@ -25,6 +25,11 @@
         <default>false</default>
         <label>EstEnergy S.p.A.</label>
     </customValue>
+<!--     <customValue>
+        <fullName>Marche Multiservizi S.p.A.</fullName>
+        <default>false</default>
+        <label>Marche Multiservizi S.p.A.</label>
+    </customValue> -->
     <masterLabel>Societa di vendita</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

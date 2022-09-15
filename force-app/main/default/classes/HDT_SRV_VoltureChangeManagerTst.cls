@@ -21,7 +21,6 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         List<wrts_prcgvr__ActivityTemplate__c> templates =  HDT_UTL_DataFactoryTst.createActivityTemplate(1, false);
         templates[0].Name = 'Valori non corrispondenti';
         templates[0].wrts_prcgvr__ObjectType__c = 'Order';
-        templates[0].wrts_prcgvr__IsRequired__c = true;
         insert templates;
 
         //Create 1 order one for the parent and one for the child 1
@@ -467,7 +466,7 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
                                  SupplyStreetName__c,SupplyStreetNumber__c, BillingCity__c,BillingCityCode__c,BillingCountry__c, BillingPostalCode__c, BillingProvince__c,
                                  BillingStreetName__c, ResidentialCity__c, ResidentialCityCode__c, ResidentialCountry__c, ResidentialPostalCode__c,ResidentialState__c,
                                  ResidentialStreet__c, ResidentialStreetName__c, SalesCompany__c, SalesCompanyCode__c, DistributorCode__c, ExciseGAS__c, VAT__c,
-                                 Resident__c, Market__c, SupplyType__c, AnnualConsumption__c, Caliber__c
+                                 Resident__c, Market__c, SupplyType__c, AnnualConsumption__c, Caliber__c,WithdrawalClass__c,EnergyService__c,UseCategory__c
         FROM Order 
         WHERE ParentOrder__c != null
         AND ProcessType__c = 'Switch in Ele'];

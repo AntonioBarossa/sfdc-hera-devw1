@@ -23,7 +23,7 @@
                         <!--<template for:each={pendingSteps} for:item="section">-->
                         <template iterator:section={pendingSteps}>
 
-                            <lightning-accordion-section key={section.value.step} if:true={section.value.processVisibility} name={section.value.name} label={section.value.label}>
+                            <lightning-accordion-section key={section.value.step} if:true={section.value.processVisibility} name={section.value.name} data-section-name={section.value.name} label={section.value.label}>
                                 
                                 <template if:true={loading}>
                                     <lightning-spinner alternative-text="Loading"></lightning-spinner>
@@ -83,6 +83,7 @@
                                     <c-hdt-land-registry 
                                     service-point-id={order.ServicePoint__r.Id}
                                     pre-selected-land-registry-id={order.LandRegistry__c}
+                                    onselection={landSelected}
                                     ></c-hdt-land-registry>
                                 </template>
 

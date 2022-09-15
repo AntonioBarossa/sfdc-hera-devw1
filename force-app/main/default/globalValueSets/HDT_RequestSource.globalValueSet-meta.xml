@@ -6,9 +6,9 @@
         <label>Da contribuente</label>
     </customValue>
     <customValue>
-        <fullName>D’ufficio</fullName>
+        <fullName>D'ufficio</fullName>
         <default>false</default>
-        <label>D’ufficio</label>
+        <label>D'ufficio</label>
     </customValue>
     <masterLabel>Provenienza Richiesta</masterLabel>
     <sorted>false</sorted>

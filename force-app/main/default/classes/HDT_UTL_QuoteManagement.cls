@@ -31,7 +31,8 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 	private static QuoteManagement__c menageVerifiche(List<HDT_UTL_FlowInputs> inputs){
 		String operationType = inputs[0].operationtype;
         String commodity = inputs[0].commodity;
-		return HDT_QR_QuoteManagement.queryAddInformation(commodity, operationType);
+		String subprocess = inputs[0].subprocess;
+		return HDT_QR_QuoteManagement.queryAddInformation(commodity, operationType,subprocess);
 	}
 	
 	@SuppressWarnings('PMD.CyclomaticComplexity')
@@ -242,6 +243,9 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 
 		@InvocableVariable
         public String phaseAvalaible;
+
+		@InvocableVariable
+        public String subprocess;
     }
     
 

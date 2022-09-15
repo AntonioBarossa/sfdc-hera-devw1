@@ -127,5 +127,15 @@ public class HDT_SRV_PostSalesCriteriaManagerTst {
         args.put('record', record);
 
         return args;
+    }
+    @isTest
+    static void areActivityOpenTest()
+    {
+        HDT_SRV_PostSalesCriteriaManager psc = new HDT_SRV_PostSalesCriteriaManager();
+        List<Order> orderList = [Select Id FROM Order];
+        Test.startTest();
+            Boolean result = psc.evaluate(setArgs('areActivityOpen', orderList[0]));
+        Test.stopTest();
+        System.assertEquals(true, result, 'areActivityOpen riuscito');
     } 
 }

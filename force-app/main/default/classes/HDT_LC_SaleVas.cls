@@ -186,7 +186,7 @@ public inherited sharing class HDT_LC_SaleVas {
     * @param key 
     * @return List<SObject> 
     **/
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<SObject> getFornitura(String searchString, String key){
         List<SObject> records = new List<SObject>();
         system.debug('searchString '+searchString);
@@ -348,6 +348,23 @@ public inherited sharing class HDT_LC_SaleVas {
                     WITH SECURITY_ENFORCED
                     ]
                 );
+            }
+            when 'RIMOZIONE_AGEVOLAZIONE'{
+                Set<Id> contrIds = new Set<Id>();
+                List<AggregateResult> results = [
+                    Select SBQQ__Contract__c 
+                    From SBQQ__Subscription__c 
+                    WHERE  
+                        SBQQ__Contract__r.Status = 'Attivo' AND SBQQ__Account__c=:searchString 
+                        AND ServicePoint__r.CommoditySector__c='Ambiente'
+                    WITH SECURITY_ENFORCED
+                    Group by SBQQ__Contract__c 
+                    HAVING Count(Id)>1
+                ];
+                for(AggregateResult res : results){
+                    contrIds.add((Id) res.get('SBQQ__Contract__c'));
+                }
+                records = [ Select id,SapContractCode__c,ContractNumber,ServicePoint__r.SupplyAddress__c,ServicePoint__r.ServicePointCode__c From Contract where Id IN :contrIds WITH SECURITY_ENFORCED];
             }
         }
         return records;

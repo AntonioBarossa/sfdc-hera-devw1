@@ -1948,6 +1948,30 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G1 - MMS Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G2 - MMS Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G3 - MMS Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 - MMS Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G5 - MMS Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 - MMS Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>GENESI-Altro</fullName>
             <default>false</default>
         </values>
@@ -8511,6 +8535,14 @@
     <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
+            <fullName>Ripristino Sigilli / Piombi Rotti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripiombatura Post Collaudo Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CLIENTE NON TROVATO</fullName>
             <default>false</default>
         </values>
@@ -10146,6 +10178,38 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Sostituzione Contatore per Incuria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lettura su Contratto Aperto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica interna inversione contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica interna apertura contatore chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica interna SISMA chiusura contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica interna lettura a carico HERA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica interna sul posto gratuita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica interna consumo abusivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cambio Amministratore</fullName>
             <default>false</default>
         </values>
@@ -10672,11 +10736,23 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
+            <fullName>Interventi con Verifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Aggiunta Attacco</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Verifica Interna</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Integrita Sigilli</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Rottura Impianto Cliente</fullName>
             <default>false</default>
         </values>
         <values>

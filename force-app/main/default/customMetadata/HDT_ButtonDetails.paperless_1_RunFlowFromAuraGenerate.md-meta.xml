@@ -32,7 +32,8 @@
   &quot;processType&quot;: &quot;Paperless&quot;,
   &quot;recordTypeName&quot;: &quot;HDT_RT_AltriProcessiPagamenti&quot;,
   &quot;flowName&quot;: &quot;HDT_FL_PostSalesMasterDispatch&quot;,
-  &quot;createDocuments&quot;: true
+  &quot;createDocuments&quot;: true,
+  &quot;documentPaymentMethod&quot;: &quot;Bollettino Paperless&quot;
 }</value>
     </values>
     <values>
