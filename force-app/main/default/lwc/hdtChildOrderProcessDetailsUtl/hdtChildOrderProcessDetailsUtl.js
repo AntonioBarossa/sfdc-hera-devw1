@@ -113,7 +113,7 @@ import  * as rateCategories from './hdtRateCategories.js';
                     new fieldData('Documentazione consegnata da contribuente','DeliveredDocumentation__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Provenienza richiesta','RequestSource__c', this.typeVisibility('both'), true, false,'','Da contribuente'),
                     new fieldData('Importo mancato dovuto','MissingDueAmount__c', this.typeVisibility('both'), false, false,'',''),
-                    new fieldData('Pagamento Unico Annuale TARI','AnnualTARIPayment__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), false, false,'',''),
+                    new fieldData('Pagamento Unico Annuale TARI','AnnualTARIPayment__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), false, false,'','Disattiva'),
                     new fieldData('Data dichiarazione','DeclarationDate__c', this.typeVisibility('both'), true, false,'', getFormattedDate(new Date())),
                     new fieldData('Data decorrenza','EffectiveDate__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Integrazione alla Dichiarazione (da Gestore)','OperatorDeclarationInfos__c', this.typeVisibility('both'), false, false,'',''),
