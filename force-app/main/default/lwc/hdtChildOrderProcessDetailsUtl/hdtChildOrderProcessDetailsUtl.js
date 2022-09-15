@@ -68,7 +68,7 @@ import  * as rateCategories from './hdtRateCategories.js';
                 nextActions : (evt) => 
                     {
                         //check mandatory section field section
-                        let reqFields = checkSectionRequiredFields(evt?.currentTarget?.value);
+                        let reqFields = checkSectionRequiredFields.call(this, evt?.currentTarget?.value);
                         if(reqFields){
                             console.log(reqFields);
                             this.showMessage('Errore', 'Popolare i campi obbligatori', 'error');
