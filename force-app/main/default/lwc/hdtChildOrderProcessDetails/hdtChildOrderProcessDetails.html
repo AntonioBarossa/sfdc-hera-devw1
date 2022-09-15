@@ -23,7 +23,7 @@
                         <!--<template for:each={pendingSteps} for:item="section">-->
                         <template iterator:section={pendingSteps}>
 
-                            <lightning-accordion-section key={section.value.step} if:true={section.value.processVisibility} name={section.value.name} label={section.value.label}>
+                            <lightning-accordion-section key={section.value.step} if:true={section.value.processVisibility} name={section.value.name} data-section-name={section.value.name} label={section.value.label}>
                                 
                                 <template if:true={loading}>
                                     <lightning-spinner alternative-text="Loading"></lightning-spinner>
