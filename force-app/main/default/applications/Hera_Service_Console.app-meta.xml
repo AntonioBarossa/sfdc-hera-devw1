@@ -776,10 +776,13 @@
     <tabs>BillingProfile__c</tabs>
     <tabs>standard-OmniSupervisorLightning</tabs>
     <tabs>standard-OmnichannelInventory</tabs>
-    <tabs>TariAppointment__c</tabs>
+    <tabs>AllineamentoGAA__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Hera_Service_Console_UtilityBar</utilityBar>
     <workspaceConfig>
+        <mappings>
+            <tab>AllineamentoGAA__c</tab>
+        </mappings>
         <mappings>
             <tab>BillingProfile__c</tab>
         </mappings>
