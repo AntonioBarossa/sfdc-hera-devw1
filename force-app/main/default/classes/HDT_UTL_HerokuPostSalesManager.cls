@@ -786,7 +786,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             currentCase.PartialOutcome__c = 'Y';
                             if(currentCase.Type.equalsIgnoreCase('Sospensione Fornitura'))
                             {
-                                NotCancellable__c = true;
+                                currentCase.NotCancellable__c = true;
                             }
                         }when 'Volture'{
                             currentCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();
