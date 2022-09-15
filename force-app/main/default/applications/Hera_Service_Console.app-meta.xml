@@ -777,6 +777,7 @@
     <tabs>standard-OmniSupervisorLightning</tabs>
     <tabs>standard-OmnichannelInventory</tabs>
     <tabs>AllineamentoGAA__c</tabs>
+    <tabs>TariAppointment__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Hera_Service_Console_UtilityBar</utilityBar>
     <workspaceConfig>
