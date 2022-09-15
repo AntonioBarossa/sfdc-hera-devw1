@@ -1,19 +1,6 @@
-public with sharing class HDT_BA_Holidays implements Database.Batchable<HDT_WRP_Scope>, Database.AllowsCallouts
+public with sharing class HDT_QBL_Holidays implements Queueable, Database.AllowsCallouts
 {
-
-    public List<HDT_WRP_Scope> batchScope;
-
-    HDT_BA_Holidays()
-    {
-        this.batchScope = new List<HDT_WRP_Scope>();
-    }
-
-    public Iterable<HDT_WRP_Scope> start(Database.BatchableContext bc)
-    {
-        return this.batchScope;
-    }
-
-    public void execute(Database.BatchableContext bc, List<HDT_WRP_Scope> scope)
+    public void execute(QueueableContext context)
     {
         /* Get current year */
         Integer year = System.today().year();
@@ -29,10 +16,6 @@ public with sharing class HDT_BA_Holidays implements Database.Batchable<HDT_WRP_
         }
     }
 
-    public void finish(Database.BatchableContext bc)
-    {
-        return;
-    }
 
 
     private String makeRequest(Integer year)
@@ -81,12 +64,12 @@ public with sharing class HDT_BA_Holidays implements Database.Batchable<HDT_WRP_
         }
         for(HDT_WRP_Holidays singleDate : response.data.holidayDate)
         {
-            if(singleDate.dateString == null || String.isBlank(singleDate.dateString))
+            if(singleDate.calendarDate == null || String.isBlank(singleDate.calendarDate))
             {
                 continue;
             }
-            Date singleDt = tryParseDate(singleDate.dateString);
-            if(singleDt != null && existDate(singleDt, year, existingHolidays))
+            Date singleDt = tryParseDate(singleDate.calendarDate);
+            if(singleDt != null && !existDate(singleDt, year, existingHolidays))
             {
                 TechnicalHolidaysCalendar__c newHoliday = new TechnicalHolidaysCalendar__c(HolidayDate__c = singleDt, Year__c = year);
                 result.add(newHoliday);
@@ -95,12 +78,12 @@ public with sharing class HDT_BA_Holidays implements Database.Batchable<HDT_WRP_
         return result;
     }
 
-    private Date tryParseDate(String dateString)
+    private Date tryParseDate(String calendarDate)
     {
         Date result;
         try
         {
-            result = Date.valueOf(dateString);
+            result = Date.valueOf(calendarDate);
         } 
         catch (Exception e)
         {
@@ -149,6 +132,6 @@ public with sharing class HDT_BA_Holidays implements Database.Batchable<HDT_WRP_
     }
     public class HDT_WRP_Holidays
     {
-        public String dateString;
+        public String calendarDate;
     }
-}   
+}
