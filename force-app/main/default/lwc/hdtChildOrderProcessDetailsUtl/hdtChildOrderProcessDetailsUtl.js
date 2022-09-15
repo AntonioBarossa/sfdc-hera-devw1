@@ -43,6 +43,15 @@ import  * as rateCategories from './hdtRateCategories.js';
                     : str1 === str2;
     }
 
+    function checkSectionRequiredFields(sectionName){
+        return [...this.template.querySelectorAll(`lightning-accordion-section[data-section-name='${sectionName}'] lightning-input-field`)
+                        ].reduce((fNames, elem) => {
+                                if(elem.required && !(elem.disabled || elem.value)) fNames+=`, ${elem.getAttribute('data-name')}`;
+                                return fNames;
+                            }, ""
+                        ).slice(2);
+    }
+
     const handleSections = function() {
         this.fields = [
             {
@@ -56,8 +65,15 @@ import  * as rateCategories from './hdtRateCategories.js';
                 hasAllegatiObbligatori: true,
                 diffObjApi: 'Sale',
                 processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),
-                nextActions : () => 
+                nextActions : (evt) => 
                     {
+                        //check mandatory section field section
+                        let reqFields = checkSectionRequiredFields(evt?.currentTarget?.value);
+                        if(reqFields){
+                            console.log(reqFields);
+                            this.showMessage('Errore', 'Popolare i campi obbligatori', 'error');
+                            return true;
+                        }
                         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
                         let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
                         //if(!this.isActiveRepentantPressed){
@@ -122,8 +138,15 @@ import  * as rateCategories from './hdtRateCategories.js';
                 diffObjApi: 'Account',
                 diffRecordId: this.order.AccountId,
                 processVisibility: ['HDT_RT_SubentroAmbiente', 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),
-                nextActions: () => 
+                nextActions: (evt) => 
                     {
+                        //check mandatory section field section
+                        let reqFields = checkSectionRequiredFields(evt?.currentTarget?.value);
+                        if(reqFields){
+                            console.log(reqFields);
+                            this.showMessage('Errore', 'Popolare i campi obbligatori', 'error');
+                            return true;
+                        }
                         const famNumb =this.template.querySelector("[data-id='FamilyNumber__c']");
                         if(famNumb) this.sectionDataToSubmit["FamilyNumber__c"]=this.template.querySelector("[data-id='FamilyNumber__c']")?.value;
                     },
@@ -171,6 +194,15 @@ import  * as rateCategories from './hdtRateCategories.js';
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),
+                nextActions: (evt) => {
+                    //check mandatory section field section
+                    let reqFields = checkSectionRequiredFields(evt?.currentTarget?.value);
+                    if(reqFields){
+                        console.log(reqFields);
+                        this.showMessage('Errore', 'Popolare i campi obbligatori', 'error');
+                        return true;
+                    }
+                },
                 data: [
                     new fieldData('Modalità Invio Bolletta', 'BillSendMode__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('Email Invio Bolletta', 'InvoiceEmailAddress__c',this.typeVisibility('both'),false,true,'',''),
