@@ -1315,7 +1315,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              * Pratica Gestita
              * per pratiche a transitorio
              */
-            Set<String> finalStatuses = new Set<String>{'Annullato','KO definitivo','Pratica gestita','KO gestito','Eliminato','KO','Pratica Rifiutata'};
+            Set<String> finalStatuses = new Set<String>{'Annullato','KO definitivo','Pratica gestita','KO gestito','Eliminato','KO','Pratica Rifiutata','Chiuso'};
             if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))&&(finalStatuses.contains((String)newOrder.get('SiebelStatus__c'))))
             {
                 response = true;
@@ -1340,7 +1340,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Map<Id,String> mapVasPhase = new Map<Id,String>();
         Map<Id,String> mapVasStatus = new Map<Id,String>();
         Set<String> negativeOutcomes = new Set<String>{'Annullato','KO definitivo','Eliminato','KO','Pratica Rifiutata','KO gestito'};
-        Set<String> positiveOutcomes = new Set<String>{'Pratica gestita'};
+        Set<String> positiveOutcomes = new Set<String>{'Pratica gestita','Chiuso'};
         for(Order newOrder : (List<Order>) newOrderList)
         {
             String oldPhase = newOrder.Phase__c;

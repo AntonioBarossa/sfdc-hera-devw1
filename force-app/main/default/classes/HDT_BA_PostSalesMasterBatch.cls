@@ -48,6 +48,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                         //ANNULLAMENTO CASE BOZZA AUTOLETTURA OLTRE SCADENZA
                         if(currentCase.Phase__c.equalsIgnoreCase('Bozza')){
                             currentCase.Phase__c = 'Bozza Annullata';
+                            currentCase.Status = 'Closed';
                             myCurrentCaseList.add(currentCase);
                             /*if(currentCase.Cluster__c.equalsIgnoreCase('Autolettura')){
                               //Get data from Days to Expiration Custom Setting
