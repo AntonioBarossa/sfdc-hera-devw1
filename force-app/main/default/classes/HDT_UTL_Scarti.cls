@@ -860,7 +860,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         set<id> parentObjectOrder = new set<id>();
         set<id> inputDataIds = new set<id>();
         for(wrts_prcgvr__Activity__c currAct : inputData){
-            if(categories.contains(currAct.DiscardCategory__c)){
+            if(categories.contains(currAct.DiscardCategory__c) && !HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL.equalsIgnoreCase(currAct.Type__c) && !HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO.equalsIgnoreCase(currAct.Type__c)){
                 inputDataIds.add(currAct.Id);
                 if(String.isNotBlank(currAct.wrts_prcgvr__ObjectId__c)){
                     if(Schema.Case.SObjectType == Id.valueOf(currAct.wrts_prcgvr__ObjectId__c).getSobjectType()){
@@ -870,6 +870,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     }
                 }
             }
+        }
+
+        if (parentObjectCase.isEmpty() && parentObjectOrder.isEmpty()){
+            return;
         }
         
         system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi parentObjectCase' + JSON.serializePretty(parentObjectCase));
