@@ -1246,25 +1246,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>CartographyDetail__c</picklist>
-        <values>
-            <fullName>Accesso agli atti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Certificazione esistenza%2Finesistenza fogna</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risanamento Ambientale nulla osta NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risanamento Ambientale nulla osta SI</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>CaseSource__c</picklist>
         <values>
             <fullName>Gestore</fullName>
@@ -3334,17 +3315,6 @@
         </values>
         <values>
             <fullName>S - Dettaglio 2</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>DeviationOver2000mc__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7148,150 +7118,150 @@
     </picklistValues>
     <picklistValues>
         <picklist>FourthLevelComplaintClassification__c</picklist>
-        <values>
-            <fullName>IE01 - fumi%2Fpulviscolo provenienti da contenitori%2Fdotazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IE02 - fumi%2Fpulviscolo provenienti da Centri di Raccolta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IE03 - fumi da tubi di scappamento di automezzi aziendali</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IE04 - cattivi odori provenienti da Centri di Raccolta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IE05 - cattivi odori provenienti da contenitori%2Fdotazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>II01 - rifiuti abbandonati per cause imputabili al gestore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>II02 - rifiuti abbandonati per cause non imputabili al gestore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IM01 - perdita di liquidi%2Folii da automezzi aziendali</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR01 - presenza di animali o insetti nei pressi di contenitori%2Fdotazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR02 - presenza di animali o insetti nei pressi di Centri di Raccolta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IT01 - rumore prodotto da automezzi%2Fattrezzature</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IT02 - rallentamenti del traffico provocati da automezzi aziendali</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QA01- pulizia spiaggia</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QC01 - orari di apertura non rispettati</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QC02 - comportamenti%2Fattività operatore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QC03 - malfunzionamento dispositivo di identificazione%2Fpesa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QR01 - mancato svuotamento contenitori stradali</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QR02 - mancata consegna dotazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QR03 - manutenzioni contenitori%2Fdotazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QR04 - comportamenti%2Fattività operatore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QR05 - lavaggio contenitori</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QR06 - mancato svuotamento domiciliare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QR07 - sollecito di servizio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QS01 - mancata raccolta %2F errato prelievo per servizi su appuntamento gratuiti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QS02 - comportamenti%2Fattività operatore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QS03 - mancata raccolta %2F errato prelievo per servizi a pagamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QZ01 - pulizia strade%2Fmarciapiedi%2C cestini%2C aree cani</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>QZ02 - comportamenti%2Fattività operatore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SC01 - attesa al telefono</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SC02 - comportamenti%2Fattività operatore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SC03 - risposta non chiara</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SC04 - difficoltà nel contatto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SS01 - tempi di attesa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SS02 - comportamenti%2Fattività operatore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SS03 - risposta non chiara</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SW01 - malfunzionamento</fullName>
-            <default>false</default>
-        </values>
+		<values>
+			<fullName>IE01 - fumi/pulviscolo provenienti da contenitori/dotazioni</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>IE02 - fumi/pulviscolo provenienti da Centri di Raccolta</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>IE03 - fumi da tubi di scappamento di automezzi aziendali</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>IE04 - cattivi odori provenienti da Centri di Raccolta</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>IE05 - cattivi odori provenienti da contenitori/dotazioni</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>II01 - rifiuti abbandonati per cause imputabili al gestore</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>II02 - rifiuti abbandonati per cause non imputabili al gestore</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>IM01 - perdita di liquidi/olii da automezzi aziendali</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>IR01 - presenza di animali o insetti nei pressi di contenitori/dotazioni</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>IR02 - presenza di animali o insetti nei pressi di Centri di Raccolta</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>IT01 - rumore prodotto da automezzi/attrezzature</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>IT02 - rallentamenti del traffico provocati da automezzi aziendali</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>QA01- pulizia spiaggia</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>QC01 - orari di apertura non rispettati</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>QC02 - comportamenti/attività operatore</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>QC03 - malfunzionamento dispositivo di identificazione/pesa</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>QR01 - mancato svuotamento contenitori stradali</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>QR02 - mancata consegna dotazioni</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>QR03 - manutenzioni contenitori/dotazioni</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>QR04 - comportamenti/attività operatore</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>QR05 - lavaggio contenitori</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>QR06 - mancato svuotamento domiciliare</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>QR07 - sollecito di servizio</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>QS01 - mancata raccolta / errato prelievo per servizi su appuntamento gratuiti</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>QS02 - comportamenti/attività operatore</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>QS03 - mancata raccolta / errato prelievo per servizi a pagamento</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>QZ01 - pulizia strade/marciapiedi, cestini, aree cani</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>QZ02 - comportamenti/attività operatore</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>SC01 - attesa al telefono</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>SC02 - comportamenti/attività operatore</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>SC03 - risposta non chiara</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>SC04 - difficoltà nel contatto</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>SS01 - tempi di attesa</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>SS02 - comportamenti/attività operatore</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>SS03 - risposta non chiara</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>SW01 - malfunzionamento</fullName>
+			<default>false</default>
+		</values>
     </picklistValues>
     <picklistValues>
         <picklist>HouseOwner__c</picklist>
@@ -8333,64 +8303,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>IntendedUse__c</picklist>
-        <values>
-            <fullName>Alberghi%2Fpensioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Antincendio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attività di intratten%2E e altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Completamento allacciamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NO DOM TEMPOR%2E %3E40kW-FIERA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ospedali%2Fcase di cura%2F</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Stralcio di allac%2E - Uso cant%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso domestico</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>IsSameReasonComplaint__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>JointBottomAdhesion__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Lettura_inserita_in_SAP__c</picklist>
         <values>
             <fullName>No</fullName>
             <default>false</default>
@@ -9175,7 +9088,7 @@
     <picklistValues>
         <picklist>OperationType__c</picklist>
         <values>
-            <fullName>Modifica dati contr%2E stesso Cli</fullName>
+            <fullName>Modifica dati contr. stesso Cli</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10545,7 +10458,7 @@
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
-            <fullName>D%27ufficio</fullName>
+            <fullName>D%E2%80%99ufficio</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12351,25 +12264,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>SupplyUseType__c</picklist>
-        <values>
-            <fullName>ACQUEDOTTO CIVILE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ACQUEDOTTO INDUSTRIALE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FOGNATURA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TELERISCALDAMENTO</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>SuspensionMotivation__c</picklist>
         <values>
             <fullName>Sospeso contatto cliente</fullName>
@@ -12718,7 +12612,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Materiali%2Fsostanze</fullName>
+            <fullName>Materiali/sostanze</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12762,7 +12656,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Richiamo animali%2Finsetti</fullName>
+            <fullName>Richiamo animali/insetti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12790,7 +12684,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Traffico%2Fcantieri</fullName>
+            <fullName>Traffico/cantieri</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12820,50 +12714,46 @@
     </picklistValues>
     <picklistValues>
         <picklist>Type</picklist>
-        <values>
-            <fullName>Ambiente annullo richiesta senza appuntamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Conferimento Centri di Raccolta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Formulari Richiesta Sconto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestione Rifiuti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pagamento Unico Annuale TARI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reclamo Scritto Da Cittadino</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Riduz%2E superficie rifiuti spec promiscui</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Riduzione Agevolazione dopo Accertamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risoluzione Contrattuale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sconti Collettivi Pap</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Segnalazioni Ambientali</fullName>
-            <default>false</default>
-        </values>
+		<values>
+			<fullName>Ambiente annullo richiesta senza appuntamento</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Conferimento Centri di Raccolta</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Formulari Richiesta Sconto</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Gestione Rifiuti</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Pagamento Unico Annuale TARI</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Reclamo Scritto Da Cittadino</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Riduz. superficie rifiuti spec promiscui</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Riduzione Agevolazione dopo Accertamento</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Sconti Collettivi Pap</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Segnalazioni Ambientali</fullName>
+			<default>false</default>
+		</values>
     </picklistValues>
     <picklistValues>
         <picklist>TypeInstallmentPlan__c</picklist>
@@ -13299,45 +13189,6 @@
         </values>
         <values>
             <fullName>013-Uso Condizionam%2E%2BRiscald%2E</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>UseSubCategory__c</picklist>
-        <values>
-            <fullName>Altri usi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso agricolo e zootecnico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso artigianale e commerciale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso condominiale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso domestico non residente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso domestico residente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso industriale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso pubblico disalimentabile</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso pubblico non disalimentabile</fullName>
             <default>false</default>
         </values>
     </picklistValues>
