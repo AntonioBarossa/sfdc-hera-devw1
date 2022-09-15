@@ -1,4 +1,5 @@
 import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
+import  * as rateCategories from './hdtRateCategories.js';
     class fieldData{
         constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value, func) {
             this.label = label;
@@ -36,48 +37,11 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
         return date.getFullYear()+'-'+month+'-'+day;
     }
 
-    //Rate Category Visibility
-    // AFSCDIRATT visibile for all
-    const AF_NODISAL =  { evaluationType: 'notvisible', rateCategories: ['APSCARPRO0','ACTANTINC0','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'] };
-    const AQCNSANNOF =  { evaluationType: 'notvisible', rateCategories: ['APSCARPRO0'] };
-    // DEP_CAUZ_ESCL visibile for all
-    const ZGEWKEY =  { evaluationType: 'visible', rateCategories: ['ACAGRICO00','ACAUNOPOT0','ACINDSTR00','ACINTERNO0','ACPOZZI000','ACPROMISC0','ACAUGENER0','ACAUGRUNI0','ACPROMIBI0','ACTANTINC0','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'] };
-    const AQVOL_FORF =  { evaluationType: 'visible', rateCategories: ['ACPOZZI000','APSCARPRO0'] };
-    const AF_BOC_IDR =  { evaluationType: 'visible', rateCategories: ['ACANTIN000','ACPROMIBI0'] };
-    const AFNUM_COMP =  { evaluationType: 'visible', rateCategories: ['ACDOMRESP0','ACPROMISC0'] };
-    const AFNCOMP =  { evaluationType: 'visible', rateCategories: ['ACDOMRESP0','ACPROMISC0','ACPROMIBI0'] };
-    // AFPAGA_DEP visibile for all
-    // AFPAGA_FOG visibile for all
-    const AFUADNR =  { evaluationType: 'visible', rateCategories: ['ACDOMNR000','ACPROMISC0','ACPROMIBI0'] };
-    const AFUADRS =  { evaluationType: 'visible', rateCategories: ['ACDOMRESP0','ACPROMISC0','ACPROMIBI0'] };
-    const AFUND =  { evaluationType: 'visible', rateCategories: ['ACANTINC00','ACAUNOPOT0','ACINTERNO0','ACPOZZI000','ACPROMISC0','ACPUBDIS00','ACPUBNDIS0','ACSUBDIST0','ACAUGENER0','ACANTIN000','ACPISPUB00','ACPROMIBI0','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'] };
-    const AFUNDA =  { evaluationType: 'visible', rateCategories: ['ACAGRICO00','ACPROMIBI0'] };
-    const AFUNDC =  { evaluationType: 'visible', rateCategories: ['ACARTCOMM0','ACPROMISC0','ACPROMIBI0'] };
-    const AFUNDI =  { evaluationType: 'visible', rateCategories: ['ACINDSTR00','ACAUGRUNI0','ACPROMIBI0'] };
-    const AFUNDZ =  { evaluationType: 'visible', rateCategories: ['ACAGRIZOO0','ACZOOTECN0','ACPROMIBI0'] };
-    const N_A =  { evaluationType: 'visible', rateCategories: ['ACDOMRESP0'] };
-
-    //Rate Category Required
-
-    // AFSCDIRATTreq never required
-    // AF_NODISALreq never required
-    // AQCNSANNOFreq never required
-    const DEP_CAUZ_ESCL=  { evaluationType: 'required', rateCategories: ['AITBNDOME0','AITMNDOME0'] };
-    const ZGEWKEYreq =  { evaluationType: 'required', rateCategories: ['AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'] };
-    // AQVOL_FORFreq never required
-    const AF_BOC_IDRreq =  { evaluationType: 'required', rateCategories: ['ACANTIN000'] };
-    // AFNUM_COMPreq never required
-    const AFNCOMPreq =  { evaluationType: 'required', rateCategories: ['ACDOMRESP0','ACPROMISC0','ACPROMIBI0'] };
-    // AFPAGA_DEP never required
-    // AFPAGA_FOG never required
-    const AFUADNRreq =  { evaluationType: 'required', rateCategories: ['ACDOMNR000','ACPROMISC0'] };
-    // AFUADRSreq never required
-    const AFUNDreq =  { evaluationType: 'required', rateCategories: ['ACANTINC00','ACAUNOPOT0','ACINTERNO0','ACPOZZI000','ACPROMISC0','ACPUBDIS00','ACPUBNDIS0','ACSUBDIST0','ACAUGENER0','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'] };
-    const AFUNDAreq =  { evaluationType: 'required', rateCategories: ['ACAGRICO00'] };
-    const AFUNDCreq =  { evaluationType: 'required', rateCategories: ['ACARTCOMM0','ACPROMISC0'] };
-    const AFUNDIreq =  { evaluationType: 'required', rateCategories: ['ACINDSTR00','ACAUGRUNI0'] };
-    const AFUNDZreq =  { evaluationType: 'required', rateCategories: ['ACZOOTECN0'] };
-    const N_Areq =  { evaluationType: 'required', rateCategories: ['ACDOMRESP0'] };
+    function equalsIgnoreCase(str1, str2){
+        return typeof str1 === 'string' && typeof str2 === 'string'? 
+                    str1.localeCompare(str2, undefined, { sensitivity: 'accent' }) === 0
+                    : str1 === str2;
+    }
 
     const handleSections = function() {
         this.fields = [
@@ -169,7 +133,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                             for(let wrp of [new wrp2Infos('CustomerName__c', "FirstName__c"), new wrp2Infos('CustomerLastName__c', "LastName__c"),new wrp2Infos('BirthPlace__c', "BirthProvince__c"),new wrp2Infos('BirthDate__c', "BirthDate__c")]){
                                 let node = this.template.querySelector(`[data-id='${wrp.val1}']`);
                                 if(!node)   return;
-                                let value = event.target.value=== "Soggetto Passivo"? this.order.Account[wrp.val2] : "";
+                                let value = equalsIgnoreCase(event.target.value, "Soggetto Passivo")? this.order.Account[wrp.val2] : "";
                                 node.value=value;
                                 this.sectionDataToSubmit[wrp.val1]=value;
                             }
@@ -340,7 +304,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 new fieldData('Azione commerciale','CommercialAction__c', this.typeVisibility('both'), false, false, '',''),
                 new fieldData('Note per il DL','CommentForDL__c', this.typeVisibility('both'), false, false, '',''),
                 new fieldData('Unita Immobiliari','RealEstateUnit__c', this.typeVisibility('acqua')  && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta', false, false, '',''),
-                new fieldData('Esclusione dal deposito cauzionale','SecurityDepositExcluded__c', this.typeVisibility('both') && this.rateCategoryVisibility(DEP_CAUZ_ESCL) && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'), this.rateCategoryVisibility(DEP_CAUZ_ESCLreq), false, '','N'),
+                new fieldData('Esclusione dal deposito cauzionale','SecurityDepositExcluded__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.DEP_CAUZ_ESCL) && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'), this.rateCategoryVisibility(DEP_CAUZ_ESCLreq), false, '','N'),
                 new fieldData('Data Inizio Connessione Temporanea','TemporaryConnectionStartDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
                 new fieldData('Data fine connessione temporanea','TemporaryConnectionEndDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
                 new fieldData('Ore di utilizzo','HoursOfUse__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
@@ -349,7 +313,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 new fieldData('ConnectionMandate__c','ConnectionMandate__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica', '',''),
                 new fieldData('Fase richiesta','RequestPhase__c', this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', true, false, '',''),
                 new fieldData('Muc', 'IsMuc__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',false,false, '',''),
-                new fieldData('Addebito Spese Contrattuali','ContractExpenses__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(AQCNSANNOF), this.rateCategoryVisibility(AQCNSANNOFreq), false, '',''),
+                new fieldData('Addebito Spese Contrattuali','ContractExpenses__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AQCNSANNOF), this.rateCategoryVisibility(AQCNSANNOFreq), false, '',''),
                 new fieldData('Data Differita','DeferredDate__c', this.typeVisibility('acqua') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro') , false, false, '',''),
                 new fieldData('Data Decorrenza','EffectiveDate__c', this.typeVisibility('acqua'), true, false, '',''),
                 new fieldData('Note','Note__c', this.typeVisibility('acqua') && (this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.ProcessType__c === 'Voltura - Subentro Scarico produttivo' ), false, false, '',''),
@@ -366,7 +330,7 @@ import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
                 new fieldData('Settore merceologico','CommodityFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Distributore','DistributorFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Mercato di provenienza','MarketOrigin__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Consumi Anno','AnnualConsumption__c', this.typeVisibility('both') && this.rateCategoryVisibility(AQCNSANNOF), this.rateCategoryVisibility(AQCNSANNOFreq), true, '',''),
+                new fieldData('Consumi Anno','AnnualConsumption__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AQCNSANNOF), this.rateCategoryVisibility(AQCNSANNOFreq), true, '',''),
                 new fieldData('Tipo Fornitura','SupplyType__c', this.typeVisibility('acqua'), false, true, '',''),
                 new fieldData('ATO','ATO__c', this.typeVisibility('acqua'), false, true, '',''),
                 new fieldData('Conto contrattuale','ContractAccountCode__c', this.typeVisibility('acqua'), false, true, '',''),
