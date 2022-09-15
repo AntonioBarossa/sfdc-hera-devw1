@@ -134,13 +134,6 @@
         <locationX>638</locationX>
         <locationY>1694</locationY>
         <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.accountType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getPreAttachments.Account.Type</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>paramsRequiredAttachments.city</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -155,13 +148,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.contactChannel</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getPreAttachments.Channel__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>paramsRequiredAttachments.processType</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -169,17 +155,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.subProcessType</assignToReference>
+            <assignToReference>paramsRequiredAttachments.commodity</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getPreAttachments.Subprocess__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.SubscriberType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getPreAttachments.SubscriberType__c</elementReference>
+                <elementReference>getPreAttachments.Commodity__c</elementReference>
             </value>
         </assignmentItems>
         <connector>

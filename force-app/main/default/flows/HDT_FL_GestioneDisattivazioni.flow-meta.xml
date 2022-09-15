@@ -683,7 +683,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateAddress_0</targetReference>
+            <targetReference>getContract</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -700,6 +700,22 @@
         </assignmentItems>
         <connector>
             <targetReference>WhichProcessType_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignContract</name>
+        <label>assignContract</label>
+        <locationX>842</locationX>
+        <locationY>1118</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.Contract__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getContract.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateAddress_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -752,13 +768,6 @@
         <locationX>1403</locationX>
         <locationY>4070</locationY>
         <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.accountType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getPreAttachments.Account.Type</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>paramsRequiredAttachments.city</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -770,13 +779,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>getPreAttachments.Cluster__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.contactChannel</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getPreAttachments.Channel__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -794,10 +796,17 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.SubscriberType</assignToReference>
+            <assignToReference>paramsRequiredAttachments.commodity</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getPreAttachments.SubscriberType__c</elementReference>
+                <elementReference>getPreAttachments.Commodity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsRequiredAttachments.productCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreAttachments.Contract__r.CommercialProduct__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -2101,6 +2110,34 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getContract</name>
+        <label>getContract</label>
+        <locationX>842</locationX>
+        <locationY>998</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>assignContract</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ServicePoint__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.ServicePoint__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Attivo</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contract</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>

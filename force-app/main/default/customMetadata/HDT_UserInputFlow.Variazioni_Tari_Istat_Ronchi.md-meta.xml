@@ -55,7 +55,7 @@
 
 &quot;Required&quot;:true,
 
-&quot;ReadOnly&quot;:false,
+&quot;ReadOnly&quot;:true,
 
 &quot;Column&quot;:2
 
@@ -66,7 +66,7 @@
 
 &quot;Required&quot;:true,
 
-&quot;ReadOnly&quot;:false,
+&quot;ReadOnly&quot;:true,
 
 &quot;Column&quot;:2
 
@@ -77,7 +77,7 @@
 
 &quot;Required&quot;:true,
 
-&quot;ReadOnly&quot;:false,
+&quot;ReadOnly&quot;:true,
 
 &quot;Column&quot;:2
 
@@ -88,7 +88,7 @@
 
 &quot;Required&quot;:true,
 
-&quot;ReadOnly&quot;:false,
+&quot;ReadOnly&quot;:true,
 
 &quot;Column&quot;:2
 
@@ -99,7 +99,7 @@
 
 &quot;Required&quot;:true,
 
-&quot;ReadOnly&quot;:false,
+&quot;ReadOnly&quot;:true,
 
 &quot;Column&quot;:2
 
