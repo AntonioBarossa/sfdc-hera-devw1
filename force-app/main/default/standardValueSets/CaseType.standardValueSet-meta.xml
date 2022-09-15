@@ -552,6 +552,11 @@
         <label>Ripristino Fornitura Interrotta</label>
     </standardValue>
     <standardValue>
+        <fullName>Risoluzione Contrattuale</fullName>
+        <default>false</default>
+        <label>Risoluzione Contrattuale</label>
+    </standardValue>
+    <standardValue>
         <fullName>Risoluzione No Disalimentabile</fullName>
         <default>false</default>
         <label>Risoluzione No Disalimentabile</label>
