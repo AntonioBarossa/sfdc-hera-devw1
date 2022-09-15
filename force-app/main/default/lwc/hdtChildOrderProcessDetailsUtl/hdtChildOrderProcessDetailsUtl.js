@@ -44,12 +44,21 @@ import  * as rateCategories from './hdtRateCategories.js';
     }
 
     function checkSectionRequiredFields(sectionName){
-        return [...this.template.querySelectorAll(`lightning-accordion-section[data-section-name='${sectionName}'] lightning-input-field`)
-                        ].reduce((fNames, elem) => {
-                                if(elem.required && !(elem.disabled || elem.value)) fNames+=`, ${elem.getAttribute('data-name')}`;
-                                return fNames;
-                            }, ""
-                        ).slice(2);
+        const reg = new RegExp('^\\*?(.+)\\n?');
+        const valuation = [
+                ...this.template.querySelectorAll(`lightning-accordion-section[data-section-name='${sectionName}'] lightning-input-field`)
+            ].reduce(
+                (Fields, elem) => {
+                        if(elem.required && !(elem.disabled || elem.value)){
+                            let fname = elem.outerText?.match(reg)?.[1];
+                            Fields.labels+=`, ${fname}`;
+                            Fields.apinames.push(elem.fieldName);
+                        }
+                        return Fields;
+                    }, {labels : "", apinames : []}
+                );
+        console.log("missing fields "+valuation.apinames);
+        return valuation.labels.slice(2);
     }
 
     const handleSections = function() {
@@ -70,8 +79,7 @@ import  * as rateCategories from './hdtRateCategories.js';
                         //check mandatory section field section
                         let reqFields = checkSectionRequiredFields.call(this, evt?.currentTarget?.value);
                         if(reqFields){
-                            console.log(reqFields);
-                            this.showMessage('Errore', 'Popolare i campi obbligatori', 'error');
+                            this.showMessage('Errore', 'Popolare i campi obbligatori: '+reqFields, 'error');
                             return true;
                         }
                         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
