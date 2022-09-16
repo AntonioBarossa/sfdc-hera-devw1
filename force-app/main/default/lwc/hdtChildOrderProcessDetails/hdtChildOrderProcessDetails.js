@@ -39,6 +39,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track fields = {};
     extraFieldsToSubmit = {}; 
     @api mainOrderItem;
+    @api isRepeatedStep;
     wrapAddressObjectAttivazione = {};
     wrapAddressObjectSpedizione = {};
     @api analisiConsumi;
