@@ -59,6 +59,7 @@ private class HDT_UTL_OrderProcessAssignmentTst {
     orderForAllTest.get(0).servicePoint__c = servicePointList.get(0).Id;
     orderForAllTest.get(0).powerRequested__c = 10;
     orderForAllTest.get(0).SBQQ__Quote__c = quotes[0].id;
+    orderForAllTest.get(0).MarketOrigin__c = 'Libero';
     
     insert orderForAllTest;
 
@@ -85,8 +86,36 @@ private class HDT_UTL_OrderProcessAssignmentTst {
 	
     HDT_UTL_DataFactoryTst.createSalePartnerCommunity(user,true);
 
+    ProcessMatrix__c process = new ProcessMatrix__c();
+    process.CasualCode__c = 'SE1';
+    process.Commodity__c = 'Gas';
+    process.ContractStatus__c = 'null';
+    process.ExistActivityDatiDiscordanti__c = false;
+    process.ExistActivitySwitchRipristinatorio__c = true;
+    process.IsAmendment__c = false;
+    process.IsChangeUse__c = false;
+    process.IsReseller__c = false;
+    process.MarketOrigin__c = 'Default;FUI;Libero;Regolamentato;Salvaguardia';
+    process.OngoingSwitchOut__c = false;
+    process.PlugPresence__c = false;
+    process.PowerChange__c = false;
+    process.ProcessName__c = 'Test Process';
+    process.RecordTypeName__c = 'HDT_RT_SwitchIn';
+    process.isOwnAccount__c = 'Si';
+    process.isSTG__c = false;
+
+    insert process;
   }
   
+  @isTest
+  static void wrpTest()
+  {
+    Test.startTest();
+      HDT_UTL_OrderProcessAssignment.HDT_WRP_Process processWrp = new HDT_UTL_OrderProcessAssignment.HDT_WRP_Process('test','test','tst',new Set<String>{'test'},new Set<String>{'test'},'Si',true,true,true,true,'test',true,true,true);
+    Test.stopTest();
+    System.assertEquals(true, processWrp != null, 'WRP Fallito');
+  }
+
   @isTest 
   static void testGetAvailableProcessesWithDevelopperNameGas() {
 

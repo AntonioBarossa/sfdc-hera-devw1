@@ -28,7 +28,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         'MacroProcess__c' => '(Case__r.Cluster__c IN (###) OR Order__r.Cluster__c IN (###))',
         'Process__c' => '(Case__r.Type IN (###) OR Order__r.Process__c IN (###))',
         'SubProcess__c' => '(Case__r.SubProcess__c IN (###) OR Order__r.Subprocess__c IN (###))',
-        'Commodity__c' => '(Case__r.Commodity__c IN (###) OR Order__r.CommodityFormula__c IN (###))'
+        'Commodity__c' => '(Case__r.Commodity__c IN (###) OR Case__r.CommodityFormula__c IN (###) OR Order__r.CommodityFormula__c IN (###))'
     };
 
     public List<AssignmentRule__c> start(Database.BatchableContext bc) {
