@@ -2,14 +2,15 @@
  * @description       : 
  * @author            : federico.defelice@webresults.it
  * @group             : WR
- * @last modified on  : 23-05-2022
- * @last modified by  : federico.defelice@webresults.it
+ * @last modified on  : 15-09-2022
+ * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.AvoidDebugStatements, PMD.ForLoopsMustUseBraces')
 public inherited sharing class HDT_UTL_ActivityTemplate { 
 
     private static final Pattern FIELD_PATTERN = Pattern.compile('\\{![\\xa0\\s]?+([A-Za-z0-9_.]+)[\\xa0\\s]?+\\}');
     private List<String> fields;
+    @TestVisible
     private String sobjType;
     private static HDT_UTL_Sobject utlSbj = new HDT_UTL_Sobject();
     public HDT_UTL_ActivityTemplate(){
@@ -23,6 +24,7 @@ public inherited sharing class HDT_UTL_ActivityTemplate {
         protected String actualPhase;
         protected Boolean isMandatory;
 
+        @TestVisible
         protected HDT_WRP_Infos(String activityType, Boolean isMandatory, String actualPhase){
             this.activityType = activityType;
             this.actualPhase = actualPhase;
@@ -84,6 +86,7 @@ public inherited sharing class HDT_UTL_ActivityTemplate {
         }
     }
 
+    @TestVisible
     private wrts_prcgvr__Activity__c createActivity(sobject sobj, wrts_prcgvr__ActivityTemplate__c template, HDT_WRP_Infos info){
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
         activity.wrts_prcgvr__ActivityTemplate__c= template.Id;
