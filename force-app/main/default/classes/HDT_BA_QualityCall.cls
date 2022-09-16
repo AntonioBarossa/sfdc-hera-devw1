@@ -142,7 +142,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     parentToChildOrderMap.get(ord.ParentOrder__c).add(ord.OrderNumber);
                 }
 
-                if (!this.skipActivityCreation(ord.Id,ord.ParentOrder__c, siebelOrderWithActivity, sfdcOrderWithActivity) && needsActivity && ((ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c)))) {
+                if (!this.skipActivityCreation(ord.Id,ord.ParentOrder__c, siebelOrderWithActivity, sfdcOrderWithActivity) && needsActivity && ((!canDeleteOrder || (ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))))) {
                     
                     String ordIdToAssoc = ord.Id;
 
