@@ -645,14 +645,47 @@ public class HDT_QR_OrderTst{
 		System.assertNotEquals(null, orders, 'Order not found');
 	}
 
-	@isTest
-	static void getOrdersByParentTst()
-	{
-		List<Order> parentOrder = [Select Id FROM Order WHERE ParentOrder__c = NULL];
+	@isTest static void testGetOrderForComfortMethod(){
+
+        Order ord = [Select id FROM Order WHERE Username__c='test'];
+		
 		Test.startTest();
-			Map<String, List<String>> result = HDT_QR_Order.getOrdersByParent(new Set<String>{parentOrder[0].Id});
+        
+		List<Order> orders = orderQr.getOrderForComfort(ord.Id);
+
 		Test.stopTest();
-		System.assertEquals(true, !result.isEmpty(), 'Order not found');
+
+		System.assertEquals(1, orders.size(), 'Order found');
+		System.assertNotEquals(null, orders, 'Order found');
+	}
+
+	@isTest static void testGetOrdersListMethod(){
+
+        Order ord = [Select id FROM Order WHERE Username__c='test'];
+		
+		Test.startTest();
+        
+		List<Order> orders = orderQr.getOrdersList(new List<String>{ord.Id});
+
+		Test.stopTest();
+
+		System.assertEquals(1, orders.size(), 'Order found');
+		System.assertNotEquals(null, orders, 'Order found');
+	}
+
+	@isTest static void testGetOrdersByParentMethod(){
+
+        List<Order> tOrder=[SELECT Id, Name FROM Order WHERE Name='testOrderName0' LIMIT 1];
+
+		Test.startTest();
+        
+		Map<String, List<String>> orders = HDT_QR_Order.getOrdersByParent(new Set<String>{tOrder[0].Id});
+
+		Test.stopTest();
+
+		System.assertEquals(1, orders.size(), 'Order found');
+		System.assertNotEquals(null, orders, 'Order found');
+
 	}
 
 }

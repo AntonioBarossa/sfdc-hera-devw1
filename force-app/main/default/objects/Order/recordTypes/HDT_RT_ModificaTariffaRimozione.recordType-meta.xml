@@ -2582,6 +2582,10 @@
 			<fullName>Bozza</fullName>
 			<default>false</default>
 		</values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
 		<values>
 			<fullName>Completata</fullName>
 			<default>false</default>
