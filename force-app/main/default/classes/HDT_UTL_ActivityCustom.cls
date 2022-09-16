@@ -6,6 +6,9 @@
 */
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ActivityCustom {
+
+    public final Static String ANNULLAMENTO_SIEBEL = 'Annullamento processo transitorio Siebel';
+    public final Static String CONTRATTO_NON_RICHIESTO = 'Contratto non richiesto da gestire';
     
     private FINAL static string APPOINTMENTDEVELOPERNAME = 'HDT_RT_DistributorAppointment';
     private FINAL static string MODCONFERMATO = 'Modifica confermata';

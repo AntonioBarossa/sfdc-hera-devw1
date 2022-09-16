@@ -210,7 +210,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 && (process.plugPresence__c == plugPresence || process.commodity__c.containsIgnoreCase('Gas') )//aggiustamento plug presence gas
                 && (process.isOwnAccount__c == isOwnAccount || process.isOwnAccount__c == null || (process.processName__c.containsIgnoreCase('Voltura Ele') && ord.ServicePoint__r.Account__c == null))
                 && process.isChangeUse__c == isChangeUse 
-                && process.ExistActivitySwitchRipristinatorio__c == isSwitchInRipr
+                && process.ExistActivitySwitchRipristinatorio__c == isSwitchInRipr 
                 && process.PowerChange__c == (isPowerChange && !process.processName__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))
                 && process.isSTG__c == ord.isSTG__c
                 && process.ContractStatus__c.containsIgnoreCase(status)
@@ -300,7 +300,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
 
         if (!activityList.isEmpty() 
             && !ord.SBQQ__Quote__r.AmendmentAllowed__c 
-            && !ord.SBQQ__Quote__r.AllowChangeUse__c 
+            && !ord.SBQQ__Quote__r.AllowChangeUse__c
             /*&& !isCambioOfferta(ord)*/) {
                 result = true;
         }
