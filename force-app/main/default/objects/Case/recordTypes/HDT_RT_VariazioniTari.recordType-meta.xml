@@ -9754,62 +9754,62 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
-		<values>
-			<fullName>Annullato</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Bozza</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Bozza Annullata</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Completata</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Comunicazione verso Heroku KO</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Comunicazione verso Heroku OK</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>DA INVIARE</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Documenti non validati</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Esito KO da SAP</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Gestione documentale</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>In attesa perfezionamento documentazione</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>In attesa validazione</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>In Lavorazione</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Inviata a SAP</fullName>
-			<default>false</default>
-		</values>
+        <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione documentale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa perfezionamento documentazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa validazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviata a SAP</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
