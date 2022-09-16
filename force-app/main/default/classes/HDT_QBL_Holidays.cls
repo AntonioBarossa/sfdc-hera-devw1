@@ -25,8 +25,8 @@ public with sharing class HDT_QBL_Holidays implements Queueable, Database.Allows
         HttpResponse response = new HttpResponse();
 
         HDT_WRP_RequestBody requestBody = new HDT_WRP_RequestBody();
-
-        requestBody.callId = '01';
+        /* callId indica la nazionone per cui si vuole verificare il calendario, se lasciato vuoto viene considerato IT */
+        requestBody.callId = '';
         requestBody.dateFrom = Date.newInstance(year, 01, 01);
         requestBody.dateTo = Date.newInstance(year, 12, 31);
         requestBody.year = year;
