@@ -43,7 +43,7 @@ import  * as rateCategories from './hdtRateCategories.js';
                     : str1 === str2;
     }
 
-    function checkSectionRequiredFields(sectionName){
+    const checkSectionRequiredFields = (sectionName)=>{
         const reg = new RegExp('^\\*?(.+)\\n?');
         const valuation = [
                 ...this.template.querySelectorAll(`lightning-accordion-section[data-section-name='${sectionName}'] lightning-input-field`)
@@ -59,6 +59,16 @@ import  * as rateCategories from './hdtRateCategories.js';
                 );
         console.log("missing fields "+valuation.apinames);
         return valuation.labels.slice(2);
+    }
+
+    const savePredefaultedFields = (sectionName)=>{
+        this.template
+        .querySelectorAll(
+            `lightning-accordion-section[data-section-name='${sectionName}'] `+
+            "lightning-input-field[data-value='true']"
+        ).forEach(el=>{
+            this.sectionDataToSubmit[el.fieldName]=el.value;
+        })
     }
 
     const handleSections = function() {
@@ -77,7 +87,7 @@ import  * as rateCategories from './hdtRateCategories.js';
                 nextActions : (evt) => 
                     {
                         //check mandatory section field section
-                        let reqFields = checkSectionRequiredFields.call(this, evt?.currentTarget?.value);
+                        let reqFields = checkSectionRequiredFields(evt?.currentTarget?.value);
                         if(reqFields){
                             this.showMessage('Errore', 'Popolare i campi obbligatori: '+reqFields, 'error');
                             return true;
@@ -100,6 +110,7 @@ import  * as rateCategories from './hdtRateCategories.js';
                                 return true;
                             }
                         }
+                        savePredefaultedFields(evt?.currentTarget?.value);
                     },
                 data:[
                     new fieldData('Codice Punto','ServicePointCode__c',this.typeVisibility('both'),true, true, '', ''),
@@ -107,7 +118,7 @@ import  * as rateCategories from './hdtRateCategories.js';
                     new fieldData('Tipo Impianto','ImplantType__c', this.typeVisibility('both'), true, true,'',''),
                     new fieldData('Residente','Resident__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Codice ATECO','AtecoCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
-                    new fieldData('Codice Ronchi','RonchiCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',' '),
+                    new fieldData('Codice Ronchi','RonchiCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',''),
                     new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',''),
                     new fieldData('Contratto Precedente','ContractReference__c', ["HDT_RT_CambioTariffa", "HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), true, true,'',''),
                     new fieldData('Documentazione consegnata da contribuente','DeliveredDocumentation__c', this.typeVisibility('both'), false, false,'',''),
@@ -155,6 +166,7 @@ import  * as rateCategories from './hdtRateCategories.js';
                         }
                         const famNumb =this.template.querySelector("[data-id='FamilyNumber__c']");
                         if(famNumb) this.sectionDataToSubmit["FamilyNumber__c"]=this.template.querySelector("[data-id='FamilyNumber__c']")?.value;
+                        savePredefaultedFields(evt?.currentTarget?.value);
                     },
                 data:[
                     new fieldData('Qualità','SubscriberType__c',this.typeVisibility('both'),true, false, '', '', 
