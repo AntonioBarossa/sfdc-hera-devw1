@@ -44,12 +44,21 @@ import  * as rateCategories from './hdtRateCategories.js';
     }
 
     function checkSectionRequiredFields(sectionName){
-        return [...this.template.querySelectorAll(`lightning-accordion-section[data-section-name='${sectionName}'] lightning-input-field`)
-                        ].reduce((fNames, elem) => {
-                                if(elem.required && !(elem.disabled || elem.value)) fNames+=`, ${elem.getAttribute('data-name')}`;
-                                return fNames;
-                            }, ""
-                        ).slice(2);
+        const reg = new RegExp('^\\*?(.+)\\n?');
+        const valuation = [
+                ...this.template.querySelectorAll(`lightning-accordion-section[data-section-name='${sectionName}'] lightning-input-field`)
+            ].reduce(
+                (Fields, elem) => {
+                        if(elem.required && !(elem.disabled || elem.value)){
+                            let fname = elem.outerText?.match(reg)?.[1];
+                            Fields.labels+=`, ${fname}`;
+                            Fields.apinames.push(elem.fieldName);
+                        }
+                        return Fields;
+                    }, {labels : "", apinames : []}
+                );
+        console.log("missing fields "+valuation.apinames);
+        return valuation.labels.slice(2);
     }
 
     const handleSections = function() {
@@ -68,10 +77,9 @@ import  * as rateCategories from './hdtRateCategories.js';
                 nextActions : (evt) => 
                     {
                         //check mandatory section field section
-                        let reqFields = checkSectionRequiredFields(evt?.currentTarget?.value);
+                        let reqFields = checkSectionRequiredFields.call(this, evt?.currentTarget?.value);
                         if(reqFields){
-                            console.log(reqFields);
-                            this.showMessage('Errore', 'Popolare i campi obbligatori', 'error');
+                            this.showMessage('Errore', 'Popolare i campi obbligatori: '+reqFields, 'error');
                             return true;
                         }
                         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
@@ -96,30 +104,28 @@ import  * as rateCategories from './hdtRateCategories.js';
                 data:[
                     new fieldData('Codice Punto','ServicePointCode__c',this.typeVisibility('both'),true, true, '', ''),
                     new fieldData('Servizio','CommodityFormula__c',this.typeVisibility('both'),true, false, '', ''),
-                    new fieldData('Società di vendita','SalesCompany__c', this.typeVisibility('both'), false, false, '',''),
-                    new fieldData('Impianto SAP','SAPImplantCode__c', this.typeVisibility('both'), false, false,'',''),
-                    new fieldData('Tipo Impianto','ImplantType__c', this.typeVisibility('both'), false, true,'',''),
+                    new fieldData('Tipo Impianto','ImplantType__c', this.typeVisibility('both'), true, true,'',''),
                     new fieldData('Residente','Resident__c', this.typeVisibility('both'), false, true,'',''),
-                    new fieldData('Codice ATECO','AtecoCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', true,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
-                    new fieldData('Codice Ronchi','RonchiCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', true,'',' '),
-                    new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', true,'',''),
+                    new fieldData('Codice ATECO','AtecoCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
+                    new fieldData('Codice Ronchi','RonchiCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',' '),
+                    new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',''),
                     new fieldData('Contratto Precedente','ContractReference__c', ["HDT_RT_CambioTariffa", "HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), true, true,'',''),
-                    new fieldData('Documentazione consegnata da contribuente','DeliveredDocumentation__c', this.typeVisibility('both'), true, false,'',''),
+                    new fieldData('Documentazione consegnata da contribuente','DeliveredDocumentation__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Provenienza richiesta','RequestSource__c', this.typeVisibility('both'), true, false,'','Da contribuente'),
                     new fieldData('Importo mancato dovuto','MissingDueAmount__c', this.typeVisibility('both'), false, false,'',''),
-                    new fieldData('Pagamento Unico Annuale TARI','AnnualTARIPayment__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), false, false,'',''),
+                    new fieldData('Pagamento Unico Annuale TARI','AnnualTARIPayment__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), false, false,'','Disattiva'),
                     new fieldData('Data dichiarazione','DeclarationDate__c', this.typeVisibility('both'), true, false,'', getFormattedDate(new Date())),
                     new fieldData('Data decorrenza','EffectiveDate__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Integrazione alla Dichiarazione (da Gestore)','OperatorDeclarationInfos__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('integrazione Riduzione Agevolazione Esclusione','IntegrationExclusion__c', ["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), false, true,'',''),
                     new fieldData('Allegati obbligatori','MandatoryAttachments__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Allegati aggiuntivi','AdditionalAttachments__c', this.typeVisibility('both'), false, false,'','', function(){console.log("dynamic on change")}),
-                    new fieldData('Blocca al calcolo','BlockOnComputation__c', this.order.Account.CompanyOwner__c!=="MMS", false, true,'',''),
+                    new fieldData('Blocca al calcolo','BlockOnComputation__c', this.order.Account.CompanyOwner__c!=="MMS", false, false,'',''),
                     new fieldData('Integrazione alla Dichiarazione (da Contribuente)','TaxpayerDeclarationInfos__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Inizio periodo ravvedibile','OnerousReviewableStartDate__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Inizio periodo non ravvedibile','OnerousUnreviewableStartDate__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Rifiuta supporto al calcolo del ravvedimento operoso','DeclineComputationSupport__c', this.order.Account.CompanyOwner__c!=="MMS", false, false,'',''),
-                    new fieldData('Superficie Mq','Surface__c', ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente"].includes(this.order.RecordType.DeveloperName), false, false,'','', 
+                    new fieldData('Superficie Mq','Surface__c', ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente"].includes(this.order.RecordType.DeveloperName), true, false,'','', 
                         function(event){
                             if(this.order.RateCategory__c==='TATUDNR001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente' && surf){
                                 const fam = this.template.querySelector("[data-id='FamilyNumber__c']");
