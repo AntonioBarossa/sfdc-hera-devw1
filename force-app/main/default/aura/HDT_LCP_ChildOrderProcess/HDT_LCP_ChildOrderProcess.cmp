@@ -7,6 +7,7 @@
     <aura:attribute name='selectedValue' type='String' default="Prima Attivazione"/>
     <aura:attribute name='precheck' type='String' default=""/>
     <aura:attribute name='isCommunity' type='Boolean' default="false"/>
+    <aura:attribute name='isRepeatedStep' type='Boolean' default="false"/>
 	<aura:attribute name='compatibilita' type='String' default=""/>
     <aura:attribute name="openModale" type="Boolean" default="false"/>
     <aura:attribute name="recordtypeOrder" type="String"/>
@@ -49,7 +50,7 @@
 
     <aura:if isTrue="{!v.order}">
         <aura:if isTrue="{!v.order.RecordType.DeveloperName != 'HDT_RT_Default'}">
-            <c:hdtChildOrderProcessDetails aura:id="detailsComp" order="{!v.order}" mainOrderItem="{!v.mainOrderItem}" analisiConsumi="{!v.analisiConsumi}" onrefreshorderchild="{!c.handleRefreshOrderChild}" onemitlaststep="{!c.handleEmitLastStep}" onemitdraftdata="{!c.handleEmitDraftData}" onemitdiffdraftdata="{!c.handleEmitDiffDraftData}" onexecute_credit_check_poll="{!c.handleCreditCheckPoll}"></c:hdtChildOrderProcessDetails>
+            <c:hdtChildOrderProcessDetails aura:id="detailsComp" order="{!v.order}" mainOrderItem="{!v.mainOrderItem}" isRepeatedStep="{!v.isRepeatedStep}" analisiConsumi="{!v.analisiConsumi}" onrefreshorderchild="{!c.handleRefreshOrderChild}" onemitlaststep="{!c.handleEmitLastStep}" onemitdraftdata="{!c.handleEmitDraftData}" onemitdiffdraftdata="{!c.handleEmitDiffDraftData}" onexecute_credit_check_poll="{!c.handleCreditCheckPoll}"></c:hdtChildOrderProcessDetails>
         </aura:if>
     </aura:if>
 
