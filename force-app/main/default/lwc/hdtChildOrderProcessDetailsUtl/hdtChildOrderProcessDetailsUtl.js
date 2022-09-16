@@ -60,7 +60,7 @@ import  * as rateCategories from './hdtRateCategories.js';
         console.log("missing fields "+valuation.apinames);
         const message = valuation.labels.slice(2);
         if(message){
-            this.showMessage('Errore', 'Popolare i campi obbligatori: '+reqFields, 'error');
+            this.showMessage('Errore', 'Popolare i campi obbligatori: '+message, 'error');
             return true;
         }
     }
