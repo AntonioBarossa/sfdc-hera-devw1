@@ -271,10 +271,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         
         // case Acqua
         let rateCategory = this.order.RateCategory__c
-        let result = false;
+        let result = evaluationType === 'notvisible';
         for(let rate of rateCategories)
         {
             if(rate === rateCategory && evaluationType === 'visible') result = true;
+            if(rate === rateCategory && evaluationType === 'notvisible') result = false;
             if(rate === rateCategory && evaluationType === 'required') result = true;
         }
         return result;
