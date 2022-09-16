@@ -562,7 +562,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.loading = true;
         let currentSectionName = event.currentTarget.value;
         this.currentSectionName = currentSectionName;
-        console.log("currentSectionName "+currentSectionName);
+        console.log('currentSectionName '+currentSectionName);
         let currentSection = this.availableSteps.filter(section => section.name === currentSectionName);
         let currentObjectApiName = currentSection[0].objectApiName;
         let currentRecordId = currentSection[0].recordId;
@@ -579,6 +579,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(sectionNextActions && sectionNextActions instanceof Function ){
             if(sectionNextActions(event)) return;//Azioni automatiche da eseguire definite nel JSON del Wizard
         }
+        
+        console.log('currentSectionName '+currentSectionName);
+
         //EVERIS AGGIUNTA LOGICA PER SEZIONE AUTOLETTURA
         if(currentSectionName === 'reading'){
             let readingComponent = this.template.querySelector('c-hdt-self-reading');
@@ -643,10 +646,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     return;
                 }
             }
+            console.log('currentSectionName '+currentSectionName);
             if(currentSectionName === 'dettaglioImpianto'){
-                console.log( 'RealEstateUnit__c ---> ' + this.template.querySelector("[data-id='RealEstateUnit__c']").value);
-                console.log( 'ImplantType__c includes Promiscuo ---> ' + this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') );
-                console.log( 'ImplantType__c value ---> ' + this.template.querySelector("[data-id='ImplantType__c']").value );
+                console.log('inside '+currentSectionName);
                 if( this.template.querySelector("[data-id='RealEstateUnit__c']") !== null && this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' )
                 {
                     if( this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value < 2 )
