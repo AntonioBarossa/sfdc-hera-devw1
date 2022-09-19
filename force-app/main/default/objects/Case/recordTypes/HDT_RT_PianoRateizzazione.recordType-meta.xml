@@ -181,10 +181,10 @@
             <fullName>Bolletta per e-mail</fullName>
             <default>false</default>
         </values>
-        <!--<values>
+        <values>
             <fullName>Bolletta per e-mail %2B Carta</fullName>
             <default>false</default>
-        </values>-->
+        </values>
         <values>
             <fullName>Cartaceo</fullName>
             <default>false</default>
@@ -8618,6 +8618,10 @@
         </values>
         <values>
             <fullName>SMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Altra comunicazione</fullName>
             <default>false</default>
         </values>
     </picklistValues>

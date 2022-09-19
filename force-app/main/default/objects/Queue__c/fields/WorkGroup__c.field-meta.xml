@@ -1277,6 +1277,11 @@
                 <label>HCM_TRG_Pagamenti</label>
             </value>
             <value>
+                <fullName>HCM_TRG_Reclami_scritti</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Reclami_scritti</label>
+            </value>
+            <value>
                 <fullName>HCM_TRG_Variazioni</fullName>
                 <default>false</default>
                 <label>HCM_TRG_Variazioni</label>

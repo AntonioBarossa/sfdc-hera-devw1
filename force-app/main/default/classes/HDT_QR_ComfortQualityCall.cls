@@ -120,7 +120,8 @@ public inherited sharing class HDT_QR_ComfortQualityCall {
             MarketType__c,
             CustomerType__c,
             UniqueQuality__c,
-            ComfortDocSendingChannel__c
+            ComfortDocSendingChannel__c,
+            QualitySignatureMethod__c
             FROM ComfortQualityCall__c
             WHERE DocumentValidation__c = true
             AND QualityEnabled__c = true

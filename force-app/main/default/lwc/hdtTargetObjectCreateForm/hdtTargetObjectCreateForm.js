@@ -102,6 +102,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @track spCodeChanged = false;
 
     @track recordTypeId;
+
+    callWinBack = false;
     
     /**
      * Handle save button availability
@@ -744,6 +746,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         let implantCode = selectedservicepoint['Impianto SAP'] !== null && selectedservicepoint['Impianto SAP'] !== undefined ? selectedservicepoint['Impianto SAP'].length === 10 && selectedservicepoint['Impianto SAP'].startsWith("4") ? selectedservicepoint['Impianto SAP']:'' : '';
         callService({ contratto: '', pod: input, impianto: implantCode }).then(data => {
             if (data.statusCode == '200') {
+                this.callWinBack = true;
                 this.responseArriccData = data;
                 if (this.servicePointRetrievedData == undefined) {
                     extractDataFromArriccDataServiceWithExistingSp({ sp: sp, response: data }).then(datas => {
@@ -878,6 +881,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 /** Casistica service point esistente su SAP */
                 if(Array.isArray(this.selectedservicepoint))
                 {
+                    this.callWinBack = true;
                     this.servicePointRetrievedData = this.selectedservicepoint[0];
                     this.recordTypeId = this.servicePointRetrievedData['RecordTypeId'];
                     let recordtype = {};
@@ -1823,7 +1827,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     create() {
 
-        createServicePoinString({ servicePoint: JSON.stringify(this.allSubmitedFields), sale: this.sale }).then(data => {
+        createServicePoinString({ servicePoint: JSON.stringify(this.allSubmitedFields), sale: this.sale, callWinBack: this.callWinBack }).then(data => {
 
             this.loading = false;
             this.closeCreateTargetObjectModal();
