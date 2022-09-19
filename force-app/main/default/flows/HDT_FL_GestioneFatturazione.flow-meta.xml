@@ -57,7 +57,81 @@
             <name>isMultiContratto</name>
         </outputParameters>
     </actionCalls>
+    <actionCalls>
+        <name>Clona_Reading_Case_Padre</name>
+        <label>Clona Reading Case Padre</label>
+        <locationX>2855</locationX>
+        <locationY>4646</locationY>
+        <actionName>HDT_SRV_SelfReadings</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>childCase</name>
+            <value>
+                <elementReference>Get_Case_Autolettura</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>parentCase</name>
+            <value>
+                <elementReference>Query_Case</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Crea_Case_Autolettura</name>
+        <label>Crea Case Autolettura</label>
+        <locationX>2855</locationX>
+        <locationY>3710</locationY>
+        <actionName>HDT_UTL_CreateGenericCase</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Get_Case_Autolettura</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>caseCluster</name>
+            <value>
+                <stringValue>Autolettura</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>caseType</name>
+            <value>
+                <stringValue>Autolettura da cliente	</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>inputSObj</name>
+            <value>
+                <elementReference>Query_Case</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordTypeId</name>
+            <value>
+                <stringValue>0121X000001j2h6QAA</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>50.0</apiVersion>
+    <assignments>
+        <name>Assegna_Codice_Causale</name>
+        <label>Assegna Codice Causale</label>
+        <locationX>2855</locationX>
+        <locationY>4406</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case_Autolettura.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Copy_1_of_Calcolo_Codice_Causale.CausalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_Autolettura</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Errore_Fatturazione_Senza_Obbligatoriet</name>
         <label>Errore Fatturazione Senza Obbligatorietà</label>
@@ -199,6 +273,38 @@
         </assignmentItems>
         <connector>
             <targetReference>Set_Case_Rettifica</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fase</name>
+        <label>Set Fase Inviata a SAP</label>
+        <locationX>2855</locationX>
+        <locationY>4190</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case_Autolettura.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Inviata a SAP</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Codice_Causale</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Fase_In_attesa</name>
+        <label>Set Fase Attesa check preliminari</label>
+        <locationX>2591</locationX>
+        <locationY>4190</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case_Autolettura.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Attesa check preliminari</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Codice_Causale</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -562,7 +668,7 @@
     <decisions>
         <name>Choose_Next_Phase</name>
         <label>Next Phase?</label>
-        <locationX>2305</locationX>
+        <locationX>2481</locationX>
         <locationY>3470</locationY>
         <defaultConnector>
             <targetReference>Set_Phase_In_Lavorazione</targetReference>
@@ -570,7 +676,7 @@
         <defaultConnectorLabel>In Lavorazione</defaultConnectorLabel>
         <rules>
             <name>Elaborazione_Manuale</name>
-            <conditionLogic>1 OR 2 OR 2 OR (3 AND 4)</conditionLogic>
+            <conditionLogic>1 OR 2</conditionLogic>
             <conditions>
                 <leftValueReference>Query_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -585,20 +691,6 @@
                     <stringValue>Errore di Lettura</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>UpdatedCase.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Errore Stima Consumi</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>UpdatedCase.MultiContractBill__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Set_Phase_Elaborazione_Manuale</targetReference>
             </connector>
@@ -606,26 +698,12 @@
         </rules>
         <rules>
             <name>Da_Inviare</name>
-            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Query_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Prescrizione Fatture</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>UpdatedCase.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Errore Stima Consumi</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>UpdatedCase.MultiContractBill__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -659,6 +737,21 @@
                 </rightValue>
             </conditions>
             <label>Ricostruzione Consumi</label>
+        </rules>
+        <rules>
+            <name>Sospeso</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore Stima Consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Phase_Sospesa</targetReference>
+            </connector>
+            <label>Sospesa</label>
         </rules>
     </decisions>
     <decisions>
@@ -739,7 +832,7 @@
     <decisions>
         <name>Prima_Bolletta_non_ancora_emessa</name>
         <label>Prima Bolletta non ancora emessa?</label>
-        <locationX>2899</locationX>
+        <locationX>3427</locationX>
         <locationY>3710</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -795,6 +888,67 @@
                 <targetReference>Calcolo_Codice_Causale</targetReference>
             </connector>
             <label>Errore stima consumi</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Turbobilling_Decision</name>
+        <label>Turbobilling Decision</label>
+        <locationX>2855</locationX>
+        <locationY>4070</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Codice_Causale</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No_Turbobilling_No_Energy</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Teleriscaldamento</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Fase_In_attesa</targetReference>
+            </connector>
+            <label>No Turbobilling No Energy</label>
+        </rules>
+        <rules>
+            <name>Turbobilling_Energy</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Label.TRB_Enable</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Y</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Energia Elettrica</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Fase</targetReference>
+            </connector>
+            <label>Turbobilling Energy</label>
         </rules>
     </decisions>
     <decisions>
@@ -918,6 +1072,62 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Copy_1_of_Calcolo_Codice_Causale</name>
+        <label>Calcolo Codice Causale</label>
+        <locationX>2855</locationX>
+        <locationY>3950</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Turbobilling_Decision</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case_Autolettura.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case_Autolettura.Type</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case_Autolettura.CommodityFormula__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Case_Autolettura</name>
+        <label>Get Case Autolettura</label>
+        <locationX>2855</locationX>
+        <locationY>3830</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Copy_1_of_Calcolo_Codice_Causale</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Crea_Case_Autolettura.idChildCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>get_RT_Tari</name>
         <label>get RT Tari</label>
         <locationX>358</locationX>
@@ -1006,6 +1216,16 @@
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
+        <name>Aggiorna_Case_Autolettura</name>
+        <label>Aggiorna Case Autolettura</label>
+        <locationX>2855</locationX>
+        <locationY>4526</locationY>
+        <connector>
+            <targetReference>Clona_Reading_Case_Padre</targetReference>
+        </connector>
+        <inputReference>Get_Case_Autolettura</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Predefault_Data_Termine_Agevolazione</name>
         <label>Predefault Data Termine Agevolazione</label>
         <locationX>996</locationX>
@@ -1080,7 +1300,7 @@
     <recordUpdates>
         <name>Set_Phase_Comunicazioni_con_il_DL</name>
         <label>Set Phase Comunicazioni con il DL</label>
-        <locationX>2239</locationX>
+        <locationX>2063</locationX>
         <locationY>3590</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1101,7 +1321,7 @@
     <recordUpdates>
         <name>Set_Phase_Da_Inviare</name>
         <label>Set Phase Da Inviare</label>
-        <locationX>1975</locationX>
+        <locationX>1799</locationX>
         <locationY>3590</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
@@ -1125,7 +1345,7 @@
     <recordUpdates>
         <name>Set_Phase_Elaborazione_Manuale</name>
         <label>Set Phase Elaborazione Manuale</label>
-        <locationX>1711</locationX>
+        <locationX>1535</locationX>
         <locationY>3590</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1146,7 +1366,7 @@
     <recordUpdates>
         <name>Set_Phase_In_Lavorazione</name>
         <label>Set Phase In Lavorazione</label>
-        <locationX>2899</locationX>
+        <locationX>3427</locationX>
         <locationY>3590</locationY>
         <connector>
             <targetReference>Prima_Bolletta_non_ancora_emessa</targetReference>
@@ -1161,6 +1381,36 @@
         </filters>
         <inputAssignments>
             <field>Phase__c</field>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Set_Phase_Sospesa</name>
+        <label>Set Phase Sospesa</label>
+        <locationX>2855</locationX>
+        <locationY>3590</locationY>
+        <connector>
+            <targetReference>Crea_Case_Autolettura</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Query_Case.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Sospesa</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
             <value>
                 <stringValue>In Lavorazione</stringValue>
             </value>
@@ -1810,21 +2060,6 @@
             <targetReference>Case_da_annullare_2</targetReference>
         </connector>
         <fields>
-            <name>DTLetture2</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Query_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Inserire le letture del cliente:&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>IsLetturaStimata</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>DTLetture3</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Query_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Letture stimate sulla fattura:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;{!ConcatenazioneLettureSelezionate}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Inserire le letture comunicate dal cliente:&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -1835,6 +2070,21 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>DTLetture2</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Query_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Inserire le letture del cliente:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>IsLetturaStimata</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2167,7 +2417,7 @@
     <screens>
         <name>SollecitoEmissioneBollettaEndScreen</name>
         <label>Fine flow Sollecito Emissione Bolletta</label>
-        <locationX>2767</locationX>
+        <locationX>3295</locationX>
         <locationY>3830</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2188,7 +2438,7 @@
     <screens>
         <name>Spinner</name>
         <label>Spinner</label>
-        <locationX>1975</locationX>
+        <locationX>1799</locationX>
         <locationY>3710</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2223,7 +2473,7 @@
             <targetReference>Check_Input_Case</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
@@ -2379,6 +2629,13 @@
         <value>
             <booleanValue>false</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>idCaseAutolettura</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>InputCase</name>
