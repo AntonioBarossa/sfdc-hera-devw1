@@ -477,4 +477,190 @@ public with sharing class HDT_SRV_SelfReadings {
         return closeCase;
     }
 
+    @InvocableMethod(label = 'Clona Readings da Padre')
+    public static void cloneReadingFromParentCase (List<HDT_UTL_FlowFatturazioneInputs> inputs){
+
+        Case parentCase = inputs[0].parentCase;
+        Case childCase = inputs[0].childCase;
+		HDT_QR_RecordType rtQueryHandler = new HDT_QR_RecordType();
+
+        try {
+            switch on parentCase.CommodityFormula__c {
+                when  'Acqua'{
+    
+                    List<Reading__c> letturaAcquaParentList = [SELECT Mru__c, SendTo__c, Name, ReadingDate__c, ReadingDigitNumberMeter__c, ReadingDigitNumberCorrector__c, ReadingDateMeter__c, ReadingDateCorrector__c, ReadingBandMeter__c, ReadingBandCorrector__c, ReadingValueMeter__c, ReadingValueCorrector__c, ReadingSerialNumberMeter__c, ReadingSerialNumber2__c, ReadingRegisterMeter__c, ReadingRegisterCorrector__c, ReadingTypeMeter__c, ReadingTypeCorrector__c, ReadingUnitMeter__c, ReadingUnitCorrector__c FROM Reading__c WHERE CaseAcqua__c =: parentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
+    
+                    if(letturaAcquaParentList.size() > 0){
+                        List<Reading__c> listaLettureAcquaChild = new List<Reading__c>();
+                        for  (Reading__c letturaAcquaParent : letturaAcquaParentList ) {
+                            Reading__c letturaAcquaChild = new Reading__c();
+                            letturaAcquaChild.CaseAcqua__c = childCase.Id;
+                            letturaAcquaChild.RecordTypeId = rtQueryHandler.getRecordTypeIdByName('HDT_RT_LetturaAcqua');
+                            letturaAcquaChild.Mru__c = letturaAcquaParent.Mru__c;
+                            letturaAcquaChild.SendTo__c = letturaAcquaParent.SendTo__c;
+                            letturaAcquaChild.Name = letturaAcquaParent.Name;
+                            letturaAcquaChild.ReadingDate__c =  letturaAcquaParent.ReadingDate__c;
+                            letturaAcquaChild.ReadingDigitNumberMeter__c = letturaAcquaParent.ReadingDigitNumberMeter__c;
+                            letturaAcquaChild.ReadingDigitNumberCorrector__c = letturaAcquaParent.ReadingDigitNumberCorrector__c;
+                            letturaAcquaChild.ReadingDateMeter__c = letturaAcquaParent.ReadingDateMeter__c;
+                            letturaAcquaChild.ReadingDateCorrector__c = letturaAcquaParent.ReadingDateCorrector__c;
+                            letturaAcquaChild.ReadingBandMeter__c = letturaAcquaParent.ReadingBandMeter__c;
+                            letturaAcquaChild.ReadingBandCorrector__c = letturaAcquaParent.ReadingBandCorrector__c;
+                            letturaAcquaChild.ReadingValueMeter__c = letturaAcquaParent.ReadingValueMeter__c;
+                            letturaAcquaChild.ReadingValueCorrector__c = letturaAcquaParent.ReadingValueCorrector__c;
+                            letturaAcquaChild.ReadingSerialNumberMeter__c = letturaAcquaParent.ReadingSerialNumberMeter__c;
+                            letturaAcquaChild.ReadingSerialNumber2__c = letturaAcquaParent.ReadingSerialNumber2__c;
+                            letturaAcquaChild.ReadingRegisterMeter__c = letturaAcquaParent.ReadingRegisterMeter__c;
+                            letturaAcquaChild.ReadingRegisterCorrector__c = letturaAcquaParent.ReadingRegisterCorrector__c;
+                            letturaAcquaChild.ReadingTypeMeter__c = letturaAcquaParent.ReadingTypeMeter__c;
+                            letturaAcquaChild.ReadingTypeCorrector__c = letturaAcquaParent.ReadingTypeCorrector__c;
+                            letturaAcquaChild.ReadingUnitMeter__c = letturaAcquaParent.ReadingUnitMeter__c;
+                            letturaAcquaChild.ReadingUnitCorrector__c = letturaAcquaParent.ReadingUnitCorrector__c;
+                            listaLettureAcquaChild.add(letturaAcquaChild);
+                        }
+                        insert listaLettureAcquaChild;
+                        
+                    }
+                    
+                }
+                when 'Energia Elettrica' {
+
+                    List<Reading__c> letturaEleParentList = [SELECT Mru__c,SendTo__c,Name,ReadingDate__c,ReadingDigitNumber2__c,ReadingDigitNumber1__c,ReadingDigitNumber3__c,ReadingDigitNumber4__c,ReadingDigitNumber5__c,ReadingDigitNumber6__c,ReadingDigitNumber7__c,ReadingDigitNumber8__c,ReadingDigitNumber9__c,ReadingDate1__c,ReadingDate2__c,ReadingDate3__c,ReadingDate4__c,ReadingDate5__c,ReadingDate6__c,ReadingDate7__c,ReadingDate8__c,ReadingDate9__c,ReadingBand1__c,ReadingBand2__c,ReadingBand3__c,ReadingBand4__c,ReadingBand5__c,ReadingBand6__c,ReadingBand7__c,ReadingBand8__c,ReadingBand9__c,ReadingValue1__c,ReadingValue2__c,ReadingValue3__c,ReadingValue4__c,ReadingValue5__c,ReadingValue6__c,ReadingValue7__c,ReadingValue8__c,ReadingValue9__c,ReadingSerialNumber1__c,ReadingSerialNumber2__c,ReadingSerialNumber3__c,ReadingSerialNumber4__c,ReadingSerialNumber5__c,ReadingSerialNumber6__c,ReadingSerialNumber7__c,ReadingSerialNumber8__c,ReadingSerialNumber9__c,ReadingRegister1__c,ReadingRegister2__c,ReadingRegister3__c,ReadingRegister4__c,ReadingRegister5__c,ReadingRegister6__c,ReadingRegister7__c,ReadingRegister8__c,ReadingRegister9__c,ReadingType1__c,ReadingType2__c,ReadingType3__c,ReadingType4__c,ReadingType5__c,ReadingType6__c,ReadingType7__c,ReadingType8__c,ReadingType9__c,ReadingUnit1__c,ReadingUnit2__c,ReadingUnit3__c,ReadingUnit4__c,ReadingUnit5__c,ReadingUnit6__c,ReadingUnit7__c,ReadingUnit8__c,ReadingUnit9__c FROM Reading__c WHERE CaseEle__c =: parentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
+
+                    if(letturaEleParentList.size() > 0){
+                        List<Reading__c> listaLettureEleChild = new List<Reading__c>();
+                        for (Reading__c letturaEleParent : letturaEleParentList){
+                            Reading__c letturaEleChild = new Reading__c();
+                            letturaEleChild.CaseEle__c = childCase.Id;
+                            letturaEleChild.RecordTypeId = rtQueryHandler.getRecordTypeIdByName('HDT_RT_LetturaEle');
+                            letturaEleChild.Mru__c = letturaEleParent.Mru__c;
+                            letturaEleChild.SendTo__c = letturaEleParent.SendTo__c;
+                            letturaEleChild.Name = letturaEleParent.Name;
+                            letturaEleChild.ReadingDate__c =  letturaEleParent.ReadingDate__c;
+                            letturaEleChild.ReadingDigitNumber1__c = letturaEleParent.ReadingDigitNumber1__c;
+                            letturaEleChild.ReadingDigitNumber2__c = letturaEleParent.ReadingDigitNumber2__c;
+                            letturaEleChild.ReadingDigitNumber3__c = letturaEleParent.ReadingDigitNumber3__c;
+                            letturaEleChild.ReadingDigitNumber4__c = letturaEleParent.ReadingDigitNumber4__c;
+                            letturaEleChild.ReadingDigitNumber5__c = letturaEleParent.ReadingDigitNumber5__c;
+                            letturaEleChild.ReadingDigitNumber6__c = letturaEleParent.ReadingDigitNumber6__c;
+                            letturaEleChild.ReadingDigitNumber7__c = letturaEleParent.ReadingDigitNumber7__c;
+                            letturaEleChild.ReadingDigitNumber8__c = letturaEleParent.ReadingDigitNumber8__c;
+                            letturaEleChild.ReadingDigitNumber9__c = letturaEleParent.ReadingDigitNumber9__c;
+                            letturaEleChild.ReadingDate1__c = letturaEleParent.ReadingDate1__c;
+                            letturaEleChild.ReadingDate2__c = letturaEleParent.ReadingDate2__c;
+                            letturaEleChild.ReadingDate3__c = letturaEleParent.ReadingDate3__c;
+                            letturaEleChild.ReadingDate4__c = letturaEleParent.ReadingDate4__c;
+                            letturaEleChild.ReadingDate5__c = letturaEleParent.ReadingDate5__c;
+                            letturaEleChild.ReadingDate6__c = letturaEleParent.ReadingDate6__c;
+                            letturaEleChild.ReadingDate7__c = letturaEleParent.ReadingDate7__c;
+                            letturaEleChild.ReadingDate8__c = letturaEleParent.ReadingDate8__c;
+                            letturaEleChild.ReadingDate9__c = letturaEleParent.ReadingDate9__c;
+                            letturaEleChild.ReadingBand1__c = letturaEleParent.ReadingBand1__c;
+                            letturaEleChild.ReadingBand2__c = letturaEleParent.ReadingBand2__c;
+                            letturaEleChild.ReadingBand3__c = letturaEleParent.ReadingBand3__c;
+                            letturaEleChild.ReadingBand4__c = letturaEleParent.ReadingBand4__c;
+                            letturaEleChild.ReadingBand5__c = letturaEleParent.ReadingBand5__c;
+                            letturaEleChild.ReadingBand6__c = letturaEleParent.ReadingBand6__c;
+                            letturaEleChild.ReadingBand7__c = letturaEleParent.ReadingBand7__c;
+                            letturaEleChild.ReadingBand8__c = letturaEleParent.ReadingBand8__c;
+                            letturaEleChild.ReadingBand9__c = letturaEleParent.ReadingBand9__c;
+                            letturaEleChild.ReadingValue1__c = letturaEleParent.ReadingValue1__c;
+                            letturaEleChild.ReadingValue2__c = letturaEleParent.ReadingValue2__c;
+                            letturaEleChild.ReadingValue3__c = letturaEleParent.ReadingValue3__c;
+                            letturaEleChild.ReadingValue4__c = letturaEleParent.ReadingValue4__c;
+                            letturaEleChild.ReadingValue5__c = letturaEleParent.ReadingValue5__c;
+                            letturaEleChild.ReadingValue6__c = letturaEleParent.ReadingValue6__c;
+                            letturaEleChild.ReadingValue7__c = letturaEleParent.ReadingValue7__c;
+                            letturaEleChild.ReadingValue8__c = letturaEleParent.ReadingValue8__c;
+                            letturaEleChild.ReadingValue9__c = letturaEleParent.ReadingValue9__c;
+                            letturaEleChild.ReadingSerialNumber1__c = letturaEleParent.ReadingSerialNumber1__c;
+                            letturaEleChild.ReadingSerialNumber2__c = letturaEleParent.ReadingSerialNumber2__c;
+                            letturaEleChild.ReadingSerialNumber3__c = letturaEleParent.ReadingSerialNumber3__c;
+                            letturaEleChild.ReadingSerialNumber4__c = letturaEleParent.ReadingSerialNumber4__c;
+                            letturaEleChild.ReadingSerialNumber5__c = letturaEleParent.ReadingSerialNumber5__c;
+                            letturaEleChild.ReadingSerialNumber6__c = letturaEleParent.ReadingSerialNumber6__c;
+                            letturaEleChild.ReadingSerialNumber7__c = letturaEleParent.ReadingSerialNumber7__c;
+                            letturaEleChild.ReadingSerialNumber8__c = letturaEleParent.ReadingSerialNumber8__c;
+                            letturaEleChild.ReadingSerialNumber9__c = letturaEleParent.ReadingSerialNumber9__c;
+                            letturaEleChild.ReadingRegister1__c = letturaEleParent.ReadingRegister1__c;
+                            letturaEleChild.ReadingRegister2__c = letturaEleParent.ReadingRegister2__c;
+                            letturaEleChild.ReadingRegister3__c = letturaEleParent.ReadingRegister3__c;
+                            letturaEleChild.ReadingRegister4__c = letturaEleParent.ReadingRegister4__c;
+                            letturaEleChild.ReadingRegister5__c = letturaEleParent.ReadingRegister5__c;
+                            letturaEleChild.ReadingRegister6__c = letturaEleParent.ReadingRegister6__c;
+                            letturaEleChild.ReadingRegister7__c = letturaEleParent.ReadingRegister7__c;
+                            letturaEleChild.ReadingRegister8__c = letturaEleParent.ReadingRegister8__c;
+                            letturaEleChild.ReadingRegister9__c = letturaEleParent.ReadingRegister9__c;
+                            letturaEleChild.ReadingType1__c = letturaEleParent.ReadingType1__c;
+                            letturaEleChild.ReadingType2__c = letturaEleParent.ReadingType2__c;
+                            letturaEleChild.ReadingType3__c = letturaEleParent.ReadingType3__c;
+                            letturaEleChild.ReadingType4__c = letturaEleParent.ReadingType4__c;
+                            letturaEleChild.ReadingType5__c = letturaEleParent.ReadingType5__c;
+                            letturaEleChild.ReadingType6__c = letturaEleParent.ReadingType6__c;
+                            letturaEleChild.ReadingType7__c = letturaEleParent.ReadingType7__c;
+                            letturaEleChild.ReadingType8__c = letturaEleParent.ReadingType8__c;
+                            letturaEleChild.ReadingType9__c = letturaEleParent.ReadingType9__c;
+                            letturaEleChild.ReadingUnit1__c = letturaEleParent.ReadingUnit1__c;
+                            letturaEleChild.ReadingUnit2__c = letturaEleParent.ReadingUnit2__c;
+                            letturaEleChild.ReadingUnit3__c = letturaEleParent.ReadingUnit3__c;
+                            letturaEleChild.ReadingUnit4__c = letturaEleParent.ReadingUnit4__c;
+                            letturaEleChild.ReadingUnit5__c = letturaEleParent.ReadingUnit5__c;
+                            letturaEleChild.ReadingUnit6__c = letturaEleParent.ReadingUnit6__c;
+                            letturaEleChild.ReadingUnit7__c = letturaEleParent.ReadingUnit7__c;
+                            letturaEleChild.ReadingUnit8__c = letturaEleParent.ReadingUnit8__c;
+                            letturaEleChild.ReadingUnit9__c = letturaEleParent.ReadingUnit9__c;
+                            listaLettureEleChild.add(letturaEleChild);
+                        }
+
+                        insert listaLettureEleChild;
+                    }
+
+                }
+                when 'Gas' {
+    
+                    List<Reading__c> letturaGasParentList = [SELECT Mru__c, SendTo__c, Name, ReadingDate__c, ReadingDigitNumberMeter__c, ReadingDigitNumberCorrector__c, ReadingDateMeter__c, ReadingDateCorrector__c, ReadingBandMeter__c, ReadingBandCorrector__c, ReadingValueMeter__c, ReadingValueCorrector__c, ReadingSerialNumberMeter__c, ReadingSerialNumber2__c, ReadingRegisterMeter__c, ReadingRegisterCorrector__c, ReadingTypeMeter__c, ReadingTypeCorrector__c, ReadingUnitMeter__c, ReadingUnitCorrector__c FROM Reading__c WHERE CaseGas__c =: parentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
+    
+                    if(letturaGasParentList.size() > 0){
+                        List<Reading__c> listaLettureGasChild = new List<Reading__c>();
+                        for (Reading__c letturaGasParent : letturaGasParentList){
+                            Reading__c letturaGasChild = new Reading__c();
+                            letturaGasChild.CaseGas__c = childCase.Id;
+                            letturaGasChild.RecordTypeId = rtQueryHandler.getRecordTypeIdByName('HDT_RT_LetturaGas');
+                            letturaGasChild.Mru__c = letturaGasParent.Mru__c;
+                            letturaGasChild.SendTo__c = letturaGasParent.SendTo__c;
+                            letturaGasChild.Name = letturaGasParent.Name;
+                            letturaGasChild.ReadingDate__c =  letturaGasParent.ReadingDate__c;
+                            letturaGasChild.ReadingDigitNumberMeter__c = letturaGasParent.ReadingDigitNumberMeter__c;
+                            letturaGasChild.ReadingDigitNumberCorrector__c = letturaGasParent.ReadingDigitNumberCorrector__c;
+                            letturaGasChild.ReadingDateMeter__c = letturaGasParent.ReadingDateMeter__c;
+                            letturaGasChild.ReadingDateCorrector__c = letturaGasParent.ReadingDateCorrector__c;
+                            letturaGasChild.ReadingBandMeter__c = letturaGasParent.ReadingBandMeter__c;
+                            letturaGasChild.ReadingBandCorrector__c = letturaGasParent.ReadingBandCorrector__c;
+                            letturaGasChild.ReadingValueMeter__c = letturaGasParent.ReadingValueMeter__c;
+                            letturaGasChild.ReadingValueCorrector__c = letturaGasParent.ReadingValueCorrector__c;
+                            letturaGasChild.ReadingSerialNumberMeter__c = letturaGasParent.ReadingSerialNumberMeter__c;
+                            letturaGasChild.ReadingSerialNumber2__c = letturaGasParent.ReadingSerialNumber2__c;
+                            letturaGasChild.ReadingRegisterMeter__c = letturaGasParent.ReadingRegisterMeter__c;
+                            letturaGasChild.ReadingRegisterCorrector__c = letturaGasParent.ReadingRegisterCorrector__c;
+                            letturaGasChild.ReadingTypeMeter__c = letturaGasParent.ReadingTypeMeter__c;
+                            letturaGasChild.ReadingTypeCorrector__c = letturaGasParent.ReadingTypeCorrector__c;
+                            letturaGasChild.ReadingUnitMeter__c = letturaGasParent.ReadingUnitMeter__c;
+                            letturaGasChild.ReadingUnitCorrector__c = letturaGasParent.ReadingUnitCorrector__c;
+                            listaLettureGasChild.add(letturaGasChild);
+                        }
+                        insert listaLettureGasChild;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG,'Exception--> '+e.getMessage());
+        }
+    }
+
+    public class HDT_UTL_FlowFatturazioneInputs {
+        @InvocableVariable
+        public Case parentCase;
+        @InvocableVariable
+        public Case childCase;
+    }
 }
