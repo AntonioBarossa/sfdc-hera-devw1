@@ -41,7 +41,12 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         'SubentroAmbienteModifica'.toLowerCase(),
         'AttivazAmbiente'.toLowerCase(),
         'CambioTariffaAmbiente'.toLowerCase(),
-        'AgevolazioneContestuale'.toLowerCase()
+        'AgevolazioneContestuale'.toLowerCase(),
+        'AttivazioneAcqua'.toLowerCase(),
+        'CambioOffertaAcqua'.toLowerCase(),
+        'ConnessioneConAttivazioneAcqua'.toLowerCase(),
+        'SubentroAcqua'.toLowerCase(),
+        'VolturaAcqua'.toLowerCase()
     };
 
     @Testvisible
