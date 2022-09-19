@@ -234,7 +234,10 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         }
 
         //SALESCOMPANY
+        System.debug('Case CommodityFormula__c: '+ currentCase.CommodityFormula__c);
+        System.debug('Case Commodity__c: '+ currentCase.Commodity__c);
         salesCompanyCode = (String) transcodeMap.get('SalesCompanyCode__c');
+        //salesCompanyCode = String.isBlank(salesCompanyCode) && 
         salesCompany = depsSrv.calculateSalesCompany(salesCompanyCode);
         transcodeMap.put('SalesCompany__c', salesCompany);
 
