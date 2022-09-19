@@ -537,6 +537,11 @@
         <label>Rimborso</label>
     </standardValue>
     <standardValue>
+        <fullName>Rimozione Agevolazione</fullName>
+        <default>false</default>
+        <label>Rimozione Agevolazione</label>
+    </standardValue>
+    <standardValue>
         <fullName>Rimozione Impianto</fullName>
         <default>false</default>
         <label>Rimozione Impianto</label>
