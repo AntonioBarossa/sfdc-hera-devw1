@@ -20,7 +20,13 @@
 {&quot;FieldName&quot;:&quot;VoltageLevelRequested__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;PhaseTypeRequested__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;CaliberRequested__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;SystemCapacity__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;Note__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1}]</value>
+{&quot;FieldName&quot;:&quot;SystemCapacity__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;Note__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
+{
+    &quot;FieldName&quot;: &quot;Commodity__c&quot;,
+    &quot;ReadOnly&quot;: true,
+    &quot;Column&quot;: 1
+}
+]</value>
     </values>
     <values>
         <field>ValidateClass__c</field>
