@@ -36434,28 +36434,28 @@
         <layout>CityTechnicalData__c-Dato Tecnico Comunale Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-	<layout>MandatoryAttachments__c-Allegati Obbligatori Layout</layout>
+	    <layout>MandatoryAttachments__c-Allegati Obbligatori Layout</layout>
 	</layoutAssignments>
-<layoutAssignments>
-	<layout>Case-HDT_VariazioniTari</layout>
-	<recordType>Case.HDT_RT_VariazioniTari</recordType>
-</layoutAssignments>
-<layoutAssignments>
-	<layout>Case-HDT_DisattivazioniTari</layout>
-	<recordType>Case.HDT_RT_DisattivazioniTari</recordType>
-</layoutAssignments>
-<layoutAssignments>
-	<layout>Case-HDT_ReclamiScrittiTARI</layout>
-	<recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
-</layoutAssignments>
-<layoutAssignments>
-	<layout>Case-HDT_ReclamoDaCittadino</layout>
-	<recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
-</layoutAssignments>
-<layoutAssignments>
-	<layout>Case-HDT_PosizionamentoContenitore</layout>
-	<recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
-</layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VariazioniTari</layout>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_DisattivazioniTari</layout>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_ReclamiScrittiTARI</layout>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_ReclamoDaCittadino</layout>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_PosizionamentoContenitore</layout>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Reading__c-HDT_LetturaAcqua</layout>
         <recordType>Reading__c.HDT_RT_LetturaAcqua</recordType>
