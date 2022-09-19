@@ -10833,6 +10833,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Rimozione Agevolazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rimozione Impianto</fullName>
             <default>false</default>
         </values>
