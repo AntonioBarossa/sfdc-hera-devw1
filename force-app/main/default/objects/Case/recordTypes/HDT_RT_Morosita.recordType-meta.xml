@@ -6965,6 +6965,89 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ServicePointType__c</picklist>
+        <values>
+            <fullName>1001-Cottura cibi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1002-Cottura/Produz acq calda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1003-Riscaldamento esclusivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1004-Riscaldamento promiscuo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1005-Risc. centraliz esclusivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1006-Risc. centraliz promiscuo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1007-Attivita produttive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1008-Promiscuo (prod+ risc)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1009-Reti (cabine primo salto)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1010-Usi interni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13A0-Usi di Abitazione BT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13BB-Illuminazione pubblica BT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13CB-Non domestici in BT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13CT-Forn temporanee < 21 gg</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13DM-Illuminazione pubblica MT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13EM-Non domestici MT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13FM-Non domestici AT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13X0-Usi interni BT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13Y0-Usi interni MT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13Z0-Grossisti</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>InformativeCluster__c</picklist>
         <values>
             <fullName>Ambiente</fullName>
