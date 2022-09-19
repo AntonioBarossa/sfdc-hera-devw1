@@ -92,6 +92,9 @@ public with sharing class HDT_UTL_CalculateTransition {
             }
             if(calculateTransitionMap.get('sale') != null){
                 sale = [SELECT Id, Account__r.CompanyOwner__c, Account__r.Category__c, Account__r.CustomerMarking__c, Account__c FROM Sale__c WHERE Id =: ((Sale__c)calculateTransitionMap.get('sale')).Id WITH SECURITY_ENFORCED LIMIT 1];
+                if('HERA COMM'.equalsIgnoreCase(sale.Account__r.CompanyOwner__c)){
+                    return false;
+                }
                 if(sale.Account__r.CustomerMarking__c != null && sale.Account__r.CustomerMarking__c != ''){
                     markerConverted = sale.Account__r.CustomerMarking__c.split('');
                 }
