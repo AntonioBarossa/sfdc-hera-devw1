@@ -58,7 +58,21 @@ import  * as rateCategories from './hdtRateCategories.js';
                     }, {labels : "", apinames : []}
                 );
         console.log("missing fields "+valuation.apinames);
-        return valuation.labels.slice(2);
+        const message = valuation.labels.slice(2);
+        if(message){
+            this.showMessage('Errore', 'Popolare i campi obbligatori: '+message, 'error');
+            return true;
+        }
+    }
+
+    function savePredefaultedFields(sectionName){
+        this.template
+        .querySelectorAll(
+            `lightning-accordion-section[data-section-name='${sectionName}'] `+
+            "lightning-input-field[data-value='true']"
+        ).forEach(el=>{
+            this.sectionDataToSubmit[el.fieldName]=el.value;
+        })
     }
 
     const handleSections = function() {
@@ -76,12 +90,7 @@ import  * as rateCategories from './hdtRateCategories.js';
                 processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),
                 nextActions : (evt) => 
                     {
-                        //check mandatory section field section
-                        let reqFields = checkSectionRequiredFields.call(this, evt?.currentTarget?.value);
-                        if(reqFields){
-                            this.showMessage('Errore', 'Popolare i campi obbligatori: '+reqFields, 'error');
-                            return true;
-                        }
+                        savePredefaultedFields.call(this, evt?.currentTarget?.value);
                         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
                         let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
                         //if(!this.isActiveRepentantPressed){
@@ -100,6 +109,8 @@ import  * as rateCategories from './hdtRateCategories.js';
                                 return true;
                             }
                         }
+                        //check mandatory section field section
+                        if(checkSectionRequiredFields.call(this, evt?.currentTarget?.value)){   return true;}
                     },
                 data:[
                     new fieldData('Codice Punto','ServicePointCode__c',this.typeVisibility('both'),true, true, '', ''),
@@ -107,7 +118,7 @@ import  * as rateCategories from './hdtRateCategories.js';
                     new fieldData('Tipo Impianto','ImplantType__c', this.typeVisibility('both'), true, true,'',''),
                     new fieldData('Residente','Resident__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Codice ATECO','AtecoCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
-                    new fieldData('Codice Ronchi','RonchiCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',' '),
+                    new fieldData('Codice Ronchi','RonchiCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',''),
                     new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',''),
                     new fieldData('Contratto Precedente','ContractReference__c', ["HDT_RT_CambioTariffa", "HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), true, true,'',''),
                     new fieldData('Documentazione consegnata da contribuente','DeliveredDocumentation__c', this.typeVisibility('both'), false, false,'',''),
@@ -146,15 +157,11 @@ import  * as rateCategories from './hdtRateCategories.js';
                 processVisibility: ['HDT_RT_SubentroAmbiente', 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),
                 nextActions: (evt) => 
                     {
-                        //check mandatory section field section
-                        let reqFields = checkSectionRequiredFields(evt?.currentTarget?.value);
-                        if(reqFields){
-                            console.log(reqFields);
-                            this.showMessage('Errore', 'Popolare i campi obbligatori', 'error');
-                            return true;
-                        }
                         const famNumb =this.template.querySelector("[data-id='FamilyNumber__c']");
                         if(famNumb) this.sectionDataToSubmit["FamilyNumber__c"]=this.template.querySelector("[data-id='FamilyNumber__c']")?.value;
+                        savePredefaultedFields.call(this, evt?.currentTarget?.value);
+                        //check mandatory section field section
+                        if(checkSectionRequiredFields.call(this, evt?.currentTarget?.value)){   return true;}
                     },
                 data:[
                     new fieldData('Qualità','SubscriberType__c',this.typeVisibility('both'),true, false, '', '', 
@@ -202,12 +209,7 @@ import  * as rateCategories from './hdtRateCategories.js';
                 processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),
                 nextActions: (evt) => {
                     //check mandatory section field section
-                    let reqFields = checkSectionRequiredFields(evt?.currentTarget?.value);
-                    if(reqFields){
-                        console.log(reqFields);
-                        this.showMessage('Errore', 'Popolare i campi obbligatori', 'error');
-                        return true;
-                    }
+                    if(checkSectionRequiredFields.call(this, evt?.currentTarget?.value)){   return true;}
                 },
                 data: [
                     new fieldData('Modalità Invio Bolletta', 'BillSendMode__c',this.typeVisibility('both'),false,true,'',''),

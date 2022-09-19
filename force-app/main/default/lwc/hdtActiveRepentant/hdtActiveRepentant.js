@@ -153,23 +153,36 @@ export default class HdtActiveRepentant extends LightningElement {
     }
 
     checkComuniNonAffidatari(dateDecorrenza, dateDichiarazione){
-        if(this.cityData?.CutOverEndDate__c && dateDichiarazione.getTime() > new Date(this.cityData?.CutOverEndDate__c).getTime()){
+        
+        if(this.cityData?.TARIManagingStartDate__c || this.cityData?.TARIManagingEndDate__c || this.cityData?.CutOverEndDate__c){
+            this.showMessage(
+                "Attenzione!",
+                this.cityData.CityNotManagedAlert__c? this.cityData.CityNotManagedAlert__c : "Comune Non Gestito",
+                "error"
+            );
+            this.dateDecorrenza=null;
+            this.disabled=false;
+            return true;
+        }
+
+        if( (dateDecorrenza.getTime() < new Date(this.cityData?.TARIManagingStartDate__c).getTime() || dateDecorrenza.getTime() > new Date(this.cityData?.TARIManagingEndDate__c).getTime())){
+            this.showMessage(
+                "Attenzione!",
+                this.cityData.CityNotManagedAlert__c? this.cityData.CityNotManagedAlert__c : "Comune Non Gestito",
+                "error"
+            );
+            this.dateDecorrenza=null;
+            this.disabled=false;
+            return true;
+        }
+        
+        if( dateDichiarazione.getTime() > new Date(this.cityData?.CutOverEndDate__c).getTime()){
             this.showMessage(
                 "Attenzione!",
                 "La data di contatto è successiva a quella di fine cut-over",
                 "error"
             );
             this.dateDichiarazione=null;
-            this.disabled=false;
-            return true;
-        }
-        if(this.cityData?.TARIManagingStartDate__c && this.cityData?.TARIManagingEndDate__c && (dateDecorrenza.getTime() < new Date(this.cityData?.TARIManagingStartDate__c).getTime() || dateDecorrenza.getTime() > new Date(this.cityData?.TARIManagingEndDate__c).getTime())){
-            this.showMessage(
-                "Attenzione!",
-                this.cityData.CityNotManagedAlert__c,
-                "error"
-            );
-            this.dateDecorrenza=null;
             this.disabled=false;
             return true;
         }
