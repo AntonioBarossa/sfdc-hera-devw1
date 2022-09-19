@@ -67,7 +67,7 @@
     </values>
     <values>
         <field>Credential__c</field>
-        <value xsi:type="xsd:string">callout:data-enrichment/gate-paperworks-demand</value>
+        <value xsi:type="xsd:string">Callout:MulesoftBasePath/data-enrichment/gate-paperworks-demand</value>
     </values>
     <values>
         <field>UseMock__c</field>
