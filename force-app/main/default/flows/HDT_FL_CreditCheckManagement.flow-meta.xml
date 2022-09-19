@@ -146,7 +146,7 @@
             </value>
         </assignmentItems-->
         <assignmentItems>
-            <assignToReference>getActivity.WorkGroup__c</assignToReference>
+            <assignToReference>getActivity.ClosingCreatorGroup__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>$User.CreatorGroup__c</elementReference>

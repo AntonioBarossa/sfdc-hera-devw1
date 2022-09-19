@@ -805,7 +805,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     newOrder.TecnicalPhase__c = null;
                 }
                 if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& newOrder.Status.equalsIgnoreCase('Activated') && !newOrder.SBQQ__Contracted__c && !old.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) { //Fabiana 15/09/2021 //Sandy 05/10 Flusso Bonus e Sconti richiede chiusura e contracted in due transazioni distinte
-                    newOrder.SBQQ__Contracted__c=true; 
+                    if(!newOrder.isTransition__c)
+                    {
+                        newOrder.SBQQ__Contracted__c=true; 
+                    }
                 }
             }           
         }
