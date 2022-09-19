@@ -8782,10 +8782,10 @@
             <fullName>1117-Autobotte (solo usi Hera)</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>1118-Scar ind no cont. ACQ+POZ</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>1119-Scar. ind.le  cont. div</fullName>
             <default>false</default>
