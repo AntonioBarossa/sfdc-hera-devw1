@@ -57,9 +57,9 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
     public static void cancelLinkedOrders(Set<Id> canceledOrderIds, Set<Id> canceledOrderQuotesIds){
         List<Order> ordersToWork = new List<Order>();
         if(!canceledOrderIds.isEmpty() && canceledOrderQuotesIds.isEmpty()){
-            ordersToWork = [SELECT Id, isBillableVas__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds WITH SECURITY_ENFORCED];
+            ordersToWork = [SELECT Id, isBillableVas__c,Contact__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds WITH SECURITY_ENFORCED];
         }else if (!canceledOrderIds.isEmpty()){
-            ordersToWork = [SELECT Id, isBillableVas__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
+            ordersToWork = [SELECT Id, isBillableVas__c, Contact__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
         }
 
        
@@ -69,7 +69,14 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
         }
         List<Order> ordersToCancel = new List<Order>();
         //Map<Id,Order> commodityOrderMap = new Map<Id,Order>();
+        Map<Id,Id> mapQuoteContactId = new Map<Id,Id>();
+        Map<Id,Id> mapOrderContactId = new Map<Id,Id>();
         for (Order orderToWork:ordersToWork) {
+            if (canceledOrderIds.contains(orderToWork.Id) && orderToWork.Contact__c != null){
+                mapQuoteContactId.put(orderToWork.SBQQ__Quote__c,orderToWork.Contact__c);
+                mapOrderContactId.put(orderToWork.Id,orderToWork.Contact__c);
+                continue;
+            }
             switch on orderToWork.RecordType.DeveloperName {
                 when 'HDT_RT_VAS','HDT_RT_ScontiBonus', 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione' {
                     ordersToCancel.add(orderToWork);
@@ -85,6 +92,9 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
         for (Order vasOrder:ordersToCancel) {
             vasOrder.Phase__c = PHASE_CANCELLED;
             vasOrder.Status = STATUS_CANCELLED;
+            if (vasOrder.Contact__c == null && (mapQuoteContactId.containsKey(vasOrder.SBQQ__Quote__c) || (vasOrder.OrderReference__c != null && mapOrderContactId.containsKey(vasOrder.OrderReference__c)))){
+                vasOrder.Contact__c = mapQuoteContactId.containsKey(vasOrder.SBQQ__Quote__c)? mapQuoteContactId.get(vasOrder.SBQQ__Quote__c) : mapOrderContactId.get(vasOrder.OrderReference__c);
+            }
             /* String cancellationReason;
             if (vasOrder.OrderReference__c != null && commodityOrderMap.containsKey(vasOrder.OrderReference__c)){
                 cancellationReason = commodityOrderMap.get(vasOrder.OrderReference__c).CancellationReason__c;

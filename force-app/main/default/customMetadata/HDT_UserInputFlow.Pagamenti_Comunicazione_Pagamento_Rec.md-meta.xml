@@ -7,10 +7,8 @@
         <value xsi:type="xsd:string">[
 {&quot;FieldName&quot;:&quot;PaidAmount__c&quot;,&quot;Required&quot;:true,&quot;ReadOnly&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;PaymentDate__c&quot;,&quot;Required&quot;:true,&quot;ReadOnly&quot;:false,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;AccountholderTypeBeneficiary__c&quot;,&quot;Required&quot;:true,&quot;ReadOnly&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;PaymentDetails__c&quot;,&quot;Required&quot;:false,&quot;ReadOnly&quot;:false,&quot;Column&quot;:2},
-{&quot;FieldName&quot;:&quot;ChannelOfPayment__c&quot;,&quot;Required&quot;:true,&quot;ReadOnly&quot;:false,&quot;Column&quot;:2},
-{&quot;FieldName&quot;:&quot;BeneficiaryAccount__c&quot;,&quot;Required&quot;:true,&quot;ReadOnly&quot;:true,&quot;Column&quot;:2}
+{&quot;FieldName&quot;:&quot;ChannelOfPayment__c&quot;,&quot;Required&quot;:true,&quot;ReadOnly&quot;:false,&quot;Column&quot;:2}
 ]</value>
     </values>
     <values>

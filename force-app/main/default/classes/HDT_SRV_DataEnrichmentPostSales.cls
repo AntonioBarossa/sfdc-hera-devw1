@@ -1,6 +1,12 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_SRV_DataEnrichmentPostSales {
     
+    private final Map<String,String> SALESCOMPANY_MAP = new Map<String,String>{
+        '13V0000000'=>'Hera Comm S.p.A.',
+        '10V0000160'=>'Hera Comm Marche',
+        '11-HERASPA'=>'Hera Comm S.p.A.',
+        '1200000000'=>'Hera Comm S.p.A.'};
+    
     private HDT_QR_DataEnrichmentPostSales depsQr = new HDT_QR_DataEnrichmentPostSales();
 
     public String getPicklistValue(String objectName, String fieldName, String condition){
@@ -128,18 +134,8 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
 
     public String calculateSalesCompany(String salesCompanyCode){
-
-        String salesCompany;
-        switch on salesCompanyCode {
-            when '13V0000000'{
-                salesCompany = 'Hera Comm S.p.A.';
-            }
-            when '10V0000160'{
-                salesCompany = 'Hera Comm Marche';
-            }
-        }
         
-        return salesCompany;
+        return SALESCOMPANY_MAP.get(salesCompanyCode);
     }
 
 
