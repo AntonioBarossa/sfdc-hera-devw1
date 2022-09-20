@@ -733,7 +733,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     if (childOrder.Phase__c == currentPhase
                         //@frpanico 06/09/2021 added voltura condition
                         /* Solo la voltura Energy deve rimanere nella fase Documentazione Validata, per il non energy deve procedere verso Creazione BP-CA */
-                        && (childOrder.ProcessType__c != 'Voltura' && !childOrder.Commodity__c.equalsIgnoreCase('Acqua') && !childOrder.Commodity__c.equalsIgnoreCase('Ambiente'))
+                        && (childOrder.ProcessType__c != 'Voltura')
                         && childOrder.ImplantType__c != '1107-Colonnetta' ) {
                         Order orderToUpdate = new Order(
                             Id = childOrder.Id,
@@ -744,7 +744,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
         }
-        //orderSrv.updateRecords(childOrdersToUpdate);
+        orderSrv.updateRecords(childOrdersToUpdate);
         return vasOrdersToUpdate;
     }
 
