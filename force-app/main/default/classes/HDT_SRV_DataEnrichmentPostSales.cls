@@ -1,7 +1,7 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_SRV_DataEnrichmentPostSales {
     
-    private Static Map<String,String> SALESCOMPANY_MAP = new Map<String,String>{
+    private final Map<String,String> SALESCOMPANY_MAP = new Map<String,String>{
         '13V0000000'=>'Hera Comm S.p.A.',
         '10V0000160'=>'Hera Comm Marche',
         '11-HERASPA'=>'Hera Comm S.p.A.',
