@@ -495,6 +495,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AbiCode__c.BankName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AmministrazioneFrodi__c.CanaleVendita__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -15408,6 +15413,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.QualityCall__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.QualityCallStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

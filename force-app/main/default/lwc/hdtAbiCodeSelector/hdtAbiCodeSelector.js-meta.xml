@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Abi Code Selector (Flow)</masterLabel>
+    <description>Component LWC</description>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="saveButton" type="Boolean" label="Save Button" description="Enable Save Button" role="inputOnly"/>
+            <property name="labelSaveButton" type="String" label="Label Save Button" description="Label Save Button" role="inputOnly"/>
+            <property name="previousButton" type="Boolean" label="Previous Button" description="Enable Previous Button" role="inputOnly"/>
+            <property name="labelPreviousButton" type="String" label="Label Previous Button" description="Label Previous Button" role="inputOnly"/>
+            <property name="draftButton" type="Boolean" label="Draft Button" description="Enable Draft Button" role="inputOnly"/>
+            <property name="labelDraftButton" type="String" label="Label Draft Button" description="Label Draft Button" role="inputOnly"/>
+            <property name="cancelButton" type="Boolean" label="Cancel Button" description="Enable Cancel Button" role="inputOnly"/>
+            <property name="labelCancelButton" type="String" label="Label Cancel Button" description="Label Cancel Button" role="inputOnly"/>
+            <!--Outputs-->
+            <property name="draft" type="Boolean" label="Draft" description="Draft branch" role="outputOnly"/>
+            <property name="cancel" type="Boolean" label="Cancel" description="Cancel branch" role="outputOnly"/>
+            <property name="abi" type="String" label="abi" description="abi selected" role="outputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
