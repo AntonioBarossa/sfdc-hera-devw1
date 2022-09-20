@@ -2,7 +2,7 @@
 public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     private static HDT_QR_HerokuPostSalesManager hpsmQr = new HDT_QR_HerokuPostSalesManager();
-    private static String type ='Acconto scaduto non pagato da gestire';
+    private static String typeAcc ='Acconto scaduto non pagato da gestire';
 
     public String getCodeFromPhaseTransition(Case currentCase){
         String code;
@@ -496,7 +496,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     else if(type.equalsIgnoreCase('KO Acc No pag rate Annullate')){
                         type = 'Acconto Paperless Non Pagato';
                         //close activity Acconto scaduto non pagato da gestire if exist
-                        List<wrts_prcgvr__Activity__c> existingAct = [SELECT Id, Approved__c, case__c, owner.name, wrts_prcgvr__Description__c, Name FROM wrts_prcgvr__Activity__c WHERE Case__c = :currentcase.Id AND wrts_prcgvr__Description__c=:type];
+                        List<wrts_prcgvr__Activity__c> existingAct = [SELECT Id, Approved__c, case__c, owner.name, wrts_prcgvr__Description__c, Name FROM wrts_prcgvr__Activity__c WHERE Case__c = :currentcase.Id AND wrts_prcgvr__Description__c=:typeAcc];
                         if(existingAct.size()>0){
                             HDT_UTL_Scarti.closeDiscardActivity(existingAct[0].Id);
                         }
