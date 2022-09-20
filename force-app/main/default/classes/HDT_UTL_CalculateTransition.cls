@@ -92,9 +92,6 @@ public with sharing class HDT_UTL_CalculateTransition {
             }
             if(calculateTransitionMap.get('sale') != null){
                 sale = [SELECT Id, Account__r.CompanyOwner__c, Account__r.Category__c, Account__r.CustomerMarking__c, Account__c FROM Sale__c WHERE Id =: ((Sale__c)calculateTransitionMap.get('sale')).Id WITH SECURITY_ENFORCED LIMIT 1];
-                if('HERA COMM'.equalsIgnoreCase(sale.Account__r.CompanyOwner__c)){
-                    return false;
-                }
                 if(sale.Account__r.CustomerMarking__c != null && sale.Account__r.CustomerMarking__c != ''){
                     markerConverted = sale.Account__r.CustomerMarking__c.split('');
                 }
@@ -118,14 +115,15 @@ public with sharing class HDT_UTL_CalculateTransition {
                (sale.Account__r.Category__c == 'Famiglie' || 
                sale.Account__r.Category__c == 'Aziende Soho' || 
                sale.Account__r.Category__c == 'Piccoli Condomini')){
-                   /** Check se Gas HC --> Transitorio */
-                   if((String)calculateTransitionMap.get('commodity') == 'Gas' && !markerConverted.isEmpty() && markerConverted != null && !(markerConverted[0] == 'D' && markerConverted[1].isNumeric())){
+                /** Check se Gas HC --> Transitorio */
+                /** infrawave: non più richiesto controllo*/
+ /*                   if((String)calculateTransitionMap.get('commodity') == 'Gas' && !markerConverted.isEmpty() && markerConverted != null && !(markerConverted[0] == 'D' && markerConverted[1].isNumeric())){
                         List<City__c> cityList = [SELECT Name, BelfioreCode__c, ProvinceName__c, Province__c, SDV__c, ServiceEle__c, ServiceGas__c 
                         FROM City__c WHERE Name =: (String)calculateTransitionMap.get('city') AND ServiceGas__c = true WITH SECURITY_ENFORCED];
                         if(cityList.isEmpty()){
                             return true;
                         }
-                   }
+                   } */
                    /** Check se ci sono altri ordini a transitorio --> Transitorio */
                    List<Order> ordList = [SELECT Id, isTransition__c, Status, AccountId FROM Order WHERE isTransition__c = true AND Status = 'In Lavorazione' AND AccountId =: sale.Account__c WITH SECURITY_ENFORCED];
                    if(!ordList.isEmpty()){
