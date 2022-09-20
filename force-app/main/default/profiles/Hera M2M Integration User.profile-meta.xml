@@ -11292,6 +11292,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>HDT_ButtonDetails__mdt.HideForExtObj__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>HDT_CalcoloPreventivi__mdt.ComparePowReq__c</field>
         <readable>true</readable>
     </fieldPermissions>
