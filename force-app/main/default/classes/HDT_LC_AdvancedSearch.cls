@@ -312,7 +312,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 	 */
 	@AuraEnabled(cacheable = true)
 	public static List<Map<String, Object>> getServicePoints(String parameter,String queryType,String additionalFilter,
-	                                                                          Boolean isSuperUser, List<String> datiCatastali) {
+	                                                                          Boolean isSuperUser, String datiCatastali) {
 		Set<ServicePoint__c> servicePoints = new Set<ServicePoint__c>();
 		HDT_QR_Contract contractQr= new HDT_QR_Contract();
 		system.debug('queryType' + queryType);
@@ -440,7 +440,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 	@AuraEnabled(cacheable = true)
 	public static List<Map<String, Object>> getServicePoints(String parameter,String queryType,
 																			  String additionalFilter,Boolean isSuperUser) {
-		return getServicePoints(parameter,queryType,additionalFilter,isSuperUser, new List<String>());
+		return getServicePoints(parameter,queryType,additionalFilter,isSuperUser, '');
 	}
 
 	@AuraEnabled(cacheable = true)
