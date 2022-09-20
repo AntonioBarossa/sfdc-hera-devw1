@@ -1478,7 +1478,6 @@
             <label>HERA FOTOVOLTAICO</label>
         </rules>
     </decisions>
-    <environments>Default</environments>
     <formulas>
         <name>NomeOffertaCalcolato_Introduzione</name>
         <dataType>String</dataType>
@@ -1559,7 +1558,7 @@
         <label>Order Items Vas Loop</label>
         <locationX>820</locationX>
         <locationY>5798</locationY>
-        <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVasOutput</collectionReference>
+        <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVASBonusOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>HDT_Script_VAS</targetReference>
@@ -5062,7 +5061,7 @@
             <targetReference>HDT_FL_Script_Gestione_Ordini</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>HDT_FL_Script_Concatenazione_Ordini_Figli</name>
         <label>HDT_FL_Script_Concatenazione Ordini Figli</label>
