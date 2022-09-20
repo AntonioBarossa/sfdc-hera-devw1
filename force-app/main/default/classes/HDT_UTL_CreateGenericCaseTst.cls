@@ -2,7 +2,7 @@
     @Author:        Francesco Vitiello
     CreatedDate:    05/10/2021
 */
-
+@SuppressWarnings('PMD.AvoidDebugStatements')
 @isTest
 public with sharing class HDT_UTL_CreateGenericCaseTst {
 
@@ -154,16 +154,11 @@ public with sharing class HDT_UTL_CreateGenericCaseTst {
         
         //DEBUG
         String debugString = TEST_NAME + ' - ' + 'createCaseFromFlowCaseTest';
-        System.debug(debugString);
+        System.debug(LoggingLevel.DEBUG, debugString);
         
         //SETUP      
 
-        // Map<String, Object> myMap = new Map<String, Object>();
         Case testCase = [SELECT Id, recordTypeId, type, Cluster__c FROM Case LIMIT 1];
-        // myMap.put('recordTypeId', testCase.recordTypeId);
-        // myMap.put('type', testCase.type);
-        // myMap.put('cluster', testCase.Cluster__c);
-        // myMap.put('inputSObj', testCase);
 
         List<HDT_UTL_CreateGenericCase.HDT_UTL_FlowInputsCreaCase> inputs = new List<HDT_UTL_CreateGenericCase.HDT_UTL_FlowInputsCreaCase>();
         HDT_UTL_CreateGenericCase.HDT_UTL_FlowInputsCreaCase input = new HDT_UTL_CreateGenericCase.HDT_UTL_FlowInputsCreaCase();
@@ -177,14 +172,10 @@ public with sharing class HDT_UTL_CreateGenericCaseTst {
         
         //TESTING
         Test.startTest();
-        Try{
-            
-            // HDT_UTL_CreateGenericCase myClass = new HDT_UTL_CreateGenericCase();
+        try{
             outputResults = HDT_UTL_CreateGenericCase.createCaseFromCaseForFlow(inputs);
-
-
         }catch(DmlException e) {
-            System.debug('The following exception has occurred: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'The following exception has occurred: ' + e.getMessage());
         }        
         Test.stopTest();
         
