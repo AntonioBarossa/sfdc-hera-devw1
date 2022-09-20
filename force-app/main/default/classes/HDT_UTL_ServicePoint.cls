@@ -278,10 +278,10 @@ public with sharing class HDT_UTL_ServicePoint {
         if(mapRes.get('AQCNS_ANNO')!=null && !String.isBlank(mapRes.get('AQCNS_ANNO'))){         
             spNew.AnnualConsumption__c = integer.valueOf(Decimal.valueOf(mapRes.get('AQCNS_ANNO')));
         }
-        if(mapRes.get('TFNCE0000')!=null && !String.isBlank(mapRes.get('TFNCE0000')){         
+        if(mapRes.get('TFNCE0000')!=null && !String.isBlank(mapRes.get('TFNCE0000'))){      
             spNew.NumberOfTARIMembers__c = (mapRes.get('TFNCE0000'));
         } 
-        if(mapRes.get('TFNCDC0000')!=null && !String.isBlank(mapRes.get('TFNCDC0000')){        
+        if(mapRes.get('TFNCDC0000')!=null && !String.isBlank(mapRes.get('TFNCDC0000'))){    
             spNew.NumberOfTARIMembers__c = (mapRes.get('TFNCDC0000'));
         }        
         if(mapRes.get('AFNUM_COMP')!=null && !String.isBlank(mapRes.get('AFNUM_COMP'))){         

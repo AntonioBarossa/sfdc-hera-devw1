@@ -357,6 +357,7 @@ public with sharing class HDT_UTL_ServicePointTst {
             position.campo = 'AFVASCA_AC';
             position.valore = '1';
             positions.add(position);
+            
 
             response.data.posizioni = positions;
 

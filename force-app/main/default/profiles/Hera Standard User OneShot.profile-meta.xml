@@ -26851,7 +26851,7 @@
     </fieldPermissions>
 	    <fieldPermissions>
         <editable>true</editable>
-        <field>ServicePoint__c.CommercialHousingUnit</field>
+        <field>ServicePoint__c.CommercialHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	    <fieldPermissions>
