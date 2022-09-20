@@ -186,6 +186,15 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>hdtAcctStmtFromExternalObj</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-994af10a-93b3-4a5e-8853-21131ea96338</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
@@ -279,6 +288,19 @@
                 <componentInstanceProperties>
                     <name>title</name>
                     <value>Alert tracking</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-994af10a-93b3-4a5e-8853-21131ea96338</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Estratto Conto</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
             </componentInstance>
