@@ -1,0 +1,55 @@
+<template>
+	<lightning-card title="Comunicazione con il Gestore" variant="narrow" icon-name="standard:email_chatter">
+		<div class="slds-grid slds-wrap slds-m-around_medium">
+			<div class="slds-col slds-size_1-of-3">
+				<span>
+                    <div class="slds-m-around_medium">
+                        <lightning-combobox
+                            name="template"
+                            label="Template"
+                            value={templateValue}
+                            placeholder="Seleziona il template..."
+                            options={options}
+                            onchange={handleTemplateChange}
+                        ></lightning-combobox>
+                    </div>
+				</span>
+			</div>
+			<div class="slds-col slds-size_1-of-3">
+				<span>
+                    <div class="slds-m-around_medium">
+                        <lightning-input type="text" label="Mittente"></lightning-input>
+                    </div>
+				</span>
+			</div>
+            <div class="slds-col slds-size_1-of-3">
+				<span>
+                    <div class="slds-m-around_medium">
+                        <lightning-input type="text" label="Destinatario"></lightning-input>
+                    </div>
+				</span>
+			</div>
+            <div class="slds-col slds-size_1-of-1">
+				<span>
+                    <div class="slds-m-around_medium">
+                        <lightning-input-rich-text
+                            value={bodyMail}
+                            disabled-categories="INSERT_CONTENT"
+                        ></lightning-input-rich-text>
+                    </div>
+				</span>
+			</div>
+		</div>
+
+        <p slot="footer">
+            <lightning-button
+                variant="brand"
+                label="Invia comunicazione"
+                title="sendMail"
+                onclick={handleClick}
+                class="slds-m-left_x-small"
+            ></lightning-button>
+        </p>
+
+	</lightning-card>
+</template>
