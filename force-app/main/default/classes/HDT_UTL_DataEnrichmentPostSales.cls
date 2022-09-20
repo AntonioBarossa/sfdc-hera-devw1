@@ -233,41 +233,20 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
             transcodeMap.put('RegionalAdditional__c', regionalAdditional);
         }
 
-        //SALESCOMPANY
-        System.debug('Case CommodityFormula__c: '+ currentCase.CommodityFormula__c);
-        System.debug('Case Commodity__c: '+ currentCase.Commodity__c);
+        //SALESCOMPANY && SALESCOMPANYCODE
         salesCompanyCode = (String) transcodeMap.get('SalesCompanyCode__c');
-        //salesCompanyCode = String.isBlank(salesCompanyCode) && 
+        salesCompanyCode = String.isBlank(salesCompanyCode) && 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c) ? '11-HERASPA' : salesCompanyCode;
+        salesCompanyCode = String.isBlank(salesCompanyCode) && 'Ambiente'.equalsIgnoreCase(currentCase.CommodityFormula__c) ? '1200000000' : salesCompanyCode;
         salesCompany = depsSrv.calculateSalesCompany(salesCompanyCode);
+        
         transcodeMap.put('SalesCompany__c', salesCompany);
+        transcodeMap.put('SalesCompanyCode__c', salesCompanyCode);
 
+        //SOTTOTIPOLOGIA D'USO
+        sottoTipologiaDuso = HDT_SRV_DataEnrichmentPostSales.handleSubType(salesCompany, (String) transcodeMap.get('RateCategory__c'));
+        transcodeMap.put('UseSubCategory__c',sottoTipologiaDuso);
+       
         dataEnrichmentFields.addAll(transcodeMap.keySet());
-
-         //SOTTOTIPOLOGIA D'USO
-        try{
-            String prodCodeInput = null;
-            List <Case> prodCodeList = [SELECT RateCategory__c FROM Case WHERE id=:currentCase.Id WITH SECURITY_ENFORCED];
-            
-            if(prodCodeList.size() > 0) {
-                prodCodeInput = prodCodeList[0].RateCategory__c;
-            }
-
-            String salesCompInput=null;
-            List <Case> salesCompList = [SELECT SalesCompany__c FROM Case WHERE id=:currentCase.Id WITH SECURITY_ENFORCED];
-            
-            if(salesCompList.size()>0){
-                salesCompInput = salesCompList[0].SalesCompany__c;
-            }
-
-            sottoTipologiaDuso = HDT_SRV_DataEnrichmentPostSales.handleSubType(salesCompInput, prodCodeInput);
-            System.debug(LoggingLevel.DEBUG, sottoTipologiaDuso);
-
-            transcodeMap.put('UseSubCategory__c',sottoTipologiaDuso);
-
-        } catch (Exception e) {
-            System.debug(LoggingLevel.DEBUG, 'Errore nell arricchimento della Sottotipologia D uso!-> ' + e.getMessage());
-        }
-
         return depsSrv.populateCase(transcodeMap, currentCase);
     }
 
