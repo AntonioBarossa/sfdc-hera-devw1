@@ -2571,6 +2571,10 @@
 			<fullName>Bozza</fullName>
 			<default>false</default>
 		</values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
 		<values>
 			<fullName>Completata</fullName>
 			<default>false</default>
@@ -2593,6 +2597,10 @@
 		</values>
 		<values>
 			<fullName>Documentazione Validata</fullName>
+			<default>false</default>
+		</values>
+        <values>
+			<fullName>In attesa Validazione</fullName>
 			<default>false</default>
 		</values>
 		<values>
@@ -2800,6 +2808,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>RequestSource__c</picklist>
+        <values>
+            <fullName>Da contribuente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D'ufficio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>RequestOption__c</picklist>
         <values>
             <fullName>AEEG Op ALTA fin 220 kV-E_ALTA</fullName>
@@ -2862,17 +2881,6 @@
         </values>
         <values>
             <fullName>Trifase</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>RequestSource__c</picklist>
-        <values>
-            <fullName>D%E2%80%99ufficio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Da contribuente</fullName>
             <default>false</default>
         </values>
     </picklistValues>

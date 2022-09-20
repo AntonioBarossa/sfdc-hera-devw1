@@ -149,4 +149,49 @@ public with sharing class HDT_UTL_CreateGenericCaseTst {
 
     }
 
+    @isTest
+    private static void createCaseFromFlowCaseTest(){
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'createCaseFromFlowCaseTest';
+        System.debug(debugString);
+        
+        //SETUP      
+
+        // Map<String, Object> myMap = new Map<String, Object>();
+        Case testCase = [SELECT Id, recordTypeId, type, Cluster__c FROM Case LIMIT 1];
+        // myMap.put('recordTypeId', testCase.recordTypeId);
+        // myMap.put('type', testCase.type);
+        // myMap.put('cluster', testCase.Cluster__c);
+        // myMap.put('inputSObj', testCase);
+
+        List<HDT_UTL_CreateGenericCase.HDT_UTL_FlowInputsCreaCase> inputs = new List<HDT_UTL_CreateGenericCase.HDT_UTL_FlowInputsCreaCase>();
+        HDT_UTL_CreateGenericCase.HDT_UTL_FlowInputsCreaCase input = new HDT_UTL_CreateGenericCase.HDT_UTL_FlowInputsCreaCase();
+        input.caseCluster = testCase.Cluster__c;
+        input.caseType = testCase.type;
+        input.inputSObj = testCase;
+        input.recordTypeId = testCase.recordTypeId;
+        inputs.add(input);
+
+        List<HDT_UTL_CreateGenericCase.HDT_UTL_FlowOutputsCreaCase> outputResults = new List<HDT_UTL_CreateGenericCase.HDT_UTL_FlowOutputsCreaCase>();
+        
+        //TESTING
+        Test.startTest();
+        Try{
+            
+            // HDT_UTL_CreateGenericCase myClass = new HDT_UTL_CreateGenericCase();
+            outputResults = HDT_UTL_CreateGenericCase.createCaseFromCaseForFlow(inputs);
+
+
+        }catch(DmlException e) {
+            System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+        
+        //ASSERTS
+        System.assert(outputResults != null, 'Attenzione, myMap non può essere null!');
+        System.assert(testCase != null, 'Attenzione, testCase non può essere null!');
+
+    }
+
 }

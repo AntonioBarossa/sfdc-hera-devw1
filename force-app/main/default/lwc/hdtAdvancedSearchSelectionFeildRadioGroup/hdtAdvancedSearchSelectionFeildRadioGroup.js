@@ -16,6 +16,8 @@ export default class HdtAdvancedSearchSelectionFeildRadioGroup extends Lightning
     imagesMatricolaContatore = [this.eleUrl, this.gasUrl, this.acquaUrl];
     imagesCodiceContratto = [this.eleUrl, this.gasUrl, this.acquaUrl, this.ambienteUrl];
     imagesIndirizzo = [this.ambienteUrl];
+    imagesDatiCatastali = [this.ambienteUrl];
+
     
     @track options = [];
     @api rowId;
@@ -26,6 +28,7 @@ export default class HdtAdvancedSearchSelectionFeildRadioGroup extends Lightning
             this.options.push({key: 3, label: 'Matricola contatore ', imageName: this.imagesMatricolaContatore, value: 'serialnumber', checked: '' });
             this.options.push({key: 4, label: 'Codice Contratto ', imageName: this.imagesCodiceContratto, value: 'contract', checked: '' });
             this.options.push({key: 5, label: 'Indirizzo di fornitura ', imageName: this.imagesIndirizzo, value: 'address', checked: '' });
+            this.options.push({key: 6, label: 'Dati Catastali ', imageName: this.imagesDatiCatastali, value: 'datiCatastali', checked: '' });
     }
 
     handleSelected(event) {

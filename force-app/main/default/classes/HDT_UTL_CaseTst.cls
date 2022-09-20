@@ -20,7 +20,9 @@ public with sharing class HDT_UTL_CaseTst {
         update myServicePoint;
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);   
+        contractList[0].StartDate = Date.today();
+        update contractList;
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
 
         
         wrts_prcgvr__ActivityTemplate__c myactivityTemplate = new wrts_prcgvr__ActivityTemplate__c();
@@ -40,6 +42,12 @@ public with sharing class HDT_UTL_CaseTst {
         atecoMatrix.AtecoCode__c = '9999';
         atecoMatrix.City__c = 'TEST';
         insert atecoMatrix;
+
+        AllineamentoGAA__c gaaAlignment1 = new AllineamentoGAA__c();
+        gaaAlignment1.Rate_Category__c = 'ACDOMRESP0';
+        insert gaaAlignment1;
+
+
     }
     
     //TESTS
@@ -119,10 +127,17 @@ public with sharing class HDT_UTL_CaseTst {
             myInput.process = 'Annullamento';
             HDT_UTL_Case.caseFlowPredefaults(inputs);
 
+            myInput.process = 'Adesione Rinuncia Fondo Fughe';
+            myInput.cluster = 'Variazioni';
+            myInput.joinBottomAdhesion = 'Y';
+            HDT_UTL_Case.caseFlowPredefaults(inputs);
 
+            myInput.process = 'Modifica Unita Immobiliari Componenti';
+            myInput.cluster = 'Variazioni';
+            myCase.RateCategory__c = 'ACDOMRESP0';
+            update myCase;
+            HDT_UTL_Case.caseFlowPredefaults(inputs);
 
-
-            
             
         }catch(DmlException e) {
             System.debug('The following exception has occurred: ' + e.getMessage());

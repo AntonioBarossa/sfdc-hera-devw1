@@ -1328,7 +1328,6 @@
     <description>SubFlow per la gestione del processo &quot;Comunicazione Pagamento&quot;</description>
     <dynamicChoiceSets>
         <name>comuniOptions</name>
-        <collectionReference>get_comuni_options</collectionReference>
         <dataType>String</dataType>
         <displayField>CadastralCity__c</displayField>
         <object>CityTechnicalData__c</object>
@@ -1855,27 +1854,7 @@
         <label>Aggiorna In Lavorazione</label>
         <locationX>1639</locationX>
         <locationY>5390</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>CaseInput.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Phase__c</field>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
+        <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase</name>
@@ -3826,7 +3805,7 @@
             <targetReference>Case_In_Bozza_Question</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annullamento_Prestazione_0</name>
         <label>Annullamento Prestazione</label>

@@ -35,7 +35,7 @@ public inherited sharing class HDT_QR_SelfReadings {
 
         if(objRes.isAccessible()) {
             
-            String relationshipName = commodity.equals('Gas') ? 'GasReadings__r' : 'EleReadings__r'; // TODO WAVE 2: adeguare per altre commodity.
+            String relationshipName = commodity.equals('Gas') ? 'GasReadings__r' : (commodity.equals('Acqua')?'AcquaReadings__r':'EleReadings__r');
             String queryTemplate = 'SELECT Id, (Select Id from {0} LIMIT 1) FROM {1} WHERE Id = :objectId';
             List<String> queryParameters = new List<String> { relationshipName, objectName };
             String query = String.format(queryTemplate, queryParameters);
@@ -65,7 +65,7 @@ public inherited sharing class HDT_QR_SelfReadings {
         
         if(objRes.isAccessible()) {
             
-            String relationshipName = commodity.equals('Gas') ? 'GasReadings__r' : 'EleReadings__r';
+            String relationshipName = commodity.equals('Gas') ? 'GasReadings__r' : (commodity.equals('Acqua')?'AcquaReadings__r':'EleReadings__r');
             String queryTemplate = 'SELECT Id, (Select {0} from {1} LIMIT 1) FROM {2} WHERE Id = :objectId';
             List<String> queryParameters = new List<String> { readingFields, relationshipName, objectName };
             String query = String.format(queryTemplate, queryParameters);

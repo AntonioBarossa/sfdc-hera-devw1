@@ -16,6 +16,14 @@
     <aura:attribute name="vatNumber" type="String"/>
     <aura:attribute name="columnsDocumenti" type="List"/>
     
+    <!--@frpanico 2022-07-22
+        Aggiunta nuovo attributo
+        Per discriminare la pressione dei due bottoni
+        * Gestisci Processi
+        * Gestisci Processi Tari 
+    -->
+    <aura:attribute name='macroProcessType' type="String"/>
+
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     
     <lightning:navigation aura:id="navService"/>

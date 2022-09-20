@@ -18,8 +18,15 @@ export default class HdtAdvancedSearch extends LightningElement {
     @track filterInputWord = null;
     openmodel = false;
     submitButtonStatus = true;
-    @api searchInputValue = null;
+    searchInputValue = null;
+    registryCityValue;
+    registryCityCodeValue;
+    urbanSectionValue;
+    sheetValue;
+    particleSheetValue;
+    subalternValue;
     queryType = 'pod';
+    datiCatastali = [];
     tableData = [];
     tableColumns = [];
     isLoaded = false;
@@ -127,11 +134,11 @@ export default class HdtAdvancedSearch extends LightningElement {
                     }
                             
                     if(data.Disalimentabile__c!= undefined && data.Disalimentabile__c!=''){
-                        this.additionalfilter+=' AND Disconnectable__c = \''+Disconnectable__c+'\'';
+                        this.additionalfilter+=' AND Disconnectable__c = \''+data.Disalimentabile__c+'\'';
                         console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
                     }
 
-                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && this.processtype !='Chiusura Contatore' && this.processtype != 'Esenz./modifica Fognatura Depurazione'){
+                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && this.processtype !='Chiusura Contatore' && this.processtype != 'Esenzione Modifica Fognatura Depurazione'){
                         RateCategorySplit = data.RateCategory__c.split(",");
                         console.log('RateCategorySplit *****'+JSON.stringify(RateCategorySplit));
 
@@ -144,7 +151,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                             console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
                     }
 
-                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && this.processtype ==='Chiusura Contatore' || this.processtype === 'Esenz./modifica Fognatura Depurazione'){
+                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && (this.processtype ==='Chiusura Contatore' || this.processtype === 'Esenzione Modifica Fognatura Depurazione')){
                         RateCategorySplit = data.RateCategory__c.split(",");
                         console.log('RateCategorySplit *****'+JSON.stringify(RateCategorySplit));
 
@@ -229,9 +236,83 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.submitButtonStatus = false;
         } else {
             this.submitButtonStatus = true;
-
         }
     }
+
+    showToast(message) {
+        const event = new ShowToastEvent({
+            title: 'Attenzione',
+            message: message,
+            variant: 'error',
+        });
+        this.dispatchEvent(event);
+    }
+
+    @track openmodelDatiCatastali = false;
+
+    openModalDatiCatastali() {
+        this.openmodelDatiCatastali = true
+    }
+
+    closeModalDatiCatastali(){        
+        this.openmodelDatiCatastali = false;
+    }
+
+    handleRegistryCity(event){
+        this.registryCityValue = event.target.value;
+    }
+    handleRegistryCityCode(event){
+        this.registryCityCodeValue = event.target.value;
+    }
+    handleUrbanSection(event){
+        this.urbanSectionValue = event.target.value;
+    }
+    handleSheet(event){
+        this.sheetValue = event.target.value;
+    }
+    handleParticleSheet(event){
+        this.particleSheetValue = event.target.value;
+    }
+    handleSubaltern(event){
+        this.subalternValue = event.target.value;
+    }     
+
+    addValuesToDatiCatastaliList() {
+        this.datiCatastali = [];
+        if(this.registryCityValue !== null){
+            this.datiCatastali.push(this.registryCityValue);
+        }
+        if(this.registryCityCodeValue !== null){
+            this.datiCatastali.push(this.registryCityCodeValue);
+        }
+        if(this.urbanSectionValue !== null){
+            this.datiCatastali.push(this.urbanSectionValue);
+        }
+        if(this.sheetValue !== null){
+            this.datiCatastali.push(this.sheetValue);
+        }
+        if(this.particleSheetValue !== null){
+            this.datiCatastali.push(this.particleSheetValue);
+        }
+        if(this.subalternValue !== null){
+            this.datiCatastali.push(this.subalternValue);
+        }
+        if(this.registryCityValue == null && this.registryCityCodeValue == null || this.registryCityValue == '' && this.registryCityCodeValue == '' || this.registryCityValue == null && this.registryCityCodeValue == '' || this.registryCityValue == '' && this.registryCityCodeValue == null){
+            this.showToast("Attenzione!Inserire almeno un valore tra Comune catastale e Codice comune catastale");
+        }else{
+            this.closeModalDatiCatastali();
+        }
+        let newVariable = (this.datiCatastali).join();
+        let result = newVariable.replace(/,/g,' ');
+        this.searchInputValue = result;
+        this.submitButtonStatus = false;
+        this.registryCityValue = '';
+        this.registryCityCodeValue = '';
+        this.urbanSectionValue = '';
+        this.sheetValue = '';
+        this.particleSheetValue = '';
+        this.subalternValue ='';
+    } 
 
     closeModal() {
         this.confirmButtonDisabled=true;
@@ -249,17 +330,18 @@ export default class HdtAdvancedSearch extends LightningElement {
      * get input value and also validate input value
      */
     searchAction(event) {
+        console.log(this.queryType);
         this.submitButtonStatus = true;
         this.apiSearchButtonStatus = true;
-
         console.log('event value: '+ event.target.value);
-
         if (event.target.value.length > 3) {
             this.submitButtonStatus = false;
             this.searchInputValue = event.target.value;
         }
-
-
+        if(this.queryType==='datiCatastali'){
+            this.openModalDatiCatastali();
+        }
+        
     }
 
     /**
@@ -276,7 +358,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         let columnsUniq = [...new Set(columns)];
         columnsUniq.forEach(field => 
             {
-                if(field != 'iconCompatibility' && field != 'compatibilityMessage' && field != 'Id' && field != 'serviceRequestId' && field != 'isCompatible' && field !== 'ServicePointId'){
+                if(field != 'iconCompatibility' && field != 'compatibilityMessage' && field != 'Id' && field != 'serviceRequestId' && field != 'isCompatible'){
                     this.tableColumns.push({label: field, fieldName: field});
                 }                 
             });
@@ -358,6 +440,9 @@ export default class HdtAdvancedSearch extends LightningElement {
         console.log('Event ' + JSON.stringify(event));
         this.queryType = event.detail;
         console.log('## QueryType >>> ' + this.queryType);
+        if(this.queryType==='datiCatastali'){
+            this.openModalDatiCatastali();
+        }
         this.apiSearchButtonStatus= true;
     }
 
@@ -396,7 +481,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
-                console.log('this.originalData ' + JSON.stringify(this.originalData));
+                console.log('this.originalData ' + this.originalData);
                 for(var i=0; i<this.originalData.length; i++){
                     this.originalData[i].Id=i.toString();
                 }
@@ -490,7 +575,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             isBlacklist=data;
         
         if(isBlacklist == false){
-        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalfilter,isSuperUser:this.isSuperUser}).then(data => {
+        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalfilter,isSuperUser:this.isSuperUser, datiCatastali:this.datiCatastali}).then(data => {
             this.preloading = false;
             if (data.length > 0) {
                 

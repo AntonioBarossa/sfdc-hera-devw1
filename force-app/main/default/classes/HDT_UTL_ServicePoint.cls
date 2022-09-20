@@ -231,32 +231,32 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.JointBottomAdhesion__c = dataEnrich.getPicklistValue('ServicePoint__c', 'JointBottomAdhesion__c', mapRes.get('AFPAG_FFUG'));
         }
         if(mapRes.get('AFPAGA_DEP')!=null && !String.isBlank(mapRes.get('AFPAGA_DEP'))){
-            if(mapRes.get('AFPAGA_DEP')=='0.0000000'){
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_DEP')))== 0) {
                 spNew.PayPurification__c = 'No - Esente';                
             }
-            if(mapRes.get('AFPAGA_DEP')=='1.0000000'){
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_DEP')))== 1) {
                 spNew.PayPurification__c = 'Si - Paga';                
             }
-            if(mapRes.get('AFPAGA_DEP')=='2.0000000'){
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_DEP')))== 2) {
                 spNew.PayPurification__c = 'Si - Ridotta';                
             }
         }
         if(mapRes.get('AFPAGA_FOG')!=null && !String.isBlank(mapRes.get('AFPAGA_FOG'))){
-            if(mapRes.get('AFPAGA_FOG')=='0.0000000'){
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_FOG')))== 0) {
                 spNew.PaySewer__c = 'No - Esente';                
             }
-            if(mapRes.get('AFPAGA_FOG')=='1.0000000'){
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_FOG')))== 1) {
                 spNew.PaySewer__c = 'Si - Paga';                
             }
         }
         if(mapRes.get('AFP_DEP355')!=null && !String.isBlank(mapRes.get('AFP_DEP355'))){
-            if(mapRes.get('AFP_DEP355')=='0.0000000'){
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 0) {
                 spNew.PurificationInfoOnTheInvoice__c = 'No - Esente';                
             }
-            if(mapRes.get('AFP_DEP355')=='1.0000000'){
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 1) {
                 spNew.PurificationInfoOnTheInvoice__c = 'Si - Paga';                
             }
-            if(mapRes.get('AFP_DEP355')=='2.0000000'){
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 2) {
                 spNew.PurificationInfoOnTheInvoice__c = 'Si - Ridotta';                
             }
         }

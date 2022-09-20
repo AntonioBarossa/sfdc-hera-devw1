@@ -4,6 +4,17 @@
     <active>true</active>
     <label>HDT_RT_SubentroAmbiente</label>
     <picklistValues>
+        <picklist>RequestSource__c</picklist>
+        <values>
+            <fullName>Da contribuente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D'ufficio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>AccountholderTypeBeneficiary__c</picklist>
         <values>
             <fullName>Beneficiario Alternativo</fullName>
@@ -2563,6 +2574,10 @@
 			<fullName>Annullato</fullName>
 			<default>false</default>
 		</values>
+        <values>
+			<fullName>In attesa validazione</fullName>
+			<default>false</default>
+		</values>
 		<values>
 			<fullName>Annullato per decorrenza dei termini</fullName>
 			<default>false</default>
@@ -2571,6 +2586,10 @@
 			<fullName>Bozza</fullName>
 			<default>false</default>
 		</values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
 		<values>
 			<fullName>Completata</fullName>
 			<default>false</default>
@@ -2866,17 +2885,6 @@
         </values>
         <values>
             <fullName>Trifase</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>RequestSource__c</picklist>
-        <values>
-            <fullName>D%E2%80%99ufficio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Da contribuente</fullName>
             <default>false</default>
         </values>
     </picklistValues>

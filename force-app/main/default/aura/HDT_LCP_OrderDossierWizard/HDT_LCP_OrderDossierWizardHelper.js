@@ -1,9 +1,10 @@
 ({
     helperInit : function(component,event,helper,saleId,accountId) {
-
-        if(saleId){
+        if(saleId){         
+            var macroProcessType = component.get("v.macroProcessType");
             console.log('saleId - helperInit '+saleId);
-            helper.executeInitAction(component, "c.controllerInit", {"saleId" : saleId}, saleId);
+            console.log('macroProcessType - helperInit ' + macroProcessType);
+            helper.executeInitAction(component, "c.controllerInit", {"saleId" : saleId, "macroProcessType": macroProcessType}, saleId);
         }else{
             var orderId;
             if (component.get('v.isCommunity')){

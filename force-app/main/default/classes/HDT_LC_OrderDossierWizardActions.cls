@@ -22,16 +22,32 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     public static void save(Order orderParent){ 
 
         updateCommodityWithConsumptionAnalisi(orderParent.Id);
-
+        Order orderParentRetreived = [SELECT Id, Phase__c, ContractSigned__c, SignMode__c, SignatureMethod__c,WasteCommodityType__c,RequestSource__c,DeliveredDocumentation__c FROM Order WHERE Id = :orderParent.Id WITH SECURITY_ENFORCED];
+        String wasteCommodityType = orderParentRetreived.WasteCommodityType__c;
+        String recordId = orderParent.Id;
+        System.debug(orderParent);
         /**@frpanico 2022-04-29
          * Aggiunta gestione del contratto gia firmato
          */
-        if(orderParent.SignatureMethod__c.equalsIgnoreCase('Contratto già firmato'))
+        if(orderParentRetreived.SignatureMethod__c != null && orderParentRetreived.SignatureMethod__c.equalsIgnoreCase('Contratto già firmato'))
         {
             Order parentOrderToUpdate = new Order();
             parentOrderToUpdate.Id = orderParent.Id;
             parentOrderToUpdate.Phase__c = 'Documentazione Gestita';
             parentOrderToUpdate.Status = 'Completed';
+            HDT_UTL_DatabaseService.updateSObject(parentOrderToUpdate);
+            return;
+        }
+        //if(rtName.equalsIgnoreCase('HDT_RT_SubentroAmbiente') ||  rtName.equalsIgnoreCase('HDT_RT_AttivazioneAmbiente') || rtName.equalsIgnoreCase('HDT_RT_CambioTariffa')){
+        if(wasteCommodityType != null && wasteCommodityType.equalsIgnoreCase('Ambiente')){
+            Order parentOrderToUpdate = new Order();
+            parentOrderToUpdate.Id = orderParent.Id;
+            if(orderParentRetreived.RequestSource__c.equalsIgnoreCase('D\'ufficio') || orderParentRetreived.DeliveredDocumentation__c.equalsIgnoreCase('Y')){
+                parentOrderToUpdate.Phase__c = 'Documentazione Gestita';
+                parentOrderToUpdate.Status = 'Completed';
+            }else{
+                parentOrderToUpdate.Phase__c = 'Documentazione da inviare';
+            }
             HDT_UTL_DatabaseService.updateSObject(parentOrderToUpdate);
             return;
         }
@@ -250,46 +266,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 );
             }
         }
-
-        //update CampaignMember Status From Stampa
-        /**@fvitiell 21/02/2022
-         * Implementato e commentato, utile laddove dovesse servire
-         * aggiornare alla pressione del tasto Stampa del Wizard
-         */
-        /*List<String> myCampaignListIds = new List<String>();
-        for (Order myChildOrder : childOrders){
-            Campaign myCampaign = new Campaign(
-                Id = myChildOrder.Campaign__c
-            );
-            myCampaignListIds.add(myChildOrder.Campaign__c);
-        }
-        List<CampaignMember> myCampaignMemberList = [Select id, Campaign.PositiveOutcomeDefaultStatus__c from CampaignMember where CampaignId IN :myCampaignListIds WITH SECURITY_ENFORCED];
-        for(myCampaignMember : myCampaignMemberList){
-            String status = myCampaignMember.Campaign.PositiveOutcomeDefaultStatus__c;
-            String CampaignMemberId = myCampaignMember.Id;
-            HDT_LC_CampaignsController.updateCampaignMemberStatusFromStampa(CampaignMemberId, status);
-        }*/
-    
         ordersToUpdate.add(orderToUpdate);
-
-        //update child orders
-        /**@frpanico 04/02/2022
-         * Commentato in quanto la conferma cliente va successivamente
-         * Alla validazione documenti
-         */
-        /*
-        for (Order childOrder : childOrders) {
-            if (childOrder.ComfortCallDaysDue__c != null) {
-                ordersToUpdate.add(new Order(
-                    Id = childOrder.Id,
-                    Phase__c = 'In attesa conferma cliente'
-                ));
-            }
-        }
-        */
-
-
-
         orderSrv.updateRecords(ordersToUpdate);
 
     }

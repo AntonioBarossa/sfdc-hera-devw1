@@ -97,10 +97,10 @@
             <fullName>02- Pubblica utilità</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Rilevanza continuità serv%2E GAS</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Sempre ap%2E - Elettromedicale</fullName>
             <default>false</default>

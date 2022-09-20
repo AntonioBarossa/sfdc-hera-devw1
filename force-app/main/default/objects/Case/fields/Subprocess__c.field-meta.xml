@@ -99,11 +99,6 @@
                 <label>Dati catastali</label>
             </value>
             <value>
-                <fullName>DGRER569/19 non Allacciato / Uso Irriguo</fullName>
-                <default>false</default>
-                <label>DGRER569/19 non Allacciato / Uso Irriguo</label>
-            </value>
-            <value>
                 <fullName>DOM_Coabitazioni</fullName>
                 <default>false</default>
                 <label>DOM_Coabitazioni</label>
@@ -117,11 +112,6 @@
                 <fullName>DOM_Componenti residenti</fullName>
                 <default>false</default>
                 <label>DOM_Componenti residenti</label>
-            </value>
-            <value>
-                <fullName>Domestico Residente</fullName>
-                <default>false</default>
-                <label>Domestico Residente</label>
             </value>
             <value>
                 <fullName>Domiciliato in nucleo residente</fullName>
@@ -179,6 +169,11 @@
                 <label>IVA - Revoca Esenzione</label>
             </value>
             <value>
+                <fullName>Lettura su Contratto Aperto</fullName>
+                <default>false</default>
+                <label>Lettura su Contratto Aperto</label>
+            </value>
+            <value>
                 <fullName>Modifica Dati di Contatto</fullName>
                 <default>false</default>
                 <label>Modifica Dati di Contatto</label>
@@ -199,11 +194,6 @@
                 <label>Modifica Dati Fiscali</label>
             </value>
             <value>
-                <fullName>Modifica Fognatura e Depurazione</fullName>
-                <default>false</default>
-                <label>Modifica Fognatura e Depurazione</label>
-            </value>
-            <value>
                 <fullName>Mortis Causa</fullName>
                 <default>false</default>
                 <label>Mortis Causa</label>
@@ -217,46 +207,6 @@
                 <fullName>Nuovo Allaccio</fullName>
                 <default>false</default>
                 <label>Nuovo Allaccio</label>
-            </value>
-            <value>
-                <fullName>Verifica interna inversione contatore</fullName>
-                <default>false</default>
-                <label>Verifica interna inversione contatore</label>
-            </value>
-            <value>
-                <fullName>Verifica interna apertura contatore chiuso</fullName>
-                <default>false</default>
-                <label>Verifica interna apertura contatore chiuso</label>
-            </value>
-            <value>
-                <fullName>Verifica interna SISMA chiusura contatore</fullName>
-                <default>false</default>
-                <label>Verifica interna SISMA chiusura contatore</label>
-            </value>
-            <value>
-                <fullName>Sostituzione Contatore per Incuria</fullName>
-                <default>false</default>
-                <label>Sostituzione Contatore per Incuria</label>
-            </value>
-            <value>
-                <fullName>Lettura su Contratto Aperto</fullName>
-                <default>false</default>
-                <label>Lettura su Contratto Aperto</label>
-            </value>
-            <value>
-                <fullName>Verifica interna lettura a carico HERA</fullName>
-                <default>false</default>
-                <label>Verifica interna lettura a carico HERA</label>
-            </value>
-            <value>
-                <fullName>Verifica interna sul posto gratuita</fullName>
-                <default>false</default>
-                <label>Verifica interna sul posto gratuita</label>
-            </value>
-            <value>
-                <fullName>Verifica interna consumo abusivo</fullName>
-                <default>false</default>
-                <label>Verifica interna consumo abusivo</label>
             </value>
             <value>
                 <fullName>Ordinaria</fullName>
@@ -282,11 +232,6 @@
                 <fullName>Processo M03</fullName>
                 <default>false</default>
                 <label>Processo M03</label>
-            </value>
-            <value>
-                <fullName>Promiscuo</fullName>
-                <default>false</default>
-                <label>Promiscuo</label>
             </value>
             <value>
                 <fullName>Recupero</fullName>
@@ -324,6 +269,11 @@
                 <label>Soppressione Attacco</label>
             </value>
             <value>
+                <fullName>Sostituzione Contatore per Incuria</fullName>
+                <default>false</default>
+                <label>Sostituzione Contatore per Incuria</label>
+            </value>
+            <value>
                 <fullName>Spostamento Impianto</fullName>
                 <default>false</default>
                 <label>Spostamento Impianto</label>
@@ -343,39 +293,37 @@
                 <default>false</default>
                 <label>Variazione Portata</label>
             </value>
+            <value>
+                <fullName>Verifica interna apertura contatore chiuso</fullName>
+                <default>false</default>
+                <label>Verifica interna apertura contatore chiuso</label>
+            </value>
+            <value>
+                <fullName>Verifica interna consumo abusivo</fullName>
+                <default>false</default>
+                <label>Verifica interna consumo abusivo</label>
+            </value>
+            <value>
+                <fullName>Verifica interna inversione contatore</fullName>
+                <default>false</default>
+                <label>Verifica interna inversione contatore</label>
+            </value>
+            <value>
+                <fullName>Verifica interna lettura a carico HERA</fullName>
+                <default>false</default>
+                <label>Verifica interna lettura a carico HERA</label>
+            </value>
+            <value>
+                <fullName>Verifica interna SISMA chiusura contatore</fullName>
+                <default>false</default>
+                <label>Verifica interna SISMA chiusura contatore</label>
+            </value>
+            <value>
+                <fullName>Verifica interna sul posto gratuita</fullName>
+                <default>false</default>
+                <label>Verifica interna sul posto gratuita</label>
+            </value>
         </valueSetDefinition>
-        <valueSettings>
-            <controllingFieldValue>Interventi con Verifica</controllingFieldValue>
-            <valueName>Sostituzione Contatore per Incuria</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Interventi con Verifica</controllingFieldValue>
-            <valueName>Lettura su Contratto Aperto</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifica Interna</controllingFieldValue>
-            <valueName>Verifica interna inversione contatore</valueName>
-        </valueSettings>
-		<valueSettings>
-            <controllingFieldValue>Verifica Interna</controllingFieldValue>
-            <valueName>Verifica interna apertura contatore chiuso</valueName>
-        </valueSettings>
-		<valueSettings>
-            <controllingFieldValue>Verifica Interna</controllingFieldValue>
-            <valueName>Verifica interna lettura a carico HERA</valueName>
-        </valueSettings>
-		<valueSettings>
-            <controllingFieldValue>Verifica Interna</controllingFieldValue>
-            <valueName>Verifica interna sul posto gratuita</valueName>
-        </valueSettings>
-		<valueSettings>
-            <controllingFieldValue>Verifica Interna</controllingFieldValue>
-            <valueName>Verifica interna consumo abusivo</valueName>
-        </valueSettings>
-		<valueSettings>
-            <controllingFieldValue>Verifica Interna</controllingFieldValue>
-            <valueName>Verifica interna SISMA chiusura contatore</valueName>
-        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
             <valueName>In Continuità</valueName>
@@ -502,6 +450,30 @@
             <valueName>Rid. Agev. Dopo Accertamento</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna apertura contatore chiuso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna consumo abusivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna inversione contatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna lettura a carico HERA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna SISMA chiusura contatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna sul posto gratuita</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Istruttoria</controllingFieldValue>
             <valueName>Antincendio</valueName>
         </valueSettings>
@@ -522,20 +494,12 @@
             <valueName>Parere Preventivo</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
-            <valueName>DGRER569/19 non Allacciato / Uso Irriguo</valueName>
+            <controllingFieldValue>Interventi con Verifica</controllingFieldValue>
+            <valueName>Lettura su Contratto Aperto</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
-            <valueName>Modifica Fognatura e Depurazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Modifica Unita Immobiliari Componenti</controllingFieldValue>
-            <valueName>Domestico Residente</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Modifica Unita Immobiliari Componenti</controllingFieldValue>
-            <valueName>Promiscuo</valueName>
+            <controllingFieldValue>Interventi con Verifica</controllingFieldValue>
+            <valueName>Sostituzione Contatore per Incuria</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>

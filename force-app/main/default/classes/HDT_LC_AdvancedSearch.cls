@@ -311,8 +311,8 @@ public with sharing class HDT_LC_AdvancedSearch {
 	 * Retrieve data from ServicePoint Object By ServiceCode
 	 */
 	@AuraEnabled(cacheable = true)
-	public static List<Map<String, Object>> getServicePoints(String parameter,
-															 String queryType,String additionalFilter,Boolean isSuperUser) {
+	public static List<Map<String, Object>> getServicePoints(String parameter,String queryType,String additionalFilter,
+	                                                                          Boolean isSuperUser, List<String> datiCatastali) {
 		Set<ServicePoint__c> servicePoints = new Set<ServicePoint__c>();
 		HDT_QR_Contract contractQr= new HDT_QR_Contract();
 		system.debug('queryType' + queryType);
@@ -375,6 +375,11 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 			}
 
+			when 'datiCatastali' {
+				servicePoints.addAll(servicePointQr.getServicePointsByDatiCatastali(datiCatastali, customSetting.OutputServicePoint__c));
+
+			}
+
 		}
 		checkTheNumberOfRecords(servicePoints.size());
 		String[] customSettingFields = customSetting.OutputServicePoint__c.split(',');
@@ -430,6 +435,12 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 
 		return output;
+	}
+
+	@AuraEnabled(cacheable = true)
+	public static List<Map<String, Object>> getServicePoints(String parameter,String queryType,
+																			  String additionalFilter,Boolean isSuperUser) {
+		return getServicePoints(parameter,queryType,additionalFilter,isSuperUser, new List<String>());
 	}
 
 	@AuraEnabled(cacheable = true)
@@ -591,11 +602,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 
         List<Map<String,String>> customSp = new List<Map<String,String>>();
 		for (ServicePoint__c sp : servicePoints) {
-            Map<String,String> row = new Map<String, String>();
-			if(sp.Id != null)
-			{
-				row.put('ServicePointId', sp.Id);
-			}
+            Map<String,String> row = new Map<String, String>();	
 			for(String field : listField){
 				String value = '';
 				String label = '';
@@ -605,14 +612,13 @@ public with sharing class HDT_LC_AdvancedSearch {
 					if(sp.getSObject(s[0]+'__r')!=null){						
 						value = (String)sp.getSObject(s[0]+'__r').get(s[1]);
 						label = fieldMap.get(s[0]+'__c').getDescribe().getLabel();
-						row.put(label,value);
 					}
 				}
 				else{
 					value = (String)sp.get(field);
 					label = fieldMap.get(field).getDescribe().getLabel();
-					row.put(label,value);
 				}
+				row.put(label,value);
 			}
 			if(!c.isEmpty() ){
 				for(Contract con :c){
