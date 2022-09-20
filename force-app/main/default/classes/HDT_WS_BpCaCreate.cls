@@ -12,7 +12,7 @@ global inherited sharing class HDT_WS_BpCaCreate implements wrts_prcgvr.Interfac
     global Object execute(Object args)
     {
         Map<String,Object> argsMap = (Map<String, Object>) args;
-        //String method = (String) argsMap.get('method');
+        String method = (String) argsMap.get('method');
         SObject inputSobj = (SObject) argsMap.get('sender');
 
 
@@ -22,7 +22,14 @@ global inherited sharing class HDT_WS_BpCaCreate implements wrts_prcgvr.Interfac
 
         request.setHeader('Accept','application/json');
         request.setHeader('Content-Type','application/json');
-        request.setEndpoint('Callout:MulesoftBasePath/customer-data/billing-profile');
+        if(method.equalsIgnoreCase('mock'))
+        {
+            request.setEndpoint('https://demo4882803.mockable.io/createBpCa');
+        }
+        else
+        {
+            request.setEndpoint('Callout:MulesoftBasePath/customer-data/billing-profile');
+        }
         request.setMethod('POST');
         request.setBody(bpCaCreateSrv.generateRequest((Order)inputSobj));
         request.setTimeout(12000);
