@@ -238,7 +238,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 {
                     process.CasualCode__c = getTempNewActivationCode();
                 }
-                if(process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_SubentroAmbiente') && ord.ServicePoint__r.RateCategory__c.containsIgnoreCase('TATUDRES01') && ord.ServicePoint__r.RateCategory__c != ord.RateCategory__c )
+                if(process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_SubentroAmbiente') && ord.ServicePoint__r.RateCategory__c != null && ord.RateCategory__c != null && ord.ServicePoint__r.RateCategory__c.containsIgnoreCase('TATUDRES01') && ord.ServicePoint__r.RateCategory__c != ord.RateCategory__c )
                 {
                     process.CasualCode__c = 'RI6';
                 }
