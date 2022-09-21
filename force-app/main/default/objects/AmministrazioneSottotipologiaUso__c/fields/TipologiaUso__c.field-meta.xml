@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Tipologia_D_uso__c</fullName>
+    <fullName>TipologiaUso__c</fullName>
     <externalId>false</externalId>
-    <label>Tipologia D&apos;uso</label>
+    <label>Tipologia Uso</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>

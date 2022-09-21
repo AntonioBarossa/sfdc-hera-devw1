@@ -110,7 +110,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">ISTAT/Ronchi</value>
+        <value xsi:type="xsd:string">NON DOM_ISTAT/Ronchi</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>

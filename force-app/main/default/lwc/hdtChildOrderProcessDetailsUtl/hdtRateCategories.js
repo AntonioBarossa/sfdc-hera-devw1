@@ -24,6 +24,9 @@
     // AFSCDIRATTreq never required
     // AF_NODISALreq never required
     // AQCNSANNOFreq never required
+    export const DEP_CAUZ_ESCLreq = {};
+    export const AQCNSANNOFreq = {};
+    
     export const DEP_CAUZ_ESCL=  { evaluationType: 'required', rateCategories: ['AITBNDOME0','AITMNDOME0'] };
     export const ZGEWKEYreq =  { evaluationType: 'required', rateCategories: ['AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'] };
     // AQVOL_FORFreq never required
