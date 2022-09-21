@@ -180,10 +180,10 @@
             <fullName>Bolletta per e-mail</fullName>
             <default>false</default>
         </values>
-        <!--<values>
+        <values>
             <fullName>Bolletta per e-mail %2B Carta</fullName>
             <default>false</default>
-        </values>-->
+        </values>
         <values>
             <fullName>Cartaceo</fullName>
             <default>false</default>
@@ -10421,6 +10421,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>1100-ACQUA --- Non definito ---</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>1101-Domestico</fullName>
             <default>false</default>
         </values>
@@ -12668,6 +12672,10 @@
 		</values>
         <values>
             <fullName>Rimborso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimozione Agevolazione</fullName>
             <default>false</default>
         </values>
         <values>

@@ -207,25 +207,25 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             if(ord.Commodity__c == 'Ambiente' && process.Commodity__c == 'Ambiente'){
                 availableProcesses.add(process);
             }
-            else if(ord.Commodity__c == 'Acqua' && process.Commodity__c == 'Acqua')
+/*             else if(ord.Commodity__c == 'Acqua' && process.Commodity__c == 'Acqua')
             {
                 availableProcesses.add(process);
             }
             else if(process.Commodity__c == 'Acqua' || process.Commodity__c == 'Ambiente')
             {
                 continue;
-            }   
+            }      */       
             else if(ord.RateCategory__c == 'APSCARPRO0' && process.ProcessName__c == 'Voltura - Subentro Scarico produttivo')
             {
                 availableProcesses.add(process);
             }
             else if (
                 //process.meterStatus.contains(ord.ServicePoint__r.MeterStatus__c) && 
-                process.marketOrigin__c.contains(ord.MarketOrigin__c) // || process.marketOrigin__c.isEmpty())
+                ( process.marketOrigin__c != null && process.marketOrigin__c.contains(ord.MarketOrigin__c)) // || process.marketOrigin__c.isEmpty())
                 && (process.plugPresence__c == plugPresence || process.commodity__c.containsIgnoreCase('Gas') )//aggiustamento plug presence gas
                 && (process.isOwnAccount__c == isOwnAccount || process.isOwnAccount__c == null || (process.processName__c.containsIgnoreCase('Voltura Ele') && ord.ServicePoint__r.Account__c == null))
                 && process.isChangeUse__c == isChangeUse 
-                && process.ExistActivitySwitchRipristinatorio__c == isSwitchInRipr
+                && process.ExistActivitySwitchRipristinatorio__c == isSwitchInRipr 
                 && process.PowerChange__c == (isPowerChange && !process.processName__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))
                 && process.isSTG__c == ord.isSTG__c
                 && process.ContractStatus__c.containsIgnoreCase(status)
@@ -315,7 +315,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
 
         if (!activityList.isEmpty() 
             && !ord.SBQQ__Quote__r.AmendmentAllowed__c 
-            && !ord.SBQQ__Quote__r.AllowChangeUse__c 
+            && !ord.SBQQ__Quote__r.AllowChangeUse__c
             /*&& !isCambioOfferta(ord)*/) {
                 result = true;
         }
@@ -444,7 +444,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                     {
                         return 'MmsMisto';
                     }
-                }	
+                } 
             }
             List<ServicePoint__c> spList = srQr.getRecordByIdList(spListId,'id,CommoditySector__c,SupplyCity__c,distributor__r.code__c');
             Map<String,HDT_WRP_RemiUbd> mapRemiCode = new Map<String,HDT_WRP_RemiUbd>();

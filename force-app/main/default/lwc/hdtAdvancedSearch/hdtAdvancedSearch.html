@@ -79,14 +79,16 @@
                             </lightning-layout-item>
                             <lightning-layout-item padding="around-small" size="6">
                                     <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
-                                    <lightning-input
-                                            onkeyup={handleSearchInputKeyChange}
-                                            name="enter-search"
-                                            type="search"
-                                            label="Nuova Ricerca"
-                                            onchange={searchAction}
-                                            class="searchInput">
-                                    </lightning-input>
+                                    <div onclick={openModalDatiCatastali}>
+                                        <lightning-input
+                                                onkeyup={handleSearchInputKeyChange}
+                                                name="enter-search"
+                                                type="search"
+                                                label="Nuova Ricerca"
+                                                onchange={searchAction}
+                                                class="searchInput">
+                                        </lightning-input>
+                                    </div>
                             </lightning-layout-item>
                             <lightning-layout-item padding="around-medium" size="3">
                                 <lightning-button variant="brand" label="search" disabled={submitButtonStatus} onclick={submitSearch} title="Search action" icon-name="utility:search" class="slds-m-left_x-small modal-searchGo"></lightning-button>
@@ -134,4 +136,57 @@
             <div class="slds-backdrop slds-backdrop_open"></div>
         </div>
     </div>
+
+
+
+    <div if:true={openmodelDatiCatastali} style="height: auto;">
+        <div>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse modal-close-button"
+                                title="Close" onclick={closeModalDatiCatastali}>
+                            <lightning-icon icon-name="utility:close" size="medium"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate"></h2>
+                    </header>        
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                            INSERISCI I VALORI PER LA RICERCA
+                            <lightning-record-edit-form object-api-name="LandRegistry__c">
+                                <div class="slds-m-around_medium">            
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <lightning-input-field variant="label-stacked" value={registryCityValue} field-name="RegistryCity__c" onchange={handleRegistryCity} required="true" > </lightning-input-field>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <lightning-input-field variant="label-stacked" value={registryCityCodeValue} field-name="RegistryCityCode__c" onchange={handleRegistryCityCode} required="true"> </lightning-input-field>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <lightning-input-field variant="label-stacked" value={urbanSectionValue} field-name="UrbanSection__c" onchange={handleUrbanSection}> </lightning-input-field>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <lightning-input-field variant="label-stacked" value={sheetValue} field-name="Sheet__c" onchange={handleSheet}></lightning-input-field>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <lightning-input-field variant="label-stacked" value={particleSheetValue} field-name="ParticleSheet__c" onchange={handleParticleSheet}> </lightning-input-field>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <lightning-input-field variant="label-stacked" value={subalternValue} field-name="Subaltern__c" onchange={handleSubaltern}> </lightning-input-field>
+                                        </div>
+                                    </div>
+                                    <div class="slds-m-top_medium">
+                                        <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right" 
+                                            variant="brand" name="save" label="Conferma" onclick={addValuesToDatiCatastaliList}>
+                                        </lightning-button>
+                                    </div>
+                                </div>
+                            </lightning-record-edit-form>
+                    </div>                                   
+                </div>
+            </section>
+        </div>
+    </div>
+
 </template>

@@ -469,6 +469,11 @@
                 <label>In attesa validazione</label>
             </value>
             <value>
+                <fullName>In attesa Verifica</fullName>
+                <default>false</default>
+                <label>In attesa Verifica</label>
+            </value>
+            <value>
                 <fullName>In Corso caricamento Siebel</fullName>
                 <default>false</default>
                 <label>In Corso caricamento Siebel</label>

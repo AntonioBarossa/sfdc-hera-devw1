@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.ApexSOQLInjection, PMD.ApexCRUDViolation, PMD.AvoidDebugStatements')
 public with sharing class HDT_SRV_SelfReadings {
 
     public static void handleInvioLettureForzato(SObject selfReadingCase) {
@@ -255,7 +256,10 @@ public with sharing class HDT_SRV_SelfReadings {
         String caseId = sapIntegration.recordId;
         HDT_WRP_SelfReadingResponse retWrap = new HDT_WRP_SelfReadingResponse();
         retWrap.isResponseOk = true;
-
+        HDT_QR_Case queryCase = new HDT_QR_Case();
+        List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description,CommodityFormula__c');
+        Boolean enableTurbobilling = String.isNotBlank(System.Label.TRB_Enable) && 'Y'.equalsIgnoreCase(System.Label.TRB_Enable)?true:false;
+        Boolean isEnergy = !cases.isEmpty() && ('Gas'.equalsIgnoreCase(cases[0].CommodityFormula__c) || 'Energia Elettrica'.equalsIgnoreCase(cases[0].CommodityFormula__c))? true:false;
         Case readingCaseToUpdate = new Case();
         readingCaseToUpdate.Id = caseId;
         Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
@@ -272,9 +276,14 @@ public with sharing class HDT_SRV_SelfReadings {
             }else{
                 errorMessage = (String)dataBody.get('message');
             }
-            readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari KO';
-            HDT_QR_Case queryCase = new HDT_QR_Case();
-            List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description');
+            if(enableTurbobilling && isEnergy){
+                readingCaseToUpdate.TecnicalPhase__c = 'Esito KO da SAP';
+            }else{
+                readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari KO';
+            }
+            
+            
+            
             if(!cases.isEmpty()) {
                 Case currentReadingCase = cases[0];
                 String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
@@ -282,7 +291,11 @@ public with sharing class HDT_SRV_SelfReadings {
                 readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
                 HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
-                    HDT_UTL_Case.createActivity(caseId, errorMessage, 'CBS_AUT001__CHECK_PRELIMINARI_KO', 'Check preliminari KO');
+                    if(enableTurbobilling && isEnergy){
+                        HDT_UTL_Case.createActivity(caseId, errorMessage, 'CBS_AUT002__ESITO_KO_DA_SAP', 'Esito KO da SAP');
+                    }else {
+                        HDT_UTL_Case.createActivity(caseId, errorMessage, 'CBS_AUT001__CHECK_PRELIMINARI_KO', 'Check preliminari KO');
+                    }
                 }
                 HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 if (isClosingError(errorMessage, currentReadingCase.Origin)) {
@@ -304,14 +317,20 @@ public with sharing class HDT_SRV_SelfReadings {
                 
             }
         } else {
-            // L'aggiornamento a Check preliminari OK non possiamo farlo adesso, poichè va fatta prima la seconda callout per l'invio letture a SAP.
-            //readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari OK';
-            // Salviamo nel wrp object il messaggio che in seguito dovremo scrivere sul campo Description del Case.
-            Map<String, Object> data = (Map<String, Object>) body.get('data');
-            String message = (String) data.get('message');
-            if (message == 'data fuori finestra acquisibile') {
-                retWrap.checkAutoletturaDescription = message;
+            if(enableTurbobilling && isEnergy){
+                readingCaseToUpdate.TecnicalPhase__c = 'Esito KO da SAP';
+                HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+            }else{
+                // L'aggiornamento a Check preliminari OK non possiamo farlo adesso, poichè va fatta prima la seconda callout per l'invio letture a SAP.
+                //readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari OK';
+                // Salviamo nel wrp object il messaggio che in seguito dovremo scrivere sul campo Description del Case.
+                Map<String, Object> data = (Map<String, Object>) body.get('data');
+                String message = (String) data.get('message');
+                if (message == 'data fuori finestra acquisibile') {
+                    retWrap.checkAutoletturaDescription = message;
+                }
             }
+            
         }
 
         //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
@@ -459,4 +478,41 @@ public with sharing class HDT_SRV_SelfReadings {
         return closeCase;
     }
 
+    @InvocableMethod(label = 'Clona Readings da Padre')
+    public static void cloneReadingFromParentCase (List<HDT_UTL_FlowFatturazioneInputs> inputs){
+
+        Case parentCase = inputs[0].parentCase;
+        Case childCase = inputs[0].childCase;
+        
+        try {
+            
+            SObjectType readingType = Schema.getGlobalDescribe().get('Reading__c');
+            List<String> fieldLst = new List<String>();
+            for(Schema.SObjectField fld: readingType.getDescribe().fields.getMap().values()){
+                fieldLst.add(fld.getDescribe().getName());
+            }
+
+            Reading__c parentReading = Database.query('SELECT ' + String.join(fieldLst,',') + ' FROM Reading__c WHERE CaseAcqua__c = \'' + parentCase.Id + '\' OR CaseEle__c = \'' + parentCase.Id + '\' OR CaseGas__c = \'' + parentCase.Id + '\' LIMIT 1');
+            Reading__c childReading = parentReading.clone(false, true, false, false);
+
+            if('Acqua'.equals(childCase.CommodityFormula__c)){
+                childReading.CaseAcqua__c = childCase.Id;
+            } else if('Energia Elettrica'.equals(childCase.CommodityFormula__c)){
+                childReading.CaseEle__c = childCase.Id;
+            }else if('Gas'.equals(childCase.CommodityFormula__c)){
+                childReading.CaseGas__c = childCase.Id;
+            }
+            insert childReading;
+            
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG,'Eccezione: '+e.getMessage());
+        }
+    }
+
+    public class HDT_UTL_FlowFatturazioneInputs {
+        @InvocableVariable
+        public Case parentCase;
+        @InvocableVariable
+        public Case childCase;
+    }
 }

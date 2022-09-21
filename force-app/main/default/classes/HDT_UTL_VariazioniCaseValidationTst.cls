@@ -21,9 +21,9 @@ public with sharing class HDT_UTL_VariazioniCaseValidationTst {
         myCaseModUnitImm.ResidentMembers__c = 0;
         insert myCaseModUnitImm;
 
-        Subtypology_Of_Use_Table__c newTypology = new Subtypology_Of_Use_Table__c();
-        newTypology.Tipologia_D_uso__c = 'Uso domestico';
-        newTypology.Data_Fine_Validita__c = Date.today().addDays(10);
+        AmministrazioneSottotipologiaUso__c newTypology = new AmministrazioneSottotipologiaUso__c();
+        newTypology.TipologiaUso__c = 'Uso domestico';
+        newTypology.DataFineValidita__c = Date.today().addDays(10);
         insert newTypology;
 
     }

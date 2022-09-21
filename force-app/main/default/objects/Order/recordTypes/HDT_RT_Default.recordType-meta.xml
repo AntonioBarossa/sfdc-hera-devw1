@@ -6,6 +6,17 @@
     <description>Record Tyope di defulat ordini Figli, utilizzato prima della selezione del processo</description>
     <label>Default</label>
     <picklistValues>
+        <picklist>RequestSource__c</picklist>
+        <values>
+            <fullName>Da contribuente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D'ufficio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>AccountholderTypeBeneficiary__c</picklist>
         <values>
             <fullName>Beneficiario Alternativo</fullName>
@@ -2285,6 +2296,17 @@
         </values>
         <values>
             <fullName>Voltura con Switch</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>QualityCallStatus__c</picklist>
+        <values>
+            <fullName>Attività Gestita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scadenza Gestita</fullName>
             <default>false</default>
         </values>
     </picklistValues>

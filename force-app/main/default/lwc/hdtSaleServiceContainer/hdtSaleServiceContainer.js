@@ -81,6 +81,17 @@ export default class hdtSaleServiceContainer extends LightningElement {
 
             this.refreshTileData();
             this.dispatchEvent(new CustomEvent('newtile'));
+            
+            console.log('isMeterRelation ---> '+ data.isMeterRelation);
+            if( data.isMeterRelation ){
+                const toastWarning = new ShowToastEvent({
+                    title: 'Warning',
+                    message: 'Relazione Contatore non nullo!',
+                    variant: 'warning'
+                });
+                this.dispatchEvent(toastWarning);
+            }
+
             if(data.isTransition && data.message === false){
                 const toastWarning = new ShowToastEvent({
                     title: 'Warning',
