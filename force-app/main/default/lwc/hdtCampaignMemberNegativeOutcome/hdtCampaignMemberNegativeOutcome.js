@@ -26,7 +26,14 @@ export default class HdtCampaignMemberNegativeOutcome extends LightningElement {
         getchannel({'campaignMemberId': this.campaignMemberId}).then(channel=>{
             if(channel=='Door to Door'){
                 this.options=[
-                    { value: 'Cliente rifiuta la vendita', label: 'Cliente rifiuta la vendita' }
+                    { value: 'Cliente rifiuta la vendita', label: 'Cliente rifiuta la vendita' },
+                    { value: 'Black List', label: 'Black List' },
+                    { value: 'Cliente non coperto rete gas', label: 'Cliente non coperto rete gas' },
+                    { value: 'Da poco con altro Gestore', label: 'Da poco con altro Gestore' },
+                    { value: 'Fuori Target', label: 'Fuori Target' },
+                    { value: 'Già Cliente', label: 'Già Cliente' },
+                    { value: 'Non interessato all offerta', label: 'Non interessato all offerta' },
+                    { value: 'Script completato', label: 'Script completato' }
                 ];
             }
             this.isModalOpen = true;
