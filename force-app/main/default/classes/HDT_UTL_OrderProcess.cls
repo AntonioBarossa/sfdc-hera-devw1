@@ -823,7 +823,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     || newOrder.Phase__c=='Preventivo Accettato' 
                     || newOrder.Phase__c=='Comunicazione Motore VAS' 
                     || newOrder.Phase__c=='Documentazione da firmare'
-                    || newOrder.Phase__c=='Ammissibilità OK')){
+                    || newOrder.Phase__c=='Ammissibilità OK'
+                    || newOrder.Phase__c=='Creazione BP-CA')){
                     newOrder.Phase__c = newOrder.TecnicalPhase__c;
                     newOrder.TecnicalPhase__c = null;
                 }
