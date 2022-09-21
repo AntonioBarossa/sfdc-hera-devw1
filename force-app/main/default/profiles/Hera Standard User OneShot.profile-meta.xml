@@ -11047,6 +11047,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>HDT_ButtonDetails__mdt.HideForExtObj__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>HDT_CalcoloPreventivi__mdt.ComparePowReq__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -26842,6 +26847,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Service26Config__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.AgriculturalHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.CommercialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.IndustrialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.SupplySubtype__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
