@@ -18,14 +18,14 @@
 			<div class="slds-col slds-size_1-of-3">
 				<span>
                     <div class="slds-m-around_medium">
-                        <lightning-input type="text" label="Mittente"></lightning-input>
+                        <lightning-input type="text" label="Mittente" disabled value={mailSender}></lightning-input>
                     </div>
 				</span>
 			</div>
             <div class="slds-col slds-size_1-of-3">
 				<span>
                     <div class="slds-m-around_medium">
-                        <lightning-input type="text" label="Destinatario"></lightning-input>
+                        <lightning-input type="text" label="Destinatario" value={mailReceiver} ></lightning-input>
                     </div>
 				</span>
 			</div>
@@ -44,6 +44,7 @@
         <p slot="footer">
             <lightning-button
                 variant="brand"
+                name="sendComunication"
                 label="Invia comunicazione"
                 title="sendMail"
                 onclick={handleClick}
