@@ -169,7 +169,7 @@ public with sharing class HDT_LC_AttachmentManager {
                                   AND ProcessType__c =: paramsWrap.processType
                                   AND (SubProcessType__c =: paramsWrap.subProcessType OR SubProcessType__c = null)
                                   AND ProductCode__c =: paramsWrap.productCode
-                                  AND Commodity__c =: paramsWrap.commodity
+                                  AND ServiceProduct__c =: paramsWrap.commodity
                                   WITH SECURITY_ENFORCED
                                   ORDER BY City__c, SubProcessType__c DESC NULLS LAST
                                  ]; 
