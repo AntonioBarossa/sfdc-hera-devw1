@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>CausalCode__c</field>
-        <value xsi:type="xsd:string">SM2</value>
+        <value xsi:type="xsd:string">SM9</value>
     </values>
     <values>
         <field>Cluster__c</field>
