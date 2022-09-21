@@ -631,9 +631,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
             obj.header.ore = String.valueOf(techOff.Hours__c);
             obj.header.percentuale = String.valueOf(techOff.Discount__c);
-            obj.header.parametroP0 = String.valueOf(techOff.P0__c);
-            obj.header.parametroK = String.valueOf(techOff.K__c);
-            obj.header.parametroI0 = String.valueOf(techOff.I0__c);
+            obj.header.parametroP0 = formatCurrency(String.valueOf(techOff.P0__c));
+            obj.header.parametroK = formatCurrency(String.valueOf(techOff.K__c));
+            obj.header.parametroI0 = formatCurrency(String.valueOf(techOff.I0__c));
             obj.header.parametroL = String.valueOf(techOff.Lambda__c);
             obj.header.identificativoProdotto = String.valueOf(techOff.ProductIdentifier__c);
 
@@ -675,6 +675,13 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         }
 
         return obj;
+    }
+
+    public static String formatCurrency(String curr){
+        if(String.isNotEmpty(curr) && curr.equalsIgnoreCase('0E-7')){
+            curr = '0';
+        }
+        return curr;
     }
 
     public static Boolean updateProductAfterSap(String technicalOfferId, String responseMessage, String responseSapCode, String status){
