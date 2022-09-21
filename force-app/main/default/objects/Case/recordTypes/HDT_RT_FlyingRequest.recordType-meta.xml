@@ -5,6 +5,7 @@
     <businessProcess>SupportProcessDefault</businessProcess>
     <description>Indica i case delle pratiche in volo</description>
     <label>Pratica in volo</label>
+
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
@@ -10401,7 +10402,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>1006-Risc%2E centraliz promiscuo</fullName>
+            <fullName>1006-Risc. centraliz promiscuo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10409,11 +10410,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>1008-Promiscuo %28prod%2B risc%29</fullName>
+            <fullName>1008-Promiscuo (prod+ risc)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1009-Reti %28cabine primo salto%29</fullName>
+            <fullName>1009-Reti (cabine primo salto)</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10437,7 +10438,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>1104-Scar%2E poz priv%2E civ%2E cont</fullName>
+            <fullName>1104-Scar. poz priv. civ. cont</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10537,7 +10538,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>13CT-Forn temporanee %3C 21 gg</fullName>
+            <fullName>13CT-Forn temporanee < 21 gg/fullName>
             <default>false</default>
         </values>
         <values>
@@ -10609,7 +10610,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>EIMP_L01-Illuminaz%2E Pubb%2E</fullName>
+            <fullName>EIMP_L01-Illuminaz. Pubb.</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10621,11 +10622,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>G_ICC-Imp%2E Usi Civili Commerci</fullName>
+            <fullName>G_ICC-Imp. Usi Civili Commerci</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>G_ICC-Imposta Usi Non Dom%2E</fullName>
+            <fullName>G_ICC-Imposta Usi Non Dom.</fullName>
             <default>false</default>
         </values>
         <values>
