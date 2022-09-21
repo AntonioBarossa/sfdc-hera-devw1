@@ -51,7 +51,6 @@ public with sharing class HDT_UTL_BpCaCreate
         {
             orderToUpdate.CustomerCode__c = response.data.codiceBP;
             orderToUpdate.ContractAccountCode__c = response.data.codiceBPAlternativo;
-            orderToUpdate.Phase__c = inputOrder.ProcessType__c.equalsIgnoreCase('Voltura') ? 'Documentazione Validata' : 'Comunicazione verso Heroku';
             Account accountToUpdate = new Account(Id = inputOrder.AccountId, CustomerCode__c = response.data.codiceBP);
             BillingProfile__c billingProfileToUpdate = new BillingProfile__c(Id = inputOrder.BillingProfile__c, ContractAccountCode__c = response.data.codiceBPAlternativo);
             result.add(accountToUpdate);
@@ -61,7 +60,6 @@ public with sharing class HDT_UTL_BpCaCreate
         else
         {
             orderToUpdate.ContractAccountCode__c = response.data.codiceBP;
-            orderToUpdate.Phase__c = inputOrder.ProcessType__c.equalsIgnoreCase('Voltura') ? 'Documentazione Validata' : 'Comunicazione verso Heroku';
             BillingProfile__c billingProfileToUpdate = new BillingProfile__c(Id = inputOrder.BillingProfile__c, ContractAccountCode__c = response.data.codiceBP);
             result.add(billingProfileToUpdate);
             result.add(orderToUpdate);
