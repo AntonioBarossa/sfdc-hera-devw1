@@ -8732,43 +8732,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>13A0-Usi di Abitazione BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13BB-Illuminazione pubblica BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13CB-Non domestici in BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13CT-Forn temporanee %3C 21 gg</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13DM-Illuminazione pubblica MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13EM-Non domestici MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13FM-Non domestici AT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
+            <fullName>1100-ACQUA --- Non definito ---</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8840,11 +8804,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>1118-Scar ind no cont%2E ACQ%2BPOZ</fullName>
+            <fullName>1118-Scar ind no cont. ACQ+POZ</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1119-Scar. ind.le  cont. div</fullName>
+            <fullName>1119-Scar. ind.le cont. div</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8861,6 +8825,98 @@
         </values>
         <values>
             <fullName>1123-Prel. pozzo priv. no fatt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1201-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1202-Non domestico</fullName>
+            <default>false</default>
+        </values>    
+        <values>
+            <fullName>13A0-Usi di Abitazione BT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13BB-Illuminazione pubblica BT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13CB-Non domestici in BT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13CT-Forn temporanee %3C 21 gg</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13DM-Illuminazione pubblica MT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13EM-Non domestici MT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13FM-Non domestici AT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13X0-Usi interni BT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13Y0-Usi interni MT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13Z0-Grossisti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1401-Risc amb singoli</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1402-Risc AcquaIS - Raffr Sing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1403-Risc Amb centr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1404-Attivita produttive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1405-Risc AcquaIS-Raffr Centr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1406-Acqua calda Sing unità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1407-Acqua calda Centr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1408-Ospedalieri</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1409-Usi interni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1410-Solo Raffrescamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1411-Piscine e Palestre</fullName>
             <default>false</default>
         </values>
     </picklistValues>
