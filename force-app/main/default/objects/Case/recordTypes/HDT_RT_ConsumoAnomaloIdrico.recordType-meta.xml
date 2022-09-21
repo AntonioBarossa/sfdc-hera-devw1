@@ -4,7 +4,6 @@
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
     <label>Consumo Anomalo Idrico</label>
-
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
@@ -10745,7 +10744,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>1002-Cottura/Produz acq calda</fullName>
+            <fullName>1002-Cottura%2FProduz acq calda</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10757,11 +10756,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>1005-Risc. centraliz esclusivo</fullName>
+            <fullName>1005-Risc%2E centraliz esclusivo</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1006-Risc. centraliz promiscuo</fullName>
+            <fullName>1006-Risc%2E centraliz promiscuo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10769,11 +10768,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>1008-Promiscuo (prod+ risc)</fullName>
+            <fullName>1008-Promiscuo %28prod%2B risc%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1009-Reti (cabine primo salto)</fullName>
+            <fullName>1009-Reti %28cabine primo salto%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10797,7 +10796,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>1104-Scar. poz priv. civ. cont</fullName>
+            <fullName>1104-Scar%2E poz priv%2E civ%2E cont</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10841,39 +10840,39 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>1115-Scar poz priv.civ no cont</fullName>
+            <fullName>1115-Scar poz priv%2Eciv no cont</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1116-Scar. acq reflue uso ind</fullName>
+            <fullName>1116-Scar%2E acq reflue uso ind</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1117-Autobotte (solo usi Hera)</fullName>
+            <fullName>1117-Autobotte %28solo usi Hera%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1118-Scar ind no cont. ACQ+POZ</fullName>
+            <fullName>1118-Scar ind no cont%2E ACQ%2BPOZ</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1119-Scar. ind.le cont. div</fullName>
+            <fullName>1119-Scar%2E ind%2Ele  cont%2E div</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1120-Scar. ind.le no cont. div</fullName>
+            <fullName>1120-Scar%2E ind%2Ele no cont%2E div</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1121-Scar.pozzo priv. ind cont</fullName>
+            <fullName>1121-Scar%2Epozzo priv%2E ind cont</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1122-Scar.poz priv.ind.no cont</fullName>
+            <fullName>1122-Scar%2Epoz priv%2Eind%2Eno cont</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>1123-Prel. pozzo priv. no fatt</fullName>
+            <fullName>1123-Prel%2E pozzo priv%2E no fatt</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10897,7 +10896,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>13CT-Forn temporanee < 21 gg</fullName>
+            <fullName>13CT-Forn temporanee %3C 21 gg</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10969,7 +10968,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>EIMP_L01-Illuminaz. Pubb.</fullName>
+            <fullName>EIMP_L01-Illuminaz%2E Pubb%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10981,11 +10980,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>G_ICC-Imp. Usi Civili Commerci</fullName>
+            <fullName>G_ICC-Imp%2E Usi Civili Commerci</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>G_ICC-Imposta Usi Non Dom.</fullName>
+            <fullName>G_ICC-Imposta Usi Non Dom%2E</fullName>
             <default>false</default>
         </values>
         <values>
