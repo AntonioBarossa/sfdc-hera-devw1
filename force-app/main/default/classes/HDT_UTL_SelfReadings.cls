@@ -232,7 +232,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
             r.ReadingUnitMeter__c = request.readings.unit1;
             r.ReadingUnitCorrector__c = request.readings.unit2;
         } else if (isAcqua) {
-            r.CaseGas__c = c.Id;
+            r.CaseAcqua__c = c.Id;
             r.RecordTypeId = rtQueryHandler.getRecordTypeIdByName('HDT_RT_LetturaAcqua');
             r.ReadingDigitNumberMeter__c = request.readings.digits1;
             r.ReadingDigitNumberCorrector__c = request.readings.digits2;

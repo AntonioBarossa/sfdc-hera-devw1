@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.ApexSOQLInjection, PMD.ApexCRUDViolation, PMD.AvoidDebugStatements')
 public with sharing class HDT_SRV_SelfReadings {
 
     public static void handleInvioLettureForzato(SObject selfReadingCase) {
@@ -477,4 +478,41 @@ public with sharing class HDT_SRV_SelfReadings {
         return closeCase;
     }
 
+    @InvocableMethod(label = 'Clona Readings da Padre')
+    public static void cloneReadingFromParentCase (List<HDT_UTL_FlowFatturazioneInputs> inputs){
+
+        Case parentCase = inputs[0].parentCase;
+        Case childCase = inputs[0].childCase;
+        
+        try {
+            
+            SObjectType readingType = Schema.getGlobalDescribe().get('Reading__c');
+            List<String> fieldLst = new List<String>();
+            for(Schema.SObjectField fld: readingType.getDescribe().fields.getMap().values()){
+                fieldLst.add(fld.getDescribe().getName());
+            }
+
+            Reading__c parentReading = Database.query('SELECT ' + String.join(fieldLst,',') + ' FROM Reading__c WHERE CaseAcqua__c = \'' + parentCase.Id + '\' OR CaseEle__c = \'' + parentCase.Id + '\' OR CaseGas__c = \'' + parentCase.Id + '\' LIMIT 1');
+            Reading__c childReading = parentReading.clone(false, true, false, false);
+
+            if('Acqua'.equals(childCase.CommodityFormula__c)){
+                childReading.CaseAcqua__c = childCase.Id;
+            } else if('Energia Elettrica'.equals(childCase.CommodityFormula__c)){
+                childReading.CaseEle__c = childCase.Id;
+            }else if('Gas'.equals(childCase.CommodityFormula__c)){
+                childReading.CaseGas__c = childCase.Id;
+            }
+            insert childReading;
+            
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG,'Eccezione: '+e.getMessage());
+        }
+    }
+
+    public class HDT_UTL_FlowFatturazioneInputs {
+        @InvocableVariable
+        public Case parentCase;
+        @InvocableVariable
+        public Case childCase;
+    }
 }

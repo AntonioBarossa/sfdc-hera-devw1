@@ -55,7 +55,27 @@ public with sharing class HDT_UTL_ServicePointTst {
 
             position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
             position.campo = 'ALIQUOTAIVA';
-            position.valore = '01';
+            position.valore = 'CHECK'; 
+            positions.add(position);
+
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'GRUPPONUMERATORE';
+            position.valore = 'CHECK';
+            positions.add(position);
+
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'VENDITORE';
+            position.valore = '13V0000170';
+            positions.add(position);
+
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'BP';
+            position.valore = '01110';
+            positions.add(position);
+
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'DEFINIZIONEOFFERTA';
+            position.valore = 'STG_'; 
             positions.add(position);
 
             position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
@@ -337,6 +357,7 @@ public with sharing class HDT_UTL_ServicePointTst {
             position.campo = 'AFVASCA_AC';
             position.valore = '1';
             positions.add(position);
+            
 
             response.data.posizioni = positions;
 
