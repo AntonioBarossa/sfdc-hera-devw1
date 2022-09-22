@@ -257,6 +257,11 @@
                 <label>Conferma Appuntamento KO</label>
             </value>
             <value>
+                <fullName>Creazione BP-CA</fullName>
+                <default>false</default>
+                <label>Creazione BP-CA</label>
+            </value>
+            <value>
                 <fullName>Credit Check KO</fullName>
                 <default>false</default>
                 <label>Credit Check KO</label>

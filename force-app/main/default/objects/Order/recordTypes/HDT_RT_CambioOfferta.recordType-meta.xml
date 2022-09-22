@@ -2258,6 +2258,10 @@
             <fullName>Comunicazione verso Heroku OK</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Creazione BP-CA</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Da Inviare</fullName>
             <default>false</default>

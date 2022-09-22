@@ -4,8 +4,8 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
     private final Map<String,String> SALESCOMPANY_MAP = new Map<String,String>{
         '13V0000000'=>'Hera Comm S.p.A.',
         '10V0000160'=>'Hera Comm Marche',
-        '11-HERASPA'=>'Hera Comm S.p.A.',
-        '1200000000'=>'Hera Comm S.p.A.'};
+        '11-HERASPA'=>'Marche Multiservizi S.p.A',
+        '1200000000'=>'Marche Multiservizi TARI'};
     
     private HDT_QR_DataEnrichmentPostSales depsQr = new HDT_QR_DataEnrichmentPostSales();
 
@@ -354,13 +354,13 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
         
         System.debug(LoggingLevel.DEBUG, campCode);
     
-        List <Subtypology_Of_Use_Table__c> subTypList = [SELECT Sottotipologia_D_uso__c FROM Subtypology_Of_Use_Table__c where Societa__c=: campCode AND
-            Codice_Rate_Category__c=: prodCode AND Attivo__c=TRUE WITH SECURITY_ENFORCED];
+        List <AmministrazioneSottotipologiaUso__c> subTypList = [SELECT SottotipologiaUso__c FROM AmministrazioneSottotipologiaUso__c where Societa__c=: campCode AND
+        CodiceCategoriaTariffa__c=: prodCode AND Attivo__c=TRUE WITH SECURITY_ENFORCED];
         
         String subTyp = null;
         
         if(subTypList.size() > 0){
-            subTyp = subTypList[0].Sottotipologia_D_uso__c;
+            subTyp = subTypList[0].SottotipologiaUso__c;
         }
         
         System.debug(LoggingLevel.DEBUG, subTyp);

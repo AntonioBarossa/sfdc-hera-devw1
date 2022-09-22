@@ -2258,6 +2258,10 @@
             <fullName>Comunicazione verso Heroku KO</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Creazione BP-CA</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Credit Check KO</fullName>
             <default>false</default>

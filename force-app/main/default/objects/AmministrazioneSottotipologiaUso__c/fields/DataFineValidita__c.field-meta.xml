@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Data_Fine_Validita__c</fullName>
+    <fullName>DataFineValidita__c</fullName>
     <externalId>false</externalId>
     <label>Data Fine Validità</label>
     <required>false</required>
