@@ -19,23 +19,39 @@ global inherited sharing class HDT_WS_BpCaCreate implements wrts_prcgvr.Interfac
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         HttpResponse response = new HttpResponse();
-
-        request.setHeader('Accept','application/json');
-        request.setHeader('Content-Type','application/json');
-        if(method.equalsIgnoreCase('mock'))
+        try
         {
-            request.setEndpoint('https://demo4882803.mockable.io/createBpCa');
+            request.setHeader('Accept','application/json');
+            request.setHeader('Content-Type','application/json');
+            if(method.equalsIgnoreCase('mock'))
+            {
+                request.setEndpoint('https://demo4882803.mockable.io/createBpCa');
+            }
+            else
+            {
+                request.setEndpoint('Callout:MulesoftBasePath/customer-data/billing-profile');
+            }
+            request.setMethod('POST');
+            request.setBody(bpCaCreateSrv.generateRequest((Order)inputSobj));
+            request.setTimeout(12000);
+
+
+            response = http.send(request);
         }
-        else
+        catch(Exception e)
         {
-            request.setEndpoint('Callout:MulesoftBasePath/customer-data/billing-profile');
+            HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse mockResponse = new HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse();
+            List<HDT_UTL_BpCaCreate.HDT_WRP_ErrorDetails> errorDetails = new List<HDT_UTL_BpCaCreate.HDT_WRP_ErrorDetails>();
+            HDT_UTL_BpCaCreate.HDT_WRP_ErrorDetails errorDetail = new HDT_UTL_BpCaCreate.HDT_WRP_ErrorDetails();
+            mockResponse.status = 'failed';
+            errorDetail.code = 'Error';
+            errorDetail.message = e.getMessage();
+            errorDetail.additionalInfo = 'Errore Creazione BP CA';
+            errorDetails.add(errorDetail);
+            mockResponse.errorDetails = errorDetails;
+            response.setBody(JSON.serialize(mockResponse));
+            response.setStatusCode(500);
         }
-        request.setMethod('POST');
-        request.setBody(bpCaCreateSrv.generateRequest((Order)inputSobj));
-        request.setTimeout(12000);
-
-        response = http.send(request);
-
         if(response != null)
         {
             bpCaCreateSrv.handleResponse(response, (Order)inputSobj);
