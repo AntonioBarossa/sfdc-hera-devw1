@@ -218,7 +218,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     )
                 }
                 else if (element == 'Resident__c') {
-                    let resValue = this.recordTypeAccount === 'Residenziale' ? true : false;
+                    let resValue =  this.allSubmitedFields[element] !== null && this.allSubmitedFields[element] !== undefined ? this.allSubmitedFields[element] : 
+                                    this.servicePointRetrievedData[element] ? this.servicePointRetrievedData[element] 
+                                    : false;
+                    //let resValue = this.recordTypeAccount === 'Residenziale' ? true : false;
                     fieldsDataObject.push(
                         {
                             fieldname: element,
@@ -453,7 +456,17 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     )
                 }
                 else if (element === 'Resident__c') {
-                    if(this.recordTypeAccount == 'Residenziale'){
+                    let residentValue = this.allSubmitedFields[element] ? this.allSubmitedFields[element] : false; 
+                    
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: false,
+                            value: residentValue,
+                            disabled: false
+                        }
+                    )
+                    /* if(this.recordTypeAccount == 'Residenziale'){
                         this.allSubmitedFields.Resident__c = true;
                         fieldsDataObject.push(
                             {
@@ -474,7 +487,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                 disabled: false
                             }
                         )
-                    }
+                    } */
                 }
                 else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas') && element === 'MeterStatus__c') {
                     this.allSubmitedFields.MeterStatus__c = 'Bozza';
