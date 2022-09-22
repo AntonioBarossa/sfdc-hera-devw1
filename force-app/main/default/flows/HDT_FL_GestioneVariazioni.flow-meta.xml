@@ -113,8 +113,8 @@
     <actionCalls>
         <name>Crea_Allineamento_Anagrafica_0_0</name>
         <label>Crea Allineamento Anagrafica</label>
-        <locationX>3382</locationX>
-        <locationY>1466</locationY>
+        <locationX>3687</locationX>
+        <locationY>1535</locationY>
         <actionName>HDT_SRV_AnagAlignment</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -268,8 +268,8 @@
     <assignments>
         <name>Aggiorna_Fase_in_Attesa_Allineamento_RCU_0_0</name>
         <label>Aggiorna Fase in Attesa Allineamento RCU</label>
-        <locationX>3381</locationX>
-        <locationY>1634</locationY>
+        <locationX>3686</locationX>
+        <locationY>1702</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato_0_0_0_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -610,6 +610,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0_0</name>
+        <label>Aggiorna Fase in Elaborazione Manuale</label>
+        <locationX>3383</locationX>
+        <locationY>1644</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato_0_0_0_0.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Elaborazione Manuale</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato_0_0_0_0.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1822,6 +1845,31 @@
                 <targetReference>Tipo_Frequenza</targetReference>
             </connector>
             <label>Coabitazione No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Commodity</name>
+        <label>Commodity</label>
+        <locationX>3374</locationX>
+        <locationY>1466</locationY>
+        <defaultConnector>
+            <targetReference>Crea_Allineamento_Anagrafica_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Acqua</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato_0_0_0_0.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0_0</targetReference>
+            </connector>
+            <label>Acqua</label>
         </rules>
     </decisions>
     <decisions>
@@ -3759,7 +3807,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <locationY>1323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Crea_Allineamento_Anagrafica_0_0</targetReference>
+            <targetReference>Commodity</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -4239,8 +4287,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>3382</locationX>
-        <locationY>1773</locationY>
+        <locationX>3687</locationX>
+        <locationY>1841</locationY>
         <inputReference>GetCaseAggiornato_0_0_0_0</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -4304,6 +4352,13 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <locationX>1374</locationX>
         <locationY>2895</locationY>
         <inputReference>GetCaseAggiornatoModificaUnitaImmobiliari_0</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
+        <label>Aggiorna Case</label>
+        <locationX>3384</locationX>
+        <locationY>1833</locationY>
+        <inputReference>GetCaseAggiornato_0_0_0_0</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_Billing_Profile</name>
