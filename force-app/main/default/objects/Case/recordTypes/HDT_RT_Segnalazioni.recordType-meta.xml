@@ -12554,6 +12554,11 @@
 			<fullName>Ambiente annullo richiesta senza appuntamento</fullName>
 			<default>false</default>
 		</values>
+        <values>
+			<fullName>Segnalazioni</fullName>
+			<default>false</default>
+		</values>
+        
 		<values>
 			<fullName>Conferimento Centri di Raccolta</fullName>
 			<default>false</default>
