@@ -496,6 +496,11 @@
                 <label>KO Credit Check</label>
             </value>
             <value>
+                <fullName>KO creazione BP CA</fullName>
+                <default>false</default>
+                <label>KO creazione BP CA</label>
+            </value>
+            <value>
                 <fullName>KO definitivo</fullName>
                 <default>false</default>
                 <label>KO definitivo</label>
