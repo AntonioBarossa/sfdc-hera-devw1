@@ -7,7 +7,7 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>DocumentSendTracking__c.HDT_ShowOriginalDocument</value>
+                            <value>DocumentSendTracking__c.Visualizza_Plico</value>
                         </valueListItems>
                         <valueListItems>
                             <value>DocumentSendTracking__c.HDT_ResendDocusignEnvelope</value>
