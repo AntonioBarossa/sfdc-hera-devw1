@@ -8,17 +8,20 @@ import getBodyMailMerged from '@salesforce/apex/HDT_LC_MailSender.getBodyMailMer
 import sendMailToApex from '@salesforce/apex/HDT_LC_MailSender.sendMail';
 
 export default class HdtMailSender extends NavigationMixin(LightningElement) {
+    
+    cardTitle;
+    buttonLabel;
+    reminderMode = false;
     mailSender;
     mailReceiver;
     bodyMail = '';
-    temp1 = '';
-    temp2 = '';
-    temp3 = '';
     options = [];
     recordId;
     render = false;
     spinner = true;
     mailStructure = {
+        caseId: '',
+        isReminder: false,
         orgWideAddId: '',
         bodyMail: '',
         toAddress: ''
@@ -35,13 +38,6 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
 
     connectedCallback(){
         console.log('>>> CASE ID: ' + this.recordId);
-        this.temp1 = 'Ciao Mario Rossi,<br><br>questo è il primo template';
-        this.temp2 = 'Ciao Mario Rossi,<br><br>questo è il secondo template';
-        this.temp3 = 'Ciao Mario Rossi,<br><br>questo è il terzo template';
-
-        this.options.push({ label: 'Template 1', value: 'temp1' });
-        this.options.push({ label: 'Template 2', value: 'temp2' });
-        this.options.push({ label: 'Template 3', value: 'temp3' });
         this.getMetadata();
     }
 
@@ -52,13 +48,21 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
             console.log('>>> ' + JSON.stringify(result));
             if(result.success){
                 console.log('# SUCCESS #');
-                result.templateList.forEach(li => {
-                    this.options.push({label: li.label, value: li.value});
-                });
-                this.mailSender = result.mailData.sender;
-                this.newCaseId = result.mailData.caseId;
 
+                this.mailSender = result.mailData.sender;
+                this.mailStructure.caseId = this.recordId;
                 this.mailStructure.orgWideAddId = result.mailData.orgWideEmailAddressId;
+                this.reminderMode = result.isReminder;
+                this.mailStructure.isReminder = result.isReminder;
+
+                if(this.reminderMode){
+                    this.cardTitle = 'Comunicazione con il Gestore - Sollecito';
+                } else {
+                    this.cardTitle = 'Comunicazione con il Gestore';
+                    result.templateList.forEach(li => {
+                        this.options.push({label: li.label, value: li.value});
+                    });
+                }
 
                 this.render = true;
                 this.spinner = false;
@@ -162,6 +166,10 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
         
     }
 
+    sendReminderMail(event){
+        this.sendMailToApex();
+    }
+
     textChange(event){
         this.bodyMail = event.target.value;
         this.checkBodyMail();
@@ -192,6 +200,7 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
                         mode: 'sticky'
                     })
                 );
+                this.newCaseId = result.caseId;
                 this.spinner = false;
                 this.goToNewRecord();
                 this.closeAction();

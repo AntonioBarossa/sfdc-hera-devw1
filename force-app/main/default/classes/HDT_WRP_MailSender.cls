@@ -4,15 +4,16 @@ public class HDT_WRP_MailSender {
     public class HDT_WRP_Result {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
+        @AuraEnabled public Boolean isReminder;
         @AuraEnabled public HDT_WRP_MailData mailData;
         @AuraEnabled public List<HDT_WRP_PicklistObj> templateList;
     }
 
     public class HDT_WRP_MailData {
         @AuraEnabled public String orgWideEmailAddressId;
-        @AuraEnabled public Id caseId;
         @AuraEnabled public String sender;
         @AuraEnabled public String receiver;
+        @AuraEnabled public String reminderBodyMail;
     }
 
     public class HDT_WRP_PicklistObj {
@@ -30,9 +31,12 @@ public class HDT_WRP_MailSender {
     public class HDT_WRP_SendMailResult {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
+        @AuraEnabled public Id caseId;
     }
 
     public class HDT_WRP_MailStructure {
+        public Id caseId;
+        public Boolean isReminder;
         public String orgWideAddId;
         public String bodyMail;
         public String toAddress;

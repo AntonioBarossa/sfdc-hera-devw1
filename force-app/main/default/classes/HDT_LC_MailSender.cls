@@ -3,18 +3,12 @@ public inherited sharing class HDT_LC_MailSender {
 
     @AuraEnabled
     public static HDT_WRP_MailSender.HDT_WRP_Result getMetadata(Id recordId) {
-
-        HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult generateCaseResult;
-        generateCaseResult = HDT_UTL_MailSenderHelper.generateNewCase(recordId);
-
-        if(!generateCaseResult.success){
-            HDT_WRP_MailSender.HDT_WRP_Result result = new HDT_WRP_MailSender.HDT_WRP_Result();
-            result.success = false;
-            result.message = generateCaseResult.message;
-            return result;
+        Boolean isReminder = HDT_UTL_MailSenderHelper.checkForReminderMail(recordId);
+        if(isReminder){
+            return HDT_UTL_MailSenderHelper.getReminderMetadataHelper(recordId);
         }
-
-        return HDT_UTL_MailSenderHelper.getMetadataHelper(recordId, generateCaseResult.caseId);
+        return HDT_UTL_MailSenderHelper.getMetadataHelper(recordId);
+        
     }
 
     @AuraEnabled

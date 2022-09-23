@@ -1,12 +1,12 @@
 <template>
-	<lightning-card title="Comunicazione con il Gestore" variant="narrow" icon-name="standard:email_chatter">
+	<lightning-card title={cardTitle} variant="narrow" icon-name="standard:email_chatter">
 
         <div if:true={spinner} >
             <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
         </div>
 
         <template if:true={render} >
-            <div class="slds-grid slds-wrap slds-m-around_medium">
+            <div if:false={reminderMode} class="slds-grid slds-wrap slds-m-around_medium">
                 <div class="slds-col slds-size_1-of-3">
                     <span>
                         <div class="slds-m-around_medium">
@@ -48,18 +48,44 @@
                 </div>
             </div>
 
-            <p slot="footer">
+            <div if:true={reminderMode} class="slds-grid slds-wrap slds-m-around_medium">
+                <div class="slds-col slds-size_1-of-1">
+                    <span>
+                        <div class="slds-m-around_medium">
+                            <lightning-input-rich-text
+                                value={bodyMail}
+                                disabled
+                            ></lightning-input-rich-text>
+                        </div>
+                    </span>
+                </div>
+            </div>
+
+            <p if:false={reminderMode} slot="footer">
                 <lightning-button
                     variant="brand"
                     name="sendComunication"
                     label="Invia comunicazione"
-                    title="sendMail"
+                    title="Invia comunicazione"
                     onclick={sendMail}
                     class="slds-m-left_x-small"
                     icon-name="utility:send"
                     disabled
                 ></lightning-button>
             </p>
+
+            <p if:true={reminderMode} slot="footer">
+                <lightning-button
+                    variant="brand"
+                    name="sendReminderMail"
+                    label="Invia sollecito"
+                    title="Invia sollecito"
+                    onclick={sendReminderMail}
+                    class="slds-m-left_x-small"
+                    icon-name="utility:send"
+                ></lightning-button>
+            </p>
+
         </template>
 	</lightning-card>
 </template>

@@ -1,7 +1,45 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_MailSenderHelper {
 
-    public static HDT_WRP_MailSender.HDT_WRP_Result getMetadataHelper(Id recordId, Id newCaseId) {
+
+    public static Boolean checkForReminderMail(Id recordId){
+        List<EmailMessage> emailMessageList = new List<EmailMessage>();
+        emailMessageList = HDT_QR_MailSender.getEmailMessageByCaseId(recordId);
+        return !(emailMessageList.size() == 0);
+    }
+
+    public static HDT_WRP_MailSender.HDT_WRP_Result getReminderMetadataHelper(Id recordId) {
+
+        HDT_WRP_MailSender.HDT_WRP_Result mailSenderMetaData = new HDT_WRP_MailSender.HDT_WRP_Result();
+        List<EmailTemplate> emailTemplateList = new List<EmailTemplate>();
+        emailTemplateList = HDT_QR_MailSender.getEmailTemplateByNameList('MyTemplate');
+
+        if(emailTemplateList.size() == 0){
+            mailSenderMetaData.success = false;
+            mailSenderMetaData.message = 'Non ci sono template';
+            return mailSenderMetaData;
+        }
+
+        List<OrgWideEmailAddress> orgWideEmailAddressList = new List<OrgWideEmailAddress>();
+        orgWideEmailAddressList = HDT_QR_MailSender.getOrgWideEmailAddressList('Comunicazione dal gestore');
+
+        if(orgWideEmailAddressList.size() == 0){
+            mailSenderMetaData.success = false;
+            mailSenderMetaData.message = 'Organization-Wide Address non è impostata';
+            return mailSenderMetaData;
+        }
+
+        mailSenderMetaData.mailData = new HDT_WRP_MailSender.HDT_WRP_MailData();
+        mailSenderMetaData.success = true;
+        mailSenderMetaData.mailData.orgWideEmailAddressId = orgWideEmailAddressList[0].Id;
+        mailSenderMetaData.mailData.sender = orgWideEmailAddressList[0].Address;
+        mailSenderMetaData.mailData.reminderBodyMail = emailTemplateList[0].Body;
+        mailSenderMetaData.isReminder = true;
+        return mailSenderMetaData;
+
+    }
+
+    public static HDT_WRP_MailSender.HDT_WRP_Result getMetadataHelper(Id recordId) {
 
         HDT_WRP_MailSender.HDT_WRP_Result mailSenderMetaData = new HDT_WRP_MailSender.HDT_WRP_Result();
         List<EmailTemplate> emailTemplateList = new List<EmailTemplate>();
@@ -22,20 +60,6 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             return mailSenderMetaData;
         }
 
-        List<OrgWideEmailAddress> orgWideEmailAddressList = new List<OrgWideEmailAddress>();
-        orgWideEmailAddressList = HDT_QR_MailSender.getOrgWideEmailAddressList('Comunicazione dal gestore');
-
-        if(orgWideEmailAddressList.size() == 0){
-            mailSenderMetaData.success = false;
-            mailSenderMetaData.message = 'Organization-Wide Addresses non è impostata';
-            return mailSenderMetaData;
-        }
-
-        mailSenderMetaData.mailData = new HDT_WRP_MailSender.HDT_WRP_MailData();
-        mailSenderMetaData.success = true;
-        mailSenderMetaData.mailData.orgWideEmailAddressId = (orgWideEmailAddressList.size() == 0) ? '' : orgWideEmailAddressList[0].Id;
-        mailSenderMetaData.mailData.sender = orgWideEmailAddressList[0].Address;
-
         mailSenderMetaData.templateList = new List<HDT_WRP_MailSender.HDT_WRP_PicklistObj>();
         HDT_WRP_MailSender.HDT_WRP_PicklistObj pickElement;
         for(EmailTemplate template : emailTemplateList){
@@ -45,9 +69,54 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             mailSenderMetaData.templateList.add(pickElement);
         }
 
-        mailSenderMetaData.mailData.caseId = newCaseId;
+        List<OrgWideEmailAddress> orgWideEmailAddressList = new List<OrgWideEmailAddress>();
+        orgWideEmailAddressList = HDT_QR_MailSender.getOrgWideEmailAddressList('Comunicazione dal gestore');
 
+        if(orgWideEmailAddressList.size() == 0){
+            mailSenderMetaData.success = false;
+            mailSenderMetaData.message = 'Organization-Wide Address non è impostata';
+            return mailSenderMetaData;
+        }
+
+        mailSenderMetaData.mailData = new HDT_WRP_MailSender.HDT_WRP_MailData();
+        mailSenderMetaData.success = true;
+        mailSenderMetaData.mailData.orgWideEmailAddressId = orgWideEmailAddressList[0].Id;
+        mailSenderMetaData.mailData.sender = orgWideEmailAddressList[0].Address;
+        mailSenderMetaData.isReminder = false;
         return mailSenderMetaData;
+
+    }
+
+    public static HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult updateReminderCase(Id caseId){
+        
+        HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult updateCaseResult = new HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult();
+
+        try {
+
+            Case reminderCase = new Case();
+            reminderCase.Id = caseId;
+            //reminderCase.Phase__c = '';
+
+            SObjectType objtype = Schema.getGlobalDescribe().get('Case');
+            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+     
+            if(objRes.isCreateable()){
+                HDT_UTL_DatabaseService.updateSObject(reminderCase);
+            } else {
+                updateCaseResult.success = false;
+                updateCaseResult.message = 'No access to Case';
+                return updateCaseResult;
+            }
+
+        } catch(Exception e){
+            updateCaseResult.success = false;
+            updateCaseResult.message = e.getMessage() + ' at line [' + String.valueOf(e.getLineNumber()) + ']';
+            return updateCaseResult;
+        }
+
+        updateCaseResult.success = true;
+        return updateCaseResult;
+
     }
 
     public static HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult generateNewCase(Id caseId){
@@ -95,7 +164,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
 
     public static HDT_WRP_MailSender.HDT_WRP_BodyMail getBodyMailMerged(Id templateId, Id recordId){
         
-        System.debug('>>> ' + templateId + ' - ' + recordId);
+        System.debug('>>> templateId: ' + templateId + ' - recordId: ' + recordId);
 
         HDT_WRP_MailSender.HDT_WRP_BodyMail bodyMailResult = new HDT_WRP_MailSender.HDT_WRP_BodyMail();
         Messaging.SingleEmailMessage singleEmailMessage;
@@ -104,7 +173,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             singleEmailMessage = Messaging.renderStoredEmailTemplate(templateId, UserInfo.getUserId(), recordId);
             bodyMailResult.success = true;
             bodyMailResult.message = '';
-            bodyMailResult.bodyMail = singleEmailMessage.getHtmlBody();//'Ciao Filippo,<br>...';
+            bodyMailResult.bodyMail = singleEmailMessage.getHtmlBody();
             bodyMailResult.receiver = getReceiverMail(templateId);
         } catch(Exception e){
             bodyMailResult.success = false;
@@ -127,15 +196,33 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             HDT_WRP_MailSender.HDT_WRP_MailStructure mailStructure;
             mailStructure = (HDT_WRP_MailSender.HDT_WRP_MailStructure)JSON.deserialize(mailStructureJson, HDT_WRP_MailSender.HDT_WRP_MailStructure.class);
 
+            HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult caseResult;
+
+            if(mailStructure.isReminder){
+                caseResult = generateNewCase(mailStructure.caseId);
+    
+                if(!caseResult.success){
+                    sendMailResult.success = false;
+                    sendMailResult.message = caseResult.message;
+                    return sendMailResult;
+                }
+
+            } else {
+                caseResult = updateReminderCase(mailStructure.caseId);
+            }
+
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			mail.setOrgWideEmailAddressId(Id.valueOf(mailStructure.orgWideAddId));
             mail.setToAddresses(new String[]{mailStructure.toAddress});
 			mail.setSubject('Comunicazione dal gestore');
             mail.setHtmlBody(mailStructure.bodyMail);
+            mail.setWhatId(caseResult.caseId);
 			Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
-            System.debug('>>> mail ' + mail);
+
             sendMailResult.success = true;
             sendMailResult.message = 'La mail è stata inviata correttamente.';
+            sendMailResult.caseId = caseResult.caseId;
+
         }catch(Exception e){
             System.debug(LoggingLevel.DEBUG, 'Send Email Error: ' + e.getMessage());
             sendMailResult.success = false;
@@ -161,10 +248,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         queryString += ' FROM Case ';
         queryString += 'WHERE Id = \'' + caseIdToClone + '\'';
 
-        System.debug('>>> ' + queryString);
-
         List<Case> caseList = Database.query(queryString);
-        System.debug('>>> ' + caseList);
 
         return caseList[0];
     }

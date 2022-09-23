@@ -17,6 +17,15 @@ public inherited sharing class HDT_QR_MailSender {
         ];
     }
 
+    public static List<EmailTemplate> getEmailTemplateByNameList(String templateName){
+        return [
+            SELECT Id, Body, DeveloperName, FolderId, FolderName, IsActive, Name
+            FROM EmailTemplate
+            WHERE IsActive = true
+            AND Name = :templateName
+        ];
+    }
+
     public static List<OrgWideEmailAddress> getOrgWideEmailAddressList(String displayName){
         return [
             SELECT Id, Address, DisplayName
@@ -44,4 +53,14 @@ public inherited sharing class HDT_QR_MailSender {
         //].Email__c;
         return null;
     }
+
+    public static List<EmailMessage> getEmailMessageByCaseId(Id caseId){
+        return [
+            SELECT EmailTemplateId, ParentId, RelatedToId, Status, Subject
+            FROM EmailMessage
+            WHERE RelatedToId = :caseId
+            AND Subject = 'Comunicazione dal gestore'
+        ];
+    }
+
 }
