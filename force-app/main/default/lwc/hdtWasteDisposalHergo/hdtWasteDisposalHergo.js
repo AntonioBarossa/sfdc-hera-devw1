@@ -3,32 +3,27 @@ import HdtRecordEditFormFlow from 'c/hdtRecordEditFormFlow';
 
 export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow {
 
-    @api processType;
-    @api objectName;
+    @api processType="Segnalazioni Hergo";
     @api recordId;
     @api saveButton;
-    @api cancelButton;
+    @api objectName;
+    @api labelSaveButton;
     @api previousButton;
+    @api labelPreviousButton;
+    @api cancelButton;
     @api draftButton;
+    @api labelDraftButton;
     @api density;
     @api recordType;
     @api saveInDraft;
     @api cancelCase;
-    @api addContentDocument;
-    @api contentDocumentLabel;
-    @api acceptedFormats;
     @api nextStep;
     @api showReadOnly;
-    @api labelSaveButton;
-    @api labelDraftButton;
-    @api labelPreviousButton;
     @api labelInputSection;
     @api labelReadOnlySection;
-    @api availableActions = [];
     @api variantSaveButton;
     @api outputId;
-    @api documentRecordId;
-
+    
     virtualOnChange(event){
         
     }

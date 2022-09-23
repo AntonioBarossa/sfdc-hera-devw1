@@ -30,10 +30,7 @@
     <targetConfigs>
         
         
-        <targetConfig targets="lightning__FlowScreen">
-            
-            <property name="processType" type="String" label="Process Type" description="process type passed by the flow" role="inputOnly"/>
-            
+        <targetConfig targets="lightning__FlowScreen">            
             
             <property name="recordId" type="String" label="Record Id" description="Id of the record to edit" role="inputOnly"/>
             
@@ -65,18 +62,8 @@
             <property name="density" type="String" label="Density" description="Layout Density" role="inputOnly"/>
             
             
-            <property name="recordType" type="String" label="Record Type" description="Record Type" role="inputOnly"/>
-            
-            
-            <property name="addContentDocument" type="Boolean" label="Add Content Document" description="Add Content Document" role="inputOnly"/>
-            
-            
-            <property name="contentDocumentLabel" type="String" label="Content Document Label" description="Content Document Label" role="inputOnly"/>
-            
-            
-            <property name="acceptedFormats" type="String" label="Accepted Formats" description="Accepted Formats" role="inputOnly"/>
-            
-            
+            <property name="recordType" type="String" label="Record Type" description="Record Type" role="inputOnly"/>            
+                        
             <property name="saveInDraft" type="Boolean" label="Save in Draft" description="Is true if the user press the Draft Button" role="outputOnly"/>
             
             
@@ -99,12 +86,7 @@
             
             
             <property name="outputId" type="String" label="Output Id" description="Id of the created record" role="outputOnly"/>
-            
-            
-            <property name="documentRecordId" type="String" label="Document Record Id" description="Id of the record to upload documents" role="inputOnly"/>
-            
-            <property name="account" type="@salesforce/schema/Account" label="Account" description="case Account" role="inputOnly"/>
-            
+                        
         </targetConfig>
         
         
