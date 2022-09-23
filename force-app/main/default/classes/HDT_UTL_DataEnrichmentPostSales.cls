@@ -236,7 +236,9 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         //SALESCOMPANY && SALESCOMPANYCODE
         salesCompanyCode = (String) transcodeMap.get('SalesCompanyCode__c');
         salesCompanyCode = String.isBlank(salesCompanyCode) && 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c) ? '11-HERASPA' : salesCompanyCode;
+        salesCompanyCode = String.isBlank(salesCompanyCode) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c) ? '11-HERASPA' : salesCompanyCode;
         salesCompanyCode = String.isBlank(salesCompanyCode) && 'Ambiente'.equalsIgnoreCase(currentCase.CommodityFormula__c) ? '1200000000' : salesCompanyCode;
+        salesCompanyCode = String.isBlank(salesCompanyCode) && 'Ambiente'.equalsIgnoreCase(currentCase.Commodity__c) ? '1200000000' : salesCompanyCode;
         salesCompany = depsSrv.calculateSalesCompany(salesCompanyCode);
         
         transcodeMap.put('SalesCompany__c', salesCompany);
