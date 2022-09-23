@@ -306,12 +306,15 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.searchInputValue += this.subalternValue + ' ';
         }
         if(this.registryCityValue == null && this.registryCityCodeValue == null || this.registryCityValue == '' && this.registryCityCodeValue == '' || this.registryCityValue == null && this.registryCityCodeValue == '' || this.registryCityValue == '' && this.registryCityCodeValue == null){
-            this.showToast("Attenzione!Inserire almeno un valore tra Comune catastale e Codice comune catastale");
-        } else if(this.sheetValue == null || this.sheetValue == ''){
+            this.showToast("Attenzione! Inserire almeno un valore tra Comune catastale e Codice comune catastale");
+        }
+        else if(this.sheetValue == null || this.sheetValue == ''){
             this.showToast("Attenzione! Il campo Foglio è obbligatorio");
-        } else if(this.particleSheetValue == null || this.particleSheetValue == ''){
+        }
+        else if(this.particleSheetValue == null || this.particleSheetValue == ''){
             this.showToast("Attenzione! Il campo Particella è obbligatorio");
-        }  else {
+        }
+        else{
             this.closeModalDatiCatastali();
         }
         console.log('this.datiCatastali' + JSON.stringify(this.datiCatastali) );
