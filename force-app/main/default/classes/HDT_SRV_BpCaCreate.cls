@@ -1,4 +1,6 @@
-/** Service Class of the BpCa Create module
+/** @frpanico 2022-09-23
+ * Test Covered by HDT_WS_BpCaCreateTst 
+ * Service Class of the BpCa Create module
  * This class expose the methods to generate the request
  * Handling the response
  * And performing updates

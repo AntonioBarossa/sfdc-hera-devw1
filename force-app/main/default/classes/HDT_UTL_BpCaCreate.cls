@@ -1,4 +1,6 @@
-/** This class contains all logic for the BP CA Module
+/**@frpanico 2022-09-23
+ * Test Covered by HDT_WS_BpCaCreateTst
+ * This class contains all logic for the BP CA Module
  * It exposes public methods that perform operations
  * To create request, rearrange Sobjects to update
  */
@@ -262,7 +264,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.codiceUfficio = tryParse(infoOrder.BillingProfile__r.OfficeSubjectCode__c);
         request.fatturaXml = transcodeFatturaXml(tryParse(infoOrder.BillingProfile__r.XMLType__c));
         request.mailPec = tryParse(infoOrder.BillingProfile__r.ElectronicInvoiceCertifiedEmailAddress__c);
-        request.modello = transcodeModelloFattur(tryParse(infoOrder.BillingProfile__r.OfficeSubjectCode__c));
+        request.modello = transcodeModelloFattura(tryParse(infoOrder.BillingProfile__r.ElectronicInvoicingMethod__c));
 
         return request;
 
@@ -333,7 +335,7 @@ public with sharing class HDT_UTL_BpCaCreate
     * while the web service requires a code 
     * a transcondification is necessary 
     */
-    private String transcodeModelloFattur(String modello)
+    private String transcodeModelloFattura(String modello)
     {
         if(String.isBlank(modello))
         {

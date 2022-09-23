@@ -1,4 +1,6 @@
-/** Query class for the Bp Ca Create Module */
+/**@frpanico 2022-09-23
+* Test Covered by HDT_WS_BpCaCreateTst
+* Query class for the Bp Ca Create Module */
 public with sharing class HDT_QR_BpCaCreate 
 {
     /* This method queries all the information, starting from the input order, needed to generate the request */

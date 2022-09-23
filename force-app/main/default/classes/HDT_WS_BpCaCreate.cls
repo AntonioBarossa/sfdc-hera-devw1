@@ -1,4 +1,6 @@
-/* This class calls the BP/CA creation web service exposed by mulesoft
+/* @frpanico 2022-09-23
+* Test Covered by HDT_WS_BpCaCreateTst
+* This class calls the BP/CA creation web service exposed by mulesoft
 * This service is mandatory for "Acqua" and "Ambiente" commodity
 * Since CustomerCode__c on the account and ContractAccountCode__c on BillingProfile need to be populated
 * If the request is successful Account, Billing Profile and all orders that shares the same Account and/or Billing Profile are update
