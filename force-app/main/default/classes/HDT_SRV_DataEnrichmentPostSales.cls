@@ -323,8 +323,11 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
         //String Date is yyyymmdd
         
         Integer year = Integer.valueOf(stringDate.substring(0,4));
+        System.debug(LoggingLevel.DEBUG, '+++++ANNO+++++: ' + year);
         Integer month = Integer.valueOf(stringDate.substring(4,6));
+        System.debug(LoggingLevel.DEBUG, '+++++MESE+++++: ' + month);
         Integer day = Integer.valueOf(stringDate.substring(6,8));
+        System.debug(LoggingLevel.DEBUG, '+++++GIORNO+++++: ' + day);
 
         if(year > 4000){
 
@@ -368,7 +371,7 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
     
     }
 
-    public static String transCodeSiNo (String  sapOp) {
+    public String transCodeSiNo (String  sapOp) {
 
         String outPut= null;
 
@@ -380,9 +383,64 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
             outPut = 'Si - Ridotta';
         }
 
-        System.debug(LoggingLevel.DEBUG, 'La conversione SI / NO è: ' + outPut);
+        System.debug(LoggingLevel.DEBUG, 'La conversione Si / Si - Ridotta / No è: ' + outPut);
         return outPut;
     
     }
+
+    public  String transCodeDoubleOppositeToDecimal(String doubleInput){
+
+        String doubleOutput = doubleInput == '0.0000000' ? '1' : '0';
+        doubleOutput = transCodeSiNo(doubleOutput);
+
+        System.debug(LoggingLevel.DEBUG, 'La transcodifica di AFPAG_FFUG risulta: ' + doubleOutput);
+        return doubleOutput;
+       }
+
+    public  String transCodeDoubleToString(String doubleInputStr){
+        String doubleOutStr = null;
+
+        if(doubleInputStr =='0.0000000'){
+            doubleOutStr = 'Esente';                
+        }
+
+        if(doubleInputStr =='1.0000000'){
+            doubleOutStr = 'Intera';                
+        }
+
+        if(doubleInputStr =='2.0000000'){
+            doubleOutStr = 'Ridotta';
+        }
+
+        System.debug(LoggingLevel.DEBUG, 'transCodeDoubleToStringOutput: ' + doubleOutStr);
+        return doubleOutStr;
+    }
+
+    public Date alignGaaDate(String inpDaOne, String InpDaTwo){
+
+        HDT_SRV_DataEnrichmentPostSales forAlign = new HDT_SRV_DataEnrichmentPostSales();
+
+        Date gaaOut= null;
+        Date convOne=null;
+
+        System.debug(LoggingLevel.DEBUG, 'DAONE: '  + inpDaOne);
+        System.debug(LoggingLevel.DEBUG, 'DATWO: '  + InpDaTwo);
+
+
+        Date convTwo = forAlign.getDateFromString(inpDaTwo);
+        
+        if(inpDaOne!=null){
+            convOne = Date.valueOf(inpDaOne);
+        } else {
+            convOne=null;
+        }
+
+        gaaOut = convOne > convTwo ? convOne : convTwo;
+
+        System.debug(LoggingLevel.DEBUG, 'L\' allineamento GAA risulta: ' + gaaOut);    
+        return gaaOut;
+        
+}
+
 
 }
