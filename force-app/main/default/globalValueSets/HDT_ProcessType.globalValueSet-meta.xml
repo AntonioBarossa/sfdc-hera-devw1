@@ -1216,6 +1216,16 @@
         <label>Rimozione impianto - ACQ</label>
     </customValue>
     <customValue>
+        <fullName>Nuovo Impianto - ACQ</fullName>
+        <default>false</default>
+        <label>Nuovo Impianto - ACQ</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica post accertamento - AMB</fullName>
+        <default>false</default>
+        <label>Modifica post accertamento - AMB</label>
+    </customValue>
+    <customValue>
         <fullName>Split Payment - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>

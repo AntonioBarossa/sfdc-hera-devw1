@@ -26,6 +26,11 @@
         <label>Annullamento Allineamento</label>
     </customValue>
     <customValue>
+        <fullName>Annullamento processo transitorio Siebel</fullName>
+        <default>false</default>
+        <label>Annullamento processo transitorio Siebel</label>
+    </customValue>
+    <customValue>
         <fullName>Anticipo Appuntamento</fullName>
         <default>false</default>
         <label>Anticipo Appuntamento</label>
@@ -194,6 +199,11 @@
         <fullName>Contratti/Bonus Commerciale</fullName>
         <default>false</default>
         <label>Contratti/Bonus Commerciale</label>
+    </customValue>
+    <customValue>
+        <fullName>Contratto non richiesto da gestire</fullName>
+        <default>false</default>
+        <label>Contratto non richiesto da gestire</label>
     </customValue>
     <customValue>
         <fullName>Creare Istruttoria</fullName>

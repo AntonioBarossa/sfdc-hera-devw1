@@ -24,10 +24,10 @@ public class HDT_SRV_DataEnrichmentPostSalesTst {
         billingProfileList[0].InvoicingCountry__c = 'ITALIA';
         insert billingProfileList;
 
-        Subtypology_Of_Use_Table__c subTable = new Subtypology_Of_Use_Table__c();
+        AmministrazioneSottotipologiaUso__c subTable = new AmministrazioneSottotipologiaUso__c();
         subTable.Societa__c='5010';
-        subTable.Sottotipologia_D_uso__c='Uso domestico non residen';
-        subTable.Data_Fine_Validita__c=date.today().addDays(10);
+        subTable.SottotipologiaUso__c='Uso domestico non residente';
+        subTable.DataFineValidita__c=date.today().addDays(10);
         insert subTable;
 
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
@@ -293,7 +293,7 @@ public class HDT_SRV_DataEnrichmentPostSalesTst {
     static void testHandleSubTyp() {
         Test.startTest();
         String checkHandleSub = HDT_SRV_DataEnrichmentPostSales.handleSubType('Hera S.p.A.','');
-		System.assertEquals('Uso domestico non residen', checkHandleSub , 'testHandleSubTyp FALLITO');
+		System.assertEquals('Uso domestico non residente', checkHandleSub , 'testHandleSubTyp FALLITO');
 		Test.stopTest();
     }
 

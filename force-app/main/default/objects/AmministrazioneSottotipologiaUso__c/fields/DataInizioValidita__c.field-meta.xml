@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Data_Fine_Validita__c</fullName>
+    <fullName>DataInizioValidita__c</fullName>
     <externalId>false</externalId>
-    <label>Data Fine Validità</label>
+    <label>Data Inizio Validità</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Date</type>

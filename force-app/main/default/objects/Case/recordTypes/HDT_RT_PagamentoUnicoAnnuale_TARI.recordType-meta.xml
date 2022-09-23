@@ -3,7 +3,7 @@
     <fullName>HDT_RT_PagamentoUnicoAnnuale_TARI</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>HDT_RT_PagamentoUnicoAnnuale_TARI</label>
+    <label>HDT_RT_PagamentoUnicoAnnualeTARI</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
@@ -13198,6 +13198,10 @@
 			<fullName>Riduzione Agevolazione dopo Accertamento</fullName>
 			<default>false</default>
 		</values>
+        <values>
+            <fullName>Rimozione Agevolazione</fullName>
+            <default>false</default>
+        </values>
 		<values>
 			<fullName>Sconti Collettivi Pap</fullName>
 			<default>false</default>

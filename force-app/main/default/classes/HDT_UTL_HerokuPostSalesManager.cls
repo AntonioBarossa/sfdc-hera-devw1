@@ -722,6 +722,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         currentCase.Contract__c = contract?.Id;
                         currentCase.ServicePoint__c = sp.Id;
                         currentCase.BillingProfile__c = Contract?.BillingProfile__c;
+                        currentCase.Commodity__c = sp.CommoditySector__c;
                         sapContractCode = contract?.SAPContractCode__c;
                     }else {
                         throw new HDT_UTL_RichPassException('Non è stato possibile recuperare il Service Point', '04');
@@ -791,6 +792,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             currentCase.Status = 'New';
                             //Campo riutilizzato per indicare a SAP che la pratica è stata creata da cruscotto
                             currentCase.PartialOutcome__c = 'Y';
+                            if(currentCase.Type.equalsIgnoreCase('Sospensione Fornitura'))
+                            {
+                                currentCase.NotCancellable__c = true;
+                            }
                         }when 'Volture'{
                             currentCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();
                             currentCase.Cluster__c = 'Voltura';

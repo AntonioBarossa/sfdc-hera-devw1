@@ -3,6 +3,7 @@
     <fullName>HDT_RT_VariazioniAcqua</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <description>Record Type per Variazioni Acqua</description>
     <label>Variazioni Acqua</label>
     <picklistValues>
@@ -711,6 +712,25 @@
         </values>
         <values>
             <fullName>Volontà estorta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CartographyDetail__c</picklist>
+        <values>
+            <fullName>Accesso agli atti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Certificazione esistenza%2Finesistenza fogna</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risanamento Ambientale nulla osta NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risanamento Ambientale nulla osta SI</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7391,6 +7411,41 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>IntendedUse__c</picklist>
+        <values>
+            <fullName>Alberghi%2Fpensioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attività di intratten%2E e altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completamento allacciamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NO DOM TEMPOR%2E %3E40kW-FIERA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ospedali%2Fcase di cura%2F</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stralcio di allac%2E - Uso cant%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>IsSameReasonComplaint__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -8772,7 +8827,7 @@
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
-            <fullName>D%E2%80%99ufficio</fullName>
+            <fullName>D%27ufficio</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9110,11 +9165,107 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>1102-Non domestico</fullName>
+            <fullName>1100-ACQUA --- Non definito ---</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>1101-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1102-Non domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1103-Attivita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1104-Scar%2E poz priv%2E civ%2E cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1105-Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1106-Cantiere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1107-Colonnetta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1108-Irriguo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1109-Comunale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1110-Ente pubblico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1111-Promiscuo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1112-Subfornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1113-Uso interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1114-Rete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1115-Scar poz priv%2Eciv no cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1116-Scar%2E acq reflue uso ind</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1117-Autobotte %28solo usi Hera%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1118-Scar ind no cont%2E ACQ%2BPOZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1119-Scar%2E ind%2Ele  cont%2E div</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1120-Scar%2E ind%2Ele no cont%2E div</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1121-Scar%2Epozzo priv%2E ind cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1122-Scar%2Epoz priv%2Eind%2Eno cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1123-Prel%2E pozzo priv%2E no fatt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1201-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1202-Non domestico</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9155,6 +9306,50 @@
         </values>
         <values>
             <fullName>13Z0-Grossisti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1401-Risc amb singoli</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1402-Risc AcquaIS - Raffr Sing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1403-Risc Amb centr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1404-Attivita produttive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1405-Risc AcquaIS-Raffr Centr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1406-Acqua calda Sing unità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1407-Acqua calda Centr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1408-Ospedalieri</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1409-Usi interni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1410-Solo Raffrescamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1411-Piscine e Palestre</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10302,6 +10497,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>SupplyUseType__c</picklist>
+        <values>
+            <fullName>ACQUEDOTTO CIVILE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ACQUEDOTTO INDUSTRIALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FOGNATURA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TELERISCALDAMENTO</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>SuspensionMotivation__c</picklist>
         <values>
             <fullName>Sospeso contatto cliente</fullName>
@@ -11009,6 +11223,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Rimozione Agevolazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rimozione Impianto</fullName>
             <default>false</default>
         </values>
@@ -11547,6 +11765,45 @@
         </values>
         <values>
             <fullName>013-Uso Condizionam%2E%2BRiscald%2E</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>UseSubCategory__c</picklist>
+        <values>
+            <fullName>Altri usi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso agricolo e zootecnico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso artigianale e commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso condominiale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico non residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso industriale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico disalimentabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico non disalimentabile</fullName>
             <default>false</default>
         </values>
     </picklistValues>

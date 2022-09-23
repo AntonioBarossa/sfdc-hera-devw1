@@ -12603,6 +12603,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Rimozione Agevolazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sconti Collettivi Pap</fullName>
             <default>false</default>
         </values>

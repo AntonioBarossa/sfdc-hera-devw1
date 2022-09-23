@@ -2300,6 +2300,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>QualityCallStatus__c</picklist>
+        <values>
+            <fullName>Attività Gestita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scadenza Gestita</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>QuickQuote__c</picklist>
         <values>
             <fullName>Non Validato</fullName>

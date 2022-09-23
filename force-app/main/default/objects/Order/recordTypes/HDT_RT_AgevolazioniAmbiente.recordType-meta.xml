@@ -2603,6 +2603,10 @@
 			<default>false</default>
 		</values>
 		<values>
+			<fullName>Creazione BP-CA</fullName>
+			<default>false</default>
+		</values>
+		<values>
 			<fullName>DA INVIARE</fullName>
 			<default>false</default>
 		</values>

@@ -66,7 +66,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Componenti residenti</value>
+        <value xsi:type="xsd:string">DOM_Componenti residenti</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
