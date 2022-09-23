@@ -1,5 +1,7 @@
+/** Query class for the Bp Ca Create Module */
 public with sharing class HDT_QR_BpCaCreate 
 {
+    /* This method queries all the information, starting from the input order, needed to generate the request */
     public List<Order> getRequestInformation(String orderId)
     {
         SObjectAccessDecision securityDecision = 
@@ -81,7 +83,10 @@ public with sharing class HDT_QR_BpCaCreate
         return securityDecision.getRecords();
     }
 
-
+    /* This method queries all orders with same Billing Profile (and Account) that need to be updated
+    * SaleId parameter is not used yet but it can be useful to eventually restrict the query to orders
+    * linked to the same Sale
+    */
     public List<Order> getOtherOrdersToUpdate(String orderId, String saleId, String billingProfileId)
     {
         SObjectAccessDecision securityDecision =

@@ -1,15 +1,23 @@
+/** This class contains all logic for the BP CA Module
+ * It exposes public methods that perform operations
+ * To create request, rearrange Sobjects to update
+ */
 public with sharing class HDT_UTL_BpCaCreate
 {
 
     private HDT_QR_BpCaCreate bpCaQuery = new HDT_QR_BpCaCreate();
     public final String SOBJ_KEY = 'sobj';
     public final String EVT_KEY = 'evt';
-
+    /** This method simply calls the private method
+     * To generate the request
+     */
     public String generateRequest(Order inputOrder, String causalCode)
     {
         return generateBpCaCreateRequest(inputOrder);
     }
-
+    /** This method is responsible of instancing Sobjects to be updated if the response is successful (Check the private method handleSobjectToUpdate)
+     * Create the KO Activity if the response fails
+     */
     public List<SObject> handleResponse(HttpResponse response, Order inputOrder)
     {
         List<SObject> result = new List<Order>();
@@ -30,6 +38,12 @@ public with sharing class HDT_UTL_BpCaCreate
 
         return result;
     }
+    /** This method rearrange SObjects for the update
+     * The method returns a Map<String, List<Object>> where the keys are the public variables SOBJ_KEY and EVT_KEY
+     * Since Account and Billing Profile need to be updated via the simple dml statement 
+     * And Orders need to be updated through a Platform Event 
+     * They are separated in order to be handled differently
+     */
     public Map<String, List<Object>> handleUpdate(List<SObject> sobjList)
     {
         Map<String, List<Object>> result = new Map<String, List<Object>>();
@@ -73,6 +87,11 @@ public with sharing class HDT_UTL_BpCaCreate
 
         return result;
     }
+    /** This method generates the request
+     * Queries all the information necessary to create the request from the HDT_QR_BpCaCreate class (check for field details)
+     * And then starts creating the request
+     * To create the request several methods have been created in order to handle every single JSONObject of the request
+     */
     private String generateBpCaCreateRequest(Order inputOrder)
     {
         String result = '';
@@ -84,6 +103,7 @@ public with sharing class HDT_UTL_BpCaCreate
         }
         return result;
     }
+    /* This method creates the main JSONObject of the request */
     private HDT_WRP_BpCaVariation generateMainBodyRequest(Order infoOrder)
     {
         HDT_WRP_BpCaVariation request = new HDT_WRP_BpCaVariation();
@@ -94,9 +114,10 @@ public with sharing class HDT_UTL_BpCaCreate
         request.nomeContatto = '';
         request.account = generateAccountBodyRequest(infoOrder);
         request.ordine = generateBillingProfileBodyRequest(infoOrder);
+
         return request;
-        
     }
+    /* This method creates the Account JSONObject of the request */
     private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationAccount generateAccountBodyRequest(Order infoOrder)
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationAccount request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationAccount();
@@ -118,6 +139,7 @@ public with sharing class HDT_UTL_BpCaCreate
 
         return request;
     }
+    /* This method creates the body for the Account Address JSONObject */
     private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzo generateAccountAddressBodyRequest(Order infoOrder)
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzo request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzo();
@@ -144,6 +166,7 @@ public with sharing class HDT_UTL_BpCaCreate
 
         return request;
     }
+    /* This method creates the body for the Billing Profile JSONObject*/
     private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationOrdine generateBillingProfileBodyRequest(Order infoOrder)
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationOrdine request = new  HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationOrdine();
@@ -162,6 +185,7 @@ public with sharing class HDT_UTL_BpCaCreate
 
         return request;
     }
+    /* This method creates the body for the bank information of the Billing Profile JSONObject */
     private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationBancari generateBillingProfileBankBodyRequest(Order infoOrder)
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationBancari request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationBancari();
@@ -179,6 +203,7 @@ public with sharing class HDT_UTL_BpCaCreate
 
         return request;
     }
+    /* This method creates the body for the Address information of the Billing Profile JSONObject */
     private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt generateBillingProfileAddressBodyRequest(Order infoOrder)
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt();
@@ -194,6 +219,7 @@ public with sharing class HDT_UTL_BpCaCreate
 
         return request;
     }
+     /* This method creates the body for the Divergent Subject information of the Billing Profile JSONObject */
     private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationDestinatarioDivergente generateBillingProfileDivergenteSubjectRequest(Order infoOrder)
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationDestinatarioDivergente request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationDestinatarioDivergente();
@@ -213,6 +239,7 @@ public with sharing class HDT_UTL_BpCaCreate
 
         return request;
     }
+     /* This method creates the body for the Divergent Subject Address information of the Billing Profile JSONObject */
     private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt generateBillingProfileDivergenteSubjectAddressRequest(Order infoOrder)
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt();
@@ -228,6 +255,7 @@ public with sharing class HDT_UTL_BpCaCreate
 
         return request;
     }
+     /* This method creates the body for the Billing information of the Billing Profile JSONObject */
     private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura generateBillingProfileFatturaRequest(Order infoOrder)
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura();
@@ -239,26 +267,47 @@ public with sharing class HDT_UTL_BpCaCreate
         return request;
 
     }
+    /* This method allow to safely parse into string fields passed to create the request */
     private String tryParse(Object field)
     {
         return field != null ? String.valueOf(field) : '';
     }
+    /* Custom transcodification: Since on the Org the picklist value has been created as "Persona Fisica" 
+    * while the web service requires "Persona fisica" 
+    * a transcondification is necessary 
+    */
     private String transcodeCustomerType(String customerType)
     {
         return customerType.equalsIgnoreCase('Persona Fisica') ? 'Persona fisica' : customerType;
     }
+    /* Custom transcodification: Since on the Org the picklist value has been created as Boolean
+    * while the web service requires 1 (if true) or blank 
+    * a transcondification is necessary 
+    */
     private String transcodeVatGroupJoined(String vatGroupJoined)
     {
         return vatGroupJoined.equalsIgnoreCase('true') ? '1' : '';
     }
+    /* Custom transcodification: Since on the Org the picklist value has been created as Boolean
+    * while the web service requires 'true' or blank 
+    * a transcondification is necessary 
+    */
     private String transcodeFlagAttivazPec(String flagAttivazPec)
     {
         return flagAttivazPec.equalsIgnoreCase('true') ? flagAttivazPec : '';
     }
+    /* Custom transcodification: Since the web service accepts only one phone number field
+    * it is necessary to discrimantes which one to send between mobilephone and phone
+    * with priority to mobilephone 
+    */
     private String transcodeDivergentSubjectPhone(String mobilePhone, String phone)
     {
         return String.isNotBlank(mobilePhone) ? mobilePhone : phone;
     }
+    /* Custom transcodification: Since on the Org the picklist value has been created with readable values
+    * while the web service requires a code 
+    * a transcondification is necessary 
+    */
     private String transcodeFatturaXml(String fatturaXml)
     {
         if(String.isBlank(fatturaXml))
@@ -280,6 +329,10 @@ public with sharing class HDT_UTL_BpCaCreate
             }
         }
     }
+    /* Custom transcodification: Since on the Org the picklist value has been created with readable values
+    * while the web service requires a code 
+    * a transcondification is necessary 
+    */
     private String transcodeModelloFattur(String modello)
     {
         if(String.isBlank(modello))
@@ -304,10 +357,14 @@ public with sharing class HDT_UTL_BpCaCreate
             }
         }
     }
+    /** This method instances the sobject to be update
+     * based on the input order and the result of the web service integration
+     */
     private List<SObject> handleSobjectToUpdate(Order inputOrder, HDT_WRP_BpCaCreateResponse response)
     {
         List<SObject> result = new List<SObject>();
         Order orderToUpdate = new Order(Id = inputOrder.Id);
+        /* If the customer code is blank the account needs to be updated */
         if(inputOrder.CustomerCode__c == null)
         {
             orderToUpdate.CustomerCode__c = response.data.codiceBP;
@@ -319,6 +376,7 @@ public with sharing class HDT_UTL_BpCaCreate
             result.add(billingProfileToUpdate);
             result.add(orderToUpdate);
         }
+        /* Otherwise only the Billing Profile needs to be updated */
         else
         {
             orderToUpdate.ContractAccountCode__c = response.data.codiceBP;
@@ -327,6 +385,7 @@ public with sharing class HDT_UTL_BpCaCreate
             result.add(billingProfileToUpdate);
             result.add(orderToUpdate);
         }
+        /* Other orders in progress with same Account and Billing Profile which have CustomerCode and ContractAccount fields blank need to be updated */
         List<Order> otherChildOrders = bpCaQuery.getOtherOrdersToUpdate(inputOrder.Id, inputOrder.Sale__c, inputOrder.BillingProfile__c);
         for(Order otherChild : otherChildOrders)
         {
@@ -344,6 +403,7 @@ public with sharing class HDT_UTL_BpCaCreate
 
         return result;
     }
+    /* This method creates the discard activity in case of integration failure or negative response */
     private void createActivityKo(Order inputOrder, String descrizioneScarto)
     {
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
@@ -360,7 +420,7 @@ public with sharing class HDT_UTL_BpCaCreate
 
         return;
     }
-
+    /* Wrapper Object for the Web Service Response */
     public class HDT_WRP_BpCaCreateResponse
     {
         public String status {get; set;}

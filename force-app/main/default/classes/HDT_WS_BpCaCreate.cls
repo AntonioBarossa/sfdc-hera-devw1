@@ -1,9 +1,10 @@
-/* Classe Che si occupa di eseguire la chiamata al servizio per la creazione del BP-CA 
-* Viene richiamata da Process Click sulla fase "Creazione BP-CA"
-* Chiama il servizio 
-* In caso di risposta positiva: Aggiorna Account, BillingProfile e tutti gli ordini in corso con stesso Account e Billing Profile e aggiorna la fase dell'order per l'invio pratica
-* In caso di risposta negativa: Crea activity sull'order per la gestione dello scarto
+/* This class calls the BP/CA creation web service exposed by mulesoft
+* This service is mandatory for "Acqua" and "Ambiente" commodity
+* Since CustomerCode__c on the account and ContractAccountCode__c on BillingProfile need to be populated
+* If the request is successful Account, Billing Profile and all orders that shares the same Account and/or Billing Profile are update
+* If the request fails a Discard Activity (wrts_prcgvr__Activity__c) is created to track the KO
 */
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_WS_BpCaCreate implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction 
 {
 
@@ -23,6 +24,10 @@ global inherited sharing class HDT_WS_BpCaCreate implements wrts_prcgvr.Interfac
         {
             request.setHeader('Accept','application/json');
             request.setHeader('Content-Type','application/json');
+            /* If needed is possible to send the request to a mock
+            * It is necessary to configure in the PClick callout
+            * the method "mock"
+            */
             if(method.equalsIgnoreCase('mock'))
             {
                 request.setEndpoint('https://demo4882803.mockable.io/createBpCa');
@@ -38,6 +43,10 @@ global inherited sharing class HDT_WS_BpCaCreate implements wrts_prcgvr.Interfac
 
             response = http.send(request);
         }
+        /**If request generation/send fails
+         * A KO is simulated in order to allow the server to create the 
+         * Discard Activity
+         */
         catch(Exception e)
         {
             HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse mockResponse = new HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse();
@@ -52,6 +61,9 @@ global inherited sharing class HDT_WS_BpCaCreate implements wrts_prcgvr.Interfac
             response.setBody(JSON.serialize(mockResponse));
             response.setStatusCode(500);
         }
+        /* Response Handling
+        * for further details check HDT_SRV_BpCaCreate
+        */
         if(response != null)
         {
             bpCaCreateSrv.handleResponse(response, (Order)inputSobj);
