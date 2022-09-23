@@ -57,6 +57,8 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
 
                 if(this.reminderMode){
                     this.cardTitle = 'Comunicazione con il Gestore - Sollecito';
+                    this.bodyMail = result.mailData.reminderBodyMail;
+                    this.mailReceiver = result.mailData.receiver;
                 } else {
                     this.cardTitle = 'Comunicazione con il Gestore';
                     result.templateList.forEach(li => {

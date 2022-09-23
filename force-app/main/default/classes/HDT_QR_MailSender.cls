@@ -19,7 +19,7 @@ public inherited sharing class HDT_QR_MailSender {
 
     public static List<EmailTemplate> getEmailTemplateByNameList(String templateName){
         return [
-            SELECT Id, Body, DeveloperName, FolderId, FolderName, IsActive, Name
+            SELECT Id, Body, DeveloperName, FolderId, FolderName, IsActive, Name, HtmlValue
             FROM EmailTemplate
             WHERE IsActive = true
             AND Name = :templateName

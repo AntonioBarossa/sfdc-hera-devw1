@@ -5,14 +5,15 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
     public static Boolean checkForReminderMail(Id recordId){
         List<EmailMessage> emailMessageList = new List<EmailMessage>();
         emailMessageList = HDT_QR_MailSender.getEmailMessageByCaseId(recordId);
-        return !(emailMessageList.size() == 0);
+        //return !(emailMessageList.size() == 0);
+        return true;
     }
 
     public static HDT_WRP_MailSender.HDT_WRP_Result getReminderMetadataHelper(Id recordId) {
 
         HDT_WRP_MailSender.HDT_WRP_Result mailSenderMetaData = new HDT_WRP_MailSender.HDT_WRP_Result();
         List<EmailTemplate> emailTemplateList = new List<EmailTemplate>();
-        emailTemplateList = HDT_QR_MailSender.getEmailTemplateByNameList('MyTemplate');
+        emailTemplateList = HDT_QR_MailSender.getEmailTemplateByNameList('COM-Sollecito');
 
         if(emailTemplateList.size() == 0){
             mailSenderMetaData.success = false;
@@ -33,7 +34,8 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         mailSenderMetaData.success = true;
         mailSenderMetaData.mailData.orgWideEmailAddressId = orgWideEmailAddressList[0].Id;
         mailSenderMetaData.mailData.sender = orgWideEmailAddressList[0].Address;
-        mailSenderMetaData.mailData.reminderBodyMail = emailTemplateList[0].Body;
+        mailSenderMetaData.mailData.reminderBodyMail = emailTemplateList[0].HtmlValue;
+        mailSenderMetaData.mailData.receiver = 'montorselli.daniele@gmail.com';
         mailSenderMetaData.isReminder = true;
         return mailSenderMetaData;
 
@@ -199,6 +201,8 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult caseResult;
 
             if(mailStructure.isReminder){
+                //caseResult = updateReminderCase(mailStructure.caseId);
+            } else {
                 caseResult = generateNewCase(mailStructure.caseId);
     
                 if(!caseResult.success){
@@ -206,9 +210,6 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
                     sendMailResult.message = caseResult.message;
                     return sendMailResult;
                 }
-
-            } else {
-                caseResult = updateReminderCase(mailStructure.caseId);
             }
 
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
