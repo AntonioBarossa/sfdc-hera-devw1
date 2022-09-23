@@ -296,51 +296,6 @@ public class HDT_SRV_DataEnrichmentPostSalesTst {
 		System.assertEquals('Uso domestico non residente', checkHandleSub , 'testHandleSubTyp FALLITO');
 		Test.stopTest();
     }
-
-    @isTest
-    static void testTransCodeSiNo(){
-        Test.startTest();
-        String checkZero = HDT_SRV_DataEnrichmentPostSales.transCodeSiNo('0');
-        System.assertEquals('No',checkZero,'testTransCodeSiNo0 Fallito');
-        String checkOne = HDT_SRV_DataEnrichmentPostSales.transCodeSiNo('1');
-        System.assertEquals('Si', checkOne, 'testTransCodeSiNo1 Fallito');
-        String checkTwo = HDT_SRV_DataEnrichmentPostSales.transCodeSiNo('2');
-        System.assertEquals('Si - Ridotta', checkTwo , 'testTransCodeSiNo2 Fallito');
-        Test.stopTest();
-   }
-
-   @isTest
-   static void testTransCodeDoubleOppositeToDecimal(){
-        Test.startTest();
-        String checkOpposite0 = HDT_SRV_DataEnrichmentPostSales.transCodeDoubleOppositeToDecimal('0.0000000');
-        System.assertEquals('Si',checkOpposite0,'testTransCodeDoubleOppositeDecimal0 Fallito');
-        String checkOpposite1 = HDT_SRV_DataEnrichmentPostSales.transCodeDoubleOppositeToDecimal('1');
-        System.assertEquals('No',checkOpposite1,'testTransCodeDoubleOppositeDecimal1 Fallito');
-        Test.stopTest();
-   }
-
-   @isTest
-   static void testTransCodeDoubleToString(){
-        Test.startTest();
-        String checkTransCodeString0 = HDT_SRV_DataEnrichmentPostSales.transCodeDoubleToString('0.0000000');
-        System.assertEquals('Esente',checkTransCodeString0,'testTransCodeDoubleString0 Fallito');
-        String checkTransCodeString1 = HDT_SRV_DataEnrichmentPostSales.transCodeDoubleToString('1.0000000');
-        System.assertEquals('Intera',checkTransCodeString1,'testTransCodeDoubleString1 Fallito');
-        String checkTransCodeString2 = HDT_SRV_DataEnrichmentPostSales.transCodeDoubleToString('2.0000000');
-        System.assertEquals('Ridotta',checkTransCodeString2,'testTransCodeDoubleString2 Fallito');
-        test.stopTest();
-
-   }
-   
-   @isTest
-   static void testAlignGaaDate(){
-        Test.startTest();
-        Date checkAlignGaaDatePrima = HDT_SRV_DataEnrichmentPostSales.alignGaaDate('19941117', '19921117');
-        System.assertEquals('1994-11-17',String.valueOf(checkAlignGaaDatePrima),'alignGaaTestPrima Fallito');
-        Date checkAlignGaaDateSeconda = HDT_SRV_DataEnrichmentPostSales.alignGaaDate('19941117', '19961117');
-        System.assertEquals('1996-11-17',String.valueOf(checkAlignGaaDateSeconda),'alignGaaTestPrima Fallito');
-        Test.stopTest();
-   }
    
     //FINE Test method per classe HDT_SRV_DataEnrichmentPostSales
   
