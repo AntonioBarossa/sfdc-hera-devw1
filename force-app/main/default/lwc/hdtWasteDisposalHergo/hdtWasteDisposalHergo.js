@@ -3,7 +3,7 @@ import HdtRecordEditFormFlow from 'c/hdtRecordEditFormFlow';
 
 export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow {
 
-    @api processType="Segnalazioni Hergo";
+    @api processType="Rifiuti Hergo";
     @api recordId;
     @api saveButton;
     @api objectName;
@@ -23,7 +23,8 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
     @api labelReadOnlySection;
     @api variantSaveButton;
     @api outputId;
-    
+    @api accountss;
+
     virtualOnChange(event){
         
     }

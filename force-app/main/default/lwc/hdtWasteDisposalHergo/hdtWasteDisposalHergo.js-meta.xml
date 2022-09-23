@@ -12,7 +12,7 @@
     <isExposed>true</isExposed>
     
     
-    <masterLabel>Advanced Record Edit Form for Screen </masterLabel>
+    <masterLabel>Waste Disposal Hergo</masterLabel>
     
     
     <description>This is a component extends the FormFlow</description>
@@ -86,7 +86,7 @@
             
             
             <property name="outputId" type="String" label="Output Id" description="Id of the created record" role="outputOnly"/>
-                        
+
         </targetConfig>
         
         
