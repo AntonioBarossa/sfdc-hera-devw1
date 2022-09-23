@@ -149,19 +149,18 @@
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
     <gender>Feminine</gender>
-    <label>Subtypology Of Use Table</label>
+    <label>Amministrazione Sottotipologia Uso</label>
     <nameField>
-        <label>Subtypology Of Use Name</label>
+        <label>Amministrazione Sottotipologia Uso Name</label>
         <type>Text</type>
     </nameField>
-    <pluralLabel>Subtypology Of Uses Table</pluralLabel>
+    <pluralLabel>Amministrazione Sottotipologia Uso</pluralLabel>
     <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
-    <startsWith>Vowel</startsWith>
     <visibility>Public</visibility>
 </CustomObject>

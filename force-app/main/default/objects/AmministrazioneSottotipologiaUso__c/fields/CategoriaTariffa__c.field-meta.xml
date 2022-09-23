@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Categoria_Tariffa__c</fullName>
+    <fullName>CategoriaTariffa__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
     <label>Categoria Tariffa</label>
@@ -14,7 +14,8 @@
         <isOptional>false</isOptional>
     </lookupFilter>
     <referenceTo>Product2</referenceTo>
-    <relationshipName>Subtypology_Of_Uses</relationshipName>
+    <relationshipLabel>Amministrazione Sottotipologia Uso</relationshipLabel>
+    <relationshipName>AmministrazioneSottotipologiaUso</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>

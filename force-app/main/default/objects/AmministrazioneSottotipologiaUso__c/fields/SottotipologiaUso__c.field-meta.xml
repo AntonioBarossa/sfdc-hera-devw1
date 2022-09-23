@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Sottotipologia_D_uso__c</fullName>
+    <fullName>SottotipologiaUso__c</fullName>
     <externalId>false</externalId>
-    <label>Sottotipologia D&apos;uso</label>
+    <label>Sottotipologia Uso</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
@@ -21,9 +21,9 @@
                 <label>Uso condominiale</label>
             </value>
             <value>
-                <fullName>Uso domestico non residen</fullName>
+                <fullName>Uso domestico non residente</fullName>
                 <default>false</default>
-                <label>Uso domestico non residen</label>
+                <label>Uso domestico non residente</label>
             </value>
             <value>
                 <fullName>Uso industriale</fullName>
@@ -31,9 +31,9 @@
                 <label>Uso industriale</label>
             </value>
             <value>
-                <fullName>Uso artigianale e commerc</fullName>
+                <fullName>Uso artigianale e commerciale</fullName>
                 <default>false</default>
-                <label>Uso artigianale e commerc</label>
+                <label>Uso artigianale e commerciale</label>
             </value>
             <value>
                 <fullName>Uso agricolo e zootecnico</fullName>
@@ -41,14 +41,14 @@
                 <label>Uso agricolo e zootecnico</label>
             </value>
             <value>
-                <fullName>Uso pubblico non disalime</fullName>
+                <fullName>Uso pubblico non disalimentabile</fullName>
                 <default>false</default>
-                <label>Uso pubblico non disalime</label>
+                <label>Uso pubblico non disalimentabile</label>
             </value>
             <value>
-                <fullName>Uso pubblico disalimentab</fullName>
+                <fullName>Uso pubblico disalimentabile</fullName>
                 <default>false</default>
-                <label>Uso pubblico disalimentab</label>
+                <label>Uso pubblico disalimentabile</label>
             </value>
             <value>
                 <fullName>Altri usi</fullName>

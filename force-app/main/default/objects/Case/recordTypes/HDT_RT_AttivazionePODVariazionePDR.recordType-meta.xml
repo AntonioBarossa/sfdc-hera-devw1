@@ -182,6 +182,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Bolletta per e-mail %2B Carta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cartaceo</fullName>
             <default>false</default>
         </values>
@@ -10379,6 +10383,10 @@
 		</values>
         <values>
             <fullName>Rimborso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimozione Agevolazione</fullName>
             <default>false</default>
         </values>
         <values>

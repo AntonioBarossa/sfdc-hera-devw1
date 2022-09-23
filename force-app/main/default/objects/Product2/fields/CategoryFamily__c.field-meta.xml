@@ -341,6 +341,11 @@
                 <isActive>false</isActive>
                 <label>Tre per te</label>
             </value>
+            <value>
+                <fullName>Nuova Impronta Zero 12 Mesi</fullName>
+                <default>false</default>
+                <label>Nuova Impronta Zero 12 Mesi</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -488,6 +488,27 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
     }
 
+    public void handleSelfReadings(SObject inputCase)
+    {
+        Set<String> fasiKo = new Set<String>{'Annullato', 'Validazione KO da DL'};
+        Set<String> fasiOk = new Set<String>{'Validazione OK da DL', 'Validazione OK DL simulata'};
+        Case currentCase = (Case) inputCase;
+        
+        try {
+            if(currentCase.ParentId != null){
+                Case parentCase = [SELECT Id, Type, Subprocess__c FROM Case where Id =: currentCase.ParentId WITH SECURITY_ENFORCED LIMIT 1];
+                if('Errore Stima Consumi'.equals(parentCase.Subprocess__c) && fasiKo.contains(currentCase.Phase__c)){
+                    HDT_UTL_Case.createActivity(currentCase.Id, '', 'CBS_CRP002__CONTATTARE_IL_CLIENTE_POSTSALES', 'Contattare il cliente');
+                }else if('Errore Stima Consumi'.equals(parentCase.Subprocess__c) && fasiOk.contains(currentCase.Phase__c)){
+                    parentCase.Phase__c = 'Da Inviare';
+                    update parentCase;
+                }
+            }
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG,'Exception--> '+e.getMessage());
+        }
+    }
+
     @Future
     private static void updateFuture(String serializedCase)
     {

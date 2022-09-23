@@ -370,6 +370,11 @@
     </fieldPermissions> 
     <fieldPermissions>
         <editable>true</editable>
+        <field>AbiCode__c.BankName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AmministrazioneFrodi__c.BpNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2758,6 +2763,46 @@
         <field>AlertConfiguration__c.IsSolChannelActive__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.Attivo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.CategoriaTariffa__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.CodiceCategoriaTariffa__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.DataFineValidita__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.DataInizioValidita__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.Societa__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.SottotipologiaUso__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.TipologiaUso__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
     <fieldPermissions>
         <editable>true</editable>
         <field>Asset.AccountId</field>
@@ -11287,6 +11332,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>HDT_ButtonDetails__mdt.HideForExtObj__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>HDT_CalcoloPreventivi__mdt.ComparePowReq__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12913,6 +12963,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>KpiTracking__c.LastBillPaymentStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LandRegistry__c.Case__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15643,6 +15698,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.QualityCall__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.QualityCallStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -27362,6 +27422,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.AgriculturalHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.CommercialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.IndustrialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.SupplySubtype__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.ActivationEleExternalDistributor__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -34453,6 +34533,15 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>AmministrazioneFrodi__c</object>
         <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>AmministrazioneSottotipologiaUso__c</object>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>

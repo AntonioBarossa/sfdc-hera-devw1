@@ -4,6 +4,17 @@
     <active>true</active>
     <label>HDT_RT_DatiCatastali_TARI</label>
     <picklistValues>
+        <picklist>CodeMissingRegistryData__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>DestinationUsage__c</picklist>
         <values>
             <fullName>1</fullName>
@@ -64,15 +75,4 @@
             <default>false</default>
         </values>
     </picklistValues>
-  <!--  <picklistValues>
-        <picklist>UnitType__c</picklist>
-        <values>
-            <fullName>F</fullName> 
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>T</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues> -->
 </RecordType>
