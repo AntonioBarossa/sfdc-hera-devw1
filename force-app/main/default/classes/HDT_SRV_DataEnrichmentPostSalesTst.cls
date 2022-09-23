@@ -296,21 +296,7 @@ public class HDT_SRV_DataEnrichmentPostSalesTst {
 		System.assertEquals('Uso domestico non residente', checkHandleSub , 'testHandleSubTyp FALLITO');
 		Test.stopTest();
     }
-
-    @isTest
-    static void testTransCodeSiNo0(){
-        Test.startTest();
-        String checkZero = HDT_SRV_DataEnrichmentPostSales.transCodeSiNo('0');
-        System.assertEquals('No',checkZero,'testTransCodeSiNo0 Fallito');
-        String checkOne = HDT_SRV_DataEnrichmentPostSales.transCodeSiNo('1');
-        System.assertEquals('Si', checkOne, 'testTransCodeSiNo1 Fallito');
-        String checkTwo = HDT_SRV_DataEnrichmentPostSales.transCodeSiNo('2');
-        System.assertEquals('Si - Ridotta', checkTwo , 'testTransCodeSiNo2 Fallito');
-        Test.stopTest();
-   }
-
-
-
+   
     //FINE Test method per classe HDT_SRV_DataEnrichmentPostSales
-
+  
 }
