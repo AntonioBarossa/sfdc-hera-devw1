@@ -722,6 +722,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         currentCase.Contract__c = contract?.Id;
                         currentCase.ServicePoint__c = sp.Id;
                         currentCase.BillingProfile__c = Contract?.BillingProfile__c;
+                        currentCase.Commodity__c = sp.CommoditySector__c;
                         sapContractCode = contract?.SAPContractCode__c;
                     }else {
                         throw new HDT_UTL_RichPassException('Non è stato possibile recuperare il Service Point', '04');
