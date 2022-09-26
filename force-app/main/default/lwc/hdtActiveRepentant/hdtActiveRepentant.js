@@ -199,7 +199,7 @@ export default class HdtActiveRepentant extends LightningElement {
             this.termsAdministration= terms;
             this.period = data[0];
         }else{
-            console.log("#getTablesConfig -> Data not found! " + JSON.stringify(error));
+            console.log("#getTablesConfig -> Data not found! ");
             this.skipCheck=true;
         }
     }
