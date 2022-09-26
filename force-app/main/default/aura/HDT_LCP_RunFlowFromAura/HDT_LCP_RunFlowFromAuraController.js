@@ -46,9 +46,9 @@
         var orderId = myPageRef.state.c__orderId;        
         // id dell'Interaction
         var interactionId = myPageRef.state.c__interactionId;
-
         //id dell'activity
         var activityId = myPageRef.state.c__activityId;
+        var documentPaymentMethod = myPageRef.state.c__documentPaymentMethod;
 
         //Gestione Risottomissione Annullamento
         let discardRework = undefined;
@@ -87,6 +87,7 @@
         console.log('# orderId -> '             + orderId);
         console.log('# interactionId -> '             + interactionId);
         console.log('# activityId -> '                  + activityId);
+        console.log('# documentPaymentMethod -> '             + documentPaymentMethod);
         console.log('# ----------------- #');
         
         var workspaceAPI = component.find("workspace");
@@ -226,6 +227,9 @@
         }        
         if(interactionId != null){
             inputVariables.push({ name : 'InteractionId', type : 'String', value : interactionId});
+        }
+        if(documentPaymentMethod != null){
+            inputVariables.push({ name : 'DocumentPaymentMethod', type : 'String', value : documentPaymentMethod});
         }
 
         console.log('## inputVariables -> ');

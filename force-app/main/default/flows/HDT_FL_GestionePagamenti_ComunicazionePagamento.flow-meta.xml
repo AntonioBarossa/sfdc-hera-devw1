@@ -2,9 +2,57 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
     <assignments>
+        <name>Assegna_Mod_Pag_VA</name>
+        <label>Assegna Mod Pag VA</label>
+        <locationX>50</locationX>
+        <locationY>1598</locationY>
+        <assignmentItems>
+            <assignToReference>ModalitaPagamento</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Virtual Account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Account_Erede_Beneficiario</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Titolare_Conto</name>
+        <label>Assegna Titolare Conto</label>
+        <locationX>50</locationX>
+        <locationY>1934</locationY>
+        <assignmentItems>
+            <assignToReference>BeneficiaryAccount.recordId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCaseAggiornato.Account.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CalcoloCodiceCausale</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Valori_Abi_Mod_Pagamento</name>
+        <label>Assegna Valori Abi - Mod Pagamento</label>
+        <locationX>182</locationX>
+        <locationY>1358</locationY>
+        <assignmentItems>
+            <assignToReference>AbiCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AbiCodeSelector.abi</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Bonifico_da_effettuare_verso_VA</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaPredefault</name>
         <label>AssegnaPredefault</label>
-        <locationX>512</locationX>
+        <locationX>924</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>CaseInput.Amount__c</assignToReference>
@@ -17,8 +65,8 @@
     <assignments>
         <name>AssegnaVariabili</name>
         <label>AssegnaVariabili</label>
-        <locationX>50</locationX>
-        <locationY>1238</locationY>
+        <locationX>380</locationX>
+        <locationY>2366</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -61,6 +109,34 @@
                 <elementReference>AmountDifference</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.IbanABI__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AbiCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.DocumentPaymentMethod__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ModalitaPagamento</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.AccountholderTypeBeneficiary__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TitolareConto</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.BeneficiaryAccount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BeneficiaryAccount.recordId</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiornamento_Case_Fine_Bozza</targetReference>
         </connector>
@@ -68,7 +144,7 @@
     <assignments>
         <name>AssegnaVariabili_0</name>
         <label>AssegnaVariabili</label>
-        <locationX>314</locationX>
+        <locationX>754</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
@@ -98,7 +174,7 @@
     <assignments>
         <name>AssegnaVariabili_0_0</name>
         <label>AssegnaVariabili</label>
-        <locationX>1106</locationX>
+        <locationX>1546</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>GetCaseNonBozza.Phase__c</assignToReference>
@@ -118,10 +194,156 @@
             <targetReference>Aggiornamento_Case_Fine_Bozza_0</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>ModalitaPagamentoNoVA</name>
+        <label>ModalitaPagamentoNoVA</label>
+        <locationX>314</locationX>
+        <locationY>1598</locationY>
+        <assignmentItems>
+            <assignToReference>ModalitaPagamento</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No Virtual Account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Account_Erede_Beneficiario</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <name>No</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>No_Virtual_Account</name>
+        <choiceText>No Virtual Account</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No Virtual Account</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Pagatore_Alternativo</name>
+        <choiceText>Pagatore Alternativo</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Pagatore Alternativo</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Si</name>
+        <choiceText>Si</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Si</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Stesso_Sottoscrittore</name>
+        <choiceText>Stesso Sottoscrittore</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Stesso Sottoscrittore</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Virtual_Account</name>
+        <choiceText>Virtual Account</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Virtual Account</stringValue>
+        </value>
+    </choices>
+    <decisions>
+        <name>Assegna_Account_Erede_Beneficiario</name>
+        <label>Assegna Account Erede Beneficiario</label>
+        <locationX>182</locationX>
+        <locationY>1814</locationY>
+        <defaultConnector>
+            <targetReference>CalcoloCodiceCausale</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Stesso_Sottoscrittore</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TitolareConto</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Stesso_Sottoscrittore</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Titolare_Conto</targetReference>
+            </connector>
+            <label>Is Stesso Sottoscrittore</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Bonifico_da_effettuare_verso_VA</name>
+        <label>Bonifico da effettuare verso VA?</label>
+        <locationX>182</locationX>
+        <locationY>1478</locationY>
+        <defaultConnector>
+            <targetReference>ModalitaPagamentoNoVA</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si_VA</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Bonifico_da_effettuare_verso_il_virtual_Account</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Si</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Mod_Pag_VA</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Canale_di_Pagamento</name>
+        <label>Canale di Pagamento?</label>
+        <locationX>380</locationX>
+        <locationY>1118</locationY>
+        <defaultConnector>
+            <targetReference>CalcoloCodiceCausale</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altro</defaultConnectorLabel>
+        <rules>
+            <name>Bonifico_BANCA</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato.ChannelOfPayment__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Banca BONIFICO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Comunicazione Pagamento</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Virtual_Account_0</targetReference>
+            </connector>
+            <label>Bonifico BANCA</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Case_In_Bozza_Question</name>
         <label>Case In Bozza?</label>
-        <locationX>809</locationX>
+        <locationX>1235</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Screen_Review_Dati_0</targetReference>
@@ -146,7 +368,7 @@
     <decisions>
         <name>Comunicazione_Pagamento_o_Doppi_Pagamenti_Incassi</name>
         <label>Comunicazione Pagamento o Doppi Pagamenti/Incassi?</label>
-        <locationX>182</locationX>
+        <locationX>567</locationX>
         <locationY>998</locationY>
         <defaultConnector>
             <targetReference>AssegnaVariabili_0</targetReference>
@@ -154,7 +376,7 @@
         <defaultConnectorLabel>Doppi Pagamenti/Incassi</defaultConnectorLabel>
         <rules>
             <name>Comunicazione_Pagamento</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>GetCaseAggiornato.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -162,8 +384,15 @@
                     <stringValue>Comunicazione Pagamento</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Promessa di Pagamento Ente</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>CalcoloCodiceCausale</targetReference>
+                <targetReference>Canale_di_Pagamento</targetReference>
             </connector>
             <label>Comunicazione Pagamento</label>
         </rules>
@@ -171,21 +400,21 @@
     <decisions>
         <name>Salva_In_Bozza_o_Conferma_0</name>
         <label>Salva In Bozza o Conferma?</label>
-        <locationX>512</locationX>
+        <locationX>924</locationX>
         <locationY>758</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_0_0.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_0.saveInDraft</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_0_0.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -200,14 +429,14 @@
             <name>Annulla_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_0_0.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_0.saveInDraft</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_0_0.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -250,8 +479,8 @@
     <recordLookups>
         <name>CalcoloCodiceCausale</name>
         <label>CalcoloCodiceCausale</label>
-        <locationX>50</locationX>
-        <locationY>1118</locationY>
+        <locationX>380</locationX>
+        <locationY>2246</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaVariabili</targetReference>
@@ -292,7 +521,7 @@
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>182</locationX>
+        <locationX>567</locationX>
         <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -313,7 +542,7 @@
     <recordLookups>
         <name>GetCaseNonBozza</name>
         <label>GetCaseNonBozza</label>
-        <locationX>1106</locationX>
+        <locationX>1546</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -334,7 +563,7 @@
     <recordUpdates>
         <name>Aggiorna_In_Lavorazione</name>
         <label>Aggiorna In Lavorazione</label>
-        <locationX>314</locationX>
+        <locationX>754</locationX>
         <locationY>1238</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -361,7 +590,7 @@
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
-        <locationX>512</locationX>
+        <locationX>924</locationX>
         <locationY>398</locationY>
         <connector>
             <targetReference>Inserire_altri_documenti_0_0_0</targetReference>
@@ -371,8 +600,8 @@
     <recordUpdates>
         <name>Aggiornamento_Case_Fine_Bozza</name>
         <label>Aggiornamento In Da Inviare</label>
-        <locationX>50</locationX>
-        <locationY>1358</locationY>
+        <locationX>380</locationX>
+        <locationY>2486</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
@@ -381,7 +610,7 @@
     <recordUpdates>
         <name>Aggiornamento_Case_Fine_Bozza_0</name>
         <label>Aggiornamento In Da Inviare</label>
-        <locationX>1106</locationX>
+        <locationX>1546</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Loading_Screen_0</targetReference>
@@ -391,13 +620,13 @@
     <screens>
         <name>Inserire_altri_documenti_0_0_0</name>
         <label>Inserire altri documenti?</label>
-        <locationX>512</locationX>
+        <locationX>924</locationX>
         <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Screen_Inserimento_Dati</targetReference>
+            <targetReference>Screen_Inserimento_Dati_0</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_2_0_0_0</name>
@@ -478,8 +707,8 @@
     <screens>
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
-        <locationX>50</locationX>
-        <locationY>1478</locationY>
+        <locationX>380</locationX>
+        <locationY>2606</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -509,7 +738,7 @@
     <screens>
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
-        <locationX>1106</locationX>
+        <locationX>1546</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -538,9 +767,9 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Screen_Inserimento_Dati</name>
+        <name>Screen_Inserimento_Dati_0</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>512</locationX>
+        <locationX>924</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -549,12 +778,12 @@
             <targetReference>Salva_In_Bozza_o_Conferma_0</targetReference>
         </connector>
         <fields>
-            <name>DisplayHeader</name>
+            <name>DisplayHeader_0</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>hdtRecordEditForm_0</name>
+            <name>hdtRecordEditForm_0_0</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -669,7 +898,7 @@
     <screens>
         <name>Screen_Review_Dati_0</name>
         <label>Screen Review Dati</label>
-        <locationX>1106</locationX>
+        <locationX>1546</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -771,8 +1000,159 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Virtual_Account_0</name>
+        <label>Virtual Account</label>
+        <locationX>182</locationX>
+        <locationY>1238</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Assegna_Valori_Abi_Mod_Pagamento</targetReference>
+        </connector>
+        <fields>
+            <name>Header</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Virtual_Account_0_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Virtual_Account_0_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>TitolareConto</name>
+                    <choiceReferences>Pagatore_Alternativo</choiceReferences>
+                    <choiceReferences>Stesso_Sottoscrittore</choiceReferences>
+                    <dataType>String</dataType>
+                    <defaultSelectedChoiceReference>Stesso_Sottoscrittore</defaultSelectedChoiceReference>
+                    <fieldText>Titolare del conto o Beneficiario</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>BeneficiaryAccount</name>
+                    <extensionName>flowruntime:lookup</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value>
+                            <stringValue>Case</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>label</name>
+                        <value>
+                            <stringValue>Account Erede/Beneficiario</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>fieldApiName</name>
+                        <value>
+                            <stringValue>BeneficiaryAccount__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>required</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>TitolareConto</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>Pagatore_Alternativo</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Virtual_Account_0_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Bonifico_da_effettuare_verso_il_virtual_Account</name>
+                    <choiceReferences>Si</choiceReferences>
+                    <choiceReferences>No</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Bonifico da effettuare verso il Virtual Account?</fieldText>
+                    <fieldType>RadioButtons</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>AbiCodeSelector</name>
+            <extensionName>c:hdtAbiCodeSelector</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelPreviousButton</name>
+                <value>
+                    <stringValue>Indietro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
-        <locationX>683</locationX>
+        <locationX>1109</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Case_In_Bozza_Question</targetReference>
@@ -782,7 +1162,7 @@
     <subflows>
         <name>Annullamento_Prestazione_0</name>
         <label>Annullamento Prestazione</label>
-        <locationX>578</locationX>
+        <locationX>1018</locationX>
         <locationY>878</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -804,6 +1184,13 @@
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>AbiCode</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>AddDocuemnts</name>
         <dataType>Boolean</dataType>
@@ -845,6 +1232,20 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>DocumentSelected__c</objectType>
+    </variables>
+    <variables>
+        <name>MetodoPagamento</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ModalitaPagamento</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>nextLabel</name>

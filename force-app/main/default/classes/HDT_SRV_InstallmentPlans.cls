@@ -123,7 +123,22 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         System.debug(LoggingLevel.DEBUG, 'SRV_InstallmentPlans Case--> '+currentCase);
         System.debug(LoggingLevel.DEBUG, 'SRV_InstallmentPlans Documetns--> '+documents);
 
-        String depositPaymentMode = currentCase.DepositPaymentMode__c == 'Paperless' ? 'P' : '';
+        //String depositPaymentMode = currentCase.DepositPaymentMode__c == 'Paperless' ? 'P' : '';
+        String depositPaymentMode = '';
+        switch on currentCase.DepositPaymentMode__c {
+            when 'Paperless' {
+                depositPaymentMode = 'P';
+            }
+            when 'Bonifico Paperless' {
+                depositPaymentMode = 'B';
+            }
+            when 'Acconto Assistiti' {
+                depositPaymentMode = 'A';
+            }
+            when else {
+                depositPaymentMode = ' ';
+            }
+        }
         Decimal total;
         if(currentCase.DepositAmount__c != null){
             total = currentCase.Amount__c - currentCase.DepositAmount__c;
