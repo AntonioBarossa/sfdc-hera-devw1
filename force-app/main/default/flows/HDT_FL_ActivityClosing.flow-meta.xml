@@ -43,7 +43,7 @@
     <assignments>
         <name>Assign_Activity</name>
         <label>Assign Activity</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>158</locationY>
         <assignmentItems>
             <assignToReference>activity.Id</assignToReference>
@@ -101,13 +101,6 @@
                 <elementReference>$User.LoginChannel__c</elementReference>
             </value>
         </assignmentItems>
-        <!--assignmentItems>
-            <assignToReference>activity.Place__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Station__c</elementReference>
-            </value>
-        </assignmentItems-->
         <connector>
             <targetReference>Get_Activity</targetReference>
         </connector>
@@ -129,9 +122,25 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssignEsitoBpCa</name>
+        <label>AssignEsitoBpCa</label>
+        <locationX>842</locationX>
+        <locationY>1094</locationY>
+        <assignmentItems>
+            <assignToReference>EsitoBpCa</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Chiudi_Activity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>HDT_CloseActivity_AND_HDT_CloseManualActivity</name>
         <label>HDT_CloseActivity AND HDT_CloseManualActivity</label>
-        <locationX>710</locationX>
+        <locationX>842</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>activity.wrts_prcgvr__Status__c</assignToReference>
@@ -154,7 +163,7 @@
     <assignments>
         <name>HDT_CloseDistributorComunicationAssign</name>
         <label>HDT_CloseDistributorComunicationAssign</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>activity.wrts_prcgvr__Status__c</assignToReference>
@@ -226,7 +235,7 @@
     <decisions>
         <name>ActivityType_0</name>
         <label>ActivityType</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Chiudi_Activity</targetReference>
@@ -291,11 +300,26 @@
             </connector>
             <label>Delibera</label>
         </rules>
+        <rules>
+            <name>Creazione_Bp_CA_KO</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Activity.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>KO creazione BP CA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignEsitoBpCa</targetReference>
+            </connector>
+            <label>Creazione Bp CA KO</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Check_Esito_Attivit</name>
         <label>Check Esito Attività</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>1430</locationY>
         <defaultConnector>
             <targetReference>Screen_Finale</targetReference>
@@ -352,11 +376,26 @@
             </connector>
             <label>Aggiorna Ordine (Dati Discordanti)</label>
         </rules>
+        <rules>
+            <name>CheckBpCa</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>EsitoBpCa</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Aggiorna_Order_Dati_Discordanti</targetReference>
+            </connector>
+            <label>Aggiorna Ordine (KO BP CA)</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Tipo_Completa_Attivit</name>
         <label>Tipo Completa Attività</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>HDT_CloseActivity_AND_HDT_CloseManualActivity</targetReference>
@@ -422,7 +461,7 @@
     <recordLookups>
         <name>Get_Activity</name>
         <label>Get Activity</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -467,17 +506,41 @@
     <recordUpdates>
         <name>Chiudi_Activity</name>
         <label>Chiudi Activity</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>1310</locationY>
         <connector>
             <targetReference>Check_Esito_Attivit</targetReference>
         </connector>
         <inputReference>activity</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>Copy_1_of_Aggiorna_Order_Dati_Discordanti</name>
+        <label>Copy 1 of Aggiorna Order (Dati Discordanti)</label>
+        <locationX>710</locationX>
+        <locationY>1550</locationY>
+        <connector>
+            <targetReference>Screen_Finale</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Activity.Order__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <stringValue>KO BP CA Risolto</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Order</object>
+    </recordUpdates>
     <screens>
         <name>Screen_Finale</name>
         <label>Screen Finale</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>1766</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -493,7 +556,7 @@
     <screens>
         <name>Screen_Finale_0</name>
         <label>Screen Finale</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>518</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -509,7 +572,7 @@
     <screens>
         <name>Set_Note</name>
         <label>Set Note</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>854</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -653,7 +716,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>320</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Assign_Activity</targetReference>
@@ -695,6 +758,16 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>wrts_prcgvr__Activity__c</objectType>
+    </variables>
+    <variables>
+        <name>EsitoBpCa</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>recordId</name>
