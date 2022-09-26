@@ -47,6 +47,9 @@
         // id dell'Interaction
         var interactionId = myPageRef.state.c__interactionId;
 
+        //id dell'activity
+        var activityId = myPageRef.state.c__activityId;
+
         //Gestione Risottomissione Annullamento
         let discardRework = undefined;
         if (myPageRef.state.c__discardRework === true || myPageRef.state.c__discardRework === 'true'){
@@ -83,6 +86,7 @@
         console.log('# compatibile -> '             + compatibile);
         console.log('# orderId -> '             + orderId);
         console.log('# interactionId -> '             + interactionId);
+        console.log('# activityId -> '                  + activityId);
         console.log('# ----------------- #');
         
         var workspaceAPI = component.find("workspace");
@@ -158,18 +162,21 @@
                 //Gestione Risottomissione Annullamento
                 if (discardRework !== undefined){
                     inputVariables.push({ name : 'discardRework', type : 'Boolean', value : discardRework });
+                    inputVariables.push({ name : 'activityId', type : 'String', value : activityId });
                 } 
             }
 
             if(processType === 'Annullamento da activity'){
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : 'Annullamento prestazione' });
                 inputVariables.push({ name : 'isCheckOwnerOk', type : 'Boolean', value : isUserActivity });
+                inputVariables.push({ name : 'activityId', type : 'String', value : activityId });
             }
 
             if(processType === 'Ripristina fase da activity'){
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : 'Ripristina fase' });
                 inputVariables.push({ name : 'isCheckOwnerOk', type : 'Boolean', value : isUserActivity });
                 inputVariables.push({ name : 'discardRework', type : 'Boolean', value : discardRework });
+                inputVariables.push({ name : 'activityId', type : 'String', value : activityId });
             }
 
             component.set('v.enableRefresh', true);
