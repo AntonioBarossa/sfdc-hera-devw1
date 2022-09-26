@@ -35,7 +35,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         mailSenderMetaData.mailData.orgWideEmailAddressId = orgWideEmailAddressList[0].Id;
         mailSenderMetaData.mailData.sender = orgWideEmailAddressList[0].Address;
         mailSenderMetaData.mailData.reminderBodyMail = emailTemplateList[0].HtmlValue;
-        mailSenderMetaData.mailData.receiver = 'montorselli.daniele@gmail.com';
+        mailSenderMetaData.mailData.receiver = 'example@mail.com';
         mailSenderMetaData.isReminder = true;
         return mailSenderMetaData;
 

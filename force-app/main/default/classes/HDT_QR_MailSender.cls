@@ -5,6 +5,7 @@ public inherited sharing class HDT_QR_MailSender {
             SELECT Id
             FROM Folder
             WHERE Name = :folderName
+            WITH SECURITY_ENFORCED
         ];
     }
 
@@ -14,6 +15,7 @@ public inherited sharing class HDT_QR_MailSender {
             FROM EmailTemplate
             WHERE IsActive = true
             AND FolderId = :folderId
+            WITH SECURITY_ENFORCED
         ];
     }
 
@@ -23,6 +25,7 @@ public inherited sharing class HDT_QR_MailSender {
             FROM EmailTemplate
             WHERE IsActive = true
             AND Name = :templateName
+            WITH SECURITY_ENFORCED
         ];
     }
 
@@ -31,6 +34,7 @@ public inherited sharing class HDT_QR_MailSender {
             SELECT Id, Address, DisplayName
             FROM OrgWideEmailAddress
             WHERE DisplayName = :displayName
+            WITH SECURITY_ENFORCED
             LIMIT 1
         ];
     }
@@ -41,6 +45,7 @@ public inherited sharing class HDT_QR_MailSender {
             FROM EmailTemplate
             WHERE IsActive = true
             AND Id = :templateId
+            WITH SECURITY_ENFORCED
         ];
     }
 
@@ -49,6 +54,7 @@ public inherited sharing class HDT_QR_MailSender {
         //    SELECT Email_Template_Name__c, Email__c, DeveloperName, MasterLabel
         //    FROM HDT_EmailComunicazioneGestore__mdt
         //    WHERE Email_Template_Name__c = :emailTemplateName
+        //    WITH SECURITY_ENFORCED
         //    LIMIT 1
         //].Email__c;
         return null;
@@ -60,6 +66,7 @@ public inherited sharing class HDT_QR_MailSender {
             FROM EmailMessage
             WHERE RelatedToId = :caseId
             AND Subject = 'Comunicazione dal gestore'
+            WITH SECURITY_ENFORCED
         ];
     }
 
