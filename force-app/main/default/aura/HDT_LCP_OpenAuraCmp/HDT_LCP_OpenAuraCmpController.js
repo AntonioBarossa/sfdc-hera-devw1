@@ -151,7 +151,7 @@
                         //Gestione Owner Activity
                         c__IsUserActivity:isUserActivity,
                         //activityId per annullamento Attività
-                        c__activityId:activityId
+                        c__activityId:activityId,
                         //introdotto per Paperless
                         c__documentPaymentMethod:documentPaymentMethod
                     }
