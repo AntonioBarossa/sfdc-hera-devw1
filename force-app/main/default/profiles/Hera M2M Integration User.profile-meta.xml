@@ -395,6 +395,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>TechnicalHolidaysCalendar__c.Year__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalHolidaysCalendar__c.HolidayDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>TownATOTable__c.ATO__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -34525,6 +34535,15 @@
         <layout>Reading__c-HDT_LetturaAcqua</layout>
         <recordType>Reading__c.HDT_RT_LetturaAcqua</recordType>
     </layoutAssignments>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>TechnicalHolidaysCalendar__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
