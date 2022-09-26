@@ -14,8 +14,8 @@ public with sharing class HDT_LC_AdvancedMeterSearch {
             HDT_WRP_MeterSearchResponse response = new HDT_WRP_MeterSearchResponse();
             String body = JSON.serialize(request);
             response = HDT_SRV_MeterSearch.executeCalloutRequest(body);
-            System.debug(LoggingLevel.DEBUG, JSON.serialize(response.packageResponse.data.etOut));
-            return JSON.serialize(response.packageResponse.data.etOut);
+            System.debug(LoggingLevel.DEBUG, JSON.serialize(response.data.etOut));
+            return JSON.serialize(response.data.etOut);
 
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());

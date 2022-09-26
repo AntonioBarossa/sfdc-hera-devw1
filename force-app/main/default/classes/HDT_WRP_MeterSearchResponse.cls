@@ -1,21 +1,11 @@
 public with sharing class HDT_WRP_MeterSearchResponse {
 
-    public Integer responseCode;
-    public String responseStatus;
-    public HDT_WRP_MeterSearchResponseRoot packageResponse;
-
-    public HDT_WRP_MeterSearchResponse() {
-        this.packageResponse = new HDT_WRP_MeterSearchResponseRoot();
-    }
-
-    public class HDT_WRP_MeterSearchResponseRoot{
-        public String status;
-        public String correlationId;
-        public String timestamp;
-        public HDT_WRP_MeterSearchData data;
-        public String result;
-        public String message;
-    }
+    public String status;
+    public String correlationId;
+    public String timestamp;
+    public String result;
+    public String message;
+    public HDT_WRP_MeterSearchData data;
 
     public class HDT_WRP_MeterSearchData{
         public String esito;

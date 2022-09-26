@@ -16,11 +16,9 @@ public with sharing class HDT_WS_MeterSearch {
             System.debug(LoggingLevel.DEBUG, 'response: ' + res.getBody());
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
             if (responseBodyMap.containsKey('data')) {
-                System.debug(LoggingLevel.DEBUG, JSON.serialize(responseBodyMap.get('data')));
-                response = (HDT_WRP_MeterSearchResponse) JSON.deserialize(JSON.serialize(responseBodyMap.get('data')), HDT_WRP_MeterSearchResponse.class);
+                System.debug(LoggingLevel.DEBUG, JSON.serialize(responseBodyMap));
+                response = (HDT_WRP_MeterSearchResponse) JSON.deserialize(JSON.serialize(responseBodyMap), HDT_WRP_MeterSearchResponse.class);
             }
-            response.responseCode = res.getStatusCode();
-            response.responseStatus =  res.getStatus();
 
         } catch (CalloutException ce) {
             System.debug(LoggingLevel.DEBUG, 'CalloutException: ' + ce.getStackTraceString());
