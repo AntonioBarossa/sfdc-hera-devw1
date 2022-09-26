@@ -2732,7 +2732,7 @@
         </fields>
         <fields>
             <name>NIZ12_GAS_OUT_TEXTBOX_1</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche di {!FormulaPriceF0} che le descrivo di seguito sono valide per un periodo di 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo di fornitura da lei scelto, è pari a {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c} €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo di fornitura da lei scelto, è pari a {!FormulaPriceF0} €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
