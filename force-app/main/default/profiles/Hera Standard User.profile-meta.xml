@@ -518,6 +518,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>TechnicalHolidaysCalendar__c.Year__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalHolidaysCalendar__c.HolidayDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>TownATOTable__c.ATO__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -34679,6 +34689,15 @@
         <uiLoginFlowType>VisualWorkflow</uiLoginFlowType>
         <useLightningRuntime>true</useLightningRuntime>
     </loginFlows>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>TechnicalHolidaysCalendar__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
