@@ -16,7 +16,7 @@
         <duplicateRuleFilterItems>
             <field>LeadSource</field>
             <operation>notEqual</operation>
-            <value>Creazione manuale, DBU</value>
+            <value>Creazione manuale, DBU, Other</value>
             <sortOrder>2</sortOrder>
             <table>Lead</table>
         </duplicateRuleFilterItems>
