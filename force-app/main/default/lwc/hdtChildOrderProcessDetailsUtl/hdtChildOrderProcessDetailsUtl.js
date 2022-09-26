@@ -396,7 +396,7 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                 new fieldData('Potenza disponibile','PowerAvailable__c', this.typeVisibility('ele'), false, true, '',''),
                 new fieldData('Potenza richiesta','PowerRequested__c', this.typeVisibility('ele'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', '',''),
                 new fieldData('Tensione','VoltageLevel__c', this.typeVisibility('ele'), false, true, '',''),
-                new fieldData('Recapito telefonico','DisconnectibilityPhone__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('Recapito telefonico','DisconnectibilityPhone__c', this.typeVisibility('ele') || this.typeVisibility('gas'), false, true, '',''),
                 new fieldData('Conferma contratto cliente','ConfirmCustomerContract__c', this.typeVisibility('ele') && (this.order.Account.RecordType.DeveloperName !== 'HDT_RT_Business' && this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'), false, false, '',''),
                 new fieldData('Residente all\'indirizzo di Fornitura','Resident__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Misuratore','MeterSN__c', this.typeVisibility('both'), false, true, '',''),
