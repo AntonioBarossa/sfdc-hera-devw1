@@ -14,6 +14,7 @@ public class HDT_WRP_MailSender {
         @AuraEnabled public String sender;
         @AuraEnabled public String receiver;
         @AuraEnabled public String reminderBodyMail;
+        @AuraEnabled public Integer reminderMailCounter;
     }
 
     public class HDT_WRP_PicklistObj {

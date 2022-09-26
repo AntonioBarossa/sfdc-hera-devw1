@@ -4,7 +4,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
 
     public static Boolean checkForReminderMail(Id recordId){
         List<EmailMessage> emailMessageList = new List<EmailMessage>();
-        emailMessageList = HDT_QR_MailSender.getEmailMessageByCaseId(recordId);
+        emailMessageList = HDT_QR_MailSender.getEmailMessage(recordId, 'Comunicazione dal gestore');
         //return !(emailMessageList.size() == 0);
         return true;
     }
@@ -30,12 +30,16 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             return mailSenderMetaData;
         }
 
+        List<EmailMessage> emailMessageList = new List<EmailMessage>();
+        emailMessageList = HDT_QR_MailSender.getEmailMessage(recordId, 'Sollecito');
+
         mailSenderMetaData.mailData = new HDT_WRP_MailSender.HDT_WRP_MailData();
         mailSenderMetaData.success = true;
         mailSenderMetaData.mailData.orgWideEmailAddressId = orgWideEmailAddressList[0].Id;
         mailSenderMetaData.mailData.sender = orgWideEmailAddressList[0].Address;
         mailSenderMetaData.mailData.reminderBodyMail = emailTemplateList[0].HtmlValue;
         mailSenderMetaData.mailData.receiver = 'example@mail.com';
+        mailSenderMetaData.mailData.reminderMailCounter = emailMessageList.size();
         mailSenderMetaData.isReminder = true;
         return mailSenderMetaData;
 
@@ -195,6 +199,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
 
         try{			
 
+            String subjectString = '';
             HDT_WRP_MailSender.HDT_WRP_MailStructure mailStructure;
             mailStructure = (HDT_WRP_MailSender.HDT_WRP_MailStructure)JSON.deserialize(mailStructureJson, HDT_WRP_MailSender.HDT_WRP_MailStructure.class);
 
@@ -202,7 +207,9 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
 
             if(mailStructure.isReminder){
                 //caseResult = updateReminderCase(mailStructure.caseId);
+                subjectString= 'Sollecito';
             } else {
+                subjectString= 'Comunicazione dal gestore';
                 caseResult = generateNewCase(mailStructure.caseId);
     
                 if(!caseResult.success){
@@ -215,7 +222,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			mail.setOrgWideEmailAddressId(Id.valueOf(mailStructure.orgWideAddId));
             mail.setToAddresses(new String[]{mailStructure.toAddress});
-			mail.setSubject('Comunicazione dal gestore');
+			mail.setSubject(subjectString);
             mail.setHtmlBody(mailStructure.bodyMail);
             mail.setWhatId(caseResult.caseId);
 			Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });

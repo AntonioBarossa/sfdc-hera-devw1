@@ -27,6 +27,7 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
         toAddress: ''
     };
     newCaseId;
+    reminderMailCounter;
 
     @wire(CurrentPageReference)
     getStateParameters(currentPageReference) {
@@ -56,9 +57,10 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
                 this.mailStructure.isReminder = result.isReminder;
 
                 if(this.reminderMode){
-                    this.cardTitle = 'Comunicazione con il Gestore - Sollecito';
+                    this.cardTitle = 'Comunicazione con il Gestore - Sollecito (' + result.mailData.reminderMailCounter + ')';
                     this.bodyMail = result.mailData.reminderBodyMail;
                     this.mailReceiver = result.mailData.receiver;
+                    this.reminderMailCounter = result.mailData.reminderMailCounter;
                 } else {
                     this.cardTitle = 'Comunicazione con il Gestore';
                     result.templateList.forEach(li => {
@@ -169,7 +171,21 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
     }
 
     sendReminderMail(event){
-        this.sendMailToApex();
+
+        if(this.reminderMailCounter>=3){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'ATTENZIONE',
+                    message: 'Sono già stati inviati 3 solleciti.',
+                    variant: 'warning',
+                    mode: 'sticky'
+                })
+            );
+        } else {
+            this.spinner = true;
+            //this.sendMailToApex();
+        }
+
     }
 
     textChange(event){

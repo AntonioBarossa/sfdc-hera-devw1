@@ -60,12 +60,12 @@ public inherited sharing class HDT_QR_MailSender {
         return null;
     }
 
-    public static List<EmailMessage> getEmailMessageByCaseId(Id caseId){
+    public static List<EmailMessage> getEmailMessage(Id caseId, String Subject){
         return [
             SELECT EmailTemplateId, ParentId, RelatedToId, Status, Subject
             FROM EmailMessage
             WHERE RelatedToId = :caseId
-            AND Subject = 'Comunicazione dal gestore'
+            AND Subject = :Subject
             WITH SECURITY_ENFORCED
         ];
     }
