@@ -33,6 +33,7 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
          HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
          feedBillingCountry(Trigger.new);
          createKpiExtension();
+         HDT_UTL_Account.handleFiscalCodeUppercase(Trigger.new);
     }
  
     protected override void beforeUpdate() {
@@ -41,6 +42,7 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
         checkAccountName();
         createKpiExtension();
         setIndividualsOwnerIds();
+        HDT_UTL_Account.handleFiscalCodeUppercase(Trigger.new);
     }
 
     public override void afterUpdate(){
