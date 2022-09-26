@@ -26,7 +26,7 @@ public with sharing class HDT_UTL_Reclami
     }
     private List<HDT_SuspensionDays__mdt> getExpirationDateConfigurations(String process)
     {
-        return [SELECT Id,SuspensionDays__c,ObjectName__c FROM HDT_SuspensionDays__mdt WHERE Process__c = :process WITH SECURITY_ENFORCED];
+        return [SELECT Id,SuspensionDays__c,ObjectName__c FROM HDT_SuspensionDays__mdt WHERE (Process__c = :process OR Process__c = 'Default') WITH SECURITY_ENFORCED];
     }
     private List<HDT_SuspensionDays__mdt> getExpirationDateConfigurationsAmbiente()
     {
