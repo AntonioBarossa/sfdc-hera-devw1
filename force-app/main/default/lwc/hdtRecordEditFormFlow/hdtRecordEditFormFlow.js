@@ -379,12 +379,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         : this.secondColumn.filter(element => element['FieldName'] === fieldName);
     }
 
-    virtualValidate(event){
+    virtualOnChange(event){
         return;
     }
 
     handleChange(event){
-        this.virtualValidate(event);
+        this.virtualOnChange(event);
         //Reclami customizations
         this.complaintsLogic();
         //PianoRata customizations
