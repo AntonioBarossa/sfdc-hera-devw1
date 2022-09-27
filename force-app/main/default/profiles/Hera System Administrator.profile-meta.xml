@@ -9572,6 +9572,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contract.Iniziativa__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contract.InterestLockDescription__c</field>
         <readable>true</readable>
     </fieldPermissions>
