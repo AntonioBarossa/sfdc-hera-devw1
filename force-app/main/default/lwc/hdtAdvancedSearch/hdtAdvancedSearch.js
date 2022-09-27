@@ -67,6 +67,8 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
     @api isRicercainSAP=false;
     postSales=false;
+    isSerialNumber = false;
+    openMeterSearchModal = false;
 
     connectedCallback() {
         permissionForFlagContract().then(data =>{
@@ -458,6 +460,13 @@ export default class HdtAdvancedSearch extends LightningElement {
         if(this.queryType==='datiCatastali'){
             this.openModalDatiCatastali();
         }
+        
+        if (this.queryType==='serialnumber'){
+            this.isSerialNumber = true;
+        } else {
+            this.isSerialNumber = false;
+        }
+        
         this.apiSearchButtonStatus= true;
     }
 
@@ -516,17 +525,23 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     searchInSAP(){
         
-        this.callApi(this.searchInputValue, 'searchSap').then(() => {
-            this.preloading = true;
-            this.closeModal();
-            if(this.serviceRequestId == null || (this.serviceRequestId != null && !this.isIncompatible)){
-                this.dispatchEvent(new CustomEvent('servicepointselection', {
-                    detail: this.rowToSend
-                }));
-                this.preloading = false;
-            }
-            this.confirmButtonDisabled = true;
-        });
+        if(this.isSerialNumber){
+            console.log('Set openMeterSearchModal -> True');
+            this.openMeterSearchModal = true;
+        }else{
+            this.callApi(this.searchInputValue, 'searchSap').then(() => {
+                this.preloading = true;
+                this.closeModal();
+                if(this.serviceRequestId == null || (this.serviceRequestId != null && !this.isIncompatible)){
+                    this.dispatchEvent(new CustomEvent('servicepointselection', {
+                        detail: this.rowToSend
+                    }));
+                    this.preloading = false;
+                }
+                this.confirmButtonDisabled = true;
+            });
+        }
+
     }
 
     callApi(event, isFrom){
@@ -757,5 +772,18 @@ export default class HdtAdvancedSearch extends LightningElement {
         else{
             this.isSuperUser=false;
         }
+    }
+
+    handleCloseMeterSearch(){
+        console.log('Set openMeterSearchModal -> False');
+        this.openMeterSearchModal = false;
+    }
+
+    handleServicePoinSelectionMeter(event){
+        this.dispatchEvent(new CustomEvent('servicepointselection', {
+            detail: event.detail
+        }));
+        this.handleCloseMeterSearch();
+        this.preloading = false;
     }
 }

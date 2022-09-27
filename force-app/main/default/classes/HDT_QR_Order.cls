@@ -819,6 +819,19 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+    public List<Order> getRecordsByAccountIdInPhases(String accountId, List<String> phases ){
+        return [
+            SELECT
+            Id,
+            Phase__c 
+            FROM
+            Order
+            WHERE AccountId = :accountId
+            AND Phase__c IN :phases
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     
     public List<Order> getRecordsByAccountIdCopContrattoFirmato(String accountId){
         return [

@@ -136,7 +136,10 @@
             <div class="slds-backdrop slds-backdrop_open"></div>
         </div>
     </div>
-
+    
+    <div if:true={openMeterSearchModal}>
+        <c-hdt-advanced-meter-search searchinputvalue={searchInputValue} onclosemetersearch={handleCloseMeterSearch} onservicepointselectionmeter={handleServicePoinSelectionMeter}></c-hdt-advanced-meter-search>
+    </div>
 
 
     <div if:true={openmodelDatiCatastali} style="height: auto;">
