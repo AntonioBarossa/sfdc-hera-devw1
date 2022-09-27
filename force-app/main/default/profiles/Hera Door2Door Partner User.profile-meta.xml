@@ -4057,6 +4057,11 @@
 	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
+		<field>AtecoMatrix__c.RonchiDescription__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
 		<field>AtecoMatrix__c.RonchiSubcategory__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
