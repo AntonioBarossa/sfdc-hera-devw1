@@ -748,6 +748,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             currentCase.Cluster__c = 'Morosità';
                             currentCase.DistributorFiscalCode__c = codFisDistr;
                             currentCase.DistributorVatNumber__c = pivaDistr;
+                            //Campo riutilizzato per indicare a SAP che la pratica è stata creata da cruscotto
+                            currentCase.PartialOutcome__c = 'Y';
                             if(dataDecorrenza != null){
                                 try{
                                     HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
@@ -789,8 +791,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             }
                             currentCase.Phase__c = 'Bozza';
                             currentCase.Status = 'New';
-                            //Campo riutilizzato per indicare a SAP che la pratica è stata creata da cruscotto
-                            currentCase.PartialOutcome__c = 'Y';
+                            
                             if(currentCase.Type.equalsIgnoreCase('Sospensione Fornitura'))
                             {
                                 currentCase.NotCancellable__c = true;

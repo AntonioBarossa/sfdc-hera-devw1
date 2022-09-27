@@ -1098,7 +1098,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     for(wrts_prcgvr__Activity__c activity : activities)
                     {
                         if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)){
-                            activity.wrts_prcgvr__Status__c = 'Chiusa';
+                            activity.wrts_prcgvr__Status__c = 'Annullata';
                             activitiesToUpdate.add(activity);
                         }
                     }

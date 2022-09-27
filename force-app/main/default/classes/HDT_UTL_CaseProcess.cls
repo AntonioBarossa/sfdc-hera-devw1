@@ -184,7 +184,7 @@ public with sharing class HDT_UTL_CaseProcess {
                                                 activityId = activity.OwnerId;
                                             }
                                             activitiesOwnerId.add(activityId);
-                                            activity.wrts_prcgvr__Status__c = 'Chiusa';
+                                            activity.wrts_prcgvr__Status__c = 'Annullata';
                                             //Notification Fire to activity's owner
                                             try{
                                                 if(customNotif != null && activitiesOwnerId.size() > 0){
