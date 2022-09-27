@@ -258,7 +258,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         queryString += ' FROM Case ';
         queryString += 'WHERE Id = \'' + caseIdToClone + '\'';
 
-        if(objRes.isCreateable()){
+        if(objRes.isAccessible()){
             caseList = Database.query(queryString);
         }
 
