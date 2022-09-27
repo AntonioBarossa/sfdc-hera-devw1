@@ -35,6 +35,10 @@
                 <behavior>Readonly</behavior>
                 <field>ClientCategory__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Contract__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -116,6 +120,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>TotalToPay__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>BillNumber__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

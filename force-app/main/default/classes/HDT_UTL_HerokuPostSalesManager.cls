@@ -498,12 +498,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         //close activity Acconto scaduto non pagato da gestire if exist
                         List<wrts_prcgvr__Activity__c> existingAct = [SELECT Id, Approved__c, case__c, owner.name, wrts_prcgvr__Description__c, Name FROM wrts_prcgvr__Activity__c WHERE Case__c = :currentcase.Id AND wrts_prcgvr__Description__c=:typeAcc];
                         if(existingAct.size()>0){
-                            HDT_UTL_Scarti.closeDiscardActivity(existingAct[0].Id);
+                            HDT_UTL_Scarti.updateCloseDiscardActivity(existingAct[0].Id);
                         }
                     }
                 currentCase.Phase__c = type; 
             }
-            if(String.isNotBlank(type) && recordCase.Type.equalsIgnoreCase('Comunicazione Pagamento') && type.equalsIgnoreCase('Pratica Gestita')){
+            if(String.isNotBlank(type) && (recordCase.Type.equalsIgnoreCase('Comunicazione Pagamento') || recordCase.Type.equalsIgnoreCase('Promessa di Pagamento Ente')) && type.equalsIgnoreCase('Pratica Gestita')){
                 currentCase.Phase__c = 'Completata';
             }
             if(String.isNotBlank(message)){
@@ -747,8 +747,6 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             currentCase.Cluster__c = 'Morosità';
                             currentCase.DistributorFiscalCode__c = codFisDistr;
                             currentCase.DistributorVatNumber__c = pivaDistr;
-                            //Campo riutilizzato per indicare a SAP che la pratica è stata creata da cruscotto
-                            currentCase.PartialOutcome__c = 'Y';
                             if(dataDecorrenza != null){
                                 try{
                                     HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
@@ -790,7 +788,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             }
                             currentCase.Phase__c = 'Bozza';
                             currentCase.Status = 'New';
-                            
+                            //Campo riutilizzato per indicare a SAP che la pratica è stata creata da cruscotto
+                            currentCase.PartialOutcome__c = 'Y';
                             if(currentCase.Type.equalsIgnoreCase('Sospensione Fornitura'))
                             {
                                 currentCase.NotCancellable__c = true;
