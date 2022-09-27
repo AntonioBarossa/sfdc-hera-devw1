@@ -33103,6 +33103,21 @@
         <field>Case.SurveySource__c</field>
         <readable>false</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Case.BillingCategory__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Case.MissingDueAmount__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Case.MissingDue__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
 <fieldPermissions>
         <editable>false</editable>
         <field>Contact.Activity__c</field>
