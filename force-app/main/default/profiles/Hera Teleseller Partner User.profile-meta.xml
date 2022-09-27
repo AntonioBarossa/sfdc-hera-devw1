@@ -486,6 +486,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>TechnicalHolidaysCalendar__c.Year__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalHolidaysCalendar__c.HolidayDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>TownATOTable__c.ATO__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -767,6 +777,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.NumberOfCommunityMembers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.AgriculturalHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.CommercialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.IndustrialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.SupplySubtype__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2740,6 +2770,46 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AlertConfiguration__c.IsSolChannelActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.Attivo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.CategoriaTariffa__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.CodiceCategoriaTariffa__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.DataFineValidita__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.DataInizioValidita__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.Societa__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.SottotipologiaUso__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.TipologiaUso__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6029,11 +6099,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.CaseSource__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.CategoryCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8289,11 +8354,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.CaseSource__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.CommunicationType__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9562,6 +9622,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.GlobalMigrationKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.Iniziativa__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11137,6 +11202,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>HDT_ButtonDetails__mdt.Tab__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_ButtonDetails__mdt.HideForExtObj__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -34459,12 +34529,30 @@
         <useLightningRuntime>true</useLightningRuntime>
     </loginFlows>
     <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>TechnicalHolidaysCalendar__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>AmministrazioneFrodi__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>AmministrazioneSottotipologiaUso__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

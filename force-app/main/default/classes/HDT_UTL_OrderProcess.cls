@@ -405,11 +405,20 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         {
             List<Order> ordersHeroku = new List<Order>();
             List<Order> ordersSiebel = new List<Order>();
-
+            List<Order> ordersNonEnergy = new List<Order>();
             for(Order o:filtered){
                 if(o.sale__r.isTransition__c==true){
                     ordersSiebel.add(o);
-                }else{
+                }
+                /* Gli ordini Ambiente ed Acqua hanno la necessita' di avere il BP e il CA prima di poter essere inviati verso Heroku
+                * e' stata percio' introdotta una fase intermedia "Creazione BP-CA" per permettere la chiamata verso SAP per la registrazione
+                * delle due entita' e aggiornarle con i relativi codici
+                */
+                else if(o.Commodity__c.equalsIgnoreCase('Acqua') || o.Commodity__c.equalsIgnoreCase('Ambiente'))
+                {
+                    ordersNonEnergy.add(o);
+                }
+                else{
                     ordersHeroku.add(o);
                 }
             }
@@ -417,6 +426,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Esportazione VS Siebel ','Documentazione Validata','Esportazione VS Siebel ');
             vasOrdersToUpdate.putAll(
                 updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS')
+            );
+            vasOrdersToUpdate.putAll(
+                updateChildOrdersPhase(ordersNonEnergy, 'Documentazione Validata', 'Creazione BP-CA','Documentazione Validata','Comunicazione Motore VAS')
             );
             if(!vasOrdersToUpdate.isEmpty()){
                 system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(vasOrdersToUpdate));
@@ -672,6 +684,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agentCodeIsMonitoringList();
         Order notManagedOrder = new Order();
         Boolean isNotManaged = false;
+        /* Temporanea Nuova Attivazione */
         for(Order childOrder : parentOrderIds)
         {
             if(childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt')
@@ -685,6 +698,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             isNotManaged = isNotManaged(notManagedOrder);
         }
         for (Order childOrder : parentOrderIds) {
+            /* Gestione VAS */
             if(childOrder.recordType.Developername == 'HDT_RT_VAS' && childOrder.Phase__c == currentPhase){
                 String phase = HDT_UTL_VasManagement.updateVasPhase( newVasPhase, childOrder );
                 Order orderToUpdate = new Order(
@@ -704,6 +718,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         }
             }
             else{
+                /* Gestione Transitorio */
                 if('Esportazione VS Siebel ' == newPhase){
                     if (childOrder.Phase__c == currentPhase) {
                         Order orderToUpdate = new Order(
@@ -717,7 +732,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 else{
                     if (childOrder.Phase__c == currentPhase
                         //@frpanico 06/09/2021 added voltura condition
-                        && childOrder.ProcessType__c != 'Voltura'
+                        /* Solo la voltura Energy deve rimanere nella fase Documentazione Validata, per il non energy deve procedere verso Creazione BP-CA */
+                        && (childOrder.ProcessType__c != 'Voltura')
                         && childOrder.ImplantType__c != '1107-Colonnetta' ) {
                         Order orderToUpdate = new Order(
                             Id = childOrder.Id,
@@ -728,7 +744,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
         }
-        //orderSrv.updateRecords(childOrdersToUpdate);
+        orderSrv.updateRecords(childOrdersToUpdate);
         return vasOrdersToUpdate;
     }
 
@@ -807,7 +823,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     || newOrder.Phase__c=='Preventivo Accettato' 
                     || newOrder.Phase__c=='Comunicazione Motore VAS' 
                     || newOrder.Phase__c=='Documentazione da firmare'
-                    || newOrder.Phase__c=='Ammissibilità OK')){
+                    || newOrder.Phase__c=='Ammissibilità OK'
+                    || newOrder.Phase__c=='Creazione BP-CA')){
                     newOrder.Phase__c = newOrder.TecnicalPhase__c;
                     newOrder.TecnicalPhase__c = null;
                 }

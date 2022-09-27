@@ -233,9 +233,17 @@ public inherited sharing class HDT_QR_ServicePoint {
 	}
 
 	@SuppressWarnings('PMD.UnusedLocalVariable')
-	public List<ServicePoint__c> getServicePointsByDatiCatastali(List<String> datiCatastaliList, String fields ) {
+	public List<ServicePoint__c> getServicePointsByDatiCatastali(String datiCatastali, String fields ) {
 
-		List<LandRegistry__c> landRegistries = Database.query('SELECT ServicePoint__c FROM LandRegistry__c WHERE RegistryCity__c IN :datiCatastaliList AND RegistryCityCode__c IN :datiCatastaliList AND UrbanSection__c IN :datiCatastaliList AND Sheet__c IN :datiCatastaliList AND ParticleSheet__c IN :datiCatastaliList AND Subaltern__c  IN :datiCatastaliList LIMIT 50 ');
+		Map<String,String> mapDatiCatastali = (Map<String,String>)JSON.deserialize(datiCatastali, Map<String,String>.class);
+		String condition = '';
+		for ( String field : mapDatiCatastali.keySet() ) { 
+			condition += !string.isBlank(mapDatiCatastali.get(field)) ? field + '__c = \'' + mapDatiCatastali.get(field) + '\' AND ' : '';
+		}
+		condition += ' ServicePoint__c != null ';
+		System.debug('Condition: ' + condition);
+
+		List<LandRegistry__c> landRegistries = Database.query('SELECT ServicePoint__c FROM LandRegistry__c WHERE ' + condition + ' LIMIT 50 ');
 		System.debug('I Land Registry sono: ' +landRegistries);
 		List<String> servicePointIds = new List<String>();
 		for (LandRegistry__c landRegistry : landRegistries){

@@ -26,7 +26,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     particleSheetValue;
     subalternValue;
     queryType = 'pod';
-    datiCatastali = [];
+    datiCatastali = {RegistryCity: '', RegistryCityCode: '', UrbanSection: '', Sheet: '', ParticleSheet: '', Subaltern: ''};
     tableData = [];
     tableColumns = [];
     isLoaded = false;
@@ -67,6 +67,8 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
     @api isRicercainSAP=false;
     postSales=false;
+    isSerialNumber = false;
+    openMeterSearchModal = false;
 
     connectedCallback() {
         permissionForFlagContract().then(data =>{
@@ -278,40 +280,55 @@ export default class HdtAdvancedSearch extends LightningElement {
     }     
 
     addValuesToDatiCatastaliList() {
-        this.datiCatastali = [];
-        if(this.registryCityValue !== null){
-            this.datiCatastali.push(this.registryCityValue);
+        this.searchInputValue = '';
+        if(this.registryCityValue){
+            this.datiCatastali.RegistryCity = this.registryCityValue;
+            this.searchInputValue += this.registryCityValue + ' ';
         }
-        if(this.registryCityCodeValue !== null){
-            this.datiCatastali.push(this.registryCityCodeValue);
+        if(this.registryCityCodeValue){
+            this.datiCatastali.RegistryCityCode = this.registryCityCodeValue;
+            this.searchInputValue += this.registryCityCodeValue + ' ';
         }
-        if(this.urbanSectionValue !== null){
-            this.datiCatastali.push(this.urbanSectionValue);
+        if(this.urbanSectionValue){
+            this.datiCatastali.UrbanSection = this.urbanSectionValue;
+            this.searchInputValue += this.urbanSectionValue + ' ';
         }
-        if(this.sheetValue !== null){
-            this.datiCatastali.push(this.sheetValue);
+        if(this.sheetValue){
+            this.datiCatastali.Sheet = this.sheetValue;
+            this.searchInputValue += this.sheetValue + ' ';
         }
-        if(this.particleSheetValue !== null){
-            this.datiCatastali.push(this.particleSheetValue);
+        if(this.particleSheetValue){
+            this.datiCatastali.ParticleSheet = this.particleSheetValue;
+            this.searchInputValue += this.particleSheetValue + ' ';
         }
-        if(this.subalternValue !== null){
-            this.datiCatastali.push(this.subalternValue);
+        if(this.subalternValue){
+            this.datiCatastali.Subaltern = this.subalternValue;
+            this.searchInputValue += this.subalternValue + ' ';
         }
         if(this.registryCityValue == null && this.registryCityCodeValue == null || this.registryCityValue == '' && this.registryCityCodeValue == '' || this.registryCityValue == null && this.registryCityCodeValue == '' || this.registryCityValue == '' && this.registryCityCodeValue == null){
-            this.showToast("Attenzione!Inserire almeno un valore tra Comune catastale e Codice comune catastale");
-        }else{
+            this.showToast("Attenzione! Inserire almeno un valore tra Comune catastale e Codice comune catastale");
+        }
+        else if(this.sheetValue == null || this.sheetValue == ''){
+            this.showToast("Attenzione! Il campo Foglio è obbligatorio");
+        }
+        else if(this.particleSheetValue == null || this.particleSheetValue == ''){
+            this.showToast("Attenzione! Il campo Particella è obbligatorio");
+        }
+        else{
             this.closeModalDatiCatastali();
         }
-        let newVariable = (this.datiCatastali).join();
+        console.log('this.datiCatastali' + JSON.stringify(this.datiCatastali) );
+/*         let newVariable = (this.datiCatastali).join();
         let result = newVariable.replace(/,/g,' ');
-        this.searchInputValue = result;
+        this.searchInputValue = result; */
+        console.log('this.searchInputValue' + this.searchInputValue );
         this.submitButtonStatus = false;
-        this.registryCityValue = '';
+/*         this.registryCityValue = '';
         this.registryCityCodeValue = '';
         this.urbanSectionValue = '';
         this.sheetValue = '';
         this.particleSheetValue = '';
-        this.subalternValue ='';
+        this.subalternValue =''; */
     } 
 
     closeModal() {
@@ -443,6 +460,13 @@ export default class HdtAdvancedSearch extends LightningElement {
         if(this.queryType==='datiCatastali'){
             this.openModalDatiCatastali();
         }
+        
+        if (this.queryType==='serialnumber'){
+            this.isSerialNumber = true;
+        } else {
+            this.isSerialNumber = false;
+        }
+        
         this.apiSearchButtonStatus= true;
     }
 
@@ -501,17 +525,23 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     searchInSAP(){
         
-        this.callApi(this.searchInputValue, 'searchSap').then(() => {
-            this.preloading = true;
-            this.closeModal();
-            if(this.serviceRequestId == null || (this.serviceRequestId != null && !this.isIncompatible)){
-                this.dispatchEvent(new CustomEvent('servicepointselection', {
-                    detail: this.rowToSend
-                }));
-                this.preloading = false;
-            }
-            this.confirmButtonDisabled = true;
-        });
+        if(this.isSerialNumber){
+            console.log('Set openMeterSearchModal -> True');
+            this.openMeterSearchModal = true;
+        }else{
+            this.callApi(this.searchInputValue, 'searchSap').then(() => {
+                this.preloading = true;
+                this.closeModal();
+                if(this.serviceRequestId == null || (this.serviceRequestId != null && !this.isIncompatible)){
+                    this.dispatchEvent(new CustomEvent('servicepointselection', {
+                        detail: this.rowToSend
+                    }));
+                    this.preloading = false;
+                }
+                this.confirmButtonDisabled = true;
+            });
+        }
+
     }
 
     callApi(event, isFrom){
@@ -575,7 +605,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             isBlacklist=data;
         
         if(isBlacklist == false){
-        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalfilter,isSuperUser:this.isSuperUser, datiCatastali:this.datiCatastali}).then(data => {
+        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalfilter,isSuperUser:this.isSuperUser, datiCatastali: JSON.stringify(this.datiCatastali)}).then(data => {
             this.preloading = false;
             if (data.length > 0) {
                 
@@ -742,5 +772,18 @@ export default class HdtAdvancedSearch extends LightningElement {
         else{
             this.isSuperUser=false;
         }
+    }
+
+    handleCloseMeterSearch(){
+        console.log('Set openMeterSearchModal -> False');
+        this.openMeterSearchModal = false;
+    }
+
+    handleServicePoinSelectionMeter(event){
+        this.dispatchEvent(new CustomEvent('servicepointselection', {
+            detail: event.detail
+        }));
+        this.handleCloseMeterSearch();
+        this.preloading = false;
     }
 }

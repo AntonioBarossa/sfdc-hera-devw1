@@ -1246,17 +1246,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>CaseSource__c</picklist>
-        <values>
-            <fullName>Gestore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Utente</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Category__c</picklist>
         <values>
             <fullName>Accedi</fullName>
@@ -1951,6 +1940,10 @@
             <fullName>Ambiente</fullName>
             <default>false</default>
         </values>
+        <values>
+			<fullName>Segnalazioni</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Annullamento</fullName>
             <default>false</default>
@@ -10350,7 +10343,7 @@
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
-            <fullName>D%E2%80%99ufficio</fullName>
+            <fullName>D'ufficio</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12553,7 +12546,7 @@
 		<values>
 			<fullName>Ambiente annullo richiesta senza appuntamento</fullName>
 			<default>false</default>
-		</values>
+		</values>        
 		<values>
 			<fullName>Conferimento Centri di Raccolta</fullName>
 			<default>false</default>
