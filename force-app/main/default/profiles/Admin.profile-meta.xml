@@ -6285,11 +6285,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.CaseSource__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.CategoryCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8561,11 +8556,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.AbnormalReadingDate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.CaseSource__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
