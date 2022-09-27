@@ -5,7 +5,7 @@
     <formula>IF(
 	AND(
 		Owner:User.Profile.Name = &apos;Hera Teleseller Partner User&apos;,
-		SUBSTITUTE($UserRole.DeveloperName, &apos;DirigentePartner&apos;, &apos;&apos;) = Owner:User.Contact.Account.Name,
+		$UserRole.DeveloperName = Owner:User.UserRole.DeveloperName,
 		NOT(ISNULL(Owner:User.ContactId))
 	),
 	true,
