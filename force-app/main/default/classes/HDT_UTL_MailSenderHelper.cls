@@ -243,7 +243,9 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
     public static Case retrieveCaseForClone(Id caseIdToClone){
 
         List<String> sObjectFields = new List<String>{};
+        List<Case> caseList = new List<Case>();
         SObjectType objtype = Schema.getGlobalDescribe().get('Case');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
         sObjectFields.addAll(objtype.getDescribe().fields.getMap().keySet());
 
         String queryString = '';
@@ -256,7 +258,9 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         queryString += ' FROM Case ';
         queryString += 'WHERE Id = \'' + caseIdToClone + '\'';
 
-        List<Case> caseList = Database.query(queryString);
+        if(objRes.isCreateable()){
+            caseList = Database.query(queryString);
+        }
 
         return caseList[0];
     }
