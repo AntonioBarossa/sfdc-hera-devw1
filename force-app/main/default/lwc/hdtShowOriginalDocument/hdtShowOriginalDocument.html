@@ -1,17 +1,17 @@
 <template>
     <!-- Workaround necessario per valorizzare il recordId se l'lwc è richiamato da quick action (release Summer '21)
          Source: https://salesforce.stackexchange.com/q/347055 -->
-    <div style="display: none;">
+    <!--<div style="display: none;">
         {recordId}
-    </div>
-
-    <lightning-quick-action-panel header="Recupero documento in corso...">
+    </div>-->
+    
+   <lightning-quick-action-panel header="Recupero documento in corso...">
         <div class="slds-align_absolute-center slds-p-top_large slds-is-relative">
             <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
         </div>
       <div slot="footer">
         <lightning-button variant="brand" label="Annulla" onclick={closeAction}></lightning-button>
       </div>
-    </lightning-quick-action-panel>
+   </lightning-quick-action-panel>
 
   </template>

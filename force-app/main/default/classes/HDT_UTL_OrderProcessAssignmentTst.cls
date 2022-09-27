@@ -91,18 +91,25 @@ private class HDT_UTL_OrderProcessAssignmentTst {
     process.Commodity__c = 'Gas';
     process.ContractStatus__c = 'null';
     process.ExistActivityDatiDiscordanti__c = false;
+    process.ExistActivityDatiDiscordantiNew__c = 'All';
     process.ExistActivitySwitchRipristinatorio__c = true;
+    process.ExistActivitySwitchRipristinatorioNew__c = 'All';
     process.IsAmendment__c = false;
     process.IsChangeUse__c = false;
+    process.IsChangeUseNew__c = 'All';
     process.IsReseller__c = false;
+    process.IsResellerNew__c = 'All';
     process.MarketOrigin__c = 'Default;FUI;Libero;Regolamentato;Salvaguardia';
     process.OngoingSwitchOut__c = false;
+    process.OngoingSwitchOutNew__c = 'All';
     process.PlugPresence__c = false;
     process.PowerChange__c = false;
     process.ProcessName__c = 'Test Process';
     process.RecordTypeName__c = 'HDT_RT_SwitchIn';
     process.isOwnAccount__c = 'Si';
+    process.isOwnAccountNew__c = 'All';
     process.isSTG__c = false;
+    process.isSTGNew__c = 'All';
 
     insert process;
   }
