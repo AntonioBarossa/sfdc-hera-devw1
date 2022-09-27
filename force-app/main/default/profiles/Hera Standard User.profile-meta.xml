@@ -6736,6 +6736,21 @@
         <field>Order.DocusignExpirationDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.BillingCategory__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.MissingDue__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.RonchiDescription__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.DocusignExpirationDate__c</field>

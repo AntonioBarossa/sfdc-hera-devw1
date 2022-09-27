@@ -4793,6 +4793,21 @@
         <field>Order.CampaignEleggibilityGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.BillingCategory__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.MissingDue__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.RonchiDescription__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>opportunity.CampaignEleggibilityGroup__c</field>
