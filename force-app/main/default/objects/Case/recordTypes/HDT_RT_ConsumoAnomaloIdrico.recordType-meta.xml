@@ -10430,11 +10430,11 @@
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
-            <fullName>D'ufficio</fullName>
+            <fullName>Da gestore</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Da contribuente</fullName>
+            <fullName>Da utente</fullName>
             <default>false</default>
         </values>
     </picklistValues>
