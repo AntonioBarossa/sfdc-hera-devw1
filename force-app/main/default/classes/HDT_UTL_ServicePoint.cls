@@ -170,6 +170,7 @@ public with sharing class HDT_UTL_ServicePoint {
                 if(response.data.datiCatastali!=null && response.data.datiCatastali.size()>0 ) {
                     List <LandRegistry__c> landLst = new List<LandRegistry__c>();
                     try {     
+                        Id idLand = qrRecordType.getRecordTypeIdByName('HDT_RT_DatiCatastali_PraticaTARI');
                         for(HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_DatiCatastaliResponseObject l : response.data.datiCatastali){
 
                             LandRegistry__c landReg = new LandRegistry__c();
@@ -184,10 +185,10 @@ public with sharing class HDT_UTL_ServicePoint {
                             landReg.ParticleSheet__c = l.particella;
                             landReg.Title__c = l.qualificaTitolareUtenza;
                             landReg.RegistrySurface__c = Decimal.valueOf(l.superficeCatastale);
-                            landReg.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_DatiCatastali_PraticaTARI');
+                            landReg.RecordTypeId = idLand;
                             landLst.add(landReg);
                         }
-                        insert landLst;
+                        HDT_UTL_DatabaseService.insertSObject(landLst);
 
                     } catch (Exception e) { 
                         System.debug(LoggingLevel.DEBUG,' Arricchimaneto LandRegistry Fallito: ' + e.getMessage());
