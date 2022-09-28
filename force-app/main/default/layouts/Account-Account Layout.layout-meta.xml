@@ -12,7 +12,7 @@
         <label>Account Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>CompanyOwner__c</field>
             </layoutItems>
             <layoutItems>
@@ -20,7 +20,7 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>VirtualSAPIban__c</field>
             </layoutItems>
             <layoutItems>
@@ -30,15 +30,15 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>CustomerMarking__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Category__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>FiscalCode__c</field>
             </layoutItems>
             <layoutItems>
@@ -55,7 +55,7 @@
         <label>Indirizzo</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>BillingAddress</field>
             </layoutItems>
         </layoutColumns>
@@ -69,11 +69,11 @@
         <label>Informazioni aggiuntive</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>ContactReason__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>InterestProduct__c</field>
             </layoutItems>
         </layoutColumns>
@@ -100,7 +100,7 @@
                 <field>CreatedById</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>ParentId</field>
             </layoutItems>
         </layoutColumns>
@@ -126,14 +126,8 @@
         <fields>Name</fields>
         <fields>ParentId</fields>
         <relatedLists>
-            <fields>CONTRACT.CONTRACT_NUMBER</fields>
             <relatedList>RelatedContractList</relatedList>
         </relatedLists>
-        <!-- <relatedLists>
-            <fields>CONTACT.FULL_NAME</fields>
-            <fields>ACCCONRELATION.ROLES</fields>
-            <relatedList>RelatedAccountContactRelationList</relatedList>
-        </relatedLists> -->
     </miniLayout>
     <platformActionList>
         <actionListContext>Record</actionListContext>
@@ -181,7 +175,8 @@
         <fields>CAMPAIGN.STATUS</fields>
         <relatedList>RelatedAccountCampaignList</relatedList>
     </relatedLists>
-    <relatedLists><!--Start  HRAWRM-258   14-09-2021 Dom -->
+    <relatedLists>
+        <customButtons>SBQQ__RenewContracts</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>SAPContractCode__c</fields>
@@ -191,7 +186,7 @@
         <fields>CONTRACT.START_DATE</fields>
         <fields>CONTRACT.END_DATE</fields>
         <relatedList>RelatedContractList</relatedList>
-    </relatedLists><!--End  HRAWRM-258   14-09-2021  -->
+    </relatedLists>
     <relatedLists>
         <fields>CONTACT.FULL_NAME</fields>
         <fields>ACCCONRELATION.ROLES</fields>
