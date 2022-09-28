@@ -405,11 +405,20 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         {
             List<Order> ordersHeroku = new List<Order>();
             List<Order> ordersSiebel = new List<Order>();
-
+            List<Order> ordersNonEnergy = new List<Order>();
             for(Order o:filtered){
                 if(o.sale__r.isTransition__c==true){
                     ordersSiebel.add(o);
-                }else{
+                }
+                /* Gli ordini Ambiente ed Acqua hanno la necessita' di avere il BP e il CA prima di poter essere inviati verso Heroku
+                * e' stata percio' introdotta una fase intermedia "Creazione BP-CA" per permettere la chiamata verso SAP per la registrazione
+                * delle due entita' e aggiornarle con i relativi codici
+                */
+                else if(o.Commodity__c.equalsIgnoreCase('Acqua') || o.Commodity__c.equalsIgnoreCase('Ambiente'))
+                {
+                    ordersNonEnergy.add(o);
+                }
+                else{
                     ordersHeroku.add(o);
                 }
             }
@@ -417,6 +426,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Esportazione VS Siebel ','Documentazione Validata','Esportazione VS Siebel ');
             vasOrdersToUpdate.putAll(
                 updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS')
+            );
+            vasOrdersToUpdate.putAll(
+                updateChildOrdersPhase(ordersNonEnergy, 'Documentazione Validata', 'Creazione BP-CA','Documentazione Validata','Comunicazione Motore VAS')
             );
             if(!vasOrdersToUpdate.isEmpty()){
                 system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(vasOrdersToUpdate));
@@ -672,6 +684,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agentCodeIsMonitoringList();
         Order notManagedOrder = new Order();
         Boolean isNotManaged = false;
+        /* Temporanea Nuova Attivazione */
         for(Order childOrder : parentOrderIds)
         {
             if(childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt')
@@ -685,6 +698,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             isNotManaged = isNotManaged(notManagedOrder);
         }
         for (Order childOrder : parentOrderIds) {
+            /* Gestione VAS */
             if(childOrder.recordType.Developername == 'HDT_RT_VAS' && childOrder.Phase__c == currentPhase){
                 String phase = HDT_UTL_VasManagement.updateVasPhase( newVasPhase, childOrder );
                 Order orderToUpdate = new Order(
@@ -704,6 +718,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         }
             }
             else{
+                /* Gestione Transitorio */
                 if('Esportazione VS Siebel ' == newPhase){
                     if (childOrder.Phase__c == currentPhase) {
                         Order orderToUpdate = new Order(
@@ -717,7 +732,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 else{
                     if (childOrder.Phase__c == currentPhase
                         //@frpanico 06/09/2021 added voltura condition
-                        && childOrder.ProcessType__c != 'Voltura'
+                        /* Solo la voltura Energy deve rimanere nella fase Documentazione Validata, per il non energy deve procedere verso Creazione BP-CA */
+                        && (childOrder.ProcessType__c != 'Voltura')
                         && childOrder.ImplantType__c != '1107-Colonnetta' ) {
                         Order orderToUpdate = new Order(
                             Id = childOrder.Id,
@@ -728,7 +744,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
         }
-        //orderSrv.updateRecords(childOrdersToUpdate);
+        orderSrv.updateRecords(childOrdersToUpdate);
         return vasOrdersToUpdate;
     }
 
@@ -807,12 +823,16 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     || newOrder.Phase__c=='Preventivo Accettato' 
                     || newOrder.Phase__c=='Comunicazione Motore VAS' 
                     || newOrder.Phase__c=='Documentazione da firmare'
-                    || newOrder.Phase__c=='Ammissibilità OK')){
+                    || newOrder.Phase__c=='Ammissibilità OK'
+                    || newOrder.Phase__c=='Creazione BP-CA')){
                     newOrder.Phase__c = newOrder.TecnicalPhase__c;
                     newOrder.TecnicalPhase__c = null;
                 }
                 if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& newOrder.Status.equalsIgnoreCase('Activated') && !newOrder.SBQQ__Contracted__c && !old.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) { //Fabiana 15/09/2021 //Sandy 05/10 Flusso Bonus e Sconti richiede chiusura e contracted in due transazioni distinte
-                    newOrder.SBQQ__Contracted__c=true; 
+                    if(!newOrder.isTransition__c)
+                    {
+                        newOrder.SBQQ__Contracted__c=true; 
+                    }
                 }
             }           
         }
@@ -1095,7 +1115,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     for(wrts_prcgvr__Activity__c activity : activities)
                     {
                         if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)){
-                            activity.wrts_prcgvr__Status__c = 'Chiusa';
+                            activity.wrts_prcgvr__Status__c = 'Annullata';
                             activitiesToUpdate.add(activity);
                         }
                     }
@@ -1322,7 +1342,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              * Pratica Gestita
              * per pratiche a transitorio
              */
-            Set<String> finalStatuses = new Set<String>{'Annullato','KO definitivo','Pratica gestita','KO gestito','Eliminato','KO','Pratica Rifiutata'};
+            Set<String> finalStatuses = new Set<String>{'Annullato','KO definitivo','Pratica gestita','KO gestito','Eliminato','KO','Pratica Rifiutata','Chiuso'};
             if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))&&(finalStatuses.contains((String)newOrder.get('SiebelStatus__c'))))
             {
                 response = true;
@@ -1347,7 +1367,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Map<Id,String> mapVasPhase = new Map<Id,String>();
         Map<Id,String> mapVasStatus = new Map<Id,String>();
         Set<String> negativeOutcomes = new Set<String>{'Annullato','KO definitivo','Eliminato','KO','Pratica Rifiutata','KO gestito'};
-        Set<String> positiveOutcomes = new Set<String>{'Pratica gestita'};
+        Set<String> positiveOutcomes = new Set<String>{'Pratica gestita','Chiuso'};
         for(Order newOrder : (List<Order>) newOrderList)
         {
             String oldPhase = newOrder.Phase__c;

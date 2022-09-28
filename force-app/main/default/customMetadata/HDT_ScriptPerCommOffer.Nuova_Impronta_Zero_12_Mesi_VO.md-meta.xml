@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Nuova Impronta Zero 12 Mesi_VO</label>
+    <protected>false</protected>
+    <values>
+        <field>ActivityType__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Object__c</field>
+        <value xsi:type="xsd:string">Order</value>
+    </values>
+    <values>
+        <field>OfferCode__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>OfferName__c</field>
+        <value xsi:type="xsd:string">Nuova Impronta Zero 12 Mesi</value>
+    </values>
+    <values>
+        <field>ScriptFlowName__c</field>
+        <value xsi:type="xsd:string">HDL_FL_VO_Script_Nuova_Impronta_Zero_12</value>
+    </values>
+    <values>
+        <field>ScriptName__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>SignatureMethod__c</field>
+        <value xsi:type="xsd:string">Vocal Order</value>
+    </values>
+</CustomMetadata>

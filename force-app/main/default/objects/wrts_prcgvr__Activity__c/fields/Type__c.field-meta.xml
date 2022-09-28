@@ -41,6 +41,11 @@
                 <label>Annullamento Allineamento</label>
             </value>
             <value>
+                <fullName>Annullamento processo transitorio Siebel</fullName>
+                <default>false</default>
+                <label>Annullamento processo transitorio Siebel</label>
+            </value>
+            <value>
                 <fullName>Anticipo Appuntamento</fullName>
                 <default>false</default>
                 <label>Anticipo Appuntamento</label>
@@ -189,6 +194,11 @@
                 <fullName>Contratti/Bonus Commerciale</fullName>
                 <default>false</default>
                 <label>Contratti/Bonus Commerciale</label>
+            </value>
+            <value>
+                <fullName>Contratto non richiesto da gestire</fullName>
+                <default>false</default>
+                <label>Contratto non richiesto da gestire</label>
             </value>
             <value>
                 <fullName>Correzione dati</fullName>
@@ -484,6 +494,11 @@
                 <fullName>KO Credit Check</fullName>
                 <default>false</default>
                 <label>KO Credit Check</label>
+            </value>
+            <value>
+                <fullName>KO creazione BP CA</fullName>
+                <default>false</default>
+                <label>KO creazione BP CA</label>
             </value>
             <value>
                 <fullName>KO definitivo</fullName>

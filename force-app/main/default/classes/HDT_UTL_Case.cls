@@ -169,6 +169,11 @@ public inherited sharing class HDT_UTL_Case {
                 output.allineamentoGaa = 'N';
             }
         }
+        else if(cluster.equalsIgnoreCase('Reclami') && process.equalsIgnoreCase('calculateExpirationDate'))
+        {
+            HDT_UTL_Reclami utlReclami = new HDT_UTL_Reclami();
+            output.effectiveDate = utlReclami.setExpirationDate(currentCase, salesCompany);
+        }
 
         outputs.add(output);
 

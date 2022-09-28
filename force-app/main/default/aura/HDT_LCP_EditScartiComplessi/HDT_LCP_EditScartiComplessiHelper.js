@@ -240,10 +240,10 @@
         console.log('@@@@openWizardForAnnullment' );
         let workspaceAPI = component.find("workspace");
         let recordId = component.get("v.inputRecordId");
-        let objectToCancel = component.get('v.objectToCancell');
-        let url = '/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__id='+recordId+'&c__flowName=HDT_FL_GestioneAnnullamento&c__sObjectRecordToCancell='+objectToCancel+'&c__processType=Annullamento+prestazione&c__discardRework=true';
-        const that = this;
         let activityId = component.get('v.recordId');
+        let objectToCancel = component.get('v.objectToCancell');
+        let url = '/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__id='+recordId+'&c__flowName=HDT_FL_GestioneAnnullamento&c__sObjectRecordToCancell='+objectToCancel+'&c__processType=Annullamento+prestazione&c__discardRework=true&c__activityId='+activityId;
+        const that = this;
         let parentId;
         workspaceAPI.getAllTabInfo().then(function(response) {
             console.log('----------');

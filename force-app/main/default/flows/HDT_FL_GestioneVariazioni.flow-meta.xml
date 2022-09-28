@@ -113,8 +113,8 @@
     <actionCalls>
         <name>Crea_Allineamento_Anagrafica_0_0</name>
         <label>Crea Allineamento Anagrafica</label>
-        <locationX>3382</locationX>
-        <locationY>1466</locationY>
+        <locationX>3687</locationX>
+        <locationY>1535</locationY>
         <actionName>HDT_SRV_AnagAlignment</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -268,8 +268,8 @@
     <assignments>
         <name>Aggiorna_Fase_in_Attesa_Allineamento_RCU_0_0</name>
         <label>Aggiorna Fase in Attesa Allineamento RCU</label>
-        <locationX>3381</locationX>
-        <locationY>1634</locationY>
+        <locationX>3686</locationX>
+        <locationY>1702</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato_0_0_0_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -610,6 +610,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0_0</name>
+        <label>Aggiorna Fase in Elaborazione Manuale</label>
+        <locationX>3383</locationX>
+        <locationY>1644</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato_0_0_0_0.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Elaborazione Manuale</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato_0_0_0_0.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -971,6 +994,38 @@
         </assignmentItems>
         <connector>
             <targetReference>Screen_Input_Fiscale_Fondo_Fughe_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Sottoprocesso_con_Iniziativa</name>
+        <label>Assegna Sottoprocesso con Iniziativa</label>
+        <locationX>5007</locationX>
+        <locationY>1085</locationY>
+        <assignmentItems>
+            <assignToReference>processTypeEsenzioneModificaFognatura</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Esenzione Modifica Fognatura Depurazione DGRER569/19 non Allacciato / Uso Irriguo Acqua</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>DisplayTextEsenzio</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Sottoprocesso_senza_Iniziativa</name>
+        <label>Assegna Sottoprocesso senza Iniziativa</label>
+        <locationX>5201</locationX>
+        <locationY>1094</locationY>
+        <assignmentItems>
+            <assignToReference>processTypeEsenzioneModificaFognatura</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Esenzione Modifica Fognatura Depurazione Modifica Fognatura e Depurazione Acqua</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>DisplayTextEsenzio</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1822,6 +1877,31 @@
                 <targetReference>Tipo_Frequenza</targetReference>
             </connector>
             <label>Coabitazione No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Commodity</name>
+        <label>Commodity</label>
+        <locationX>3374</locationX>
+        <locationY>1466</locationY>
+        <defaultConnector>
+            <targetReference>Crea_Allineamento_Anagrafica_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Acqua</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato_0_0_0_0.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0_0</targetReference>
+            </connector>
+            <label>Acqua</label>
         </rules>
     </decisions>
     <decisions>
@@ -3026,10 +3106,10 @@
             <name>DGRER569_19_non_Allacciato_Uso_Irriguo</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetCaseAggiornatoEsenzioneModificaFognature.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>GetCaseStessoSottoprocessoFornitura.Contract__r.Iniziativa__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue>DGRER569/19 non Allacciato / Uso Irriguo</stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -3041,16 +3121,53 @@
             <name>Modifica_Fognatura_e_Depurazione_subproc</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetCaseAggiornatoEsenzioneModificaFognature.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>GetCaseStessoSottoprocessoFornitura.Contract__r.Iniziativa__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue>Modifica Fognatura e Depurazione</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Calcolo_Codice_Causale_EsModFognature</targetReference>
             </connector>
             <label>Modifica Fognatura e Depurazione</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Split_sottoprocesso_0</name>
+        <label>Split sottoprocesso</label>
+        <locationX>5087</locationX>
+        <locationY>974</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Sottoprocesso_Iniziativa</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseStessoSottoprocessoFornitura.Contract__r.Iniziativa__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Sottoprocesso_con_Iniziativa</targetReference>
+            </connector>
+            <label>Sottoprocesso Iniziativa</label>
+        </rules>
+        <rules>
+            <name>Sottoprocesso_senza_iniziativa</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseStessoSottoprocessoFornitura.Contract__r.Iniziativa__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Sottoprocesso_senza_Iniziativa</targetReference>
+            </connector>
+            <label>Sottoprocesso senza iniziativa</label>
         </rules>
     </decisions>
     <decisions>
@@ -3759,7 +3876,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <locationY>1323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Crea_Allineamento_Anagrafica_0_0</targetReference>
+            <targetReference>Commodity</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -4239,8 +4356,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>3382</locationX>
-        <locationY>1773</locationY>
+        <locationX>3687</locationX>
+        <locationY>1841</locationY>
         <inputReference>GetCaseAggiornato_0_0_0_0</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -4306,6 +4423,13 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <inputReference>GetCaseAggiornatoModificaUnitaImmobiliari_0</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
+        <label>Aggiorna Case</label>
+        <locationX>3384</locationX>
+        <locationY>1833</locationY>
+        <inputReference>GetCaseAggiornato_0_0_0_0</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Aggiorna_Case_Billing_Profile</name>
         <label>Aggiorna Case Billing  Profile</label>
         <locationX>5679</locationX>
@@ -4321,7 +4445,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <locationX>5089</locationX>
         <locationY>833</locationY>
         <connector>
-            <targetReference>DisplayTextEsenzio</targetReference>
+            <targetReference>Split_sottoprocesso_0</targetReference>
         </connector>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
@@ -4358,8 +4482,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>DisplayTextEsenzio</name>
         <label>Screen Input Fiscale Esenzione Fognature</label>
-        <locationX>5089</locationX>
-        <locationY>1175</locationY>
+        <locationX>5133</locationX>
+        <locationY>1205</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4457,6 +4581,12 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
                 <name>showReadOnly</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>processTypeEsenzioneModificaFognatura</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -7483,6 +7613,13 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <value>
             <booleanValue>false</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>processTypeEsenzioneModificaFognatura</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>ProcessTypeModificaUnitImm</name>

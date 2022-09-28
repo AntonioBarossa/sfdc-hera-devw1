@@ -2710,6 +2710,10 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
+            <fullName>Annullamento processo transitorio Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Approvazione Bonus Commerciale</fullName>
             <default>false</default>
         </values>
@@ -2727,6 +2731,10 @@
         </values>
         <values>
             <fullName>Contratti%2FBonus Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratto non richiesto da gestire</fullName>
             <default>false</default>
         </values>
         <values>

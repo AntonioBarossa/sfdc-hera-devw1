@@ -444,8 +444,15 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         //initialization the result for no fraud, then search for fraud condition
         Map<String,Object> result = new Map<String,Object>();
         Boolean isFraud = false;
+        Boolean existNoEnergy = false;
         String message = 'Nessuna frode trovata.';
-
+        Map<String,Boolean> energyMap = new Map<String,Boolean>{
+            'Energia Elettrica'=>true,
+            'Gas'=>true,
+            'Acqua'=>false,
+            'Teleriscaldamento'=>false,
+            'Ambiente'=>false
+        };
         Order parentOrder = new Order();
         List<String> processList = new List<String>();
 
@@ -454,6 +461,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         
         for(Order singleOrder : orderList)
         {
+            String commodity = singleOrder.CommodityFormula__c;
             if(singleOrder.ParentOrder__c == null)
             {
                 parentOrder = singleOrder;
@@ -462,9 +470,12 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             {
                 processList.add(singleOrder.ProcessType__c);
             }
+            if(String.isNotBlank(commodity) && energyMap.get(commodity) != null && !energyMap.get(commodity) && !existNoEnergy){
+                existNoEnergy = true;
+            }
         }
 
-        if(!orderList.isEmpty()){
+        if(!orderList.isEmpty() && !existNoEnergy){
             List<AmministrazioneFrodi__c> ammFrodiList = [SELECT BpNumber__c FROM AmministrazioneFrodi__c WHERE (Processo__c IN :processList AND CanaleVendita__c=: parentOrder.Channel__c AND CategoriaCliente__c=: parentOrder.Account.Category__c) WITH SECURITY_ENFORCED ];
             
             if( ammFrodiList != null && !ammFrodiList.isEmpty() ){

@@ -2323,6 +2323,10 @@
             <fullName>Comunicazione verso Heroku OK</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Creazione BP-CA</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Credit Check KO</fullName>
             <default>false</default>
@@ -2574,6 +2578,17 @@
         </values>
         <values>
             <fullName>Voltura con Switch</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>QualityCallStatus__c</picklist>
+        <values>
+            <fullName>Attività Gestita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scadenza Gestita</fullName>
             <default>false</default>
         </values>
     </picklistValues>

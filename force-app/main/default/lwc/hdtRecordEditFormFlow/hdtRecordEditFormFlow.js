@@ -379,12 +379,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         : this.secondColumn.filter(element => element['FieldName'] === fieldName);
     }
 
-    virtualValidate(event){
+    virtualOnChange(event){
         return;
     }
 
     handleChange(event){
-        this.virtualValidate(event);
+        this.virtualOnChange(event);
         //Reclami customizations
         this.complaintsLogic();
         //PianoRata customizations
@@ -417,7 +417,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
 
     paymentLogic(){ 
-        if(this.type == 'Comunicazione Pagamento' || this.type == 'Promessa di Pagamento Ente'){
+        /*if(this.type == 'Comunicazione Pagamento'){
             let accountholderTypeBeneficiary = this.selector('AccountholderTypeBeneficiary__c');
             console.log('#accountholderTypeBeneficiary : ' + accountholderTypeBeneficiary.value);
             if(accountholderTypeBeneficiary != null){
@@ -429,6 +429,15 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                 }else{
                     beneficiaryAccount.disabled = false;
                 }
+            }
+            
+        }*/
+        if(this.type == 'Comunicazione Pagamento'){
+            let canalePagamento = this.selector('ChannelOfPayment__c');
+            if(canalePagamento && canalePagamento.value === 'Banca BONIFICO'){
+                this.labelSaveButton  = 'Avanti';
+            }else{
+                this.labelSaveButton  = 'Conferma Pratica';
             }
         }
     }
@@ -540,7 +549,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                     depositamount.disabled = false;
                     depositDate.disabled = false;
                 }
-                if(depositPaymentMode.value === 'Paperless' && !depositPaymentMode.disabled){
+                if((depositPaymentMode.value === 'Paperless' || depositPaymentMode.value === 'Bonifico Paperless') && !depositPaymentMode.disabled){
                     sendPaperlessCode.disabled = false;
                 }
             }
@@ -552,7 +561,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             console.log('#DepositPaymentMode -> ' + depositPaymentMode.value)
             if(depositPaymentMode.value !== null && depositPaymentMode.value !== undefined){
                 let paperlessCode = this.selector('SendPaperlessCodeMode__c');
-                if(depositPaymentMode.value === 'Paperless'){
+                if(depositPaymentMode.value === 'Paperless' || depositPaymentMode.value === 'Bonifico Paperless'){
                     paperlessCode.disabled = false;
                 } else {
                     paperlessCode.disabled = true;

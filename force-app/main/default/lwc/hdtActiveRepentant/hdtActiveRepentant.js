@@ -154,7 +154,7 @@ export default class HdtActiveRepentant extends LightningElement {
 
     checkComuniNonAffidatari(dateDecorrenza, dateDichiarazione){
         
-        if(this.cityData?.TARIManagingStartDate__c || this.cityData?.TARIManagingEndDate__c || this.cityData?.CutOverEndDate__c){
+        if(!(this.cityData?.TARIManagingStartDate__c && this.cityData?.TARIManagingEndDate__c && this.cityData?.CutOverEndDate__c)){
             this.showMessage(
                 "Attenzione!",
                 this.cityData.CityNotManagedAlert__c? this.cityData.CityNotManagedAlert__c : "Comune Non Gestito",
@@ -199,7 +199,7 @@ export default class HdtActiveRepentant extends LightningElement {
             this.termsAdministration= terms;
             this.period = data[0];
         }else{
-            console.log("#getTablesConfig -> Data not found! " + JSON.stringify(error));
+            console.log("#getTablesConfig -> Data not found! ");
             this.skipCheck=true;
         }
     }

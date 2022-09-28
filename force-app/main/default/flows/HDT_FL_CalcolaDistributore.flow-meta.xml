@@ -132,10 +132,10 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Name</field>
+            <field>Code__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>MARCHE MULTISERV.-10R0000212</stringValue>
+                <stringValue>11-HERASPA</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
