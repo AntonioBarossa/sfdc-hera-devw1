@@ -83,7 +83,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         return contrWrp;
     }
 
-    public static HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj getMeterReadingRecordsHelper(String contractCode) {
+    public static HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj getMeterReadingRecordsHelper(String contractCode, String modality) {
         HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj meterReadingObj = new HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj();
 
         try{
@@ -100,7 +100,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             List<Contract> contractRecord;
             contractRecord= HDT_QR_MeterReading.getContract(contractRecord, contractCode);
 
-            String body = generateBody(contractRecord[0]);
+            String body = generateBody(contractRecord[0], modality);
             System.debug(LoggingLevel.DEBUG, '>>> body obj > ' + body);
 
             HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
@@ -146,7 +146,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         return meterReadingObj;
     }
 
-    public static String generateBody(Contract contr){
+    public static String generateBody(Contract contr, String modality){
         String body;
         if(Label.TRB_Enable.equalsIgnoreCase('N')){
             HDT_WRP_MeterReading.HDT_WRP_HttpBody bodyWrp = new HDT_WRP_MeterReading.HDT_WRP_HttpBody();
@@ -171,7 +171,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             jsonGen.writeStringField('dataInizio', '01/01/' + currentYear); //-- formato 01/01/2022 inserire primo giorno anno corrente
             jsonGen.writeStringField('dataFine', '31/12/' + currentYear); //-- formato 31/12/2022 inserire ultimo giorno anno corrente
             jsonGen.writeStringField('commodity', contr.ServicePoint__r.CommoditySector__c);
-            jsonGen.writeStringField('modalita', 'xyz'); //-- DEFAULT - FULL
+            jsonGen.writeStringField('modalita', modality); //-- DEFAULT - FULL
             jsonGen.writeEndObject();
             body = jsonGen.getAsString();
         }

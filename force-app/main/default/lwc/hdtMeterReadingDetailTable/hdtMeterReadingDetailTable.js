@@ -34,7 +34,7 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
         this.meterReadingErrorMessage = '';
     }
 
-    @wire(getMeterReadingRecords, {contractCode : '$contractNumber'})
+    @wire(getMeterReadingRecords, {contractCode : '$contractNumber', modality: '$modality'})
     wiredRecords({ error, data }) {
         if(data) {
             if(data.success){

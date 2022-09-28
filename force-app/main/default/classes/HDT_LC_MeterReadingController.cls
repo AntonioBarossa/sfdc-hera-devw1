@@ -11,8 +11,8 @@ public inherited sharing class HDT_LC_MeterReadingController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj getMeterReadingRecords(String contractCode) {
-        return HDT_LC_MeterReadingControllerHelper.getMeterReadingRecordsHelper(contractCode);
+    public static HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj getMeterReadingRecords(String contractCode, String modality) {
+        return HDT_LC_MeterReadingControllerHelper.getMeterReadingRecordsHelper(contractCode, modality);
     }
 
 }
