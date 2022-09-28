@@ -86,14 +86,26 @@ public inherited sharing class HDT_QR_AccountStatement {
             FROM Account
             WHERE Id = :accId
             WITH SECURITY_ENFORCED
-            ];
+        ];
         return accList;
+    }
+
+    // CR026 - Montors
+    public static List<SiebelCustomer__x> getSiebelCustomer(String recId){
+        List<SiebelCustomer__x> siebelCustomerList = new List<SiebelCustomer__x>();
+        siebelCustomerList = [
+            SELECT Id, ALIAS_NAME__c, TAX_IDEN_NUM__c , VAT_REGN_NUM__c, NAME_1__c , OU_NUM__c
+            FROM SiebelCustomer__x
+            WHERE Id = :recId
+            WITH SECURITY_ENFORCED
+        ];
+        return siebelCustomerList;
     }
 
     public static List<HDT_ButtonDetails__mdt> getButtonMetadataList(List<HDT_ButtonDetails__mdt> mdtButtonList, String tabValue, String level){
         mdtButtonList = new List<HDT_ButtonDetails__mdt>();
         mdtButtonList = [
-            SELECT MasterLabel, DeveloperName, ButtonCode__c,ButtonLevel__c,ButtonOrder__c,IsVisible__c, Tab__r.DeveloperName, ButtonType__c,Parameters__c,Accesskey__c
+            SELECT MasterLabel, DeveloperName, ButtonCode__c,ButtonLevel__c,ButtonOrder__c,IsVisible__c, HideForExtObj__c, Tab__r.DeveloperName, ButtonType__c,Parameters__c,Accesskey__c
             FROM HDT_ButtonDetails__mdt	
             WHERE Tab__r.DeveloperName = :tabValue AND ButtonLevel__c = :level
             WITH SECURITY_ENFORCED

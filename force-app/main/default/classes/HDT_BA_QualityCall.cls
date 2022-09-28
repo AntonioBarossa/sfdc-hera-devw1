@@ -1,15 +1,18 @@
 @SuppressWarnings('PMD.CyclomaticComplexity, PMD.NcssMethodCount')
 public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObject>, Database.Stateful {
 
-    private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
-    private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
+    private HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
+    private HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
+    private final String HANDLE_ACTIVITY = 'Attività gestita';
+    private final String HANDLE_DEADLINE = 'Scadenza gestita';
+
     //public List<Order> ordersToUpdate = new List<Order>();
     public Map<String, List<String>> parentToChildOrderMap = new Map<String, List<String>>();
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
 
-        String query = 'SELECT Id, OrderNumber, IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c FROM Order '+
-        'Where Phase__c NOT IN (\'In attesa validazione\', \'Accettazione Voltura\', \'Da Inviare\', \'Bozza\',  \'In attesa conferma cliente\', \'Completata\',\'Annullato\',\'Credit Check KO\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND VasSubtype__c != \'Analisi Consumi\'';
+        String query = 'SELECT Id, OrderNumber, IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c FROM Order '+
+        'Where Phase__c NOT IN (\'In attesa validazione\', \'Accettazione Voltura\', \'Da Inviare\', \'Bozza\',  \'In attesa conferma cliente\', \'Completata\',\'Annullato\',\'Credit Check KO\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND VasSubtype__c != \'Analisi Consumi\' AND QualityCallStatus__c != \'Scadenza Gestita\'';
         return Database.getQueryLocator(query);
     }
 
@@ -54,15 +57,21 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         List<String> ordersIdsList = new List<String>();
         ordersIdsList.addAll(orderIdsSet);
         
-        List<wrts_prcgvr__Activity__c> activitiesAssigned = HDT_QR_ActivityCustom.getRecordByOrderListAndQuality(ordersIdsList);
+        List<wrts_prcgvr__Activity__c> activitiesAssigned = HDT_QR_ActivityCustom.getActivityCreatedByQualityBatch(ordersIdsList);
         List<wrts_prcgvr__Activity__c> activitiesToClose = new List<wrts_prcgvr__Activity__c>();
         Map<String, wrts_prcgvr__Activity__c> orderToActivityMap = new Map<String, wrts_prcgvr__Activity__c>();
+        Set<Id> siebelOrderWithActivity = new Set<Id>();
+        Set<Id> sfdcOrderWithActivity = new Set<Id>();
         Set<Id> ordersAlreadyAssigned = new Set<Id>();
         for (wrts_prcgvr__Activity__c activityAssigned : activitiesAssigned) {
-            ordersAlreadyAssigned.add(activityAssigned.Order__c);
-        }
-        for(wrts_prcgvr__Activity__c activity : activitiesAssigned){
-            orderToActivityMap.put(activity.Order__c, activity);
+            if ('HDT_RT_ComfortQualityCall'.equalsIgnoreCase(activityAssigned.RecordType.DeveloperName)){
+                ordersAlreadyAssigned.add(activityAssigned.Order__c);
+                orderToActivityMap.put(activityAssigned.Order__c, activityAssigned);
+            }else if (HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL.equalsIgnoreCase(activityAssigned.type__c)){
+                siebelOrderWithActivity.add(activityAssigned.Order__c);
+            }else if(HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO.equalsIgnoreCase(activityAssigned.type__c)){
+                sfdcOrderWithActivity.add(activityAssigned.Order__c);
+            }
         }
 
         Map<String, List<OrderItem>> orderToItemMap = new Map<String, List<OrderItem>>();
@@ -93,25 +102,36 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 }
             }
 
+            wrts_prcgvr__Activity__c activityQualityCall = (ord.ParentOrder__c != null && orderToActivityMap.containsKey(ord.ParentOrder__c))
+                    ? orderToActivityMap.get(ord.ParentOrder__c) : orderToActivityMap.get(ord.Id);
+
             if (startDate != null && startDate.daysBetween(dueDate) > 50) {
                 
-                Order ordToUpd = new Order(Id = ord.Id);
+                Order ordToUpd = new Order(Id = ord.Id, QualityCallStatus__c = HANDLE_DEADLINE );
 
-                if (isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c && !notCancelNonBillable.contains(ord.Phase__c) && !notCancelBillable.contains(ord.Phase__c)) {
-                    ordToUpd.Phase__c = 'Annullato';
-                    ordToUpd.Status = 'Activated';
+                if (activityQualityCall!= null && activityQualityCall.wrts_prcgvr__IsClosed__c){
+                    ordersToUpdate.add(ordToUpd);
+                    continue;
                 }
-                else if(!notCancelNonBillable.contains(ord.Phase__c) && !notCancelBillable.contains(ord.Phase__c)) {
-                    ordToUpd.QualityCall__c = false;
-                    if(orderToItemMap.get(ord.Id) != null){
-                        for(OrderItem item : orderToItemMap.get(ord.Id)){
-                            if(item.Product2.CancelableQC__c){
-                                ordToUpd.Phase__c = 'Annullato';
-                                ordToUpd.Status = 'Activated';
-                                break;
-                            }
+
+                Boolean hasCancellableProduct = false;
+                if(orderToItemMap.get(ord.Id) != null){
+                    for(OrderItem item : orderToItemMap.get(ord.Id)){
+                        if(item.Product2.CancelableQC__c){
+                            hasCancellableProduct= true;
+                            break;
                         }
                     }
+                }
+
+                Boolean canDeleteOrder = !this.notCancellableOrder(ord);
+                Boolean needsActivity = false;
+                if (!notCancelNonBillable.contains(ord.Phase__c) && !notCancelBillable.contains(ord.Phase__c) && canDeleteOrder 
+                    && ((isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c) || hasCancellableProduct)) {
+                    ordToUpd.Phase__c = 'Annullato';
+                    ordToUpd.Status = 'Activated';         
+                }else if ((isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c) || hasCancellableProduct){
+                    needsActivity = true;
                 }
                 //DV: VADO A CREARMI UNA MAPPA DI TUTTI GLI ORDINI VECCHI, CORRELATI AL PARENT
                 if(parentToChildOrderMap.get(ord.ParentOrder__c) != null){
@@ -122,24 +142,29 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     parentToChildOrderMap.get(ord.ParentOrder__c).add(ord.OrderNumber);
                 }
 
-                /* if ((ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))) {
+                if (!this.skipActivityCreation(ord.Id,ord.ParentOrder__c, siebelOrderWithActivity, sfdcOrderWithActivity) && needsActivity && ((!canDeleteOrder || (ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))))) {
                     
                     String ordIdToAssoc = ord.Id;
 
                     if(ordersAlreadyAssigned.contains(ord.ParentOrder__c)){
                         ordIdToAssoc = ord.ParentOrder__c;
                     }
+                    String activityType = ord.isTransition__c ? HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL : HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO;
                     activityVas.add(new wrts_prcgvr__Activity__c(
                         RecordTypeId = rc.Id,
                         Account__c = ord.AccountId,
                         Order__c = ordIdToAssoc,
+                        Type__c = activityType,
+                        wrts_prcgvr__Status__c = 'Aperta',
                         wrts_prcgvr__Description__c = 'Non è stato possibile procedere all’annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS'
                     ));
-                } */                
+                }                
                 ordersToUpdate.add(ordToUpd);
-            }
-            else {
-
+            }else if (HANDLE_ACTIVITY.equalsIgnoreCase(ord.QualityCallStatus__c) && activityQualityCall!= null && activityQualityCall.wrts_prcgvr__IsClosed__c){
+                Order ordToUpd = new Order(Id = ord.Id, QualityCallStatus__c = HANDLE_DEADLINE );
+                ordersToUpdate.add(ordToUpd);
+            }else if (String.isBlank(ord.QualityCallStatus__c)){
+                ordersToUpdate.add(new Order(Id=ord.Id, QualityCallStatus__c = HANDLE_ACTIVITY));
                 if (!ordersAlreadyAssigned.contains(ord.Id) && (ord.ParentOrder__c != null && !ordersAlreadyAssigned.contains(ord.ParentOrder__c))) {
                     orderMap.put(ord.Id, ord);
         
@@ -281,6 +306,18 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         if (!activityVas.isEmpty()) {
             Database.insert(activityVas, false);
         }
+    }
+
+    private Boolean skipActivityCreation(Id orderId, Id parentOrderId, Set<Id> siebelOrderWithActivity, Set<Id> sfdcOrderWithActivity){
+        return siebelOrderWithActivity.contains(orderId) 
+            || sfdcOrderWithActivity.contains(orderId) 
+            || (parentOrderId != null && (siebelOrderWithActivity.contains(parentOrderId) || sfdcOrderWithActivity.contains(parentOrderId)));
+    }
+
+    private Boolean notCancellableOrder(Order ord){
+        Set<String> annullablePhase = new Set<String>{'Amm. Precheck KO SII','Amm. Precheck OK SII', 'Esito KO da DL', 'Esito KO da SII', 'Ammissibilità KO','Dati discordanti'};
+        Boolean switchCancellationEligibility = (ord.ProcessType__c!= null && ord.ProcessType__c.containsIgnoreCase('Switch In')) ? (ord.PhaseStory__c != null && ord.PhaseStory__c.containsIgnoreCase('Ammissibilità OK')) : true;
+        return ord.HerokuPracticeCode__c != null && !annullablePhase.contains(ord.Phase__c) && switchCancellationEligibility;
     }
 
     @SuppressWarnings('PMD.AvoidDebugStatements')

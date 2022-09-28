@@ -22,7 +22,7 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
             dtos = caseQr.getRecordCreatedInRequestedDate('Reclami', startDt, endDt);
             return this.dtos;
         }
-        dtos = caseQr.getRecordCreatedLastWeekEqualsBy('Reclami');
+        dtos = caseQr.getRecordCreatedLastDayEqualsBy('Reclami');
         return this.dtos;
     }
 

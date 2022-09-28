@@ -66,7 +66,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Coabitazioni</value>
+        <value xsi:type="xsd:string">DOM_Coabitazioni</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>

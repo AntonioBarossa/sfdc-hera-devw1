@@ -2450,7 +2450,8 @@ IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICK
         <name>RateCategoryFromCaseCommodity</name>
         <dataType>String</dataType>
         <expression>IF(ISPICKVAL({!Get_Input_Case_0.Commodity__c}, &quot;Gas&quot;), &quot;GAS_ALLACCIAMENTO&quot;,
-IF(ISPICKVAL({!Get_Input_Case_0.Commodity__c}, &quot;Energia Elettrica&quot;), &quot;ELE_ALLACCIAMENTO&quot;, &quot;&quot;))</expression>
+IF(ISPICKVAL({!Get_Input_Case_0.Commodity__c}, &quot;Energia Elettrica&quot;), &quot;ELE_ALLACCIAMENTO&quot;,
+IF(ISPICKVAL({!Get_Input_Case_0.Commodity__c}, &quot;Acqua&quot;), &quot;ACQ_ALLACC&quot;,&quot;&quot;)))</expression>
     </formulas>
     <formulas>
         <name>RecordTypeDevNameFormula</name>

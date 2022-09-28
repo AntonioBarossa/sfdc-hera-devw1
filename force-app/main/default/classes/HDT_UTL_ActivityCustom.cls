@@ -6,6 +6,9 @@
 */
 @SuppressWarnings('PMD.CyclomaticComplexity, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ActivityCustom {
+
+    public final Static String ANNULLAMENTO_SIEBEL = 'Annullamento processo transitorio Siebel';
+    public final Static String CONTRATTO_NON_RICHIESTO = 'Contratto non richiesto da gestire';
     
     private FINAL static string APPOINTMENTDEVELOPERNAME = 'HDT_RT_DistributorAppointment';
     private FINAL static string MODCONFERMATO = 'Modifica confermata';
@@ -365,6 +368,10 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 act.ParentCluster__c = null;
                 act.ParentProcess__c = null;
                 act.ParentSubprocess__c = null;
+            }
+            //ticket 920338C non togliere in alcuni casi quando il record viene creato da Automated Process, non viene valorizzato il recordtype.
+            if (act.RecordTypeId == null){
+                act.RecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Default').getRecordTypeId();
             }
         }
         Map<Id,Case> caseFieldProcessMap = new Map<Id,Case>();

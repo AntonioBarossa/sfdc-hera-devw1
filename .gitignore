@@ -49,3 +49,4 @@ launch.json
 
 .sf/
 .sf/*
+force-app/main/default/lwc/*/__tests__

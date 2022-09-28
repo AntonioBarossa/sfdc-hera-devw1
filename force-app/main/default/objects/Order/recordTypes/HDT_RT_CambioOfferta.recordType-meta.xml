@@ -2258,6 +2258,10 @@
             <fullName>Comunicazione verso Heroku OK</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Creazione BP-CA</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Da Inviare</fullName>
             <default>false</default>
@@ -2459,6 +2463,17 @@
         </values>
         <values>
             <fullName>Cambio Offerta Gas</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>QualityCallStatus__c</picklist>
+        <values>
+            <fullName>Attività Gestita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scadenza Gestita</fullName>
             <default>false</default>
         </values>
     </picklistValues>
