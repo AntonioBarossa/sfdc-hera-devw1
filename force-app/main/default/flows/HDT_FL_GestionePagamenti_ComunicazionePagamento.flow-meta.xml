@@ -1672,7 +1672,6 @@
         <object>CityTechnicalData__c</object>
         <valueField>CadastralCity__c</valueField>
     </dynamicChoiceSets>
-    <environments>Default</environments>
     <formulas>
         <name>AmountDifference</name>
         <dataType>Currency</dataType>
@@ -4366,7 +4365,6 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>AbiCodeSelector</name>
