@@ -454,11 +454,6 @@
                 <label>Variazione Tensione</label>
             </value>
             <value>
-                <fullName>VAS</fullName>
-                <default>false</default>
-                <label>VAS</label>
-            </value>
-            <value>
                 <fullName>Verifica Dati al DL</fullName>
                 <default>false</default>
                 <label>Verifica Dati al DL</label>

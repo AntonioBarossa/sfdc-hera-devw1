@@ -7590,10 +7590,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>VAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Verifica Dati al DL</fullName>
             <default>false</default>
         </values>
