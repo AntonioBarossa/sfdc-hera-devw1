@@ -95,11 +95,6 @@
         <default>false</default>
         <label>Info servizi</label>
     </customValue>
-    <customValue>
-        <fullName>Info adesione iniziativa</fullName>
-        <default>false</default>
-        <label>Info adesione iniziativa</label>
-    </customValue>
     <masterLabel>Macro Argomento</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
