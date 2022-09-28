@@ -3994,11 +3994,6 @@
 	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
-		<field>AtecoMatrix__c.RonchiDescription__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
 		<field>AtecoMatrix__c.RonchiSubcategory__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
@@ -8689,11 +8684,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>CityTechnicalData__c.CityMMS__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>CityTechnicalData__c.ManagedTCP__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11112,6 +11102,11 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>ExpRavv__c.OperandValue__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ExpRavv__c.SapTariCode__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>
@@ -29118,6 +29113,31 @@
 		<field>TermTable__c.Subtype__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.BillingCategory__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.Cluster__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.PopupTypeY__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.PopupTypeZ__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.Type__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <!--SFDC-OIG/OIM 17/09/2021-->
     <fieldPermissions>
         <editable>true</editable>
@@ -33783,11 +33803,6 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>MandatoryAttachments__c.Cluster__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
-		<field>MandatoryAttachments__c.Commodity__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>
