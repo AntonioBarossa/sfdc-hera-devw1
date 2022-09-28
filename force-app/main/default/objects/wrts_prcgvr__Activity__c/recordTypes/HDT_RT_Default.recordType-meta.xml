@@ -2939,6 +2939,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione richiesta social</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inviare Comunicazione Disconoscimento</fullName>
             <default>false</default>
         </values>
