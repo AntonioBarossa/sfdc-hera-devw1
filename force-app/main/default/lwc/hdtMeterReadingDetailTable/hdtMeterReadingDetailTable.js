@@ -10,14 +10,19 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
     //addtionalInputsForNonStandAlone
     @api nonStandAlone;
     @api maxRows;
-
+    showChooseType = false;
     @track meterReadingData;
     @track detailTableHeader = 'Letture';
+    tempList = [
+        {label: 'DEFAULT', name: 'DEFAULT', iconName: 'utility:topic', desc: 'Imposta il valore "default"'},
+        {label: 'FULL', name: 'FULL', iconName: 'utility:wellness', desc: 'Imposta il valore "full"'}
+    ];
     meterReadingError = false;
     meterReadingErrorMessage = '';
     sortedBy;
     defaultSortDirection = 'asc';
     sortDirection = 'asc';
+    modality = 'DEFAULT';
 
     connectedCallback(){
         console.log('HdtMeterReadingDetailTable loaded.');
@@ -164,6 +169,19 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
             this.dispatchEvent(new CustomEvent('rowselection',{detail: selectRow}));
         }
         return;
+    }
+
+    changeModality(event){
+        this.showChooseType = true;
+    }
+
+    closeModalHandler(event){
+        this.showChooseType = false;
+    }
+
+    setNewChoise(event){
+        this.showChooseType = false;
+        this.modality = event.detail.stmtName;
     }
 
     /*onHandleSort(event){

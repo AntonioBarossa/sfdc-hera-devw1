@@ -1,41 +1,88 @@
 <template>
-    <div if:false={meterReadingError} >
-        <lightning-card title={detailTableHeader} >
 
-            <div if:true={loadData} class="slds-scrollable_y slds-m-left_small slds-m-right_small" style="height: 25vh;">
-                <template if:true={hideCheckboxColumn} >
-                    <lightning-datatable
-                        key-field="id"
-                        data={meterReadingData}
-                        columns={columnsobj}
-                        default-sort-direction={defaultSortDirection}
-                        sorted-direction={sortDirection}
-                        sorted-by={sortedBy}
-                        onsort={sort}
-                        hide-checkbox-column
-                    ></lightning-datatable>
-                    <!--resize-column-disabled-->
-                </template>
-                <template if:false={hideCheckboxColumn} >
-                    <lightning-datatable
-                        key-field="id"
-                        data={meterReadingData}
-                        columns={columnsobj}
-                        default-sort-direction={defaultSortDirection}
-                        sorted-direction={sortDirection}
-                        sorted-by={sortedBy}
-                        onsort={sort}
-                        onrowaction={handleRowAction}
-                        onrowselection={handleRowSelection}
-                        max-row-selection={maxRows}
-                    ></lightning-datatable>
-                    <!--resize-column-disabled-->
-                </template>                
+    <template if:true={showChooseType} >
+        <c-hdt-choose-type-modal
+            stmt-type={modality}
+            temp-list={tempList}
+            onclosestmtchoise={closeModalHandler}
+            onchoisestmt={setNewChoise}
+        ></c-hdt-choose-type-modal>
+    </template>
+
+    <div if:false={meterReadingError} >
+
+        <article class="slds-card">
+            <div class="slds-card__header slds-grid">
+              <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__body">
+                    <div class="slds-grid slds-wrap slds-grid_vertical-align-center">
+                        <div class="slds-col slds-size_2-of-12">
+                            <span>
+                                <h2 class="slds-card__header-title">
+                                    <span>{detailTableHeader}</span>
+                                </h2>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-size_1-of-12">
+                            <span>
+                                <lightning-button
+                                    variant="brand-outline"
+                                    label={modality}
+                                    title="Modalità"
+                                    icon-name="utility:change_record_type"
+                                    class="slds-m-left_medium"
+                                    onclick={changeModality}
+                                ></lightning-button>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="slds-no-flex">
+                  
+                </div>
+              </header>
             </div>
-            <div if:false={loadData} style="height: 25vh;" >
-                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            <div class="slds-card__body slds-card__body_inner">
+                
+                <div if:true={loadData} class="slds-scrollable_y" style="height: 25vh;">
+                    <template if:true={hideCheckboxColumn} >
+                        <lightning-datatable
+                            key-field="id"
+                            data={meterReadingData}
+                            columns={columnsobj}
+                            default-sort-direction={defaultSortDirection}
+                            sorted-direction={sortDirection}
+                            sorted-by={sortedBy}
+                            onsort={sort}
+                            hide-checkbox-column
+                        ></lightning-datatable>
+                        <!--resize-column-disabled-->
+                    </template>
+                    <template if:false={hideCheckboxColumn} >
+                        <lightning-datatable
+                            key-field="id"
+                            data={meterReadingData}
+                            columns={columnsobj}
+                            default-sort-direction={defaultSortDirection}
+                            sorted-direction={sortDirection}
+                            sorted-by={sortedBy}
+                            onsort={sort}
+                            onrowaction={handleRowAction}
+                            onrowselection={handleRowSelection}
+                            max-row-selection={maxRows}
+                        ></lightning-datatable>
+                        <!--resize-column-disabled-->
+                    </template>                
+                </div>
+                <div if:false={loadData} style="height: 25vh;" >
+                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                </div>
+
             </div>
-        </lightning-card>
+
+          </article>
+
     </div>
     <div if:true={meterReadingError} class="slds-box" style="background:#ffffff" >
         <!--<p class="slds-text-heading_small slds-text-color_error" >{meterReadingErrorMessage}</p>-->

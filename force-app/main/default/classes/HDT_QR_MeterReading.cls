@@ -33,7 +33,7 @@ public inherited sharing class HDT_QR_MeterReading {
     public static List<Contract> getContract(List<Contract> contractList, String contractCode){
         contractList = new List<Contract>();
         contractList = [
-            SELECT Id, ServicePoint__r.CommoditySector__c
+            SELECT Id, ServicePoint__r.CommoditySector__c, SAPContractCode__c
             FROM Contract
             WHERE SAPContractCode__c = :contractCode
             WITH SECURITY_ENFORCED
