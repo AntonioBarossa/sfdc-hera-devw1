@@ -7668,6 +7668,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.OnerousReviewableStartDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.OnerousUnreviewableStartDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
