@@ -6616,6 +6616,10 @@
     <picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
+            <fullName>Da bimestrale a mensile</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Pagamento Online</fullName>
             <default>false</default>
         </values>
@@ -7736,6 +7740,10 @@
         </values>
         <values>
             <fullName>Richiesta di approfondimenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info adesione iniziativa</fullName>
             <default>false</default>
         </values>
     </picklistValues>

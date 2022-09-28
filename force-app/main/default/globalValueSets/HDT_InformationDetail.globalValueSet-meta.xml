@@ -480,6 +480,11 @@
         <default>false</default>
         <label>Pagamento Online</label>
     </customValue>
+    <customValue>
+        <fullName>Da bimestrale a mensile</fullName>
+        <default>false</default>
+        <label>Da bimestrale a mensile</label>
+    </customValue>
     <masterLabel>Dettaglio Informazioni</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
