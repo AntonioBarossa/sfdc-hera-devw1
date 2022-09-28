@@ -51,7 +51,7 @@ public with sharing class HDT_UTL_ServicePointTst {
 
             position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
             position.campo = 'DESCRCOMM';
-            position.valore = 'Gas'; //Se questo valore non è Gas il testScoppia
+            position.valore = 'Gas';
             positions.add(position);
 
             position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
@@ -432,6 +432,8 @@ public with sharing class HDT_UTL_ServicePointTst {
             //Testing CALIBRO1 values
             for (Integer i=2; i<19; i++) {
                 
+                response = new HDT_WS_ArrichmentDataEntityResponse();
+                
                 positions = new List<HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject>();
                 position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
 
@@ -495,7 +497,7 @@ public with sharing class HDT_UTL_ServicePointTst {
           
         List <LandRegistry__c> lstCheck = [SELECT id FROM LandRegistry__c];
         System.assert(lstcheck.size()>0, 'Creazione landregistry non riuscita!');
-        
+
     }
 
     @isTest

@@ -167,9 +167,6 @@ public with sharing class HDT_UTL_ServicePoint {
                 spNew.CommoditySector__c = 'Ambiente';
                 spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Ambiente'); //21/08/2021 - gabriele.rota@webresults.it
 
-                System.debug(LoggingLevel.DEBUG, response.data.datiCatastali);
-                System.debug(LoggingLevel.DEBUG,'+++++SIZE++++' + response.data.datiCatastali.size());
-
                 if(response.data.datiCatastali!=null && response.data.datiCatastali.size()>0 ) {
                     List <LandRegistry__c> landLst = new List<LandRegistry__c>();
                     try {     
@@ -187,7 +184,7 @@ public with sharing class HDT_UTL_ServicePoint {
                             landReg.ParticleSheet__c = l.particella;
                             landReg.Title__c = l.qualificaTitolareUtenza;
                             landReg.RegistrySurface__c = Decimal.valueOf(l.superficeCatastale);
-                            landReg.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_DatiCatastali_TARI');
+                            landReg.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_DatiCatastali_PraticaTARI');
                             landLst.add(landReg);
                         }
                         insert landLst;
