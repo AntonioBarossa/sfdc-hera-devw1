@@ -230,13 +230,13 @@ public with sharing class HDT_QR_ActivityCustomTst{
 
 			Id rt=constants.ACTIVITYCUSTOM_RECORDTYPEID_KOPRECEDETECLIENTE;
 
-			List<wrts_prcgvr__Activity__c> tActCust=[SELECT Id, Type__c
+			List<wrts_prcgvr__Activity__c> tActCust=[SELECT Id, Type__c,wrts_prcgvr__IsClosed__c 
 			                                         FROM wrts_prcgvr__Activity__c
 			                                         WHERE Type__c='Approvazione Quote' AND wrts_prcgvr__Status__c='Aperta'
 			                                         LIMIT 1];
 			
 			tActCust[0].RecordTypeId=rt;
-
+			tActCust[0].wrts_prcgvr__IsClosed__c=false;
 			update tActCust;
 
 			List<wrts_prcgvr__Activity__c> tActivity=HDT_QR_ActivityCustom.getActivityListCrediCheck(orderIds);
