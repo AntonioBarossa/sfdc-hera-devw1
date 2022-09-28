@@ -2,7 +2,7 @@
   @description       : 
   @author            : Giacinto Florio
   @group             : 
-  @last modified on  : 27-09-2022
+  @last modified on  : 28-09-2022
   @last modified by  : Giacinto Florio
 -->
 <template>
@@ -15,14 +15,14 @@
                   <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
                   <span class="slds-assistive-text">Close</span>
                 </button>
-                <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Modal Opened</h2>
+                <!-- <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Selezione Materiali</h2> -->
               </header>
               <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                <template if:true={showSpinner}>
+                <!-- <template if:true={showSpinner}>
                   <div class="demo-only demo--inverse" style="height:300px;position:relative">
                     <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
                   </div>
-                </template>
+                </template> -->
                 <!-- HEADER -->
                 <div class="slds-page-header">
                     <div class="slds-page-header__row">
@@ -40,11 +40,11 @@
                             <div class="slds-page-header__name">
                               <div class="slds-page-header__name-title">
                                 <h1>
-                                  <span class="slds-page-header__title slds-truncate" title="Qualcosa">Qualcosa</span>
+                                  <span class="slds-page-header__title slds-truncate" title="selection">Seleziona Materiali</span>
                                 </h1>
                               </div>
                             </div>
-                            <p class="slds-page-header__name-meta">•Something•</p>
+                            <!-- <p class="slds-page-header__name-meta">•Something•</p> -->
                           </div>
                         </div>
                       </div>
@@ -53,9 +53,14 @@
                     </div>
                   </div>
                 <!-- HEADER -->
+                <template if:true={showSpinner}>
+                  <div class="demo-only demo--inverse" style="height:300px;position:relative">
+                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                  </div>
+                </template>
                 <template if:false={showSpinner}>
-                    <lightning-accordion active-section-name="section">
-                      <lightning-accordion-section name="name" label="Label">
+                    <lightning-accordion active-section-name="selezioneMateriali">
+                      <lightning-accordion-section name="materialiSelezionabili" label="Materiali Selezionabili">
                         <div style="height: 300px;">
                           <template if:true={data}>
                               <lightning-datatable data={data}
@@ -68,7 +73,7 @@
                         </div>
                       </lightning-accordion-section>
                       <template if:true={isDataSelected}>
-                        <lightning-accordion-section name="nameSelected" label="selectedLabels">
+                        <lightning-accordion-section name="materialiSelezionati" label="Materiali Selezionati">
                             <div style="height: 300px;">
                                   <lightning-datatable data={selectedData}
                                                        columns={columns}
@@ -76,6 +81,13 @@
                                                        hide-checkbox-column="true">
                                   </lightning-datatable>
                             </div>
+                            <div  style="height: 300px;" class="slds-form-element slds-form-element_horizontal">
+                              <label class="slds-form-element__label" for="cubatureSelected">Cubatura Selezionata</label>
+                              <div class="slds-form-element__control">
+                                <textarea id="cubatureSelected" disabled="" placeholder={allCubatureSelected} class="slds-textarea"></textarea>
+                              </div>
+                            </div>
+
                           </lightning-accordion-section>
                       </template>
                   </lightning-accordion>

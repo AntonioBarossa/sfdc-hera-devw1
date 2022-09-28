@@ -1,6 +1,9 @@
 import {LightningElement, wire, track, api} from 'lwc';
 
-import getVolumetricEstimate from '@salesforce/apex/HDT_LC_MaterialSelection.getVolumetricEstimate';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import getVolumetricEstimateById from '@salesforce/apex/HDT_LC_MaterialSelection.getVolumetricEstimateById';
+import getTables from '@salesforce/apex/HDT_LC_MaterialSelection.getTables';
+import createJunctionObj from '@salesforce/apex/HDT_LC_MaterialSelection.createJunctionObj';
 
 const COLUMNS = [ 
         { label: 'Descrizione', fieldName: 'Description__c', hideDefaultActions: "true"},
@@ -11,6 +14,7 @@ const COLUMNS = [
 export default class HdtMaterialSelection extends LightningElement {
 
     @api caseId;
+    @api isCubatureLimited;
     @api cubatureLimit;
     @api flowSessionId;
 
@@ -21,34 +25,41 @@ export default class HdtMaterialSelection extends LightningElement {
     @track _initialRecords;
     @track _setGlobalSelectedIds= new Set();
     @track _globalSelectionMap = new Map();
-
-    _reloadingTable;
-    
     @track preSelectedKeys= [];
     @track selectedData=[];
+
+    _reloadingTable;
+    showModal = false;
+    doneTypingInterval = 500;
+    typingTimer;
+    showSpinner;
+    allCubatureSelected = 0;
+    isAlreadyWarned = false;
+    isPaymentNeeded;
+    volumetricEstimateById;
+    
     get isDataSelected(){
         return this.selectedData.length
     }
 
-    showModal = false;
-    doneTypingInterval = 500;
-    typingTimer;
-    // showSpinner = true;
-
-    @wire(getVolumetricEstimate)
-    contacts(result) {
-        if (result.data) {
-            this.data = result.data;
-            this._initialRecords = result.data;
-            this.error = undefined;
-        } else if (result.error) {
-            this.error = result.error;
-            this.data = undefined;
+    async getTablesConfig(){
+        let wrp = await getTables({ caseId: this.caseId});
+        let data =wrp?.volumetricEstimate;
+        let preselectedValues = wrp?.preselectedValues;
+        let preSelectedKeys = wrp?.preselectedKeys;
+        if (data?.length) {
+            //console.log("data " + data);
+            this.data= data;
+            this._initialRecords = data;
+            this.preSelectedKeys=preSelectedKeys;
+            this.selectedData=preselectedValues;
+        }else{
+            console.log("#getTablesConfig -> Data not found! ");
         }
     }
 
     connectedCallback(){
-        
+        this.getTablesConfig();
     }
 
     handleRowAction(event){
@@ -87,18 +98,42 @@ export default class HdtMaterialSelection extends LightningElement {
             this.selectedData=[...this._globalSelectionMap.values()];
             console.log('selectedData are ', this.selectedData);
             this.preSelectedKeys = [...selectedRecordsMap.keys()];
-            
+            this.checkCubatureLimit();
         }
         
     }
 
-    showMessage(title, message, variant, mode) {
-        //Create Toast Message
+    checkCubatureLimit(){
+        if(this.isCubatureLimited == 'Y') {
+            this.allCubatureSelected = 0;
+            
+            this.selectedData.forEach((currentItem)=>{
+                    console.log('### currentItem -> ' + currentItem.Cubic_Meters__c);
+                    this.allCubatureSelected += currentItem.Cubic_Meters__c;
+            });   
+            this.allCubatureSelected = this.allCubatureSelected.toFixed(2);
+            console.log('### allCubatureSelected actual value -> ' + this.allCubatureSelected);
+
+            if(this.allCubatureSelected > this.cubatureLimit){
+                if(!this.isAlreadyWarned){
+                    if(this.showModal){ //Se la modal è chiusa ignoro il messaggio - utile quando si ritorna dalla bozza ed è visibile solo il bottone
+                        this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');
+                    }
+                    this.isPaymentNeeded = true;
+                    this.isAlreadyWarned = true;
+                }
+            }else{//Non più a pagamento
+                this.isPaymentNeeded = false;
+                this.isAlreadyWarned = false;
+            }
+        }
+    }
+
+    showMessage(title, message, variant) {
         const toastErrorMessage = new ShowToastEvent({
             title: title,
             message: message,
-            variant: variant,
-            mode: mode
+            variant: variant
         });
         this.dispatchEvent(toastErrorMessage);
     }
@@ -108,7 +143,35 @@ export default class HdtMaterialSelection extends LightningElement {
     }
 
     closeModal(){
+        var labels='';
+        var selectedDataIds = [];
+        // creazione labels
+        this.selectedData.forEach((currentItem)=>{
+            console.log('### currentItem Description__c -> ' + currentItem.Description__c);
+            labels += currentItem.Description__c + ';';
+            selectedDataIds.push(currentItem.Id);
+        });  
+        labels = labels.slice(0, -1);
+        console.log('### allLabels value -> ' + labels);
+        // creazione record ed eliminazione precedente
+        console.log('### selectedDataIds -> ' + selectedDataIds); 
+        this.createObject(selectedDataIds);
+
+        //ripristino valori filtrati
+        this.data = this._initialRecords;
+        this.preSelectedKeys = [...this._globalSelectionMap.keys()];
         this.showModal = false;
+        //lancio evento
+        console.log('### closeModalEvent labels -> ' + labels); 
+        console.log('### closeModalEvent isCubatureLimited -> ' + this.isCubatureLimited); 
+        console.log('### closeModalEvent isPaymentNeeded  -> ' + this.isPaymentNeeded ); 
+        this.dispatchEvent(new CustomEvent('closeModal',{label : labels, needPayment: this.isCubatureLimited=='Y'? this.isPaymentNeeded : false}));
+    }
+
+    async createObject(selectedDataIds){
+        let createdObject = await createJunctionObj({ caseId : this.caseId, volumetricEsimateIds : selectedDataIds });
+        console.log('createdObject are ', createdObject);
+        return createdObject;
     }
         
     addRecord(element){
@@ -116,6 +179,7 @@ export default class HdtMaterialSelection extends LightningElement {
     }
 
     onchangeSearch(event){
+        this.showSpinner = true;
         clearTimeout(this.typingTimer);
         let value = event.target.value;
         this.typingTimer = setTimeout(() => {
@@ -125,8 +189,8 @@ export default class HdtMaterialSelection extends LightningElement {
                 console.log('******** Debounce Restore Initial:');
                 this.data = this._initialRecords;
                 this.preSelectedKeys = [...this._globalSelectionMap.keys()];
-                //this.preSelectedKeys = [...this._setGlobalSelectedIds];
             }
+            this.showSpinner = false;
         }, this.doneTypingInterval);
     }
 
@@ -146,7 +210,7 @@ export default class HdtMaterialSelection extends LightningElement {
                         let valuesArray = Object.values(record);
      
                         for (let val of valuesArray) {
-                            console.log('val is ' + val);
+                            //console.log('val is ' + val);
                             let strVal = String(val);
      
                             if (strVal) {
