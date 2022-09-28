@@ -42,21 +42,6 @@ public with sharing class HDT_LC_MaterialSelection {
     }
 
     @AuraEnabled
-    public static List<VolumetricEstimate__c> getVolumetricEstimateById(List<String> ids) {
-
-        return [ 
-                SELECT Id, 
-                Description__c,
-                Cubic_Meters__c,
-                Typology__c
-                FROM VolumetricEstimate__c 
-                WHERE Id IN :ids
-                WITH SECURITY_ENFORCED
-        ];
-
-    }
-
-    @AuraEnabled
     public static HDT_WRP_Data getTables(String caseId){
         return new HDT_WRP_Data(getVolumetricEstimate(), getVolumetricEstimateByCaseId(caseId));
     }
