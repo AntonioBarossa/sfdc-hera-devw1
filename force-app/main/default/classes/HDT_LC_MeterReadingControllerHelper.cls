@@ -97,16 +97,12 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
                 return meterReadingObj;
             }
 
-            HDT_WRP_MeterReading.HDT_WRP_HttpBody bodyWrp = new HDT_WRP_MeterReading.HDT_WRP_HttpBody();
-            bodyWrp.codiceContratto = contractCode;
-            //bodyWrp.codiceImpianto = '4005362981';
-            bodyWrp.codicePod = '';
-            //bodyWrp.dataInizioLettura = '01/12/2019';
-            bodyWrp.dataFineLettura = Datetime.now().format('dd/MM/yyyy'); 
-            bodyWrp.letturaReale = '';
+            List<Contract> contractRecord;
+            contractRecord= HDT_QR_MeterReading.getContract(contractRecord, contractCode);
 
-            String body = JSON.serialize(bodyWrp, true);
+            String body = generateBody(contractRecord[0]);
             System.debug(LoggingLevel.DEBUG, '>>> body obj > ' + body);
+
             HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
      
             if(!responseCtrl.success){
@@ -148,6 +144,38 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         }
 
         return meterReadingObj;
+    }
+
+    public static String generateBody(Contract contr){
+        String body;
+        if(Label.TRB_Enable.equalsIgnoreCase('N')){
+            HDT_WRP_MeterReading.HDT_WRP_HttpBody bodyWrp = new HDT_WRP_MeterReading.HDT_WRP_HttpBody();
+            bodyWrp.codiceContratto = contr.SAPContractCode__c;
+            //bodyWrp.codiceImpianto = '4005362981';
+            bodyWrp.codicePod = '';
+            //bodyWrp.dataInizioLettura = '01/12/2019';
+            bodyWrp.dataFineLettura = Datetime.now().format('dd/MM/yyyy'); 
+            bodyWrp.letturaReale = '';
+            body = JSON.serialize(bodyWrp, true);
+        } else {
+            JSONGenerator jsonGen = JSON.createGenerator(true);
+            jsonGen.writeStartObject();
+
+            if(contr.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Energia Elettrica')){
+                jsonGen.writeStringField('pod', 'xyz');
+            } else if(contr.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Gas')){
+                jsonGen.writeStringField('pdr', '');
+            }
+            Date d = Date.today();
+            String currentYear = String.valueOf(d.year());
+            jsonGen.writeStringField('dataInizio', '01/01/' + currentYear); //-- formato 01/01/2022 inserire primo giorno anno corrente
+            jsonGen.writeStringField('dataFine', '31/12/' + currentYear); //-- formato 31/12/2022 inserire ultimo giorno anno corrente
+            jsonGen.writeStringField('commodity', contr.ServicePoint__r.CommoditySector__c);
+            jsonGen.writeStringField('modalita', 'xyz'); //-- DEFAULT - FULL
+            jsonGen.writeEndObject();
+            body = jsonGen.getAsString();
+        }
+        return body;
     }
 
     public static HDT_WS_MulesoftCaller.HDT_WRP_HttpObj setHttpObject(){
