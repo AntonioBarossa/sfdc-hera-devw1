@@ -160,7 +160,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>RonchiDescription__c</field>
+                <field>RonchiCodeDescription__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
