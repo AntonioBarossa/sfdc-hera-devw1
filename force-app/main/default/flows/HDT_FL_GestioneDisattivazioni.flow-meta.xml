@@ -789,20 +789,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.subProcessType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getPreAttachments.Subprocess__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.commodity</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getPreAttachments.Commodity__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>paramsRequiredAttachments.productCode</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -1228,13 +1214,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Chiusura Contatore</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Input_Case.CommodityFormula__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Acqua</stringValue>
                 </rightValue>
             </conditions>
             <connector>

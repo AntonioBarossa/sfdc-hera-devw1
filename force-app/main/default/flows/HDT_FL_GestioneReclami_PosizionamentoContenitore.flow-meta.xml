@@ -154,13 +154,6 @@
                 <elementReference>getPreAttachments.Type</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.commodity</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getPreAttachments.Commodity__c</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>screenGestioneAllegati</targetReference>
         </connector>

@@ -440,13 +440,6 @@
                 <elementReference>tryGet.Contract__r.CommercialProduct__c</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.commodity</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>tryGet.Commodity__c</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>GestioneAllegati_0_0</targetReference>
         </connector>
@@ -456,13 +449,6 @@
         <label>assignParams</label>
         <locationX>657</locationX>
         <locationY>1478</locationY>
-        <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.accountType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAfterForm_0.Account.Type</elementReference>
-            </value>
-        </assignmentItems>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.city</assignToReference>
             <operator>Assign</operator>
@@ -478,13 +464,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.contactChannel</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAfterForm_0.Channel__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>paramsRequiredAttachments.processType</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -492,31 +471,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.subProcessType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAfterForm_0.Subprocess__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.SubscriberType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAfterForm_0.SubscriberType__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>paramsRequiredAttachments.productCode</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>getAfterForm_0.Contract__r.CommercialProduct__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.commodity</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAfterForm_0.Commodity__c</elementReference>
             </value>
         </assignmentItems>
         <connector>

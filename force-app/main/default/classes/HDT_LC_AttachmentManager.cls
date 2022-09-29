@@ -26,9 +26,6 @@ public with sharing class HDT_LC_AttachmentManager {
     public String  subProcessType {get;set;}
 
     @AuraEnabled
-    public String  commodity {get;set;}
-
-    @AuraEnabled
     public String  productCode {get;set;}
 
     @AuraEnabled
@@ -54,7 +51,6 @@ public with sharing class HDT_LC_AttachmentManager {
                                     String cluster, 
                                     String processType, 
                                     String subProcessType, 
-                                    String commodity,
                                     String productCode,
                                     String productDescription,
                                     String subscriberType,
@@ -65,7 +61,6 @@ public with sharing class HDT_LC_AttachmentManager {
         this.cluster = cluster;
         this.processType = processType;
         this.subProcessType = subProcessType;
-        this.commodity = commodity;
         this.productCode = productCode;
         this.productDescription = productDescription;
         this.subscriberType = subscriberType;
@@ -138,7 +133,7 @@ public with sharing class HDT_LC_AttachmentManager {
 */
     @AuraEnabled
     public static HDT_LC_AttachmentManager getOrderForButton(Id recordId){
-        Order currOrder = [SELECT Id,AccountholderTypeBeneficiary__c, Channel__c, BillingCity__c, Cluster__c, ProcessType__c, Subprocess__c, commodity__c, CommercialProductCode__c, subscriberType__c
+        Order currOrder = [SELECT Id,AccountholderTypeBeneficiary__c, Channel__c, BillingCity__c, Cluster__c, ProcessType__c, Subprocess__c, CommercialProductCode__c, subscriberType__c
         FROM Order WHERE Id =:recordId 
         WITH SECURITY_ENFORCED];
         HDT_LC_AttachmentManager paramsWrap = new HDT_LC_AttachmentManager(currOrder.AccountholderTypeBeneficiary__c, 
@@ -147,7 +142,6 @@ public with sharing class HDT_LC_AttachmentManager {
                                                                            currOrder.Cluster__c, 
                                                                            currOrder.ProcessType__c, 
                                                                            currOrder.Subprocess__c,
-                                                                           currOrder.commodity__c,
                                                                            currOrder.CommercialProductCode__c,
                                                                            null,
                                                                            currOrder.subscriberType__c,
@@ -169,7 +163,6 @@ public with sharing class HDT_LC_AttachmentManager {
                                   AND ProcessType__c =: paramsWrap.processType
                                   AND (SubProcessType__c =: paramsWrap.subProcessType OR SubProcessType__c = null)
                                   AND ProductCode__c =: paramsWrap.productCode
-                                  AND ServiceProduct__c =: paramsWrap.commodity
                                   WITH SECURITY_ENFORCED
                                   ORDER BY City__c, SubProcessType__c DESC NULLS LAST
                                  ]; 
