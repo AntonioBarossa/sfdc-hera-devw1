@@ -127,21 +127,21 @@ public with sharing class HDT_LC_CodiceAtecoTst{
 
 		List<Case> cases = HDT_UTL_DataFactoryTst.createCase(1, true, accId, null, null, null, null);
 
-		List<Case> currCase = [SELECT Id,AtecoCode__c,SupplyCityCode__c,RonchiCode__c,RonchiSubcategory__c,RonchiDescription__c
+		List<Case> currCase = [SELECT Id,AtecoCode__c,SupplyCityCode__c,RonchiCode__c,RonchiSubcategory__c,RonchiCodeDescription__c
 							FROM Case LIMIT 1];
 
 		Test.startTest();
 			HDT_LC_CodiceAteco.saveAtecoRonchiCodeCase(currCase[0], tempMap);
 		Test.stopTest();
 
-		currCase = [SELECT Id,AtecoCode__c,SupplyCityCode__c,RonchiCode__c,RonchiSubcategory__c,RonchiDescription__c
+		currCase = [SELECT Id,AtecoCode__c,SupplyCityCode__c,RonchiCode__c,RonchiSubcategory__c,RonchiCodeDescription__c
 							FROM Case LIMIT 1];
 
 		system.assertEquals('1', currCase[0].AtecoCode__c);
 		system.assertEquals('2', currCase[0].SupplyCityCode__c);
 		system.assertEquals('3', currCase[0].RonchiCode__c);
 		system.assertEquals('4', currCase[0].RonchiSubcategory__c);
-		system.assertEquals('5', currCase[0].RonchiDescription__c);
+		system.assertEquals('5', currCase[0].RonchiCodeDescription__c);
 
 	}
 }
