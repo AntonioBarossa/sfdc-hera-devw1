@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 28-09-2022
+ * @last modified on  : 29-09-2022
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.AvoidDebugStatements , PMD.ApexCRUDViolation')
@@ -26,7 +26,7 @@ public with sharing class HDT_LC_MaterialSelection {
         return [ 
                 SELECT Id, 
                 Description__c,
-                Cubic_Meters__c,
+                CubicMeters__c,
                 Typology__c
                 FROM VolumetricEstimate__c 
                 WITH SECURITY_ENFORCED
@@ -36,7 +36,7 @@ public with sharing class HDT_LC_MaterialSelection {
     }
 
     public static Map<Id,VolumetricEstimate__c> getVolumetricEstimateByCaseId(String caseId) {
-        return new Map<Id,VolumetricEstimate__c>( [Select Id, Description__c,Cubic_Meters__c, Typology__c FROM VolumetricEstimate__c WHERE Id IN (SELECT VolumetricEstimate__c 
+        return new Map<Id,VolumetricEstimate__c>( [Select Id, Description__c,CubicMeters__c, Typology__c FROM VolumetricEstimate__c WHERE Id IN (SELECT VolumetricEstimate__c 
         FROM CaseVolumetricaJunction__c 
         WHERE Case__c =:caseId) WITH SECURITY_ENFORCED ]);
     }
@@ -56,7 +56,7 @@ public with sharing class HDT_LC_MaterialSelection {
 
         if(!obj.isEmpty()){
             try {
-                System.debug(LoggingLevel.DEBUG ,'deleted ' + obj);
+                System.debug(LoggingLevel.DEBUG ,'deleted object ' + obj);
                 delete obj;
             } catch (DmlException e) {
                 System.debug(LoggingLevel.DEBUG, e.getMessage());
@@ -75,8 +75,8 @@ public with sharing class HDT_LC_MaterialSelection {
 
 		}
 
-        System.debug(LoggingLevel.DEBUG, 'insert ' + caseVolumetricaJunctionList);
         insert caseVolumetricaJunctionList;
+        System.debug(LoggingLevel.DEBUG, 'inserted object ' + caseVolumetricaJunctionList);
         return caseVolumetricaJunctionList;
     }    
 

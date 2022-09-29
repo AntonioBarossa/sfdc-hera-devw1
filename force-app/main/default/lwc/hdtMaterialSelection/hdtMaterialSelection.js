@@ -6,7 +6,7 @@ import createJunctionObj from '@salesforce/apex/HDT_LC_MaterialSelection.createJ
 
 const COLUMNS = [ 
         { label: 'Descrizione', fieldName: 'Description__c', hideDefaultActions: "true"},
-        { label: 'Metri Cubi', fieldName: 'Cubic_Meters__c', hideDefaultActions: "true"},
+        { label: 'Metri Cubi', fieldName: 'CubicMeters__c', hideDefaultActions: "true"},
         { label: 'Tipologia', fieldName: 'Typology__c', hideDefaultActions: "true"}
     ];
 
@@ -29,7 +29,7 @@ export default class HdtMaterialSelection extends LightningElement {
 
     _reloadingTable;
     showModal = false;
-    doneTypingInterval = 500;
+    doneTypingInterval = 2000;
     typingTimer;
     showSpinner;
     allCubatureSelected = 0;
@@ -107,8 +107,8 @@ export default class HdtMaterialSelection extends LightningElement {
             this.allCubatureSelected = 0;
             
             this.selectedData.forEach((currentItem)=>{
-                    console.log('### currentItem -> ' + currentItem.Cubic_Meters__c);
-                    this.allCubatureSelected += currentItem.Cubic_Meters__c;
+                    console.log('### currentItem -> ' + currentItem.CubicMeters__c);
+                    this.allCubatureSelected += currentItem.CubicMeters__c;
             });   
             this.allCubatureSelected = this.allCubatureSelected.toFixed(2);
             console.log('### allCubatureSelected actual value -> ' + this.allCubatureSelected);

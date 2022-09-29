@@ -2,7 +2,7 @@
   @description       : 
   @author            : Giacinto Florio
   @group             : 
-  @last modified on  : 28-09-2022
+  @last modified on  : 29-09-2022
   @last modified by  : Giacinto Florio
 -->
 <template>
@@ -15,14 +15,8 @@
                   <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
                   <span class="slds-assistive-text">Close</span>
                 </button>
-                <!-- <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Selezione Materiali</h2> -->
               </header>
-              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                <!-- <template if:true={showSpinner}>
-                  <div class="demo-only demo--inverse" style="height:300px;position:relative">
-                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
-                  </div>
-                </template> -->
+              <div class="slds-modal__content slds-p-around_medium slds-is-relative" id="modal-content-id-1">
                 <!-- HEADER -->
                 <div class="slds-page-header">
                     <div class="slds-page-header__row">
@@ -54,11 +48,8 @@
                   </div>
                 <!-- HEADER -->
                 <template if:true={showSpinner}>
-                  <div class="demo-only demo--inverse" style="height:300px;position:relative">
-                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
-                  </div>
+                  <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
                 </template>
-                <template if:false={showSpinner}>
                     <lightning-accordion active-section-name="selezioneMateriali">
                       <lightning-accordion-section name="materialiSelezionabili" label="Materiali Selezionabili">
                         <div style="height: 300px;">
@@ -91,7 +82,6 @@
                           </lightning-accordion-section>
                       </template>
                   </lightning-accordion>
-                </template>
               </div>
               <footer class="slds-modal__footer slds-text-align_center">
                 <lightning-button label="Close" name="Cancel" onclick={closeModal} ></lightning-button>
