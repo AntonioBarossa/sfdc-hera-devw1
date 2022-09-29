@@ -30,7 +30,6 @@ export default class HdtRecordCommodityViewForm extends LightningElement {
         {
             console.log('### START connected 2');
             console.log('refresh 4');
-
             getFields({ recordId: this.recordId })
             .then(result => {
                 console.log('result:'+ result);

@@ -25250,6 +25250,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.allowNegativeQuantity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.AllowSwitchInDummy__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -37378,6 +37383,17 @@
         <layout>Case-HDT_PosizionamentoContenitore</layout>
         <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>SlaAdministration__c-Amministrazione SLA Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SlaAdministration__c-HDT_PostSales</layout>
+        <recordType>SlaAdministration__c.HDT_RT_PostSales</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SlaAdministration__c-HDT_Sales</layout>
+        <recordType>SlaAdministration__c.HDT_RT_Sales</recordType>
+    </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
@@ -41071,7 +41087,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>SlaAdministration__c</tab>
-        <visibility>DefaultOff</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <userLicense>Salesforce</userLicense>
     <userPermissions>

@@ -4461,7 +4461,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento doppi pagamenti</stringValue>
+                <stringValue>Annullamento doppi pagamenti tari</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4486,7 +4486,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento comunicazione pagamenti</stringValue>
+                <stringValue>Annullamento comunicazione pagamenti tari</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4511,7 +4511,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento comunicazione pagamenti</stringValue>
+                <stringValue>Annullamento comunicazione pagamenti tari</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4536,7 +4536,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento doppi pagamenti</stringValue>
+                <stringValue>Annullamento doppi pagamenti tari</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4561,7 +4561,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento comunicazione pagamenti</stringValue>
+                <stringValue>Annullamento comunicazione pagamenti tari</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4586,7 +4586,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento comunicazione pagamenti</stringValue>
+                <stringValue>Annullamento comunicazione pagamenti tari</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4611,7 +4611,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento comunicazione pagamenti</stringValue>
+                <stringValue>Annullamento comunicazione pagamenti tari</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4636,7 +4636,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento comunicazione pagamenti</stringValue>
+                <stringValue>Annullamento comunicazione pagamenti tari</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4661,7 +4661,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento comunicazione pagamenti</stringValue>
+                <stringValue>Annullamento comunicazione pagamenti tari</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4686,7 +4686,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento comunicazione pagamenti</stringValue>
+                <stringValue>Annullamento comunicazione pagamenti tari</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4711,7 +4711,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento comunicazione pagamenti</stringValue>
+                <stringValue>Annullamento comunicazione pagamenti tari</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
