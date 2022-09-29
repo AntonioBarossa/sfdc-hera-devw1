@@ -10,7 +10,7 @@ import isPreventivo from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.isPre
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
 import getReadingId from '@salesforce/apex/HDT_LC_SelfReading.getReadingId';
 import isAfterthoughtDaysZero from '@salesforce/apex/HDT_UTL_ProcessDateManager.isAfterthoughtDaysZero';
-import {handleSections} from 'c/hdtChildOrderProcessDetailsUtl';
+import {handleSections, equalsIgnoreCase, safeStr} from 'c/hdtChildOrderProcessDetailsUtl';
 
 export default class hdtChildOrderProcessDetails extends LightningElement {
     @api order;
@@ -1229,10 +1229,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     handleUpdateCodAtecoEvent(event){
         console.log('###Ateco Event >>> ' + JSON.stringify(event.detail));
-        if(event.detail.ronchiCode){
-            this.template.querySelector("[data-id='AtecoCode__c']").value = event.detail.atecoCode;
-            this.template.querySelector("[data-id='RonchiCode__c']").value = event.detail.ronchiCode;
-            this.template.querySelector("[data-id='RonchiSubcategory__c']").value = event.detail.ronchiSubcategory;
+        if(event.detail?.isRonchi){
+            this.template.querySelector("[data-id='AtecoCode__c']").value = safeStr(event.detail?.atecoCode);
+            this.template.querySelector("[data-id='RonchiCode__c']").value = safeStr(event.detail?.ronchiCode);
+            this.template.querySelector("[data-id='RonchiSubcat__c']").value = safeStr(event.detail?.ronchiSubcategory);
         }
         else{
             this.template.querySelector("[data-id='AtecoCode__c']").value = event.detail;
