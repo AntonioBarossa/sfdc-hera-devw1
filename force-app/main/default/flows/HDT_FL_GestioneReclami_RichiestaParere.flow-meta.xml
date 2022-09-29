@@ -718,13 +718,6 @@
                 <elementReference>getPreAttachmentsTari.Type</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>paramsAttachmentsTari.commodity</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getPreAttachmentsTari.Commodity__c</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Gestione_Allegati_Tari</targetReference>
         </connector>
@@ -1200,7 +1193,7 @@
             <name>YesTariProcess</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Input_Case_0.Commodity__c</leftValueReference>
+                <leftValueReference>GetParentCase.Commodity__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Ambiente</stringValue>
