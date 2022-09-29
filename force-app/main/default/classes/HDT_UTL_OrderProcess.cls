@@ -524,7 +524,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                             }else{
                                 newOrder.DateSentToSII__c = Date.today();
                                 String category = newOrder.CustomerCategory__c;
-                                if(category.equalsIgnoreCase('Famiglie')){
+                                if('Famiglie'.equalsIgnoreCase(category) || newOrder.RecessNotice__c == 0){
                                     newOrdersListRecalc.add(newOrder);
                                 }
                             }

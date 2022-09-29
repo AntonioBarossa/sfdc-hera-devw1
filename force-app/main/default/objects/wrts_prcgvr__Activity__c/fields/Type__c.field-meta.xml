@@ -401,6 +401,11 @@
                 <label>Gestione processi Ultima Istanza</label>
             </value>
             <value>
+                <fullName>Gestione richiesta social</fullName>
+                <default>false</default>
+                <label>Gestione richiesta social</label>
+            </value>
+            <value>
                 <fullName>Gestione Sblocco al Calcolo</fullName>
                 <default>false</default>
                 <label>Gestione Sblocco al Calcolo</label>
