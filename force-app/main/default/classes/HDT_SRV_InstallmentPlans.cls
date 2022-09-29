@@ -101,6 +101,21 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         if(customerAssisted != null){
             currentCase.CutomerAssisted__c = customerAssisted.equalsIgnoreCase('Si');
         }
+        
+        // TARI, predefault Reason__c field on Case
+        if (String.isNotBlank(inputs[0].motivazione)) {
+            currentCase.Reason__c = inputs[0].motivazione;
+        }
+
+        // TARI, predefault RequestSource__c field on Case
+        if (String.isNotBlank(inputs[0].provenienzaRichiesta)) {
+            currentCase.RequestSource__c = inputs[0].provenienzaRichiesta;
+        }
+
+        // TARI, predefault ApplicationInterests__c field on Case
+        if (inputs[0].applicazioneInteressi != null) {
+            currentCase.ApplicationInterests__c = inputs[0].applicazioneInteressi;
+        }
 
         HDT_UTL_DatabaseService.updateSObject(currentCase);
 
@@ -306,7 +321,14 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         @InvocableVariable
         public Decimal totalToPay;
 
+        @InvocableVariable
+        public String motivazione;
 
+        @InvocableVariable
+        public String provenienzaRichiesta;
+
+        @InvocableVariable
+        public Boolean applicazioneInteressi;
     }
 
 
