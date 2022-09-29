@@ -275,14 +275,27 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         if(!orderParentIds.isEmpty()){
             List<Order> childOrders = orderQr.getChildOrdersForDateCalculation(orderParentIds);
+            List<Order> childOrdersToWork = new List<Order>();
+            List<Order> onlySignedDateUpdate = new List<Order>();
             for(Order singleOrder : childOrders){
+                Boolean changeDate = false;
                 if(singleOrder.SignedDate__c == null){
+                    changeDate=true;
                     singleOrder.SignedDate__c = Date.today();
                 }
+                if (changeDate && ('VAS'.equalsIgnoreCase(singleOrder.ProcessType__c) || String.isBlank(singleOrder.ProcessType__c))){
+                    onlySignedDateUpdate.add(singleOrder);
+                    continue;
+                }
+                childOrdersToWork.add(singleOrder);
             }
-            HDT_UTL_ProcessDateManager.calculateOrderProcessDate(childOrders);
-            if (!childOrders.isEmpty()) {
-                HDT_UTL_DatabaseService.updateSObject(childOrders);
+            childOrders = null;
+            HDT_UTL_ProcessDateManager.calculateOrderProcessDate(childOrdersToWork);
+            if(!onlySignedDateUpdate.isEmpty()){
+                childOrdersToWork.addAll(onlySignedDateUpdate);
+            }
+            if (!childOrdersToWork.isEmpty()) {
+                HDT_UTL_DatabaseService.updateSObject(childOrdersToWork);
             }
         }
     }
@@ -511,7 +524,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                             }else{
                                 newOrder.DateSentToSII__c = Date.today();
                                 String category = newOrder.CustomerCategory__c;
-                                if(category.equalsIgnoreCase('Famiglie')){
+                                if('Famiglie'.equalsIgnoreCase(category) || newOrder.RecessNotice__c == 0){
                                     newOrdersListRecalc.add(newOrder);
                                 }
                             }
