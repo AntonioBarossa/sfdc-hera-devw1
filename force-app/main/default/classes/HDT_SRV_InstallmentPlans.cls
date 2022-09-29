@@ -134,7 +134,10 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
             when 'Bonifico Paperless' {
                 depositPaymentMode = 'B';
             }
-            when 'Acconto Assistiti' {
+            when 'Accordi Assistiti' {
+                depositPaymentMode = 'A';
+            }
+            when 'Promessa di pagamento' {
                 depositPaymentMode = 'A';
             }
             when else {

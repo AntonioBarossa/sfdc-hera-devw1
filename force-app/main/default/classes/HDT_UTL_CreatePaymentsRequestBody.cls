@@ -219,7 +219,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
     private String handlePhaseChange(HDT_WRP_SuccessResponse response, String recordId, String process,String condition, String depositMode){
         
         String phase = null;
-        String successPhase = (process == 'Piano Rateizzazione' && depositMode != 'Paperless') //IF
+        String successPhase = (process == 'Piano Rateizzazione' && !depositMode.containsIgnoreCase('Paperless')) //IF
                 ? 'Completata' //IF TRUE
                 : process == 'Paperless' //ELSE IF
                     ? 'Paperless Generato' //IF TRUE

@@ -2130,7 +2130,7 @@
     <picklistValues>
         <picklist>DepositPaymentMode__c</picklist>
         <values>
-            <fullName>Acconto Assistiti</fullName>
+            <fullName>Accordi Assistiti</fullName>
             <default>false</default>
         </values>
         <values>
