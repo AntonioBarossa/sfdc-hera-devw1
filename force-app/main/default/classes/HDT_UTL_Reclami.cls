@@ -9,7 +9,8 @@ public with sharing class HDT_UTL_Reclami
     {
         Set<Date> holidays = new Set<Date>();
         Date currentDate = inputCase.SendDate__c;
-        Integer suspensionDays = inputCase.Commodity__c.equalsIgnoreCase('Acqua') ? calculateSuspensionDaysWater(inputCase, calculateAto(supplyCity)) : calculateSuspensionDaysAmbiente(inputCase);
+        String commodity = [ SELECT ServicePoint__r.CommoditySector__c FROM Case WHERE ( ParentId = :inputCase.ParentId OR ParentId = :inputCase.Id ) AND ServicePoint__c != null WITH SECURITY_ENFORCED ][0].ServicePoint__r.CommoditySector__c;
+        Integer suspensionDays = commodity.equalsIgnoreCase('Acqua') ? calculateSuspensionDaysWater(inputCase, calculateAto(supplyCity)) : calculateSuspensionDaysAmbiente(inputCase);
         holidays = getHolidaysDate();
         return addBusinsessDaysWithHolidays(suspensionDays, currentDate, holidays);
     }
@@ -24,9 +25,9 @@ public with sharing class HDT_UTL_Reclami
 
         return result;
     }
-    private List<HDT_SuspensionDays__mdt> getExpirationDateConfigurations(String process)
+    private List<HDT_SuspensionDays__mdt> getExpirationDateConfigurations(String process,String subprocess)
     {
-        return [SELECT Id,SuspensionDays__c,ObjectName__c FROM HDT_SuspensionDays__mdt WHERE (Process__c = :process OR Process__c = 'Default') WITH SECURITY_ENFORCED];
+        return [SELECT Id,SuspensionDays__c,ObjectName__c FROM HDT_SuspensionDays__mdt WHERE Process__c = :process AND ( Subprocess__c = :subprocess OR Subprocess__c = null ) WITH SECURITY_ENFORCED];
     }
     private List<HDT_SuspensionDays__mdt> getExpirationDateConfigurationsAmbiente()
     {
@@ -35,9 +36,10 @@ public with sharing class HDT_UTL_Reclami
     private Integer calculateSuspensionDaysWater(Case inputCase, String ato)
     {
         Integer result;
-        String process = inputCase.Type.equalsIgnoreCase('Reclamo da Cittadino') ? inputCase.Type : inputCase.FirstLevelComplaintClassification__c;
+        String process = inputCase.Type.equalsIgnoreCase('Reclamo da Cittadino') || inputCase.Type.equalsIgnoreCase('Richiesta Parere') ? inputCase.Type : inputCase.FirstLevelComplaintClassification__c;
+        String subprocess = inputCase.Type.equalsIgnoreCase('Richiesta Parere') ? inputCase.SecondLevelOpinion__c : '';
 
-        List<HDT_SuspensionDays__mdt> configurations = getExpirationDateConfigurations(process);
+        List<HDT_SuspensionDays__mdt> configurations = getExpirationDateConfigurations(process,subprocess);
         for(HDT_SuspensionDays__mdt config : configurations)
         {
             if(String.isNotBlank(ato) && config.ObjectName__c.equalsIgnoreCase(ato))
