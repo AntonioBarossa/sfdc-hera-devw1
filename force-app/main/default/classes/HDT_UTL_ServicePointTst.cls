@@ -43,6 +43,7 @@ public with sharing class HDT_UTL_ServicePointTst {
             List<Account> accList = [SELECT Id FROM Account WHERE CompanyOwner__c = 'HERA COMM' LIMIT 1];
 
             List<HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject> positions = new List<HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject>();
+
             HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
             position.campo = 'IMPOSTE';
             position.valore = '5';
@@ -50,7 +51,7 @@ public with sharing class HDT_UTL_ServicePointTst {
 
             position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
             position.campo = 'DESCRCOMM';
-            position.valore = 'Gas'; 
+            position.valore = 'Gas';
             positions.add(position);
 
             position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
@@ -430,7 +431,9 @@ public with sharing class HDT_UTL_ServicePointTst {
 
             //Testing CALIBRO1 values
             for (Integer i=2; i<19; i++) {
+                
                 response = new HDT_WS_ArrichmentDataEntityResponse();
+                
                 positions = new List<HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject>();
                 position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
 
@@ -457,6 +460,45 @@ public with sharing class HDT_UTL_ServicePointTst {
         }
     }
 
+    
+    @isTest
+    public static void testDatiCatastali(){
+
+        Test.startTest();
+        List<HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject> positions = new List<HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject>();
+        HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+
+        position.campo = 'DESCRCOMM';
+        position.valore = 'Ambiente';
+        positions.add(position);
+        response.data.posizioni = positions;
+
+        List<HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_DatiCatastaliResponseObject> datiCat = new List<HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_DatiCatastaliResponseObject>();
+        HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_DatiCatastaliResponseObject datoCat = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_DatiCatastaliResponseObject();
+        datoCat.destinazione = '1';
+        datoCat.progressivo = '0001';
+        datoCat.comuneAmministrativo = 'URBINO';
+        datoCat.comuneCatastale = 'URBINO';
+        datoCat.codiceComuneCatastale = 'L500';
+        datoCat.codiceProvincia = 'PU';
+        datoCat.tipoUnita='F';
+        datoCat.foglio = '18';
+        datoCat.particella = '154';
+        datoCat.qualificaTitolareUtenza = '1';
+        datoCat.superficeCatastale = '00000000';
+
+        datiCat.add(datoCat);
+        response.data.datiCatastali = datiCat;
+
+        List<ServicePoint__c> spList = [SELECT Id, MeterStatus__c, Distributor__c, Account__c, ExciseGas__c, ImplantType__c FROM ServicePoint__c WHERE Name='testServicePoint0' LIMIT 1];
+
+        HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(spList[0], response);
+        Test.stopTest();
+          
+        List <LandRegistry__c> lstCheck = [SELECT id FROM LandRegistry__c];
+        System.assert(lstcheck.size()>0, 'Creazione landregistry non riuscita!');
+
+    }
 
     @isTest
     public static void testGetInstanceWrapAddressObject() {

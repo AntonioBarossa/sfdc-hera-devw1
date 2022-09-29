@@ -44,6 +44,11 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                     : str1 === str2;
     }
 
+    function safeStr(str){
+        if(str) return `${str}`;
+        return "";
+    }
+
     function checkSectionRequiredFields(sectionName){
         const reg = new RegExp('^\\*?(.+)\\n?');
         const valuation = [
@@ -85,6 +90,7 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 hasCodiceRonchiButton: this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName),
+                //hasCodiceAtecoButton: this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName),
                 hasVerificaRavv: this.order.Account.CompanyOwner__c!=="MMS",
                 hasAllegatiObbligatori: true,
                 diffObjApi: 'Sale',
@@ -866,4 +872,4 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
         ];
     }
 
-    export {handleSections}
+    export {handleSections, equalsIgnoreCase, safeStr}
