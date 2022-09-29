@@ -93,9 +93,9 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj meterReadingObj = new HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj();
 
         try{
-            //meterReadingObj.data = new List<HDT_WRP_MeterReading.HDT_WRP_MeterReadingDetail>();
+            String code = enableNewService() ? 'NewMeterReading' : 'meterReading';
 
-            HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = setHttpObject();
+            HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = setHttpObject(code);
 
             if(httpObj == null){
                 meterReadingObj.success = false;
@@ -181,13 +181,13 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         return body;
     }
 
-    public static HDT_WS_MulesoftCaller.HDT_WRP_HttpObj setHttpObject(){
+    public static HDT_WS_MulesoftCaller.HDT_WRP_HttpObj setHttpObject(String code){
 
         HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
         httpObj.headersMap = new Map<String, String>();
 
         List<HDT_AccountDataEnrichment__mdt> enrichmentbMetadataList;
-        enrichmentbMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(enrichmentbMetadataList, 'meterReading');
+        enrichmentbMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(enrichmentbMetadataList, code);
 
         if(enrichmentbMetadataList.size()>0 && !String.isEmpty(enrichmentbMetadataList[0].Credential__c)){
 

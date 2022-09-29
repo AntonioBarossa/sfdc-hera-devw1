@@ -59,7 +59,7 @@
     </template>
 
     <div if:false={error} class="slds-m-top_x-small" >
-        <template if:true={contractNumberAvailable} >
+        <template if:true={showDetailTable} >
             <c-hdt-meter-reading-detail-table
                 columnsobj={meterReadingColumns}
                 contract-number={contractNumber}
@@ -69,6 +69,17 @@
                 show-modality={showModality}
             ></c-hdt-meter-reading-detail-table>
         </template>
+        <!--<template if:false={showDetailTable} >
+            <div class="slds-text-align_center">
+                <lightning-card>
+                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                    <c-hdt-custom-illustration
+                        message="Stiamo caricando i dati"
+                        style-class="slds-text-heading_medium"
+                    ></c-hdt-custom-illustration>
+                </lightning-card>
+            </div>
+        </template>-->
     </div>
 
 </template>

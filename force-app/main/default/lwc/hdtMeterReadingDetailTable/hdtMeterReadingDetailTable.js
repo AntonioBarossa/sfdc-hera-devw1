@@ -41,7 +41,7 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
             if(data.success){
                 var obj = JSON.parse(data.data);
                 this.meterReadingData = obj.data;
-                //console.log(JSON.stringify(this.meterReadingData));
+                console.log(JSON.stringify(this.meterReadingData));
                 this.detailTableHeader = 'Letture contratto > ' + this.contractNumber;
                 this.loadData = true;
             } else {
