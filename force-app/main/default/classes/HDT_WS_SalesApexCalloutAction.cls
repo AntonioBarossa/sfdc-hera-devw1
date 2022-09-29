@@ -68,6 +68,9 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             Map<String, HDT_CodificaAgevolazione__mdt> codificaAgevolazioni = 'AgevolazioneContestuale'.equalsIgnoreCase(method)? HDT_CodificaAgevolazione__mdt.getAll() : new Map<String, HDT_CodificaAgevolazione__mdt>();
             /**Rimozione OrderItems non necessaria per Analisi consumi */
             String vasType = (String)obj.get('VASType__c');
+            String commercialProduct = (String)obj.get('CommercialProduct__c');
+            String commercialProductCode = (String)obj.get('CommercialProductCode__c');
+            String commodity = (String)obj.get('CommodityFormula__c');
             if(String.isBlank(vasType) || !vasType.equalsIgnoreCase('VAS Fatturabili'))
             {
                 for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
@@ -103,6 +106,11 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                         multirequestObj.requests[0].objects.remove(indexOfObjectToRemove[i]);
                     }
                 }
+                //Verificare Se ELE
+            }else if ('VAS Fatturabili'.equalsIgnoreCase(vasType) && String.isBlank(commercialProductCode) && 'Analisi Consumi'.equalsIgnoreCase(commercialProduct)
+                &&('AggScontiBonusEECreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusGGCreaRich'.equalsIgnoreCase(method)) 
+                && 'Energia Elettrica'.equalsIgnoreCase(commodity)){
+                this.populateCommercialProductCode((Order)obj, multirequestObj);
             }
         
             try{
@@ -388,5 +396,71 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration endpointUtils = ( wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration)  wrts_prcgvr.VersionManager.newClassInstance('EndpointRulesIntegration');
         String endpoint = endpointUtils.getEndpoint(sender);
         return endpoint;
+    }
+    
+    @TestVisible
+    private void populateCommercialProductCode(Order ord,wrts_prcgvr.MRR_1_0.MultiRequest mrrList){
+        Id contractId = ord.ContractReference__c;
+        Id servicePointId = ord.ServicePoint__c;
+        Id parentOrderId = ord.ParentOrder__c;
+        String commercialProductCode = '';
+        String commercialVersion = ''; 
+        try{
+            if(String.isNotBlank(contractId)){
+                HDT_QR_Contract qrContract = new HDT_QR_Contract();
+                SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractId);
+                if(subscription != null){
+                    commercialProductCode = subscription.ProductCode__c;
+                    commercialVersion = subscription.VersionFormula__c;
+                }
+            }else if(String.isNotBlank(servicePointId) && String.isNotBlank(parentOrderId)) {
+                HDT_QR_OrderItem qrOrderItems = new HDT_QR_OrderItem();
+                OrderItem orderItem = qrOrderItems.getOfferActivationItem(parentOrderId,servicePointId);
+                if(orderItem != null){
+                    commercialProductCode = orderItem.Product2.ProductCode;
+                    commercialVersion = orderItem.Product2.Version__c;            
+                }
+            }
+        }catch(Exception e){
+            commercialProductCode = '';
+            commercialVersion = '';
+        }
+        
+        if (String.isBlank(commercialProductCode) && String.isBlank(commercialVersion)){
+            return;
+        }
+        Boolean changeProfilo = false;
+        Boolean changeOfferta = false;
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects){
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('Order')){
+                for(wrts_prcgvr.MRR_1_0.Field f : obj.fields){
+                    if(f.name.equalsIgnoreCase('OFFERTA')){
+                        f.value = commercialProductCode;
+                        changeOfferta = true;   
+                    }else if (f.name.equalsIgnoreCase('PROFILO')){
+                        f.value = commercialVersion;
+                        changeProfilo = true;
+                    }
+                    if (changeOfferta && changeProfilo){
+                        break;
+                    }
+                } 
+                if (!changeOfferta){
+                    wrts_prcgvr.MRR_1_0.Field offerta = new wrts_prcgvr.MRR_1_0.Field();
+                    offerta.name = 'OFFERTA';
+                    offerta.fieldType = 'STRING';
+                    offerta.value = commercialProductCode;
+                    obj.fields.add(offerta);
+                }
+                if (!changeProfilo){
+                    wrts_prcgvr.MRR_1_0.Field profilo = new wrts_prcgvr.MRR_1_0.Field();
+                    profilo.name = 'PROFILO';
+                    profilo.fieldType = 'STRING';
+                    profilo.value = commercialVersion;
+                    obj.fields.add(profilo);
+                }           
+                break;
+            }
+        }
     }
 }

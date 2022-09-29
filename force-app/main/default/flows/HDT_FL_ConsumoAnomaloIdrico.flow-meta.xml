@@ -7,7 +7,7 @@
         <locationX>182</locationX>
         <locationY>398</locationY>
         <assignmentItems>
-            <assignToReference>Get_Case.CaseSource__c</assignToReference>
+            <assignToReference>Get_Case.RequestSource__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Provenienza</elementReference>
@@ -92,6 +92,22 @@
         </connector>
     </assignments>
     <choices>
+        <name>Da_gestore</name>
+        <choiceText>Da gestore</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Da gestore</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Da_utente</name>
+        <choiceText>Da utente</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Da utente</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>Forte_Consumo</name>
         <choiceText>Forte Consumo</choiceText>
         <dataType>String</dataType>
@@ -120,7 +136,7 @@
         <choiceText>Gestore</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>Gestore</stringValue>
+            <stringValue>Da gestore</stringValue>
         </value>
     </choices>
     <choices>
@@ -179,7 +195,7 @@
                 <leftValueReference>Provenienza</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Gestore</elementReference>
+                    <elementReference>Da_gestore</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -196,6 +212,7 @@
         <picklistField>DeviationOver2000mc__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <interviewLabel>Gestione Consumo Anomalo Idrico {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Consumo Anomalo Idrico</label>
     <processMetadataValues>
@@ -280,8 +297,8 @@
         </fields>
         <fields>
             <name>Provenienza</name>
-            <choiceReferences>Gestore</choiceReferences>
-            <choiceReferences>Utente</choiceReferences>
+            <choiceReferences>Da_gestore</choiceReferences>
+            <choiceReferences>Da_utente</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Provenienza</fieldText>
             <fieldType>DropdownBox</fieldType>

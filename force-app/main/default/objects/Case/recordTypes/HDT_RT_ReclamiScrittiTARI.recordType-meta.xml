@@ -1246,17 +1246,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>CaseSource__c</picklist>
-        <values>
-            <fullName>Gestore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Utente</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Category__c</picklist>
         <values>
             <fullName>Accedi</fullName>
@@ -10038,7 +10027,7 @@
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
-            <fullName>D%E2%80%99ufficio</fullName>
+            <fullName>D'ufficio</fullName>
             <default>false</default>
         </values>
         <values>
