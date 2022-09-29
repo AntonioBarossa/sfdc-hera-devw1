@@ -1396,10 +1396,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+newOrder.PhaseStory__c
                     : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
                     /* Contracted */
-                    if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& newOrder.Status.equalsIgnoreCase('Activated') && !newOrder.SBQQ__Contracted__c && !oldOrder.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) 
+                    /* if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& newOrder.Status.equalsIgnoreCase('Activated') && !newOrder.SBQQ__Contracted__c && !oldOrder.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) 
                     { 
                         newOrder.SBQQ__Contracted__c=true; 
-                    }      
+                    } */      
                     if(!orderIds.contains(newOrder.Id))
                     {
                         orderIds.add(newOrder.Id);
