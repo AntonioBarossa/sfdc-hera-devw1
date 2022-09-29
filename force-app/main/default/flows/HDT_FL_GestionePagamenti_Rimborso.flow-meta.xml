@@ -2132,7 +2132,6 @@
         </outputAssignments>
         <valueField>IBAN__c</valueField>
     </dynamicChoiceSets>
-    <environments>Default</environments>
     <formulas>
         <name>accountBalanceCheckFormula</name>
         <dataType>String</dataType>
@@ -2979,7 +2978,6 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>hdtFlowNavChecks</name>
