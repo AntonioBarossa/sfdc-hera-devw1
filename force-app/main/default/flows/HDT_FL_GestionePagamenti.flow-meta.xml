@@ -899,7 +899,7 @@
             <name>Non_Superato</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>CheckEligibilityCriteria</leftValueReference>
+                <leftValueReference>CheckCriterioEleggibilita</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -2016,6 +2016,7 @@
         </rules>
     </decisions>
     <description>Flow per la gestione dei pagamenti</description>
+    <environments>Default</environments>
     <formulas>
         <name>genericRecordSelectionFormula</name>
         <dataType>String</dataType>
@@ -4218,7 +4219,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento storno rateizzazione</stringValue>
+                <stringValue>Annullamento storno rateizzazione tari</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

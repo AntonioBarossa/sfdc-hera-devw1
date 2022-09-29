@@ -43,6 +43,7 @@ export default class HdtCodiceRonchi extends HdtCodiceAteco {
             console.log('###Selected Code >>> ' + this.selectedCode)
 
             this.dispatchEvent(new CustomEvent('update_cod_ateco_details',{ detail: {
+                isRonchi:true,
                 atecoCode: this.selectedCode, 
                 ronchiCode: this.ronchiCode, 
                 ronchiSubcategory: this.ronchiSubcategory
