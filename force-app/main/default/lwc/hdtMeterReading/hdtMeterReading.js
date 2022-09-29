@@ -49,7 +49,7 @@ export default class HdtMeterReading extends LightningElement {
                 //console.log('>>> ' + result.contractTable);
                 var obj = JSON.parse(result.contractTable);
                 this.contractColumns = contractColumns.concat(obj.data);
-                this.meterReadingColumns = JSON.parse(result.meterReadingTable);
+                //this.meterReadingColumns = JSON.parse(result.meterReadingTable);
                 this.showModality = result.trbEnable;
             } else {
                 console.log('>>>> ERROR > getContractRecords');
@@ -72,7 +72,9 @@ export default class HdtMeterReading extends LightningElement {
                 this.contractData = result.contractList;
                 this.contractDataToView =  result.contractList;
                 this.contractNumber = this.contractData[0].contractNumber;
+                this.contractService = this.contractData[0].service;
                 this.showDetailTable = true;
+                this.spinner = false;
             } else {
                 console.log('>>>> ERROR > getContractRecords');
                 this.error = true;
@@ -88,11 +90,12 @@ export default class HdtMeterReading extends LightningElement {
 
     handleRowAction(event) {
         console.log('# handleRowAction #');
-
-        if(this.contractNumber != event.detail.row.contractNumber) {
-            this.template.querySelector('c-hdt-meter-reading-detail-table').loadingData();
-            this.contractNumber = event.detail.row.contractNumber;
-        }
+        this.template.querySelector('c-hdt-meter-reading-detail-table').loadingData();
+        
+        //if(this.contractNumber != event.detail.row.contractNumber) {
+        //    this.template.querySelector('c-hdt-meter-reading-detail-table').loadingData();
+        //    this.contractNumber = event.detail.row.contractNumber;
+        //}
     }
 
     handleSearch(event) {

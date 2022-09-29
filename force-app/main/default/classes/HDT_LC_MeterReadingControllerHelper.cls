@@ -19,8 +19,48 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
                 return columnsMetadata;
             }
 
+            //columnsMetadata.trbEnable = enableNewService();
+            //String code = columnsMetadata.trbEnable ? 'NewMeterReading' : 'meterReading';
+            //
+            //List<HDT_AccountDataEnrichment__mdt> meterRadingMetadataList;
+            //meterRadingMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(meterRadingMetadataList, code);
+            //
+            //if(meterRadingMetadataList.size()==0){
+            //    columnsMetadata.success = false;
+            //    columnsMetadata.message = 'No metadata found for meterRading';
+            //    return columnsMetadata;
+            //}
+
+            columnsMetadata.success = true;
+            columnsMetadata.contractTable = contractMetadataList[0].ColumnData__c;
+            //columnsMetadata.meterReadingTable = meterRadingMetadataList[0].ColumnData__c;
+            return columnsMetadata;
+
+        } catch(Exception e){
+            columnsMetadata.success = false;
+            columnsMetadata.message = e.getMessage() + ' - at line [' + String.valueOf(e.getLineNumber()) + ']';
+            return columnsMetadata;
+        }
+
+    }
+
+    public static HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata getConfigurationDetailTableHelper(String contractService){
+
+        HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata columnsMetadata = new HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata();
+
+        try{
+
+            String code;
             columnsMetadata.trbEnable = enableNewService();
-            String code = columnsMetadata.trbEnable ? 'NewMeterReading' : 'meterReading';
+            if(columnsMetadata.trbEnable){
+                if(contractService.equalsIgnoreCase('Energia Elettrica')){
+                    code = 'MeterReading_ele';
+                } else if(contractService.equalsIgnoreCase('Gas')){
+                    code = 'MeterReading_gas';
+                }
+            } else {
+                code = 'meterReading';
+            }
 
             List<HDT_AccountDataEnrichment__mdt> meterRadingMetadataList;
             meterRadingMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(meterRadingMetadataList, code);
@@ -32,7 +72,6 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             }
 
             columnsMetadata.success = true;
-            columnsMetadata.contractTable = contractMetadataList[0].ColumnData__c;
             columnsMetadata.meterReadingTable = meterRadingMetadataList[0].ColumnData__c;
             return columnsMetadata;
 
@@ -83,17 +122,28 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         contrWrp.startDate = String.valueOf(c.StartDate);
         contrWrp.endDate = String.valueOf(c.EndDate);
         contrWrp.asset = c.ServicePoint__r.SAPImplantCode__c;
-        contrWrp.service = c.ServicePoint__r.CommoditySector__c;
+        //contrWrp.service = c.ServicePoint__r.CommoditySector__c;
+        contrWrp.service = 'Gas';
         contrWrp.serialNumber = c.ServicePoint__r.MeterSN__c;
         contrWrp.servicePoint = c.ServicePoint__r.ServicePointCode__c;
         return contrWrp;
     }
 
-    public static HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj getMeterReadingRecordsHelper(String contractCode, String modality) {
+    public static HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj getMeterReadingRecordsHelper(String contractCode, String modality, String contractService) {
         HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj meterReadingObj = new HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj();
 
         try{
-            String code = enableNewService() ? 'NewMeterReading' : 'meterReading';
+
+            String code;
+            if(enableNewService()){
+                if(contractService.equalsIgnoreCase('Energia Elettrica')){
+                    code = 'MeterReading_ele';
+                } else if(contractService.equalsIgnoreCase('Gas')){
+                    code = 'MeterReading_gas';
+                }
+            } else {
+                code = 'meterReading';
+            }
 
             HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = setHttpObject(code);
 
@@ -141,7 +191,9 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
                 transcodeSapData(responseWrapper.data);
             }
 
-            meterReadingObj.data = JSON.serialize(responseWrapper);
+            //meterReadingObj.data = JSON.serialize(responseWrapper);
+
+            meterReadingObj.data = '{"data": [{"dataLetturaPianificata": "xxx"}]}';
 
         } catch (Exception e){
             meterReadingObj.success = false;
