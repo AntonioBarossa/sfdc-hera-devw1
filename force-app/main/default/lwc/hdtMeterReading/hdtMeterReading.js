@@ -34,6 +34,7 @@ export default class HdtMeterReading extends LightningElement {
     contractDataToView = [];
     sortDirection = 'desc';
     sortedBy;
+    showModality;
 
     connectedCallback() {
         this.configurationData();
@@ -48,6 +49,7 @@ export default class HdtMeterReading extends LightningElement {
                 var obj = JSON.parse(result.contractTable);
                 this.contractColumns = contractColumns.concat(obj.data);
                 this.meterReadingColumns = JSON.parse(result.meterReadingTable);
+                this.showModality = result.trbEnable;
             } else {
                 console.log('>>>> ERROR > getContractRecords');
                 this.error = true;

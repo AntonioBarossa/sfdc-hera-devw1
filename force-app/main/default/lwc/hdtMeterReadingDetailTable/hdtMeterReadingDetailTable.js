@@ -7,9 +7,9 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
     @api contractNumber;
     @api loadData;
     @api hideCheckboxColumn;
-    //addtionalInputsForNonStandAlone
     @api nonStandAlone;
     @api maxRows;
+    @api showModality;
     showChooseType = false;
     @track meterReadingData;
     @track detailTableHeader = 'Letture';
@@ -26,6 +26,7 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
 
     connectedCallback(){
         console.log('HdtMeterReadingDetailTable loaded.');
+        console.log('>>> use new service -> ' + this.showModality);
     }
 
     @api loadingData(){
@@ -183,67 +184,5 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
         this.showChooseType = false;
         this.modality = event.detail.stmtName;
     }
-
-    /*onHandleSort(event){
-        console.log('## sort event ## ');
-
-        try {
-            const { fieldName: sortedBy, sortDirection } = event.detail;
-            console.log('>>> sortDirection ' + sortDirection);
-            const cloneData = [...this.meterReadingData];
-            cloneData.sort(this.sortBy(sortedBy, sortDirection === 'asc' ? 1 : -1));
-            this.meterReadingData = cloneData;
-
-            this.sortDirection = sortDirection;
-            this.sortedBy = sortedBy;
-
-        } catch(e) {
-            console.log(e);
-        }
-     
-    }
-
-    sortBy(field, reverse, primer) {
-        const key = primer
-            ? function(x) {
-                  return primer(x[field]);
-              }
-            : function(x) {
-                  return x[field];
-              };
-
-        return function(a, b) {
-            a = key(a);
-            b = key(b);
-            return reverse * ((a > b) - (b > a));
-        };
-    }
-
-    @api meterReadingBackendCall(contractNumber){
-        console.log('>>>> contractNumber  > ' + contractNumber);
-        this.loadData = false;
-        getMeterReadingRecords({contractCode: contractNumber}).then(result => {
-
-            if(result.success){
-                this.meterReadingData = result.data;
-                this.detailTableHeader = 'Letture contratto > ' + contractNumber;
-                this.loadData = true;
-            } else {
-                console.log('>>>> ERROR > getMeterReadingRecords');
-                this.meterReadingError = true;
-                this.meterReadingErrorMessage = result.message;
-            }
-
-            const dataLoad = new CustomEvent("dataload", {
-                detail:  {spinner: false}
-            });
-            // Dispatches the event.
-            this.dispatchEvent(dataLoad);
-
-        }).catch(error => {
-            console.log('>>>> ERROR - catch');
-            console.log(JSON.stringify(error));
-        });
-    }*/
 
 }

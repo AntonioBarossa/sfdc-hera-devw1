@@ -1,6 +1,10 @@
 @SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessivePublicCount')
 public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
+    public static Boolean enableNewService(){
+        return (Label.TRB_Enable.equalsIgnoreCase('Y'));
+    }
+
     public static HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata getConfigurationDataHelper(){
 
         HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata columnsMetadata = new HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata();
@@ -15,8 +19,11 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
                 return columnsMetadata;
             }
 
+            columnsMetadata.trbEnable = enableNewService();
+            String code = columnsMetadata.trbEnable ? 'NewMeterReading' : 'meterReading';
+
             List<HDT_AccountDataEnrichment__mdt> meterRadingMetadataList;
-            meterRadingMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(meterRadingMetadataList, 'meterReading');
+            meterRadingMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(meterRadingMetadataList, code);
 
             if(meterRadingMetadataList.size()==0){
                 columnsMetadata.success = false;
@@ -27,7 +34,6 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             columnsMetadata.success = true;
             columnsMetadata.contractTable = contractMetadataList[0].ColumnData__c;
             columnsMetadata.meterReadingTable = meterRadingMetadataList[0].ColumnData__c;
-
             return columnsMetadata;
 
         } catch(Exception e){
@@ -124,17 +130,16 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
                     }
                 }
 
-                //meterReadingObj.message = 'Mulesoft side [code: ' + restMessage.errorDetails.code;
-                //meterReadingObj.message += ']; Detail: ' + restMessage.errorDetails.message;
-                //meterReadingObj.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
-
                 return meterReadingObj;
             }
 
             meterReadingObj.success = true;
-            HDT_WRP_EstrattoLettureResponse responseWrapper = (HDT_WRP_EstrattoLettureResponse) JSON.deserialize(responseCtrl.body, HDT_WRP_EstrattoLettureResponse.class);
+            HDT_WRP_EstrattoLettureResponse responseWrapper;
+            responseWrapper = (HDT_WRP_EstrattoLettureResponse) JSON.deserialize(responseCtrl.body, HDT_WRP_EstrattoLettureResponse.class);
 
-            transcodeSapData(responseWrapper.data);
+            if(!enableNewService()){
+                transcodeSapData(responseWrapper.data);
+            }
 
             meterReadingObj.data = JSON.serialize(responseWrapper);
 
@@ -148,19 +153,10 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
     public static String generateBody(Contract contr, String modality){
         String body;
-        if(Label.TRB_Enable.equalsIgnoreCase('N')){
-            HDT_WRP_MeterReading.HDT_WRP_HttpBody bodyWrp = new HDT_WRP_MeterReading.HDT_WRP_HttpBody();
-            bodyWrp.codiceContratto = contr.SAPContractCode__c;
-            //bodyWrp.codiceImpianto = '4005362981';
-            bodyWrp.codicePod = '';
-            //bodyWrp.dataInizioLettura = '01/12/2019';
-            bodyWrp.dataFineLettura = Datetime.now().format('dd/MM/yyyy'); 
-            bodyWrp.letturaReale = '';
-            body = JSON.serialize(bodyWrp, true);
-        } else {
-            JSONGenerator jsonGen = JSON.createGenerator(true);
-            jsonGen.writeStartObject();
+        JSONGenerator jsonGen = JSON.createGenerator(true);
+        jsonGen.writeStartObject();
 
+        if(enableNewService()){
             if(contr.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Energia Elettrica')){
                 jsonGen.writeStringField('pod', 'xyz');
             } else if(contr.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Gas')){
@@ -168,13 +164,20 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             }
             Date d = Date.today();
             String currentYear = String.valueOf(d.year());
-            jsonGen.writeStringField('dataInizio', '01/01/' + currentYear); //-- formato 01/01/2022 inserire primo giorno anno corrente
-            jsonGen.writeStringField('dataFine', '31/12/' + currentYear); //-- formato 31/12/2022 inserire ultimo giorno anno corrente
+            jsonGen.writeStringField('dataInizio', '01/01/' + currentYear);
+            jsonGen.writeStringField('dataFine', '31/12/' + currentYear);
             jsonGen.writeStringField('commodity', contr.ServicePoint__r.CommoditySector__c);
             jsonGen.writeStringField('modalita', modality); //-- DEFAULT - FULL
-            jsonGen.writeEndObject();
-            body = jsonGen.getAsString();
+        } else {
+            jsonGen.writeStringField('codiceContratto', contr.SAPContractCode__c);
+            jsonGen.writeStringField('codicePod', '');
+            jsonGen.writeStringField('dataFineLettura', Datetime.now().format('dd/MM/yyyy'));
+            jsonGen.writeStringField('letturaReale', '');
         }
+
+        jsonGen.writeEndObject();
+        body = jsonGen.getAsString();
+
         return body;
     }
 
