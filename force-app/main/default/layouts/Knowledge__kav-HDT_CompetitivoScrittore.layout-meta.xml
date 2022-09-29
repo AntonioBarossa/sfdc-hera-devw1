@@ -26,6 +26,9 @@
             <layoutItems>
                 <field>SalesCompany__c</field>
             </layoutItems>
+            <layoutItems>
+                <field>ToPublishDate__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
