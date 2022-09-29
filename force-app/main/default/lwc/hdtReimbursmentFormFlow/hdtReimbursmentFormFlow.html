@@ -1,0 +1,88 @@
+<template>
+    <div class="slds-box">
+        <template if:true={caseRecord}>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="6">
+                    <lightning-combobox name="RefundMethod__c" 
+                                        data-id="RefundMethod__c"
+                                        label="Tipo Rimborso" 
+                                        required 
+                                        value={caseRecord.RefundMethod__c} 
+                                        options={optionsForRefundMethod__c} 
+                                        onchange={handleInputChange}></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-combobox name="AccountholderTypeBeneficiary__c" 
+                                        data-id="AccountholderTypeBeneficiary__c"
+                                        label="Tipo Beneficiario" 
+                                        required={beneficiaryTypeRequired} 
+                                        value={caseRecord.AccountholderTypeBeneficiary__c} 
+                                        options={optionsForAccountholderTypeBeneficiary__c} 
+                                        onchange={handleInputChange}></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                    <lightning-record-edit-form record-id={caseId}
+                                                object-api-name="Case">
+                        <lightning-input-field  field-name="BeneficiaryAccount__c" 
+                                                data-id="BeneficiaryAccount__c"
+                                                variant="label-stacked" 
+                                                disabled={beneficiaryAccountDisabled} 
+                                                value={BENEFICIARY_ACCOUNT}>
+                        </lightning-input-field>
+                    </lightning-record-edit-form>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+    </div>
+    <lightning-record-view-form record-id={caseId} object-api-name="Case">
+        <div class="slds-box slds-theme_shade">
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="6">
+                <lightning-output-field field-name="Account.Name"></lightning-output-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                <lightning-output-field field-name="BillingProfile__r.Name"></lightning-output-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                <lightning-output-field field-name="PhoneNumber__c"></lightning-output-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                <lightning-output-field field-name="DocumentNumber__c"></lightning-output-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                <lightning-output-field field-name="DocumentAmount__c"></lightning-output-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                <lightning-output-field field-name="BeneficiaryPhoneNumber__c"></lightning-output-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                <lightning-output-field field-name="Commodity__c"></lightning-output-field>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-record-view-form>
+    <div class="slds-card__footer">
+        <lightning-layout horizontal-align="end">
+            <lightning-layout-item>
+                <div class="slds-m-horizontal_xxx-small slds-text-align_center">
+                    <lightning-button variant="brand" label="Annulla" title="Annulla" onclick={handleCancelButton}></lightning-button>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item>
+                <div class="slds-m-horizontal_xxx-small slds-text-align_center">
+                    <lightning-button variant="neutral" label="Indietro" title="Indietro" onclick={handleBackButton}></lightning-button>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item>
+                <div class="slds-m-horizontal_xxx-small slds-text-align_center">
+                    <lightning-button variant="neutral" label="Salva in Bozza" title="Salva in Bozza" onclick={handleDraftButton}></lightning-button>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item>
+                <div class="slds-m-horizontal_xxx-small slds-text-align_center">
+                    <lightning-button variant="brand" label="Avanti" title="Avanti" onclick={handleNextButton}></lightning-button>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>

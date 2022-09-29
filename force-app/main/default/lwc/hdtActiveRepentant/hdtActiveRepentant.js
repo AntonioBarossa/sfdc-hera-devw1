@@ -154,7 +154,7 @@ export default class HdtActiveRepentant extends LightningElement {
 
     checkComuniNonAffidatari(dateDecorrenza, dateDichiarazione){
         
-        if(this.cityData?.TARIManagingStartDate__c || this.cityData?.TARIManagingEndDate__c || this.cityData?.CutOverEndDate__c){
+        if(!(this.cityData?.TARIManagingStartDate__c && this.cityData?.TARIManagingEndDate__c && this.cityData?.CutOverEndDate__c)){
             this.showMessage(
                 "Attenzione!",
                 this.cityData.CityNotManagedAlert__c? this.cityData.CityNotManagedAlert__c : "Comune Non Gestito",
