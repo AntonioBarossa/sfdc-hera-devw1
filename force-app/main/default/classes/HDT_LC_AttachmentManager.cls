@@ -162,8 +162,8 @@ public with sharing class HDT_LC_AttachmentManager {
     public static String getRequiredAttachment(Id recordId, HDT_LC_AttachmentManager paramsWrap){
         //caso subprocess mancante
         //caso product mancante ->
-        List<MandatoryAttachment__c> tabellaAllegati = [SELECT Id, MandatoryAttachments__c
-                                  FROM  MandatoryAttachment__c 
+        List<MandatoryAttachments__c> tabellaAllegati = [SELECT Id, MandatoryAttachments__c
+                                  FROM  MandatoryAttachments__c 
                                   WHERE Cluster__c =: paramsWrap.cluster
                                   AND (City__c =: paramsWrap.city OR City__c = null)
                                   AND ProcessType__c =: paramsWrap.processType
