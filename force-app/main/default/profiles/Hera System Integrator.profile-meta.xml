@@ -27899,7 +27899,12 @@
         <editable>true</editable>
         <field>ServicePoint__c.AnnualVolumeReplacement__c</field>
         <readable>true</readable>
-    </fieldPermissions>  
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.AuthorizedNotToConfer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.BrandLogo__c</field>
@@ -28293,6 +28298,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.ServicePointCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.SingleInstallmentOperating__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.SingleInstallmentValidityDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
