@@ -138,6 +138,12 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             if(approved.equalsIgnoreCase('si')) return new HDT_WRP_Actions(null, 'Gestione Manuale SAP', true, selectedCase.Phase__c);//Se gestione SAP non va in completata subito
             if(approved.equalsIgnoreCase('no')) return new HDT_WRP_Actions('Annullato');   
         }
+        //START >>> marco.arci@webresults.it
+        if(caseType == 'Modifica post accertamento' || caseType == 'Cessazione post accertamento') {
+            if('Aprire Cesaazione'.equalsIgnoreCase(activityType) ||
+               'Aprire Variazione'.equalsIgnoreCase(activityType))      return new HDT_WRP_Actions(null, 'Completata'); //con il null iniziale non interviene sulla fase dell'activity, con il secondo param aggiorna la fase del case padre
+        }
+        //END >>> marco.arci@webresults.it
         if(caseType == 'Gestione Rifiuti' && 'Risposta Ricevuta'.equalsIgnoreCase(activityType)){
             if(approved.equalsIgnoreCase('si')) return new HDT_WRP_Actions('Annullato');
 
