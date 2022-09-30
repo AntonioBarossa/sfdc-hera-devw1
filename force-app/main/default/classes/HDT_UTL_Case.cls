@@ -172,7 +172,20 @@ public inherited sharing class HDT_UTL_Case {
         else if(cluster.equalsIgnoreCase('Reclami') && process.equalsIgnoreCase('calculateExpirationDate'))
         {
             HDT_UTL_Reclami utlReclami = new HDT_UTL_Reclami();
-            output.effectiveDate = utlReclami.setExpirationDate(currentCase, salesCompany);
+            Map<String,String> datesNamount = utlReclami.setExpirationDate(currentCase, salesCompany);
+            //output.effectiveDate
+            if( datesNamount.containsKey('EndDate__c') ){
+                output.EndDate = date.valueOf(datesNamount.get('EndDate__c'));
+            }
+            if( datesNamount.containsKey('CompletedDocumentationDate__c') ){
+                output.CompletedDocumentationDate = date.valueOf(datesNamount.get('CompletedDocumentationDate__c'));
+            }
+            if( datesNamount.containsKey('DepositExpirationDate__c') ){
+                output.DepositExpirationDate = date.valueOf(datesNamount.get('DepositExpirationDate__c'));
+            }
+            if( datesNamount.containsKey('AmountToPayInInstallments__c') ){
+                output.AmountToPayInInstallments = decimal.valueOf(datesNamount.get('AmountToPayInInstallments__c'));
+            }
         }
 
         outputs.add(output);
@@ -211,6 +224,14 @@ public inherited sharing class HDT_UTL_Case {
 
     public class HDT_UTL_FlowOutputs{
 
+        @InvocableVariable
+        public Date EndDate;
+        @InvocableVariable
+        public Date CompletedDocumentationDate;
+        @InvocableVariable
+        public Date DepositExpirationDate;
+        @InvocableVariable
+        public Decimal AmountToPayInInstallments;
         @InvocableVariable
         public Date effectiveDate;
         @InvocableVariable

@@ -2,7 +2,12 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>IndemnityDueSendResponse__c</fullName>
     <externalId>false</externalId>
-    <formula>IF( ISPICKVAL(FirstLevelComplaintClassification__c ,&quot;Reclamo Scritto&quot;),IF(TODAY() &lt;= SendDate__c + 60 &amp;&amp; TODAY() &gt; SendDate__c + 30 , 25,IF(TODAY() &lt;= SendDate__c + 90 &amp;&amp; TODAY() &gt; SendDate__c + 60, 50,IF(TODAY() &gt; SendDate__c + 90, 75, 0))),null)</formula>
+    <formula>IF(ISPICKVAL(FirstLevelComplaintClassification__c ,&quot;Reclamo Scritto&quot;),
+    IF(ISPICKVAL(Status ,&quot;Chiuso&quot;),
+        IF( DATEVALUE(ClosedDate) &lt;= CompletedDocumentationDate__c &amp;&amp; DATEVALUE(ClosedDate) &gt; EndDate__c, AmountToPayInInstallments__c,IF( DATEVALUE(ClosedDate) &lt;= DepositExpirationDate__c &amp;&amp; DATEVALUE(ClosedDate) &gt; CompletedDocumentationDate__c, AmountToPayInInstallments__c*2,IF( DATEVALUE(ClosedDate) &gt; DepositExpirationDate__c, AmountToPayInInstallments__c*3, 0))),
+        IF(TODAY() &lt;= CompletedDocumentationDate__c  &amp;&amp; TODAY() &gt;  EndDate__c, AmountToPayInInstallments__c,IF(TODAY() &lt;= (DepositExpirationDate__c) &amp;&amp; TODAY() &gt; (CompletedDocumentationDate__c), AmountToPayInInstallments__c*2,IF(TODAY() &gt; (DepositExpirationDate__c), AmountToPayInInstallments__c*3, 0)))
+				),
+null)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Indennizzo per invio risposta</label>
     <precision>18</precision>
