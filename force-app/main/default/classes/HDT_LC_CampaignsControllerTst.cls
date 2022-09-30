@@ -23,6 +23,7 @@ public with sharing class HDT_LC_CampaignsControllerTst {
     HDT_UTL_DataFactoryTst.createOrder(1, true, accounts[0].Id,sales);
     List<Individual> individuals=HDT_UTL_DataFactoryTst.createIndividual(1, true);
     List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, false);
+    leads[0].CompanyOwner__c='HERA COMM';
     leads[0].IndividualId=individuals[0].Id;
     insert leads;
     //public static List<Case> createCase(, Boolean doInsert, Id accId, Id contactId, servicePoint[0].ID, contract[0].Id,orders[0].Id){
@@ -1053,5 +1054,13 @@ CampaignMember member = new CampaignMember(
             System.assertNotEquals(resultTest.size() !=null , false, 'Ids of Campaigns are not null');
             Test.stopTest();
         }
+    }
+    
+        @isTest
+    	static void testGetCurrUserRole(){
+        Test.startTest();
+        boolean isFront = HDT_LC_CampaignsController.getCurrUserRole();
+        System.assertEquals(false, isFront, 'is Front User');
+        Test.stopTest();
     }
 }
