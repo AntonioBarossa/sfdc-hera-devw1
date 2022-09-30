@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Meter reading Gas</label>
+    <protected>false</protected>
+    <values>
+        <field>ApexClass__c</field>
+        <value xsi:type="xsd:string">HDT_UTL_DataEnrichmentView</value>
+    </values>
+    <values>
+        <field>Authorization__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ColumnData__c</field>
+        <value xsi:type="xsd:string">[
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;PDR&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;PDR&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Data inizio&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;DATA_INIZIO&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Data fine&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;DATA_FINE&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Commodity&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;COMMODITY&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Modalità&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;MODALITA&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Codice Flusso&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;CODFLUSSO&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Codice Flusso decod&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;CODFLUSSO_DECOD&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;COD PDR&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;COD_PDR&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Stato misura&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;STATO_MISURA&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Stato misura decod&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;STATO_MISURA_DECOD&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Data misura&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;DATA_MISURA&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Tipo rettifica&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;TIPO_RETTIFICA&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Motivazione&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;MOTIVAZIONE&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Trattamento&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;TRATTAMENTO&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Matrice mis&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;MATR_MIS&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Matrice conv&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;MATR_CONV&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;N cifre MIS&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;N_CIFRE_MIS&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;N cifre CONV&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;N_CIFRE_CONV&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Coeff Corr&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;COEFF_CORR&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Raccolta&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;RACCOLTA&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Esito Raccolta&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;ESITO_RACCOLTA&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Causa mancata Raccolta&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;CAUSA_MANC_RACCOLTA&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Vol annuo sost&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;VOL_ANNUO_SOST&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Classe grupppo mis&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;CLASSE_GRUPPO_MIS&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Tipo lettura&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;TIPO_LETTURA&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Lettura mis&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;LETTURA_MIS&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Lettura conv&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;LETTURA_CONV&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Esito val&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;ESITO_VAL&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Note&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;NOTE&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Cau int mis&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;CAU_INT_MIS&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Cau int cor&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;CAU_INT_COR&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Matr mis post&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;MATR_MIS_POST&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Classe grupppo mis post&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;CLASSE_GRUPPO_MIS_POST&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Tipo mis post&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;TIPO_MIS_POST&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Matr conv post&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;MATR_CONV_POST&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;N cifre conv post&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;N_CIFRE_CONV_POST&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Coeff corr post&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;COEFF_CORR_POST&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;N cifre MIS POST&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;N_CIFRE_MIS_POST&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Lettura MIS POST&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;LETTURA_MIS_POST&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Lettura CONV POST&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;LETTURA_CONV_POST&quot;
+  },
+  {
+    &quot;sortable&quot;: true,
+    &quot;label&quot;: &quot;Data inservizio SM&quot;,
+    &quot;initialWidth&quot;: 150,
+    &quot;fieldType&quot;: &quot;text&quot;,
+    &quot;fieldName&quot;: &quot;DATA_INSERVIZIO_SM&quot;
+  }
+]</value>
+    </values>
+    <values>
+        <field>Credential__c</field>
+        <value xsi:type="xsd:string">callout:MeterReadings</value>
+    </values>
+    <values>
+        <field>UseMock__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>

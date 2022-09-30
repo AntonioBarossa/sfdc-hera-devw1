@@ -241,6 +241,9 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
     setNewChoise(event){
         this.showChooseType = false;
         this.modality = event.detail.stmtName;
+        console.log('>>> modality -> ' + this.modality);
+        this.loadData = false;
+        this.detailBackendCall();
     }
 
 }

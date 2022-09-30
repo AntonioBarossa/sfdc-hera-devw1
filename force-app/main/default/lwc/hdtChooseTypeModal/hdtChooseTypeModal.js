@@ -12,7 +12,7 @@ export default class HdtChooseTypeModal extends LightningElement {
     clickOperation(event){
         var dataSet = event.currentTarget.dataset;
 
-        console.log('>>> oldType ' + this.stmtType + ' - newType' + dataSet.id);
+        console.log('>>> oldType: ' + this.stmtType + ' - newType: ' + dataSet.id);
 
         if(this.stmtType == dataSet.id){
             this.closeModal();
