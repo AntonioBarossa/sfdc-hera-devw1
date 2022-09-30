@@ -7,6 +7,7 @@
 public inherited sharing class HDT_LC_CodiceAteco {
 
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
     
     @AuraEnabled
     public static List<AtecoMatrix__c> getAtecoMatrixList(String filterType, String filterValue){
@@ -42,7 +43,21 @@ public inherited sharing class HDT_LC_CodiceAteco {
             AtecoCode__c = params.get('atecoCode'),
             HerAteco__c = params.get('istatCode'),
             RonchiCode__c = params.get('ronchiCode'),
-            RonchiSubcat__c = params.get('ronchiSubcategory')
+            RonchiSubcat__c = params.get('ronchiSubcategory'),
+            RonchiDescription__c = params.get('ronchiDescription')
         ));
     }
+
+    @AuraEnabled
+    public static void saveAtecoRonchiCodeCase(Case caseRecord, Map<String,String> params){
+        caseSrv.updateRecord(new Case(
+            Id = caseRecord.Id,
+            AtecoCode__c = params.get('atecoCode'),
+            SupplyCityCode__c = params.get('istatCode'),
+            RonchiCode__c = params.get('ronchiCode'),
+            RonchiSubcategory__c = params.get('ronchiSubcategory'),
+            RonchiCodeDescription__c = params.get('ronchiDescription')
+        ));
+    }
+
 }
