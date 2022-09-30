@@ -55,6 +55,7 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
     }
 
     detailBackendCall(){
+
         getMeterReadingRecords({contractCode : this.contractNumber, modality: this.modality, contractService: this.contractService})
         .then(result => {
 
@@ -81,11 +82,14 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
         });
     }
 
-    @api loadingData(){
+    @api loadingData(contractNumber, contractService){
         this.loadData = false;
         this.meterReadingError = false;
         this.meterReadingErrorMessage = '';
-        console.log('>>> contractService -> ' + this.contractService);
+        console.log('>>> contractService -> ' + contractService);
+        console.log('>>> contractNumber -> ' + contractNumber);
+        this.contractNumber = contractNumber;
+        this.contractService = contractService;
         this.configurationData();
     }
 

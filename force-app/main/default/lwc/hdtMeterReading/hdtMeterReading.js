@@ -90,12 +90,10 @@ export default class HdtMeterReading extends LightningElement {
 
     handleRowAction(event) {
         console.log('# handleRowAction #');
-        this.template.querySelector('c-hdt-meter-reading-detail-table').loadingData();
+        if(this.contractNumber != event.detail.row.contractNumber) {
+            this.template.querySelector('c-hdt-meter-reading-detail-table').loadingData(event.detail.row.contractNumber, event.detail.row.service);
+        }
         
-        //if(this.contractNumber != event.detail.row.contractNumber) {
-        //    this.template.querySelector('c-hdt-meter-reading-detail-table').loadingData();
-        //    this.contractNumber = event.detail.row.contractNumber;
-        //}
     }
 
     handleSearch(event) {
