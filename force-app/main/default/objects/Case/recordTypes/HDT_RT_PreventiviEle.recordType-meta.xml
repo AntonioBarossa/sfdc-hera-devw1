@@ -9933,6 +9933,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Aggiunta Attacco senza Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Continuità</fullName>
             <default>false</default>
         </values>

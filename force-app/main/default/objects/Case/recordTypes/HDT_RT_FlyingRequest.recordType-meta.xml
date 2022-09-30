@@ -1889,6 +1889,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Segnalazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Fatturazione</fullName>
             <default>false</default>
         </values>
