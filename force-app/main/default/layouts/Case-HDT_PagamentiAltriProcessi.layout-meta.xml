@@ -43,6 +43,10 @@
                 <behavior>Readonly</behavior>
                 <field>DiscardDescription__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>DocumentPaymentMethod__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

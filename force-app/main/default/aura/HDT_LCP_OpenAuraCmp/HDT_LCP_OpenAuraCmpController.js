@@ -45,6 +45,7 @@
         var interactionId = myPageRef.state.c__interactionId;
         // activityId
         var activityId = myPageRef.state.c__activityId;
+        var documentPaymentMethod = myPageRef.state.c__documentPaymentMethod;
 
         //Gestione Risottomissione Annullamento
         let discardRework = undefined;
@@ -81,6 +82,7 @@
         console.log('# orderId -> '                 + orderId);
         console.log('# InteractionId -> '           + interactionId);
         console.log('# activityId -> '              + activityId);
+        console.log('# documentPaymentMethod -> '   + documentPaymentMethod);
 
                 
         var workspaceAPI = component.find("workspace");
@@ -149,7 +151,9 @@
                         //Gestione Owner Activity
                         c__IsUserActivity:isUserActivity,
                         //activityId per annullamento Attività
-                        c__activityId:activityId
+                        c__activityId:activityId,
+                        //introdotto per Paperless
+                        c__documentPaymentMethod:documentPaymentMethod
                     }
                 },
                 focus: true

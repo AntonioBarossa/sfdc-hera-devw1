@@ -8591,6 +8591,10 @@
     <picklistValues>
         <picklist>SendPaperlessCodeMode__c</picklist>
         <values>
+            <fullName>Altra comunicazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email</fullName>
             <default>false</default>
         </values>
