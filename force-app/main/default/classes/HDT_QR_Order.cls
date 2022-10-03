@@ -628,8 +628,8 @@ public inherited sharing class HDT_QR_Order {
             Order
             WHERE ParentOrder__c IN :parentOrderIds
             AND Phase__c NOT IN ('Annullato')
-            AND ProcessType__c != ''
-            AND ProcessType__c != 'VAS'
+            /* AND ProcessType__c != ''
+            AND ProcessType__c != 'VAS' */
             WITH SECURITY_ENFORCED
         ];
     }

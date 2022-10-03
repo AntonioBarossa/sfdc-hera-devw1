@@ -2943,6 +2943,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione richiesta social</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inviare Comunicazione Disconoscimento</fullName>
             <default>false</default>
         </values>
@@ -3069,6 +3073,10 @@
         </values>
         <values>
             <fullName>Verifiche pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Back Office</fullName>
             <default>false</default>
         </values>
     </picklistValues>
