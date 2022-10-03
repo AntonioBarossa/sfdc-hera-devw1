@@ -660,6 +660,14 @@
             <valueName>Permanenza condizioni di disagio</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Bonus integrativo solo per non Energy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Agevolazioni non Energy indirette</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Contratto Non Richiesto</controllingFieldValue>
             <valueName>Volontà estorta</valueName>
         </valueSettings>
