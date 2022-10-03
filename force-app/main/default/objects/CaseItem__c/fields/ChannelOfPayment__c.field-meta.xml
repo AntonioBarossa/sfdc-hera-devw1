@@ -11,14 +11,74 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>1</fullName>
+                <fullName>Banca BONIFICO</fullName>
                 <default>false</default>
-                <label>1</label>
+                <label>Banca BONIFICO</label>
             </value>
             <value>
-                <fullName>2</fullName>
+                <fullName>Banca SPORTELLO</fullName>
                 <default>false</default>
-                <label>2</label>
+                <label>Banca SPORTELLO</label>
+            </value>
+            <value>
+                <fullName>Bollettino postale</fullName>
+                <default>false</default>
+                <label>Bollettino postale</label>
+            </value>
+            <value>
+                <fullName>Bonifico Tesoreria ente creditore</fullName>
+                <default>false</default>
+                <label>Bonifico Tesoreria ente creditore</label>
+            </value>
+            <value>
+                <fullName>Carta di credito online</fullName>
+                <default>false</default>
+                <label>Carta di credito online</label>
+            </value>
+            <value>
+                <fullName>Cassa COOP</fullName>
+                <default>false</default>
+                <label>Cassa COOP</label>
+            </value>
+            <value>
+                <fullName>F24</fullName>
+                <default>false</default>
+                <label>F24</label>
+            </value>
+            <value>
+                <fullName>PagoPA</fullName>
+                <default>false</default>
+                <label>PagoPA</label>
+            </value>
+            <value>
+                <fullName>POS Sportello</fullName>
+                <default>false</default>
+                <label>POS Sportello</label>
+            </value>
+            <value>
+                <fullName>Posta</fullName>
+                <default>false</default>
+                <label>Posta</label>
+            </value>
+            <value>
+                <fullName>Rate</fullName>
+                <default>false</default>
+                <label>Rate</label>
+            </value>
+            <value>
+                <fullName>Ricevitoria</fullName>
+                <default>false</default>
+                <label>Ricevitoria</label>
+            </value>
+            <value>
+                <fullName>RID</fullName>
+                <default>false</default>
+                <label>RID</label>
+            </value>
+            <value>
+                <fullName>Standard</fullName>
+                <default>false</default>
+                <label>Standard</label>
             </value>
         </valueSetDefinition>
     </valueSet>

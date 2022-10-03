@@ -195,6 +195,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         WHERE Phase__c = :this.bozzaCase
         AND Cluster__c != : this.autoletturaCase
         AND RecordTypeId != :segnalazioniRtId
+        AND Type != 'Contenitore Morosità'
         AND CreatedDate < :limitDate
         WITH SECURITY_ENFORCED
         ];

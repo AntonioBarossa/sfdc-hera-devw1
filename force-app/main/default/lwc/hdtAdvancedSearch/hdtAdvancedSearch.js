@@ -18,8 +18,15 @@ export default class HdtAdvancedSearch extends LightningElement {
     @track filterInputWord = null;
     openmodel = false;
     submitButtonStatus = true;
-    @api searchInputValue = null;
+    searchInputValue = null;
+    registryCityValue;
+    registryCityCodeValue;
+    urbanSectionValue;
+    sheetValue;
+    particleSheetValue;
+    subalternValue;
     queryType = 'pod';
+    datiCatastali = {RegistryCity: '', RegistryCityCode: '', UrbanSection: '', Sheet: '', ParticleSheet: '', Subaltern: ''};
     tableData = [];
     tableColumns = [];
     isLoaded = false;
@@ -60,6 +67,8 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
     @api isRicercainSAP=false;
     postSales=false;
+    isSerialNumber = false;
+    openMeterSearchModal = false;
 
     connectedCallback() {
         permissionForFlagContract().then(data =>{
@@ -70,77 +79,100 @@ export default class HdtAdvancedSearch extends LightningElement {
             console.log('processType non popolato');
             this.showbuttonforniture=true;
         }
-        else{
+
+        else { 
             this.postSales = true;
             console.log('targetObject'+ JSON.stringify(this.targetobject));
             console.log('processType'+ JSON.stringify(this.processtype));
-            console.log('additionalFilter'+ JSON.stringify(this.additionalfilter));
+            
             getCustomMetadata({processType:this.processtype}).then(data =>{
                 console.log('data custom metadata '+JSON.stringify(data));
                 console.log('data.FornitureCliente__c  '+JSON.stringify(data.FornitureCliente__c ));
                 console.log('data.StatoContratto__c  '+JSON.stringify(data.StatoContratto__c ));
                 console.log('data.ContrattiCliente__c '+ JSON.stringify(data.ContrattiCliente__c ));
                 console.log('data.statoFornitura '+ JSON.stringify(data.StatoFornitura__c ));
+                console.log('data.Disalimentable__c '+ JSON.stringify(data.Disalimentable__c ));
+                console.log('data.RateCategory__c '+ JSON.stringify(data.RateCategory__c ));
 
                 let statusSplit=[];
                 let TipoServizioSplit=[];
-                
+                let RateCategorySplit=[];
+
+                if(this.additionalfilter===undefined){
+                    this.additionalfilter='';
+                }
+                console.log('additionalFilter'+ JSON.stringify(this.additionalfilter));
+
                 if(data.FornitureCliente__c == 'SI')
                 {
                     console.log('entra in forniture cliente == SI');
 
                     if(data.StatoFornitura__c != undefined && data.StatoFornitura__c!='')
                     {
-
                         statusSplit = data.StatoFornitura__c.split(",");
                         console.log('statusSplit in statoFornitura *****'+JSON.stringify(statusSplit));
-                        console.log('statusSplit in statoFornitura *****'+JSON.stringify(statusSplit));
-
-                        if(statusSplit.length > 1 && statusSplit.length < 3){
-                
-                            this.additionalfilter= ' AND (MeterStatus__c =\''+statusSplit[0]+'\''+'OR MeterStatus__c = \''+statusSplit[1]+'\''+ 'OR MeterStatus__c = \'\')';
-                            console.log('entra in lenght==1 ');
                         
-                    }
-                    else if(statusSplit.length > 2){
-                        
-                        this.additionalfilter= ' AND (MeterStatus__c =\''+statusSplit[0]+'\''+'OR MeterStatus__c = \''+statusSplit[1]+'\''+'OR MeterStatus__c = \''+statusSplit[2]+'\''+ 'OR MeterStatus__c = \'\')';
-                        console.log('entra in lenght>2 si');
-                    
+                        this.additionalfilter+=' AND MeterStatus__c IN('
+                        for(let i=0; i<statusSplit.length-1;i++) {
+                            this.additionalfilter+='\''+ statusSplit[i]+'\',';
                         }
-                    else if(statusSplit.length > 0)
-                    {
-            
-                            this.additionalfilter= 'AND (MeterStatus__c =\''+data.StatoFornitura__c+'\''+ 'OR MeterStatus__c = \'\')'; 
-                    }
+                        this.additionalfilter+= '\''+ statusSplit[statusSplit.length-1]+'\'';
+                        this.additionalfilter+=')';
+                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
                     }
                     
-                    if(data.TipoServizio__c!= undefined&&data.TipoServizio__c!='')
+                    if(data.TipoServizio__c!= undefined && data.TipoServizio__c!='')
                     {
                         TipoServizioSplit = data.TipoServizio__c.split(",");
                         console.log('TipoServizioSplit *****'+JSON.stringify(TipoServizioSplit));
-                        //this.submitFornitura();
+                        
+                        this.additionalfilter+=' AND CommoditySector__c IN('
+                        for(let i=0; i<TipoServizioSplit.length-1;i++) {
+                            this.additionalfilter+='\''+ TipoServizioSplit[i]+'\',';
+                        }
+                        this.additionalfilter+= '\''+ TipoServizioSplit[TipoServizioSplit.length-1]+'\'';
+                        this.additionalfilter+=')';
+                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
+                    }
+                            
+                    if(data.Disalimentabile__c!= undefined && data.Disalimentabile__c!=''){
+                        this.additionalfilter+=' AND Disconnectable__c = \''+data.Disalimentabile__c+'\'';
+                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
+                    }
+
+                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && this.processtype !='Chiusura Contatore' && this.processtype != 'Esenzione Modifica Fognatura Depurazione'){
+                        RateCategorySplit = data.RateCategory__c.split(",");
+                        console.log('RateCategorySplit *****'+JSON.stringify(RateCategorySplit));
+
+                            this.additionalfilter+=' AND RateCategory__c IN('
+                            for(let i=0; i<RateCategorySplit.length-1;i++) {
+                                this.additionalfilter+='\''+ RateCategorySplit[i]+'\',';
+                            }
+                            this.additionalfilter+= '\''+ RateCategorySplit[RateCategorySplit.length-1]+'\'';
+                            this.additionalfilter+=')';
+                            console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
+                    }
+
+                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && (this.processtype ==='Chiusura Contatore' || this.processtype === 'Esenzione Modifica Fognatura Depurazione')){
+                        RateCategorySplit = data.RateCategory__c.split(",");
+                        console.log('RateCategorySplit *****'+JSON.stringify(RateCategorySplit));
+
+                            this.additionalfilter+=' AND RateCategory__c NOT IN('
+                            for(let i=0; i<RateCategorySplit.length-1;i++) {
+                                this.additionalfilter+='\''+ RateCategorySplit[i]+'\',';
+                            }
+                            this.additionalfilter+= '\''+ RateCategorySplit[RateCategorySplit.length-1]+'\'';
+                            this.additionalfilter+=')';
+
+                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
                     }
                     
-                
-
-
-                    if(TipoServizioSplit.length >1){
-
-                        this.additionalfilter+=' AND (CommoditySector__c = \''+TipoServizioSplit[0]+'\''+'OR CommoditySector__c = \''+TipoServizioSplit[1]+'\')';
-                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    }
-                    else
-                    {     
-                        this.additionalfilter+=' AND CommoditySector__c = \''+data.TipoServizio__c+'\'';
-                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    }
-                
                     console.log('additionalFilter pre final :  '+ this.additionalfilter);
                     this.additionalFilterFinal = this.additionalfilter;
                     console.log('additionalFilter post final :  '+ this.additionalFilterFinal);
                     this.submitFornitura();
                 }
+
             });
         }
 
@@ -206,9 +238,101 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.submitButtonStatus = false;
         } else {
             this.submitButtonStatus = true;
-
         }
     }
+
+    showToast(message) {
+        const event = new ShowToastEvent({
+            title: 'Attenzione',
+            message: message,
+            variant: 'error',
+            mode:'sticky',
+        });
+        this.dispatchEvent(event);
+    }
+
+    @track openmodelDatiCatastali = false;
+
+    openModalDatiCatastali() {
+        this.openmodelDatiCatastali = true
+    }
+
+    closeModalDatiCatastali(){        
+        this.openmodelDatiCatastali = false;
+    }
+
+    handleRegistryCity(event){
+        this.registryCityValue = event.target.value;
+    }
+    handleRegistryCityCode(event){
+        this.registryCityCodeValue = event.target.value;
+    }
+    handleUrbanSection(event){
+        this.urbanSectionValue = event.target.value;
+    }
+    handleSheet(event){
+        this.sheetValue = event.target.value;
+    }
+    handleParticleSheet(event){
+        this.particleSheetValue = event.target.value;
+    }
+    handleSubaltern(event){
+        this.subalternValue = event.target.value;
+    }     
+
+    addValuesToDatiCatastaliList() {
+        console.log('****Sono nella funcion****');
+        let errorMessage = [];
+        let concatErrorFields = '';
+        console.log('****Sono dopo le variabili****');
+        this.searchInputValue = '';
+        if(this.registryCityValue){
+            this.datiCatastali.RegistryCity = this.registryCityValue;
+            this.searchInputValue += this.registryCityValue + ' ';
+        }
+        if(this.registryCityCodeValue){
+            this.datiCatastali.RegistryCityCode = this.registryCityCodeValue;
+            this.searchInputValue += this.registryCityCodeValue + ' ';
+        }
+        if(this.urbanSectionValue){
+            this.datiCatastali.UrbanSection = this.urbanSectionValue;
+            this.searchInputValue += this.urbanSectionValue + ' ';
+        }
+        if(this.sheetValue){
+            this.datiCatastali.Sheet = this.sheetValue;
+            this.searchInputValue += this.sheetValue + ' ';
+        }
+        if(this.particleSheetValue){
+            this.datiCatastali.ParticleSheet = this.particleSheetValue;
+            this.searchInputValue += this.particleSheetValue + ' ';
+        }
+        if(this.subalternValue){
+            this.datiCatastali.Subaltern = this.subalternValue;
+            this.searchInputValue += this.subalternValue + ' ';
+        }
+        if(this.registryCityValue == null && this.registryCityCodeValue == null || this.registryCityValue == '' && this.registryCityCodeValue == '' || this.registryCityValue == null && this.registryCityCodeValue == '' || this.registryCityValue == '' && this.registryCityCodeValue == null){
+            concatErrorFields = concatErrorFields.concat('Comune catastale o in alternativa Codice comune catastale, ');
+        }
+        if(this.sheetValue == null || this.sheetValue == ''){
+            concatErrorFields = concatErrorFields.concat('Foglio, ');
+        }
+        if(this.particleSheetValue == null || this.particleSheetValue == ''){
+            concatErrorFields = concatErrorFields.concat('Particella');
+        }
+        if (concatErrorFields.charAt(concatErrorFields.length - 2) == ',') {
+            concatErrorFields = concatErrorFields.slice(0, -2);
+          }
+        
+        if (concatErrorFields !== '') {
+            errorMessage.push('Per poter confermare popolare i seguenti campi: ' + concatErrorFields);
+        }        
+        if(errorMessage.length === 0){
+            this.closeModalDatiCatastali();
+        }else{
+            this.showToast(errorMessage[0]);
+        }       
+        this.submitButtonStatus = false;
+    } 
 
     closeModal() {
         this.confirmButtonDisabled=true;
@@ -226,17 +350,18 @@ export default class HdtAdvancedSearch extends LightningElement {
      * get input value and also validate input value
      */
     searchAction(event) {
+        console.log(this.queryType);
         this.submitButtonStatus = true;
         this.apiSearchButtonStatus = true;
-
         console.log('event value: '+ event.target.value);
-
         if (event.target.value.length > 3) {
             this.submitButtonStatus = false;
             this.searchInputValue = event.target.value;
         }
-
-
+        if(this.queryType==='datiCatastali'){
+            this.openModalDatiCatastali();
+        }
+        
     }
 
     /**
@@ -335,6 +460,16 @@ export default class HdtAdvancedSearch extends LightningElement {
         console.log('Event ' + JSON.stringify(event));
         this.queryType = event.detail;
         console.log('## QueryType >>> ' + this.queryType);
+        if(this.queryType==='datiCatastali'){
+            this.openModalDatiCatastali();
+        }
+        
+        if (this.queryType==='serialnumber'){
+            this.isSerialNumber = true;
+        } else {
+            this.isSerialNumber = false;
+        }
+        
         this.apiSearchButtonStatus= true;
     }
 
@@ -393,17 +528,23 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     searchInSAP(){
         
-        this.callApi(this.searchInputValue, 'searchSap').then(() => {
-            this.preloading = true;
-            this.closeModal();
-            if(this.serviceRequestId == null || (this.serviceRequestId != null && !this.isIncompatible)){
-                this.dispatchEvent(new CustomEvent('servicepointselection', {
-                    detail: this.rowToSend
-                }));
-                this.preloading = false;
-            }
-            this.confirmButtonDisabled = true;
-        });
+        if(this.isSerialNumber){
+            console.log('Set openMeterSearchModal -> True');
+            this.openMeterSearchModal = true;
+        }else{
+            this.callApi(this.searchInputValue, 'searchSap').then(() => {
+                this.preloading = true;
+                this.closeModal();
+                if(this.serviceRequestId == null || (this.serviceRequestId != null && !this.isIncompatible)){
+                    this.dispatchEvent(new CustomEvent('servicepointselection', {
+                        detail: this.rowToSend
+                    }));
+                    this.preloading = false;
+                }
+                this.confirmButtonDisabled = true;
+            });
+        }
+
     }
 
     callApi(event, isFrom){
@@ -467,7 +608,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             isBlacklist=data;
         
         if(isBlacklist == false){
-        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalfilter,isSuperUser:this.isSuperUser}).then(data => {
+        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalfilter,isSuperUser:this.isSuperUser, datiCatastali: JSON.stringify(this.datiCatastali)}).then(data => {
             this.preloading = false;
             if (data.length > 0) {
                 
@@ -598,7 +739,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         let servPoint = this.rowToSend;
         let pointCode = servPoint['Codice Punto'];
         let implantCode = servPoint['Impianto SAP'];
-        let codeCallApi = servPoint['Codice Punto'] != null && servPoint['Codice Punto'] != undefined && servPoint['Codice Punto'] != ''?pointCode:implantCode;
+        let codeCallApi = servPoint['Codice Punto'] !== null && servPoint['Codice Punto'] !== undefined && servPoint['Codice Punto'] !== ''?pointCode:!implantCode ? '' : implantCode;
         this.callApi(codeCallApi, 'confirm').then(() => {
             this.preloading = true;
             this.closeModal();
@@ -634,5 +775,18 @@ export default class HdtAdvancedSearch extends LightningElement {
         else{
             this.isSuperUser=false;
         }
+    }
+
+    handleCloseMeterSearch(){
+        console.log('Set openMeterSearchModal -> False');
+        this.openMeterSearchModal = false;
+    }
+
+    handleServicePoinSelectionMeter(event){
+        this.dispatchEvent(new CustomEvent('servicepointselection', {
+            detail: event.detail
+        }));
+        this.handleCloseMeterSearch();
+        this.preloading = false;
     }
 }

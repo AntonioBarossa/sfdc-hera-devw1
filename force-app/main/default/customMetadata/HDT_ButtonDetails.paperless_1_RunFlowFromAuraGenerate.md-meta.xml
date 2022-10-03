@@ -23,6 +23,10 @@
         <value xsi:type="xsd:string">lwcmethod</value>
     </values>
     <values>
+        <field>HideForExtObj__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
         <field>IsVisible__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>
@@ -32,7 +36,8 @@
   &quot;processType&quot;: &quot;Paperless&quot;,
   &quot;recordTypeName&quot;: &quot;HDT_RT_AltriProcessiPagamenti&quot;,
   &quot;flowName&quot;: &quot;HDT_FL_PostSalesMasterDispatch&quot;,
-  &quot;createDocuments&quot;: true
+  &quot;createDocuments&quot;: true,
+  &quot;documentPaymentMethod&quot;: &quot;Bollettino Paperless&quot;
 }</value>
     </values>
     <values>

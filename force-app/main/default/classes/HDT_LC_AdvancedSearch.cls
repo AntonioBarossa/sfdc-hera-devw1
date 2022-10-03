@@ -311,8 +311,8 @@ public with sharing class HDT_LC_AdvancedSearch {
 	 * Retrieve data from ServicePoint Object By ServiceCode
 	 */
 	@AuraEnabled(cacheable = true)
-	public static List<Map<String, Object>> getServicePoints(String parameter,
-															 String queryType,String additionalFilter,Boolean isSuperUser) {
+	public static List<Map<String, Object>> getServicePoints(String parameter,String queryType,String additionalFilter,
+	                                                                          Boolean isSuperUser, String datiCatastali) {
 		Set<ServicePoint__c> servicePoints = new Set<ServicePoint__c>();
 		HDT_QR_Contract contractQr= new HDT_QR_Contract();
 		system.debug('queryType' + queryType);
@@ -375,6 +375,11 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 			}
 
+			when 'datiCatastali' {
+				return servicePointQr.getServicePointsByDatiCatastali(datiCatastali, customSetting.OutputServicePoint__c);
+
+			}
+
 		}
 		checkTheNumberOfRecords(servicePoints.size());
 		String[] customSettingFields = customSetting.OutputServicePoint__c.split(',');
@@ -430,6 +435,12 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 
 		return output;
+	}
+
+	@AuraEnabled(cacheable = true)
+	public static List<Map<String, Object>> getServicePoints(String parameter,String queryType,
+																			  String additionalFilter,Boolean isSuperUser) {
+		return getServicePoints(parameter,queryType,additionalFilter,isSuperUser, '');
 	}
 
 	@AuraEnabled(cacheable = true)

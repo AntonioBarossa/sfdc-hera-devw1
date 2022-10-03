@@ -388,6 +388,12 @@
                 <label>Esito KO</label>
             </value>
             <value>
+                <fullName>Esito KO da DBO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Esito KO da DBO</label>
+            </value>
+            <value>
                 <fullName>Esito KO da DL</fullName>
                 <default>false</default>
                 <label>Esito KO da DL</label>
@@ -515,6 +521,7 @@
             <value>
                 <fullName>In attesa lancio EngageOne</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>In attesa lancio EngageOne</label>
             </value>
             <value>
@@ -667,6 +674,11 @@
                 <fullName>Lettura non inserita in SAP</fullName>
                 <default>false</default>
                 <label>Lettura non inserita in SAP</label>
+            </value>
+            <value>
+                <fullName>Mancata risposta</fullName>
+                <default>false</default>
+                <label>Mancata risposta</label>
             </value>
             <value>
                 <fullName>Motore VAS KO</fullName>
@@ -952,6 +964,11 @@
                 <fullName>Validazione OK DL simulata</fullName>
                 <default>false</default>
                 <label>Validazione OK DL simulata</label>
+            </value>
+            <value>
+                <fullName>Verifica in corso</fullName>
+                <default>false</default>
+                <label>Verifica in corso</label>
             </value>
             <value>
                 <fullName>Verifica in laboratorio</fullName>

@@ -13,12 +13,112 @@
         <restricted>true</restricted>
         <valueSetName>HDT_FourthLevelComplaintClassification</valueSetName>
         <valueSettings>
-            <controllingFieldValue>Cambio fornitore</controllingFieldValue>
-            <controllingFieldValue>Modifiche unilaterali</controllingFieldValue>
-            <controllingFieldValue>Recesso</controllingFieldValue>
-            <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
-            <controllingFieldValue>Autolettura (uso della)</controllingFieldValue>
-            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <controllingFieldValue>Impatto visivo</controllingFieldValue>
+            <valueName>II01 - rifiuti abbandonati per cause imputabili al gestore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Impatto visivo</controllingFieldValue>
+            <valueName>II02 - rifiuti abbandonati per cause non imputabili al gestore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Materiali/sostanze</controllingFieldValue>
+            <valueName>IM01 - perdita di liquidi/olii da automezzi aziendali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Richiamo animali/insetti</controllingFieldValue>
+            <valueName>IR01 - presenza di animali o insetti nei pressi di contenitori/dotazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Richiamo animali/insetti</controllingFieldValue>
+            <valueName>IR02 - presenza di animali o insetti nei pressi di Centri di Raccolta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Traffico/cantieri</controllingFieldValue>
+            <valueName>IT01 - rumore prodotto da automezzi/attrezzature</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Traffico/cantieri</controllingFieldValue>
+            <valueName>IT02 - rallentamenti del traffico provocati da automezzi aziendali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contestazioni</controllingFieldValue>
+            <valueName>MC01 - contestazioni su n. vuotature/conferimenti/litri presenti su web</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Solleciti</controllingFieldValue>
+            <valueName>MS01 - sollecito non dovuto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Solleciti</controllingFieldValue>
+            <valueName>MS02 - storno spese di sollecito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Arenile</controllingFieldValue>
+            <controllingFieldValue>Attivazione/Cessazione</controllingFieldValue>
+            <valueName>CA01 - non eseguita causa cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Arenile</controllingFieldValue>
+            <controllingFieldValue>Attivazione/Cessazione</controllingFieldValue>
+            <valueName>CA02 - non eseguita causa HC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Arenile</controllingFieldValue>
+            <valueName>QA01- pulizia spiaggia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Centri di Raccolta</controllingFieldValue>
+            <valueName>QC01 - orari di apertura non rispettati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Centri di Raccolta</controllingFieldValue>
+            <valueName>QC02 - comportamenti/attività operatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Centri di Raccolta</controllingFieldValue>
+            <valueName>QC03 - malfunzionamento dispositivo di identificazione/pesa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizi a chiamata</controllingFieldValue>
+            <valueName>QS01 - mancata raccolta / errato prelievo per servizi su appuntamento gratuiti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizi a chiamata</controllingFieldValue>
+            <valueName>QS02 - comportamenti/attività operatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizi a chiamata</controllingFieldValue>
+            <valueName>QS03 - mancata raccolta / errato prelievo per servizi a pagamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizi di raccolta</controllingFieldValue>
+            <valueName>QR01 - mancato svuotamento contenitori stradali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizi di raccolta</controllingFieldValue>
+            <valueName>QR02 - mancata consegna dotazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizi di raccolta</controllingFieldValue>
+            <valueName>QR03 - manutenzioni contenitori/dotazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizi di raccolta</controllingFieldValue>
+            <valueName>QR04 - comportamenti/attività operatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizi di raccolta</controllingFieldValue>
+            <valueName>QR05 - lavaggio contenitori</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizi di raccolta</controllingFieldValue>
+            <valueName>QR06 - mancato svuotamento domiciliare</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizi di raccolta</controllingFieldValue>
+            <valueName>QR07 - sollecito di servizio</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Indennizzi</controllingFieldValue>
             <controllingFieldValue>Erogazioni</controllingFieldValue>
             <controllingFieldValue>Cessazioni</controllingFieldValue>
@@ -34,127 +134,25 @@
             <controllingFieldValue>Volture e subentri</controllingFieldValue>
             <controllingFieldValue>Ricalcoli</controllingFieldValue>
             <controllingFieldValue>Condizioni economiche nuovi contratti</controllingFieldValue>
-            <valueName>Altro</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Cambio fornitore</controllingFieldValue>
-            <valueName>Mancata ricezione Welcome letter</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Cambio fornitore</controllingFieldValue>
-            <valueName>Penali</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Cambio fornitore</controllingFieldValue>
-            <valueName>Tempistiche e modalità switch</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Cmor (Corrispettivo morosità pregresse)</controllingFieldValue>
-            <valueName>Venditore entrante</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Cmor (Corrispettivo morosità pregresse)</controllingFieldValue>
-            <valueName>Venditore uscente</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Morosità</controllingFieldValue>
-            <valueName>Spese di sollecito/interessi</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
-            <valueName>Riattivazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
-            <valueName>Sezionamento presa</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
-            <valueName>Sospensione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
-            <valueName>Sospensione non legittima</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
-            <valueName>Spese</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Modifiche unilaterali</controllingFieldValue>
-            <valueName>Modifiche unilaterali</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Recesso</controllingFieldValue>
-            <valueName>Modalità recesso</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Autolettura (uso della)</controllingFieldValue>
-            <valueName>Mancato utilizzo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Autolettura (uso della)</controllingFieldValue>
-            <valueName>Modalità autolettura</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
-            <valueName>Compensazioni</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
-            <valueName>Deposito cauzionale</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
-            <valueName>Domiciliazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
-            <valueName>Doppio incasso/doppio pagamento</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
-            <valueName>Pagamenti</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
-            <valueName>Rateizzazione - diniego piano di rientro</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
-            <valueName>Rateizzazione - numero rate</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
-            <valueName>Rimborsi</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
-            <valueName>Rimborsi - assegno</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
-            <valueName>Rimborsi - mancato accredito/doppio pagamento</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sicurezza</controllingFieldValue>
-            <valueName>Assicurazione contro incidenti da gas</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sicurezza</controllingFieldValue>
-            <valueName>Impianti fuganti</valueName>
+            <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
+            <valueName>Altro</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Indennizzi</controllingFieldValue>
             <valueName>Mancata/ritardata erogazione</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Valori della tensione/pressione</controllingFieldValue>
-            <valueName>Pressione</valueName>
+            <controllingFieldValue>Spazzamento</controllingFieldValue>
+            <valueName>QZ01 - pulizia strade/marciapiedi, cestini, aree cani</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Valori della tensione/pressione</controllingFieldValue>
-            <valueName>Tensione</valueName>
+            <controllingFieldValue>Spazzamento</controllingFieldValue>
+            <valueName>QZ02 - comportamenti/attività operatore</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
@@ -182,11 +180,39 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>SC01 - attesa al telefono</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>SC02 - comportamenti/attività operatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>SC03 - risposta non chiara</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>SC04 - difficoltà nel contatto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
             <valueName>SOL - Accessibilità canale</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
             <valueName>SOL - Funzionalità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>SS01 - tempi di attesa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>SS02 - comportamenti/attività operatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>SS03 - risposta non chiara</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
@@ -203,6 +229,10 @@
         <valueSettings>
             <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
             <valueName>Vendita - Teleselling - Comportamento/Informazioni non corrette</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Web</controllingFieldValue>
+            <valueName>SW01 - malfunzionamento</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Erogazioni</controllingFieldValue>
@@ -301,6 +331,10 @@
             <valueName>Preventivi - tempistiche/modalità/costi</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Preventivi- tempistiche/modalità/costi</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Continuità</controllingFieldValue>
             <valueName>Interruzione servizio</valueName>
         </valueSettings>
@@ -381,6 +415,10 @@
         <valueSettings>
             <controllingFieldValue>Altro</controllingFieldValue>
             <valueName>Domestico - Non Domestico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Evoluzioni automatiche</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Altro</controllingFieldValue>
@@ -467,10 +505,6 @@
             <valueName>Venditore terzo</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Altro</controllingFieldValue>
-            <valueName>Evoluzioni automatiche</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
             <valueName>Accollo Totale</valueName>
         </valueSettings>
@@ -497,6 +531,18 @@
         <valueSettings>
             <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
             <valueName>Proposto del. 228</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>Proposto del. 229</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>Proposto del. 230</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>Proposto del. 231</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
@@ -568,19 +614,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Volture e subentri</controllingFieldValue>
-            <valueName>POD errato sui sistemi</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Volture e subentri</controllingFieldValue>
-            <valueName>Voltura con richiesta accessoria</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Volture e subentri</controllingFieldValue>
             <valueName>PdR errato sulla fornitura</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>POD errato sui sistemi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
             <valueName>POD errato sulla fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Voltura con richiesta accessoria</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Privacy</controllingFieldValue>
@@ -633,6 +679,266 @@
         <valueSettings>
             <controllingFieldValue>Condizioni economiche nuovi contratti</controllingFieldValue>
             <valueName>Tariffe diverse dalle aspettative</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cambio fornitore</controllingFieldValue>
+            <valueName>Mancata ricezione Welcome letter</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cambio fornitore</controllingFieldValue>
+            <valueName>Penali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cambio fornitore</controllingFieldValue>
+            <valueName>Tempistiche e modalità switch</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cmor (Corrispettivo morosità pregresse)</controllingFieldValue>
+            <valueName>Venditore entrante</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cmor (Corrispettivo morosità pregresse)</controllingFieldValue>
+            <valueName>Venditore uscente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <valueName>Spese di sollecito/interessi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
+            <valueName>Riattivazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
+            <valueName>Sezionamento presa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
+            <valueName>Sospensione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
+            <valueName>Sospensione non legittima</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
+            <valueName>Spese</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifiche unilaterali</controllingFieldValue>
+            <valueName>Modifiche unilaterali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifiche unilaterali</controllingFieldValue>
+            <valueName>Scivoli</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recesso</controllingFieldValue>
+            <valueName>Modalità recesso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Autolettura (uso della)</controllingFieldValue>
+            <valueName>Mancato utilizzo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Autolettura (uso della)</controllingFieldValue>
+            <valueName>Modalità autolettura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Compensazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Deposito cauzionale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Domiciliazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Doppio incasso/doppio pagamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>FI01 - assegno erede</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>FI02 - problemi emissione assegno</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Pagamenti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Rateizzazione - diniego piano di rientro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Rateizzazione - numero rate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Rimborsi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Rimborsi - assegno</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Rimborsi - mancato accredito/doppio pagamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sicurezza</controllingFieldValue>
+            <valueName>Assicurazione contro incidenti da gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sicurezza</controllingFieldValue>
+            <valueName>Impianti fuganti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Valori della tensione/pressione</controllingFieldValue>
+            <valueName>Pressione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Valori della tensione/pressione</controllingFieldValue>
+            <valueName>Tensione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratto</controllingFieldValue>
+            <valueName>CT01 - componente economica/contrattuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratto</controllingFieldValue>
+            <valueName>CT02 - errata attribuzione tariffa/tipologia utenza</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratto</controllingFieldValue>
+            <valueName>CT03 - cambio opzione Residente / Non Residente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratto</controllingFieldValue>
+            <valueName>CT04 - modifica indirizzo di fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Subentro/Voltura</controllingFieldValue>
+            <valueName>CV01 - non eseguito per mancata presentazione della documentazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Subentro/Voltura</controllingFieldValue>
+            <valueName>CV02 - gestito in ritardo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Avviso/Bolletta</controllingFieldValue>
+            <valueName>FB01 - chiarezza bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Avviso/Bolletta</controllingFieldValue>
+            <valueName>FB02 - recapito bolletta e relativi costi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Avviso/Bolletta</controllingFieldValue>
+            <valueName>FB03 - periodicità bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Avviso/Bolletta</controllingFieldValue>
+            <valueName>FB04 - tariffe diverse dalle aspettative</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Avviso/Bolletta</controllingFieldValue>
+            <valueName>FB05 - avviso/bolletta errato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calcolo</controllingFieldValue>
+            <valueName>FC01 - addebito vuotature/litri</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calcolo</controllingFieldValue>
+            <valueName>FC02 - acconto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calcolo</controllingFieldValue>
+            <valueName>FC03 - conguaglio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calcolo</controllingFieldValue>
+            <valueName>FC04 - riduzioni/sconti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calcolo</controllingFieldValue>
+            <valueName>FC05 - metratura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calcolo</controllingFieldValue>
+            <valueName>FC06 - periodo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calcolo</controllingFieldValue>
+            <valueName>FC07 - imposte</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calcolo</controllingFieldValue>
+            <valueName>FC08 - altre voci</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modalità di pagamento</controllingFieldValue>
+            <valueName>FM01 - modalità di pagamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modalità di pagamento</controllingFieldValue>
+            <valueName>FM02 - rimborso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modalità di pagamento</controllingFieldValue>
+            <valueName>FM03 - rateizzazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Periodicità</controllingFieldValue>
+            <valueName>FF01 - frequenza di fatturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Problemi di fatturazione</controllingFieldValue>
+            <valueName>FP01 - doppia fatturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Problemi di fatturazione</controllingFieldValue>
+            <valueName>FP02 - mancato addebito avviso/bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recapito</controllingFieldValue>
+            <valueName>FR01 - consegna in ritardo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recapito</controllingFieldValue>
+            <valueName>FR02 - mancato recapito causa errato indirizzo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recapito</controllingFieldValue>
+            <valueName>FR03 - mancato recapito causa vettore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Emissioni</controllingFieldValue>
+            <valueName>IE01 - fumi/pulviscolo provenienti da contenitori/dotazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Emissioni</controllingFieldValue>
+            <valueName>IE02 - fumi/pulviscolo provenienti da Centri di Raccolta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Emissioni</controllingFieldValue>
+            <valueName>IE03 - fumi da tubi di scappamento di automezzi aziendali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Emissioni</controllingFieldValue>
+            <valueName>IE04 - cattivi odori provenienti da Centri di Raccolta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Emissioni</controllingFieldValue>
+            <valueName>IE05 - cattivi odori provenienti da contenitori/dotazioni</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

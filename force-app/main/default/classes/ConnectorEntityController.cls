@@ -10,6 +10,17 @@ global with sharing class ConnectorEntityController {
 
 		try {
 			if((Integer) message.get('ErrorCode') > 0) {
+				
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			list <OrgWideEmailAddress> orgWideAddress = [SELECT Id, DisplayName, Address FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address' WITH SECURITY_ENFORCED LIMIT 1];
+			mail.setOrgWideEmailAddressId(orgWideAddress[0].Id);
+
+                mail.setToAddresses(new String[]{'danilo.penna@nttdata.com'});
+                mail.setSubject('Create Activity Exception Message');
+                String body='JSON Exception messagge: ERROR: errorCode is not 0. Message: ' + JSON.serialize(message) + '   ' +jsonMessage ;
+                mail.setPlainTextBody (body);
+                Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+            
 				return 'ERROR: errorCode is not 0. Message: ' + JSON.serialize(message);
 			}
 
@@ -29,10 +40,10 @@ global with sharing class ConnectorEntityController {
 				when 'Outbound' {
 					activity.Type__c = 'Chiamata Outbound';
 					// activity.CallCenterNumber__c = (String) message.get('ANI');
-					//activity.ClientNumber__c = message.get('DNIS') != null ? ((String) message.get('DNIS')).removeStart('0') : null;
-					
+					activity.ClientNumber__c = message.get('DNIS') != null ? ((String) message.get('DNIS')).removeStart('0') : null;
+					//ripristinato removeStart('0') solo per outbound
 					//AF RIMOSSA ISTRUZIONE removeStart('0') in quanto rimuovendo lo 0 non veniva fatto il match con i numeri presenti in SFDC
-					activity.ClientNumber__c = message.get('DNIS') != null ? (String) message.get('DNIS') : null;
+					//activity.ClientNumber__c = message.get('DNIS') != null ? (String) message.get('DNIS') : null;
 				}
 				when 'Inbound' {
 					activity.Type__c = 'Chiamata Inbound';
@@ -70,9 +81,20 @@ global with sharing class ConnectorEntityController {
 			result.put('contactId', activity.Contact__c);
 			result.put('leadId', activity.Lead__c);
 		} catch (Exception e) {
+
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			list <OrgWideEmailAddress> orgWideAddress = [SELECT Id, DisplayName, Address FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address' WITH SECURITY_ENFORCED LIMIT 1];
+			mail.setOrgWideEmailAddressId(orgWideAddress[0].Id);
+
+			mail.setToAddresses(new String[]{'danilo.penna@nttdata.com'});
+			mail.setSubject('Create Activity Exception Message');
+			String body='Exception messagge: ERROR: ' + e.getMessage() + '   ' +jsonMessage;
+			mail.setPlainTextBody (body);
+			Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+			
 			return 'ERROR: ' + e.getMessage();
 		}
-		
+		system.debug('Result Krist: '+result);
 		return JSON.serialize(result);
 	}
 
@@ -107,6 +129,16 @@ global with sharing class ConnectorEntityController {
 			update activity;
 		} catch (Exception e) {
 			// WIP
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			list <OrgWideEmailAddress> orgWideAddress = [SELECT Id, DisplayName, Address FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address' WITH SECURITY_ENFORCED LIMIT 1];
+			mail.setOrgWideEmailAddressId(orgWideAddress[0].Id);
+
+			mail.setToAddresses(new String[]{'danilo.penna@nttdata.com'});
+			mail.setSubject('Close Activity Exception Message');
+			String body='Exception messagge: ERROR: ' + e.getMessage() + '   ' +jsonMessage;
+			mail.setPlainTextBody (body);
+			Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+
 			return 'ERROR: ' + e.getMessage();
 		}
 

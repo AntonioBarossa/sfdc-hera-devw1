@@ -2,7 +2,7 @@
  * @description       : Processing Orders for VAS process
  * @author            : gabriele.rota@webresults.it
  * @group             : WR
- * @last modified on  : 2021-09-28
+ * @last modified on  : 09-12-2022
  * @last modified by  : gabriele.rota@webresults.it
  * Modifications Log 
  * Ver   Date         Author                        Modification
@@ -14,6 +14,8 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
     private static final String PHASE_CANCELLED = 'Annullato';
     private static final Id VAS_RT = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
     private static final Id SCONTIBONUS_RT = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId();
+    private static final Id AGEVOLAZIONI_RT = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_AgevolazioniAmbiente').getRecordTypeId();
+    private static final Id RIMOZ_AGEV_RT = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ModificaTariffaRimozione').getRecordTypeId();
 
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     
@@ -27,9 +29,11 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
 
         Set<Id> canceledOrderIds = new Set<Id>();
         Set<Id> canceledOrderQuotesIds = new Set<Id>();
+        Set<Id> excludedRecTypes = new Set<Id>{VAS_RT, SCONTIBONUS_RT, AGEVOLAZIONI_RT, RIMOZ_AGEV_RT};
+
         for (Order newOrder : (List<Order>)newMap.values()) {
             Order oldOrder = (Order) oldMap.get(newOrder.Id);
-            if (newOrder.RecordTypeId!=VAS_RT && newOrder.RecordTypeId!=SCONTIBONUS_RT && (newOrder.Status==STATUS_CANCELLED && oldOrder.Status!=STATUS_CANCELLED)) {
+            if (!excludedRecTypes.contains(newOrder.RecordTypeId) && (newOrder.Status==STATUS_CANCELLED && oldOrder.Status!=STATUS_CANCELLED)) {
                 canceledOrderIds.add( newOrder.Id );
                 if (newOrder.SBQQ__Quote__c != null){
                     canceledOrderQuotesIds.add(newOrder.SBQQ__Quote__c);
@@ -53,9 +57,9 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
     public static void cancelLinkedOrders(Set<Id> canceledOrderIds, Set<Id> canceledOrderQuotesIds){
         List<Order> ordersToWork = new List<Order>();
         if(!canceledOrderIds.isEmpty() && canceledOrderQuotesIds.isEmpty()){
-            ordersToWork = [SELECT Id, isBillableVas__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds WITH SECURITY_ENFORCED];
+            ordersToWork = [SELECT Id, isBillableVas__c,Contact__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds WITH SECURITY_ENFORCED];
         }else if (!canceledOrderIds.isEmpty()){
-            ordersToWork = [SELECT Id, isBillableVas__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
+            ordersToWork = [SELECT Id, isBillableVas__c, Contact__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
         }
 
        
@@ -63,24 +67,34 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
         if(ordersToWork.isEmpty()){
             return;
         }
-        List<Order> vasOrdersToCancel = new List<Order>();
+        List<Order> ordersToCancel = new List<Order>();
         //Map<Id,Order> commodityOrderMap = new Map<Id,Order>();
+        Map<Id,Id> mapQuoteContactId = new Map<Id,Id>();
+        Map<Id,Id> mapOrderContactId = new Map<Id,Id>();
         for (Order orderToWork:ordersToWork) {
+            if (canceledOrderIds.contains(orderToWork.Id) && orderToWork.Contact__c != null){
+                mapQuoteContactId.put(orderToWork.SBQQ__Quote__c,orderToWork.Contact__c);
+                mapOrderContactId.put(orderToWork.Id,orderToWork.Contact__c);
+                continue;
+            }
             switch on orderToWork.RecordType.DeveloperName {
-                when 'HDT_RT_VAS','HDT_RT_ScontiBonus' {
-                    vasOrdersToCancel.add(orderToWork);
+                when 'HDT_RT_VAS','HDT_RT_ScontiBonus', 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione' {
+                    ordersToCancel.add(orderToWork);
                 }
                 when 'HDT_RT_Default'{
-                    verifyDraftVas(orderToWork,vasOrdersToCancel);
+                    verifyDraftVas(orderToWork,ordersToCancel);
                 }
                 /* when else {
                     setCommodityOrderMap(orderToWork, commodityOrderMap,canceledOrderIds);
                 } */
             }
         }
-        for (Order vasOrder:vasOrdersToCancel) {
+        for (Order vasOrder:ordersToCancel) {
             vasOrder.Phase__c = PHASE_CANCELLED;
             vasOrder.Status = STATUS_CANCELLED;
+            if (vasOrder.Contact__c == null && (mapQuoteContactId.containsKey(vasOrder.SBQQ__Quote__c) || (vasOrder.OrderReference__c != null && mapOrderContactId.containsKey(vasOrder.OrderReference__c)))){
+                vasOrder.Contact__c = mapQuoteContactId.containsKey(vasOrder.SBQQ__Quote__c)? mapQuoteContactId.get(vasOrder.SBQQ__Quote__c) : mapOrderContactId.get(vasOrder.OrderReference__c);
+            }
             /* String cancellationReason;
             if (vasOrder.OrderReference__c != null && commodityOrderMap.containsKey(vasOrder.OrderReference__c)){
                 cancellationReason = commodityOrderMap.get(vasOrder.OrderReference__c).CancellationReason__c;
@@ -92,7 +106,7 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
             vasOrder.CancellationReason__c = 'Annullamento Ordine di Riferimento';
         }
 
-        orderSrv.updateRecords(vasOrdersToCancel);
+        orderSrv.updateRecords(ordersToCancel);
     }
 
     private static void verifyDraftVas(Order orderToWork,List<Order> vasOrdersToCancel){

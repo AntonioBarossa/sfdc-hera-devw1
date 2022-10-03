@@ -3,6 +3,10 @@
     <label>Pagamenti - Comunicazione Pagamento Rec.</label>
     <protected>false</protected>
     <values>
+        <field>Commodity__c</field>
+        <value xsi:type="xsd:string">Ambiente</value>
+    </values>
+    <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {&quot;FieldName&quot;:&quot;PaidAmount__c&quot;,&quot;Required&quot;:true,&quot;ReadOnly&quot;:false,&quot;Column&quot;:1},
@@ -18,7 +22,7 @@
     <values>
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[
-{&quot;FieldName&quot;:&quot;AccountId&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;BillingProfile__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;DocumentPaymentMethod__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
+{&quot;FieldName&quot;:&quot;AccountId&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;BillingProfile__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;Type&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;DocumentPaymentMethod__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;TotalResidue__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}
 ]</value>
     </values>

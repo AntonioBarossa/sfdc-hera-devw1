@@ -25,6 +25,9 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     when 'InstallmentsView', 'EC7' {
                         return manageDocumentsCreditViews(inputs);
                     }
+                    when 'Paperless' {
+                        return manageDocumentsPaperless(inputs);
+                    }
                     when else {
                         return null;
                     }
@@ -108,7 +111,6 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             caseRecord.SalesCompany__c = (String) primolivello.get('societa');
             
             caseRecord.Id = inputs[0].caseId;
-            //caseRecord.ReadType__c = (String) secondoLivello.get('importo'); --> Richiamare WS ad hoc
             caseCommitted = qrCase.getRecordById(inputs[0].caseId);
             processType = caseCommitted != null? caseCommitted.Type:'';
             response.caseRecord = caseRecord;
@@ -129,12 +131,13 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     singleDocument.DocumentNumber__c = numeroFattura != null? numeroFattura:numeroDocumento;
                     dataEmissione = formatDate((String) primolivello.get('dataEmissione'));
                     dataScadenza = formatDate((String) primolivello.get('dataScadenza'));
-                    Double totaleCopertina = Double.valueOf(primolivello.get('totaleCopertina'));
-                    Double importo = Double.valueOf(primolivello.get('importo'));
                     singleDocument.Bill__c = (String) primolivello.get('numeroBollettino');
                     singleDocument.Type__c = (String) primolivello.get('tipoDocumento');
                     singleDocument.IssueDate__c = dataEmissione;
                     singleDocument.ExpirationDate__c = dataScadenza;
+                    // Valorizzazione Amount
+                    Double totaleCopertina = Double.valueOf(primolivello.get('totaleCopertina'));
+                    Double importo = Double.valueOf(primolivello.get('importo'));
                     if(processType.equalsIgnoreCase('Piano Rateizzazione') && Double.valueOf(primolivello.get('residuo')) == 0){
                         singleDocument.Amount__c = importo;
                     }else {
@@ -149,6 +152,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     singleDocument.ContractualAccount__c = (String) primolivello.get('contoContrattuale');
                     singleDocument.TotalCommunicationPayment__c = totaleCopertina != null? totaleCopertina:importo;
                     singleDocument.Case__c = inputs[0].caseId;
+                    singleDocument.CommoditySector__c = calculateCommodity(secondoLivelloList);// fpalladi sviluppo per W2 Errore Fatturazione Idrico
                     
                     if(String.isNotBlank(numeroFattura)){
                         singleDocument.Name = numeroFattura;
@@ -160,18 +164,10 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     documentList.add(singleDocument);
                 }
                 if(documentList.size()>0){
-                    /*
-                        @Author: Davide Viola - 19/10/2021
-                        Description: PMD -> Commentata variabile non utilizzata.
-                    */
-                    /*Boolean insertDoc = */HDT_UTL_DatabaseService.insertSObject(documentList);
+                    HDT_UTL_DatabaseService.insertSObject(documentList);
                 }
             }
-            /*
-                @Author: Davide Viola - 19/10/2021
-                Description: PMD -> Commentata variabile non utilizzata.
-            */
-            /*Boolean updateCase = */HDT_UTL_DatabaseService.updateSObject(caseRecord);
+            HDT_UTL_DatabaseService.updateSObject(caseRecord);
         } catch (Exception ex) {
             System.debug(LoggingLevel.DEBUG, 'Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
             return null;
@@ -340,6 +336,8 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     singleDocument.ContractualAccount__c = (String) primolivello.get('contoContrattuale');
                     singleDocument.TotalCommunicationPayment__c = Double.valueOf(primolivello.get('residuo'));
                     singleDocument.Case__c = inputs[0].caseId;
+                    singleDocument.PaymentMode__c = 'BOLLETTINO POSTALE';
+                    singleDocument.Amount__c = Double.valueOf(primolivello.get('residuo'));
                     
                     if(String.isNotBlank(numeroFattura)) {
                         singleDocument.Name = numeroFattura;
@@ -412,6 +410,30 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             return null;
         }
     }
+
+    /**
+     * @fpalladi 2022-08-26
+     * Wave2 - Calcola la commodity della partita (2nd livello) selezionata 
+     */
+    @TestVisible
+    private static String calculateCommodity(List<Object> secondoLivelloList){ 
+        String toReturn = '';
+        Set<String> commoditySectorSet = new Set<String>();
+        
+        if(secondoLivelloList != null) {
+            for(Object singleRecord : secondoLivelloList){
+                Map<String, Object> secondolivello = (Map<String, Object>) singleRecord;
+                commoditySectorSet.add((String) secondolivello.get('settoreMerceologico'));
+            }         
+        }
+
+        toReturn = commoditySectorSet.size() == 0 ? '' : toReturn;
+        toReturn = commoditySectorSet.size() == 1 ? new List<String> (commoditySectorSet)[0] : toReturn;
+        toReturn = commoditySectorSet.size()  > 1 ? 'Multi' : toReturn;
+
+        return toReturn ;                
+    }
+    
     @TestVisible
     private static Double calculateRaiFee(List<Object> secondoLivelloList){
         if(secondoLivelloList==null || secondoLivelloList.size()<=0) {
@@ -435,7 +457,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             return null;
         }
     }
-    
+
     @TestVisible
     private static String getRiferimentoFattura(List<Object> secondoLivelloList){
         if(secondoLivelloList == null || secondoLivelloList.size() <= 0) {

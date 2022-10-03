@@ -1,0 +1,31 @@
+# This workflow sends a request to jenkins to launch the allingment of branches to master
+
+name: Launch branch alignment from master
+
+# The trigger of this workflow is a pull request merged into master
+on:
+  pull_request:
+    branches:
+      - master
+    types: [closed]
+
+jobs:
+
+  sendRequest:
+  
+    runs-on: ubuntu-latest
+
+    # Check if the current event was a merge of a Pull-request
+    if: github.event.pull_request.merged == true
+    
+    steps:
+
+    - name: Call Jenkins
+    
+      uses: appleboy/jenkins-action@master
+      with:
+        url: "https://hdt-jenkins.esf.eng.it/"
+        user: "heraApiUser"
+        token: ${{ secrets.JENKINS_TOKEN }}
+        job: "HDT_Salesforce/Wave1/Align_Branches_From_master"
+      # run: echo "Test ${{ github.event.inputs.name }}"

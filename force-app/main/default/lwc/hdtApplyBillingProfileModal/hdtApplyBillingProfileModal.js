@@ -1,23 +1,27 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getQuoteLineBundle from '@salesforce/apex/HDT_LC_ApplyBillingProfileModal.getQuoteLineBundle';
 import updateQuoteLinesBillingProfile from '@salesforce/apex/HDT_LC_ApplyBillingProfileModal.updateQuoteLinesBillingProfile';
+import getEligibleQuoteLinesToApply from '@salesforce/apex/HDT_LC_ApplyBillingProfileModal.getEligibleQuoteLinesToApply';
 
 export default class hdtApplyBillingProfileModal extends LightningElement {
 
     @api sale;
     @api selectedBillingProfile;
-    loading = false;
-    quoteBundleData;
-    disabledConfirm = true;
-    selectedQuoteItems;
-    complementaryBundleArray = []; //used in case their is an additional product to main 'Offerta commerciale' - HRAWRM-424
+    
+    @track loading = false;
+    @track quoteBundleData;
+    @track eligibleQuote; 
+    @track fetchError;
+    @track disabledConfirm = true;
+    @track selectedQuoteItems;
+    @track complementaryBundleArray = []; //used in case their is an additional product to main 'Offerta commerciale' - HRAWRM-424
 
     columns = [
-        {label: 'Nome', fieldName: 'Name', type: 'text'},
-        {label: 'Billing Profile', fieldName: 'BillingProfile', type: 'text'},
-        {label: 'Prodotto', fieldName: 'ProductName', type: 'text'},
-        {label: 'POD/PDR', fieldName: 'ServicePointCode', type: 'text'}
+        {label: 'Nome', fieldName: 'name', type: 'text'},
+        {label: 'Billing Profile', fieldName: 'billingProfileName', type: 'text'},
+        {label: 'Prodotto', fieldName: 'productName', type: 'text'},
+        {label: 'POD/PDR', fieldName: 'pod', type: 'text'}
     ];
 
     getModalData(){
@@ -25,9 +29,27 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
 
         console.log('this.selectedBillingProfile: ', JSON.parse(JSON.stringify(this.selectedBillingProfile)));
 
-        let paymentMethodRaw = this.selectedBillingProfile.PaymentMethod__c;
-        let paymentMethodToSend = this.selectedBillingProfile.PaymentMethod__c;
+        let inputMap = {};
+        inputMap['saleId'] = this.sale.Id;
+        inputMap['selectedBillingProfile'] = JSON.stringify(this.selectedBillingProfile);
 
+        getEligibleQuoteLinesToApply({inputs: inputMap})
+        .then(result => 
+            {
+                this.quoteBundleData = JSON.parse(result);
+                this.loading = false;
+                this.fetchError = undefined;
+            }
+        )
+        .catch(error => 
+            {
+                this.quoteBundleData = undefined;
+                this.loading = false;
+                this.fetchError = true;
+            }
+        );
+    }
+        /*
         getQuoteLineBundle({saleId: this.sale.Id, paymentMethod: paymentMethodToSend, sendingBillMode: this.selectedBillingProfile.BillSendingMethod__c}).then(data =>{
             this.loading = false;
             
@@ -113,7 +135,7 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
         });
-    }
+        */
 
     updateQuoteBundle(){
         this.loading = true;
@@ -126,8 +148,8 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
 
             console.log('complementaryBundleArray assign after: ' + JSON.stringify(this.selectedQuoteItems));
         }
-
-        updateQuoteLinesBillingProfile({quoteLinesToUpdate: this.selectedQuoteItems, billingProfileId: this.selectedBillingProfile.Id}).then(data =>{
+        console.log('SelectedQuoteLines >>> ' + JSON.stringify(this.selectedQuoteItems));
+        updateQuoteLinesBillingProfile({quoteLinesToUpdate: JSON.stringify(this.selectedQuoteItems), billingProfileId: this.selectedBillingProfile.Id}).then(data =>{
             this.loading = false;
             
             this.handleCancelEvent();
@@ -135,7 +157,7 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
             let hasBillingProfileChanged = false;
 
             this.selectedQuoteItems.forEach(el => {
-                if (el.IsCambioOfferta && el.BillingProfilePrevious != this.selectedBillingProfile.Name) {
+                if (el.isCambioOfferta && el.previousBillingProfile !== this.selectedBillingProfile.Name) {
                     hasBillingProfileChanged = true;
                 }
             });

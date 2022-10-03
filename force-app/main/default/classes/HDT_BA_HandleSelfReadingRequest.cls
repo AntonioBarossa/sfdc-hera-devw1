@@ -3,6 +3,7 @@ public with sharing class HDT_BA_HandleSelfReadingRequest implements Database.Ba
     private wrts_prcgvr__ActivityTemplate__c templateKoMdm;
 	private wrts_prcgvr__ActivityTemplate__c templateKoSap;
 	private wrts_prcgvr__ActivityTemplate__c templateGestioneManualeSap;
+    private Set<Id> casesWorked;
     private Id actRecordTypeId;
     
     public HDT_BA_HandleSelfReadingRequest(){
@@ -27,10 +28,11 @@ public with sharing class HDT_BA_HandleSelfReadingRequest implements Database.Ba
             this.templateGestioneManualeSap = (wrts_prcgvr__ActivityTemplate__c) templatesGestioneManualeSap[0];
         }
         this.actRecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
+        this.casesWorked = new Set<Id>();
     }
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        return Database.getQueryLocator('SELECT Id, Case__c, ErrorDescription__c, ErrorCode__c, ActivityType__c, Request_Json__c,Case__r.Phase__c, Case__r.ServicePoint__r.CommoditySector__c,Case__r.Id FROM SelfReadingOutcomeRequest__c WHERE Status__c =\'PENDING\' ');
+        return Database.getQueryLocator('SELECT Id, Case__c, ErrorDescription__c, ErrorCode__c, ActivityType__c, Request_Json__c,Case__r.Phase__c, Case__r.ServicePoint__r.CommoditySector__c,Case__r.Id, Status__c FROM SelfReadingOutcomeRequest__c WHERE Status__c =\'PENDING\' ORDER BY CreatedDate DESC');
     }
 
     public void execute(Database.BatchableContext context, List<SObject> scope){
@@ -45,6 +47,13 @@ public with sharing class HDT_BA_HandleSelfReadingRequest implements Database.Ba
         for (SelfReadingOutcomeRequest__c selfReadingRequest : (List<SelfReadingOutcomeRequest__c>) scope) {
             try{
                 Case c = selfReadingRequest.Case__r;
+                if (this.casesWorked.contains(selfReadingRequest.Case__c)){
+                    selfReadingRequest.Status__c = 'ERROR';
+                    selfReadingRequest.StatusDescription__c = 'In presenza di più esiti è stato lavorato l\'ultimo inviato.';
+                    requestToUpdate.add(selfReadingRequest);
+                    continue;
+                }
+                this.casesWorked.add(selfReadingRequest.Case__c);
                 if ('Annullato'.equalsIgnoreCase(c.Phase__c)){
                     mapCaseInAnnulato.put(c.Id,c);
                 }
@@ -73,6 +82,9 @@ public with sharing class HDT_BA_HandleSelfReadingRequest implements Database.Ba
         Map<Id, Boolean> isAutomaticDiscardCasesMap = new Map<Id,Boolean>();
         
         for (SelfReadingOutcomeRequest__c selfReadingRequest : (List<SelfReadingOutcomeRequest__c>) scope) {
+            if ('ERROR'.equalsIgnoreCase(selfReadingRequest.Status__c)){
+                continue;
+            }
             try{
                 Case caseToUpdate = new Case();
                 caseToUpdate.Id = selfReadingRequest.Case__c;
@@ -229,6 +241,9 @@ public with sharing class HDT_BA_HandleSelfReadingRequest implements Database.Ba
         }
 
         for (SelfReadingOutcomeRequest__c selfReadingRequest : (List<SelfReadingOutcomeRequest__c>) scope) {
+            if ('ERROR'.equalsIgnoreCase(selfReadingRequest.Status__c)){
+                continue;
+            }
             if (errorMessageRequestMap.containsKey(selfReadingRequest.Case__c)){
                 String errorMessage = String.join(errorMessageRequestMap.get(selfReadingRequest.Case__c), ' \n');
                 selfReadingRequest.StatusDescription__c = errorMessage.length() > 255 ? errorMessage.substring(0,254) : errorMessage;

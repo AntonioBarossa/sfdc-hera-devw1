@@ -251,6 +251,11 @@
         <label>HC_CRM_SITOGRUPPO_OUT_KN</label>
     </customValue>
     <customValue>
+        <fullName>HC_CRM_SOLAPP_OUT_CV</fullName>
+        <default>false</default>
+        <label>HC_CRM_SOLAPP_OUT_CV</label>
+    </customValue>
+    <customValue>
         <fullName>HC_CRM_SOLAPP_OUT_KN</fullName>
         <default>false</default>
         <label>HC_CRM_SOLAPP_OUT_KN</label>
@@ -551,6 +556,11 @@
         <label>HSPA_TESORERIA</label>
     </customValue>
     <customValue>
+        <fullName>HC_CRM_SIND_LAMI</fullName>
+        <default>false</default>
+        <label>HC_CRM_SIND_LAMI</label>
+    </customValue>
+    <customValue>
         <fullName>HC_CRM_SIND_LEMURA</fullName>
         <default>false</default>
         <label>HC_CRM_SIND_LEMURA</label>
@@ -561,11 +571,136 @@
         <label>HC_CRM_SIND_LEONI</label>
     </customValue>
     <customValue>
-        <fullName>HC_CRM_SIND_LAMI</fullName>
+        <fullName>HC_CRM_CC_OUT_CV</fullName>
         <default>false</default>
-        <label>HC_CRM_SIND_LAMI</label>
+        <label>HC_CRM_CC_OUT_CV</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_CRM_SPORT_TS</fullName>
+        <default>false</default>
+        <label>EE_CRM_SPORT_TS</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_CRM_SPORT_REG_ TS</fullName>
+        <default>false</default>
+        <label>EE_CRM_SPORT_REG_ TS</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_CRM_SIND_SOSEL</fullName>
+        <default>false</default>
+        <label>EE_CRM_SIND_SOSEL</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_CRM_SPORT_PD</fullName>
+        <default>false</default>
+        <label>EE_CRM_SPORT_PD</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_CRM_SPORT_UD</fullName>
+        <default>false</default>
+        <label>EE_CRM_SPORT_UD</label>
+    </customValue>
+    <customValue>
+        <fullName>HC_COSTING E FORECASTING</fullName>
+        <default>false</default>
+        <label>HC_COSTING E FORECASTING</label>
+    </customValue>
+    <customValue>
+        <fullName>HC_CRELEG</fullName>
+        <default>false</default>
+        <label>HC_CRELEG</label>
+    </customValue>
+    <customValue>
+        <fullName>HC_MARKETING</fullName>
+        <default>false</default>
+        <label>HC_MARKETING</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_CDO_OM</fullName>
+        <default>false</default>
+        <label>EE_CDO_OM</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_CDO_OM_OUT</fullName>
+        <default>false</default>
+        <label>EE_CDO_OM_OUT</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_CDO_RECL</fullName>
+        <default>false</default>
+        <label>EE_CDO_RECL</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_CDO_RECL_OUT</fullName>
+        <default>false</default>
+        <label>EE_CDO_RECL_OUT</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_CONDOMINI</fullName>
+        <default>false</default>
+        <label>EE_CONDOMINI</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_ASSISTITI</fullName>
+        <default>false</default>
+        <label>EE_ASSISTITI</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_CVMBO_TOP</fullName>
+        <default>false</default>
+        <label>EE_CVMBO_TOP</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_CVMBO_BACKGIALLO</fullName>
+        <default>false</default>
+        <label>EE_CVMBO_BACKGIALLO</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_CVMBO_BACKGIALLO_OUT</fullName>
+        <default>false</default>
+        <label>EE_CVMBO_BACKGIALLO_OUT</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_CVMBO_BACKARANCIO</fullName>
+        <default>false</default>
+        <label>EE_CVMBO_BACKARANCIO</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_CVMBO_BACKARANCIO_OUT</fullName>
+        <default>false</default>
+        <label>EE_CVMBO_BACKARANCIO_OUT</label>
+    </customValue>
+    <customValue>
+        <fullName>EE_PROTOCOLLO</fullName>
+        <default>false</default>
+        <label>EE_PROTOCOLLO</label>
+    </customValue>
+    <customValue>
+        <fullName>HCM_RECLAMI</fullName>
+        <default>false</default>
+        <label>HCM_RECLAMI</label>
+    </customValue>
+    <customValue>
+        <fullName>HCM_BACK_OUT_TRG_RECLAMI</fullName>
+        <default>false</default>
+        <label>HCM_BACK_OUT_TRG_RECLAMI</label>
+    </customValue>
+    <customValue>
+        <fullName>HCM_BACK_OUT_TRG</fullName>
+        <default>false</default>
+        <label>HCM_BACK_OUT_TRG</label>
+    </customValue>
+    <customValue>
+        <fullName>HCM_BACK_OUT_TRG_BONUS</fullName>
+        <default>false</default>
+        <label>HCM_BACK_OUT_TRG_BONUS</label>
+    </customValue>
+    <customValue>
+        <fullName>HCM_BACK_OUT_CON</fullName>
+        <default>false</default>
+        <label>HCM_BACK_OUT_CON</label>
     </customValue>
     <description>Gruppo creatore dell&apos; utente</description>
     <masterLabel>Gruppo Creatore</masterLabel>
-    <sorted>true</sorted>
+    <sorted>false</sorted>
 </GlobalValueSet>

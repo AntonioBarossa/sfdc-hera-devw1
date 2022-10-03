@@ -176,6 +176,20 @@
                 <elementReference>GetInputCase.ServicePoint__r.WithdrawalClass__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.UseCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__r.UseCategory__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.ServiceEnergy__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Telefono_Vuoto</targetReference>
         </connector>

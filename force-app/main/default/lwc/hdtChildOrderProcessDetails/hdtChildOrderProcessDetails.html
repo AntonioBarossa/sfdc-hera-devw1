@@ -23,7 +23,7 @@
                         <!--<template for:each={pendingSteps} for:item="section">-->
                         <template iterator:section={pendingSteps}>
 
-                            <lightning-accordion-section key={section.value.step} if:true={section.value.processVisibility} name={section.value.name} label={section.value.label}>
+                            <lightning-accordion-section key={section.value.step} if:true={section.value.processVisibility} name={section.value.name} data-section-name={section.value.name} label={section.value.label}>
                                 
                                 <template if:true={loading}>
                                     <lightning-spinner alternative-text="Loading"></lightning-spinner>
@@ -40,7 +40,12 @@
                                             <template iterator:field_obj={section.value.data}>
                                                 <template if:false={field_obj.value.diffObjApi}>
                                                     <template if:true={field_obj.value.value}>
-                                                        <lightning-input-field data-section-index={section.index} data-field-index={field_obj.index} ata-to-retrieve={field_obj.value.forceRetrieve} onchange={handleSectionDataToSubmitCollection} if:true={field_obj.value.typeVisibility} value={field_obj.value.value} disabled={field_obj.value.disabled} required={field_obj.value.required} class="slds-size_1-of-4 fieldsData" data-id={field_obj.value.apiname} data-name={field_obj.value.apiname} key={field_obj.value.apiname} field-name={field_obj.value.apiname} variant="label-stacked"></lightning-input-field>
+                                                        <template if:false={isRepeatedStep}>
+                                                            <lightning-input-field data-section-index={section.index} data-field-index={field_obj.index} data-to-retrieve={field_obj.value.forceRetrieve} onchange={handleSectionDataToSubmitCollection} if:true={field_obj.value.typeVisibility} value={field_obj.value.value} data-value="true" disabled={field_obj.value.disabled} required={field_obj.value.required} class="slds-size_1-of-4 fieldsData" data-id={field_obj.value.apiname} data-name={field_obj.value.apiname} key={field_obj.value.apiname} field-name={field_obj.value.apiname} variant="label-stacked"></lightning-input-field>
+                                                        </template>
+                                                        <template if:true={isRepeatedStep}>
+                                                            <lightning-input-field data-section-index={section.index} data-field-index={field_obj.index} data-to-retrieve={field_obj.value.forceRetrieve} onchange={handleSectionDataToSubmitCollection} if:true={field_obj.value.typeVisibility} disabled={field_obj.value.disabled} required={field_obj.value.required} class="slds-size_1-of-4 fieldsData" data-id={field_obj.value.apiname} data-name={field_obj.value.apiname} key={field_obj.value.apiname} field-name={field_obj.value.apiname} variant="label-stacked"></lightning-input-field>
+                                                        </template>
                                                     </template>
                                                     <template if:false={field_obj.value.value}>
                                                         <lightning-input-field data-section-index={section.index} data-field-index={field_obj.index} data-to-retrieve={field_obj.value.forceRetrieve} onchange={handleSectionDataToSubmitCollection} if:true={field_obj.value.typeVisibility} disabled={field_obj.value.disabled} required={field_obj.value.required} class="slds-size_1-of-4 fieldsData" data-id={field_obj.value.apiname} data-name={field_obj.value.apiname} key={field_obj.value.apiname} field-name={field_obj.value.apiname} variant="label-stacked"></lightning-input-field>
@@ -83,6 +88,7 @@
                                     <c-hdt-land-registry 
                                     service-point-id={order.ServicePoint__r.Id}
                                     pre-selected-land-registry-id={order.LandRegistry__c}
+                                    onselection={landSelected}
                                     ></c-hdt-land-registry>
                                 </template>
 
@@ -104,7 +110,7 @@
                                 
                                 <div class="slds-clearfix slds-p-around_small">
                                     <div class="slds-float_left">
-                                        <template if:true={section.value.hasVerificaAccertamento}>
+                                        <template if:true={section.value.hasVerificaRavv}>
                                             <p><lightning-formatted-url value="https://gerav.bingest.net"  label="Supporto al Ravvedimento Operoso" target="_blank" ></lightning-formatted-url></p>
                                         </template>
                                     </div>
@@ -126,8 +132,8 @@
                                         <template if:true={section.value.hasAllegatiObbligatori}>
                                             <c-hdt-attachment-manager-button record-id={section.value.recordId} parent-record-id={order.ParentOrder__c} onvalidate_attachments={handleValidateAttachments} onclose_attachment_manager={handleCloseAttachment} additional-attachments={additionalAttachments}></c-hdt-attachment-manager-button>
                                         </template>
-                                        <template if:true={section.value.hasVerificaAccertamento}>
-                                           <c-hdt-active-repentant city={order.ServicePoint__r.SupplyCity__c} sottotipo="Subentro" onrequest_data={handleActiveRepentantStart} onend_algorithm={handleActiveRepentantFinish}></c-hdt-active-repentant>
+                                        <template if:true={section.value.hasVerificaRavv}>
+                                           <c-hdt-active-repentant city={order.ServicePoint__r.SupplyCity__c} sottotipo={order.ProcessType__c} onrequest_data={handleActiveRepentantStart} onend_algorithm={handleActiveRepentantFinish}></c-hdt-active-repentant>
                                         </template>
                                         <lightning-button data-section-index={section.index} if:false={section.value.lastStep} value={section.value.name} onclick={handleNext} label="Avanti" variant="brand" class="slds-m-left_x-small" icon-name="utility:right"></lightning-button>
                                     </div>

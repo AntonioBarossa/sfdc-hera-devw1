@@ -46,6 +46,9 @@
         var orderId = myPageRef.state.c__orderId;        
         // id dell'Interaction
         var interactionId = myPageRef.state.c__interactionId;
+        //id dell'activity
+        var activityId = myPageRef.state.c__activityId;
+        var documentPaymentMethod = myPageRef.state.c__documentPaymentMethod;
 
         //Gestione Risottomissione Annullamento
         let discardRework = undefined;
@@ -83,6 +86,8 @@
         console.log('# compatibile -> '             + compatibile);
         console.log('# orderId -> '             + orderId);
         console.log('# interactionId -> '             + interactionId);
+        console.log('# activityId -> '                  + activityId);
+        console.log('# documentPaymentMethod -> '             + documentPaymentMethod);
         console.log('# ----------------- #');
         
         var workspaceAPI = component.find("workspace");
@@ -160,25 +165,28 @@
                 || processType === 'KO Definitivo' || processType === 'KO Forzato' || processType === 'KO Risolto' 
                 || processType === 'Modifica dati contrattuali' || processType === 'Modifica post accertamento' || processType === 'AnnullamentoVarIndFornitura'
                 || processType === 'Cessazione' || processType === 'Cessazione post accertamento' || processType === 'Reclamo da cittadino' || processType === 'Posizionamento contenitore'
-                || processType === 'Annullamento comunicazione pagamenti' || processType ==='Annullamento doppi pagamenti' || processType ==='Annullamento storno rateizzazione'
-                || processType ==='Annullamento errore fatturazione'){
+                || processType === 'Annullamento comunicazione pagamenti tari' || processType ==='Annullamento doppi pagamenti tari' || processType ==='Annullamento storno rateizzazione tari' || processType ==='Annullamento errore fatturazione'
+                || processType ==='Annullamento rimborso tari' || processType ==='Annullamento contratti TARI' || processType ==='Annullamento prestazione tari'){
 
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
                 //Gestione Risottomissione Annullamento
                 if (discardRework !== undefined){
                     inputVariables.push({ name : 'discardRework', type : 'Boolean', value : discardRework });
+                    inputVariables.push({ name : 'activityId', type : 'String', value : activityId });
                 } 
             }
 
             if(processType === 'Annullamento da activity'){
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : 'Annullamento prestazione' });
                 inputVariables.push({ name : 'isCheckOwnerOk', type : 'Boolean', value : isUserActivity });
+                inputVariables.push({ name : 'activityId', type : 'String', value : activityId });
             }
 
             if(processType === 'Ripristina fase da activity'){
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : 'Ripristina fase' });
                 inputVariables.push({ name : 'isCheckOwnerOk', type : 'Boolean', value : isUserActivity });
                 inputVariables.push({ name : 'discardRework', type : 'Boolean', value : discardRework });
+                inputVariables.push({ name : 'activityId', type : 'String', value : activityId });
             }
 
             component.set('v.enableRefresh', true);
@@ -228,6 +236,9 @@
         }        
         if(interactionId != null){
             inputVariables.push({ name : 'InteractionId', type : 'String', value : interactionId});
+        }
+        if(documentPaymentMethod != null){
+            inputVariables.push({ name : 'DocumentPaymentMethod', type : 'String', value : documentPaymentMethod});
         }
 
         console.log('## inputVariables -> ');

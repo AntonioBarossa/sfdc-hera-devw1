@@ -97,10 +97,10 @@
             <fullName>02- Pubblica utilità</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Rilevanza continuità serv%2E GAS</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Sempre ap%2E - Elettromedicale</fullName>
             <default>false</default>
@@ -380,6 +380,54 @@
             <fullName>WV150 - 300 mc</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>1/2&quot; - 3X15 T</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>3/4&quot; - 5X20 T</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DN40 (1&quot; 1/2)   16x40  MID</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DN 150</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DN15 (1/2&quot;)  2,5x15  MID</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DN20 (3/4&quot;)  4x20  MID</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DN30 (1&quot; 1/4)  10x30  MID</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DN25 (1&quot;)   6,3x25  MID</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>3x15</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>80 W   MID</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>65 W   MID</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DN50 (2&quot;)  30X50 MID</fullName>
+			<default>false</default>
+		</values>
     </picklistValues>
     <picklistValues>
         <picklist>MeterStatus__c</picklist>
@@ -592,11 +640,11 @@
     <picklistValues>
         <picklist>SupplySubtype__c</picklist>
         <values>
-            <fullName>Altri usi</fullName>
+            <fullName>Uso agricolo e zootecnico</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Uso artigianale e commerciale</fullName>
+            <fullName>Uso pubblico non disalimentabile</fullName>
             <default>false</default>
         </values>
         <values>
@@ -619,35 +667,15 @@
             <fullName>Uso pubblico disalimentabile</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Uso pubblico non disalimentabile</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SupplyTypeTemp__c</picklist>
         <values>
-            <fullName>Altri usi</fullName>
+            <fullName>Domestico</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Usi industriali che scaricano in pubblica fognatura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso civile domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso civile non domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso diverso da domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso domestico</fullName>
+            <fullName>Non Domestico</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -681,27 +709,11 @@
     <picklistValues>
         <picklist>SupplyType__c</picklist>
         <values>
-            <fullName>Altri usi</fullName>
+            <fullName>Domestico</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Usi industriali che scaricano in pubblica fognatura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso civile domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso civile non domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso diverso da domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso domestico</fullName>
+            <fullName>Non Domestico</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -38,6 +38,23 @@ const DATA_ACCESS_MAP = {
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
     },
+    'RIMOZIONE_AGEVOLAZIONE':{
+        label: 'Contratti con Agevolazioni',
+        sObjectName: 'Contract',
+        emptyMessage: 'Non ci sono Contratti Ambiente con Agevolazione da poter rimuovere',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.PodPdr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Codice Contratto Sap', fieldName: 'SAPContractCode__c', type: 'text'},
+            {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
     'ORDERS_ELE':{
         label: 'Ordini Energia Elettrica',
         sObjectName: 'Order',
@@ -295,7 +312,9 @@ export default class HdtSelezFornituraFlow extends LightningElement {
 
     loadRecords(){
         this.isLoading = true;
-        getFornitura({searchString: this.accountId, key: this.selectedOption}).then(data =>{
+        getFornitura({searchString: this.accountId, key: this.selectedOption}).then(dataReadOnly =>{
+
+            const data = dataReadOnly.map(obj=>Object.create(obj));//Object from Apex are now Non extensible, must deep-clone to add attributes
             this.isLoading = false;
             
             if(data.length > 0){

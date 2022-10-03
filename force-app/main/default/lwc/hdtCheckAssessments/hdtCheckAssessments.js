@@ -60,7 +60,7 @@ export default class HdtCheckAssessments extends LightningElement {
         handleSearch({
             cfPiva : this.fiscalCode,
             comuneFornitura : this.supplyCity,
-            tipoPersona : this.CustomerMarking,
+            tipoPersona : this.customerMarking,
         }).then(result =>{
             if (!result){
                 console.log('result ->' + this.result);
@@ -77,20 +77,20 @@ export default class HdtCheckAssessments extends LightningElement {
                     else{
                         slots.forEach(element => {
                             this.addRecord({
-                                NrAtto : element.NrAtto,
-                                DataAtto : element.DataAtto,
-                                TipoTributo : element.TipoTributo,
-                                AccertamentoPer : element.AccertamentoPer,
-                                Stato : element.Stato,
-                                BaseDati : element.BaseDati,
-                                DataInizio : element.DataInizio,
-                                DataFine : element.DataFine,
-                                Soggetto : element.Soggetto,
-                                Indirizzo : element.Indirizzo,
-                                Civico : element.Civico,
-                                Contratto : element.Contratto,
-                                SuperficieAccertata : element.SuperficieAccertata,
-                                CategoriaAccertata : element.CategoriaAccertata
+                                NrAtto : element.numeroProvvedimento,
+                                DataAtto : element.dataProvvedimento,
+                                TipoTributo : element.tipoTributo,
+                                AccertamentoPer : element.tipoAccertamento,
+                                Stato : element.stato,
+                                BaseDati : element.bs,
+                                DataInizio : element.DataInizio,//OP
+                                DataFine : element.DataFine,//OP
+                                Soggetto : element.ragioneSociale,
+                                Indirizzo : element.via,
+                                Civico : element.civico,
+                                Contratto : element.pratica,
+                                SuperficieAccertata : element.SuperficieAccertata,//OP
+                                CategoriaAccertata : element.CategoriaAccertata//OP
                             });
                         });
                         this.data.sort(this.sortBy('NrAtto', -1));

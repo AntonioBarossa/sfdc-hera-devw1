@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : Giacinto Florio
+ * @group             : 
+ * @last modified on  : 15-09-2022
+ * @last modified by  : Giacinto Florio
+**/
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 

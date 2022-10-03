@@ -13,6 +13,39 @@
         <restricted>true</restricted>
         <valueSetName>HDT_FifthLevelComplaintClassification</valueSetName>
         <valueSettings>
+            <controllingFieldValue>Impatto visivo</controllingFieldValue>
+            <controllingFieldValue>Materiali/sostanze</controllingFieldValue>
+            <controllingFieldValue>Richiamo animali/insetti</controllingFieldValue>
+            <controllingFieldValue>Traffico/cantieri</controllingFieldValue>
+            <controllingFieldValue>Arenile</controllingFieldValue>
+            <controllingFieldValue>Centri di Raccolta</controllingFieldValue>
+            <controllingFieldValue>Servizi a chiamata</controllingFieldValue>
+            <controllingFieldValue>Servizi di raccolta</controllingFieldValue>
+            <controllingFieldValue>Spazzamento</controllingFieldValue>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <controllingFieldValue>Web</controllingFieldValue>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <controllingFieldValue>Emissioni</controllingFieldValue>
+            <valueName>Igiene ambientale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contestazioni</controllingFieldValue>
+            <controllingFieldValue>Solleciti</controllingFieldValue>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <controllingFieldValue>Web</controllingFieldValue>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <controllingFieldValue>Attivazione/Cessazione</controllingFieldValue>
+            <controllingFieldValue>Contratto</controllingFieldValue>
+            <controllingFieldValue>Subentro/Voltura</controllingFieldValue>
+            <controllingFieldValue>Avviso/Bolletta</controllingFieldValue>
+            <controllingFieldValue>Calcolo</controllingFieldValue>
+            <controllingFieldValue>Modalità di pagamento</controllingFieldValue>
+            <controllingFieldValue>Periodicità</controllingFieldValue>
+            <controllingFieldValue>Problemi di fatturazione</controllingFieldValue>
+            <controllingFieldValue>Recapito</controllingFieldValue>
+            <valueName>Ambiente</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
             <valueName>Comportamento non professionale</valueName>
         </valueSettings>

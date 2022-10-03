@@ -45,7 +45,7 @@ export default class HdtActiveRepentant extends LightningElement {
 	messageContext;
 
     get showSpinner(){
-        return this.formLoading || this.loading==0;
+        return this.formLoading || this.loading>0;
     }
 
     get isCase(){
@@ -139,7 +139,7 @@ export default class HdtActiveRepentant extends LightningElement {
         if (dateDecorrenza && new Date(dateDecorrenza).getTime() <= new Date().getTime() && dateDichiarazione && new Date(dateDecorrenza).getTime() <= new Date(dateDichiarazione).getTime()) {
             this.dateDichiarazione = dateDichiarazione;
             this.dateDecorrenza = dateDecorrenza;
-            if(this.checkComuniNonAffidatari(new Date(this.dateDecorrenza))) return;
+            if(this.checkComuniNonAffidatari(new Date(this.dateDecorrenza), new Date(this.dateDichiarazione))) return;
             this.handleRepentant();
         } else {
             this.showMessage(
@@ -152,14 +152,37 @@ export default class HdtActiveRepentant extends LightningElement {
         }
     }
 
-    checkComuniNonAffidatari(dateDecorrenza){
-        if(this.cityData?.TARIManagingStartDate__c && this.cityData?.TARIManagingEndDate__c && (dateDecorrenza.getTime() < new Date(this.cityData?.TARIManagingStartDate__c).getTime() || dateDecorrenza.getTime() > new Date(this.cityData?.TARIManagingEndDate__c).getTime())){
+    checkComuniNonAffidatari(dateDecorrenza, dateDichiarazione){
+        
+        if(!(this.cityData?.TARIManagingStartDate__c && this.cityData?.TARIManagingEndDate__c && this.cityData?.CutOverEndDate__c)){
             this.showMessage(
                 "Attenzione!",
-                this.cityData.CityNotManagedAlert__c,
+                this.cityData.CityNotManagedAlert__c? this.cityData.CityNotManagedAlert__c : "Comune Non Gestito",
                 "error"
             );
             this.dateDecorrenza=null;
+            this.disabled=false;
+            return true;
+        }
+
+        if( (dateDecorrenza.getTime() < new Date(this.cityData?.TARIManagingStartDate__c).getTime() || dateDecorrenza.getTime() > new Date(this.cityData?.TARIManagingEndDate__c).getTime())){
+            this.showMessage(
+                "Attenzione!",
+                this.cityData.CityNotManagedAlert__c? this.cityData.CityNotManagedAlert__c : "Comune Non Gestito",
+                "error"
+            );
+            this.dateDecorrenza=null;
+            this.disabled=false;
+            return true;
+        }
+        
+        if( dateDichiarazione.getTime() > new Date(this.cityData?.CutOverEndDate__c).getTime()){
+            this.showMessage(
+                "Attenzione!",
+                "La data di contatto è successiva a quella di fine cut-over",
+                "error"
+            );
+            this.dateDichiarazione=null;
             this.disabled=false;
             return true;
         }
@@ -176,7 +199,7 @@ export default class HdtActiveRepentant extends LightningElement {
             this.termsAdministration= terms;
             this.period = data[0];
         }else{
-            console.log("#getTablesConfig -> Data not found! " + JSON.stringify(error));
+            console.log("#getTablesConfig -> Data not found! ");
             this.skipCheck=true;
         }
     }
@@ -273,7 +296,7 @@ export default class HdtActiveRepentant extends LightningElement {
         } else {
             console.log("Periodo Ravvedibile Y");
             this.periodType ="Y";
-            this.calculateMissedDue(terms, declarationDate);
+            //this.calculateMissedDue(terms, declarationDate);
             this.showMessage("Attenzione!", this.period.PopupY__c, " error", "sticky");
         }
     }
@@ -292,9 +315,9 @@ export default class HdtActiveRepentant extends LightningElement {
     finish() {
         const evt = CustomEvent("end_algorithm", {
             detail: {
-                dateX: this.limitDateX? this.getFormattedDate(this.limitDateX) : null,
-                dateY: this.limitDateY? this.getFormattedDate(this.limitDateY) : null,
-                missedDue: this.missedDueDate,
+                dateX: this.limitDateX? this.getFormattedDate(this.limitDateX.setDate(this.limitDateX.getDate() + 1)) : null,
+                dateY: this.limitDateY? this.getFormattedDate(this.limitDateY.setDate(this.limitDatey.getDate() + 1)) : null,
+                //missedDue: this.missedDueDate,
                 period: this.periodType
             }
         });
@@ -318,8 +341,8 @@ export default class HdtActiveRepentant extends LightningElement {
 
         let isPeriodY = event.detail.period=="Y";
 
-        const missingDueAmount = this.template.querySelector("[data-id='MissingDueAmount__c']");
-        if(missingDueAmount)    missingDueAmount.required = event.detail.missedDue? true : false, missingDueAmount.disabled = !isPeriodY; missingDueAmount.value = isPeriodY? missingDueAmount.value : "";        
+        //const missingDueAmount = this.template.querySelector("[data-id='MissingDueAmount__c']");
+        //if(missingDueAmount)    missingDueAmount.required = event.detail.missedDue? true : false, missingDueAmount.disabled = !isPeriodY; missingDueAmount.value = isPeriodY? missingDueAmount.value : "";        
         
         const decline = this.template.querySelector("[data-id='DeclineComputationSupport__c']");
         if(decline) decline.required = isPeriodY;
@@ -327,7 +350,7 @@ export default class HdtActiveRepentant extends LightningElement {
         const refusal = this.template.querySelector("[data-id='CustomerRepentanceRefusal__c']");
         if(refusal) refusal.required=isPeriodY;
 
-        this.template.querySelector("[data-id='BlockOnComputation__c']").value = isPeriodY? "Y" : "";
+        this.template.querySelector("[data-id='BlockOnComputation__c']").value = isPeriodY? "Y" : "N";
     }
 
     getFormattedDate(date){

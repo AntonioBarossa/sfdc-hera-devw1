@@ -1,70 +1,106 @@
 <template>
-    <template if:true={inputParams}>
-        <c-hdt-document-signature-manager params={inputParams} onchangesignmode={handleSignModeChange} disable-sign-mode={disableSignMode} onconfirmdata={handleConfirmData} onpreviewexecuted={handlePreviewExecuted}></c-hdt-document-signature-manager>
+    <template if:false={skipDocumental}>
+        <template if:true={inputParams}>
+            <c-hdt-document-signature-manager params={inputParams} onchangesignmode={handleSignModeChange}
+                disable-sign-mode={disableSignMode} onconfirmdata={handleConfirmData}
+                onpreviewexecuted={handlePreviewExecuted}></c-hdt-document-signature-manager>
+        </template>
     </template>
+    <lightning-record-edit-form record-id={recordId} object-api-name="Case">
+        <div class="slds-section slds-is-open">
+            <h3 if:true={isAmbiente} class="slds-section__title slds-theme_shade">
+                <span class="slds-truncate slds-p-horizontal_small" title="Section Title">Dati Richiesta Ambiente</span>
+            </h3>
+            <div aria-hidden="false" class="slds-section__content">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning-input-field data-id="RequestSource__c" if:true={isAmbiente}
+                            onchange={handleRequestSourceChange} class="slds-size_1-of-3" field-name="RequestSource__c"
+                            variant="label-stacked" required="true"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-8 slds-grow-none">
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning-input-field data-id="ModuleFromContributor__c"
+                            if:true={isVisbleDocumentazioneContribuente} onchange={handleRequestSourceChange}
+                            class="slds-size_1-of-3" field-name="ModuleFromContributor__c" variant="label-stacked"
+                            value={lastDocContrValue}></lightning-input-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </lightning-record-edit-form>
     <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
         <div class="actionsLeft">
         </div>
         <div class="actionsRight">
-            
-            <template if:true={previewExecuted}>
-                <lightning-button
-                class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                variant="brand" type="button" name="next" label={labelConfirm} onclick={handleConfirmButton}>
-            </lightning-button>
+            <!--temp to unlock documental error from E1-->
+            <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                        variant="brand" type="button" name="next" label='Skip Documentale' onclick={handleGoNext}>
+                    </lightning-button>
+            <template if:false={skipDocumental}>
+                <template if:true={previewExecuted}>
+                    <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                        variant="brand" type="button" name="next" label={labelConfirm} onclick={handleConfirmButton}>
+                    </lightning-button>
+                </template>
+
+                <template if:true={showPreviewButton}>
+                    <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                        variant={variantButton} type="button" name="save" label='Preview' onclick={handlePreview}>
+                    </lightning-button>
+                </template>
             </template>
-            
-            <template if:true={showPreviewButton}>
-                <lightning-button
-                class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                variant={variantButton} type="button" name="save" label='Preview' onclick={handlePreview}>
-            </lightning-button>
+            <template if:true={skipDocumental}>
+                <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                        variant="brand" type="button" name="save" label='Conferma Pratica' onclick={handleConfirmNoDocumental}>
+                    </lightning-button>
             </template>
             <template if:true={scriptAvailable}>
-                <lightning-button
-                class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                variant="brand" type="button" name="Avvia Script" label="Avvia Script" onclick={launchScript}>
+                <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                    variant="brand" type="button" name="Avvia Script" label="Avvia Script" onclick={launchScript}>
                 </lightning-button>
             </template>
-        <lightning-button
-            class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-            variant="neutral" type="button" name="previous" label="Indietro" onclick={handleGoBack}>
-        </lightning-button>
-            <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
-                variant={variantButton} type="button" name="cancel" label="Annulla" onclick={handleCancel}>
+            <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                variant="neutral" type="button" name="previous" label="Indietro" onclick={handleGoBack}>
+            </lightning-button>
+            <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right" variant={variantButton}
+                type="button" name="cancel" label="Annulla" onclick={handleCancel}>
             </lightning-button>
         </div>
     </div>
     <template if:true={openModal}>
         <div class="slds-modal slds-modal_medium slds-fade-in-open slds-backdrop">
-          <div class="slds-modal__container">
-            <!--HEADER Section-->
-            <div class="slds-modal__header">
-              <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"
-              variant="bare-inverse" onclick={closeModal} class="slds-modal__close">
-            </lightning-button-icon>
-            
-                <h2 class="slds-modal__title slds-hyphenate">Avvio Script</h2>
-              </div>
-              <!------Body Section-->
-                    <div style=" max-height: 80rem !important;height: 80% !important;" class="slds-modal__content slds-var-p-around_medium slds-is-relative">
-                        
-                        <template if:true={isLoading}>
-                            <lightning-spinner alternative-text="Loading" size="small" variant="brand"></lightning-spinner>
-                        </template>
-                        
-                        <template if:true={flowFound}>
-                            <div style="height: 500px;padding-bottom: 20px;">
-                                <iframe width="100%" height="100%" src={flowUrl}></iframe>
-                            </div>
-                            <lightning-button variant="brand" label="Fine" title="Fine" onclick={closeModal} class="slds-m-right_x-small" disabled={isScriptNotEnded}></lightning-button>
-                        </template>
-    
-                        <template if:false={flowFound}>
-                            <p>Non è disponibile alcuno script.</p>
-                        </template>
-                    </div>
+            <div class="slds-modal__container">
+                <!--HEADER Section-->
+                <div class="slds-modal__header">
+                    <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"
+                        variant="bare-inverse" onclick={closeModal} class="slds-modal__close">
+                    </lightning-button-icon>
+
+                    <h2 class="slds-modal__title slds-hyphenate">Avvio Script</h2>
+                </div>
+                <!------Body Section-->
+                <div style=" max-height: 80rem !important;height: 80% !important;"
+                    class="slds-modal__content slds-var-p-around_medium slds-is-relative">
+
+                    <template if:true={isLoading}>
+                        <lightning-spinner alternative-text="Loading" size="small" variant="brand"></lightning-spinner>
+                    </template>
+
+                    <template if:true={flowFound}>
+                        <div style="height: 500px;padding-bottom: 20px;">
+                            <iframe width="100%" height="100%" src={flowUrl}></iframe>
+                        </div>
+                        <lightning-button variant="brand" label="Fine" title="Fine" onclick={closeModal}
+                            class="slds-m-right_x-small" disabled={isScriptNotEnded}></lightning-button>
+                    </template>
+
+                    <template if:false={flowFound}>
+                        <p>Non è disponibile alcuno script.</p>
+                    </template>
                 </div>
             </div>
+        </div>
     </template>
 </template>

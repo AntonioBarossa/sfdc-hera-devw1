@@ -181,10 +181,10 @@
             <fullName>Bolletta per e-mail</fullName>
             <default>false</default>
         </values>
-        <!--<values>
+        <values>
             <fullName>Bolletta per e-mail %2B Carta</fullName>
             <default>false</default>
-        </values>-->
+        </values>
         <values>
             <fullName>Cartaceo</fullName>
             <default>false</default>
@@ -1201,38 +1201,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HCM_BACK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_BACK_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_CORR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_CRE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_DISCO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_SCORE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_SPORT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_SPORT_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HC_Back Office Condomini</fullName>
             <default>false</default>
         </values>
@@ -1321,6 +1289,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HC_CRM_CH_OUT_CD</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HC_CRM_HD_LTCH</fullName>
             <default>false</default>
         </values>
@@ -1397,23 +1369,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HC_CRM_SIND_LAMI</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HC_CRM_SIND_LAMONT</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>HC_CRM_SIND_LAPRAT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CRM_SIND_LEMURA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CRM_SIND_LEONI</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1430,6 +1390,10 @@
         </values>
         <values>
             <fullName>HC_CRM_SITOGRUPPO_OUT_KN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_SOLAPP_OUT_CV</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1529,6 +1493,22 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HC_CVMBO_SREG_EB_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CVMBO_SREG_EB_QC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CVMBO_SREG_EB_QC_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CVMBO_SREG_EB_SPORT_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HC_CVMBO_SREG_EBT</fullName>
             <default>false</default>
         </values>
@@ -1573,22 +1553,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HC_CVMBO_SREG_EB_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CVMBO_SREG_EB_QC</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CVMBO_SREG_EB_QC_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CVMBO_SREG_EB_SPORT_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HC_LOYALTY E CAMPAIGN</fullName>
             <default>false</default>
         </values>
@@ -1617,15 +1581,47 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HC_Vendita Condomini</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HC_VenditaBusiness</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>HC_Vendita Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HC_VenditaMM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_CORR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_CRE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_DISCO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_SCORE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_SPORT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_SPORT_OUT</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1638,6 +1634,122 @@
         </values>
         <values>
             <fullName>HSPA_TESORERIA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_SIND_LAMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_SIND_LEMURA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_SIND_LEONI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_CC_OUT_CV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SPORT_TS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SPORT_REG_ TS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SIND_SOSEL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SPORT_PD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SPORT_UD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_COSTING E FORECASTING</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRELEG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_MARKETING</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CDO_OM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CDO_OM_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CDO_RECL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CDO_RECL_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CONDOMINI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_ASSISTITI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_TOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_BACKGIALLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_BACKGIALLO_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_BACKARANCIO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_BACKARANCIO_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_PROTOCOLLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_RECLAMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT_TRG_RECLAMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT_TRG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT_TRG_BONUS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT_CON</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1872,6 +1984,29 @@
         </values>
         <values>
             <fullName>FUTURENERGY-Persona fisica</fullName>
+            <default>false</default>
+        </values><values>
+            <fullName>G1 - MMS Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G2 - MMS Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G3 - MMS Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 - MMS Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G5 - MMS Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 - MMS Associazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8906,6 +9041,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CC_KN_coach</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CC_KN_Gruppo_Back</fullName>
             <default>false</default>
         </values>
@@ -8919,14 +9058,6 @@
         </values>
         <values>
             <fullName>CC_KN_Team_Online</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_KN_coach</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_KN_team 16</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8955,6 +9086,10 @@
         </values>
         <values>
             <fullName>CC_KN_team15</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_team 16</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9090,6 +9225,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CC_VK_team10</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CC_VK_team 17</fullName>
             <default>false</default>
         </values>
@@ -9099,10 +9238,6 @@
         </values>
         <values>
             <fullName>CC_VK_team 23</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_team10</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9138,19 +9273,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>FE_SP_CENTRO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FE_SP_CENTRO_Accoglienza</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>FE_SP_CentoGuercino</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>FE_SP_CentoMalamini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FE_SP_CENTRO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FE_SP_CENTRO_Accoglienza</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9187,6 +9322,10 @@
         </values>
         <values>
             <fullName>FO_SP_Top_accoglienza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_sp_Atessa</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9242,6 +9381,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HCM_sp_Macerata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HCM_SP_Mondolfo</fullName>
             <default>false</default>
         </values>
@@ -9258,6 +9401,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HCM_sp_Paglieta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HCM_SP_Pergola</fullName>
             <default>false</default>
         </values>
@@ -9267,6 +9414,10 @@
         </values>
         <values>
             <fullName>HCM_SP_Pesaro_accoglienza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_sp_Pescara</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9294,11 +9445,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HCM_SP_San_Michele</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HCM_SP_San Demetrio ne Vestin</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>HCM_SP_San_Michele</fullName>
+            <fullName>HCM_sp_San Vito Chietino</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9326,6 +9481,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HCM_sp_Tortoreto Lido</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_sp_Trodica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HCM_SP_Urbania</fullName>
             <default>false</default>
         </values>
@@ -9335,34 +9498,6 @@
         </values>
         <values>
             <fullName>HCM_SP_Urbino_accoglienza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_sp_Atessa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_sp_Macerata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_sp_Paglieta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_sp_Pescara</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_sp_San Vito Chietino</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_sp_Tortoreto Lido</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_sp_Trodica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9454,6 +9589,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>MO_SP_Pavullo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>MO_SP_PH_Fanano</fullName>
             <default>false</default>
         </values>
@@ -9475,10 +9614,6 @@
         </values>
         <values>
             <fullName>MO_SP_PH_Sestola</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MO_SP_Pavullo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9566,11 +9701,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>RN_SP_Top</fullName>
+            <fullName>RN_Sp_Novafeltria</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>RN_Sp_Novafeltria</fullName>
+            <fullName>RN_SP_Top</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9579,6 +9714,334 @@
         </values>
         <values>
             <fullName>Team 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_staff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_coach</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_Gruppo_Back</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_MT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_Supporti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team9</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team10</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team11</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team12</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team13</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team14</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team15</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team16</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team17</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team18</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team19</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team20</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team21</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team22</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team23</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team24</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team26</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team27</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team28</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_Team_Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Staff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team11</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team12</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team13</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team14</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team15</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team16</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team17</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team18</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team19</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team20</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CH_CD_Team1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Staff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team9</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team17</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team20</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team22</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team23</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team24</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team26</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team27</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team28</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Helpdesk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_TS_SP_Trieste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_TS_SP_Trieste_Accoglienza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_TS_SP_Muggia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_TS_SP_S Dorligo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_PD_SP_Abano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_PD_SP_Piove di Sacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_PD_SP_Padova</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_PD_SP_Padova_Accoglienza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_UD_SP_S%2EMartino al Tagliamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_UD_SP_Top</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_UD_SP_Top_Accoglienza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_TS_SP_TS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_TS_SP_Gorizia</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10477,6 +10940,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Promessa di Pagamento Ente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Proroga Temporanea</fullName>
             <default>false</default>
         </values>
@@ -10546,6 +11013,10 @@
 		</values>
         <values>
             <fullName>Rimborso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimozione Agevolazione</fullName>
             <default>false</default>
         </values>
         <values>

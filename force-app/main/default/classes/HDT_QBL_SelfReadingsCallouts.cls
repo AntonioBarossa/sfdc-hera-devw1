@@ -2,10 +2,17 @@ public inherited sharing class HDT_QBL_SelfReadingsCallouts implements Queueable
     
     private Case selfReadingsCase;
     private String requestType;
+    private Boolean discardRework;
 
     public HDT_QBL_SelfReadingsCallouts(Case selfReadingsCase, String requestType) {
         this.selfReadingsCase = selfReadingsCase;
         this.requestType = requestType;
+        this.discardRework = false;
+    }
+
+    public HDT_QBL_SelfReadingsCallouts(Case selfReadingsCase, String requestType,Boolean discardRework) {
+        this(selfReadingsCase,requestType);
+        this.discardRework = discardRework;
     }
 
     /*
@@ -33,6 +40,9 @@ public inherited sharing class HDT_QBL_SelfReadingsCallouts implements Queueable
         args.put('transition', transition);
         args.put('action', action);
         args.put('sender', this.selfReadingsCase);
+        if (this.discardRework){
+            args.put('discardRework', true);
+        }
         args.put('parameters', parameters);
         HDT_SRV_SelfReadingsFacade facadeClass = new HDT_SRV_SelfReadingsFacade();
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();

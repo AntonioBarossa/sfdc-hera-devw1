@@ -11,12 +11,12 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>1</fullName>
+                <fullName>F</fullName>
                 <default>false</default>
                 <label>Fabbricato</label>
             </value>
             <value>
-                <fullName>2</fullName>
+                <fullName>T</fullName>
                 <default>false</default>
                 <label>Terreno</label>
             </value>

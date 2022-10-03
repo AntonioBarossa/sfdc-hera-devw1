@@ -6,8 +6,24 @@
         <label>Da contribuente</label>
     </customValue>
     <customValue>
+        <fullName>D&apos;ufficio</fullName>
+        <default>false</default>
+        <label>D&apos;ufficio</label>
+    </customValue>
+    <customValue>
+        <fullName>Da utente</fullName>
+        <default>false</default>
+        <label>Da utente</label>
+    </customValue>
+    <customValue>
+        <fullName>Da gestore</fullName>
+        <default>false</default>
+        <label>Da gestore</label>
+    </customValue>
+    <customValue>
         <fullName>D’ufficio</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>D’ufficio</label>
     </customValue>
     <masterLabel>Provenienza Richiesta</masterLabel>

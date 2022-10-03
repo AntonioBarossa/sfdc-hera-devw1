@@ -488,4 +488,32 @@ public with sharing class HDT_UTL_CampaignMember {
             }
         }
     }
+    @future(callout=true)
+    public static void assignCallDateTime(List<Id> context){
+        List<CampaignMember> updList = [SELECT Id, PhoneNumber__c, Lead.ContactDate__c, Agency__r.Name, Campaign.MacroActivityEasyCIM__r.Name, Campaign.ReitekIntegrationTechnology__c FROM CampaignMember WHERE Id IN :context];
+            
+        for(CampaignMember curCm : updList){
+            String macroactivity = curCm.Campaign.MacroActivityEasyCIM__r.Name;
+            String phonenumber = curCm.PhoneNumber__c;
+            Datetime callDateTime = curCm.Lead.ContactDate__c;
+            String agency=curCm.Agency__r.Name;
+            HDT_WS_Response response = HDT_WS_InvioNumerazioni.callService(macroactivity, phonenumber, callDateTime, curCm.Id, agency);
+            System.debug('@@ futureAssignCallDateTime reitek resp: '+curCm.Id+' '+response);
+        }
+        
+
+    }
+    public static void assignCallDateTimeHandle(List<CampaignMember> context){
+        List<Id> camMemList = new List<Id>();
+        for(CampaignMember curCm : context){
+            camMemList.add(curCm.Id);
+            
+        }
+        List<CampaignMember> updList = [SELECT Id, ReitekSendDate__c FROM CampaignMember WHERE Id IN :camMemList];
+
+        for(CampaignMember curCm : updList) curCm.ReitekSendDate__c = Date.today();
+        HDT_UTL_DatabaseService.updateSObject(updList);
+        assignCallDateTime(camMemList);
+
+    }
 }

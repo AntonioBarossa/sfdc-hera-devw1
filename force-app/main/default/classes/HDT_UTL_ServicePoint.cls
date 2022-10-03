@@ -10,6 +10,7 @@ public with sharing class HDT_UTL_ServicePoint {
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint serviceSrv = new HDT_SRV_ServicePoint();
+   
     
     @AuraEnabled
     public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response){
@@ -24,7 +25,7 @@ public with sharing class HDT_UTL_ServicePoint {
         for(HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_posizioniResponseObject r : response.data.posizioni){
             if(!String.isBlank(r.campo) && mapRes.get(r.campo.toUpperCase()) == null){
                 mapRes.put(r.campo.toUpperCase(),r.valore);
-            }            
+            }         
         }
 
         if(mapRes.get('DEFINIZIONEOFFERTA')!=null && mapRes.get('DEFINIZIONEOFFERTA').containsIgnoreCase('STG_') ){
@@ -165,6 +166,34 @@ public with sharing class HDT_UTL_ServicePoint {
             else if(mapRes.get('DESCRCOMM')== 'Ambiente'){
                 spNew.CommoditySector__c = 'Ambiente';
                 spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Ambiente'); //21/08/2021 - gabriele.rota@webresults.it
+
+                if(response.data.datiCatastali!=null && response.data.datiCatastali.size()>0 ) {
+                    List <LandRegistry__c> landLst = new List<LandRegistry__c>();
+                    try {     
+                        Id idLand = qrRecordType.getRecordTypeIdByName('HDT_RT_DatiCatastali_PraticaTARI');
+                        for(HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_DatiCatastaliResponseObject l : response.data.datiCatastali){
+
+                            LandRegistry__c landReg = new LandRegistry__c();
+                            landReg.DestinationUsage__c = l.destinazione;
+                            landReg.SapProgressive__c = l.progressivo;
+                            landReg.LegalCity__c = l.comuneAmministrativo;
+                            landReg.RegistryCity__c = l.comuneCatastale;
+                            landReg.RegistryCityCode__c = l.codiceComuneCatastale;
+                            landReg.Province__c = l.codiceProvincia;
+                            landReg.UnitType__c = l.tipoUnita;
+                            landReg.Sheet__c = l.foglio;
+                            landReg.ParticleSheet__c = l.particella;
+                            landReg.Title__c = l.qualificaTitolareUtenza;
+                            landReg.RegistrySurface__c = Decimal.valueOf(l.superficeCatastale);
+                            landReg.RecordTypeId = idLand;
+                            landLst.add(landReg);
+                        }
+                        HDT_UTL_DatabaseService.insertSObject(landLst);
+
+                    } catch (Exception e) { 
+                        System.debug(LoggingLevel.DEBUG,' Arricchimaneto LandRegistry Fallito: ' + e.getMessage());
+                    }
+                }
             }
         }
         if(mapRes.get('MOTGARANZIAFORN')==null){            
@@ -231,16 +260,34 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.JointBottomAdhesion__c = dataEnrich.getPicklistValue('ServicePoint__c', 'JointBottomAdhesion__c', mapRes.get('AFPAG_FFUG'));
         }
         if(mapRes.get('AFPAGA_DEP')!=null && !String.isBlank(mapRes.get('AFPAGA_DEP'))){
-            HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
-            spNew.PayPurification__c = dataEnrich.getPicklistValue('ServicePoint__c', 'PayPurification__c', mapRes.get('AFPAGA_DEP'));
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_DEP')))== 0) {
+                spNew.PayPurification__c = 'No - Esente';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_DEP')))== 1) {
+                spNew.PayPurification__c = 'Si - Paga';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_DEP')))== 2) {
+                spNew.PayPurification__c = 'Si - Ridotta';                
+            }
         }
         if(mapRes.get('AFPAGA_FOG')!=null && !String.isBlank(mapRes.get('AFPAGA_FOG'))){
-            HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
-            spNew.PaySewer__c = dataEnrich.getPicklistValue('ServicePoint__c', 'PaySewer__c', mapRes.get('AFPAGA_FOG'));
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_FOG')))== 0) {
+                spNew.PaySewer__c = 'No - Esente';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_FOG')))== 1) {
+                spNew.PaySewer__c = 'Si - Paga';                
+            }
         }
         if(mapRes.get('AFP_DEP355')!=null && !String.isBlank(mapRes.get('AFP_DEP355'))){
-            HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
-            spNew.PurificationInfoOnTheInvoice__c = dataEnrich.getPicklistValue('ServicePoint__c', 'PurificationInfoOnTheInvoice__c', mapRes.get('AFP_DEP355'));
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 0) {
+                spNew.PurificationInfoOnTheInvoice__c = 'No - Esente';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 1) {
+                spNew.PurificationInfoOnTheInvoice__c = 'Si - Paga';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 2) {
+                spNew.PurificationInfoOnTheInvoice__c = 'Si - Ridotta';                
+            }
         }
         if(mapRes.get('TRATAUNICA')!=null && !String.isBlank(mapRes.get('TRATAUNICA'))){
             spNew.SingleInstallmentOperating__c = mapRes.get('TRATAUNICA');
@@ -260,11 +307,11 @@ public with sharing class HDT_UTL_ServicePoint {
         if(mapRes.get('AQCNS_ANNO')!=null && !String.isBlank(mapRes.get('AQCNS_ANNO'))){         
             spNew.AnnualConsumption__c = integer.valueOf(Decimal.valueOf(mapRes.get('AQCNS_ANNO')));
         }
-        if(mapRes.get('TFNCE0000')!=null){         
+        if(mapRes.get('TFNCE0000')!=null && !String.isBlank(mapRes.get('TFNCE0000'))){      
             spNew.NumberOfTARIMembers__c = (mapRes.get('TFNCE0000'));
         } 
-        if(mapRes.get('TFNCDC000')!=null){         
-            spNew.NumberOfTARIMembers__c = (mapRes.get('TFNCDC000'));
+        if(mapRes.get('TFNCDC0000')!=null && !String.isBlank(mapRes.get('TFNCDC0000'))){    
+            spNew.NumberOfTARIMembers__c = (mapRes.get('TFNCDC0000'));
         }        
         if(mapRes.get('AFNUM_COMP')!=null && !String.isBlank(mapRes.get('AFNUM_COMP'))){         
             spNew.NumberOfCommunityMembers__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFNUM_COMP')));
@@ -279,21 +326,21 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUND')));
         }
         if(mapRes.get('AFUNDA')!=null && !String.isBlank(mapRes.get('AFUNDA'))){         
-            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDA')));
+            spNew.AgriculturalHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDA')));
         }
         if(mapRes.get('AFUNDC')!=null && !String.isBlank(mapRes.get('AFUNDC'))){         
-            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDC')));
+            spNew.CommercialHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDC')));
         }
         if(mapRes.get('AFUNDI')!=null && !String.isBlank(mapRes.get('AFUNDI'))){         
-            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDI')));
+            spNew.IndustrialHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDI')));
         }
         if(mapRes.get('AFUNDZ')!=null && !String.isBlank(mapRes.get('AFUNDZ'))){         
-            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDZ')));
+            spNew.ZootechnicalHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDZ')));
         }
         if(mapRes.get('AFBI_DIAM1')!=null && !String.isBlank(mapRes.get('AFBI_DIAM1'))){         
             spNew.HydrantMouthsNumberA__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFBI_DIAM1')));
         }
-        if(mapRes.get('AFBI_DIAM2')!=null && !String.isBlank(mapRes.get('AFBI_DAFBI_DIAM2IAM1'))){         
+        if(mapRes.get('AFBI_DIAM2')!=null && !String.isBlank(mapRes.get('AFBI_DIAM2'))){         
             spNew.HydrantMouthsNumberB__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFBI_DIAM2')));
         }
         if(mapRes.get('AF_BOC_IDR')!=null && !String.isBlank(mapRes.get('AF_BOC_IDR'))){         
@@ -394,7 +441,7 @@ public with sharing class HDT_UTL_ServicePoint {
             tipoFornitura = tipoImpianto != null && tipoImpianto.equalsIgnoreCase('13A0-Usi di Abitazione BT') ? 'Domestico' : 'Non Domestico';
         }
         else if(servizio.equalsIgnoreCase('Acqua')){
-            tipoFornitura = tipoImpianto != null && tipoImpianto.equalsIgnoreCase('1101-Domestico') ? 'Uso domestico' : 'Uso diverso da domestico';    
+            tipoFornitura = tipoImpianto != null && tipoImpianto.equalsIgnoreCase('1101-Domestico') ? 'Domestico' : 'Uso diverso da domestico';    
         }
         else {
             String fields = 'Id, SupplyType__c';

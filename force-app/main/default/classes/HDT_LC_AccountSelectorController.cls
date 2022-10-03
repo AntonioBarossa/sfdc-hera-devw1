@@ -103,7 +103,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 			if( queryString.contains('@') ){
 				//mail
 				result=getContactsAndLeads(result, queryString,'Email', recordId);
-			} else if( queryString.length() == 16 ){
+			} else if( queryString.length() == 18 ){
 				//CF
 				result=getContactsAndLeads(result, queryString,'FiscalCode__c', recordId);
 			} else { //Name

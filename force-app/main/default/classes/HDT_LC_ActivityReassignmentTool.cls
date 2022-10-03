@@ -16,7 +16,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         'Staff',
         'Supporto agenzie',
         'Supporto GDA',
-        'Back office Vendita ',
+        'Back office Vendita',
         'Back office Teleselling'
     };
 
@@ -29,7 +29,8 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         for(AggregateResult result : [SELECT WorkGroup__c, Agency2__c FROM Queue__c WHERE WorkGroup__c LIKE :queryString WITH SECURITY_ENFORCED GROUP BY WorkGroup__c, Agency2__c]) {
             results.add(new Map<String,String>{
                 'name' => (String) result.get('WorkGroup__c'),
-                'agency' => (String) result.get('Agency2__c')
+                'agency' => (String) result.get('Agency2__c'),
+                'displayname' => (String) result.get('WorkGroup__c') + ' - ' +(String) result.get('Agency2__c')
             });
         }
 

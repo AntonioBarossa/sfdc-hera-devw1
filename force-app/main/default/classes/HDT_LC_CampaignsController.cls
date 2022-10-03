@@ -473,4 +473,18 @@ public inherited sharing class HDT_LC_CampaignsController {
         }
         return null;
     }
+
+    @AuraEnabled
+    public static  Boolean getCurrUserRole(){
+
+        String roleId=UserInfo.getUserRoleId();
+        List <UserRole> currUserRole=new List <UserRole>();
+        if(String.isNotBlank(roleId)){
+            currUserRole=[SELECT Id, Name FROM UserRole WHERE Id=:roleId LIMIT 1];
+            if (currUserRole[0].Name.containsIgnoreCase('Front')) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

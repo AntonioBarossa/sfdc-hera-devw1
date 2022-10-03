@@ -29,6 +29,9 @@
             <layoutItems>
                 <field>SalesCompany__c</field>
             </layoutItems>
+            <layoutItems>
+                <field>ToPublishDate__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -89,11 +92,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>EditDraftKnowledgeArticleVersion</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>DeleteArchiveKnowledgeArticleVersion</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>1</sortOrder>
@@ -112,6 +110,11 @@
             <actionName>DeleteDraftKnowledgeArticleVersion</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>4</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>EditDraftKnowledgeArticleVersion</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>SubmitKnowledgeArticleVersionForApproval</actionName>

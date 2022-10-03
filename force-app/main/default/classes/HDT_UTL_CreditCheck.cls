@@ -130,7 +130,10 @@ public with sharing class HDT_UTL_CreditCheck {
 
     public static void updateOrder(List<HDT_WRP_DataForUpdate> ordersData){
         List<Order> ordersToUpdate = new List<Order>();
+        
         for (HDT_WRP_DataForUpdate item : ordersData){
+            item.outcomeDescription = (String.isNotBlank(item.outcomeDescription) && item.outcomeDescription.length() > 255) ?
+            item.outcomeDescription.subString(0,255) : item.outcomeDescription;
             Order o = new Order(Id = item.orderId, CreditCheckDescription__c = item.outcomeDescription, CreditCheckInProgress__c = false);
             if (item.outcoming != null && item.outcoming){
                 o.OutgoingCreditCheckResult__c = item.outcome;

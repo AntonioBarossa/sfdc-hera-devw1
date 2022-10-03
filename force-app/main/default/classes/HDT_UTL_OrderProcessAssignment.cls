@@ -114,7 +114,24 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
      */
     public static List<ProcessMatrix__c> initProcesses(){
 
-        return [SELECT CasualCode__c,Commodity__c,ContractStatus__c,CreatedById,ExistActivityDatiDiscordanti__c,ExistActivitySwitchRipristinatorio__c,IsAmendment__c,IsChangeUse__c,isOwnAccount__c,IsReseller__c,IsSameAccount__c,isSTG__c,MarketOrigin__c,Name,OngoingSwitchOut__c,OwnerId,PlugPresence__c,PowerChange__c,ProcessName__c,RecordTypeName__c FROM ProcessMatrix__c WITH SECURITY_ENFORCED];
+        return [SELECT CasualCode__c,
+            ProcessName__c,
+            RecordTypeName__c,
+            Commodity__c,
+            ContractStatus__c,
+            ExistActivityDatiDiscordantiNew__c,
+            ExistActivitySwitchRipristinatorioNew__c,
+            IsAmendment__c,
+            IsChangeUseNew__c,
+            isOwnAccountNew__c,
+            IsResellerNew__c,
+            IsSTGNew__c,
+            MarketOrigin__c,
+            OngoingSwitchOutNew__c,
+            PlugPresence__c,
+            PowerChange__c
+            FROM ProcessMatrix__c 
+            WITH SECURITY_ENFORCED];
 
         /*          return new List<HDT_WRP_Process>{
             new HDT_WRP_Process('Subentro Gas', 'HDT_RT_Subentro','A01', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, false, false),
@@ -180,48 +197,64 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         List<ProcessMatrix__c> availableProcesses = new List<ProcessMatrix__c>();
         List<SObject> toUpdateList = new List<SObject>();
 
-        String isOwnAccount = ord.AccountId == ord.ServicePoint__r.Account__c ? 'Si' : 'No';
+        /* Calcolo Parametri Processo */
+        String sapContractStatus = ord.ServicePoint__r.SapContractStatus__c != null ? ord.ServicePoint__r.SapContractStatus__c : 'null';
+        String isStg = ord.isSTG__c ? 'Si' : 'No';
+        String marketOrigin = ord.MarketOrigin__c;
         Boolean plugPresence = ord.ServicePoint__r.PlugPresence__c == null ? true : (ord.ServicePoint__r.PlugPresence__c.containsIgnoreCase('Si'));
-        Boolean isChangeUse = ord.SBQQ__Quote__r.AllowChangeUse__c;
+        String isOwnAccount = ord.AccountId == ord.ServicePoint__r.Account__c ? 'Si' : 'No';
+        String isReseller = ord.ServicePoint__r.isReseller__c ? 'Si' : 'No';
+        String isChangeUse = ord.SBQQ__Quote__r.AllowChangeUse__c ? 'Si' : 'No';
+        String isSwitchInRipr = isSwitchInRipristinatorio(ord) ? 'Si' : 'No';
+        String datiDiscordanti = 'No';
+        String isWinback = ord.IsWinback__c ? 'Si' : 'No';
         Boolean isAmendmentAllowed = ord.SBQQ__Quote__r.AmendmentAllowed__c;
-        Boolean isReseller = ord.ServicePoint__r.isReseller__c;//ord.Account.CompanyOwner__c.equalsIgnoreCase('reseller') || ord.ServicePoint__r.isReseller__c;
-        //isReseller=false;
-
-        String status = ord.ServicePoint__r.SapContractStatus__c != null ? ord.ServicePoint__r.SapContractStatus__c : 'null';
-        Boolean isSwitchInRipr = isSwitchInRipristinatorio(ord);
         Boolean isPowerChange = isAttivazioneConModifica(ord);
-
-        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isOwnAccount: ' + isOwnAccount);
-        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - plugPresence: ' + plugPresence);
-        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isChangeUse: ' + isChangeUse);
-        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - marketOrigin: ' + ord.MarketOrigin__c);
-        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isSwitchInRipristinatorio: ' + isSwitchInRipr);
-        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAttivazioneConModifica: ' + isPowerChange);
-        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - commodity: ' + ord.ServicePoint__r.RecordType.DeveloperName);
-        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - contractStatus: ' + status);
-        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAmendmentAllowed: ' + isAmendmentAllowed);
-        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isWinBack: ' + ord.IsWinback__c);
-        system.debug(LoggingLevel.DEBUG, 'getAvailableProcesses - isReseller: ' +isReseller);
-
+		String commodity = ord.ServicePoint__r.CommoditySector__c;
+        
         for (ProcessMatrix__c process : allProcesses) {
-            if (
-                //process.meterStatus.contains(ord.ServicePoint__r.MeterStatus__c) && 
-                process.marketOrigin__c.contains(ord.MarketOrigin__c) // || process.marketOrigin__c.isEmpty())
-                && (process.plugPresence__c == plugPresence || process.commodity__c.containsIgnoreCase('Gas') )//aggiustamento plug presence gas
-                && (process.isOwnAccount__c == isOwnAccount || process.isOwnAccount__c == null || (process.processName__c.containsIgnoreCase('Voltura Ele') && ord.ServicePoint__r.Account__c == null))
-                && process.isChangeUse__c == isChangeUse 
-                && process.ExistActivitySwitchRipristinatorio__c == isSwitchInRipr
-                && process.PowerChange__c == (isPowerChange && !process.processName__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))
-                && process.isSTG__c == ord.isSTG__c
-                && process.ContractStatus__c.containsIgnoreCase(status)
-                && (process.commodity__c == ord.ServicePoint__r.CommoditySector__c || process.commodity__c == null)
-                && process.isAmendment__c == isAmendmentAllowed
-                && process.OngoingSwitchOut__c == (ord.IsWinback__c && !process.processName__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))
-                && process.isReseller__c == isReseller
+            if(commodity == 'Ambiente' && process.Commodity__c == 'Ambiente'){
+                availableProcesses.add(process);
+            }     
+            else if(ord.RateCategory__c == 'APSCARPRO0' && process.ProcessName__c == 'Voltura - Subentro Scarico produttivo')
+            {
+                availableProcesses.add(process);
+            }
+            else if(
+                    /* Controllo Stato Contratto */
+                    (process.ContractStatus__c.containsIgnoreCase(sapContractStatus))
+                    /* Controllo IsStg */
+                &&  (process.isSTGNew__c == isStg || process.isSTGNew__c.equalsIgnoreCase('All'))
+                    /* Controllo Market Origin */
+                &&  (process.marketOrigin__c.contains(marketOrigin))
+                    /* Controllo Presenza Allaccio */
+                &&  (process.plugPresence__c == plugPresence || process.commodity__c.containsIgnoreCase('Gas'))
+                    /* Controllo Stesso Account */
+                &&  (process.isOwnAccountNew__c == isOwnAccount || process.isOwnAccountNew__c.equalsIgnoreCase('All') || (process.processName__c.containsIgnoreCase('Voltura Ele') && ord.ServicePoint__r.Account__c == null))
+                    /* Controllo Reseller */
+                &&  (process.isResellerNew__c == isReseller || process.isResellerNew__c.equalsIgnoreCase('All'))
+                    /* Controllo Cambio Uso */
+                &&  (process.isChangeUseNew__c == isChangeUse || process.isChangeUseNew__c.equalsIgnoreCase('All'))
+                    /* Controllo Switch Ripristinatorio */
+                &&  (process.ExistActivitySwitchRipristinatorioNew__c == isSwitchInRipr || process.ExistActivitySwitchRipristinatorioNew__c.equalsIgnoreCase('All'))
+                    /* Controllo Dati Discordanti */
+                &&  (process.ExistActivityDatiDiscordantiNew__c == datiDiscordanti || process.ExistActivityDatiDiscordantiNew__c.equalsIgnoreCase('All'))
+                    /* Controllo WinBack */
+                &&  (process.OngoingSwitchOutNew__c == isWinback || process.OngoingSwitchOutNew__c.equalsIgnoreCase('All'))
+                    /* Controllo Variazione Potenza */
+                &&  (process.PowerChange__c == isPowerChange && !process.processName__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))
+                    /* Controllo Commodity */
+                &&  ((process.commodity__c == commodity || process.commodity__c == null))
+                    /* Controllo Amendment */
+                &&  (process.isAmendment__c == isAmendmentAllowed)
             ) {
                 if(process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_TemporaneaNuovaAtt'))
                 {
                     process.CasualCode__c = getTempNewActivationCode();
+                }
+                if(process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_SubentroAmbiente') && ord.ServicePoint__r.RateCategory__c != null && ord.RateCategory__c != null && ord.ServicePoint__r.RateCategory__c.containsIgnoreCase('TATUDRES01') && ord.ServicePoint__r.RateCategory__c != ord.RateCategory__c )
+                {
+                    process.CasualCode__c = 'RI6';
                 }
                 availableProcesses.add(process);
             }
@@ -300,7 +333,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
 
         if (!activityList.isEmpty() 
             && !ord.SBQQ__Quote__r.AmendmentAllowed__c 
-            && !ord.SBQQ__Quote__r.AllowChangeUse__c 
+            && !ord.SBQQ__Quote__r.AllowChangeUse__c
             /*&& !isCambioOfferta(ord)*/) {
                 result = true;
         }
@@ -365,12 +398,32 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         String res = '';
         List<String> listRes = new List<String>();
         List<SaleServiceItem__c> transitionlist =saleItQr.getRecordsBySaleIdFilter(sale.id);
+        Set<String> energySet = new Set<String>{'Energia Elettrica', 'Gas'};
+        Set<String> nonEnergySet = new Set<String>{'Acqua', 'Ambiente'};
+        Boolean isMms = sal.Account__r.customerMarking__c.containsIgnoreCase('MMS');
+        Boolean checkEnergy = false;
+        Boolean checkNonEnergy = true;
         System.debug('*****MAVUOIANNA:'+ transitionlist);
         if(sal.isTransition__c){
                 //Map<String,
             // String sub = 'Subentro';
             boolean r = false;
             for(SaleServiceItem__c ser :transitionlist ){
+                if(isMms)
+                {
+                    if(energySet.contains(ser.ServicePoint__r.CommoditySector__c))
+                    {
+                        checkEnergy = true;
+                    }
+                    else if(nonEnergySet.contains(ser.ServicePoint__r.CommoditySector__c))
+                    {
+                        checkNonEnergy = true;
+                    }
+                    if(checkEnergy && checkNonEnergy)
+                    {
+                        return 'MmsMisto';
+                    }
+                }	
                 if((ser.ServicePoint__r.PlugPresence__c== 'NO')||(ser.ServicePoint__r.PowerRequested__c != null && (ser.ServicePoint__r.PowerRequested__c!= ser.ServicePoint__r.PowerContractual__c))){
                 //Sale__c s = new Sale__c(Id=sale.Id);
                     s.isTransition__c=true;
@@ -395,6 +448,21 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 if(ser.ServicePoint__r.CommoditySector__c == 'Gas'){
                     spListId.add(ser.ServicePoint__c);
                 }
+                if(isMms)
+                {
+                    if(energySet.contains(ser.ServicePoint__r.CommoditySector__c))
+                    {
+                        checkEnergy = true;
+                    }
+                    else if(nonEnergySet.contains(ser.ServicePoint__r.CommoditySector__c))
+                    {
+                        checkNonEnergy = true;
+                    }
+                    if(checkEnergy && checkNonEnergy)
+                    {
+                        return 'MmsMisto';
+                    }
+                } 
             }
             List<ServicePoint__c> spList = srQr.getRecordByIdList(spListId,'id,CommoditySector__c,SupplyCity__c,distributor__r.code__c');
             Map<String,HDT_WRP_RemiUbd> mapRemiCode = new Map<String,HDT_WRP_RemiUbd>();

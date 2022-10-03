@@ -140,14 +140,12 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         /**Execute the check and if its false creates the activity*/
         if(!(Boolean)ammissibilityCheckMap.get('result'))
         {
-            wrts_prcgvr__Activity__c activity = voltureChangeUtils.createActivity(ammissibilityCheckTemplate);
+            //wrts_prcgvr__Activity__c activity = voltureChangeUtils.createActivity(ammissibilityCheckTemplate);
+            wrts_prcgvr__Activity__c activity = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName(currentOrder.Id,activityType,'Order');
             if(activity != null)
             {
-                activity.Type__c = activityType;
                 activity.OpeningNote__c = (String)ammissibilityCheckMap.get('note');
                 activity.wrts_prcgvr__Description__c = (String)ammissibilityCheckMap.get('message');
-                activity.Order__c = currentOrder.Id;
-                activity.wrts_prcgvr__IsRequired__c = true;
                 HDT_UTL_DatabaseService.insertSObject(activity);
             }
         }
