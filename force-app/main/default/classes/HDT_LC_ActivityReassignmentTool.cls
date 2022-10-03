@@ -16,7 +16,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         'Staff',
         'Supporto agenzie',
         'Supporto GDA',
-        'Back office Vendita ',
+        'Back office Vendita',
         'Back office Teleselling'
     };
 

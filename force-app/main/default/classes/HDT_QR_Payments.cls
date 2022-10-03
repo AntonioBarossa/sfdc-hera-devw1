@@ -32,6 +32,8 @@ public inherited sharing class HDT_QR_Payments {
         DocumentPaymentMethod__c,
         IbanABI__c,
         BeneficiaryAccount__r.Name,
+        BankAccountSignatoryFirstName__c,
+        BankAccountSignatoryLastName__c,
         BillingProfile__r.ContractAccountCode__c,
         Type,
         CityOrInstitution__c,
