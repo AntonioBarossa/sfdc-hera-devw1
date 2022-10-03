@@ -246,6 +246,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             title: 'Attenzione',
             message: message,
             variant: 'error',
+            mode:'sticky',
         });
         this.dispatchEvent(event);
     }
@@ -280,6 +281,10 @@ export default class HdtAdvancedSearch extends LightningElement {
     }     
 
     addValuesToDatiCatastaliList() {
+        console.log('****Sono nella funcion****');
+        let errorMessage = [];
+        let concatErrorFields = '';
+        console.log('****Sono dopo le variabili****');
         this.searchInputValue = '';
         if(this.registryCityValue){
             this.datiCatastali.RegistryCity = this.registryCityValue;
@@ -306,29 +311,27 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.searchInputValue += this.subalternValue + ' ';
         }
         if(this.registryCityValue == null && this.registryCityCodeValue == null || this.registryCityValue == '' && this.registryCityCodeValue == '' || this.registryCityValue == null && this.registryCityCodeValue == '' || this.registryCityValue == '' && this.registryCityCodeValue == null){
-            this.showToast("Attenzione! Inserire almeno un valore tra Comune catastale e Codice comune catastale");
+            concatErrorFields = concatErrorFields.concat('Comune catastale o in alternativa Codice comune catastale, ');
         }
-        else if(this.sheetValue == null || this.sheetValue == ''){
-            this.showToast("Attenzione! Il campo Foglio è obbligatorio");
+        if(this.sheetValue == null || this.sheetValue == ''){
+            concatErrorFields = concatErrorFields.concat('Foglio, ');
         }
-        else if(this.particleSheetValue == null || this.particleSheetValue == ''){
-            this.showToast("Attenzione! Il campo Particella è obbligatorio");
+        if(this.particleSheetValue == null || this.particleSheetValue == ''){
+            concatErrorFields = concatErrorFields.concat('Particella');
         }
-        else{
+        if (concatErrorFields.charAt(concatErrorFields.length - 2) == ',') {
+            concatErrorFields = concatErrorFields.slice(0, -2);
+          }
+        
+        if (concatErrorFields !== '') {
+            errorMessage.push('Per poter confermare popolare i seguenti campi: ' + concatErrorFields);
+        }        
+        if(errorMessage.length === 0){
             this.closeModalDatiCatastali();
-        }
-        console.log('this.datiCatastali' + JSON.stringify(this.datiCatastali) );
-/*         let newVariable = (this.datiCatastali).join();
-        let result = newVariable.replace(/,/g,' ');
-        this.searchInputValue = result; */
-        console.log('this.searchInputValue' + this.searchInputValue );
+        }else{
+            this.showToast(errorMessage[0]);
+        }       
         this.submitButtonStatus = false;
-/*         this.registryCityValue = '';
-        this.registryCityCodeValue = '';
-        this.urbanSectionValue = '';
-        this.sheetValue = '';
-        this.particleSheetValue = '';
-        this.subalternValue =''; */
     } 
 
     closeModal() {

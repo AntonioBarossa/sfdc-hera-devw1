@@ -95,6 +95,16 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		return body;
 	}
 
+	public static void traceRequest(Map<String,String> resultMap, String body,String recordId){
+		String code = resultMap.get('code');
+		String result = resultMap.get('result');
+		Boolean enableTrace =  String.isNotBlank(System.Label.HDT_DocTraceEnable) && 'Y'.equalsIgnoreCase(System.Label.HDT_DocTraceEnable)?true:false;
+		if(enableTrace && String.isNotBlank(code) && String.isNotBlank(result) && result!='000'){
+			ContentVersion cv = HDT_UTL_DocumentalManagement.createContentVersion(body,'PayloadDocumentale','JSON');
+			HDT_UTL_DocumentalManagement.createContentLink(cv.Id,recordId);
+		}
+	}
+
 	public static String generateGetAttachmentRequest(String recordId){
 		if (String.isBlank(recordId)) {
 			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c per visualizzare il documento.');
