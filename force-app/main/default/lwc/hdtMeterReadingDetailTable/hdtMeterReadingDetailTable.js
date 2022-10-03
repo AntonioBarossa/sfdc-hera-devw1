@@ -70,8 +70,9 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
                     this.loadData = true;
 
                 } else {
+                    console.log('>>> result error');
                     this.meterReadingError = true;
-                    this.meterReadingErrorMessage = data.message;
+                    this.meterReadingErrorMessage = result.message;
                 }
                 //this.dataLoaded();
             }

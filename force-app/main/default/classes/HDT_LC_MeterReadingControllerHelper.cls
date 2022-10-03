@@ -121,7 +121,9 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         try{
 
             String code;
-            if(enableNewService()){
+            Boolean trbEnable = enableNewService();
+
+            if(trbEnable){
                 if(contractService.equalsIgnoreCase('Energia Elettrica')){
                     code = 'meterReading_ele';
                 } else if(contractService.equalsIgnoreCase('Gas')){
@@ -131,7 +133,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
                 code = 'meterReading';
             }
 
-            HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = setHttpObject(code);
+            HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = setHttpObject(code, trbEnable);
 
             if(httpObj == null){
                 meterReadingObj.success = false;
@@ -142,14 +144,26 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             List<Contract> contractRecord;
             contractRecord= HDT_QR_MeterReading.getContract(contractRecord, contractCode);
 
-            String body = generateBody(contractRecord[0], modality);
+            String body = generateBodyOrParameters(contractRecord[0], modality);
             System.debug(LoggingLevel.DEBUG, '>>> body obj > ' + body);
+
+            if(trbEnable){
+                httpObj.endPoint += body;
+                body = null;
+                System.debug(LoggingLevel.DEBUG, '>>> httpObj.endPoint > ' + httpObj.endPoint);
+            }
 
             HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
      
             if(!responseCtrl.success){
                 meterReadingObj.success = false;
                 meterReadingObj.message = responseCtrl.message;
+                return meterReadingObj;
+            }
+
+            if(trbEnable){
+                meterReadingObj.success = true;
+                meterReadingObj.data = responseCtrl.body.replaceAll('Response', 'data');
                 return meterReadingObj;
             }
 
@@ -188,37 +202,42 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         return meterReadingObj;
     }
 
-    public static String generateBody(Contract contr, String modality){
+    public static String generateBodyOrParameters(Contract contr, String modality){
         String body;
-        JSONGenerator jsonGen = JSON.createGenerator(true);
-        jsonGen.writeStartObject();
 
         if(enableNewService()){
+
+            //body = 'pod=pariatur Duis&dataInizio=1963-10-26&dataFine=1963-10-26&modalita=FULL';
+            body = '?';
+
             if(contr.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Energia Elettrica')){
-                jsonGen.writeStringField('pod', 'xyz');
+                body += 'pod=';
             } else if(contr.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Gas')){
-                jsonGen.writeStringField('pdr', '');
+                body += 'pdr=';
             }
+            body += contr.ServicePoint__r.ServicePointCode__c;
+
             Date d = Date.today();
             String currentYear = String.valueOf(d.year());
-            jsonGen.writeStringField('dataInizio', '01/01/' + currentYear);
-            jsonGen.writeStringField('dataFine', '31/12/' + currentYear);
-            jsonGen.writeStringField('commodity', contr.ServicePoint__r.CommoditySector__c);
-            jsonGen.writeStringField('modalita', modality); //-- DEFAULT - FULL
+            body += '&dataInizio=' + currentYear + '-01-01';
+            body += '&dataFine=' + currentYear + '-12-31';
+            //body += '&commodity' + contr.ServicePoint__r.CommoditySector__c;
+            body += '&modalita=' + modality; //-- DEFAULT - FULL
         } else {
+            JSONGenerator jsonGen = JSON.createGenerator(true);
+            jsonGen.writeStartObject();
             jsonGen.writeStringField('codiceContratto', contr.SAPContractCode__c);
             jsonGen.writeStringField('codicePod', '');
             jsonGen.writeStringField('dataFineLettura', Datetime.now().format('dd/MM/yyyy'));
             jsonGen.writeStringField('letturaReale', '');
+            jsonGen.writeEndObject();
+            body = jsonGen.getAsString();
         }
-
-        jsonGen.writeEndObject();
-        body = jsonGen.getAsString();
 
         return body;
     }
 
-    public static HDT_WS_MulesoftCaller.HDT_WRP_HttpObj setHttpObject(String code){
+    public static HDT_WS_MulesoftCaller.HDT_WRP_HttpObj setHttpObject(String code, Boolean trbEnable){
 
         HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
         httpObj.headersMap = new Map<String, String>();
@@ -230,8 +249,16 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
             httpObj.endPoint = enrichmentbMetadataList[0].Credential__c;
             //httpObj.headersMap.put('Authorization', enrichmentbMetadataList[0].Authorization__c);
-            httpObj.httpMethod = 'POST';
-            httpObj.headersMap.put('Content-Type', 'application/json');
+
+            if(trbEnable){
+                httpObj.httpMethod = 'GET';
+                httpObj.headersMap.put('Accept', 'application/json');
+                httpObj.headersMap.put('CLIENT_ID', 'clientid');
+                httpObj.headersMap.put('CLIENT_SECRET', 'clientsecret');
+            } else {
+                httpObj.httpMethod = 'POST';
+                httpObj.headersMap.put('Content-Type', 'application/json');
+            }
 
         } else {
             httpObj = null;
