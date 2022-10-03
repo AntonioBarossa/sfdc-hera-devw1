@@ -54,7 +54,7 @@ public with sharing class HDT_UTL_LandRegistry {
     @AuraEnabled(continuation=true cacheable=true)
     public static Object getVistaDatiCatastali(Id recordId){
         try {            
-            Map<String,Object> request;
+            Map<String,Object> request = new Map<String,Object>();
             String namedCredential = 'MulesoftBasePath';
             String path = '/data-enrichment/cadastral-data';
 
@@ -74,7 +74,7 @@ public with sharing class HDT_UTL_LandRegistry {
             req.setEndpoint('Callout:'+namedCredential+path);
             req.setMethod('GET');
 
-            System.debug('request: ' + JSON.serializePretty(req));
+            System.debug('request: ' + req);
 
             Continuation cnt = new Continuation(120);
             cnt.continuationMethod='getVistaDatiCatastaliResponse';
@@ -92,19 +92,23 @@ public with sharing class HDT_UTL_LandRegistry {
     @AuraEnabled(cacheable=true)
     public static Object getVistaDatiCatastaliResponse(List<String> labels, Object state) {
         VistaDatiCatastaliWrapper result = new VistaDatiCatastaliWrapper();
-
+        
         HttpResponse response = Continuation.getResponse(labels[0]);
-        HDT_WS_VistaDatiCatastaliResponse parsedResp = (HDT_WS_VistaDatiCatastaliResponse)JSON.deserialize(response.getBody(), HDT_WS_VistaDatiCatastaliResponse.class);
-        result.response = parsedResp;
+        System.debug('response: ' + response);
+        result.status = response.getStatus();
+
+        if('success'.equalsIgnoreCase(response.getStatus()) ){
+            HDT_WS_VistaDatiCatastaliResponse parsedResp = (HDT_WS_VistaDatiCatastaliResponse)JSON.deserialize(response.getBody(), HDT_WS_VistaDatiCatastaliResponse.class);
+            result.response = parsedResp;
+        }
         
         return result;
     }
 
     class VistaDatiCatastaliWrapper{
         @AuraEnabled
-        public string recordName;
+        public string status;
         @AuraEnabled
         public HDT_WS_VistaDatiCatastaliResponse response;
-
     }
 }
