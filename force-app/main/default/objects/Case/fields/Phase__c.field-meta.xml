@@ -676,6 +676,11 @@
                 <label>Lettura non inserita in SAP</label>
             </value>
             <value>
+                <fullName>Mancata risposta</fullName>
+                <default>false</default>
+                <label>Mancata risposta</label>
+            </value>
+            <value>
                 <fullName>Motore VAS KO</fullName>
                 <default>false</default>
                 <label>Motore VAS KO</label>
