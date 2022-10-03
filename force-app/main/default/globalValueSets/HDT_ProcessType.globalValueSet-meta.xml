@@ -351,6 +351,11 @@
         <label>Gestione Bonus Sociale - GAS</label>
     </customValue>
     <customValue>
+        <fullName>Gestione Bonus Sociale - ACQ</fullName>
+        <default>false</default>
+        <label>Gestione Bonus Sociale - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Gestione Calamità - EE</fullName>
         <default>false</default>
         <label>Gestione Calamità - EE</label>
@@ -409,6 +414,11 @@
         <fullName>Inversione del contatore - GAS</fullName>
         <default>false</default>
         <label>Inversione del contatore - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Inversione del contatore - ACQ</fullName>
+        <default>false</default>
+        <label>Inversione del contatore - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Mancata telelettura/Lettura - EE</fullName>

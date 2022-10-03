@@ -676,7 +676,7 @@
         <defaultConnectorLabel>In Lavorazione</defaultConnectorLabel>
         <rules>
             <name>Elaborazione_Manuale</name>
-            <conditionLogic>1 OR 2</conditionLogic>
+            <conditionLogic>1 OR 2 OR (3 AND 4)</conditionLogic>
             <conditions>
                 <leftValueReference>Query_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -689,6 +689,20 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Errore di Lettura</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Inversione del Contatore</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -719,6 +733,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Inversione del Contatore</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.CommodityFormula__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -992,6 +1013,7 @@
             <label>Riprendi Processo Tari</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>ConvertTipoDocumentoToUppercase</name>
         <dataType>String</dataType>
