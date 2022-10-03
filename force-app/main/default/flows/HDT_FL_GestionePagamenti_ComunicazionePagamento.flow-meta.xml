@@ -55,15 +55,59 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Titolare_Conto</name>
-        <label>Assegna Titolare Conto</label>
-        <locationX>781</locationX>
-        <locationY>6470</locationY>
+        <name>Assegna_Titolare_Conto_From_Case</name>
+        <label>Assegna Titolare Conto From Case</label>
+        <locationX>50</locationX>
+        <locationY>1934</locationY>
         <assignmentItems>
-            <assignToReference>BeneficiaryAccount.recordId</assignToReference>
+            <assignToReference>NomeIntestatario_CC</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>GetCaseAggiornato.Account.Id</elementReference>
+                <elementReference>GetCaseAggiornato.Account.FirstName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CognomeIntestatario_CC</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCaseAggiornato.Account.LastName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CFIntestatario_CC</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCaseAggiornato.Account.FiscalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CalcoloCodiceCausale</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Titolare_Conto_From_Flow_Screen</name>
+        <label>Assegna Titolare Conto From Flow Screen</label>
+        <locationX>314</locationX>
+        <locationY>1934</locationY>
+        <assignmentItems>
+            <assignToReference>NomeIntestatario_CC</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Nome_intestatario_c_c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CognomeIntestatario_CC</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Cognome_intestatario_c_c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CFIntestatario_CC</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Codice_fiscale_intestatario_c_c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -292,10 +336,24 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCaseAggiornato.BeneficiaryAccount__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.BankAccountSignatoryFirstName__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>BeneficiaryAccount.recordId</elementReference>
+                <elementReference>NomeIntestatario_CC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.BankAccountSignatoryLastName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CognomeIntestatario_CC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.BankAccountSignatoryFiscalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CFIntestatario_CC</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -531,7 +589,7 @@
         <locationX>913</locationX>
         <locationY>6350</locationY>
         <defaultConnector>
-            <targetReference>CalcoloCodiceCausale</targetReference>
+            <targetReference>Assegna_Titolare_Conto_From_Flow_Screen</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -545,7 +603,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Titolare_Conto</targetReference>
+                <targetReference>Assegna_Titolare_Conto_From_Case</targetReference>
             </connector>
             <label>Is Stesso Sottoscrittore</label>
         </rules>
@@ -4295,36 +4353,49 @@
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
-                    <name>BeneficiaryAccount</name>
-                    <extensionName>flowruntime:lookup</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>fieldApiName</name>
-                        <value>
-                            <stringValue>BeneficiaryAccount__c</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>label</name>
-                        <value>
-                            <stringValue>Account Erede/Beneficiario</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>objectApiName</name>
-                        <value>
-                            <stringValue>Case</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>required</name>
-                        <value>
-                            <booleanValue>true</booleanValue>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <name>Nome_intestatario_c_c</name>
+                    <dataType>String</dataType>
+                    <fieldText>Nome intestatario c/c</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>TitolareConto</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>Pagatore_Alternativo</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Cognome_intestatario_c_c</name>
+                    <dataType>String</dataType>
+                    <fieldText>Cognome intestatario c/c</fieldText>
+                    <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>TitolareConto</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>Pagatore_Alternativo</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Codice_fiscale_intestatario_c_c</name>
+                    <dataType>String</dataType>
+                    <fieldText>Codice fiscale intestatario c/c</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Il Codice Fiscale inserito non è valido.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>REGEX({!Codice_fiscale_intestatario_c_c},&quot;[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9]{2}([a-zA-Z]{1}[0-9]{3})[a-zA-Z]{1}&quot;)</formulaExpression>
+                    </validationRule>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
                         <conditions>
@@ -4352,7 +4423,7 @@
                     <choiceReferences>Si</choiceReferences>
                     <choiceReferences>No</choiceReferences>
                     <dataType>String</dataType>
-                    <fieldText>Bonifico da effettuare verso il Virtual Account?</fieldText>
+                    <fieldText>Bonifico effettuato su Virtual Account?</fieldText>
                     <fieldType>RadioButtons</fieldType>
                     <isRequired>true</isRequired>
                 </fields>
@@ -4410,8 +4481,8 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <start>
         <locationX>2262</locationX>
@@ -4744,6 +4815,13 @@
         <objectType>Case</objectType>
     </variables>
     <variables>
+        <name>CFIntestatario_CC</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>checkCaseItem</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -4752,6 +4830,13 @@
         <value>
             <elementReference>Annulla_CaseItem</elementReference>
         </value>
+    </variables>
+    <variables>
+        <name>CognomeIntestatario_CC</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>CollectionSize</name>
@@ -4810,6 +4895,13 @@
         <value>
             <stringValue>Avanti</stringValue>
         </value>
+    </variables>
+    <variables>
+        <name>NomeIntestatario_CC</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>notaEsistente</name>

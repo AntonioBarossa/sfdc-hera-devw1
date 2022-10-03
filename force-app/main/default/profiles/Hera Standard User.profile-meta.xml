@@ -5908,6 +5908,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.CityOrInstitution__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.SecondaryContact__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -18153,7 +18158,7 @@
         <field>Product2.Cloned__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>true</editable>
         <field>Product2.DefaulStartTime__c</field>
         <readable>true</readable>
@@ -22438,7 +22443,7 @@
         <field>SBQQ__QuoteLine__c.Agency__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.DefaulStartTime__c</field>
         <readable>true</readable>
@@ -33592,6 +33597,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.PetitionerAssigneeStructure__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ContentVersion.FileNameMigration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ContentVersion.JobNameMigration__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

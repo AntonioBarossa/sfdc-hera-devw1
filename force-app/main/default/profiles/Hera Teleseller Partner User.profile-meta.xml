@@ -9632,13 +9632,21 @@
         <field>ContactPointTypeConsent.EngagementChannelTypeId</field>
         <readable>true</readable>
     </fieldPermissions>
-    <!--Start HRAWRM-251 08/09/2021 -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ContentVersion.FileNameMigration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ContentVersion.JobNameMigration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.CommercialProduct__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <!--Start HRAWRM-251 08/09/2021 -->
     <fieldPermissions>
         <editable>false</editable>
         <field>Contract.ExciseEle__c</field>
