@@ -144,28 +144,28 @@ public with sharing class HDT_QR_OrderItemTst {
         Test.stopTest();
     }
     
-    @isTest
-    public static void testGetMainItem() {
+    // @isTest
+    // public static void testGetMainItem() {
         
-        Test.startTest();
+    //     Test.startTest();
         
-        String orderId = String.valueOf([SELECT Id FROM Order].Id);
+    //     String orderId = String.valueOf([SELECT Id FROM Order].Id);
         
-        List<OrderItem> oiList = new List<OrderItem>();
+    //     List<OrderItem> oiList = new List<OrderItem>();
         
-        System.debug('Order IDs: '+ orderId);
+    //     System.debug('Order IDs: '+ orderId);
         
-        HDT_QR_OrderItem qrOi = new HDT_QR_OrderItem();
+    //     HDT_QR_OrderItem qrOi = new HDT_QR_OrderItem();
         
-        oiList = qrOi.getMainItem(orderId);
+    //     oiList = qrOi.getMainItem(orderId);
         
-        System.debug('oiList: '+ oiList);
+    //     System.debug('oiList: '+ oiList);
         
-        System.assertEquals(orderId, String.valueOf(oiList[0].OrderId), 'Order IDs match.');
-        System.assertNotEquals(orderId, null, 'Order IDs mismatch.');
+    //     System.assertEquals(orderId, String.valueOf(oiList[0].OrderId), 'Order IDs match.');
+    //     System.assertNotEquals(orderId, null, 'Order IDs mismatch.');
         
-        Test.stopTest();
-    }
+    //     Test.stopTest();
+    // }
     
     @isTest
     public static void testGetAnalisiConsumi() {

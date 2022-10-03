@@ -434,7 +434,7 @@
         <name>AssegnaValoriParere_0_0_0_0_0</name>
         <label>AssegnaValoriParere</label>
         <locationX>776</locationX>
-        <locationY>2726</locationY>
+        <locationY>3422</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -457,7 +457,7 @@
         <name>AssegnaValoriParere_0_0_0_0_0_0</name>
         <label>AssegnaValoriParere</label>
         <locationX>1040</locationX>
-        <locationY>2486</locationY>
+        <locationY>3182</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Status</assignToReference>
             <operator>Assign</operator>
@@ -473,7 +473,7 @@
         <name>AssegnaValoriParere_0_0_0_0_0_0_0</name>
         <label>AssegnaValoriParere</label>
         <locationX>1304</locationX>
-        <locationY>2366</locationY>
+        <locationY>3062</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -693,6 +693,36 @@
         </connector>
     </assignments>
     <assignments>
+        <name>assignParamsAttachments</name>
+        <label>assignParamsAttachments</label>
+        <locationX>1106</locationX>
+        <locationY>2366</locationY>
+        <assignmentItems>
+            <assignToReference>paramsAttachmentsTari.city</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreAttachmentsTari.SupplyCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsAttachmentsTari.cluster</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreAttachmentsTari.Cluster__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsAttachmentsTari.processType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreAttachmentsTari.Type</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Gestione_Allegati_Tari</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Id_Reclamo</name>
         <label>Assegna Id Parere</label>
         <locationX>578</locationX>
@@ -728,7 +758,7 @@
         <name>OutputCase_0</name>
         <label>OutputCase</label>
         <locationX>1238</locationX>
-        <locationY>3158</locationY>
+        <locationY>3854</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
@@ -811,7 +841,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Parere_Aggiornato</targetReference>
+                <targetReference>TariProcess</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -845,7 +875,7 @@
         <name>Modalit_Comunicazione</name>
         <label>Modalità Comunicazione</label>
         <locationX>908</locationX>
-        <locationY>2366</locationY>
+        <locationY>3062</locationY>
         <defaultConnector>
             <targetReference>AssegnaValoriParere_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1100,7 +1130,7 @@
         <name>Quale_Processo_Parent_0_0_0</name>
         <label>Quale Processo Parent?</label>
         <locationX>1238</locationX>
-        <locationY>2246</locationY>
+        <locationY>2942</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Case_Richiesta_Parere</targetReference>
         </defaultConnector>
@@ -1150,6 +1180,31 @@
             <label>Esercizio Diritti Privacy</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>TariProcess</name>
+        <label>TariProcess?</label>
+        <locationX>1238</locationX>
+        <locationY>2126</locationY>
+        <defaultConnector>
+            <targetReference>Get_Parere_Aggiornato</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesTariProcess</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>getPreAttachmentsTari</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <description>Flow per la gestione della Richiesta Parere</description>
     <formulas>
         <name>RemoveSpaceFromTo</name>
@@ -1181,7 +1236,7 @@
         <name>Crea_Activity_Richiesta_Parere</name>
         <label>Crea Activity Richiesta Parere</label>
         <locationX>776</locationX>
-        <locationY>2606</locationY>
+        <locationY>3302</locationY>
         <connector>
             <targetReference>AssegnaValoriParere_0_0_0_0_0</targetReference>
         </connector>
@@ -1237,7 +1292,7 @@
         <name>Get_Parere_Aggiornato</name>
         <label>Get Parere Aggiornato</label>
         <locationX>1238</locationX>
-        <locationY>2126</locationY>
+        <locationY>2822</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Quale_Processo_Parent_0_0_0</targetReference>
@@ -1258,7 +1313,7 @@
         <name>Get_Template</name>
         <label>Get Template</label>
         <locationX>776</locationX>
-        <locationY>2486</locationY>
+        <locationY>3182</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Activity_Richiesta_Parere</targetReference>
@@ -1290,6 +1345,27 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>ParentRecordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getPreAttachmentsTari</name>
+        <label>getPreAttachmentsTari</label>
+        <locationX>1106</locationX>
+        <locationY>2246</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>assignParamsAttachments</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -1342,7 +1418,7 @@
         <name>Aggiorna_Case_Richiesta_Parere</name>
         <label>Aggiorna Case Richiesta Parere</label>
         <locationX>1238</locationX>
-        <locationY>3038</locationY>
+        <locationY>3734</locationY>
         <connector>
             <targetReference>OutputCase_0</targetReference>
         </connector>
@@ -1364,6 +1440,16 @@
         <locationX>512</locationX>
         <locationY>2246</locationY>
         <inputReference>GetRichiestaParere</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updateAttachmentsTari</name>
+        <label>updateAttachmentsTari</label>
+        <locationX>1106</locationX>
+        <locationY>2606</locationY>
+        <connector>
+            <targetReference>Get_Parere_Aggiornato</targetReference>
+        </connector>
+        <inputReference>getPreAttachmentsTari</inputReference>
     </recordUpdates>
     <screens>
         <name>Case_Layout</name>
@@ -1447,6 +1533,113 @@
             </inputParameters>
             <inputParameters>
                 <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Gestione_Allegati_Tari</name>
+        <label>Gestione Allegati Tari</label>
+        <locationX>1106</locationX>
+        <locationY>2486</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>updateAttachmentsTari</targetReference>
+        </connector>
+        <fields>
+            <name>headerAttachmentsTari</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Richiesta Parere&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Richiedi il parere compilando il campo sottostante&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>componentAttachmentsTari</name>
+            <extensionName>c:hdtAttachmentManager</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>paramsWrap</name>
+                <value>
+                    <elementReference>paramsAttachmentsTari</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>hdtFlowNavButtons</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>Brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
@@ -1629,6 +1822,14 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>paramsAttachmentsTari</name>
+        <apexClass>HDT_LC_AttachmentManager</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>ParentRecordId</name>

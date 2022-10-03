@@ -2,14 +2,16 @@
  * @description       : 
  * @author            : federico.defelice@webresults.it
  * @group             : WR
- * @last modified on  : 28-07-2022
+ * @last modified on  : 14-09-2022
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.CyclomaticComplexity , PMD.NcssMethodCount')
 public with sharing class HDT_UTL_ActivityCloseActions {
 
+    @TestVisible
     private inherited sharing class HDT_WRP_Actions extends HDT_UTL_ActivityTemplate.HDT_WRP_Infos {
 
+        @TestVisible
         private String phase;
         private String parentSObjectPhase;
         HDT_WRP_Actions(String phase, String activityType, Boolean isMandatory, String actualPhase){
@@ -25,10 +27,13 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         }
     }
 
+    @TestVisible
     private inherited sharing class HDT_WRP_Queue implements Queueable{
 
         Map<Id, HDT_WRP_Actions> actionsCase;
         Map<Id, HDT_WRP_Actions> actionsOrder;
+        
+        @TestVisible
         HDT_WRP_Queue(Map<Id, HDT_WRP_Actions> actionsCase, Map<Id, HDT_WRP_Actions> actionsOrder){
             this.actionsCase=actionsCase;
             this.actionsOrder=actionsOrder;
@@ -104,7 +109,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
 
         if (allActivity.isEmpty())    return new Map<String,List<wrts_prcgvr__Activity__c>>();
         Map<String,List<wrts_prcgvr__Activity__c>> result = new Map<String,List<wrts_prcgvr__Activity__c>>();
-        List<wrts_prcgvr__Activity__c> activities = [SELECT Case__r.Id, Case__r.Type, Case__r.Phase__c, Case__r.RelatedCase__c, Case__r.PhaseStory__c, Order__r.Id, Order__r.Type, Order__r.Phase__c, Order__r.PhaseStory__c, wrts_prcgvr__ActivityTemplate__r.Name FROM wrts_prcgvr__Activity__c WHERE Id IN :allActivity  WITH Security_Enforced];
+        List<wrts_prcgvr__Activity__c> activities = [SELECT Case__r.Id, Case__r.Type, Case__r.Phase__c, Case__r.RelatedCase__c, Case__r.PhaseStory__c, Order__r.Id, Order__r.ProcessType__c, Order__r.Phase__c, Order__r.PhaseStory__c, wrts_prcgvr__ActivityTemplate__r.Name FROM wrts_prcgvr__Activity__c WHERE Id IN :allActivity  WITH Security_Enforced];
         List<wrts_prcgvr__Activity__c> caseActivities  = new List<wrts_prcgvr__Activity__c>();
         List<wrts_prcgvr__Activity__c> orderActivities = new List<wrts_prcgvr__Activity__c>();
         
@@ -118,6 +123,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         return result;
     }
 
+    @TestVisible
     private static HDT_WRP_Actions getOnCloseActions(Case selectedCase, wrts_prcgvr__Activity__c activity, String activityType){
         String approved = activity.Approved__c;
         String caseType = selectedCase.Type;
@@ -132,6 +138,12 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             if(approved.equalsIgnoreCase('si')) return new HDT_WRP_Actions(null, 'Gestione Manuale SAP', true, selectedCase.Phase__c);//Se gestione SAP non va in completata subito
             if(approved.equalsIgnoreCase('no')) return new HDT_WRP_Actions('Annullato');   
         }
+        //START >>> marco.arci@webresults.it
+        if(caseType == 'Modifica post accertamento' || caseType == 'Cessazione post accertamento') {
+            if('Aprire Cesaazione'.equalsIgnoreCase(activityType) ||
+               'Aprire Variazione'.equalsIgnoreCase(activityType))      return new HDT_WRP_Actions(null, 'Completata'); //con il null iniziale non interviene sulla fase dell'activity, con il secondo param aggiorna la fase del case padre
+        }
+        //END >>> marco.arci@webresults.it
         if(caseType == 'Gestione Rifiuti' && 'Risposta Ricevuta'.equalsIgnoreCase(activityType)){
             if(approved.equalsIgnoreCase('si')) return new HDT_WRP_Actions('Annullato');
 
@@ -144,8 +156,21 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         }
         return null;
     }
-
+    
+	@TestVisible
     private static HDT_WRP_Actions getOnCloseActions(Order selectedOrder, wrts_prcgvr__Activity__c activity, String activityType){
+        String approved = activity.Approved__c;
+        String activityName=STRING.isNotBlank(activity.Name)? activity.Name : ''; 
+        String orderActualPhase=STRING.isNotBlank(selectedOrder.Phase__c)? selectedOrder.Phase__c : '';
+        String orderType = selectedOrder.ProcessType__c;
+        
+        if( 
+            'Approvazione Agevolazione'.containsIgnoreCase(activityName)
+            && new set<String>{'Modifica Tariffa', 'Modifica Tariffa - Rimozione Agevolazione'}.contains(orderType)
+        ){
+            if(approved.equalsIgnoreCase('no')) return new HDT_WRP_Actions(null, 'Contattare Cliente', false, orderActualPhase);
+            if ('In attesa Approvazione'.equalsIgnoreCase(orderActualPhase))   return new HDT_WRP_Actions('Documentazione Validata');
+        }
         return null;
     }
 }

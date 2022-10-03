@@ -257,6 +257,11 @@
                 <label>Conferma Appuntamento KO</label>
             </value>
             <value>
+                <fullName>Creazione BP-CA</fullName>
+                <default>false</default>
+                <label>Creazione BP-CA</label>
+            </value>
+            <value>
                 <fullName>Credit Check KO</fullName>
                 <default>false</default>
                 <label>Credit Check KO</label>
@@ -347,6 +352,11 @@
                 <label>Esecuzione Appuntamento OK</label>
             </value>
             <value>
+                <fullName>Esito Consuntivazione KO</fullName>
+                <default>false</default>
+                <label>Esito Consuntivazione KO</label>
+            </value>
+            <value>
                 <fullName>Esito DL KO</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -357,6 +367,11 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Esito DL OK</label>
+            </value>
+            <value>
+                <fullName>Esito KO da DBO</fullName>
+                <default>false</default>
+                <label>Esito KO da DBO</label>
             </value>
             <value>
                 <fullName>Esito KO da DL</fullName>
@@ -429,6 +444,11 @@
                 <label>In attesa esito documentale da E1</label>
             </value>
             <value>
+                <fullName>In attesa esito SAP</fullName>
+                <default>false</default>
+                <label>In attesa esito SAP</label>
+            </value>
+            <value>
                 <fullName>In Attesa Legge 80</fullName>
                 <default>false</default>
                 <label>In Attesa Legge 80</label>
@@ -452,6 +472,11 @@
                 <fullName>In attesa validazione</fullName>
                 <default>false</default>
                 <label>In attesa validazione</label>
+            </value>
+            <value>
+                <fullName>In attesa Verifica</fullName>
+                <default>false</default>
+                <label>In attesa Verifica</label>
             </value>
             <value>
                 <fullName>In Corso caricamento Siebel</fullName>

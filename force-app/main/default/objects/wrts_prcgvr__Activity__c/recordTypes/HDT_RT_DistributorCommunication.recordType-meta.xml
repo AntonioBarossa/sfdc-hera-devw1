@@ -2777,11 +2777,15 @@
         </values>
         <values>
             <fullName>3</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>wrts_prcgvr__Status__c</picklist>
+        <values>
+            <fullName>Annullata</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Comunicazione inviata</fullName>
             <default>false</default>

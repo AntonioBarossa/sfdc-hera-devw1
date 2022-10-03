@@ -7,14 +7,14 @@
 public inherited sharing class HDT_QR_ServicePoint {
 	
 	private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
-	String fieldSp =  'Id, Account__c, Account__r.Name, CommoditySector__c, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__c, Distributor__r.Name, RecordType.Name, ImplantType__c, ImplantTypeTemp__c, MeterStatus__c, SupplyPlace__c';
+	String fieldSp =  'Id, Account__c, Account__r.Name, CommoditySector__c, ServicePointCode__c, SAPImplantCode__c,MeterSN__c, SupplyAddress__c, Distributor__c, Distributor__r.Name, RecordType.Name, ImplantType__c, ImplantTypeTemp__c, MeterStatus__c, SupplyPlace__c';
 	/*
 	 * Query for Getting All Account Service Points
 	 */
 	public List<ServicePoint__c> getAccountServicePoints(String accountid) {
-		contractSrv.checkReadAccess('Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__c, Distributor__r.Name,recordType.Name,');
+		contractSrv.checkReadAccess('Id, Account__c,Account__r.Name, ServicePointCode__c,SAPImplantCode__c, MeterSN__c, SupplyAddress__c, Distributor__c, Distributor__r.Name,recordType.Name,');
 		List<ServicePoint__c> listSp = new List<ServicePoint__c>();
-		return listSp= [SELECT Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__c, Distributor__r.Name,recordType.Name,MeterStatus__c,CommoditySector__c,ImplantType__c,ImplantTypeTemp__c FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
+		return listSp= [SELECT Id, Account__c,Account__r.Name, ServicePointCode__c,SAPImplantCode__c, MeterSN__c, SupplyAddress__c, Distributor__c, Distributor__r.Name,recordType.Name,MeterStatus__c,CommoditySector__c,ImplantType__c,ImplantTypeTemp__c FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
 	}
 	
 	/**
@@ -82,6 +82,18 @@ public inherited sharing class HDT_QR_ServicePoint {
 	public List<ServicePoint__c> getRecordByCode(String code, String fields) {
 		contractSrv.checkReadAccess(fields);
         List<ServicePoint__c> servicePoints = Database.query('SELECT '+ String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE ServicePointCode__c = :code WITH SECURITY_ENFORCED LIMIT 1');
+        return servicePoints;
+    }
+
+	/**
+	 * @description getRecordByImplantCode
+	 * @param implantCode
+	 * @param fields
+	 * @return List<ServicePoint__c>
+	 */
+	public List<ServicePoint__c> getRecordByImplantCode(String implantCode, String fields) {
+		contractSrv.checkReadAccess(fields);
+        List<ServicePoint__c> servicePoints = Database.query('SELECT '+ String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE SAPImplantCode__c = :implantCode WITH SECURITY_ENFORCED LIMIT 1');
         return servicePoints;
     }
 
@@ -219,6 +231,41 @@ public inherited sharing class HDT_QR_ServicePoint {
 		List<ServicePoint__c> servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE CommoditySector__c = \'Acqua\' AND ServicePointCode__c = :stringCode ');
 		return servicePoints;
 	}
+
+	@SuppressWarnings('PMD.UnusedLocalVariable')
+	public List<Map<String,Object>> getServicePointsByDatiCatastali(String datiCatastali, String fields ) {
+
+		Map<String,String> mapDatiCatastali = (Map<String,String>)JSON.deserialize(datiCatastali, Map<String,String>.class);
+		String condition = '';
+		for ( String field : mapDatiCatastali.keySet() ) { 
+			condition += !string.isBlank(mapDatiCatastali.get(field)) ? field + '__c = \'' + mapDatiCatastali.get(field) + '\' AND ' : '';
+		}
+		condition += ' ServicePoint__c != null ';
+		System.debug('Condition: ' + condition);
+
+		String myString = 'ServicePoint__r.Account__r.Name, ServicePoint__r.MeterStatus__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c, ServicePoint__r.CommoditySector__c, ServicePoint__r.MeterSN__c, ServicePoint__r.ImplantType__c, ServicePoint__r.Distributor__r.Name,';
+
+		List<LandRegistry__c> landRegistries = Database.query('SELECT ServicePoint__c,' +myString+ 'Subaltern__c FROM LandRegistry__c WHERE ' + condition + ' LIMIT 50 ');
+		System.debug('I Land Registry sono: ' +landRegistries);
+
+		List<Map<String,Object>> myListMap = new List<Map<String,Object>>();
+		Map<String,Object> myMap;
+		for(LandRegistry__c myLandRegistry : landRegistries){
+			myMap = new Map<String,Object>();
+			myMap.put('Account Titolare', myLandRegistry.ServicePoint__r.Account__r.Name);
+			myMap.put('Stato Apparecchiatura', myLandRegistry.ServicePoint__r.MeterStatus__c);
+			myMap.put('Codice Punto', myLandRegistry.ServicePoint__r.ServicePointCode__c);
+			myMap.put('Indirizzo [Fornitura]', myLandRegistry.ServicePoint__r.SupplyAddress__c);
+			myMap.put('Servizio', myLandRegistry.ServicePoint__r.CommoditySector__c);
+			myMap.put('Matricola Contatore', myLandRegistry.ServicePoint__r.MeterSN__c);
+			myMap.put('Tipologia Impianto', myLandRegistry.ServicePoint__r.ImplantType__c);
+			myMap.put('Distributore', myLandRegistry.ServicePoint__r.Distributor__r.Name);
+			myMap.put('Subalterno', myLandRegistry.Subaltern__c);
+			myListMap.add(myMap);
+		}	
+			System.debug('******* I record sono: '+myListMap);
+			return myListMap;
+    }
 
 	/**
 	 * @description getServicePointsByCodeWithFilter

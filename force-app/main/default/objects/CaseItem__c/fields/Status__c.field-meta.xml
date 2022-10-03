@@ -11,14 +11,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>1</fullName>
+                <fullName>Annullato</fullName>
                 <default>false</default>
-                <label>1</label>
+                <label>Annullato</label>
             </value>
             <value>
-                <fullName>2</fullName>
+                <fullName>Bozza</fullName>
                 <default>false</default>
-                <label>2</label>
+                <label>Bozza</label>
+            </value>
+            <value>
+                <fullName>In Lavorazione</fullName>
+                <default>false</default>
+                <label>In Lavorazione</label>
             </value>
         </valueSetDefinition>
     </valueSet>

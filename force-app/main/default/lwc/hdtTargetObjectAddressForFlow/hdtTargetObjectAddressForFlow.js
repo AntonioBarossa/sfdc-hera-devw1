@@ -167,7 +167,7 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
         this.theCase["InvoicingPostalCode__c"] = address['CAP'];
         this.theCase["InvoicingCountry__c"] = address['Stato'];
         this.theCase["InvoicingProvince__c"] = address['Provincia'];
-        this.theCase["InvoicingStreetNumberExtension__c"] =  address['Estens.Civico'];
+        this.theCase["InvoicingStreetNumberExtension__c"] =  address['Estens.Civico']? address['Estens.Civico'] : null;
         this.theCase["InvoicingStreetNumber__c"] = address['Civico'];
         this.theCase["InvoicingPlace__c"] = address['Localita']? address['Localita'] : null;
     }

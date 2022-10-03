@@ -3,10 +3,9 @@
     <fullName>CityNotManagedAlert__c</fullName>
     <externalId>false</externalId>
     <label>Alert comune non gestito</label>
-    <length>255</length>
-    <required>false</required>
+    <length>100000</length>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
 </CustomField>

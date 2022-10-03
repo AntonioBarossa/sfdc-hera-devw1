@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <assignments>
+        <name>Aggiornamento_Fase_Case</name>
+        <label>Aggiornamento Fase Case</label>
+        <locationX>209</locationX>
+        <locationY>528</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Contattare cliente</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiornamento_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Chiusura_case</name>
+        <label>Chiusura case</label>
+        <locationX>473</locationX>
+        <locationY>648</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completata</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiornamento_Case_0</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Fase_Case_Cliente_contattato</name>
+        <label>Fase Case = &quot;Cliente contattato&quot;?</label>
+        <locationX>605</locationX>
+        <locationY>528</locationY>
+        <defaultConnectorLabel>NO</defaultConnectorLabel>
+        <rules>
+            <name>Fase_Case_Cliente_contattato_SI</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cliente contattato</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Chiusura_case</targetReference>
+            </connector>
+            <label>SI</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Fase_Case_Documentazione_incompleta</name>
+        <label>Fase Case &quot;Documentazione incompleta&quot;?</label>
+        <locationX>407</locationX>
+        <locationY>408</locationY>
+        <defaultConnector>
+            <targetReference>Fase_Case_Cliente_contattato</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NO</defaultConnectorLabel>
+        <rules>
+            <name>Fase_Case_Documentazione_incompleta_SI</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Documentazione incompleta</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiornamento_Fase_Case</targetReference>
+            </connector>
+            <label>SI</label>
+        </rules>
+    </decisions>
+    <interviewLabel>Gestione Case Documentazione Incompleta {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Gestione Documentazione Incompleta Case</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Creazione_Activity_Custom_Contattare_cliente</name>
+        <label>Creazione Activity Custom &quot;Contattare cliente&quot;</label>
+        <locationX>209</locationX>
+        <locationY>768</locationY>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <stringValue>Contattare il cliente</stringValue>
+            </value>
+        </inputAssignments>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Get_Case</name>
+        <label>Get Case</label>
+        <locationX>407</locationX>
+        <locationY>288</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Fase_Case_Documentazione_incompleta</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Aggiornamento_Case</name>
+        <label>Aggiornamento Case</label>
+        <locationX>209</locationX>
+        <locationY>648</locationY>
+        <connector>
+            <targetReference>Creazione_Activity_Custom_Contattare_cliente</targetReference>
+        </connector>
+        <inputReference>Get_Case</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiornamento_Case_0</name>
+        <label>Aggiornamento Case</label>
+        <locationX>473</locationX>
+        <locationY>768</locationY>
+        <inputReference>Get_Case</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Phase__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Documentazione incompleta</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Phase__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Cliente contattato</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <name>Intervallo_7_giorni</name>
+            <connector>
+                <targetReference>Get_Case</targetReference>
+            </connector>
+            <label>Intervallo 7 giorni</label>
+            <offsetNumber>7</offsetNumber>
+            <offsetUnit>Days</offsetUnit>
+            <timeSource>RecordTriggerEvent</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

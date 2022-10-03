@@ -61,7 +61,6 @@
             <value>
                 <fullName>Modifica dati contr. stesso Cli</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Modifica dati contr. stesso Cli</label>
             </value>
         </valueSetDefinition>

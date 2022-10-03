@@ -20,6 +20,11 @@
                 <default>false</default>
                 <label>Gas</label>
             </value>
+            <value>
+                <fullName>Acqua</fullName>
+                <default>false</default>
+                <label>Acqua</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

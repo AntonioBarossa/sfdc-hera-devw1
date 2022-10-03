@@ -87,6 +87,9 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
             newCase.CaliberAvailable__c = order.Caliber__c;
             newCase.Charge__c = 'Si';
             newCase.VoltureType__c = 'Ordinaria';
+            newCase.WithdrawalClass__c = order.WithdrawalClass__c;
+            newCase.ServiceEnergy__c = order.EnergyService__c;
+            newCase.UseCategory__c = order.UseCategory__c;
 
             pod = order.ServicePointCode__c;
             sapContractCode = order.SapContractCode__c;

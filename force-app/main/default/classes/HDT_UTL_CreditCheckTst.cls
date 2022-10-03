@@ -70,7 +70,7 @@ public with sharing class HDT_UTL_CreditCheckTst {
         Order o = [SELECT Id,RecordType.DeveloperName,ServicePoint__r.Account__c FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_Subentro'];
         data.orderId = String.valueOf(o.Id).substring(0,15);
         data.outcome = 'KO';
-        data.outcomeDescription = 'TEST';
+        data.outcomeDescription = 'Update failed. First exception on row 0 with id ; first error: STRING_TOO_LONG, Descrizione Esito Credit Check: data value too large: KO Tecnico - Expected Map&lt;String,String&gt; but found &quot;First exception on row 0 with id ; first error: STRING_TOO_LONG, Descrizione Esito Credit Check: data value too large: KO Tecnico - Expected Map&lt;String,String&gt; but found &quot;';
         data.outcoming = null;
         Test.startTest();
             HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{data});

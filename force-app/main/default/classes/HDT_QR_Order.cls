@@ -361,7 +361,10 @@ public inherited sharing class HDT_QR_Order {
             AnnualTARIPayment__c,
             RequestSource__c,
             DeliveredDocumentation__c,
-            AdditionalAttachments__c
+            ApprovalType__c,
+            AdditionalAttachments__c,
+            WasteCommodityType__c,
+            VASType__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -625,8 +628,8 @@ public inherited sharing class HDT_QR_Order {
             Order
             WHERE ParentOrder__c IN :parentOrderIds
             AND Phase__c NOT IN ('Annullato')
-            AND ProcessType__c != ''
-            AND ProcessType__c != 'VAS'
+            /* AND ProcessType__c != ''
+            AND ProcessType__c != 'VAS' */
             WITH SECURITY_ENFORCED
         ];
     }
@@ -813,6 +816,19 @@ public inherited sharing class HDT_QR_Order {
             Order
             WHERE AccountId = :accountId
             AND ParentOrder__c = null
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Order> getRecordsByAccountIdInPhases(String accountId, List<String> phases ){
+        return [
+            SELECT
+            Id,
+            Phase__c 
+            FROM
+            Order
+            WHERE AccountId = :accountId
+            AND Phase__c IN :phases
             WITH SECURITY_ENFORCED
         ];
     }

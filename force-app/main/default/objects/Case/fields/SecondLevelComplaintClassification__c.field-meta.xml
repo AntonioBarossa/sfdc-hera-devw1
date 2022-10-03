@@ -12,31 +12,11 @@
         <controllingField>FirstLevelComplaintClassification__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
-                <fullName>Misura</fullName>
+                <fullName>Altro</fullName>
                 <default>false</default>
-                <label>Misura</label>
-            </value>
-            <value>
-                <fullName>Mercato</fullName>
-                <default>false</default>
-                <label>Mercato</label>
-            </value>
-            <value>
-                <fullName>Qualità Commerciale</fullName>
-                <default>false</default>
-                <label>Qualità Commerciale</label>
-            </value>
-            <value>
-                <fullName>Fatturazione</fullName>
-                <default>false</default>
-                <label>Fatturazione</label>
-            </value>
-            <value>
-                <fullName>Doppia Fatturazione</fullName>
-                <default>false</default>
-                <label>Doppia Fatturazione</label>
+                <label>Altro</label>
             </value>
             <value>
                 <fullName>Bonus sociale</fullName>
@@ -44,45 +24,70 @@
                 <label>Bonus sociale</label>
             </value>
             <value>
+                <fullName>Connessioni, lavori e qualità tecnica</fullName>
+                <default>false</default>
+                <label>Connessioni, lavori e qualità tecnica</label>
+            </value>
+            <value>
                 <fullName>Contratti</fullName>
                 <default>false</default>
                 <label>Contratti</label>
             </value>
             <value>
-                <fullName>Altro</fullName>
+                <fullName>Doppia Fatturazione</fullName>
                 <default>false</default>
-                <label>Altro</label>
+                <label>Doppia Fatturazione</label>
             </value>
             <value>
-                <fullName>Connessioni, lavori e qualità tecnica</fullName>
+                <fullName>Fatturazione</fullName>
                 <default>false</default>
-                <label>Connessioni, lavori e qualità tecnica</label>
+                <label>Fatturazione</label>
+            </value>
+            <value>
+                <fullName>Impatti Ambientali</fullName>
+                <default>false</default>
+                <label>Impatti Ambientali</label>
+            </value>
+            <value>
+                <fullName>Mercato</fullName>
+                <default>false</default>
+                <label>Mercato</label>
+            </value>
+            <value>
+                <fullName>Misura</fullName>
+                <default>false</default>
+                <label>Misura</label>
+            </value>
+            <value>
+                <fullName>Morosità</fullName>
+                <default>false</default>
+                <label>Morosità</label>
             </value>
             <value>
                 <fullName>Morosità e sospensione</fullName>
                 <default>false</default>
                 <label>Morosità e sospensione</label>
             </value>
+            <value>
+                <fullName>Qualità Commerciale</fullName>
+                <default>false</default>
+                <label>Qualità Commerciale</label>
+            </value>
+            <value>
+                <fullName>Qualità del Servizio</fullName>
+                <default>false</default>
+                <label>Qualità del Servizio</label>
+            </value>
+            <value>
+                <fullName>Servizio Clienti</fullName>
+                <default>false</default>
+                <label>Servizio Clienti</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
             <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
-            <valueName>Misura</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
-            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
-            <valueName>Mercato</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
-            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
-            <valueName>Qualità Commerciale</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
-            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
-            <valueName>Fatturazione</valueName>
+            <valueName>Altro</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
@@ -92,22 +97,61 @@
         <valueSettings>
             <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
             <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
-            <valueName>Contratti</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
-            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
-            <valueName>Altro</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
-            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
             <valueName>Connessioni, lavori e qualità tecnica</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
             <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <controllingFieldValue>Richiesta di Rettifica di fatturazione</controllingFieldValue>
+            <valueName>Contratti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
+            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <controllingFieldValue>Richiesta di Rettifica di fatturazione</controllingFieldValue>
+            <valueName>Fatturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
+            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <valueName>Impatti Ambientali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
+            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <valueName>Mercato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
+            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <controllingFieldValue>Richiesta di Rettifica di fatturazione</controllingFieldValue>
+            <valueName>Misura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
+            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <controllingFieldValue>Richiesta di Rettifica di fatturazione</controllingFieldValue>
+            <valueName>Morosità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
+            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
             <valueName>Morosità e sospensione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
+            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <valueName>Qualità Commerciale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
+            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <valueName>Qualità del Servizio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
+            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <valueName>Servizio Clienti</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Rettifica Doppia Fatturazione</controllingFieldValue>

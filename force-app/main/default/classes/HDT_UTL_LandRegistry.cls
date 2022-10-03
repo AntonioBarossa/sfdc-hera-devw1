@@ -28,7 +28,6 @@ public with sharing class HDT_UTL_LandRegistry {
             LandRegistry__c resultLR;
             resultLR = curOriginRecord.clone(false, true, false, false);
             resultLR.RecordTypeId = rtIdPraticaTARI;
-            resultLR.Dati_Catastali__c = curOriginRecord.Id;
             resultLR.ServicePoint__c = null;
             if(caseId != null) resultLR.Case__c = caseId;
             if(orderId != null) resultLR.Order__c = orderId;

@@ -22,7 +22,55 @@ public with sharing class HDT_UTL_CaseProcess {
         accountSrv.updateRecordsWithCheck(accountsToUpdate);
         //update accountsToUpdate; 
     }
-
+    public static void predefaultCaseValues(List<Case> caseList, Map<Id,SObject> caseOldMap){
+        //variable allocation
+        String servicePoint = '';
+        String servicePointOld = '';
+        String commodity = '';
+        Boolean enableSearch = false;
+        Map<Id,String> spCommodityMap = new Map<Id,String>();
+        List<Id> spIds = new List<Id>();
+        Map<Id,Boolean> needUpdate = new Map<Id,Boolean>();
+        //First check if is from Insert or Update
+        //1. Is From insert
+        if(caseList != null && !caseList.isEmpty() && caseOldMap == null){
+            //Commodity Management
+            for(Case singleNewCase : caseList){
+                servicePoint = singleNewCase.ServicePoint__c;
+                commodity = singleNewCase.Commodity__c;
+                if (servicePoint != null && String.isNotBlank(servicePoint) && String.isBlank(commodity)) {
+                    spIds.add(servicePoint);
+                    needUpdate.put(servicePoint, true);
+                }
+            }
+        }
+        //2. Is From Updated
+        else if(caseList != null && !caseList.isEmpty() && caseOldMap != null) {
+            //Commodity Management
+            for(Case singleCase : caseList){
+                Case caseNew = singleCase;
+		        Case caseOld = (Case) caseOldMap.get(caseNew.Id);
+                servicePoint = caseNew.ServicePoint__c;
+                servicePointOld = caseOld.ServicePoint__c;
+                if((String.isBlank(commodity) && String.isBlank(servicePointOld) && String.isNotBlank(servicePoint)) || (String.isNotBlank(servicePointOld) && String.isNotBlank(servicePoint) && servicePoint != servicePointOld)){
+                    spIds.add(servicePoint);
+                    needUpdate.put(servicePoint, true);
+                }
+            }
+        }
+        if(spIds!=null && !spIds.isEmpty()){
+            HDT_QR_ServicePoint spQrClass = new HDT_QR_ServicePoint();
+            List<ServicePoint__c> spList = spQrClass.getRecordByIdList(spIds,'Id,CommoditySector__c');
+            if(!spList.isEmpty()){
+                Map<Id, ServicePoint__c> spMap = new Map<Id, ServicePoint__c>(spList);
+                for(Case singleCaseToUpdate : caseList){
+                    if(needUpdate.get(singleCaseToUpdate.ServicePoint__c) != null && needUpdate.get(singleCaseToUpdate.ServicePoint__c)){
+                        singleCaseToUpdate.Commodity__c = spMap.get(singleCaseToUpdate.ServicePoint__c).CommoditySector__c;
+                    }
+                }
+            }
+        }
+    }
     public static void caseBpcaSieManagement(Map<Id, Sobject> newCasesMap, Map<Id, Sobject> oldCasesMap) {
         Set<Id> accountIdsBpca = new Set<Id>();
         for(Case caseNew : (List<Case>) newCasesMap.values()){
@@ -149,7 +197,7 @@ public with sharing class HDT_UTL_CaseProcess {
                                                 activityId = activity.OwnerId;
                                             }
                                             activitiesOwnerId.add(activityId);
-                                            activity.wrts_prcgvr__Status__c = 'Chiusa';
+                                            activity.wrts_prcgvr__Status__c = 'Annullata';
                                             //Notification Fire to activity's owner
                                             try{
                                                 if(customNotif != null && activitiesOwnerId.size() > 0){
@@ -396,6 +444,7 @@ public with sharing class HDT_UTL_CaseProcess {
                 system.debug('@@@ Case SupplyCity__c:'+fieldsMap.get('SupplyCity__c'));
                 system.debug('@@@ Case SupplyStreetName__c:'+fieldsMap.get('SupplyStreetName__c'));
             }
+            //verificare che selezione fornitura effettui questo controllo in fase di UAT
             //querare tabella 'dato tecnico comunale' con chiave i comuni del case e verificare se il flag di gestione è attivo
             // o se la data odierna rientra nel range tra 'data da' e 'data cutover',
             //con il risultato modificare la lista fieldsMap.get('SupplyCity__c') lasciando quelli trovati e togliendo quelli non trovati nella tabella
@@ -403,7 +452,8 @@ public with sharing class HDT_UTL_CaseProcess {
                                             FROM Contract
                                             WHERE AccountId IN: fieldsMap.get('AccountId')
                                             AND BillingCity IN: fieldsMap.get('SupplyCity__c')
-                                            AND BillingStreet IN: fieldsMap.get('SupplyStreetName__c')];
+                                            AND BillingStreet IN: fieldsMap.get('SupplyStreetName__c')
+                                            AND Status = 'Attivo'];
             system.debug('@@@@ related contract: '+relatedContracts);
             List<wrts_prcgvr__Activity__c> notInsertActivity = HDT_QR_Activity.getActivityFromTypeList(caseIds, new Set<String>{'Aprire variazione','Aprire Cessazione'});
             

@@ -33,6 +33,11 @@
                 <label>Acconto Paperless Pagato</label>
             </value>
             <value>
+                <fullName>Allegati ricevuti</fullName>
+                <default>false</default>
+                <label>Allegati ricevuti</label>
+            </value>
+            <value>
                 <fullName>Allineamento RCU Concluso</fullName>
                 <default>false</default>
                 <label>Allineamento RCU Concluso</label>
@@ -233,6 +238,11 @@
                 <label>Chiuso</label>
             </value>
             <value>
+                <fullName>Cliente contattato</fullName>
+                <default>false</default>
+                <label>Cliente contattato</label>
+            </value>
+            <value>
                 <fullName>Completata</fullName>
                 <default>false</default>
                 <label>Completata</label>
@@ -268,6 +278,16 @@
                 <label>Comunicazioni con il DL</label>
             </value>
             <value>
+                <fullName>Consumo effettivo</fullName>
+                <default>false</default>
+                <label>Consumo effettivo</label>
+            </value>
+            <value>
+                <fullName>Contattare cliente</fullName>
+                <default>false</default>
+                <label>Contattare cliente</label>
+            </value>
+            <value>
                 <fullName>Da Inviare</fullName>
                 <default>false</default>
                 <label>Da Inviare</label>
@@ -298,6 +318,26 @@
                 <label>Disattivato</label>
             </value>
             <value>
+                <fullName>Documentazione completa</fullName>
+                <default>false</default>
+                <label>Documentazione completa</label>
+            </value>
+            <value>
+                <fullName>Documentazione da verificare sul posto</fullName>
+                <default>false</default>
+                <label>Documentazione da verificare sul posto</label>
+            </value>
+            <value>
+                <fullName>Documentazione incompleta</fullName>
+                <default>false</default>
+                <label>Documentazione incompleta</label>
+            </value>
+            <value>
+                <fullName>Documentazione validata</fullName>
+                <default>false</default>
+                <label>Documentazione validata</label>
+            </value>
+            <value>
                 <fullName>Documenti non validati</fullName>
                 <default>false</default>
                 <label>Documenti non validati</label>
@@ -323,6 +363,11 @@
                 <label>E-Mail Non Inviata</label>
             </value>
             <value>
+                <fullName>Errore di lettura</fullName>
+                <default>false</default>
+                <label>Errore di lettura</label>
+            </value>
+            <value>
                 <fullName>Errore invio a DL/SII</fullName>
                 <default>false</default>
                 <label>Errore invio a DL/SII</label>
@@ -341,6 +386,12 @@
                 <fullName>Esito KO</fullName>
                 <default>false</default>
                 <label>Esito KO</label>
+            </value>
+            <value>
+                <fullName>Esito KO da DBO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Esito KO da DBO</label>
             </value>
             <value>
                 <fullName>Esito KO da DL</fullName>
@@ -413,6 +464,11 @@
                 <label>Flusso bloccato in assenza del precedente</label>
             </value>
             <value>
+                <fullName>Fuga da Gestire - In attesa validazione</fullName>
+                <default>false</default>
+                <label>Fuga da Gestire - In attesa validazione</label>
+            </value>
+            <value>
                 <fullName>Gestione documentale</fullName>
                 <default>false</default>
                 <label>Gestione documentale</label>
@@ -421,6 +477,16 @@
                 <fullName>Gestione Procedurale</fullName>
                 <default>false</default>
                 <label>Gestione Procedurale</label>
+            </value>
+            <value>
+                <fullName>Gestione risposta cliente</fullName>
+                <default>false</default>
+                <label>Gestione risposta cliente</label>
+            </value>
+            <value>
+                <fullName>In attesa allegati</fullName>
+                <default>false</default>
+                <label>In attesa allegati</label>
             </value>
             <value>
                 <fullName>In Attesa Allineamento Anagrafica</fullName>
@@ -451,6 +517,12 @@
                 <fullName>In attesa Documentazione</fullName>
                 <default>false</default>
                 <label>In attesa Documentazione</label>
+            </value>
+            <value>
+                <fullName>In attesa lancio EngageOne</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>In attesa lancio EngageOne</label>
             </value>
             <value>
                 <fullName>In attesa perfezionamento documentazione</fullName>
@@ -577,6 +649,36 @@
                 <fullName>Lavori Sospesi</fullName>
                 <default>false</default>
                 <label>Lavori Sospesi</label>
+            </value>
+            <value>
+                <fullName>Lettura fatturata</fullName>
+                <default>false</default>
+                <label>Lettura fatturata</label>
+            </value>
+            <value>
+                <fullName>Lettura inserita in SAP</fullName>
+                <default>false</default>
+                <label>Lettura inserita in SAP</label>
+            </value>
+            <value>
+                <fullName>Lettura non fatturata</fullName>
+                <default>false</default>
+                <label>Lettura non fatturata</label>
+            </value>
+            <value>
+                <fullName>Lettura non inserita</fullName>
+                <default>false</default>
+                <label>Lettura non inserita</label>
+            </value>
+            <value>
+                <fullName>Lettura non inserita in SAP</fullName>
+                <default>false</default>
+                <label>Lettura non inserita in SAP</label>
+            </value>
+            <value>
+                <fullName>Mancata risposta</fullName>
+                <default>false</default>
+                <label>Mancata risposta</label>
             </value>
             <value>
                 <fullName>Motore VAS KO</fullName>
@@ -862,6 +964,11 @@
                 <fullName>Validazione OK DL simulata</fullName>
                 <default>false</default>
                 <label>Validazione OK DL simulata</label>
+            </value>
+            <value>
+                <fullName>Verifica in corso</fullName>
+                <default>false</default>
+                <label>Verifica in corso</label>
             </value>
             <value>
                 <fullName>Verifica in laboratorio</fullName>

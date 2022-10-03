@@ -47,7 +47,7 @@ public class HDT_BA_ComfortCallTst {
             
             List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
             orders[0].qualityCall__c = true;
-            orders[0].DateComfortCall__c = System.today() - 2;
+            orders[0].DateComfortCall__c = System.today() - 5;
             orders[0].ComfortCallDaysDue__c = 2;
             orders[0].ParentOrder__c = parentOrderId;
             orders[0].Contact__c = contactId;

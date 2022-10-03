@@ -9,12 +9,165 @@
         <value>It is not allowed to ask for certification on a non &quot;Customer&quot; Account</value>
     </labels>
     <labels>
+        <fullName>CarMass_SalesAccountRequiredFieldsError</fullName>
+        <categories>CarMass</categories>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>CarMass_SalesAccountRequiredFieldsError</shortDescription>
+        <value>Campi Account necassari: Codice Cliente, CF + Marcatura oppure PIVA + Marcatura</value>
+    </labels>
+    <labels>
+        <fullName>CarMass_SalesForVasContractError</fullName>
+        <categories>CarMass</categories>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>CarMass_SalesForVasContractError</shortDescription>
+        <value>Contratto non presente</value>
+    </labels>
+    <labels>
+        <fullName>CarMass_SalesForVasDataError</fullName>
+        <categories>CarMass</categories>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>CarMass_SalesForVasDataError</shortDescription>
+        <value>Errore nel formato dati</value>
+    </labels>
+    <labels>
+        <fullName>CarMass_SalesForVasOrderError</fullName>
+        <categories>CarMass</categories>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>CarMass_SalesForVasOrderError</shortDescription>
+        <value>Controllare parametri Order</value>
+    </labels>
+    <labels>
+        <fullName>CarMass_SalesForVasOrderItemStructureError</fullName>
+        <categories>CarMass</categories>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>CarMass_SalesForVasOrderItemStructureError</shortDescription>
+        <value>Controllare struttura order item</value>
+    </labels>
+    <labels>
+        <fullName>CarMass_SalesForVasOrderStructureError</fullName>
+        <categories>CarMass</categories>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>CarMass_SalesForVasOrderStructureError</shortDescription>
+        <value>Controllare struttura order</value>
+    </labels>
+    <labels>
         <fullName>CertificationAlreadyInProgress</fullName>
         <categories>SendCertificationRequest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CertificationAlreadyInProgress</shortDescription>
         <value>The certification has already been requested for this Contact Point</value>
+    </labels>
+    <labels>
+        <fullName>ChooseAssOperation_CreateIsAvailable</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ChooseAssOperation_CreateIsAvailable</shortDescription>
+        <value>Puoi associare i prodotti opzione</value>
+    </labels>
+    <labels>
+        <fullName>ChooseAssOperation_DeleteIsAvailable</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ChooseAssOperation_DeleteIsAvailable</shortDescription>
+        <value>Puoi eliminare i prodotti opzione</value>
+    </labels>
+    <labels>
+        <fullName>ChooseAssOperation_JobIsRunning</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ChooseAssOperation_JobIsRunning</shortDescription>
+        <value>E&apos; in corso un processo di creazione/rimozione di prodotti opzione</value>
+    </labels>
+    <labels>
+        <fullName>ChooseAssOperation_StatusError</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ChooseAssOperation_StatusError</shortDescription>
+        <value>Lo stato del prodotto opzione non è compatibile</value>
+    </labels>
+    <labels>
+        <fullName>CompanyNameLabel</fullName>
+        <language>en_IE</language>
+        <protected>false</protected>
+        <shortDescription>CompanyNameLabel</shortDescription>
+        <value>HERA COMM</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleCloseCreateBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleCloseCreateBody</shortDescription>
+        <value>Attenzione! Vuoi annullare l&apos;associazione delle regole  prodotto?</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleCloseDeleteBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleCloseDeleteBody</shortDescription>
+        <value>Attenzione! Vuoi annullare la rimozione delle regole prodotto prodotto?</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleConfimSelectBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleConfimSelectBody</shortDescription>
+        <value>Attenzione! la regola verrà associata a tutti i prodotti selezionati.</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleConfimSelectBodyDelete</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleConfimSelectBodyDelete</shortDescription>
+        <value>Attenzione! la regola verrà rimossa da tutti i prodotti selezionati.</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleConfirmFilterCreateBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleConfirmFilterCreateBody</shortDescription>
+        <value>Attenzione! In questo modo la regola verrà associata a tutti i prodotti ottenuti applicando il filtro, vuoi procedere?</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleConfirmFilterDeleteBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleConfirmFilterDeleteBody</shortDescription>
+        <value>Attenzione! In questo modo la regola verrà eliminata da tutti i prodotti ottenuti applicando il filtro, vuoi procedere?</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleCreateSection</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleCreateSection</shortDescription>
+        <value>Su questi elementi puoi associare le regole di prodotto</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleCreateTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleCreateTitle</shortDescription>
+        <value>Associazione Massiva delle regole prodotto</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleDeleteSection</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleDeleteSection</shortDescription>
+        <value>Da questi elementi puoi eliminare le regole di prodotto</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleDeleteTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleDeleteTitle</shortDescription>
+        <value>Rimozione Massiva delle regole prodotto</value>
     </labels>
     <labels>
         <fullName>ContactPointAlreadyCertified</fullName>
@@ -25,12 +178,454 @@
         <value>It is not allowed to request certification on an already certified Contact Point</value>
     </labels>
     <labels>
+        <fullName>Cpq_ProductAssociation_EnabledProfile</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>Cpq_ProductAssociation_EnabledProfile</shortDescription>
+        <value>Attenzione! Non possiedi i privilegi per questa funzionalità.</value>
+    </labels>
+    <labels>
         <fullName>Error</fullName>
         <categories>Cross</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Error</shortDescription>
         <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>HDT_CPQ_TemplateProductCode</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_CPQ_TemplateProductCode</shortDescription>
+        <value>TEMPLATE%</value>
+    </labels>
+    <labels>
+        <fullName>HDT_Canceled</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_Canceled</shortDescription>
+        <value>Annullata</value>
+    </labels>
+    <labels>
+        <fullName>HDT_Confirmed</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_Confirmed</shortDescription>
+        <value>Confermata</value>
+    </labels>
+    <labels>
+        <fullName>HDT_EligCriteria_DeleteComplete</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_EligCriteria_DeleteComplete</shortDescription>
+        <value>Criterio eliminato correttamente</value>
+    </labels>
+    <labels>
+        <fullName>HDT_EligCriteria_DeleteError</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_EligCriteria_DeleteError</shortDescription>
+        <value>Errore durante la cancellazione</value>
+    </labels>
+    <labels>
+        <fullName>HDT_EligCriteria_ErrorObj</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_EligCriteria_ErrorObj</shortDescription>
+        <value>Errore, non hai i permessi per questo oggetto</value>
+    </labels>
+    <labels>
+        <fullName>HDT_EligCriteria_ProdStatus</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_EligCriteria_ProdStatus</shortDescription>
+        <value>E&apos; possibile configurare dei criteri solamente nello stato &quot;In Sviluppo&quot;</value>
+    </labels>
+    <labels>
+        <fullName>HDT_EligCriteria_ProductType</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_EligCriteria_ProductType</shortDescription>
+        <value>Questa funzionalità è riservata alle Offerte commerciali, VAS Prodotto e VAS Servizio</value>
+    </labels>
+    <labels>
+        <fullName>HDT_EligCriteria_SaveError</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_EligCriteria_SaveError</shortDescription>
+        <value>Errore durante il salvataggio</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnCanceledEdit</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnCanceledEdit</shortDescription>
+        <value>Un offerta in stato &quot;Annullata&quot;&quot; non può essere modificata. Per modificare l&apos;offerta è necessario cambiare lo stato  &quot;In sviluppo&quot;</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnConfirmProduct</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnConfirmProduct</shortDescription>
+        <value>Non è possibile passare in &quot;Confermata&quot; il bundle, ci sono prodotti opzione del bundle in stato &quot;In sviluppo&quot;. Per procedre è necessario modificare lo stato dei prodotti opzione in &quot;Confermata&quot; oppure &quot;Annullata&quot;.</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnConfirmedEdit</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnConfirmedEdit</shortDescription>
+        <value>Un offerta in stato &quot;Confermata&quot; non può essere modificata. Per modificare l&apos;offerta è necessario cambiare lo stato in &quot;Annullata&quot; e poi in &quot;In sviluppo&quot;</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnConfirmedTechOff</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnConfirmedTechOff</shortDescription>
+        <value>Attenzione, deve essere presente un&apos;offerta tecnica con relativo codice SAP</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnDateDiff1</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnDateDiff1</shortDescription>
+        <value>La data inizio deve essere maggiore o uguale alla data attuale</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnDateDiff2</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnDateDiff2</shortDescription>
+        <value>La data fine non può essere inferiore a quella di fine</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnEndDate</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnEndDate</shortDescription>
+        <value>Inserire un Data Fine</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnManualStatusChange</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnManualStatusChange</shortDescription>
+        <value>Non è possibile effettuare questo passaggio di stato manualmente</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnNullStatus</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnNullStatus</shortDescription>
+        <value>Valore di statao obbligatorio</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnSoldEdit</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnSoldEdit</shortDescription>
+        <value>Un offerta in stato &quot;Vendibile&quot; non può essere modificata. Per modificare l&apos;offerta è necessario cambiare lo stato in &quot;Annullata&quot; e poi in &quot;In sviluppo&quot;</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnStartDate</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnStartDate</shortDescription>
+        <value>Inserire un Data Inizio</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnStatus</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnStatus</shortDescription>
+        <value>Cambio stato non consentito</value>
+    </labels>
+    <labels>
+        <fullName>HDT_Expired</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_Expired</shortDescription>
+        <value>Scaduta</value>
+    </labels>
+    <labels>
+        <fullName>HDT_InDevelopment</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_InDevelopment</shortDescription>
+        <value>In Sviluppo</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_CreateNewCriteria_MainTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_CreateNewCriteria_MainTitle</shortDescription>
+        <value>Eleggibilità</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_CreateNewCriteria_NewTitleLabel</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_CreateNewCriteria_NewTitleLabel</shortDescription>
+        <value>Crea dei criteri</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_CreateNewCriteria_SearchTitleLabel</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_CreateNewCriteria_SearchTitleLabel</shortDescription>
+        <value>Cerca e copia un insieme di criteri</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_CreateOffer_NewOffer</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_CreateOffer_NewOffer</shortDescription>
+        <value>Crea una nuova offerta tecnica</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_CreateOffer_SearchOffer</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_CreateOffer_SearchOffer</shortDescription>
+        <value>Cerca e copia un&apos;offerta tecnica</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_CriteriaModal_CloseBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_CriteriaModal_CloseBody</shortDescription>
+        <value>Perderai tutte le tue configurazioni, vuoi procedere?</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_CriteriaModal_CloseTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_CriteriaModal_CloseTitle</shortDescription>
+        <value>Chiudi la configurazione</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_CriteriaModal_DeleteBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_CriteriaModal_DeleteBody</shortDescription>
+        <value>Perderai tutte le tue configurazioni, vuoi procedere?</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_CriteriaModal_DeleteTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_CriteriaModal_DeleteTitle</shortDescription>
+        <value>Elimina il criterio</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_CriteriaModal_SaveBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_CriteriaModal_SaveBody</shortDescription>
+        <value>Questa configurazione verrà salvata su Salesforce. Vuoi confermare?</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_CriteriaModal_SaveTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_CriteriaModal_SaveTitle</shortDescription>
+        <value>Salva il criterio</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_OfferConfig_MainTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_OfferConfig_MainTitle</shortDescription>
+        <value>Configurazione Offerta Tecnica</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_OfferEditForm_AllFieldRequired</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_OfferEditForm_AllFieldRequired</shortDescription>
+        <value>Tutti i parametri obbligatori devono essere compilati per l&apos;invio dell&apos;offerta!</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_OfferEditForm_EndDateError</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_OfferEditForm_EndDateError</shortDescription>
+        <value>La data di fine validità non può essere inferiore alla data di inizio</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_OfferEditForm_NumberDaysMonthsYearsError</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_OfferEditForm_NumberDaysMonthsYearsError</shortDescription>
+        <value>Nº Giorni/Mesi/Anni non può contenere delle lettere</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_OfferEditForm_NumberOfTimeUnitsError</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_OfferEditForm_NumberOfTimeUnitsError</shortDescription>
+        <value>Numero unità di tempo non può contenere delle lettere</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_OfferEditForm_NumberTimeError</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_OfferEditForm_NumberTimeError</shortDescription>
+        <value>Numero unità di tempo per proroga può contenere solo dei numeri</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_OfferSelectionLabel</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_OfferSelectionLabel</shortDescription>
+        <value>Inserisci un nome e premi invio</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_SearchEligibilityCriteria_HeplText1</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_SearchEligibilityCriteria_HeplText1</shortDescription>
+        <value>Stai creando un criterio per questa offerta</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_SearchEligibilityCriteria_HeplText2</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_SearchEligibilityCriteria_HeplText2</shortDescription>
+        <value>Dettagli offerta corrente</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_SearchEligibilityCriteria_MainTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_SearchEligibilityCriteria_MainTitle</shortDescription>
+        <value>Ricerca criterio eleggibilità</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_SearchEligibilityCriteria_Search</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_SearchEligibilityCriteria_Search</shortDescription>
+        <value>Cerca un criterio esistente</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_SearchOffer_MainTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_SearchOffer_MainTitle</shortDescription>
+        <value>Ricerca e clonazione di un&apos;offerta Tecnica</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_SearchOffer_SearchExistingOffer</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_SearchOffer_SearchExistingOffer</shortDescription>
+        <value>Cerca un&apos;offerta tecnica esistente</value>
+    </labels>
+    <labels>
+        <fullName>HDT_LWC_SearchOffer_SearchTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_LWC_SearchOffer_SearchTitle</shortDescription>
+        <value>Stai creando un&apos;offerta tecnica per questo prodotto</value>
+    </labels>
+    <labels>
+        <fullName>HDT_OfferConfig_ConfigError</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_OfferConfig_ConfigError</shortDescription>
+        <value>Nessuna configurazione trovata</value>
+    </labels>
+    <labels>
+        <fullName>HDT_OfferConfig_DeleteComplete</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_OfferConfig_DeleteComplete</shortDescription>
+        <value>Offerta eliminata correttamente</value>
+    </labels>
+    <labels>
+        <fullName>HDT_OfferConfig_ErrorObj</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_OfferConfig_ErrorObj</shortDescription>
+        <value>Errore! Non hai i permessi su questo oggetto!</value>
+    </labels>
+    <labels>
+        <fullName>HDT_OfferConfig_FieldRequired</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_OfferConfig_FieldRequired</shortDescription>
+        <value>Tutti i parametri obbligatori devono essere compilati!</value>
+    </labels>
+    <labels>
+        <fullName>HDT_OfferConfig_OfferType</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_OfferConfig_OfferType</shortDescription>
+        <value>Questa funzionalità è riservata alle offerte commerciali</value>
+    </labels>
+    <labels>
+        <fullName>HDT_OfferConfig_SaveError</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_OfferConfig_SaveError</shortDescription>
+        <value>Errore, salvataggio non riuscito!</value>
+    </labels>
+    <labels>
+        <fullName>HDT_OfferConfig_SaveSuccess</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_OfferConfig_SaveSuccess</shortDescription>
+        <value>Offerta salvata correttamente</value>
+    </labels>
+    <labels>
+        <fullName>HDT_OfferConfig_WS_Error</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_OfferConfig_WS_Error</shortDescription>
+        <value>Errore nella configurazione chiamata SAP</value>
+    </labels>
+    <labels>
+        <fullName>HDT_OfferConfig_WS_Success</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_OfferConfig_WS_Success</shortDescription>
+        <value>Offerta inviata a SAP correttamente, codice Sap:</value>
+    </labels>
+    <labels>
+        <fullName>HDT_PermissionSetNameForCPQ</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_PermissionSetNameForCPQ</shortDescription>
+        <value>HDT_SalesforceCPQAdmin</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ProductFamilyTrigger</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ProductFamilyTrigger</shortDescription>
+        <value>Offerta commerciale</value>
+    </labels>
+    <labels>
+        <fullName>HDT_Sold</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_Sold</shortDescription>
+        <value>Vendibile</value>
+    </labels>
+    <labels>
+        <fullName>HDT_SuperUserCPQ</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_SuperUserCPQ</shortDescription>
+        <value>HDT_SuperUserCPQ</value>
+    </labels>
+    <labels>
+        <fullName>LeadCantBeCertified</fullName>
+        <categories>SendCertificationRequest</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LeadCantBeCertified</shortDescription>
+        <value>It is not allowed to certify a Lead</value>
     </labels>
     <labels>
         <fullName>MassiveLoader</fullName>
@@ -166,449 +761,6 @@
         <value>00D58000000KR1c!AQgAQJyKK5vLgfE7PGN5RYGw3eh9HuBHBHFbIyFxHlcCa6l1Ju40yJgft9qRroF9NU.cn0RPU_E7XFTNiK5RAETcWY1.6G5y</value>
     </labels>
     <labels>
-        <fullName>Success</fullName>
-        <categories>Cross</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Success</shortDescription>
-        <value>Success</value>
-    </labels>
-    <labels>
-        <fullName>HDT_Canceled</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_Canceled</shortDescription>
-        <value>Annullata</value>
-    </labels>
-    <labels>
-        <fullName>HDT_Confirmed</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_Confirmed</shortDescription>
-        <value>Confermata</value>
-    </labels>
-    <labels>
-        <fullName>HDT_Expired</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_Expired</shortDescription>
-        <value>Scaduta</value>
-    </labels>
-    <labels>
-        <fullName>HDT_InDevelopment</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_InDevelopment</shortDescription>
-        <value>In Sviluppo</value>
-    </labels>
-    <labels>
-        <fullName>HDT_Sold</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_Sold</shortDescription>
-        <value>Vendibile</value>
-    </labels>
-    <labels>
-        <fullName>HDT_ProductFamilyTrigger</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_ProductFamilyTrigger</shortDescription>
-        <value>Offerta commerciale</value>
-    </labels>
-    <labels>
-        <fullName>HDT_PermissionSetNameForCPQ</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_PermissionSetNameForCPQ</shortDescription>
-        <value>HDT_SalesforceCPQAdmin</value>
-    </labels>
-    <labels>
-        <fullName>HDT_SuperUserCPQ</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_SuperUserCPQ</shortDescription>
-        <value>HDT_SuperUserCPQ</value>
-    </labels>
-    <labels>
-        <fullName>HDT_ErrorOnConfirmProduct</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_ErrorOnConfirmProduct</shortDescription>
-        <value>Non è possibile passare in "Confermata" il bundle, ci sono prodotti opzione del bundle in stato "In sviluppo". Per procedre è necessario modificare lo stato dei prodotti opzione in "Confermata" oppure "Annullata".</value>
-    </labels>
-    <labels>
-        <fullName>HDT_ErrorOnNullStatus</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_ErrorOnNullStatus</shortDescription>
-        <value>Valore di statao obbligatorio</value>
-    </labels>
-    <labels>
-        <fullName>HDT_ErrorOnConfirmedTechOff</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_ErrorOnConfirmedTechOff</shortDescription>
-        <value>Attenzione, deve essere presente un'offerta tecnica con relativo codice SAP</value>
-    </labels>
-    <labels>
-        <fullName>HDT_ErrorOnStatus</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_ErrorOnStatus</shortDescription>
-        <value>Cambio stato non consentito</value>
-    </labels>
-    <labels>
-        <fullName>HDT_ErrorOnConfirmedEdit</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_ErrorOnConfirmedEdit</shortDescription>
-        <value>Un offerta in stato "Confermata" non può essere modificata. Per modificare l'offerta è necessario cambiare lo stato in "Annullata" e poi in "In sviluppo"</value>
-    </labels>
-    <labels>
-        <fullName>HDT_ErrorOnManualStatusChange</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_ErrorOnManualStatusChange</shortDescription>
-        <value>Non è possibile effettuare questo passaggio di stato manualmente</value>
-    </labels>
-    <labels>
-        <fullName>HDT_ErrorOnSoldEdit</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_ErrorOnSoldEdit</shortDescription>
-        <value>Un offerta in stato "Vendibile" non può essere modificata. Per modificare l'offerta è necessario cambiare lo stato in "Annullata" e poi in "In sviluppo"</value>
-    </labels>
-    <labels>
-        <fullName>HDT_ErrorOnCanceledEdit</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_ErrorOnCanceledEdit</shortDescription>
-        <value>Un offerta in stato "Annullata"" non può essere modificata. Per modificare l'offerta è necessario cambiare lo stato  "In sviluppo"</value>
-    </labels>
-    <labels>
-        <fullName>HDT_ErrorOnStartDate</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_ErrorOnStartDate</shortDescription>
-        <value>Inserire un Data Inizio</value>
-    </labels>
-    <labels>
-        <fullName>HDT_ErrorOnEndDate</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_ErrorOnEndDate</shortDescription>
-        <value>Inserire un Data Fine</value>
-    </labels>
-    <labels>
-        <fullName>HDT_ErrorOnDateDiff1</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_ErrorOnDateDiff1</shortDescription>
-        <value>La data inizio deve essere maggiore o uguale alla data attuale</value>
-    </labels>
-    <labels>
-        <fullName>HDT_ErrorOnDateDiff2</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_ErrorOnDateDiff2</shortDescription>
-        <value>La data fine non può essere inferiore a quella di fine</value>
-    </labels>
-    <labels>
-        <fullName>HDT_CPQ_TemplateProductCode</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_CPQ_TemplateProductCode</shortDescription>
-        <value>TEMPLATE%</value>
-    </labels>
-    <labels>
-        <fullName>HDT_OfferConfig_ConfigError</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_OfferConfig_ConfigError</shortDescription>
-        <value>Nessuna configurazione trovata</value>
-    </labels>
-    <labels>
-        <fullName>HDT_OfferConfig_DeleteComplete</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_OfferConfig_DeleteComplete</shortDescription>
-        <value>Offerta eliminata correttamente</value>
-    </labels>
-    <labels>
-        <fullName>HDT_OfferConfig_ErrorObj</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_OfferConfig_ErrorObj</shortDescription>
-        <value>Errore! Non hai i permessi su questo oggetto!</value>
-    </labels>
-    <labels>
-        <fullName>HDT_OfferConfig_FieldRequired</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_OfferConfig_FieldRequired</shortDescription>
-        <value>Tutti i parametri obbligatori devono essere compilati!</value>
-    </labels>
-    <labels>
-        <fullName>HDT_OfferConfig_OfferType</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_OfferConfig_OfferType</shortDescription>
-        <value>Questa funzionalità è riservata alle offerte commerciali</value>
-    </labels>
-    <labels>
-        <fullName>HDT_OfferConfig_SaveError</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_OfferConfig_SaveError</shortDescription>
-        <value>Errore, salvataggio non riuscito!</value>
-    </labels>
-    <labels>
-        <fullName>HDT_OfferConfig_SaveSuccess</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_OfferConfig_SaveSuccess</shortDescription>
-        <value>Offerta salvata correttamente</value>
-    </labels>
-    <labels>
-        <fullName>HDT_OfferConfig_WS_Error</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_OfferConfig_WS_Error</shortDescription>
-        <value>Errore nella configurazione chiamata SAP</value>
-    </labels>
-    <labels>
-        <fullName>HDT_OfferConfig_WS_Success</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_OfferConfig_WS_Success</shortDescription>
-        <value>Offerta inviata a SAP correttamente, codice Sap:</value>
-    </labels>
-    <labels>
-        <fullName>HDT_EligCriteria_DeleteComplete</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_EligCriteria_DeleteComplete</shortDescription>
-        <value>Criterio eliminato correttamente</value>
-    </labels>
-    <labels>
-        <fullName>HDT_EligCriteria_DeleteError</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_EligCriteria_DeleteError</shortDescription>
-        <value>Errore durante la cancellazione</value>
-    </labels>
-    <labels>
-        <fullName>HDT_EligCriteria_ErrorObj</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_EligCriteria_ErrorObj</shortDescription>
-        <value>Errore, non hai i permessi per questo oggetto</value>
-    </labels>
-    <labels>
-        <fullName>HDT_EligCriteria_ProdStatus</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_EligCriteria_ProdStatus</shortDescription>
-        <value>E&apos; possibile configurare dei criteri solamente nello stato &quot;In Sviluppo&quot;</value>
-    </labels>
-    <labels>
-        <fullName>HDT_EligCriteria_ProductType</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_EligCriteria_ProductType</shortDescription>
-        <value>Questa funzionalità è riservata alle Offerte commerciali, VAS Prodotto e VAS Servizio</value>
-    </labels>
-    <labels>
-        <fullName>HDT_EligCriteria_SaveError</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_EligCriteria_SaveError</shortDescription>
-        <value>Errore durante il salvataggio</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_CreateOffer_NewOffer</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_CreateOffer_NewOffer</shortDescription>
-        <value>Crea una nuova offerta tecnica</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_CreateOffer_SearchOffer</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_CreateOffer_SearchOffer</shortDescription>
-        <value>Cerca e copia un&apos;offerta tecnica</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_OfferSelectionLabel</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_OfferSelectionLabel</shortDescription>
-        <value>Inserisci un nome e premi invio</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_SearchOffer_MainTitle</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_SearchOffer_MainTitle</shortDescription>
-        <value>Ricerca e clonazione di un&apos;offerta Tecnica</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_SearchOffer_SearchExistingOffer</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_SearchOffer_SearchExistingOffer</shortDescription>
-        <value>Cerca un&apos;offerta tecnica esistente</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_SearchOffer_SearchTitle</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_SearchOffer_SearchTitle</shortDescription>
-        <value>Stai creando un&apos;offerta tecnica per questo prodotto</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_OfferConfig_MainTitle</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_OfferConfig_MainTitle</shortDescription>
-        <value>Configurazione Offerta Tecnica</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_OfferEditForm_AllFieldRequired</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_OfferEditForm_AllFieldRequired</shortDescription>
-        <value>Tutti i parametri obbligatori devono essere compilati per l&apos;invio dell&apos;offerta!</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_OfferEditForm_EndDateError</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_OfferEditForm_EndDateError</shortDescription>
-        <value>La data di fine validità non può essere inferiore alla data di inizio</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_OfferEditForm_NumberDaysMonthsYearsError</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_OfferEditForm_NumberDaysMonthsYearsError</shortDescription>
-        <value>Nº Giorni/Mesi/Anni non può contenere delle lettere</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_OfferEditForm_NumberOfTimeUnitsError</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_OfferEditForm_NumberOfTimeUnitsError</shortDescription>
-        <value>Numero unità di tempo non può contenere delle lettere</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_OfferEditForm_NumberTimeError</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_OfferEditForm_NumberTimeError</shortDescription>
-        <value>Numero unità di tempo per proroga può contenere solo dei numeri</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_CreateNewCriteria_MainTitle</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_CreateNewCriteria_MainTitle</shortDescription>
-        <value>Eleggibilità</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_CreateNewCriteria_NewTitleLabel</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_CreateNewCriteria_NewTitleLabel</shortDescription>
-        <value>Crea dei criteri</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_CreateNewCriteria_SearchTitleLabel</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_CreateNewCriteria_SearchTitleLabel</shortDescription>
-        <value>Cerca e copia un insieme di criteri</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_SearchEligibilityCriteria_HeplText1</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_SearchEligibilityCriteria_HeplText1</shortDescription>
-        <value>Stai creando un criterio per questa offerta</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_SearchEligibilityCriteria_HeplText2</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_SearchEligibilityCriteria_HeplText2</shortDescription>
-        <value>Dettagli offerta corrente</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_SearchEligibilityCriteria_MainTitle</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_SearchEligibilityCriteria_MainTitle</shortDescription>
-        <value>Ricerca criterio eleggibilità</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_SearchEligibilityCriteria_Search</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_SearchEligibilityCriteria_Search</shortDescription>
-        <value>Cerca un criterio esistente</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_CriteriaModal_CloseBody</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_CriteriaModal_CloseBody</shortDescription>
-        <value>Perderai tutte le tue configurazioni, vuoi procedere?</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_CriteriaModal_CloseTitle</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_CriteriaModal_CloseTitle</shortDescription>
-        <value>Chiudi la configurazione</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_CriteriaModal_DeleteBody</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_CriteriaModal_DeleteBody</shortDescription>
-        <value>Perderai tutte le tue configurazioni, vuoi procedere?</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_CriteriaModal_DeleteTitle</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_CriteriaModal_DeleteTitle</shortDescription>
-        <value>Elimina il criterio</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_CriteriaModal_SaveBody</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_CriteriaModal_SaveBody</shortDescription>
-        <value>Questa configurazione verrà salvata su Salesforce. Vuoi confermare?</value>
-    </labels>
-    <labels>
-        <fullName>HDT_LWC_CriteriaModal_SaveTitle</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>HDT_LWC_CriteriaModal_SaveTitle</shortDescription>
-        <value>Salva il criterio</value>
-    </labels>
-    <labels>
-        <fullName>LeadCantBeCertified</fullName>
-        <categories>SendCertificationRequest</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>LeadCantBeCertified</shortDescription>
-        <value>It is not allowed to certify a Lead</value>
-    </labels>
-    <labels>
         <fullName>ObjectNotAllowedForCertification</fullName>
         <categories>SendCertificationRequest</categories>
         <language>en_US</language>
@@ -617,19 +769,102 @@
         <value>Operation not supported on this type of object</value>
     </labels>
     <labels>
-        <fullName>SuccessfulCertificationRequest</fullName>
-        <categories>SendCertificationRequest</categories>
-        <language>en_US</language>
+        <fullName>ProdOptAssociationClose</fullName>
+        <language>it</language>
         <protected>false</protected>
-        <shortDescription>SuccessfulCertificationRequest</shortDescription>
-        <value>The certification request was created successfully</value>
+        <shortDescription>ProdOptAssociationClose</shortDescription>
+        <value>Chiudi la ricerca</value>
     </labels>
     <labels>
-        <fullName>UnsupportedObjectType</fullName>
-        <language>en_US</language>
+        <fullName>ProdOptAssociationCloseCreateBody</fullName>
+        <language>it</language>
         <protected>false</protected>
-        <shortDescription>UnsupportedObjectType</shortDescription>
-        <value>Object Type not supported for this action</value>
+        <shortDescription>ProdOptAssociationCloseCreateBody</shortDescription>
+        <value>Attenzione! Vuoi annullare l&apos;associazione dell&apos;opzione prodotto?</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationCloseDeleteBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationCloseDeleteBody</shortDescription>
+        <value>Attenzione! Vuoi annullare la rimozione dell&apos;opzione prodotto?</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationConfimSelectBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationConfimSelectBody</shortDescription>
+        <value>Attenzione! il prodotto opzione verrà associato a tutti i prodotti selezionati.</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationConfimSelectBodyDelete</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationConfimSelectBodyDelete</shortDescription>
+        <value>Attenzione! il prodotto opzione verrà rimosso da tutti i prodotti selezionati.</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationConfirmFilterCreateBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationConfirmFilterCreateBody</shortDescription>
+        <value>Attenzione! In questo modo l&apos;opzione verrà associata a tutti i prodotti ottenuti applicando il filtro, vuoi procedere?</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationConfirmFilterDeleteBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationConfirmFilterDeleteBody</shortDescription>
+        <value>Attenzione! In questo modo l&apos;opzione verrà eliminata da tutti i prodotti ottenuti applicando il filtro, vuoi procedere?</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationConfirmFilterTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationConfirmFilterTitle</shortDescription>
+        <value>Conferma tutti prodotti ottenuti dal filtro</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationConfirmSelection</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationConfirmSelection</shortDescription>
+        <value>Conferma i prodotti selezionati</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationCreateSection</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationCreateSection</shortDescription>
+        <value>Su queste offerte commerciali puoi associare il prodotto opzione</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationCreateTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationCreateTitle</shortDescription>
+        <value>Associazione Massiva del prodotto opzione</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationDeleteSection</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationDeleteSection</shortDescription>
+        <value>Da queste offerte commerciali puoi eliminare il prodotto opzione</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationDeleteTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationDeleteTitle</shortDescription>
+        <value>Rimozione Massiva del prodotto opzione</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationNoResultText</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationNoResultText</shortDescription>
+        <value>Non è stato trovato nessun prodotto</value>
     </labels>
     <labels>
         <fullName>ProdOptAssociationNotification_Body</fullName>
@@ -646,6 +881,34 @@
         <value>Associazione massiva prodotti opzione</value>
     </labels>
     <labels>
+        <fullName>ProdOptAssociationResultText</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationResultText</shortDescription>
+        <value>I risultati verranno mostrati qui</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationRunBatch</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationRunBatch</shortDescription>
+        <value>L&apos;operazione durerà pochi minuti</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationSuccessCreate</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationSuccessCreate</shortDescription>
+        <value>L&apos;associazione è stata eseguita correttamente</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationSuccessDelete</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationSuccessDelete</shortDescription>
+        <value>L&apos;associazione è stata eliminata correttamente</value>
+    </labels>
+    <labels>
         <fullName>ProdRuleAssociationNotification_DeleteTitle</fullName>
         <language>it</language>
         <protected>false</protected>
@@ -660,235 +923,41 @@
         <value>Associazione massiva regole prodotti</value>
     </labels>
     <labels>
-        <fullName>ProdOptAssociationCreateTitle</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ProdOptAssociationCreateTitle</shortDescription>
-        <value>Associazione Massiva del prodotto opzione</value>
+        <fullName>Success</fullName>
+        <categories>Cross</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Success</shortDescription>
+        <value>Success</value>
     </labels>
     <labels>
-        <fullName>ProdOptAssociationDeleteTitle</fullName>
-        <language>it</language>
+        <fullName>SuccessfulCertificationRequest</fullName>
+        <categories>SendCertificationRequest</categories>
+        <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ProdOptAssociationDeleteTitle</shortDescription>
-        <value>Rimozione Massiva del prodotto opzione</value>
+        <shortDescription>SuccessfulCertificationRequest</shortDescription>
+        <value>The certification request was created successfully</value>
     </labels>
     <labels>
-        <fullName>ProdOptAssociationCreateSection</fullName>
-        <language>it</language>
+        <fullName>TRB_Enable</fullName>
+        <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ProdOptAssociationCreateSection</shortDescription>
-        <value>Su queste offerte commerciali puoi associare il prodotto opzione</value>
+        <shortDescription>Enable Turbobilling</shortDescription>
+        <value>Y</value>
     </labels>
     <labels>
-        <fullName>ProdOptAssociationDeleteSection</fullName>
-        <language>it</language>
+        <fullName>HDT_DocTraceEnable</fullName>
+        <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ProdOptAssociationDeleteSection</shortDescription>
-        <value>Da queste offerte commerciali puoi eliminare il prodotto opzione</value>
+        <shortDescription>Enable Trace Payload</shortDescription>
+        <value>Y</value>
     </labels>
     <labels>
-        <fullName>ProdOptAssociationConfirmSelection</fullName>
-        <language>it</language>
+        <fullName>UnsupportedObjectType</fullName>
+        <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ProdOptAssociationConfirmSelection</shortDescription>
-        <value>Conferma i prodotti selezionati</value>
-    </labels>
-    <labels>
-        <fullName>ProdOptAssociationClose</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ProdOptAssociationClose</shortDescription>
-        <value>Chiudi la ricerca</value>
-    </labels>
-    <labels>
-        <fullName>ProdOptAssociationCloseDeleteBody</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ProdOptAssociationCloseDeleteBody</shortDescription>
-        <value>Attenzione! Vuoi annullare la rimozione dell'opzione prodotto?</value>
-    </labels>
-    <labels>
-        <fullName>ProdOptAssociationCloseCreateBody</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ProdOptAssociationCloseCreateBody</shortDescription>
-        <value>Attenzione! Vuoi annullare l'associazione dell'opzione prodotto?</value>
-    </labels>
-    <labels>
-        <fullName>ProdOptAssociationConfimSelectBodyDelete</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ProdOptAssociationConfimSelectBodyDelete</shortDescription>
-        <value>Attenzione! il prodotto opzione verrà rimosso da tutti i prodotti selezionati.</value>
-    </labels>
-    <labels>
-        <fullName>ProdOptAssociationConfimSelectBody</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ProdOptAssociationConfimSelectBody</shortDescription>
-        <value>Attenzione! il prodotto opzione verrà associato a tutti i prodotti selezionati.</value>
-    </labels>
-    <labels>
-        <fullName>ProdOptAssociationConfirmFilterTitle</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ProdOptAssociationConfirmFilterTitle</shortDescription>
-        <value>Conferma tutti prodotti ottenuti dal filtro</value>
-    </labels>
-    <labels>
-        <fullName>ProdOptAssociationConfirmFilterDeleteBody</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ProdOptAssociationConfirmFilterDeleteBody</shortDescription>
-        <value>Attenzione! In questo modo l'opzione verrà eliminata da tutti i prodotti ottenuti applicando il filtro, vuoi procedere?</value>
-    </labels>
-    <labels>
-        <fullName>ProdOptAssociationConfirmFilterCreateBody</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ProdOptAssociationConfirmFilterCreateBody</shortDescription>
-        <value>Attenzione! In questo modo l'opzione verrà associata a tutti i prodotti ottenuti applicando il filtro, vuoi procedere?</value>
-    </labels>
-    <labels>
-        <fullName>ProdOptAssociationRunBatch</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ProdOptAssociationRunBatch</shortDescription>
-        <value>L'operazione durerà pochi minuti</value>
-    </labels>
-    <labels>
-        <fullName>ProdOptAssociationSuccessDelete</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ProdOptAssociationSuccessDelete</shortDescription>
-        <value>L'associazione è stata eliminata correttamente</value>
-    </labels>
-    <labels>
-        <fullName>ProdOptAssociationSuccessCreate</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ProdOptAssociationSuccessCreate</shortDescription>
-        <value>L'associazione è stata eseguita correttamente</value>
-    </labels>
-    <labels>
-        <fullName>ProdOptAssociationResultText</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ProdOptAssociationResultText</shortDescription>
-        <value>I risultati verranno mostrati qui</value>
-    </labels>
-    <labels>
-        <fullName>ProdOptAssociationNoResultText</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ProdOptAssociationNoResultText</shortDescription>
-        <value>Non è stato trovato nessun prodotto</value>
-    </labels>
-    <labels>
-        <fullName>ChooseAssOperation_JobIsRunning</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ChooseAssOperation_JobIsRunning</shortDescription>
-        <value>E' in corso un processo di creazione/rimozione di prodotti opzione</value>
-    </labels>
-    <labels>
-        <fullName>ChooseAssOperation_CreateIsAvailable</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ChooseAssOperation_CreateIsAvailable</shortDescription>
-        <value>Puoi associare i prodotti opzione</value>
-    </labels>
-    <labels>
-        <fullName>ChooseAssOperation_DeleteIsAvailable</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ChooseAssOperation_DeleteIsAvailable</shortDescription>
-        <value>Puoi eliminare i prodotti opzione</value>
-    </labels>
-    <labels>
-        <fullName>ChooseAssOperation_StatusError</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ChooseAssOperation_StatusError</shortDescription>
-        <value>Lo stato del prodotto opzione non è compatibile</value>
-    </labels>
-    <labels>
-        <fullName>ConfRuleCreateTitle</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ConfRuleCreateTitle</shortDescription>
-        <value>Associazione Massiva delle regole prodotto</value>
-    </labels>
-    <labels>
-        <fullName>ConfRuleDeleteTitle</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ConfRuleDeleteTitle</shortDescription>
-        <value>Rimozione Massiva delle regole prodotto</value>
-    </labels>
-    <labels>
-        <fullName>ConfRuleCreateSection</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ConfRuleCreateSection</shortDescription>
-        <value>Su questi elementi puoi associare le regole di prodotto</value>
-    </labels>
-    <labels>
-        <fullName>ConfRuleDeleteSection</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ConfRuleDeleteSection</shortDescription>
-        <value>Da questi elementi puoi eliminare le regole di prodotto</value>
-    </labels>
-    <labels>
-        <fullName>ConfRuleCloseDeleteBody</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ConfRuleCloseDeleteBody</shortDescription>
-        <value>Attenzione! Vuoi annullare la rimozione delle regole prodotto prodotto?</value>
-    </labels>
-    <labels>
-        <fullName>ConfRuleCloseCreateBody</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ConfRuleCloseCreateBody</shortDescription>
-        <value>Attenzione! Vuoi annullare l'associazione delle regole  prodotto?</value>
-    </labels>
-    <labels>
-        <fullName>ConfRuleConfimSelectBodyDelete</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ConfRuleConfimSelectBodyDelete</shortDescription>
-        <value>Attenzione! la regola verrà rimossa da tutti i prodotti selezionati.</value>
-    </labels>
-    <labels>
-        <fullName>ConfRuleConfimSelectBody</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ConfRuleConfimSelectBody</shortDescription>
-        <value>Attenzione! la regola verrà associata a tutti i prodotti selezionati.</value>
-    </labels>
-    <labels>
-        <fullName>ConfRuleConfirmFilterDeleteBody</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ConfRuleConfirmFilterDeleteBody</shortDescription>
-        <value>Attenzione! In questo modo la regola verrà eliminata da tutti i prodotti ottenuti applicando il filtro, vuoi procedere?</value>
-    </labels>
-    <labels>
-        <fullName>ConfRuleConfirmFilterCreateBody</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>ConfRuleConfirmFilterCreateBody</shortDescription>
-        <value>Attenzione! In questo modo la regola verrà associata a tutti i prodotti ottenuti applicando il filtro, vuoi procedere?</value>
-    </labels>
-    <labels>
-        <fullName>Cpq_ProductAssociation_EnabledProfile</fullName>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>Cpq_ProductAssociation_EnabledProfile</shortDescription>
-        <value>Attenzione! Non possiedi i privilegi per questa funzionalità.</value>
+        <shortDescription>UnsupportedObjectType</shortDescription>
+        <value>Object Type not supported for this action</value>
     </labels>
     <labels>
         <fullName>VARIAZIONI_INDIRIZZO_FORNITURA</fullName>
@@ -912,51 +981,10 @@
         <value>Modifica Tariffa Residente/Non Residente</value>
     </labels>
     <labels>
-        <fullName>CarMass_SalesAccountRequiredFieldsError</fullName>
-        <categories>CarMass</categories>
-        <language>it</language>
+        <fullName>HDT_DeleteServicePointDays</fullName>
+        <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CarMass_SalesAccountRequiredFieldsError</shortDescription>
-        <value>Campi Account necassari: Codice Cliente, CF + Marcatura oppure PIVA + Marcatura</value>
-    </labels>
-    <labels>
-        <fullName>CarMass_SalesForVasDataError</fullName>
-        <categories>CarMass</categories>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>CarMass_SalesForVasDataError</shortDescription>
-        <value>Errore nel formato dati</value>
-    </labels>
-    <labels>
-        <fullName>CarMass_SalesForVasContractError</fullName>
-        <categories>CarMass</categories>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>CarMass_SalesForVasContractError</shortDescription>
-        <value>Contratto non presente</value>
-    </labels>
-    <labels>
-        <fullName>CarMass_SalesForVasOrderError</fullName>
-        <categories>CarMass</categories>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>CarMass_SalesForVasOrderError</shortDescription>
-        <value>Controllare parametri Order</value>
-    </labels>
-    <labels>
-        <fullName>CarMass_SalesForVasOrderStructureError</fullName>
-        <categories>CarMass</categories>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>CarMass_SalesForVasOrderStructureError</shortDescription>
-        <value>Controllare struttura order</value>
-    </labels>
-    <labels>
-        <fullName>CarMass_SalesForVasOrderItemStructureError</fullName>
-        <categories>CarMass</categories>
-        <language>it</language>
-        <protected>false</protected>
-        <shortDescription>CarMass_SalesForVasOrderItemStructureError</shortDescription>
-        <value>Controllare struttura order item</value>
+        <shortDescription>HDT_DeleteServicePointDays</shortDescription>
+        <value>10</value>
     </labels>
 </CustomLabels>

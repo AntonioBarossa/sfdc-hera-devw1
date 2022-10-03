@@ -1012,6 +1012,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>BillingIsAddressVerified__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingIsAddressVerified__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>BillingPostalCode__c</field>
             <value>
                 <elementReference>Query_Case.Account.BillingPostalCode</elementReference>

@@ -78,7 +78,9 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         String customerAssisted;
 
         for(DocumentSelected__c document : raiFeeDocuments){
-            totalRaiFeeResidual += document.TvFeeResidual__c;
+            if(document.TvFeeResidual__c != null){
+                totalRaiFeeResidual += document.TvFeeResidual__c;
+            }
         }
         if(totalResidue == 0){
             for(DocumentSelected__c document : raiFeeDocuments){
@@ -100,6 +102,21 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         customerAssisted = installmentsQr.getCustomerAssistedKpi(accountId);
         if(customerAssisted != null){
             currentCase.CutomerAssisted__c = customerAssisted.equalsIgnoreCase('Si');
+        }
+        
+        // TARI, predefault Reason__c field on Case
+        if (String.isNotBlank(inputs[0].motivazione)) {
+            currentCase.Reason__c = inputs[0].motivazione;
+        }
+
+        // TARI, predefault RequestSource__c field on Case
+        if (String.isNotBlank(inputs[0].provenienzaRichiesta)) {
+            currentCase.RequestSource__c = inputs[0].provenienzaRichiesta;
+        }
+
+        // TARI, predefault ApplicationInterests__c field on Case
+        if (inputs[0].applicazioneInteressi != null) {
+            currentCase.ApplicationInterests__c = inputs[0].applicazioneInteressi;
         }
 
         HDT_UTL_DatabaseService.updateSObject(currentCase);
@@ -123,7 +140,25 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         System.debug(LoggingLevel.DEBUG, 'SRV_InstallmentPlans Case--> '+currentCase);
         System.debug(LoggingLevel.DEBUG, 'SRV_InstallmentPlans Documetns--> '+documents);
 
-        String depositPaymentMode = currentCase.DepositPaymentMode__c == 'Paperless' ? 'P' : '';
+        //String depositPaymentMode = currentCase.DepositPaymentMode__c == 'Paperless' ? 'P' : '';
+        String depositPaymentMode = '';
+        switch on currentCase.DepositPaymentMode__c {
+            when 'Paperless' {
+                depositPaymentMode = 'P';
+            }
+            when 'Bonifico Paperless' {
+                depositPaymentMode = 'B';
+            }
+            when 'Accordi Assistiti' {
+                depositPaymentMode = 'A';
+            }
+            when 'Promessa di pagamento' {
+                depositPaymentMode = 'A';
+            }
+            when else {
+                depositPaymentMode = ' ';
+            }
+        }
         Decimal total;
         if(currentCase.DepositAmount__c != null){
             total = currentCase.Amount__c - currentCase.DepositAmount__c;
@@ -291,7 +326,14 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         @InvocableVariable
         public Decimal totalToPay;
 
+        @InvocableVariable
+        public String motivazione;
 
+        @InvocableVariable
+        public String provenienzaRichiesta;
+
+        @InvocableVariable
+        public Boolean applicazioneInteressi;
     }
 
 

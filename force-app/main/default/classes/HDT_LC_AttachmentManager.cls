@@ -29,7 +29,13 @@ public with sharing class HDT_LC_AttachmentManager {
     public String  productCode {get;set;}
 
     @AuraEnabled
-    public String  SubscriberType {get;set;}
+    public String  productDescription {get;set;}
+
+    @AuraEnabled
+    public String  subscriberType {get;set;}
+
+    @AuraEnabled
+    public String  macroTopic {get;set;}
 
     @AuraEnabled
     public String  additionalAttachments {get;set;}
@@ -39,8 +45,16 @@ public with sharing class HDT_LC_AttachmentManager {
 
     public HDT_LC_AttachmentManager(){}
 
-    public HDT_LC_AttachmentManager(String accountType, String contactChannel, String city, String cluster, 
-                                    String processType, String subProcessType, String productCode, String SubscriberType){
+    public HDT_LC_AttachmentManager(String accountType, 
+                                    String contactChannel, 
+                                    String city, 
+                                    String cluster, 
+                                    String processType, 
+                                    String subProcessType, 
+                                    String productCode,
+                                    String productDescription,
+                                    String subscriberType,
+                                    String macroTopic){
         this.accountType = accountType;
         this.contactChannel = contactChannel;
         this.city = city;
@@ -48,7 +62,9 @@ public with sharing class HDT_LC_AttachmentManager {
         this.processType = processType;
         this.subProcessType = subProcessType;
         this.productCode = productCode;
-        this.SubscriberType = SubscriberType;
+        this.productDescription = productDescription;
+        this.subscriberType = subscriberType;
+        this.macroTopic = macroTopic;
     }
 
     
@@ -92,7 +108,7 @@ public with sharing class HDT_LC_AttachmentManager {
             cdIdList.add(nextCdl.ContentDocumentId); 
         }        
 
-        List<ContentDocument> contentDocuments = [SELECT Id, Title, FileType,CreatedDate FROM ContentDocument WHERE ContentDocument.Id IN :cdIdList WITH SECURITY_ENFORCED];
+        List<ContentDocument> contentDocuments = [SELECT Id, Title, FileType,CreatedDate FROM ContentDocument WHERE Id IN :cdIdList WITH SECURITY_ENFORCED];
         
         return contentDocuments;
         
@@ -117,12 +133,20 @@ public with sharing class HDT_LC_AttachmentManager {
 */
     @AuraEnabled
     public static HDT_LC_AttachmentManager getOrderForButton(Id recordId){
-        Order currOrder = [SELECT Id,AccountholderTypeBeneficiary__c,Channel__c,BillingCity__c,Cluster__c,ProcessType__c,Subprocess__c,CommercialProductCode__c,SignatoryType__c
+        Order currOrder = [SELECT Id,AccountholderTypeBeneficiary__c, Channel__c, BillingCity__c, Cluster__c, ProcessType__c, Subprocess__c, CommercialProductCode__c, subscriberType__c
         FROM Order WHERE Id =:recordId 
         WITH SECURITY_ENFORCED];
-        HDT_LC_AttachmentManager paramsWrap = new HDT_LC_AttachmentManager(currOrder.AccountholderTypeBeneficiary__c, currOrder.Channel__c,
-                                                                            currOrder.BillingCity__c, currOrder.Cluster__c, currOrder.ProcessType__c, currOrder.Subprocess__c, 
-                                                                            currOrder.CommercialProductCode__c, currOrder.SignatoryType__c);
+        HDT_LC_AttachmentManager paramsWrap = new HDT_LC_AttachmentManager(currOrder.AccountholderTypeBeneficiary__c, 
+                                                                           currOrder.Channel__c,
+                                                                           currOrder.BillingCity__c, 
+                                                                           currOrder.Cluster__c, 
+                                                                           currOrder.ProcessType__c, 
+                                                                           currOrder.Subprocess__c,
+                                                                           currOrder.CommercialProductCode__c,
+                                                                           null,
+                                                                           currOrder.subscriberType__c,
+                                                                           null);
+                                                                            
         
         system.debug('paramsWrapSelected -> ' + paramsWrap);
         return paramsWrap;
@@ -130,12 +154,22 @@ public with sharing class HDT_LC_AttachmentManager {
 
     @AuraEnabled
     public static String getRequiredAttachment(Id recordId, HDT_LC_AttachmentManager paramsWrap){
-        /*
-        Object tabellaAllegati = null; // Implementare la chiamata alla tabella degli allegati obbligatori con tutti i driver necessari
-        return tabellaAllegati?.requiredAttachment;
-        */
-        return 'Patente; Modulo Variazione Superficie; Atto di Proprietà';
-        //return '';
+        //caso subprocess mancante
+        //caso product mancante ->
+        List<MandatoryAttachments__c> tabellaAllegati = [SELECT Id, MandatoryAttachments__c
+                                  FROM  MandatoryAttachments__c 
+                                  WHERE Cluster__c =: paramsWrap.cluster
+                                  AND (City__c =: paramsWrap.city OR City__c = null)
+                                  AND ProcessType__c =: paramsWrap.processType
+                                  AND (SubProcessType__c =: paramsWrap.subProcessType OR SubProcessType__c = null)
+                                  AND ProductCode__c =: paramsWrap.productCode
+                                  WITH SECURITY_ENFORCED
+                                  ORDER BY City__c, SubProcessType__c DESC NULLS LAST
+                                 ]; 
+        
+        return tabellaAllegati[0]?.MandatoryAttachments__c;
+        
+        //return 'Patente; Modulo Variazione Superficie; Atto di Proprietà';
     }
 
     @AuraEnabled

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Matrice_Societa_Vendita</fullName>
+    <columns>MasterLabel</columns>
+    <columns>isActive__c</columns>
+    <columns>SalesCompanyCode__c</columns>
+    <columns>Comune__c</columns>
+    <columns>distributor__c</columns>
+    <columns>Marcatura__c</columns>
+    <columns>Offerta__c</columns>
+    <columns>Service__c</columns>
+    <columns>SellerCompany__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Matrice Societa Vendita</label>
+    <language>en_US</language>
+</ListView>

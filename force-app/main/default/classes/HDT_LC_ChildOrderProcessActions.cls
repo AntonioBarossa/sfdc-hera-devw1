@@ -5,7 +5,7 @@
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
 
-@SuppressWarnings('PMD.CyclomaticComplexity, PMD.ExcessiveParameterList, PMD.NcssMethodCount')
+@SuppressWarnings('PMD.CyclomaticComplexity, PMD.ExcessiveParameterList, PMD.NcssMethodCount,PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_ChildOrderProcessActions {
     
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
@@ -66,10 +66,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }
 
         switch on order.RecordType.DeveloperName {
-            when 'HDT_RT_SubentroAmbiente' {
+            when 'HDT_RT_SubentroAmbiente', 'HDT_RT_AttivazioneAmbiente', 'HDT_RT_CambioTariffa' {
                 if(order.AnnualTARIPayment__c=='Attiva'){       order.TaxpayerDeclarationInfos__c='CHIEDO di ricevere ogni anno il bollettino precompilato per il pagamento della TARI - '+order.TaxpayerDeclarationInfos__c;}
                 if(order.AnnualTARIPayment__c=='Disattiva'){    order.TaxpayerDeclarationInfos__c='CHIEDO la revoca della disposizione di pagamento in unica soluzione - '+order.TaxpayerDeclarationInfos__c;}
-                if( currentOrder.RequestSource__c == 'D’ufficio' 
+                /**
+                 * Autore NTT
+                 * Commentato poichè lo sviluppo deve adeguarsi a quanto previsto per tutti i processi di vendita W1 e W2.
+                 * L'aggiornamento della fase dell'order figlio in Documentazione Validata o In attesa perferzionamento documentazione è demandata al Conferma pratica del Wizard Padre
+                 **/
+                /*if( currentOrder.RequestSource__c == 'D’ufficio' 
                     || 'Back office'.equalsIgnoreCase(currentOrder.Sale__r.Channel__c) 
                     || 'Sportello'.equalsIgnoreCase(currentOrder.Sale__r.Channel__c)
                     || 'y'.equalsIgnoreCase(currentOrder.DeliveredDocumentation__c)
@@ -77,7 +82,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     orderToUpdate.Phase__c='Documentazione Validata';
                 }else{
                     orderToUpdate.Phase__c='In attesa perfezionamento documentazione';
-                }
+                }*/
+            }
+            when 'HDT_RT_ModificaTariffaRimozione', 'HDT_RT_AgevolazioniAmbiente'{
+                orderToUpdate.Phase__c = '1 - Avviso di servizio'.equalsIgnoreCase(currentOrder.ApprovalType__c)? 'In Attesa Approvazione' : 'Documentazione Validata';
             }
             when 'HDT_RT_Subentro' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
@@ -94,21 +102,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             when 'HDT_RT_SwitchIn' {
 
                 List<Order> listOrd = new List<Order>{order};
-                //Map<String,Boolean> mapAccountRes = HDT_UTL_SwtichInProcess.checkAccountOrderIsResidential(listOrd);
-                //orderToUpdate.IsActivationDeferred__c = order.IsActivationDeferred__c;
-
-                /*try {       
-                    if(order.SignedDate__c != null){                    
-                        orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
-                    }
-                }
-                catch (Exception e) { 
-                    throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
-                }*/
-                
-                /*if (order.ProcessType__c == 'Switch in Fittizio') {
-                    orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
-                }*/
                 if (order.ProcessType__c == 'Switch in Ripristinatorio') {
                     orderToUpdate.DateSentToSII__c = Date.today();
                     orderToUpdate.EffectiveDate__c = Date.today();
@@ -116,53 +109,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 }
                 else {
                     if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
-  
-                        /*try { 
-                            if(order.SignedDate__c != null && mapAccountRes.get(order.AccountId)){
-                                orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
-                            }                                                            
-                        } 
-                        catch (Exception e) { 
-                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data massima di ripensamento.');
-                        }         */                                                        
-
                         if(order.SignedDate__c == null){
                             orderToUpdate.Status = 'In lavorazione';
                             orderToUpdate.Phase__c = 'Da Inviare' ;                        
                         }
-                        /*
-                        try {    
-                            if(order.SignedDate__c != null && !order.ProcessType__c.contains('Cambio Offerta')){                         
-                                orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order); 
-                            }
-                        }
-                        catch (Exception e) { 
-                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
-                        }                            
-                        */
                         if (order.VolturaThirdTrader__c == true) {
                             orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                         }
                         orderToUpdate.CIAccoutn__c = 'Richiesto';                        
                     }
                     else {
-                       /* 
-                        try {   
-                            if(order.SignedDate__c != null && !order.ProcessType__c.contains('Cambio Offerta')){                          
-                                orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
-                            }
-                        }
-                        catch (Exception e) { 
-                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
-                        }
-                        try {
-                            if(order.SignedDate__c != null){
-                                orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
-                            }                                                             
-                        }
-                        catch (Exception e) { 
-                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
-                        }       */ 
                         if (order.VolturaThirdTrader__c) {
                             orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                         }    
@@ -318,27 +274,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 {
                     orderToUpdate.ProcessCode__c = currentOrder.Commodity__c.equalsIgnoreCase('Energia Elettrica') ? 'VCE' : 'VCG';
                 }
-            }
-            /*when 'HDT_RT_CambioOfferta' {
-                
-                String dateToCalculate = '';
-                List<Order> listOrd = new List<Order>{order};
-                Map<String,Boolean> mapAccountRes = HDT_UTL_SwtichInProcess.checkAccountOrderIsResidential(listOrd);
 
-                try {
-                    if(order.SignedDate__c != null){      
-                        dateToCalculate = 'di decorrenza.';
-                        orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
-                    } 
-                    if(mapAccountRes.get(order.AccountId)){
-                        dateToCalculate = 'massima di ripensamento.';
-                        orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
-                    }
+                if ('VAS Fatturabili'.equalsIgnoreCase(currentOrder.VASType__c) && String.isBlank(currentOrder.CommercialProductCode__c) && 'Analisi Consumi'.equalsIgnoreCase(currentOrder.CommercialProduct__c)&& 'Energia Elettrica'.equalsIgnoreCase(currentOrder.CommodityFormula__c)){
+                        setVasProductField(orderToUpdate, currentOrder);
                 }
-                catch (Exception e) { 
-                    throw new AuraHandledException('Dati incompleti o errati per la generazione della data ' +dateToCalculate);
-                }             
-            }*/
+            }
         }
 
         List<ComfortQualityCall__c> comfortQualityList = new List<ComfortQualityCall__c>();
@@ -639,5 +579,33 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             return fixedFeeExclVat;
         }
         return fixedFeeExclVat == null ? null : fixedFeeExclVat*(1+vatNumber);
+    }
+
+    private static void setVasProductField(Order ordToUpdate,Order originalOrder){
+        Id contractId = originalOrder.ContractReference__c;
+        Id servicePointId = originalOrder.ServicePoint__c;
+        Id parentOrderId = originalOrder.ParentOrder__c;
+        try{
+            if(String.isNotBlank(contractId)){
+                HDT_QR_Contract qrContract = new HDT_QR_Contract();
+                SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractId);
+                if(subscription != null){
+                    ordToUpdate.CommercialProduct__c = subscription.SBQQ__ProductName__c;
+                    ordToUpdate.CommercialProductCode__c = subscription.ProductCode__c;
+                    ordToUpdate.CommercialProductVersion__c = subscription.VersionFormula__c;
+                }
+            }else if(String.isNotBlank(servicePointId) && String.isNotBlank(parentOrderId)) {
+                HDT_QR_OrderItem qrOrderItems = new HDT_QR_OrderItem();
+                OrderItem orderItem = qrOrderItems.getOfferActivationItem(parentOrderId,servicePointId);
+                if(orderItem != null){
+                    ordToUpdate.CommercialProduct__c = orderItem.Product2.Name;
+                    ordToUpdate.CommercialProductCode__c = orderItem.Product2.ProductCode;
+                    ordToUpdate.CommercialProductVersion__c = orderItem.Product2.Version__c;            
+                }
+            }
+        }catch(Exception e){
+            System.debug(LoggingLevel.INFO, 'setVasProductField : ' + e.getMessage());
+        }
+        
     }
 }

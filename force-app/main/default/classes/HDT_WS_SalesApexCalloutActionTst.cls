@@ -79,7 +79,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteObjectNull(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -121,7 +121,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();
         
-        myOrder = [SELECT Id, TecnicalPhase__c FROM Order]; 
+        myOrder = [SELECT Id, TecnicalPhase__c, VASType__c FROM Order]; 
         
         System.assertEquals('Comunicazione verso Heroku KO', myOrder.TecnicalPhase__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -129,7 +129,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
 
 	@isTest public static void testExecuteAnnullamento(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -169,7 +169,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();
         
-        myOrder = [SELECT Id, TecnicalPhase__c FROM Order]; 
+        myOrder = [SELECT Id, TecnicalPhase__c, VASType__c FROM Order]; 
         
         System.assertEquals('Annullamento - Comunicazione verso Heroku OK', myOrder.TecnicalPhase__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -177,7 +177,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
 
 	@isTest public static void testExecuteAmmissibilitaKO(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c,  VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c,  VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -217,7 +217,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();
         
-        myOrder = [SELECT Id, TecnicalPhase__c FROM Order]; 
+        myOrder = [SELECT Id, TecnicalPhase__c, VASType__c FROM Order]; 
         
         System.assertEquals('Annullato', myOrder.TecnicalPhase__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -225,7 +225,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
 
 	@isTest public static void testExecuteAmmissibilitaOK(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -267,7 +267,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();
         
-        myOrder = [SELECT Id, TecnicalPhase__c FROM Order]; 
+        myOrder = [SELECT Id, TecnicalPhase__c, VASType__c FROM Order]; 
         
         System.assertEquals('Annullato', myOrder.TecnicalPhase__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -275,7 +275,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteEsitoKOdaDL(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -317,7 +317,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest(); 
         
-        myOrder = [SELECT Id, CausalCode__c FROM Order]; 
+        myOrder = [SELECT Id, CausalCode__c, VASType__c FROM Order]; 
         
         System.assertEquals('testflusso', myOrder.CausalCode__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -325,7 +325,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteEsitoOKdaDL(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -367,7 +367,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();
         
-        myOrder = [SELECT Id, CausalCode__c FROM Order]; 
+        myOrder = [SELECT Id, CausalCode__c, VASType__c FROM Order]; 
         
         System.assertEquals('testflusso', myOrder.CausalCode__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -375,7 +375,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteAmmPrecheckKOSII(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -417,7 +417,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();      
         
-        myOrder = [SELECT Id, CausalCode__c FROM Order]; 
+        myOrder = [SELECT Id, CausalCode__c, VASType__c FROM Order]; 
         
         System.assertEquals('034', myOrder.CausalCode__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -425,7 +425,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteAmmPrecheckOKSII(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -468,7 +468,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();
         
-        myOrder = [SELECT Id, PrecheckResultSII__c FROM Order]; 
+        myOrder = [SELECT Id, PrecheckResultSII__c, VASType__c FROM Order]; 
         
         System.assertEquals('OK', myOrder.PrecheckResultSII__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -476,7 +476,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteEsitoKOdaSII(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -518,7 +518,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();
         
-        myOrder = [SELECT Id, CausalCode__c FROM Order]; 
+        myOrder = [SELECT Id, CausalCode__c, VASType__c FROM Order]; 
         
         System.assertEquals('testflusso', myOrder.CausalCode__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -526,7 +526,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteEsitoOKdaSII(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -568,7 +568,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest(); 
         
-        myOrder = [SELECT Id, CausalCode__c FROM Order]; 
+        myOrder = [SELECT Id, CausalCode__c, VASType__c FROM Order]; 
         
         System.assertEquals('testflusso', myOrder.CausalCode__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -576,7 +576,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteErroreLavorazioneSAP(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -618,7 +618,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();
         
-        myOrder = [SELECT Id, DiscardReason__c FROM Order]; 
+        myOrder = [SELECT Id, DiscardReason__c, VASType__c FROM Order]; 
         
         System.assertEquals('testnote', myOrder.DiscardReason__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -626,7 +626,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteCompletata(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -668,7 +668,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest(); 
 
-        myOrder = [SELECT Id, ContractAccountCode__c FROM Order]; 
+        myOrder = [SELECT Id, ContractAccountCode__c, VASType__c FROM Order]; 
         
         System.assertEquals('something', myOrder.ContractAccountCode__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -676,7 +676,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteFaseNulla(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -718,7 +718,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest(); 
         
-        myOrder = [SELECT Id, TecnicalPhase__c FROM Order]; 
+        myOrder = [SELECT Id, TecnicalPhase__c, VASType__c FROM Order]; 
         
         System.assertEquals('Annullamento - Comunicazione verso Heroku OK', myOrder.TecnicalPhase__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -726,7 +726,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteFaseNullaRecordId(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, RecordTypeId, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, RecordTypeId, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -768,7 +768,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest(); 
         
-        myOrder = [SELECT Id, TecnicalPhase__c FROM Order]; 
+        myOrder = [SELECT Id, TecnicalPhase__c, VASType__c FROM Order]; 
         
         System.assertEquals('Comunicazione verso Heroku OK', myOrder.TecnicalPhase__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -776,7 +776,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
     
     @isTest public static void testExecuteResult(){		
         
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c,CommercialProduct__c,CommercialProductCode__c,CommodityFormula__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -818,9 +818,73 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest(); 
         
-        myOrder = [SELECT Id, TecnicalPhase__c FROM Order]; 
+        myOrder = [SELECT Id, TecnicalPhase__c, VASType__c FROM Order]; 
         
         System.assertEquals('Comunicazione verso Heroku KO', myOrder.TecnicalPhase__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
     }
+
+    @isTest
+    public static void testpopulateCommercialProductCodeFromContract(){
+        wrts_prcgvr.MRR_1_0.MultiRequest request = (wrts_prcgvr.MRR_1_0.MultiRequest)JSON.deserialize('{"requests":[{"objects":[{"name":"Order","label":"Order","sObjectType":"Order","queryable":true,"fields":[{"name":"AccountId","value":"Account ID"},{"name":"OrderNumber","value":"Order Number"}]}]}]}',wrts_prcgvr.MRR_1_0.MultiRequest.class);
+        Order ord = [SELECT id,ServicePoint__c,ContractReference__c, ParentOrder__c FROM Order LIMIT 1];
+        Contract contr = [SELECT id FROM Contract LIMIT 1];
+        Product2 prod = [SELECT id FROM Product2 LIMIT 1];
+        prod.Family = 'Offerta commerciale';
+        prod.Version__c = 'V2';
+        prod.ProductCode = 'TEST';
+        update prod;
+        SBQQ__Subscription__c sub = HDT_UTL_DataFactoryTst.createSubscription (1, false, null, contr.Id, null)[0];
+        sub.SBQQ__Product__c = prod.Id;
+        insert sub;
+        Test.startTest();
+            ord.ContractReference__c = contr.id;
+            ord.ServicePoint__c = null;
+            ord.ParentOrder__c = null;
+            new HDT_WS_SalesApexCalloutAction().populateCommercialProductCode(ord,request);
+            system.assertEquals(true, checkRequest(request), 'La request non è stata popolata correttamente');
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testpopulateCommercialProductCodeFromServicePoint(){
+        wrts_prcgvr.MRR_1_0.MultiRequest request = (wrts_prcgvr.MRR_1_0.MultiRequest)JSON.deserialize('{"requests":[{"objects":[{"name":"Order","label":"Order","sObjectType":"Order","queryable":true,"fields":[{"name":"OFFERTA","value":"WRONG_VALUE"},{"name":"PROFILO","value":"WRONG_VALUE"}]}]}]}',wrts_prcgvr.MRR_1_0.MultiRequest.class);
+        Order ord = [SELECT id,AccountId FROM Order LIMIT 1];
+        List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1, false, ord.AccountId, 'Bozza');
+        orders[0].Name = 'ParentOrder';
+        insert orders;
+        ServicePoint__c sp = [SELECT id FROM ServicePoint__c LIMIT 1];
+        ord.ServicePoint__c = sp.Id;
+        ord.ParentOrder__c = orders[0].Id;
+        update ord;
+        Product2 prod = [SELECT id FROM Product2 LIMIT 1];
+        prod.Family = 'Offerta commerciale';
+        prod.Version__c = 'V2';
+        prod.ProductCode = 'TEST';
+        update prod;
+        PricebookEntry pe = [SELECT id FROM PricebookEntry LIMIT 1];
+        HDT_UTL_DataFactoryTst.createOrderItem(1, true, ord.Id, sp.Id, prod.Id, pe.Id);
+        ord = [SELECT id,ServicePoint__c,ContractReference__c, ParentOrder__c FROM Order LIMIT 1];
+        Test.startTest();
+            new HDT_WS_SalesApexCalloutAction().populateCommercialProductCode(ord,request);
+            system.assertEquals(true, checkRequest(request), 'La request non è stata popolata correttamente');
+        Test.stopTest();
+    }
+
+    private static Boolean checkRequest(wrts_prcgvr.MRR_1_0.MultiRequest mrrList){
+        Boolean response = true;
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects){
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('Order')){
+                for(wrts_prcgvr.MRR_1_0.Field f : obj.fields){
+                    if(f.name.equalsIgnoreCase('OFFERTA') && !'TEST'.equalsIgnoreCase(f.value)){
+                        response = false;   
+                    }else if (f.name.equalsIgnoreCase('PROFILO')&&!'V2'.equalsIgnoreCase(f.value)){
+                        response = false;
+                    }
+                }
+            }
+        }
+        return response;
+    }
+
 }

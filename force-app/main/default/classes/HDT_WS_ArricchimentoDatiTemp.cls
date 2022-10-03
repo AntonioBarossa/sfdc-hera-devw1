@@ -8,8 +8,9 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
 
         String pod = request[0].pod;
         String contractCode = request[0].contractCode;
+        String impianto = request[0].impianto;
 
-        String arricchimentoResponse = submitRequest(pod, contractCode);
+        String arricchimentoResponse = submitRequest(pod, contractCode, impianto);
 
         serializedResponse.add(arricchimentoResponse);
         return serializedResponse;
@@ -23,14 +24,21 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
     CreatedDate:    22/10/2021
     Reason: Avoid Debug Statements
     */
+
+    public static String submitRequest(String pod, String contractCode)
+    {
+        return submitRequest(pod, contractCode, '');
+    }
+
     @SuppressWarnings('PMD.AvoidDebugStatements')
-    public static String submitRequest(String pod, String contractCode) {
+    public static String submitRequest(String pod, String contractCode, String impianto) {
         //List<String> serializedResponse = new List<String>();
         //Map<String,String> bodyMap = new Map<String,String>{'pod' => request[0].pod,'contratto'=>request[0].contractCode};
         JSONGenerator gen = JSON.createGenerator(true);
         gen.writeStartObject();
         gen.writeStringField('pod', pod != null ? pod : '');
         gen.writeStringField('contratto', contractCode != null ? contractCode : '');
+        gen.writeStringField('impianto', impianto != null ? impianto : '');
         gen.writeEndObject();
         String pretty = gen.getAsString();
         System.debug(LoggingLevel.DEBUG, pretty);
@@ -86,6 +94,9 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
         
         @InvocableVariable
         public String pod;
+
+        @InvocableVariable
+        public String impianto;
         
     }
     
@@ -104,6 +115,7 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
     public class HDT_WRP_ArricchimentoData{
         public HDT_WRP_ArricchimentoTestata testata;
         public List<HDT_WRP_ArricchimentoPosizioni> posizioni;
+        public List<HDT_WRP_ArricchimentoDatiCatastali> datiCatastali;
     }
     
     public class HDT_WRP_ArricchimentoResponse{
@@ -112,4 +124,22 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
         public String timestamp;
         public HDT_WRP_ArricchimentoData data;
     }
+
+    public class HDT_WRP_ArricchimentoDatiCatastali{
+        public String destinazione;
+        public String progressivo;
+        public String codiceAssenzaDatiCatastali;
+        public String comuneAmministrativo;
+        public String comuneCatastale;
+        public String codiceComuneCatastale;
+        public String codiceProvincia;
+        public String tipoUnita;
+        public String sezioneUrbana;
+        public String foglio;
+        public String particella;
+        public String subalterno;
+        public String qualificaTitolareUtenza;
+        public String superficeCatastale;
+        public String categoriaCatastale;
+   }
 }

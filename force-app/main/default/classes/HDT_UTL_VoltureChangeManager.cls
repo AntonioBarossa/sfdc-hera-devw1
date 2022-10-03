@@ -118,7 +118,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             /**@frpanico 26/10/2021
              * Cambio Voltura - RN008 "Voltura con Switch"
             */
-            if (!'Amm. Precheck KO SII'.equalsIgnoreCase(orderToUpdate.TecnicalPhase__c)){
+            if ('Amm. Precheck OK SII'.equalsIgnoreCase(orderToUpdate.TecnicalPhase__c)){
                 voltureChangeSrv.handleAmmissibilityCheck(fieldsMap, currentOrder);
             }
 
