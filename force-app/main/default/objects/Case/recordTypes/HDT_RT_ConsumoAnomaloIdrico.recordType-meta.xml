@@ -9863,6 +9863,14 @@
             <fullName>Verifica in corso</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mancata risposta</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
