@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>AccountholderTypeBeneficiary__c</fullName>
     <externalId>false</externalId>
-    <label>Tipologia Intestatario/Beneficiario</label>
+    <label>Titolare del conto o Beneficiario</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
@@ -40,23 +40,28 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>Promessa di Pagamento Ente</controllingFieldValue>
             <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
-            <controllingFieldValue>Richiesta Domiciliazione</controllingFieldValue>
             <controllingFieldValue>Attivazione Click&amp;Pay</controllingFieldValue>
+            <controllingFieldValue>Comunicazione Pagamento</controllingFieldValue>
+            <controllingFieldValue>Richiesta Domiciliazione</controllingFieldValue>
+            <controllingFieldValue>Rimborso</controllingFieldValue>
             <valueName>Pagatore Alternativo</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Promessa di Pagamento Ente</controllingFieldValue>
             <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
-            <controllingFieldValue>Richiesta Domiciliazione</controllingFieldValue>
             <controllingFieldValue>Attivazione Click&amp;Pay</controllingFieldValue>
-            <valueName>Rappresentante Legale</valueName>
+            <controllingFieldValue>Comunicazione Pagamento</controllingFieldValue>
+            <controllingFieldValue>Richiesta Domiciliazione</controllingFieldValue>
+            <controllingFieldValue>Rimborso</controllingFieldValue>
+            <valueName>Stesso Sottoscrittore</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
-            <controllingFieldValue>Rimborso</controllingFieldValue>
-            <controllingFieldValue>Richiesta Domiciliazione</controllingFieldValue>
             <controllingFieldValue>Attivazione Click&amp;Pay</controllingFieldValue>
-            <valueName>Stesso Sottoscrittore</valueName>
+            <controllingFieldValue>Richiesta Domiciliazione</controllingFieldValue>
+            <valueName>Rappresentante Legale</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Rimborso</controllingFieldValue>

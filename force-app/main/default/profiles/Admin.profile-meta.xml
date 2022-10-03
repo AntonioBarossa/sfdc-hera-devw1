@@ -385,6 +385,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AbiCode__c.BankName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CampaignMember.Ext_Agency_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5426,6 +5431,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.AccountClassCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.CityOrInstitution__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
