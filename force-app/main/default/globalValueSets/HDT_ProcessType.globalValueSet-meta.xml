@@ -416,11 +416,6 @@
         <label>Inversione del contatore - GAS</label>
     </customValue>
     <customValue>
-        <fullName>Inversione del contatore - ACQ</fullName>
-        <default>false</default>
-        <label>Inversione del contatore - ACQ</label>
-    </customValue>
-    <customValue>
         <fullName>Mancata telelettura/Lettura - EE</fullName>
         <default>false</default>
         <label>Mancata telelettura/Lettura - EE</label>
