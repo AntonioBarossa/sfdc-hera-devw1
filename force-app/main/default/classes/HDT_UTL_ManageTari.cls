@@ -23,7 +23,7 @@ public with sharing class HDT_UTL_ManageTari {
         
         Map<String, Object> resultMap = (Map<String, Object>) resultList[0];
         List<Object> indentedList = (List<Object>) resultMap.get('secondoLivelloInformativo');
-        
+        if(indentedList == null)return checkTari;
         for(Object secondLevelObj : indentedList){
             Map<String, Object> secondLevelMap = (Map<String, Object>) secondLevelObj;
             String resulString = (String)secondLevelMap.get('settoreMerceologico');
