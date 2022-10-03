@@ -561,6 +561,11 @@
         <label>Processo VS2 - Trasmissione Dati Cliente Finale SII - EE</label>
     </customValue>
     <customValue>
+        <fullName>Promessa di Pagamento Ente</fullName>
+        <default>false</default>
+        <label>Promessa di Pagamento Ente</label>
+    </customValue>
+    <customValue>
         <fullName>Proroga connessione temporanea - EE</fullName>
         <default>false</default>
         <label>Proroga connessione temporanea - EE</label>

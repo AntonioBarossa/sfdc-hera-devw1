@@ -1,6 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 import CampaignIcons from '@salesforce/resourceUrl/campaignIcons';
 import getAllCampaigns from '@salesforce/apex/HDT_LC_CampaignsController.getCampaigns';
+import getCurrUserRole from '@salesforce/apex/HDT_LC_CampaignsController.getCurrUserRole';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 
@@ -41,20 +42,27 @@ export default class HdtAccountHighlightPanel extends LightningElement {
                 });
                 if (this.requiredCampaigns) {
                     this.iconStatus = this.requiredCampaignsIcon;
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Sono presenti Campagne Obbligatorie', //HRDTR-00_HRAWRM-36 14/09/2021
-                            message: 'Clicca {0}',
-                            messageData: [
-                                {
-                                    url: this.pageUrl,
-                                    label: 'qui'
-                                }
-                            ],
-                            variant: 'error',
-                            mode: 'sticky'
-                        })
-                    );
+                    getCurrUserRole().then(isFront => {
+                        if(isFront){
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Sono presenti Campagne Obbligatorie', //HRDTR-00_HRAWRM-36 14/09/2021
+                                    message: 'Clicca {0}',
+                                    messageData: [
+                                        {
+                                            url: this.pageUrl,
+                                            label: 'qui'
+                                        }
+                                    ],
+                                    variant: 'error',
+                                    mode: 'sticky'
+                                })
+                            );
+                        }
+                    }).catch(ex => {
+                        //console.log(err.body.message);
+                        console.log(ex);
+                    });
                 } else {
                     this.iconStatus = this.activeCampaignsIcon;
                 }

@@ -3,6 +3,7 @@
     <aura:attribute name="recordId" type="String" />
     <aura:attribute name="pageReference" type="Object"/>
     <aura:attribute name="currentTab" type="String"/>
+    <aura:attribute name="isFrontUser" type="Boolean" default="true"/>
 
 
     <aura:attribute name="sObjectName" type="String" />
