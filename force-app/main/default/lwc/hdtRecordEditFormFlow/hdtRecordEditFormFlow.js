@@ -379,12 +379,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         : this.secondColumn.filter(element => element['FieldName'] === fieldName);
     }
 
-    virtualValidate(event){
+    virtualChange(event){
         return;
     }
 
     handleChange(event){
-        this.virtualValidate(event);
+        this.virtualChange(event);
         //Reclami customizations
         this.complaintsLogic();
         //PianoRata customizations
@@ -453,12 +453,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             if(fifthLevel != null){
                 let soldBy = this.selector('SoldBy__c');
                 if(soldBy != null){
-                    if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
-                        soldBy.disabled = false;
-                    }else{
-                        soldBy.disabled = true;
-                    }
+                if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
+                    soldBy.disabled = false;
+                }else{
+                    soldBy.disabled = true;
                 }
+            }
             }
         } else if(!(Object.keys(channel).length === 0)){
             let entryChannel = this.selector('ComplaintEntryChannel__c');

@@ -14,8 +14,35 @@ export default class HdtMaterialSelection extends LightningElement {
 
     @api caseId;
     @api isCubatureLimited;
-    @api cubatureLimit;
     @api flowSessionId;
+    @api isDisable;
+
+    _cubatureLimit;
+
+    @api
+    get cubatureLimit() {
+        return this._cubatureLimit;
+    }
+
+    set cubatureLimit(value) {
+        if(this.isCubatureLimited=="Y"){
+            if(this._cubatureLimit <= this.allCubatureSelected && value <= this.allCubatureSelected){
+                this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');
+                this.closeModal();
+            }else if(this._cubatureLimit >= this.allCubatureSelected &&  value <= this.allCubatureSelected){
+                this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');
+                this.isPaymentNeeded = true;
+                this.closeModal();
+            }
+            if(!this._cubatureLimit && this.allCubatureSelected >= value){
+                this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');
+                this.isPaymentNeeded = true;
+                this.closeModal();
+            }
+        }
+       
+        this._cubatureLimit = value;
+    }
 
     @track data;
     @track error;
@@ -40,7 +67,7 @@ export default class HdtMaterialSelection extends LightningElement {
     get isDataSelected(){
         return this.selectedData.length
     }
-
+    
     async getTablesConfig(){
         let wrp = await getTables({ caseId: this.caseId});
         let data =wrp?.volumetricEstimate;
@@ -103,7 +130,6 @@ export default class HdtMaterialSelection extends LightningElement {
     }
 
     checkCubatureLimit(){
-        if(this.isCubatureLimited == 'Y') {
             this.allCubatureSelected = 0;
             
             this.selectedData.forEach((currentItem)=>{
@@ -113,19 +139,24 @@ export default class HdtMaterialSelection extends LightningElement {
             this.allCubatureSelected = this.allCubatureSelected.toFixed(2);
             console.log('### allCubatureSelected actual value -> ' + this.allCubatureSelected);
 
-            if(this.allCubatureSelected > this.cubatureLimit){
-                if(!this.isAlreadyWarned){
-                    if(this.showModal){ //Se la modal è chiusa ignoro il messaggio - utile quando si ritorna dalla bozza ed è visibile solo il bottone
-                        this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');
+            if(this.isCubatureLimited == 'Y'){
+                if(this.allCubatureSelected >= this.cubatureLimit){
+                    if(!this.isAlreadyWarned){
+                        if(this.showModal){
+                            this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');
+                        }
+                        this.isPaymentNeeded = true;
+                        this.isAlreadyWarned = true;
                     }
-                    this.isPaymentNeeded = true;
-                    this.isAlreadyWarned = true;
+                }else{
+                    if(this.isAlreadyWarned){
+                        this.showMessage('Attenzione','Ritiro non più a pagamento per i metri cubi selezionati','success');
+                    }
+                    this.isPaymentNeeded = false;
+                    this.isAlreadyWarned = false;
                 }
-            }else{//Non più a pagamento
-                this.isPaymentNeeded = false;
-                this.isAlreadyWarned = false;
             }
-        }
+        // }
     }
 
     showMessage(title, message, variant) {
@@ -152,19 +183,20 @@ export default class HdtMaterialSelection extends LightningElement {
         });  
         labels = labels.slice(0, -1);
         console.log('### allLabels value -> ' + labels);
-        // creazione record ed eliminazione precedente
         console.log('### selectedDataIds -> ' + selectedDataIds); 
         this.createObject(selectedDataIds);
 
-        //ripristino valori filtrati
         this.data = this._initialRecords;
         this.preSelectedKeys = [...this._globalSelectionMap.keys()];
         this.showModal = false;
-        //lancio evento
+
         console.log('### closeModalEvent labels -> ' + labels); 
         console.log('### closeModalEvent isCubatureLimited -> ' + this.isCubatureLimited); 
         console.log('### closeModalEvent isPaymentNeeded  -> ' + this.isPaymentNeeded ); 
-        this.dispatchEvent(new CustomEvent('closeModal',{label : labels, needPayment: this.isCubatureLimited=='Y'? this.isPaymentNeeded : false}));
+        this.dispatchEvent(new CustomEvent('closemodal',{ detail: {
+            label: labels, 
+            needPayment: this.isCubatureLimited=='Y'? this.isPaymentNeeded : false, 
+        }}));
     }
 
     async createObject(selectedDataIds){
@@ -209,7 +241,7 @@ export default class HdtMaterialSelection extends LightningElement {
                         let valuesArray = Object.values(record);
      
                         for (let val of valuesArray) {
-                            //console.log('val is ' + val);
+
                             let strVal = String(val);
      
                             if (strVal) {

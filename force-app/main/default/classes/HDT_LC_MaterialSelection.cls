@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 29-09-2022
+ * @last modified on  : 04-10-2022
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.AvoidDebugStatements , PMD.ApexCRUDViolation')
@@ -75,7 +75,7 @@ public with sharing class HDT_LC_MaterialSelection {
 
 		}
 
-        insert caseVolumetricaJunctionList;
+        HDT_UTL_DatabaseService.insertSObject(caseVolumetricaJunctionList);
         System.debug(LoggingLevel.DEBUG, 'inserted object ' + caseVolumetricaJunctionList);
         return caseVolumetricaJunctionList;
     }    
