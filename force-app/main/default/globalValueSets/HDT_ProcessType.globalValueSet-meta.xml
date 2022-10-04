@@ -351,6 +351,11 @@
         <label>Gestione Bonus Sociale - GAS</label>
     </customValue>
     <customValue>
+        <fullName>Gestione Bonus Sociale - ACQ</fullName>
+        <default>false</default>
+        <label>Gestione Bonus Sociale - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Gestione Calamità - EE</fullName>
         <default>false</default>
         <label>Gestione Calamità - EE</label>
@@ -559,6 +564,11 @@
         <fullName>Processo VS2 - Trasmissione Dati Cliente Finale SII - EE</fullName>
         <default>false</default>
         <label>Processo VS2 - Trasmissione Dati Cliente Finale SII - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Promessa di Pagamento Ente</fullName>
+        <default>false</default>
+        <label>Promessa di Pagamento Ente</label>
     </customValue>
     <customValue>
         <fullName>Proroga connessione temporanea - EE</fullName>

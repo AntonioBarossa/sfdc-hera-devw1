@@ -1,4 +1,5 @@
 import { LightningElement, track, api, wire } from 'lwc';
+import { CloseActionScreenEvent } from 'lightning/actions';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import showOriginalDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.showOriginalDocument';
@@ -42,7 +43,6 @@ export default class HdtShowOriginalDocument extends NavigationMixin(LightningEl
                 }else{
                     if(resultParsed.errorMessage != null && resultParsed.errorMessage != undefined){
                         this.closeAction();
-                        console.log('krist: '+resultParsed.errorMessage);
                         this.showErrorMessage(resultParsed.errorMessage);
                     }else{
                         this.closeAction();
@@ -62,7 +62,7 @@ export default class HdtShowOriginalDocument extends NavigationMixin(LightningEl
 
     closeAction(){
         console.log('closing action');
-        this.dispatchEvent(new CustomEvent('close'));
+        this.dispatchEvent(new CloseActionScreenEvent());
     }
 
     showErrorMessage(errorMessage){
