@@ -9776,6 +9776,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Approvazione KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Attesa risposta cliente</fullName>
             <default>false</default>
         </values>
@@ -9828,7 +9836,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In attesa allegati</fullName>
+            <fullName>In Attesa Approvazione</fullName>
             <default>false</default>
         </values>
         <values>
