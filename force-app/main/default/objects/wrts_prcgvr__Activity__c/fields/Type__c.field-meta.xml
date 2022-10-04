@@ -56,6 +56,11 @@
                 <label>Approvazione Bonus Commerciale</label>
             </value>
             <value>
+                <fullName>Approvazione Gestione Fuga</fullName>
+                <default>false</default>
+                <label>Approvazione Gestione Fuga</label>
+            </value>
+            <value>
                 <fullName>Approvazione Offerte</fullName>
                 <default>false</default>
                 <label>Approvazione Offerte</label>
@@ -301,6 +306,11 @@
                 <label>Eseguire Gestione Manuale SAP</label>
             </value>
             <value>
+                <fullName>Esito approvazione</fullName>
+                <default>false</default>
+                <label>Esito approvazione</label>
+            </value>
+            <value>
                 <fullName>Esito Da Gestire</fullName>
                 <default>false</default>
                 <label>Esito Da Gestire</label>
@@ -364,6 +374,11 @@
                 <fullName>Gestione Back Office</fullName>
                 <default>false</default>
                 <label>Gestione Back Office</label>
+            </value>
+            <value>
+                <fullName>Gestione blocco sollecito</fullName>
+                <default>false</default>
+                <label>Gestione blocco sollecito</label>
             </value>
             <value>
                 <fullName>Gestione dati discordanti</fullName>
