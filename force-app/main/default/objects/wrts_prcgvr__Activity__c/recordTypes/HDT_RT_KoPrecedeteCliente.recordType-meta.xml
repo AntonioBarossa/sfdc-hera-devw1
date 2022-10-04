@@ -1126,6 +1126,22 @@
             <fullName>Protocollo Gestito</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Contratto affitto registrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rogito registrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cessione ramo d’azienda registrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Altro atto registrato</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>IwsDemand__c</picklist>
