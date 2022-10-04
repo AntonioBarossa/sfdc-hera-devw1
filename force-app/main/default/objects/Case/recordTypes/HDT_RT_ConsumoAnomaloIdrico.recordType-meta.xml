@@ -3,6 +3,7 @@
     <fullName>HDT_RT_ConsumoAnomaloIdrico</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <label>Consumo Anomalo Idrico</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
