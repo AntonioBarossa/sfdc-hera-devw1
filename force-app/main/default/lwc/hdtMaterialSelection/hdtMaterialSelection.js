@@ -35,16 +35,18 @@ export default class HdtMaterialSelection extends LightningElement {
 
         if(this.isCubatureLimited=="Y"){
             if(this._cubatureLimit <= this.allCubatureSelected && value <= this.allCubatureSelected){
-                this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');
+                this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');//Cambio di motivazione
                 this.closeModal();
-            }else if(this._cubatureLimit >= this.allCubatureSelected &&  value <= this.allCubatureSelected){
-                this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');
+            }else if(this._cubatureLimit > this.allCubatureSelected &&  value <= this.allCubatureSelected){
+                this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');//vecchio limite ok, nuovo ko
                 this.isPaymentNeeded = true;
                 this.closeModal();
             }else if(!this._cubatureLimit && this.allCubatureSelected >= value){
-                this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');
+                this.showMessage('Attenzione','3 Il ritiro è a pagamento per i metri cubi selezionati','error');
                 this.isPaymentNeeded = true;
                 this.closeModal();
+            }else if(this._cubatureLimit <= this.allCubatureSelected && value > this.allCubatureSelected){
+                this.showMessage('Attenzione','Ritiro non più a pagamento per i metri cubi selezionati','success');//vecchio limite ko, nuovo ok
             }
         }
         this._cubatureLimit = value;

@@ -53,7 +53,6 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
         if(event.target.fieldName == 'ClientTypology__c') this._checkResidente = event.target.value == 'Domestico';
         if(event.target.fieldName == 'TypeOperation__c') this._typeOperation = event.target.value;
         checkPayment.value = this.checkConfiguration(event, checkPayment.value);
-        
     }
 
 
@@ -99,6 +98,7 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
         }
 
         if(this._withdrawConfiguration.FreeWithdrawCalculation__c == 'N'){
+            if(this.isCubatureLimited != 'N' && oldValue)   this.noChargeToast();
             this.isCubatureLimited = 'N';
             this.disableMaterialButton = false;
             this.cubatureLimit=null;
@@ -133,20 +133,17 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
         
     }
 
-    setCheckboxRitiro(newValue, paymentMessage){
-        const checkbox = this.template.querySelector("[data-id='WithdrawalFee__c']");
-        if(newValue && !checkbox.value){
-            this.showMessage('Attenzione', paymentMessage,'error');
-        }else if(!newValue && checkbox.value){
-            this.showMessage('Attenzione','Ritiro non più a pagamento per i parametri selezionati','success');
-        }
-        checkbox.value = newValue;
+    noChargeToast(){
+        this.showMessage('Attenzione','Ritiro non più a pagamento per i parametri selezionati','success');
     }
 
     handleClose(event){
         console.log('###Close Event >>> ' + JSON.stringify(event.detail));
         this.template.querySelector("[data-id='MaterialDescription__c']").value = event.detail.label;  
-        if(this.cubatureLimit!==null)   this.template.querySelector("[data-id='WithdrawalFee__c']").value = event.detail.needPayment;
+        if(this.cubatureLimit!==null){
+            const checkPayment = this.template.querySelector("[data-id='WithdrawalFee__c']");
+            checkPayment.value = event.detail.needPayment;
+        }   
     }
 
 
