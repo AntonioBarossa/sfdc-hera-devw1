@@ -40,26 +40,27 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>Comunicazione Pagamento</controllingFieldValue>
-            <controllingFieldValue>Attivazione Click&amp;Pay</controllingFieldValue>
-            <controllingFieldValue>Richiesta Domiciliazione</controllingFieldValue>
-            <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
             <controllingFieldValue>Promessa di Pagamento Ente</controllingFieldValue>
+            <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
+            <controllingFieldValue>Attivazione Click&amp;Pay</controllingFieldValue>
+            <controllingFieldValue>Comunicazione Pagamento</controllingFieldValue>
+            <controllingFieldValue>Richiesta Domiciliazione</controllingFieldValue>
+            <controllingFieldValue>Rimborso</controllingFieldValue>
             <valueName>Pagatore Alternativo</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Comunicazione Pagamento</controllingFieldValue>
-            <controllingFieldValue>Attivazione Click&amp;Pay</controllingFieldValue>
-            <controllingFieldValue>Richiesta Domiciliazione</controllingFieldValue>
-            <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
-            <controllingFieldValue>Rimborso</controllingFieldValue>
             <controllingFieldValue>Promessa di Pagamento Ente</controllingFieldValue>
+            <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
+            <controllingFieldValue>Attivazione Click&amp;Pay</controllingFieldValue>
+            <controllingFieldValue>Comunicazione Pagamento</controllingFieldValue>
+            <controllingFieldValue>Richiesta Domiciliazione</controllingFieldValue>
+            <controllingFieldValue>Rimborso</controllingFieldValue>
             <valueName>Stesso Sottoscrittore</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
             <controllingFieldValue>Attivazione Click&amp;Pay</controllingFieldValue>
             <controllingFieldValue>Richiesta Domiciliazione</controllingFieldValue>
-            <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
             <valueName>Rappresentante Legale</valueName>
         </valueSettings>
         <valueSettings>

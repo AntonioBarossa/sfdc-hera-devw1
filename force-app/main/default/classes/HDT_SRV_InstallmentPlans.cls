@@ -78,7 +78,9 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         String customerAssisted;
 
         for(DocumentSelected__c document : raiFeeDocuments){
-            totalRaiFeeResidual += document.TvFeeResidual__c;
+            if(document.TvFeeResidual__c != null){
+                totalRaiFeeResidual += document.TvFeeResidual__c;
+            }
         }
         if(totalResidue == 0){
             for(DocumentSelected__c document : raiFeeDocuments){
@@ -132,7 +134,10 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
             when 'Bonifico Paperless' {
                 depositPaymentMode = 'B';
             }
-            when 'Acconto Assistiti' {
+            when 'Accordi Assistiti' {
+                depositPaymentMode = 'A';
+            }
+            when 'Promessa di pagamento' {
                 depositPaymentMode = 'A';
             }
             when else {

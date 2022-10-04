@@ -10,5 +10,5 @@
     <masterLabel>Annulla pratica</masterLabel>
     <openType>sidebar</openType>
     <protected>false</protected>
-    <url>/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__id={!IF(NOT(ISBLANK(wrts_prcgvr__Activity__c.OrderId__c)), wrts_prcgvr__Activity__c.OrderId__c, wrts_prcgvr__Activity__c.CaseId__c)}&amp;c__accid={!wrts_prcgvr__Activity__c.Account__c}&amp;c__flowName=HDT_FL_GestioneAnnullamento&amp;c__processType=Annullamento+da+activity&amp;c__IsUserActivity={!IF(wrts_prcgvr__Activity__c.isUserActivity__c,true,false)}&amp;c__sObjectRecordToCancell={!IF(NOT(ISBLANK(wrts_prcgvr__Activity__c.OrderId__c)), &apos;Order&apos;, &apos;Case&apos;)}</url>
+    <url>/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__id={!IF(NOT(ISBLANK(wrts_prcgvr__Activity__c.OrderId__c)), wrts_prcgvr__Activity__c.OrderId__c, wrts_prcgvr__Activity__c.CaseId__c)}&amp;c__accid={!wrts_prcgvr__Activity__c.Account__c}&amp;c__flowName=HDT_FL_GestioneAnnullamento&amp;c__processType=Annullamento+da+activity&amp;c__IsUserActivity={!IF(wrts_prcgvr__Activity__c.isUserActivity__c,true,false)}&amp;c__sObjectRecordToCancell={!IF(NOT(ISBLANK(wrts_prcgvr__Activity__c.OrderId__c)), &apos;Order&apos;, &apos;Case&apos;)}&amp;c__activityId={!wrts_prcgvr__Activity__c.Id}</url>
 </WebLink>

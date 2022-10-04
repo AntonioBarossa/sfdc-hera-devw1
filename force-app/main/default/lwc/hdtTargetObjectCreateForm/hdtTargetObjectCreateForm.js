@@ -98,6 +98,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @track spCodeChanged = false;
 
     @track recordTypeId;
+
+    callWinBack = false;
     
     /**
      * Handle save button availability
@@ -216,7 +218,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     )
                 }
                 else if (element == 'Resident__c') {
-                    let resValue = this.recordTypeAccount === 'Residenziale' ? true : false;
+                    let resValue =  this.allSubmitedFields[element] !== null && this.allSubmitedFields[element] !== undefined ? this.allSubmitedFields[element] : 
+                                    this.servicePointRetrievedData[element] ? this.servicePointRetrievedData[element] 
+                                    : false;
+                    //let resValue = this.recordTypeAccount === 'Residenziale' ? true : false;
                     fieldsDataObject.push(
                         {
                             fieldname: element,
@@ -451,7 +456,17 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     )
                 }
                 else if (element === 'Resident__c') {
-                    if(this.recordTypeAccount == 'Residenziale'){
+                    let residentValue = this.allSubmitedFields[element] ? this.allSubmitedFields[element] : false; 
+                    
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: false,
+                            value: residentValue,
+                            disabled: false
+                        }
+                    )
+                    /* if(this.recordTypeAccount == 'Residenziale'){
                         this.allSubmitedFields.Resident__c = true;
                         fieldsDataObject.push(
                             {
@@ -472,7 +487,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                 disabled: false
                             }
                         )
-                    }
+                    } */
                 }
                 else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas') && element === 'MeterStatus__c') {
                     this.allSubmitedFields.MeterStatus__c = 'Bozza';
@@ -563,6 +578,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         let sp = selectedservicepoint;
         callService({ contratto: '', pod: input }).then(data => {
             if (data.statusCode == '200') {
+                this.callWinBack = true;
                 this.responseArriccData = data;
                 if (this.servicePointRetrievedData == undefined) {
                     extractDataFromArriccDataServiceWithExistingSp({ sp: sp, response: data }).then(datas => {
@@ -672,6 +688,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 /** Casistica service point esistente su SAP */
                 if(Array.isArray(this.selectedservicepoint))
                 {
+                    this.callWinBack = true;
                     this.servicePointRetrievedData = this.selectedservicepoint[0];
                     this.recordTypeId = this.servicePointRetrievedData['RecordTypeId'];
                     let recordtype = {};
@@ -1523,7 +1540,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     create() {
 
-        createServicePoinString({ servicePoint: JSON.stringify(this.allSubmitedFields), sale: this.sale }).then(data => {
+        createServicePoinString({ servicePoint: JSON.stringify(this.allSubmitedFields), sale: this.sale, callWinBack: this.callWinBack }).then(data => {
 
             this.loading = false;
             this.closeCreateTargetObjectModal();

@@ -368,6 +368,10 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 act.ParentProcess__c = null;
                 act.ParentSubprocess__c = null;
             }
+            //ticket 920338C non togliere in alcuni casi quando il record viene creato da Automated Process, non viene valorizzato il recordtype.
+            if (act.RecordTypeId == null){
+                act.RecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Default').getRecordTypeId();
+            }
         }
         Map<Id,Case> caseFieldProcessMap = new Map<Id,Case>();
         Map<Id,Order> orderFieldProcessMap = new Map<Id,Order>();

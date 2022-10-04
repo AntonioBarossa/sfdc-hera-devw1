@@ -543,5 +543,6 @@ public inherited sharing class HDT_LC_CampaignsController {
         system.debug('partialOutcomeValues --> '+partialOutcomeValues);
 
         return partialOutcomeValues;
+        
     }
 }
