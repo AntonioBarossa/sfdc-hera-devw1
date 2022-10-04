@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Redirect</name>
         <label>Redirect</label>
-        <locationX>1392</locationX>
-        <locationY>2342</locationY>
+        <locationX>1656</locationX>
+        <locationY>2522</locationY>
         <actionName>c:HDT_LCP_FlowRedirectAdvanced</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -23,6 +23,38 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <assignments>
+        <name>Assign_Configs_Records</name>
+        <label>Assign Configs Records</label>
+        <locationX>2602</locationX>
+        <locationY>1718</locationY>
+        <assignmentItems>
+            <assignToReference>ritiri_gratuiti_configs</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getRitiriGratuitiConfig</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>servicePointUpdate</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Configs_Records0</name>
+        <label>Assign Configs Records</label>
+        <locationX>2338</locationX>
+        <locationY>1478</locationY>
+        <assignmentItems>
+            <assignToReference>ritiri_gratuiti_configs</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getRitiriGratuitiConfig_0</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Hergo</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Assign_Process_Type</name>
         <label>Assign Process Type</label>
@@ -56,7 +88,7 @@
     <assignments>
         <name>Assign_Process_Type_0</name>
         <label>Assign Process Type</label>
-        <locationX>2008</locationX>
+        <locationX>2074</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -82,6 +114,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Selezione_Indirizzi_0</targetReference>
         </connector>
     </assignments>
@@ -98,14 +131,15 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Selezione_Indirizzi</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Company_Owner_MMS</targetReference>
         </connector>
     </assignments>
     <assignments>
         <description>Inherit just once those fields and blank parentId so this branch is not executed twice</description>
         <name>InheritFieldsfromOldCase</name>
         <label>Inherit Fields from Old Case</label>
-        <locationX>2008</locationX>
+        <locationX>2074</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>theCase.ParentId</assignToReference>
@@ -384,7 +418,7 @@
     <assignments>
         <name>populate_case_fields</name>
         <label>populate case fields</label>
-        <locationX>2602</locationX>
+        <locationX>3130</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>theCase.InvoicingStreetName__c</assignToReference>
@@ -457,68 +491,21 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Assign_Process_Type_0</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>putIndirizzi</name>
         <label>putIndirizzi</label>
-        <locationX>996</locationX>
-        <locationY>998</locationY>
+        <locationX>864</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>theCaseIndirizzi.Id</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>theCase.Id</elementReference>
             </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_Indirizzi</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>putIndirizzi_0</name>
-        <label>putIndirizzi</label>
-        <locationX>732</locationX>
-        <locationY>998</locationY>
-        <assignmentItems>
-            <assignToReference>theCaseIndirizzi.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>theCase.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCaseIndirizzi.InvoicingCity__c</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCaseIndirizzi.InvoicingStreetName__c</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCaseIndirizzi.InvoicingPostalCode__c</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCaseIndirizzi.InvoicingCountry__c</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCaseIndirizzi.InvoicingProvince__c</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCaseIndirizzi.InvoicingStreetNumberExtension__c</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCaseIndirizzi.InvoicingStreetNumber__c</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCaseIndirizzi.InvoicingPlace__c</assignToReference>
-            <operator>Assign</operator>
         </assignmentItems>
         <connector>
             <targetReference>Update_Indirizzi</targetReference>
@@ -528,7 +515,7 @@
         <name>CB_Appuntamenti</name>
         <label>CB Appuntamenti</label>
         <locationX>1150</locationX>
-        <locationY>1814</locationY>
+        <locationY>1598</locationY>
         <defaultConnector>
             <targetReference>DaInviare</targetReference>
         </defaultConnector>
@@ -550,9 +537,57 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Company_Owner_MMS</name>
+        <label>isCompanyOwnerMMS</label>
+        <locationX>2602</locationX>
+        <locationY>1238</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Selezione_Indirizzi_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non MMS</defaultConnectorLabel>
+        <rules>
+            <name>Riprendi_Processo_MMS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getAccount.CompanyOwner__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>MMS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Riprendi_Processo</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>getRitiriGratuitiConfig_0</targetReference>
+            </connector>
+            <label>Riprendi Processo MMS</label>
+        </rules>
+        <rules>
+            <name>MMS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getAccount.CompanyOwner__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>MMS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SelezioneForniture</targetReference>
+            </connector>
+            <label>MMS</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Context</name>
         <label>Context</label>
-        <locationX>1392</locationX>
+        <locationX>1656</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>populate_case_fields</targetReference>
@@ -683,7 +718,7 @@
         <description>Se è anonima, dopo aver ereditato i campi dal case, torna alla decision principale per essere redirezionata sul ramo delle global</description>
         <name>Context_0_0</name>
         <label>Context</label>
-        <locationX>2008</locationX>
+        <locationX>2074</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>FlowCompatibility</targetReference>
@@ -707,6 +742,7 @@
                 </rightValue>
             </conditions>
             <connector>
+                <isGoTo>true</isGoTo>
                 <targetReference>Context</targetReference>
             </connector>
             <label>isAnonima</label>
@@ -715,10 +751,10 @@
     <decisions>
         <name>isCompatible</name>
         <label>isCompatible</label>
-        <locationX>2206</locationX>
+        <locationX>2338</locationX>
         <locationY>1118</locationY>
         <defaultConnector>
-            <targetReference>Selezione_Indirizzi</targetReference>
+            <targetReference>Company_Owner_MMS</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Compatibile</defaultConnectorLabel>
         <rules>
@@ -745,7 +781,7 @@
         <name>NextStep</name>
         <label>Next Step</label>
         <locationX>864</locationX>
-        <locationY>1454</locationY>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>getUpdatedFields</targetReference>
         </defaultConnector>
@@ -779,38 +815,6 @@
                 <targetReference>Redirect</targetReference>
             </connector>
             <label>Salva In Bozza</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>updateIndirizzo</name>
-        <label>updateIndirizzo</label>
-        <locationX>864</locationX>
-        <locationY>878</locationY>
-        <defaultConnector>
-            <targetReference>putIndirizzi</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Indirizzo Popolato</defaultConnectorLabel>
-        <rules>
-            <name>IndirizzoSbiancato</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Selezione_Indirizzi_0</leftValueReference>
-                <operator>WasVisited</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Indirizzo_non_trovato</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>putIndirizzi_0</targetReference>
-            </connector>
-            <label>Indirizzo Sbiancato</label>
         </rules>
     </decisions>
     <formulas>
@@ -857,7 +861,7 @@
     <recordCreates>
         <name>Insert_theCase</name>
         <label>Insert theCase</label>
-        <locationX>2008</locationX>
+        <locationX>2074</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>Context_0_0</targetReference>
@@ -887,7 +891,7 @@
     <recordLookups>
         <name>getAccount</name>
         <label>getAccount</label>
-        <locationX>1392</locationX>
+        <locationX>1656</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -908,7 +912,7 @@
     <recordLookups>
         <name>getOldCase</name>
         <label>getOldCase</label>
-        <locationX>1392</locationX>
+        <locationX>1656</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -927,10 +931,73 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>getRitiriGratuitiConfig</name>
+        <label>getRitiriGratuitiConfig</label>
+        <locationX>2602</locationX>
+        <locationY>1598</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Configs_Records</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Municipality__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getServicePoint.SupplyCity__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>FreeWithdrawConfig__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getRitiriGratuitiConfig_0</name>
+        <label>getRitiriGratuitiConfig</label>
+        <locationX>2338</locationX>
+        <locationY>1358</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Configs_Records0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Municipality__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>theCase.InvoicingCity__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>FreeWithdrawConfig__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getServicePoint</name>
+        <label>getServicePoint</label>
+        <locationX>2602</locationX>
+        <locationY>1478</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>getRitiriGratuitiConfig</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Punto_di_Fornitura_Tari</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>ServicePoint__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getTabellaAppuntamento</name>
         <label>getTabellaAppuntamento</label>
         <locationX>1150</locationX>
-        <locationY>1694</locationY>
+        <locationY>1478</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CB_Appuntamenti</targetReference>
@@ -958,7 +1025,7 @@
         <name>getUpdatedFields</name>
         <label>getUpdatedFields</label>
         <locationX>1150</locationX>
-        <locationY>1574</locationY>
+        <locationY>1358</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getTabellaAppuntamento</targetReference>
@@ -982,7 +1049,7 @@
         <name>DaInviare</name>
         <label>Da Inviare</label>
         <locationX>1282</locationX>
-        <locationY>1934</locationY>
+        <locationY>1718</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>
@@ -1006,7 +1073,7 @@
         <name>InAttAppuntamento</name>
         <label>In Att Appuntamento</label>
         <locationX>1018</locationX>
-        <locationY>1934</locationY>
+        <locationY>1718</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>
@@ -1027,51 +1094,179 @@
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
+        <name>servicePointUpdate</name>
+        <label>servicePointUpdate</label>
+        <locationX>2602</locationX>
+        <locationY>1838</locationY>
+        <connector>
+            <targetReference>Screen_Hergo</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>theCase.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>InvoicingCity__c</field>
+            <value>
+                <elementReference>getServicePoint.SupplyCity__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingCountry__c</field>
+            <value>
+                <elementReference>getServicePoint.SupplyCountry__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingPostalCode__c</field>
+            <value>
+                <elementReference>getServicePoint.SupplyPostalCode__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingProvince__c</field>
+            <value>
+                <elementReference>getServicePoint.SupplyProvince__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingStreetName__c</field>
+            <value>
+                <elementReference>getServicePoint.SupplyStreetName__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingStreetNumberExtension__c</field>
+            <value>
+                <elementReference>getServicePoint.SupplyStreetNumberExtension__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingStreetNumber__c</field>
+            <value>
+                <elementReference>getServicePoint.SupplyStreetNumber__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServicePoint__c</field>
+            <value>
+                <elementReference>Punto_di_Fornitura_Tari</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>Update_Indirizzi</name>
         <label>Update Indirizzi</label>
         <locationX>864</locationX>
-        <locationY>1214</locationY>
+        <locationY>998</locationY>
         <connector>
             <targetReference>WizardScreen</targetReference>
         </connector>
         <inputReference>theCaseIndirizzi</inputReference>
     </recordUpdates>
     <screens>
-        <name>Selezione_Indirizzi</name>
-        <label>Selezione Indirizzi</label>
-        <locationX>2338</locationX>
-        <locationY>1238</locationY>
-        <allowBack>false</allowBack>
+        <name>Screen_Hergo</name>
+        <label>Screen_Hergo</label>
+        <locationX>2602</locationX>
+        <locationY>2054</locationY>
+        <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
+        <allowPause>true</allowPause>
         <connector>
-            <targetReference>updateIndirizzo</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>NextStep</targetReference>
         </connector>
         <fields>
-            <name>getAddress</name>
-            <extensionName>c:hdtTargetObjectAddressForFlow</extensionName>
+            <name>hdtWasteDisposalHergo</name>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>FreeWithdrawConfig__c</typeValue>
+            </dataTypeMappings>
+            <extensionName>c:hdtWasteDisposalHergo</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>hideNavigationButtons</name>
+                <name>recordId</name>
+                <value>
+                    <elementReference>theCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>theCase</name>
+                <name>draftButton</name>
                 <value>
-                    <elementReference>theCase</elementReference>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextStep</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>freeWithdrawConfig</name>
+                <value>
+                    <elementReference>getRitiriGratuitiConfig</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva in Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>lastWithdrawDate</name>
+                <value>
+                    <elementReference>getServicePoint.MaxFreeWithdrawDate__c</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>theCaseIndirizzi</assignToReference>
-                <name>theCase</name>
-            </outputParameters>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
+        <showFooter>false</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Selezione_Indirizzi_0</name>
@@ -1082,18 +1277,8 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>updateIndirizzo</targetReference>
+            <targetReference>putIndirizzi</targetReference>
         </connector>
-        <fields>
-            <name>Indirizzo_non_trovato</name>
-            <dataType>Boolean</dataType>
-            <defaultValue>
-                <elementReference>checkboxIndirizzo</elementReference>
-            </defaultValue>
-            <fieldText>Indirizzo non trovato</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
         <fields>
             <name>getAddress_0</name>
             <extensionName>c:hdtTargetObjectAddressForFlow</extensionName>
@@ -1116,25 +1301,36 @@
                 <assignToReference>theCaseIndirizzi</assignToReference>
                 <name>theCase</name>
             </outputParameters>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Indirizzo_non_trovato</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>SelezioneForniture</name>
+        <label>SelezioneForn</label>
+        <locationX>2602</locationX>
+        <locationY>1358</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>getServicePoint</targetReference>
+        </connector>
+        <fields>
+            <name>Punto_di_Fornitura_Tari</name>
+            <dataType>String</dataType>
+            <fieldText>Punto di Fornitura Tari</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>WizardScreen</name>
         <label>Wizard Screen</label>
         <locationX>864</locationX>
-        <locationY>1334</locationY>
+        <locationY>1118</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1224,7 +1420,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1266</locationX>
+        <locationX>1530</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>getOldCase</targetReference>
@@ -1234,7 +1430,7 @@
     <subflows>
         <name>FlowCompatibility</name>
         <label>Flow Compatibility</label>
-        <locationX>2206</locationX>
+        <locationX>2338</locationX>
         <locationY>998</locationY>
         <connector>
             <targetReference>isCompatible</targetReference>
@@ -1252,7 +1448,7 @@
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>578</locationX>
-        <locationY>1574</locationY>
+        <locationY>1358</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>
@@ -1288,6 +1484,14 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ritiri_gratuiti_configs</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>FreeWithdrawConfig__c</objectType>
     </variables>
     <variables>
         <name>theCase</name>
