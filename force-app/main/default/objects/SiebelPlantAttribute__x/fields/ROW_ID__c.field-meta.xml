@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SUPERFICIE_DETTAGLIO__c</fullName>
+    <fullName>ROW_ID__c</fullName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Superficie Dettaglio</label>
-    <length>100</length>
+    <label>Row Id</label>
+    <length>15</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>
