@@ -13,6 +13,7 @@ export default class HdtGeneralInfo extends LightningElement {
     @api campaignId;
     @api campaignCommissioningId;
     disabledInput = false;
+    requiredInput = false;
     hiddenEdit = true;
     loading = false;
     dataToSubmit = {};
@@ -139,10 +140,20 @@ export default class HdtGeneralInfo extends LightningElement {
             }
             if(Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound'){
                 this.isServiceCommissioning = true;
+                this.requiredInput = true;
             }
             else{
                 this.isServiceCommissioning = false;
+                this.requiredInput = false;
             }
+
+            if(Channel == 'Telefono'){
+                this.requiredInput = true;
+            }
+            else{
+                this.requiredInput = false;
+            }
+            
             if (this.userRole !== 'HDT_BackOffice' && (Channel == 'Telefono' || Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound' || Channel == 'Sportello' )) {
                 this.hiddenAgency = true;
                 handleAutomaticAgentAssign ({Channel:Channel,saleId:this.saleRecord.Id }).then(data =>{
@@ -332,6 +343,48 @@ export default class HdtGeneralInfo extends LightningElement {
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: 'Popolare il campo Canale',
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+            return;
+        }
+
+        if (this.template.querySelector("[data-id='DocumentType__c']") !== null
+            && (this.template.querySelector("[data-id='DocumentType__c']").value === ''
+                || this.template.querySelector("[data-id='DocumentType__c']").value === null)) {
+            this.loading = false;
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Popolare il campo Tipo Documento',
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+            return;
+        }
+
+        if (this.template.querySelector("[data-id='DocumentNumber__c']") !== null
+            && (this.template.querySelector("[data-id='DocumentNumber__c']").value === ''
+                || this.template.querySelector("[data-id='DocumentNumber__c']").value === null)) {
+            this.loading = false;
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Popolare il campo Numero Documento',
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+            return;
+        }
+
+        if (this.template.querySelector("[data-id='DocumentDate__c']") !== null
+            && (this.template.querySelector("[data-id='DocumentDate__c']").value === ''
+                || this.template.querySelector("[data-id='DocumentDate__c']").value === null)) {
+            this.loading = false;
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Popolare il campo Data Documento',
                 variant: 'error',
                 mode: 'sticky'
             });
