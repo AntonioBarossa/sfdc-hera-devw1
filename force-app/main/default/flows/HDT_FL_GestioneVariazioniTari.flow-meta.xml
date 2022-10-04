@@ -2577,6 +2577,12 @@
                     <elementReference>getAfterSecondForm.SupplyCity__c</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -3725,7 +3731,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Surface</name>
-                    <fieldText>&lt;p&gt;Superficie: 80&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;Superficie: {!getCase.Surface__c}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
@@ -3751,7 +3757,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>NumberOfPeople</name>
-                    <fieldText>&lt;p&gt;Numero abitanti: 3&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;Numero abitanti: {!getCase.NumberOfPeople__c}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
