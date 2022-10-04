@@ -254,7 +254,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                                 String blockingServicePoint = (String)srBlocking.ServicePointCode__c==null?(String)srBlocking.Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c:(String)srBlocking.ServicePointCode__c;
                                 blockingServicePoint = blockingServicePoint==null?(String)srBlocking.Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c:blockingServicePoint;
                                 
-                                if((incomingServicePoint.get(sr.Id)).equalsIgnoreCase(blockingServicePoint)){
+                                if(incomingServicePoint.get(sr.Id) != null && (incomingServicePoint.get(sr.Id)).equalsIgnoreCase(blockingServicePoint)){
                                     match = true;
                                 }
                             }else if(account){

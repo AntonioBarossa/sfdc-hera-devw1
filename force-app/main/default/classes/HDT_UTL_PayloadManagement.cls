@@ -213,6 +213,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         
         if (processType == 'Paperless' || (processType == 'Piano Rateizzazione' && depositPaymentMode == 'Paperless')){
             isPaperless = 'Y';
+            if(depositPaymentMode == 'Bonifico Paperless'){
+                isPaperless = 'B';
+            }
         }
         return isPaperless;
     }
