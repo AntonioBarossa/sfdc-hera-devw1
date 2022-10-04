@@ -119,9 +119,10 @@
     <enableReports>false</enableReports>
     <enableSearch>false</enableSearch>
     <externalDataSource>Hera_Archive</externalDataSource>
-    <externalName>SiebelDatiCatastali</externalName>
+    <externalName>SiebelPlantAttributeBundle</externalName>
     <gender>Masculine</gender>
-    <label>Dato Catastale</label>
-    <pluralLabel>Dati Catastali</pluralLabel>
+    <label>Attributo impianto Bundle</label>
+    <pluralLabel>Attributi impianto Bundle</pluralLabel>
     <searchLayouts></searchLayouts>
+    <startsWith>Vowel</startsWith>
 </CustomObject>

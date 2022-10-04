@@ -119,7 +119,7 @@
     <enableReports>false</enableReports>
     <enableSearch>false</enableSearch>
     <externalDataSource>Hera_Archive</externalDataSource>
-    <externalName>S_ASSET_XM</externalName>
+    <externalName>SiebelPlantAttribute</externalName>
     <gender>Masculine</gender>
     <label>Attributo impianto</label>
     <pluralLabel>Attributi impianto</pluralLabel>
