@@ -85,7 +85,7 @@ export default class HdtStringGenerationForDocument extends LightningElement {
             }
             if(!isValid){
                 window.sessionStorage.setItem(this.interviewId, JSON.stringify(this.outputObject()));
-                message = message? message : 'Verificare il ravvedimento operoso prima di procedere';
+                message = message? message : 'Contattare un\' amministratore';
             }else{
                 window.sessionStorage.removeItem(this.interviewId);
             }

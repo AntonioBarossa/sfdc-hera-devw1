@@ -281,7 +281,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 }
 
                 // Su Engage1 i plichi dei preventivi sono configurati solo per la 1070.
-                if (companyDesc != 'Hera Comm S.p.A.' && (cluster == 'Verifiche' || cluster == 'Preventivi')) {
+                if (companyDesc != 'Marche Multiservizi S.p.A' && companyDesc != 'Hera Comm S.p.A.' && (cluster == 'Verifiche' || cluster == 'Preventivi')) {
                     companyDesc = 'Hera Comm S.p.A.';
                 }
             }

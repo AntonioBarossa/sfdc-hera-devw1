@@ -43,6 +43,22 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		}
 	}
 
+	public static ContentVersion createContentVersion(String body, String filename, String extension){
+		ContentVersion cv = new ContentVersion();
+		cv.VersionData = Blob.valueOf(body);
+		cv.Title = filename;
+		cv.PathOnClient = filename + '.' + extension;
+		cv.ContentLocation = 'S';
+		try {
+			//Sostituire con HDT_UTL_DatabaseService.insertSObject()
+			HDT_UTL_DatabaseService.insertSObject(cv);
+			return cv;
+		} catch(DMLException e) {
+			System.debug(LoggingLevel.DEBUG, e);
+			return null;
+		}
+	}
+
 	public static ContentDocumentLink createContentLink(String contentVersionId, String recordId) {
 		if (contentVersionId == null || recordId == null) { return null; }
 		ContentDocumentLink cdl = new ContentDocumentLink();

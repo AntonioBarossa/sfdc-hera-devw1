@@ -44,6 +44,11 @@
                 <label>Agevolazione</label>
             </value>
             <value>
+                <fullName>Aggiunta Attacco senza Attivazione</fullName>
+                <default>false</default>
+                <label>Aggiunta Attacco senza Attivazione</label>
+            </value>
+            <value>
                 <fullName>Aggiunta Attacco</fullName>
                 <default>false</default>
                 <label>Aggiunta Attacco</label>
@@ -389,6 +394,11 @@
             <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
             <controllingFieldValue>Nuovo Impianto - Aggiunta Attacco</controllingFieldValue>
             <valueName>Nuovo Allaccio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
+            <controllingFieldValue>Nuovo Impianto - Aggiunta Attacco</controllingFieldValue>
+            <valueName>Aggiunta Attacco senza Attivazione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Modifica Impianto</controllingFieldValue>

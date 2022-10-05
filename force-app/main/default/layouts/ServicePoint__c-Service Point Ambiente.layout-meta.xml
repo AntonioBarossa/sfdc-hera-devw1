@@ -264,6 +264,17 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>RegistryCategory__c</fields>
+        <fields>RegistryCityCode__c</fields>
+        <fields>LegalCity__c</fields>
+        <fields>RegistryCity__c</fields>
+        <fields>DestinationUsage__c</fields>
+        <fields>Sheet__c</fields>
+        <fields>SapProgressive__c</fields>
+        <relatedList>LandRegistry__c.ServicePoint__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>CREATED_DATE</fields>
         <fields>Opportunity__c</fields>
         <fields>Quote__c</fields>
@@ -287,7 +298,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1w000000TS8k</masterLabel>
+        <masterLabel>00h3N000003d5iY</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -9385,11 +9385,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>BO_SP_S.Giovanni</fullName>
+            <fullName>BO_SP_S%2EGiovanni</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>BO_SP_S.Lazzaro</fullName>
+            <fullName>BO_SP_S%2ELazzaro</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10109,7 +10109,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>CC_CV_team2</fullName>	
+            <fullName>CC_CV_team2</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10393,7 +10393,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>EE_UD_SP_S.Martino al Tagliamento</fullName>
+            <fullName>EE_UD_SP_S%2EMartino al Tagliamento</fullName>
             <default>false</default>
         </values>
         <values>
