@@ -3,12 +3,49 @@
     <actionCalls>
         <name>Calculate_Expiration_Date</name>
         <label>Calculate Expiration Date</label>
+        <locationX>894</locationX>
+        <locationY>4598</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssignExpirationDate</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>GetCaseAggiornatoSecondaClassificazione</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Calculate_Expiration_Date_1</name>
+        <label>Calculate Expiration Date</label>
         <locationX>982</locationX>
         <locationY>1094</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>AssignExpirationDate</targetReference>
+            <targetReference>AssignExpirationDate_1</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -201,6 +238,13 @@
                 <stringValue>Si</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCaseAggiornato.DepositAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_1.DepositAmount</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Presenza_Reiterazione</targetReference>
         </connector>
@@ -232,7 +276,7 @@
         <name>AssegnaValori_2</name>
         <label>AssegnaValori</label>
         <locationX>894</locationX>
-        <locationY>5450</locationY>
+        <locationY>5690</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -255,7 +299,7 @@
         <name>AssegnaValoriActivity</name>
         <label>AssegnaValoriActivity</label>
         <locationX>630</locationX>
-        <locationY>5078</locationY>
+        <locationY>5318</locationY>
         <assignmentItems>
             <assignToReference>Get_Activity.ActivityEndTime__c</assignToReference>
             <operator>Assign</operator>
@@ -319,13 +363,78 @@
     <assignments>
         <name>AssignExpirationDate</name>
         <label>AssignExpirationDate</label>
+        <locationX>894</locationX>
+        <locationY>4718</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoSecondaClassificazione.AmountToPayInInstallments__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.AmountToPayInInstallments</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoSecondaClassificazione.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.EndDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoSecondaClassificazione.CompletedDocumentationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.CompletedDocumentationDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoSecondaClassificazione.DepositExpirationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.DepositExpirationDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoSecondaClassificazione.DepositAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.DepositAmount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Blocco_Sollecito_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignExpirationDate_1</name>
+        <label>AssignExpirationDate_1</label>
         <locationX>982</locationX>
         <locationY>1214</locationY>
         <assignmentItems>
-            <assignToReference>GetInputCaseAggiornato.ExpirationDate__c</assignToReference>
+            <assignToReference>GetInputCaseAggiornato.AmountToPayInInstallments__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.effectiveDate</elementReference>
+                <elementReference>Calculate_Expiration_Date_1.AmountToPayInInstallments</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCaseAggiornato.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_1.EndDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCaseAggiornato.CompletedDocumentationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_1.CompletedDocumentationDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCaseAggiornato.DepositExpirationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_1.CompletedDocumentationDate</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -499,7 +608,7 @@
         <name>Blocco_Sollecito_0</name>
         <label>Blocco Sollecito? (Fixare al completamento della build DM)</label>
         <locationX>894</locationX>
-        <locationY>4598</locationY>
+        <locationY>4838</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_2</targetReference>
         </defaultConnector>
@@ -750,7 +859,7 @@
         <defaultConnector>
             <targetReference>Diritto_Rettifica</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Si</name>
             <conditionLogic>and</conditionLogic>
@@ -762,7 +871,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Calculate_Expiration_Date</targetReference>
+                <targetReference>Calculate_Expiration_Date_1</targetReference>
             </connector>
             <label>Si</label>
         </rules>
@@ -843,7 +952,7 @@
         <name>Crea_Activity_Blocco_Sollecito</name>
         <label>Crea Activity Blocco Sollecito</label>
         <locationX>630</locationX>
-        <locationY>4838</locationY>
+        <locationY>5078</locationY>
         <connector>
             <targetReference>Get_Activity</targetReference>
         </connector>
@@ -967,7 +1076,7 @@
         <name>Get_Activity</name>
         <label>Get Activity</label>
         <locationX>630</locationX>
-        <locationY>4958</locationY>
+        <locationY>5198</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValoriActivity</targetReference>
@@ -1016,7 +1125,7 @@
         <name>GetActivityBloccoSollecito</name>
         <label>Get Activity Blocco Sollecito</label>
         <locationX>630</locationX>
-        <locationY>4718</locationY>
+        <locationY>4958</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Activity_Blocco_Sollecito</targetReference>
@@ -1047,7 +1156,7 @@
         <locationY>4478</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Blocco_Sollecito_0</targetReference>
+            <targetReference>Calculate_Expiration_Date</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1107,7 +1216,7 @@
         <name>Aggiorna_Attivi</name>
         <label>Aggiorna Attivita</label>
         <locationX>630</locationX>
-        <locationY>5198</locationY>
+        <locationY>5438</locationY>
         <connector>
             <targetReference>AssegnaValori_2</targetReference>
         </connector>
@@ -1121,7 +1230,7 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>894</locationX>
-        <locationY>5570</locationY>
+        <locationY>5810</locationY>
         <inputReference>GetCaseAggiornatoSecondaClassificazione</inputReference>
     </recordUpdates>
     <recordUpdates>

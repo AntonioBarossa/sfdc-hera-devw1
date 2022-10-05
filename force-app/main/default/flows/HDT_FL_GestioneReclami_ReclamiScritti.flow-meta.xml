@@ -50,6 +50,13 @@
                 <stringValue>Si</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.DepositAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.DepositAmount</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Cerca_Case_reiterazione</targetReference>
         </connector>

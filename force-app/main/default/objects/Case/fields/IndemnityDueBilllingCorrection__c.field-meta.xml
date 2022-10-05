@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>IndemnityDueBilllingCorrection__c</fullName>
     <externalId>false</externalId>
-    <formula>DepositAmount__c</formula>
+    <formula>IF(ISPICKVAL(CorrectionRight__c, &quot;Si&quot;), DepositAmount__c, null)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Indennizzo per rettifica fatturazione</label>
     <precision>18</precision>

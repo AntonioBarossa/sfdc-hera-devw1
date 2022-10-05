@@ -782,7 +782,7 @@
             <assignToReference>GetRichiestaParere.ExpirationDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.effectiveDate</elementReference>
+                <elementReference>Calculate_Expiration_Date.EndDate</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -798,7 +798,7 @@
             <assignToReference>GetRichiestaParere.ExpirationDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.effectiveDate</elementReference>
+                <elementReference>Calculate_Expiration_Date.EndDate</elementReference>
             </value>
         </assignmentItems>
         <connector>
