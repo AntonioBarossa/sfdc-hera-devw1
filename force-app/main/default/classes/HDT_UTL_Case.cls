@@ -186,6 +186,9 @@ public inherited sharing class HDT_UTL_Case {
             if( datesNamount.containsKey('AmountToPayInInstallments__c') ){
                 output.AmountToPayInInstallments = decimal.valueOf(datesNamount.get('AmountToPayInInstallments__c'));
             }
+            if( datesNamount.containsKey('DepositAmount__c') ){
+                output.DepositAmount = decimal.valueOf(datesNamount.get('DepositAmount__c'));
+            }
         }
 
         outputs.add(output);
@@ -232,6 +235,8 @@ public inherited sharing class HDT_UTL_Case {
         public Date DepositExpirationDate;
         @InvocableVariable
         public Decimal AmountToPayInInstallments;
+        @InvocableVariable
+        public Decimal DepositAmount;
         @InvocableVariable
         public Date effectiveDate;
         @InvocableVariable
