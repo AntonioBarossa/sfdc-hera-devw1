@@ -2,10 +2,10 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 14-09-2022
+ * @last modified on  : 05-10-2022
  * @last modified by  : Giacinto Florio
 **/
-@SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfStmtsMustUseBraces, PMD.IfElseStmtsMustUseBraces, PMD.pmdAvoidDebugStatements, PMD.CyclomaticComplexity')
+@SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfStmtsMustUseBraces, PMD.IfElseStmtsMustUseBraces, PMD.pmdAvoidDebugStatements, PMD.CyclomaticComplexity, PMD.ClassNamingConventions')
 public with sharing class HDT_LC_AppointmentTariAgenda {
     
     private static HDT_SRV_AppointmentAgenda srvAgenda = new HDT_SRV_AppointmentAgenda();
@@ -27,30 +27,13 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     }
 
     @AuraEnabled
-    public static String handleConfirm(String caseId,String appointmentJson) { //questo
-        String response = '';
-        try{
-            // HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento request = initAppointmentRequestCase(caseId, requestType.CONFIRM);
-            // Map<String,String> mapAppointment = (Map<String,String>) JSON.deserialize(appointmentJson, Map<String,String>.class);
-            // HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento appointment = new HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento();
-            // appointment.codiceApp = mapAppointment.get('codice');
-            // appointment.appData = HDT_UTL_AppointmentAgenda.dateConverter(mapAppointment.get('data'));
-            // appointment.appFasciaOrario = mapAppointment.get('fascia');
-            // appointment.zLimApp= mapAppointment.get('dataLimite');
-            // appointment.zLimAppOra = mapAppointment.get('oraLimite');
-            // appointment.zStimaDurApp = mapAppointment.get('stima');
-            // request.appData = appointment.appData;
-            // request.appFasciaOrario = appointment.appFasciaOrario;
-            // HDT_UTL_AppointmentAgenda.setAppointmentCode(request, appointment.codiceApp);
-
-            //HDT_WRP_Appuntamento.HDT_WRP_ResponseAppuntamento response = HDT_UTL_AppointmentAgenda.executeCallout(request);
-            // response = '{"data" : "31/12/2022","fascia" : "15:00/16:00","codice" : "2222","dataLimite" : "28/12/2021","oraLimite" : "19:00","stima" :"00:30:00"}';
-            response = 'OK';
-            return response;
-        }catch (exception e){
-            throw new AuraHandledException(e.getMessage());
-        }
-        // return response;
+    public static void handleWithdrawalCreation(String servicePointId, Date dataRitiro){
+        System.debug('data Ritiro -> ');
+        FreeWithdraw__c ritiro = new FreeWithdraw__c();
+        ritiro.ServicePointMaster__c = servicePointId;
+        ritiro.LastFreeWithdrawDate__c = dataRitiro;
+        System.debug('ritiro -> ' + ritiro);
+        HDT_UTL_DatabaseService.insertSObject(ritiro);
     }
     
     @AuraEnabled
@@ -61,7 +44,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
 
         Map<String,Object> activityObj = (Map<String,Object>)JSON.deserializeUntyped(activityFields);
         Map<String,Object> caseObj = (Map<String,Object>)JSON.deserializeUntyped(caseFields);
-
+        
         System.debug('templateName ->' + templateName); 
         List<wrts_prcgvr__Activity__c> activitiesToInsert = null;
         
@@ -78,7 +61,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
                 }
             }
         }
-
+        
         if(JSON.deserializeUntyped(caseFields)!=null){
             Case theCase = [SELECT Id FROM Case WHERE Id =:caseId];
             if(theCase!=null){
@@ -109,16 +92,65 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             HDT_UTL_DatabaseService.insertSObject(cases);
         }
     }
+    
+    @AuraEnabled
+    public static String handleConfirm(String caseId,String appointmentJson) { //TODO Conferma Appuntamento
+        String response = '';
+        try{
+            // HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento request = initAppointmentRequestCase(caseId, requestType.CONFIRM);
+            // Map<String,String> mapAppointment = (Map<String,String>) JSON.deserialize(appointmentJson, Map<String,String>.class);
+            // HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento appointment = new HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento();
+            // appointment.codiceApp = mapAppointment.get('codice');
+            // appointment.appData = HDT_UTL_AppointmentAgenda.dateConverter(mapAppointment.get('data'));
+            // appointment.appFasciaOrario = mapAppointment.get('fascia');
+            // appointment.zLimApp= mapAppointment.get('dataLimite');
+            // appointment.zLimAppOra = mapAppointment.get('oraLimite');
+            // appointment.zStimaDurApp = mapAppointment.get('stima');
+            // request.appData = appointment.appData;
+            // request.appFasciaOrario = appointment.appFasciaOrario;
+            // HDT_UTL_AppointmentAgenda.setAppointmentCode(request, appointment.codiceApp);
 
+            //HDT_WRP_Appuntamento.HDT_WRP_ResponseAppuntamento response = HDT_UTL_AppointmentAgenda.executeCallout(request);
+            // response = '{"data" : "31/12/2022","fascia" : "15:00/16:00","codice" : "2222","dataLimite" : "28/12/2021","oraLimite" : "19:00","stima" :"00:30:00"}';
+            //response = 'OK';
+
+            // startDate = appointmentJson.startDate;ì
+            // endDate = appointmentJson.endDate;
+            //request = "{""purchaseOrderNumber"": """",""streetCoding"": """",""street"":"""",""housenumber"":"""",""typeInt"": """",""indicator"":"""",""numberOfLines"":"""", ""startDate"":"""", ""endDate"":"""" }"
+            
+            //CASE SUCCESS
+            response = '{"status": "success","correlationId": "30cf9330-02f0-11ed-addc-064078045870","timestamp": "2022-27-07T12:00:34.819+02:00",'+
+                        '"data": {"noticeNumber":"1","workCenterId":"","division":"","startDate":"2022-12-31","endDate":"2023-01-10"}}';
+
+            //CASE FAILED
+            //response = '{"status": "failed", "correlationId": "30cf9330-02f0-11ed-addc-064078045870", "timestamp": "2022-27-07T12:00:34.819+02:00",'+
+                        //' "errorDetails": [{"code": "BAD_REQUET", "message": "There was an issue with your request message", "additionalInfo": "Bad Request : There was an issue with your request message" }]}';
+
+            return response;
+        }catch (exception e){
+            throw new AuraHandledException(e.getMessage());
+        }
+        // return response;
+    }
     @AuraEnabled
     public static String handleView(String caseId) { //questo
         String response = '';
         try{
+
+            //requestMessage = {"purchaseOrderNumber": "", "streetCoding": "", "street":"", "housenumber":"", "typeInt": "", "indicator":"", "numberOfLines":""}
+
                 //response = srvAgenda.handleFirstSearch(caseId,preferedDate,preferedTimeSlot);
                 // return handleSearc(caseId, preferedDate, preferedTimeSlot, requestType.FIRST_SEARCH);
                 // return '{"codCaus" : "test" ,"codFlusso" : "0160" ,"desEsitoConf" : "1" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "0" ,"appuntamento" : [{"appData" : "2022-12-31","appFasciaOrario" : "15:00/16:00","codiceApp" : "2222","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"}]}';
-                return '{"appuntamento" : {"id" : "1","tipo" : "Primo Appuntamento","inizio" : "2022-12-31","fine" : "2022-12-31"}}';
+                //return '{"appuntamento" : {"id" : "1","tipo" : "Primo Appuntamento","inizio" : "2022-12-31","fine" : "2022-12-31"}}';
                
+
+            //CASE SUCCESS
+            return '{"status": "success","correlationId": "30cf9330-02f0-11ed-addc-064078045870","timestamp": "2022-27-07T12:00:34.819+02:00","data": {"noticeNumber":"1","appointmentType":"First App","startDate":"2022-12-31","endDate":"2023-01-10"}}';
+
+            //CASE FAILED
+            // return '{"status": "failed","correlationId": "30cf9330-02f0-11ed-addc-064078045870","timestamp": "2022-27-07T12:00:34.819+02:00","errorDetails": [{"code": "BAD_REQUET","message": "There was an issue with your request message","additionalInfo": "Bad Request : There was an issue with your request message"}]}';
+            
         }catch (exception e){
             throw new AuraHandledException(e.getMessage());
         }
@@ -126,7 +158,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     }
 
     @AuraEnabled
-    public static String handleSearch(String caseId, String searchType, Date preferedDate, String preferedTimeSlot) { //questo
+    public static String handleSearch(String caseId, String searchType, Date preferedDate, String preferedTimeSlot) { //TODO Richiesta Appuntamento
         String response = '';
         try{
                 //response = srvAgenda.handleFirstSearch(caseId,preferedDate,preferedTimeSlot);
@@ -135,7 +167,26 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
                 // Nessun Appuntamento Restituito
                 //return '{"codCaus" : "test" ,"codFlusso" : "0160" ,"desEsitoConf" : "1" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "0" ,"appuntamento" : []}';
                
-                return '{"codCaus" : "test" ,"codFlusso" : "0160" ,"desEsitoConf" : "1" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "0" ,"appuntamento" : [{"appData" : "2022-12-31","appFasciaOrario" : "15:00/16:00","codiceApp" : "2222","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "16:00/17:00","codiceApp" : "3333","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "17:00/18:00","codiceApp" : "4444","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "18:00/19:00","codiceApp" : "5555","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "19:00/20:00","codiceApp" : "6666","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"}]}';
+                // "{
+                //     ""purchaseOrderNumber"": """",
+                //     ""streetCoding"": """",
+                //     ""street"":"""",
+                //     ""housenumber"":"""",
+                //     ""typeInt"": """",
+                //     ""indicator"":"""",
+                //     ""numberOfLines"":""""
+                //      }"
+                   
+                //CASE SUCCESS
+                return '{"status": "success","correlationId": "30cf9330-02f0-11ed-addc-064078045870","timestamp": "2022-27-07T12:00:34.819+02:00",'+
+                '"data": {"outcome":"OK", "text":"Text","appointmentData": [ {"startDate":"2022-12-31","endDate":"2023-01-10"}] }}';
+
+                //CASE FAILED
+                // return'{""status"": ""failed"",""correlationId"": ""30cf9330-02f0-11ed-addc-064078045870"",""timestamp"": ""2022-27-07T12:00:34.819+02:00"",'+
+                // '""errorDetails"": [{""code"": ""BAD_REQUET"",""message"": ""There was an issue with your request message"",""additionalInfo"": ""Bad Request : There was an issue with your request message""}]}';
+
+
+                //return '{"codCaus" : "test" ,"codFlusso" : "0160" ,"desEsitoConf" : "1" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "0" ,"appuntamento" : [{"appData" : "2022-12-31","appFasciaOrario" : "15:00/16:00","codiceApp" : "2222","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "16:00/17:00","codiceApp" : "3333","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "17:00/18:00","codiceApp" : "4444","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "18:00/19:00","codiceApp" : "5555","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "19:00/20:00","codiceApp" : "6666","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"}]}';
 
         }catch (exception e){
             throw new AuraHandledException(e.getMessage());
