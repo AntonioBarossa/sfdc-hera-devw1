@@ -100,11 +100,6 @@
                 <label>Informazione su doppio pagamento/incasso</label>
             </value>
             <value>
-                <fullName>Assistenza Sociale</fullName>
-                <default>false</default>
-                <label>Assistenza Sociale</label>
-            </value>
-            <value>
                 <fullName>Calamità Naturali</fullName>
                 <default>false</default>
                 <label>Calamità Naturali</label>
@@ -360,6 +355,21 @@
                 <label>Firma falsa</label>
             </value>
             <value>
+                <fullName>Assistenza sociale (cliente)</fullName>
+                <default>false</default>
+                <label>Assistenza sociale (cliente)</label>
+            </value>
+            <value>
+                <fullName>Assistenza sociale (ente)</fullName>
+                <default>false</default>
+                <label>Assistenza sociale (ente)</label>
+            </value>
+            <value>
+                <fullName>Assistenza Sociale</fullName>
+                <default>false</default>
+                <label>Assistenza Sociale (DEPRECATO)</label>
+            </value>
+            <value>
                 <fullName>Mancata erogazione Bonus con domanda di attivazione/rinnovo su contratto Energy</fullName>
                 <default>false</default>
                 <label>Mancata erogazione Bonus con domanda di attivazione/rinnovo su contratto Energy</label>
@@ -387,16 +397,19 @@
             <value>
                 <fullName>Bolletta Fuga H2O</fullName>
                 <default>false</default>
+                <isActive>true</isActive>
                 <label>Bolletta Fuga H2O</label>
             </value>
             <value>
                 <fullName>Servizio Avviso Sms/mail</fullName>
                 <default>false</default>
+                <isActive>true</isActive>
                 <label>Servizio Avviso Sms/mail</label>
             </value>
             <value>
                 <fullName>Delibera 2018</fullName>
                 <default>false</default>
+                <isActive>true</isActive>
                 <label>Delibera 2018</label>
             </value>
             <value>
@@ -453,8 +466,24 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>Verifica Integrita Sigilli</controllingFieldValue>
+            <valueName>Ripristino Sigilli / Piombi Rotti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Integrita Sigilli</controllingFieldValue>
+            <valueName>Ripiombatura Post Collaudo Antincendio</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Modifica/Azzeramento Consumo Annuo</controllingFieldValue>
             <valueName>Edificio in ristrutturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lettura Acqua Avviso al Cliente</controllingFieldValue>
+            <valueName>Servizio Avviso Sms/mail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lettura Acqua Avviso al Cliente</controllingFieldValue>
+            <valueName>Delibera 2018</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Modifica/Azzeramento Consumo Annuo</controllingFieldValue>
@@ -534,6 +563,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
+            <valueName>Bolletta Fuga H2O</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>Calamità Naturali</valueName>
         </valueSettings>
         <valueSettings>
@@ -594,7 +627,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
-            <valueName>Bolletta Fuga H2O</valueName>
+            <valueName>Assistenza sociale (cliente)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
+            <valueName>Assistenza sociale (ente)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
@@ -655,14 +692,6 @@
         <valueSettings>
             <controllingFieldValue>Contratto Non Richiesto</controllingFieldValue>
             <valueName>Firma falsa</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Lettura Acqua Avviso al Cliente</controllingFieldValue>
-            <valueName>Servizio Avviso Sms/mail</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Lettura Acqua Avviso al Cliente</controllingFieldValue>
-            <valueName>Delibera 2018</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
