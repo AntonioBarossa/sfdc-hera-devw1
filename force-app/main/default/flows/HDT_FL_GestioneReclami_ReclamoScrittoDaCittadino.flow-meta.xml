@@ -3,8 +3,8 @@
     <actionCalls>
         <name>redirectToRecord</name>
         <label>redirectToRecord</label>
-        <locationX>204</locationX>
-        <locationY>2270</locationY>
+        <locationX>182</locationX>
+        <locationY>2510</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -20,8 +20,8 @@
     <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
-        <locationX>72</locationX>
-        <locationY>1814</locationY>
+        <locationX>50</locationX>
+        <locationY>2054</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.CorrectionRight__c</assignToReference>
             <operator>Assign</operator>
@@ -36,8 +36,8 @@
     <assignments>
         <name>AssegnaValori_0_0</name>
         <label>AssegnaValori</label>
-        <locationX>204</locationX>
-        <locationY>2030</locationY>
+        <locationX>182</locationX>
+        <locationY>2270</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -73,7 +73,7 @@
     <assignments>
         <name>assignCommodity</name>
         <label>assignCommodity</label>
-        <locationX>391</locationX>
+        <locationX>484</locationX>
         <locationY>158</locationY>
         <assignmentItems>
             <assignToReference>InputCase.Commodity__c</assignToReference>
@@ -89,7 +89,7 @@
     <assignments>
         <name>AssignNewAddress</name>
         <label>AssignNewAddress</label>
-        <locationX>292</locationX>
+        <locationX>424</locationX>
         <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>getPostClassification.SupplyCity__c</assignToReference>
@@ -154,7 +154,7 @@
     <assignments>
         <name>assignProcessType_0</name>
         <label>assignProcessType</label>
-        <locationX>391</locationX>
+        <locationX>484</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>processTypeMetadato</assignToReference>
@@ -170,7 +170,7 @@
     <decisions>
         <name>alternativeAddress</name>
         <label>alternativeAddress</label>
-        <locationX>204</locationX>
+        <locationX>336</locationX>
         <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>AssignNewAddress</targetReference>
@@ -195,7 +195,7 @@
     <decisions>
         <name>Annullamento_postAddress</name>
         <label>Annullamento</label>
-        <locationX>50</locationX>
+        <locationX>105</locationX>
         <locationY>998</locationY>
         <defaultConnector>
             <targetReference>alternativeAddress</targetReference>
@@ -241,8 +241,8 @@
     <decisions>
         <name>Rettifica_Doppia_Fatturazione</name>
         <label>Rettifica Doppia Fatturazione?</label>
-        <locationX>204</locationX>
-        <locationY>1694</locationY>
+        <locationX>182</locationX>
+        <locationY>1934</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_0_0</targetReference>
         </defaultConnector>
@@ -266,7 +266,7 @@
     <decisions>
         <name>SalvaOConferma</name>
         <label>Salva in Bozza o Conferma?</label>
-        <locationX>391</locationX>
+        <locationX>484</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -318,6 +318,32 @@
             <label>Annulla</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>tariManaged</name>
+        <label>tariManaged</label>
+        <locationX>336</locationX>
+        <locationY>1814</locationY>
+        <defaultConnector>
+            <targetReference>Annulla_Prestazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>checkTariManaged.result</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Rettifica_Doppia_Fatturazione</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
     <interviewLabel>HDT_FL_GestioneReclami_ReclamoScrittoDaCittadino {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GestioneReclami_ReclamoScrittoDaCittadino</label>
     <processMetadataValues>
@@ -342,11 +368,11 @@
     <recordLookups>
         <name>Get_Input_Case_Aggiornato</name>
         <label>Get Input Case Aggiornato</label>
-        <locationX>204</locationX>
+        <locationX>336</locationX>
         <locationY>1574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Rettifica_Doppia_Fatturazione</targetReference>
+            <targetReference>checkTariManaged</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -363,7 +389,7 @@
     <recordLookups>
         <name>getPostClassification</name>
         <label>getPostClassification</label>
-        <locationX>50</locationX>
+        <locationX>105</locationX>
         <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -384,8 +410,8 @@
     <recordUpdates>
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
-        <locationX>204</locationX>
-        <locationY>2150</locationY>
+        <locationX>182</locationX>
+        <locationY>2390</locationY>
         <connector>
             <targetReference>redirectToRecord</targetReference>
         </connector>
@@ -394,7 +420,7 @@
     <recordUpdates>
         <name>updateAfterAddress</name>
         <label>updateAfterAddress</label>
-        <locationX>292</locationX>
+        <locationX>424</locationX>
         <locationY>1358</locationY>
         <connector>
             <targetReference>Get_Input_Case_Aggiornato</targetReference>
@@ -404,7 +430,7 @@
     <recordUpdates>
         <name>updateCommodity</name>
         <label>updateCommodity</label>
-        <locationX>391</locationX>
+        <locationX>484</locationX>
         <locationY>278</locationY>
         <connector>
             <targetReference>assignProcessType_0</targetReference>
@@ -414,7 +440,7 @@
     <screens>
         <name>Prima_Classificazione</name>
         <label>Prima Classificazione</label>
-        <locationX>391</locationX>
+        <locationX>484</locationX>
         <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -525,7 +551,7 @@
     <screens>
         <name>selezioneIndirizzo</name>
         <label>selezioneIndirizzo</label>
-        <locationX>50</locationX>
+        <locationX>105</locationX>
         <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -672,7 +698,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>265</locationX>
+        <locationX>358</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>assignCommodity</targetReference>
@@ -682,8 +708,8 @@
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>391</locationX>
-        <locationY>2702</locationY>
+        <locationX>484</locationX>
+        <locationY>3038</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -703,6 +729,35 @@
                 <stringValue>Case</stringValue>
             </value>
         </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>checkTariManaged</name>
+        <label>checkTariManaged</label>
+        <locationX>336</locationX>
+        <locationY>1694</locationY>
+        <connector>
+            <targetReference>tariManaged</targetReference>
+        </connector>
+        <flowName>HDT_FL_CheckTariManaged</flowName>
+        <inputAssignments>
+            <name>city</name>
+            <value>
+                <elementReference>Get_Input_Case_Aggiornato.SupplyCity__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>declarationDate</name>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>effectiveDate</name>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
         <name>DirittoRettifica</name>
