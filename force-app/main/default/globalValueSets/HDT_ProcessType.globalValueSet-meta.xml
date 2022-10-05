@@ -321,6 +321,11 @@
         <label>Doppi pagamenti/Incassi - ACQUA</label>
     </customValue>
     <customValue>
+        <fullName>Doppi pagamenti/Incassi - AMB</fullName>
+        <default>false</default>
+        <label>Doppi pagamenti/Incassi - AMB</label>
+    </customValue>
+    <customValue>
         <fullName>Doppi pagamenti/Incassi - GAS</fullName>
         <default>false</default>
         <label>Doppi pagamenti/Incassi - GAS</label>

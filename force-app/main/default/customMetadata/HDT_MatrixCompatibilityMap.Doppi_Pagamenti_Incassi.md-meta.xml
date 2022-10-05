@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>ServiceRequestType__c</field>
-        <value xsi:type="xsd:string">Doppi pagamenti/Incassi - ACQUA</value>
+        <value xsi:type="xsd:string">Doppi pagamenti/Incassi - AMB</value>
     </values>
     <values>
         <field>Type__c</field>
