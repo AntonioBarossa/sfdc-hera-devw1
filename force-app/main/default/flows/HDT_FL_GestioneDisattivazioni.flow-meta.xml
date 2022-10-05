@@ -1216,6 +1216,13 @@
                     <stringValue>Chiusura Contatore</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Aggiornato.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_FT_0</targetReference>
             </connector>
