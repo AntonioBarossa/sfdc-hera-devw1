@@ -1256,11 +1256,6 @@
         <label>Connessione con attivazione​  - ACQ</label>
     </customValue>
     <customValue>
-        <fullName>Ricostruzione consumi - ACQ</fullName>
-        <default>false</default>
-        <label>Ricostruzione consumi - ACQ</label>
-    </customValue>
-    <customValue>
         <fullName>Richiesta domiciliazione - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
