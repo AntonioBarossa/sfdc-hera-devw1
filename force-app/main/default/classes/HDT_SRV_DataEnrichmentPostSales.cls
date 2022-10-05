@@ -6,6 +6,9 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
     public String getPicklistValue(String objectName, String fieldName, String condition){
 
         String result;
+        if ('Case'.equalsIgnoreCase(objectName) && 'Market__c'.equalsIgnoreCase(fieldName) && 'Tutela'.equalsIgnoreCase(condition)){
+            condition = 'Regolamentato';
+        }
 
         if(fieldName == 'PhaseTypeAvailable__c'){
             try{
