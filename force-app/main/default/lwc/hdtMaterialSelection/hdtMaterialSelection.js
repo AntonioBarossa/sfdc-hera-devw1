@@ -87,6 +87,7 @@ export default class HdtMaterialSelection extends LightningElement {
             this._initialRecords = data;
             this.preSelectedKeys=preSelectedKeys;
             this.selectedData=preselectedValues;
+            preselectedValues?.forEach(elem=>{this._globalSelectionMap.set(elem.Id, elem)});
         }else{
             console.log("#getTablesConfig -> Data not found! ");
         }
