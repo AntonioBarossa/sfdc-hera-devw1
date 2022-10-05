@@ -264,14 +264,14 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     handleNewAddress() {
         try{
             var addressWrapper = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
-            var estensioneCivico = ((addressWrapper.EstensCivico)? addressWrapper.EstensCivico:'');
+            var estensioneCivico = ((addressWrapper.EstensCivico)? addressWrapper['Estens.Civico']:'');
             this.address = addressWrapper.Via + ' ' + addressWrapper.Civico + ' ' + estensioneCivico + ', ' + addressWrapper.Comune + ' ' + addressWrapper.Provincia + ', ' + addressWrapper.CAP + ' ' +addressWrapper.Stato;
             this.returnWrapper.addressWrapper.CAP = addressWrapper.CAP;
             this.returnWrapper.addressWrapper.Civico = addressWrapper.Civico;
             this.returnWrapper.addressWrapper.CodiceComuneSAP = addressWrapper.CodiceComuneSAP;
             this.returnWrapper.addressWrapper.CodiceViaStradarioSAP = addressWrapper.CodiceViaStradarioSAP;
             this.returnWrapper.addressWrapper.Comune = addressWrapper.Comune;
-            this.returnWrapper.addressWrapper.EstensCivico = addressWrapper.EstensCivico;
+            this.returnWrapper.addressWrapper.EstensCivico = addressWrapper['Estens.Civico'];
             this.returnWrapper.addressWrapper.FlagVerificato = addressWrapper['Flag Verificato'];
             //this.returnWrapper.addressWrapper. = addressWrapper.
             this.returnWrapper.addressWrapper.Provincia = addressWrapper.Provincia;

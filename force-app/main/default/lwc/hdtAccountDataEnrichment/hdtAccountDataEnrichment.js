@@ -102,42 +102,32 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                 this.showErrorMessage = obj.errorDetails[0].code + ' - ' + obj.errorDetails[0].message;
                 this.showSpinner = false;            
             } else {
-                //if(this.type != 'cmor'){
-                //    this.data = obj.data.posizioni;
-                //} else {
-                //    this.showSecondTable = true;
-                //    this.data = obj.data.venditoreEntrante;
-                //    this.data2 = obj.data.venditoreUscente;
-                //}
-
                 switch (this.type) {
                     case 'cmor':
                         this.showSecondTable = true;
                         this.data = obj.data.venditoreEntrante;
                         this.data2 = obj.data.venditoreUscente;
+                        break;
 
                     case 'bonusSocialeIdrico':
                         this.data = obj.data;
-
+                        break;
                     case 'gaaView':
                         this.data = obj.data;
-
+                        break;
+                    case 'odlAdsView':
+                        this.data = obj.data;
+                        break;
                     default:
                         this.data = obj.data.posizioni;
-
                 }
-
             }
 
             this.showSpinner = false;
             
         }).catch(error => {
-            //var obj = JSON.parse(error.body.message);
+            console.log('### error: ' + JSON.parse(error));
             this.showError = true;
-            //var s = '';
-            //obj.errorDetails.forEach(element => {
-            //    s += element.code + ': ' + element.message;
-            //});
             this.showErrorMessage = error.body.message;
             this.showSpinner = false;
         });

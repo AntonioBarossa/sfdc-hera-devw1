@@ -2786,6 +2786,14 @@
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Marche Multiservizi S.p.A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi TARI</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SecurityDepositExcluded__c</picklist>
