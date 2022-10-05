@@ -1222,7 +1222,7 @@
             <inputParameters>
                 <name>freeWithdrawConfig</name>
                 <value>
-                    <elementReference>getRitiriGratuitiConfig</elementReference>
+                    <elementReference>ritiri_gratuiti_configs</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
