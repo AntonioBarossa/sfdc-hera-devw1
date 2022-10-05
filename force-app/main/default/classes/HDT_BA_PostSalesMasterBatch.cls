@@ -41,6 +41,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         //List<HDT_PEV_NonReqContract__e> eventsToPublish = new List<HDT_PEV_NonReqContract__e>();
         List<Case> casesToCheck = new List<Case>();
 
+        List<wrts_prcgvr__Activity__c> actToInsert = new List<wrts_prcgvr__Activity__c>();
         for(SObject sobj : scope){
 
             try{
@@ -135,7 +136,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                             wrts_prcgvr__Activity__c act = createActivity('Elaborazione Manuale');
                             act.Case__c = activity.Case__c;
                             act.wrts_prcgvr__IsRequired__c	= true;
-                            insert act;
+                            actToInsert.add(act);
                         }
                     }
                 }
@@ -145,6 +146,9 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                 System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
                 continue;
             }
+        }
+        if (actToInsert.size() > 0){
+            insert actToInsert;
         }
         // if(!eventsToPublish.isEmpty()){
         //     //EventBus.publish(eventsToPublish);
