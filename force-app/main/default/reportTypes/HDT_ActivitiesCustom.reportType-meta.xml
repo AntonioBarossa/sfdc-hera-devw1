@@ -1599,6 +1599,11 @@
             <field>Case__c.Contract__c.Market__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.Contract__c.ContractSalesCompany__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
         <masterLabel>Contratto</masterLabel>
     </sections>
     <sections>
