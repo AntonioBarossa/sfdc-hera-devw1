@@ -682,6 +682,11 @@
         <label>Ricostruzione Consumi - GAS</label>
     </customValue>
     <customValue>
+        <fullName>Ricostruzione Consumi - ACQ</fullName>
+        <default>false</default>
+        <label>Ricostruzione Consumi - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Rimborso</fullName>
         <default>false</default>
         <label>Rimborso</label>
@@ -1255,11 +1260,6 @@
         <fullName>Connessione con attivazione​  - ACQ</fullName>
         <default>false</default>
         <label>Connessione con attivazione​  - ACQ</label>
-    </customValue>
-    <customValue>
-        <fullName>Ricostruzione consumi - ACQ</fullName>
-        <default>false</default>
-        <label>Ricostruzione consumi - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Richiesta domiciliazione - GAS</fullName>
