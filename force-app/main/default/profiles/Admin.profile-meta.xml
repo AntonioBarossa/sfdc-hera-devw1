@@ -25,6 +25,7 @@
         <default>false</default>
         <visible>true</visible>
     </applicationVisibilities>
+    <applicationVisibilities>
     <application>HDT_SlaAdministration</application>
         <default>false</default>
         <visible>true</visible>

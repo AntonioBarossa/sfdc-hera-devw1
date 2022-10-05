@@ -26,7 +26,6 @@
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
-    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <label>Amministrazione SLA</label>
     <navType>Standard</navType>
     <tabs>SlaAdministration__c</tabs>
