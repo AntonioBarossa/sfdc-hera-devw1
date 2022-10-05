@@ -256,8 +256,8 @@ export default class HdtLandRegistryEdit extends LightningElement {
     }
 
     handleFormError(event){
-        console.error("### handleFormError", event);
-        const evt = new ShowToastEvent({ variant: 'error', title: 'Operazione non eseguita!', message: 'Errore ' + this._recordId });
+        console.error("### handleFormError", event.detail.detail);
+        const evt = new ShowToastEvent({ variant: 'error', title: 'Operazione non eseguita!', message: 'Errore ' + event.detail.detail });
         this.dispatchEvent(evt);
         this.showSpinner = false;
     }
