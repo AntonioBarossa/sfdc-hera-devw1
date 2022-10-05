@@ -411,7 +411,17 @@
                 <default>false</default>
                 <isActive>true</isActive>
                 <label>Delibera 2018</label>
-            </value>	
+            </value>
+            <value>
+                <fullName>Ricalcolo consumi</fullName>
+                <default>false</default>
+                <label>Ricalcolo consumi</label>
+            </value>
+            <value>
+                <fullName>Monitoraggio</fullName>
+                <default>false</default>
+                <label>Monitoraggio</label>
+            </value>
             <value>
                 <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
                 <default>false</default>
@@ -630,6 +640,14 @@
         <valueSettings>
             <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
             <valueName>Blocco per frode</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Ricalcolo consumi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Monitoraggio</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sollecito Emissione Bolletta</controllingFieldValue>
