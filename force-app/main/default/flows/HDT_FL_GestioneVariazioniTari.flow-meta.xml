@@ -3215,6 +3215,12 @@
                     <elementReference>getAfterForm_0.ModuleFromContributor__c</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>caseId</name>
+                <value>
+                    <elementReference>getPreLandRegistry.Id</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>

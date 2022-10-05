@@ -391,6 +391,12 @@
         <label>Gestione disalimentabilità - GAS</label>
     </customValue>
     <customValue>
+        <fullName>Gestione rifiuti​ - AMB</fullName>
+        <default>false</default>
+        <label>Gestione rifiuti​ - AMB</label>
+    </customValue>
+    
+    <customValue>
         <fullName>HVAC</fullName>
         <default>false</default>
         <label>HVAC</label>
