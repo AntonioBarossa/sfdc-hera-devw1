@@ -23,7 +23,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         scope.addAll(postsalesQr.getPostAccertamentoCase());
         scope.addAll(postsalesQr.getSegnalazioniBozzaCase());
         scope.addAll(postsalesQr.getRifiutiBozzaCase());
-
+        scope.addAll(postsalesQr.getActivitiesRicConsumi());
         return scope;
 
 
@@ -34,7 +34,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
     CreatedDate:    19/10/2021
     Reason: Avoid Debug Statements
     */
-    @SuppressWarnings('PMD.AvoidDebugStatements')
+    @SuppressWarnings('PMD.AvoidDebugStatements, PMD.OperationWithLimitsInLoop, PMD.AvoidSoqlInLoops')
     public void execute(Database.BatchableContext bc, List<SObject> scope){
 
         List<Case> myCurrentCaseList = new List<Case>();
@@ -119,12 +119,23 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                             system.debug('@@@@ currcase AccountId: '+currentCase.Id);
                             system.debug('@@@@ currcase AccountId: '+currentCase.Phase__c);
 
-                        }     
+                        }   
                         //END MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto              
                     }
                     when Knowledge__kav article{
                         if(article.ExpirationDate__c != null){
                             KbManagement.PublishingService.archiveOnlineArticle(article.KnowledgeArticleId,null);
+                        }
+                    }
+                    when wrts_prcgvr__Activity__c activity{
+                        Datetime dt = (Datetime) activity.ActivityStartTime__c;
+                        System.debug(LoggingLevel.DEBUG, 'activity.ActivityStartTime__c: ' + activity.ActivityStartTime__c);
+                        Date startDateActivity = dt.date();
+                        if (System.today() > HDT_UTL_Case.addBusinessDay(startDateActivity , 30)){
+                            wrts_prcgvr__Activity__c act = createActivity('Elaborazione Manuale');
+                            act.Case__c = activity.Case__c;
+                            act.wrts_prcgvr__IsRequired__c	= true;
+                            insert act;
                         }
                     }
                 }
@@ -186,5 +197,15 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :bc.getJobId()];
         System.debug(LoggingLevel.DEBUG, 'HDT_BA_PostSalesMasterBatch - finished job: ' + a);
         
+    }
+
+    private static wrts_prcgvr__Activity__c createActivity(String templateName){
+        HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
+        wrts_prcgvr__ActivityTemplate__c template = postsalesQr.getActivityTemplate(templateName);
+        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+        activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
+        activity.wrts_prcgvr__Description__c = template.wrts_prcgvr__Subject__c;
+        activity.Type__c = templateName;
+        return activity;
     }
 }

@@ -676,6 +676,11 @@
         <label>Ricostruzione Consumi - GAS</label>
     </customValue>
     <customValue>
+        <fullName>Ricostruzione Consumi - ACQ</fullName>
+        <default>false</default>
+        <label>Ricostruzione Consumi - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Rimborso</fullName>
         <default>false</default>
         <label>Rimborso</label>
