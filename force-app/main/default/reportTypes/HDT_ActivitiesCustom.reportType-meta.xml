@@ -1322,6 +1322,86 @@
             <field>Case__c.Parent</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.Market__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.SalesCompany__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.Commodity__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.SupplyType__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.CriticalAttribute__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.QuotationType__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.CompetentOffice__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.FirstLevelOpinion__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.SecondLevelOpinion__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.CreatorGroup__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.FirstLevelComplaintClassification__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.SecondLevelComplaintClassification__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.ThirdLevelComplaintClassification__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.FourthLevelComplaintClassification__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.FithLevelComplaintClassification__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c.SendDate__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
         <masterLabel>Case Parent</masterLabel>
     </sections>
     <sections>
@@ -1405,6 +1485,51 @@
             <field>Order__c.SignedDate__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Order__c.Market__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Order__c.SalesCompany__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Order__c.Commodity__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Order__c.SupplyType__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Order__c.Agency__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Order__c.CreatorGroup__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Order__c.Type</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Order__c.VasStatus__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Order__c.VasSubtype__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
         <masterLabel>Order Parent</masterLabel>
     </sections>
     <sections>
@@ -1426,6 +1551,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Case__c.Account.Segment__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account__c.CustomerMarking__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <masterLabel>Account</masterLabel>
