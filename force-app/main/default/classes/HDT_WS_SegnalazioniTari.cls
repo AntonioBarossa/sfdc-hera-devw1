@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 15-09-2022
+ * @last modified on  : 05-10-2022
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.AvoidGlobalModifier')
@@ -137,11 +137,27 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
                 caseToUpdate.TecnicalPhase__c= 'Inviata a SAP';
             }
 
+
+            if(currentCase.Type.equalsIgnoreCase('Gestione Rifiuti') && caseToUpdate.StartAppointment__c==null && currentCase.WithdrawalFee__c==false && currentCase.ServicePoint__c!=null){
+                Datetime createdDate = currentCase.CreatedDate;
+                Date dataUltimoRitiro = Date.newinstance(createdDate.year(), createdDate.month(), createdDate.day());
+                FreeWithdraw__c ritiro = new FreeWithdraw__c(
+                    LastFreeWithdrawDate__c = dataUltimoRitiro,
+                    ServicePointMaster__c = currentCase.ServicePoint__c
+                );
+
+                HDT_UTL_DatabaseService.insertSObject(ritiro);
+            }
+                
+
+
             if(!Test.isRunningTest()){
                 HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
             }
         } catch (Exception ex) {
             //Error Handling
+            System.debug('exception --> ' + ex.getStackTraceString());
+            System.debug('atLine --> ' + ex.getLineNumber());
             System.debug(ex.getMessage());
             response.success = false;
             response.message = 'KO';
