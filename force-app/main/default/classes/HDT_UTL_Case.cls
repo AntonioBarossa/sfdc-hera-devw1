@@ -175,19 +175,19 @@ public inherited sharing class HDT_UTL_Case {
             Map<String,String> datesNamount = utlReclami.setExpirationDate(currentCase, salesCompany);
             //output.effectiveDate
             if( datesNamount.containsKey('EndDate__c') ){
-                output.EndDate = date.valueOf(datesNamount.get('EndDate__c'));
+                output.endDate = date.valueOf(datesNamount.get('EndDate__c'));
             }
             if( datesNamount.containsKey('CompletedDocumentationDate__c') ){
-                output.CompletedDocumentationDate = date.valueOf(datesNamount.get('CompletedDocumentationDate__c'));
+                output.completedDocumentationDate = date.valueOf(datesNamount.get('CompletedDocumentationDate__c'));
             }
             if( datesNamount.containsKey('DepositExpirationDate__c') ){
-                output.DepositExpirationDate = date.valueOf(datesNamount.get('DepositExpirationDate__c'));
+                output.depositExpirationDate = date.valueOf(datesNamount.get('DepositExpirationDate__c'));
             }
             if( datesNamount.containsKey('AmountToPayInInstallments__c') ){
-                output.AmountToPayInInstallments = decimal.valueOf(datesNamount.get('AmountToPayInInstallments__c'));
+                output.amountToPayInInstallments = decimal.valueOf(datesNamount.get('AmountToPayInInstallments__c'));
             }
             if( datesNamount.containsKey('DepositAmount__c') ){
-                output.DepositAmount = decimal.valueOf(datesNamount.get('DepositAmount__c'));
+                output.depositAmount = decimal.valueOf(datesNamount.get('DepositAmount__c'));
             }
         }
 
@@ -228,15 +228,15 @@ public inherited sharing class HDT_UTL_Case {
     public class HDT_UTL_FlowOutputs{
 
         @InvocableVariable
-        public Date EndDate;
+        public Date endDate;
         @InvocableVariable
-        public Date CompletedDocumentationDate;
+        public Date completedDocumentationDate;
         @InvocableVariable
-        public Date DepositExpirationDate;
+        public Date depositExpirationDate;
         @InvocableVariable
-        public Decimal AmountToPayInInstallments;
+        public Decimal amountToPayInInstallments;
         @InvocableVariable
-        public Decimal DepositAmount;
+        public Decimal depositAmount;
         @InvocableVariable
         public Date effectiveDate;
         @InvocableVariable
