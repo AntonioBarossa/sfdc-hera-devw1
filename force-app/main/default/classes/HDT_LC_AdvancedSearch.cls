@@ -376,7 +376,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 			}
 
 			when 'datiCatastali' {
-				servicePoints.addAll(servicePointQr.getServicePointsByDatiCatastali(datiCatastali, customSetting.OutputServicePoint__c));
+				return servicePointQr.getServicePointsByDatiCatastali(datiCatastali, customSetting.OutputServicePoint__c);
 
 			}
 

@@ -17,8 +17,11 @@ public with sharing class HDT_LC_RecordCommodityViewForm {
         ];
 
         System.debug('### HDT_LC_RecordCommodityViewForm -> myCase ='+ myCase);
-        String userInputFlow;
-        List<HDT_UserInputFlow__mdt> userInputFlowList = HDT_QR_RecordCommodityViewForm.queryInput(myCase.Type, myCase.Commodity__c);
+        
+        String userInputFlow;        
+        String qField = 'Id, FieldsJSON__c';
+        String sObjName = 'HDT_UserInputFlow__mdt';
+        List<HDT_UserInputFlow__mdt> userInputFlowList = HDT_QR_GenericQuery.getGenericRecords(qField, sObjName, 'ProcessType__c =\''+myCase.Type+'\' AND Commodity__c =\''+myCase.Commodity__c+'\'');
 
         if(userInputFlowList.size() > 0 ){
             System.Debug('### HDT_LC_RecordCommodityViewForm -> userInputFlowList = '+ userInputFlowList);

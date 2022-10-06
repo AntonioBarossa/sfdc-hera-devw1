@@ -3453,7 +3453,7 @@
         </rules>
         <rules>
             <name>Cluster_Autoletture</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>

@@ -165,8 +165,8 @@
                 || processType === 'KO Definitivo' || processType === 'KO Forzato' || processType === 'KO Risolto' 
                 || processType === 'Modifica dati contrattuali' || processType === 'Modifica post accertamento' || processType === 'AnnullamentoVarIndFornitura'
                 || processType === 'Cessazione' || processType === 'Cessazione post accertamento' || processType === 'Reclamo da cittadino' || processType === 'Posizionamento contenitore'
-                || processType === 'Annullamento comunicazione pagamenti' || processType ==='Annullamento doppi pagamenti' || processType ==='Annullamento storno rateizzazione' || processType ==='Annullamento errore fatturazione'
-                || processType ==='Annullamento rimborso' || processType ==='Annullamento contratti TARI' || processType ==='Annullamento prestazione tari'){
+                || processType === 'Annullamento comunicazione pagamenti tari' || processType ==='Annullamento doppi pagamenti tari' || processType ==='Annullamento storno rateizzazione tari' || processType ==='Annullamento errore fatturazione'
+                || processType ==='Annullamento rimborso tari' || processType ==='Annullamento contratti TARI' || processType ==='Annullamento prestazione tari' || processType === 'Sospensione' || processType === 'Chiusura'){
 
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
                 //Gestione Risottomissione Annullamento

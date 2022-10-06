@@ -10,6 +10,7 @@ public with sharing class HDT_UTL_ServicePoint {
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint serviceSrv = new HDT_SRV_ServicePoint();
+   
     
     @AuraEnabled
     public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response){
@@ -24,7 +25,7 @@ public with sharing class HDT_UTL_ServicePoint {
         for(HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_posizioniResponseObject r : response.data.posizioni){
             if(!String.isBlank(r.campo) && mapRes.get(r.campo.toUpperCase()) == null){
                 mapRes.put(r.campo.toUpperCase(),r.valore);
-            }            
+            }         
         }
 
         if(mapRes.get('DEFINIZIONEOFFERTA')!=null && mapRes.get('DEFINIZIONEOFFERTA').containsIgnoreCase('STG_') ){
@@ -165,6 +166,34 @@ public with sharing class HDT_UTL_ServicePoint {
             else if(mapRes.get('DESCRCOMM')== 'Ambiente'){
                 spNew.CommoditySector__c = 'Ambiente';
                 spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Ambiente'); //21/08/2021 - gabriele.rota@webresults.it
+
+                if(response.data.datiCatastali!=null && response.data.datiCatastali.size()>0 ) {
+                    List <LandRegistry__c> landLst = new List<LandRegistry__c>();
+                    try {     
+                        Id idLand = qrRecordType.getRecordTypeIdByName('HDT_RT_DatiCatastali_PraticaTARI');
+                        for(HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_DatiCatastaliResponseObject l : response.data.datiCatastali){
+
+                            LandRegistry__c landReg = new LandRegistry__c();
+                            landReg.DestinationUsage__c = l.destinazione;
+                            landReg.SapProgressive__c = l.progressivo;
+                            landReg.LegalCity__c = l.comuneAmministrativo;
+                            landReg.RegistryCity__c = l.comuneCatastale;
+                            landReg.RegistryCityCode__c = l.codiceComuneCatastale;
+                            landReg.Province__c = l.codiceProvincia;
+                            landReg.UnitType__c = l.tipoUnita;
+                            landReg.Sheet__c = l.foglio;
+                            landReg.ParticleSheet__c = l.particella;
+                            landReg.Title__c = l.qualificaTitolareUtenza;
+                            landReg.RegistrySurface__c = Decimal.valueOf(l.superficeCatastale);
+                            landReg.RecordTypeId = idLand;
+                            landLst.add(landReg);
+                        }
+                        HDT_UTL_DatabaseService.insertSObject(landLst);
+
+                    } catch (Exception e) { 
+                        System.debug(LoggingLevel.DEBUG,' Arricchimaneto LandRegistry Fallito: ' + e.getMessage());
+                    }
+                }
             }
         }
         if(mapRes.get('MOTGARANZIAFORN')==null){            

@@ -444,6 +444,7 @@ public with sharing class HDT_UTL_CaseProcess {
                 system.debug('@@@ Case SupplyCity__c:'+fieldsMap.get('SupplyCity__c'));
                 system.debug('@@@ Case SupplyStreetName__c:'+fieldsMap.get('SupplyStreetName__c'));
             }
+            //verificare che selezione fornitura effettui questo controllo in fase di UAT
             //querare tabella 'dato tecnico comunale' con chiave i comuni del case e verificare se il flag di gestione è attivo
             // o se la data odierna rientra nel range tra 'data da' e 'data cutover',
             //con il risultato modificare la lista fieldsMap.get('SupplyCity__c') lasciando quelli trovati e togliendo quelli non trovati nella tabella
@@ -451,7 +452,8 @@ public with sharing class HDT_UTL_CaseProcess {
                                             FROM Contract
                                             WHERE AccountId IN: fieldsMap.get('AccountId')
                                             AND BillingCity IN: fieldsMap.get('SupplyCity__c')
-                                            AND BillingStreet IN: fieldsMap.get('SupplyStreetName__c')];
+                                            AND BillingStreet IN: fieldsMap.get('SupplyStreetName__c')
+                                            AND Status = 'Attivo'];
             system.debug('@@@@ related contract: '+relatedContracts);
             List<wrts_prcgvr__Activity__c> notInsertActivity = HDT_QR_Activity.getActivityFromTypeList(caseIds, new Set<String>{'Aprire variazione','Aprire Cessazione'});
             

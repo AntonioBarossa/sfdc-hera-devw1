@@ -425,6 +425,7 @@
         <picklistField>ThirdLevelComplaintClassification__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <name>ParentCaseFormula</name>
         <dataType>String</dataType>

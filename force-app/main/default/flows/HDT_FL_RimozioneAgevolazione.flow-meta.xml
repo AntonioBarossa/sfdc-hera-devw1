@@ -475,6 +475,12 @@
                 <booleanValue>true</booleanValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>allowNegativeQuantity__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
         <object>SBQQ__Quote__c</object>
     </recordUpdates>
     <recordUpdates>
