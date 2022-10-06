@@ -648,6 +648,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Segnalazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Social</fullName>
             <default>false</default>
         </values>

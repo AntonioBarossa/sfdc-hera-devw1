@@ -36677,6 +36677,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SlaAdministration__c.Ato__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SlaTracking__c.Activity__c</field>
         <readable>true</readable>
     </fieldPermissions>

@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>FirstLevelComplaintClassification__c</fullName>
     <externalId>false</externalId>
-    <label>1° Livello</label>
+    <label>Classificazione 1° Livello</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
