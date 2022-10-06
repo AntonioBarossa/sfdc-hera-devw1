@@ -3763,7 +3763,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>NumberOfPeople</name>
-                    <fieldText>&lt;p&gt;Numero abitanti: {!getCase.NumberOfPeople__c}&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;Numero componenti: {!getCase.NumberMembers__c}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
