@@ -391,6 +391,12 @@
         <label>Gestione disalimentabilità - GAS</label>
     </customValue>
     <customValue>
+        <fullName>Gestione rifiuti​ - AMB</fullName>
+        <default>false</default>
+        <label>Gestione rifiuti​ - AMB</label>
+    </customValue>
+    
+    <customValue>
         <fullName>HVAC</fullName>
         <default>false</default>
         <label>HVAC</label>
@@ -674,6 +680,11 @@
         <fullName>Ricostruzione Consumi - GAS</fullName>
         <default>false</default>
         <label>Ricostruzione Consumi - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Ricostruzione Consumi - ACQ</fullName>
+        <default>false</default>
+        <label>Ricostruzione Consumi - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Rimborso</fullName>
@@ -1249,11 +1260,6 @@
         <fullName>Connessione con attivazione​  - ACQ</fullName>
         <default>false</default>
         <label>Connessione con attivazione​  - ACQ</label>
-    </customValue>
-    <customValue>
-        <fullName>Ricostruzione consumi - ACQ</fullName>
-        <default>false</default>
-        <label>Ricostruzione consumi - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Richiesta domiciliazione - GAS</fullName>

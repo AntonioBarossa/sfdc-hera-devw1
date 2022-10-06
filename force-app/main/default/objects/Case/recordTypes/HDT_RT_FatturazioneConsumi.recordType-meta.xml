@@ -8324,6 +8324,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Monitoraggio</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Piano Rate errato</fullName>
             <default>false</default>
         </values>
@@ -8337,6 +8341,10 @@
         </values>
         <values>
             <fullName>RESO %28PRODOTTO%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ricalcolo consumi</fullName>
             <default>false</default>
         </values>
         <values>

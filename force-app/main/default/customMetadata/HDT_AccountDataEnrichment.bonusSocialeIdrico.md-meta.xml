@@ -44,22 +44,6 @@
       {
         &quot;label&quot;: &quot;Numero componenti&quot;,
         &quot;fieldName&quot;: &quot;numeroComponenti&quot;
-      },
-      {
-        &quot;label&quot;: &quot;Contratto&quot;,
-        &quot;fieldName&quot;: &quot;contratto&quot;,
-        &quot;initialWidth&quot;: 220,
-        &quot;sortable&quot;: true
-      },
-      {
-        &quot;label&quot;: &quot;Data inizio voltura&quot;,
-        &quot;fieldName&quot;: &quot;dataInizioVoltura&quot;,
-        &quot;initialWidth&quot;: 220,
-        &quot;sortable&quot;: true
-      },
-      {
-        &quot;label&quot;: &quot;BP&quot;,
-        &quot;fieldName&quot;: &quot;bp&quot;
       }
     ]
   }

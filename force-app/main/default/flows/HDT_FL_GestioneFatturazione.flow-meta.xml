@@ -1013,7 +1013,6 @@
             <label>Riprendi Processo Tari</label>
         </rules>
     </decisions>
-    <environments>Default</environments>
     <formulas>
         <name>ConvertTipoDocumentoToUppercase</name>
         <dataType>String</dataType>
@@ -1038,6 +1037,11 @@
         <name>PrimaBollettaNonAncoraEmessa</name>
         <dataType>Boolean</dataType>
         <expression>TODAY() &lt; ({!UpdatedCase.ContractStartDate__c} + 60)</expression>
+    </formulas>
+    <formulas>
+        <name>processTypeFormula</name>
+        <dataType>String</dataType>
+        <expression>IF({!Query_Case.CommodityFormula__c} = &apos;Acqua&apos;, TEXT({!Query_Case.Type}) &amp; &quot; &quot; &amp; {!Query_Case.CommodityFormula__c}, TEXT({!Query_Case.Type}))</expression>
     </formulas>
     <formulas>
         <name>TipoUltimaLetturaFormula</name>
@@ -1803,7 +1807,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>CustomMetadataProcessType</elementReference>
+                    <elementReference>processTypeFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
