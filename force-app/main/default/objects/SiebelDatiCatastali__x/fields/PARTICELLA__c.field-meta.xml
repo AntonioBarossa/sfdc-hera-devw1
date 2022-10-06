@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SR_STAT_ID__c</fullName>
-    <description>Stato RDS</description>
-    <externalDeveloperName>SR_STAT_ID</externalDeveloperName>
+    <fullName>PARTICELLA__c</fullName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Stato RDS</label>
-    <length>30</length>
+    <label>Particella</label>
+    <length>5</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>
