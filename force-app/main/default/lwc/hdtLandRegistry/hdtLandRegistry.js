@@ -31,7 +31,7 @@ export default class HdtLandRegistry extends LightningElement {
     @api selectedLandRegistryId;        //outputOnly
     
     @api validate (){
-        let isValid = tableData.length() != 0;
+        let isValid = this.tableData?.length != 0;
         let msg = isValid? null : 'Inserire almeno un dato catastale.';
         return { isValid : isValid, errorMessage: msg };
     }
