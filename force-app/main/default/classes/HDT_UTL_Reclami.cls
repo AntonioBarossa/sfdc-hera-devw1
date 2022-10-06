@@ -43,7 +43,7 @@ public with sharing class HDT_UTL_Reclami
     private Map<String,String> calculateDates( Case inputCase, String commodity )
     {
         Map<String,String> result = new Map<String,String>();
-        String process =  inputCase.FirstLevelComplaintClassification__c;
+        String process = 'Reclamo Scritto/Rich. Info'.equalsIgnoreCase(inputCase.Type) ? inputCase.FirstLevelComplaintClassification__c : inputCase.Type ;
         List<HDT_IndemnitiesDays__mdt> configurations = getExpirationDateConfigurations(process,commodity);
 
         for(HDT_IndemnitiesDays__mdt config : configurations)
