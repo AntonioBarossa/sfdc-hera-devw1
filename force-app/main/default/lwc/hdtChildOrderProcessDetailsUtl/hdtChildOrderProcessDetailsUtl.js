@@ -44,6 +44,11 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                     : str1 === str2;
     }
 
+    function safeStr(str){
+        if(str) return `${str}`;
+        return "";
+    }
+
     function checkSectionRequiredFields(sectionName){
         const reg = new RegExp('^\\*?(.+)\\n?');
         const valuation = [
@@ -85,6 +90,7 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 hasCodiceRonchiButton: this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName),
+                //hasCodiceAtecoButton: this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName),
                 hasVerificaRavv: this.order.Account.CompanyOwner__c!=="MMS",
                 hasAllegatiObbligatori: true,
                 diffObjApi: 'Sale',
@@ -139,9 +145,9 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                     new fieldData('Rifiuta supporto al calcolo del ravvedimento operoso','DeclineComputationSupport__c', this.order.Account.CompanyOwner__c!=="MMS", false, false,'',''),
                     new fieldData('Superficie Mq','Surface__c', ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente"].includes(this.order.RecordType.DeveloperName), true, false,'','', 
                         function(event){
-                            if(this.order.RateCategory__c==='TATUDNR001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente' && surf){
+                            if(this.order.RateCategory__c==='TATUDNR001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente' && event.detail.value){
                                 const fam = this.template.querySelector("[data-id='FamilyNumber__c']");
-                                let value = cities[order.ServicePoint__r.SupplyCity__c?.toUpperCase()]?.getResident(event.target.value);
+                                let value = tariNonResidenti[this.order.ServicePoint__r.SupplyCity__c?.toUpperCase()]?.getResident(event.detail.value);
                                 if(value && fam)    fam.value = value;
                             }
                     })
@@ -866,4 +872,4 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
         ];
     }
 
-    export {handleSections}
+    export {handleSections, equalsIgnoreCase, safeStr}

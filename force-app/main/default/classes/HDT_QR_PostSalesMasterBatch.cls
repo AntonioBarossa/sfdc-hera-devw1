@@ -283,4 +283,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         ];
     }
 
+    public List<wrts_prcgvr__Activity__c> getActivitiesRicConsumi(){
+        return [SELECT ActivityStartTime__c, Case__c FROM wrts_prcgvr__Activity__c WHERE Type__c = 'In attesa risposta cliente' AND wrts_prcgvr__Status__c = 'Aperta' AND Case__r.Type = 'Ricostruzione Consumi' AND Case__r.Reason__c = 'Ricalcolo consumi'];
+    }
 }

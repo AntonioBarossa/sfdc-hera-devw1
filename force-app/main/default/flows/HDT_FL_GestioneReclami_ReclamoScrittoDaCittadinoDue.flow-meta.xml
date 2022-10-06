@@ -4,7 +4,7 @@
     <assignments>
         <name>Assegna_Process_Type_0</name>
         <label>Assegna Process Type</label>
-        <locationX>336</locationX>
+        <locationX>468</locationX>
         <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -20,7 +20,7 @@
     <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
-        <locationX>204</locationX>
+        <locationX>336</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.CorrectionRight__c</assignToReference>
@@ -37,7 +37,7 @@
         <name>AssegnaValori_2</name>
         <label>AssegnaValori</label>
         <locationX>182</locationX>
-        <locationY>2150</locationY>
+        <locationY>2510</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -57,9 +57,74 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaValoriActivity</name>
+        <label>AssegnaValoriActivity</label>
+        <locationX>182</locationX>
+        <locationY>2270</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Activity.ActivityEndTime__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.ClosedByUsername__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Username</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.wrts_prcgvr__IsClosed__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.UserCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.UserCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.ClosingCreatorGroup__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.CreatorGroup__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.ClosingUserChannel__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.LoginChannel__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Chiusa</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Attivita</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Rimuovi_Link_Reiterazione_0</name>
         <label>Rimuovi Link Reiterazione</label>
-        <locationX>336</locationX>
+        <locationX>468</locationX>
         <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.RelatedCase__c</assignToReference>
@@ -103,7 +168,7 @@
     <decisions>
         <name>Avanzamento</name>
         <label>Avanzamento</label>
-        <locationX>545</locationX>
+        <locationX>743</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione</targetReference>
@@ -135,7 +200,7 @@
     <decisions>
         <name>Avanzamento_0_0</name>
         <label>Avanzamento</label>
-        <locationX>336</locationX>
+        <locationX>468</locationX>
         <locationY>1454</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0_0_0</targetReference>
@@ -170,7 +235,7 @@
         <locationX>182</locationX>
         <locationY>1694</locationY>
         <defaultConnector>
-            <targetReference>AssegnaValori_2</targetReference>
+            <targetReference>Get_Activity</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Blocco</defaultConnectorLabel>
         <rules>
@@ -192,7 +257,7 @@
     <decisions>
         <name>Diritto_Rettifica</name>
         <label>Diritto Rettifica?</label>
-        <locationX>336</locationX>
+        <locationX>468</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Rimuovi_Link_Reiterazione_0</targetReference>
@@ -254,6 +319,7 @@
         <picklistField>ThirdLevelComplaintClassification__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <name>ParentCaseFormula</name>
         <dataType>String</dataType>
@@ -286,7 +352,7 @@
         <locationX>50</locationX>
         <locationY>1934</locationY>
         <connector>
-            <targetReference>AssegnaValori_2</targetReference>
+            <targetReference>Get_Activity</targetReference>
         </connector>
         <inputAssignments>
             <field>Case__c</field>
@@ -316,9 +382,37 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
+        <name>Get_Activity</name>
+        <label>Get Activity</label>
+        <locationX>182</locationX>
+        <locationY>2150</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssegnaValoriActivity</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>In gestione</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>545</locationX>
+        <locationX>743</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -388,7 +482,7 @@
     <recordLookups>
         <name>GetInputCaseAggiornato</name>
         <label>GetInputCaseAggiornato</label>
-        <locationX>336</locationX>
+        <locationX>468</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -407,16 +501,30 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>Aggiorna_Attivita</name>
+        <label>Aggiorna Attivita</label>
+        <locationX>182</locationX>
+        <locationY>2390</locationY>
+        <connector>
+            <targetReference>AssegnaValori_2</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>AssegnaValori_2</targetReference>
+        </faultConnector>
+        <inputReference>Get_Activity</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>182</locationX>
-        <locationY>2270</locationY>
+        <locationY>2630</locationY>
         <inputReference>GetCaseAggiornatoSecondaClassificazione</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase_0</name>
         <label>AggiornaCase</label>
-        <locationX>336</locationX>
+        <locationX>468</locationX>
         <locationY>1094</locationY>
         <connector>
             <targetReference>Assegna_Process_Type_0</targetReference>
@@ -426,7 +534,7 @@
     <screens>
         <name>Controllo_Classificazione</name>
         <label>Controllo Classificazione</label>
-        <locationX>545</locationX>
+        <locationX>743</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -519,7 +627,7 @@
     <screens>
         <name>Screen_Seconda_Classificazione</name>
         <label>Screen Seconda Classificazione</label>
-        <locationX>336</locationX>
+        <locationX>468</locationX>
         <locationY>1334</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -622,7 +730,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>419</locationX>
+        <locationX>617</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
@@ -632,7 +740,7 @@
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>754</locationX>
+        <locationX>1018</locationX>
         <locationY>518</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -657,7 +765,7 @@
     <subflows>
         <name>Annulla_Prestazione_0_0_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>490</locationX>
+        <locationX>754</locationX>
         <locationY>1574</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>

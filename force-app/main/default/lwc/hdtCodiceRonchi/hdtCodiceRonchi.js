@@ -7,6 +7,7 @@ export default class HdtCodiceRonchi extends HdtCodiceAteco {
 
     ronchiCode;
     ronchiSubcategory;
+    ronchiDescription;
     @api order; 
     @api title;
 
@@ -17,7 +18,8 @@ export default class HdtCodiceRonchi extends HdtCodiceAteco {
         {label: 'Codice Istat', fieldName: 'IstatCode__c', type: 'text'},
         {label: 'Categoria', fieldName: 'Category__c', type: 'text'},
         {label: 'Codice Ronchi', fieldName: 'RonchiCode__c', type: 'text'},
-        {label: 'Sottocategoria Ronchi', fieldName: 'RonchiSubcategory__c', type: 'text'}
+        {label: 'Sottocategoria Ronchi', fieldName: 'RonchiSubcategory__c', type: 'text'},
+        {label: 'Descrizione Ronchi', fieldName: 'RonchiDescription__c', type: 'text'}
     ];
 
     getTableSelection(event){
@@ -27,12 +29,13 @@ export default class HdtCodiceRonchi extends HdtCodiceAteco {
         this.selectedIstatCode = selectedRows[0].IstatCode__c;
         this.ronchiCode = selectedRows[0].RonchiCode__c;
         this.ronchiSubcategory = selectedRows[0].RonchiSubcategory__c;
+        this.ronchiDescription = selectedRows[0].RonchiDescription__c;
         this.disabledSave = false;
     }
 
     handleSaveAtecoCode(){
         this.loading = true;
-        saveAtecoRonchiCode({order: this.order, params: {atecoCode: this.selectedCode, istatCode: this.selectedIstatCode, ronchiCode: this.ronchiCode, ronchiSubcategory: this.ronchiSubcategory }}).then(data =>{
+        saveAtecoRonchiCode({order: this.order, params: {atecoCode: this.selectedCode, istatCode: this.selectedIstatCode, ronchiCode: this.ronchiCode, ronchiSubcategory: this.ronchiSubcategory, ronchiDescription: this.ronchiDescription }}).then(data =>{
             this.loading = false;
             this.dispatchEvent(new ShowToastEvent({
                 title: 'Successo',
@@ -43,6 +46,7 @@ export default class HdtCodiceRonchi extends HdtCodiceAteco {
             console.log('###Selected Code >>> ' + this.selectedCode)
 
             this.dispatchEvent(new CustomEvent('update_cod_ateco_details',{ detail: {
+                isRonchi:true,
                 atecoCode: this.selectedCode, 
                 ronchiCode: this.ronchiCode, 
                 ronchiSubcategory: this.ronchiSubcategory

@@ -294,7 +294,7 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
             this.addressWrapper = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
             const fields = {};
             fields[ID_FIELD.fieldApiName] = this.recordId;
-            var estensioneCivico = ((this.addressWrapper.EstensCivico)? this.addressWrapper.EstensCivico:'');
+            var estensioneCivico = ((this.addressWrapper['Estens.Civico'])? this.addressWrapper['Estens.Civico']:'');
             this.address = this.addressWrapper.Via + ' ' + this.addressWrapper.Civico + ' ' + estensioneCivico + ', ' + this.addressWrapper.Comune + ' ' + this.addressWrapper.Provincia + ', ' + this.addressWrapper.CAP + ' ' +this.addressWrapper.Stato;
             if(this.addressType.localeCompare('ServicePoint') == 0){
                 fields[SupplyPostalCode.fieldApiName] = this.addressWrapper.CAP;
@@ -302,7 +302,7 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                 fields[SupplyCityCode.fieldApiName] = this.addressWrapper['Codice Comune SAP'];
                 fields[SupplyStreetCode.fieldApiName] = this.addressWrapper.CodiceViaStradarioSAP;
                 fields[SupplyCity.fieldApiName] = this.addressWrapper.Comune;
-                fields[SupplyStreetNumberExtension.fieldApiName] = this.addressWrapper.EstensCivico;
+                fields[SupplyStreetNumberExtension.fieldApiName] = this.addressWrapper['Estens.Civico'];
                 fields[SupplyIsAddressVerified.fieldApiName] = this.addressWrapper['Flag Verificato'];
                 //fields[SupplyPlace.fieldApiName] = this.addressWrapper.
                 fields[SupplyProvince.fieldApiName] = this.addressWrapper.Provincia;
@@ -316,7 +316,7 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                 fields[InvoicingCityCode.fieldApiName] = this.addressWrapper['Codice Comune SAP'];
                 fields[InvoicingStreetCode.fieldApiName] = this.addressWrapper.CodiceViaStradarioSAP;
                 fields[InvoicingCity.fieldApiName] = this.addressWrapper.Comune;
-                fields[InvoicingStreetNumberExtension.fieldApiName] = this.addressWrapper.EstensCivico;
+                fields[InvoicingStreetNumberExtension.fieldApiName] = this.addressWrapper['Estens.Civico'];
                 fields[IsInvoicingVerified.fieldApiName] = this.addressWrapper['Flag Verificato'];
                 //fields[InvoicingPlace.fieldApiName] = this.addressWrapper.
                 fields[InvoicingProvince.fieldApiName] = this.addressWrapper.Provincia;
@@ -329,7 +329,7 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                 fields[BillingCityCode__c.fieldApiName] = this.addressWrapper['Codice Comune SAP'];
                 fields[BillingStreetCode__c.fieldApiName] = this.addressWrapper.CodiceViaStradarioSAP;
                 fields[BillingCity__c.fieldApiName] = this.addressWrapper.Comune;
-                fields[BillingStreetNumberExtension__c.fieldApiName] = this.addressWrapper.EstensCivico;
+                fields[BillingStreetNumberExtension__c.fieldApiName] = this.addressWrapper['Estens.Civico'];
                 fields[BillingIsAddressVerified__c.fieldApiName] = this.addressWrapper['Flag Verificato'];
                 //fields[BillingPlace__c.fieldApiName] = this.addressWrapper.
                 fields[BillingProvince__c.fieldApiName] = this.addressWrapper.Provincia;
