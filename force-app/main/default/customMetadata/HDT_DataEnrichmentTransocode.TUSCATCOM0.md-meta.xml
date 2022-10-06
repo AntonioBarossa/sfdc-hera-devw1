@@ -24,6 +24,6 @@
     </values>
     <values>
         <field>SfdcField__c</field>
-        <value xsi:type="xsd:string">RonchiCode__c</value>
+        <value xsi:type="xsd:string">RonchiSubcategory__c</value>
     </values>
 </CustomMetadata>
