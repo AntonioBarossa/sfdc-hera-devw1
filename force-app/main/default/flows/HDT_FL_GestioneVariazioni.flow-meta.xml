@@ -997,6 +997,38 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Sottoprocesso_con_Iniziativa</name>
+        <label>Assegna Sottoprocesso con Iniziativa</label>
+        <locationX>5007</locationX>
+        <locationY>1085</locationY>
+        <assignmentItems>
+            <assignToReference>processTypeEsenzioneModificaFognatura</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Esenzione Modifica Fognatura Depurazione DGRER569/19 non Allacciato / Uso Irriguo Acqua</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>DisplayTextEsenzio</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Sottoprocesso_senza_Iniziativa</name>
+        <label>Assegna Sottoprocesso senza Iniziativa</label>
+        <locationX>5201</locationX>
+        <locationY>1094</locationY>
+        <assignmentItems>
+            <assignToReference>processTypeEsenzioneModificaFognatura</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Esenzione Modifica Fognatura Depurazione Modifica Fognatura e Depurazione Acqua</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>DisplayTextEsenzio</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_valori</name>
         <label>Assegna valori</label>
         <locationX>2001</locationX>
@@ -3074,10 +3106,10 @@
             <name>DGRER569_19_non_Allacciato_Uso_Irriguo</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetCaseAggiornatoEsenzioneModificaFognature.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>GetCaseStessoSottoprocessoFornitura.Contract__r.Iniziativa__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue>DGRER569/19 non Allacciato / Uso Irriguo</stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -3089,16 +3121,53 @@
             <name>Modifica_Fognatura_e_Depurazione_subproc</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetCaseAggiornatoEsenzioneModificaFognature.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>GetCaseStessoSottoprocessoFornitura.Contract__r.Iniziativa__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue>Modifica Fognatura e Depurazione</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Calcolo_Codice_Causale_EsModFognature</targetReference>
             </connector>
             <label>Modifica Fognatura e Depurazione</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Split_sottoprocesso_0</name>
+        <label>Split sottoprocesso</label>
+        <locationX>5087</locationX>
+        <locationY>974</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Sottoprocesso_Iniziativa</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseStessoSottoprocessoFornitura.Contract__r.Iniziativa__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Sottoprocesso_con_Iniziativa</targetReference>
+            </connector>
+            <label>Sottoprocesso Iniziativa</label>
+        </rules>
+        <rules>
+            <name>Sottoprocesso_senza_iniziativa</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseStessoSottoprocessoFornitura.Contract__r.Iniziativa__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Sottoprocesso_senza_Iniziativa</targetReference>
+            </connector>
+            <label>Sottoprocesso senza iniziativa</label>
         </rules>
     </decisions>
     <decisions>
@@ -4376,7 +4445,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <locationX>5089</locationX>
         <locationY>833</locationY>
         <connector>
-            <targetReference>DisplayTextEsenzio</targetReference>
+            <targetReference>Split_sottoprocesso_0</targetReference>
         </connector>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
@@ -4413,8 +4482,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>DisplayTextEsenzio</name>
         <label>Screen Input Fiscale Esenzione Fognature</label>
-        <locationX>5089</locationX>
-        <locationY>1175</locationY>
+        <locationX>5133</locationX>
+        <locationY>1205</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4512,6 +4581,12 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
                 <name>showReadOnly</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>processTypeEsenzioneModificaFognatura</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -7538,6 +7613,13 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <value>
             <booleanValue>false</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>processTypeEsenzioneModificaFognatura</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>ProcessTypeModificaUnitImm</name>

@@ -1,0 +1,58 @@
+<template>
+    <div>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                 aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse modal-close-button"
+                            title="Close" onclick={handleCloseModal}>
+                        <lightning-icon icon-name="utility:close" size="medium"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Ricerca per Matricola Contatore</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning-layout>
+                        <lightning-layout-item class="slds-var-m-right_medium">
+                            <lightning-input type="text" data-id="matricolaInput" name="matricola" label="Matricola" value={searchinputvalue} required min-length="4" onchange={handleChangeMatricola}></lightning-input>
+                            <lightning-combobox
+                                data-id="servizioInput"
+                                name="service"
+                                label="Servizio"
+                                value={valueService}
+                                options={serviceOptions}
+                                onchange={handleChangeService} 
+                                required></lightning-combobox>
+                        </lightning-layout-item>
+                        <lightning-layout-item>
+                            <lightning-input type="text" name="comune" label="Comune" onchange={handleChangeComune}></lightning-input>
+                            <lightning-combobox
+                                name="silos"
+                                label="Silos"
+                                value={valueSilos}
+                                options={silosOptions}
+                                onchange={handleChangeSilos}
+                                class="slds-m-bottom_small" 
+                                ></lightning-combobox>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <lightning-button name="sapSearch" variant="brand" label="Cerca in SAP" onclick={handleSapSearch} ></lightning-button>
+                    <div class="slds-m-top_small" style="height: 300px;">
+                        <lightning-datatable
+                                key-field="id"
+                                data={originalData}
+                                columns={columns}
+                                max-row-selection="1"
+                                onrowselection={getSelectedRow}>
+                        </lightning-datatable>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button name="closeButton" variant="brand" label="Annulla" onclick={handleCloseModal} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button name="confirmButton" variant="brand" label="Conferma" onclick={handleConfirm} class="slds-m-left_x-small"></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</template>

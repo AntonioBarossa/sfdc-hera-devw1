@@ -13,17 +13,8 @@ public with sharing class HDT_UTL_CaseApprovalProcessTst {
     private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
     
     //TEST SETUP
-    
-    
-    //TESTS
-    
-    //submitForApproval
-    @isTest
-    private static void submitForApprovalTest(){
-        
-        //DEBUG
-        String debugString = TEST_NAME + ' - ' + 'submitForApprovalTest';
-        System.debug(debugString);
+    @TestSetup
+    static void setup() {
         
         //SETUP
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
@@ -31,7 +22,7 @@ public with sharing class HDT_UTL_CaseApprovalProcessTst {
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        
+
         //CASE PHASE MANAGEMENT ENABLE
         HDT_UTL_DataFactoryTst.pClickInstance();
         HDT_UTL_DataFactoryTst.pClickCasePhase();
@@ -43,27 +34,43 @@ public with sharing class HDT_UTL_CaseApprovalProcessTst {
         
         //CASE - INSERT - PAGAMENTI - PIANO RATEIZZAZIONE
         Case myCase = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id)[0];
+        myCase.salesCompany__c='Hera Comm Marche';
         myCase.RecordTypeId = constants.CASE_RECORDTYPEID_PAG_PIANORATEIZZAZIONE;
         insert myCase;
         
         //CASE UPDATING
         myCase.Phase__c = 'In Attesa Approvazione';
         update myCase;
-        
-        //TESTING
+    }
+    
+    
+    //TESTS
+    
+    //submitForApproval
+    @isTest
+    private static void submitForApprovalTst(){
+    
+        Case myCase = [SELECT Id, SalesCompany__c FROM Case][0];
+
         Test.startTest();
-        try{
-            HDT_UTL_CaseApprovalProcess.submitForApproval(new List<Case>{myCase});
-        } catch (DmlException e) {
-            System.debug('The following exception has occurred: ' + e.getMessage());
-        }
+            try{
+                HDT_UTL_CaseApprovalProcess.submitForApproval(new List<Case>{myCase});
+            } catch (DmlException e) {
+                System.debug('The following exception has occurred: ' + e.getMessage());
+            }
         Test.stopTest();
-        
-        //ASSERTS
-        System.assert(myCase != null, 'Attenzione, myCase non può essere null!');
+
+        Boolean check = false;
+        Id selectedUserId = [SELECT Id, ActorId FROM ProcessInstanceWorkitem WHERE ProcessInstance.TargetObjectId = :myCase.Id ][0].ActorId;
+        Group approvalGroup = [SELECT Id, (SELECT Id, UserOrGroupId FROM GroupMembers) FROM Group WHERE DeveloperName = 'HDT_PG_ApprovatoriPianoRataHCM'][0]; 
+
+        for( Integer i=0; i< approvalGroup.GroupMembers.size(); i++ ){
+            check = approvalGroup.GroupMembers[i].UserOrGroupId == selectedUserId ? true : check;
+        }
+
+        System.assert(check, 'Test su approver fallito');
         
     }
 
 
 }
-

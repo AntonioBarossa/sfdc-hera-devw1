@@ -3,8 +3,8 @@
     <actionCalls>
         <name>redirectToCase</name>
         <label>redirectToCase</label>
-        <locationX>418</locationX>
-        <locationY>2390</locationY>
+        <locationX>297</locationX>
+        <locationY>2750</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -20,8 +20,8 @@
     <assignments>
         <name>assignAttachments</name>
         <label>assignAttachments</label>
-        <locationX>638</locationX>
-        <locationY>1934</locationY>
+        <locationX>517</locationX>
+        <locationY>2294</locationY>
         <assignmentItems>
             <assignToReference>getPreAttachments.AdditionalAttachments__c</assignToReference>
             <operator>Assign</operator>
@@ -59,7 +59,7 @@
     <assignments>
         <name>assignFields_0</name>
         <label>assignFields</label>
-        <locationX>506</locationX>
+        <locationX>627</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>getAfterAddress.Phase__c</assignToReference>
@@ -131,15 +131,8 @@
     <assignments>
         <name>assignParamsAttachments_0</name>
         <label>assignParamsAttachments</label>
-        <locationX>638</locationX>
-        <locationY>1694</locationY>
-        <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.accountType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getPreAttachments.Account.Type</elementReference>
-            </value>
-        </assignmentItems>
+        <locationX>517</locationX>
+        <locationY>2054</locationY>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.city</assignToReference>
             <operator>Assign</operator>
@@ -155,31 +148,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.contactChannel</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getPreAttachments.Channel__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>paramsRequiredAttachments.processType</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>getPreAttachments.Type</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.subProcessType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getPreAttachments.Subprocess__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>paramsRequiredAttachments.SubscriberType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getPreAttachments.SubscriberType__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -189,8 +161,8 @@
     <assignments>
         <name>assignPhase</name>
         <label>assignPhase</label>
-        <locationX>638</locationX>
-        <locationY>2054</locationY>
+        <locationX>517</locationX>
+        <locationY>2414</locationY>
         <assignmentItems>
             <assignToReference>getPreAttachments.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -212,7 +184,7 @@
     <decisions>
         <name>isChecked_0</name>
         <label>isChecked</label>
-        <locationX>418</locationX>
+        <locationX>539</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>assignFields_0</targetReference>
@@ -229,7 +201,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>updateFinishAddress</targetReference>
+                <targetReference>get_input_case_aggiornato</targetReference>
             </connector>
             <label>Indirizzo Alternativo</label>
         </rules>
@@ -237,8 +209,8 @@
     <decisions>
         <name>operationButton_0</name>
         <label>operationButton</label>
-        <locationX>418</locationX>
-        <locationY>1454</locationY>
+        <locationX>297</locationX>
+        <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>getPreAttachments</targetReference>
         </defaultConnector>
@@ -321,6 +293,33 @@
             <label>Annullamento</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>tariManaged</name>
+        <label>tariManaged</label>
+        <locationX>539</locationX>
+        <locationY>1574</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>subFlowAnnullamento_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>checkTariManaged.result</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ScreenFieldsForm</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
     <interviewLabel>HDT_FL_GestioneReclami_PosizionamentoContenitore {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GestioneReclami_PosizionamentoContenitore</label>
     <processMetadataValues>
@@ -343,9 +342,30 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>get_input_case_aggiornato</name>
+        <label>get_input_case_aggiornato</label>
+        <locationX>539</locationX>
+        <locationY>1334</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>checkTariManaged</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getAfterAddress</name>
         <label>getAfterAddress</label>
-        <locationX>418</locationX>
+        <locationX>539</locationX>
         <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -387,8 +407,8 @@
     <recordLookups>
         <name>getPreAttachments</name>
         <label>getPreAttachments</label>
-        <locationX>638</locationX>
-        <locationY>1574</locationY>
+        <locationX>517</locationX>
+        <locationY>1934</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assignParamsAttachments_0</targetReference>
@@ -418,18 +438,18 @@
     <recordUpdates>
         <name>updateFinishAddress</name>
         <label>updateFinishAddress</label>
-        <locationX>418</locationX>
-        <locationY>1214</locationY>
+        <locationX>627</locationX>
+        <locationY>1118</locationY>
         <connector>
-            <targetReference>ScreenFieldsForm</targetReference>
+            <targetReference>get_input_case_aggiornato</targetReference>
         </connector>
         <inputReference>getAfterAddress</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>updatePostAttachment</name>
         <label>updatePostAttachment</label>
-        <locationX>638</locationX>
-        <locationY>2174</locationY>
+        <locationX>517</locationX>
+        <locationY>2534</locationY>
         <connector>
             <targetReference>redirectToCase</targetReference>
         </connector>
@@ -438,8 +458,8 @@
     <screens>
         <name>ScreenFieldsForm</name>
         <label>ScreenFieldsForm</label>
-        <locationX>418</locationX>
-        <locationY>1334</locationY>
+        <locationX>297</locationX>
+        <locationY>1694</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -543,8 +563,8 @@
     <screens>
         <name>screenGestioneAllegati</name>
         <label>Gestione allegati</label>
-        <locationX>638</locationX>
-        <locationY>1814</locationY>
+        <locationX>517</locationX>
+        <locationY>2174</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -789,10 +809,39 @@
     </start>
     <status>Active</status>
     <subflows>
+        <name>checkTariManaged</name>
+        <label>checkTariManaged</label>
+        <locationX>539</locationX>
+        <locationY>1454</locationY>
+        <connector>
+            <targetReference>tariManaged</targetReference>
+        </connector>
+        <flowName>HDT_FL_CheckTariManaged</flowName>
+        <inputAssignments>
+            <name>city</name>
+            <value>
+                <elementReference>get_input_case_aggiornato.SupplyCity__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>declarationDate</name>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>effectiveDate</name>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
         <name>subFlowAnnullamento_0</name>
         <label>subFlowAnnullamento</label>
-        <locationX>198</locationX>
-        <locationY>1574</locationY>
+        <locationX>77</locationX>
+        <locationY>1934</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

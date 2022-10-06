@@ -78,7 +78,9 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         String customerAssisted;
 
         for(DocumentSelected__c document : raiFeeDocuments){
-            totalRaiFeeResidual += document.TvFeeResidual__c;
+            if(document.TvFeeResidual__c != null){
+                totalRaiFeeResidual += document.TvFeeResidual__c;
+            }
         }
         if(totalResidue == 0){
             for(DocumentSelected__c document : raiFeeDocuments){
@@ -100,6 +102,21 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         customerAssisted = installmentsQr.getCustomerAssistedKpi(accountId);
         if(customerAssisted != null){
             currentCase.CutomerAssisted__c = customerAssisted.equalsIgnoreCase('Si');
+        }
+        
+        // TARI, predefault Reason__c field on Case
+        if (String.isNotBlank(inputs[0].motivazione)) {
+            currentCase.Reason__c = inputs[0].motivazione;
+        }
+
+        // TARI, predefault RequestSource__c field on Case
+        if (String.isNotBlank(inputs[0].provenienzaRichiesta)) {
+            currentCase.RequestSource__c = inputs[0].provenienzaRichiesta;
+        }
+
+        // TARI, predefault ApplicationInterests__c field on Case
+        if (inputs[0].applicazioneInteressi != null) {
+            currentCase.ApplicationInterests__c = inputs[0].applicazioneInteressi;
         }
 
         HDT_UTL_DatabaseService.updateSObject(currentCase);
@@ -132,7 +149,10 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
             when 'Bonifico Paperless' {
                 depositPaymentMode = 'B';
             }
-            when 'Acconto Assistiti' {
+            when 'Accordi Assistiti' {
+                depositPaymentMode = 'A';
+            }
+            when 'Promessa di pagamento' {
                 depositPaymentMode = 'A';
             }
             when else {
@@ -306,7 +326,14 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         @InvocableVariable
         public Decimal totalToPay;
 
+        @InvocableVariable
+        public String motivazione;
 
+        @InvocableVariable
+        public String provenienzaRichiesta;
+
+        @InvocableVariable
+        public Boolean applicazioneInteressi;
     }
 
 

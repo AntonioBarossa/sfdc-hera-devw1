@@ -156,8 +156,9 @@
     <gender>Masculine</gender>
     <label>AllineamentoGAA</label>
     <nameField>
+        <displayFormat>GAA-{0000}</displayFormat>
         <label>AllineamentoGAA Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>AllineamentoGAA</pluralLabel>
     <profileSearchLayouts>

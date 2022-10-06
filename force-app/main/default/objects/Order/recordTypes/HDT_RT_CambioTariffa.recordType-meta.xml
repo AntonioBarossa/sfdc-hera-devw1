@@ -2603,6 +2603,10 @@
 			<default>false</default>
 		</values>
 		<values>
+			<fullName>Creazione BP-CA</fullName>
+			<default>false</default>
+		</values>
+		<values>
 			<fullName>DA INVIARE</fullName>
 			<default>false</default>
 		</values>
@@ -2976,6 +2980,14 @@
         </values>
         <values>
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi S.p.A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi TARI</fullName>
             <default>false</default>
         </values>
     </picklistValues>

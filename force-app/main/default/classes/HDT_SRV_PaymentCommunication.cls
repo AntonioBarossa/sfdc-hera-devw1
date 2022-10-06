@@ -28,11 +28,8 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
                 'rds' => currentCase.CaseNumber,
                 'totale' => currentCase.TotalToPay__c,
                 'residuo' => currentCase.TotalToPay__c,
-                'dataPagamento' => currentCase.PaymentDate__c,
-                'modalitaPagamento' => modalitaPagamento,
-                'abi' => currentCase.IbanABI__c,
-                'intestatarioContoOrdinante' => currentCase.BeneficiaryAccount__r.Name,
                 'type' => currentCase.Type,
+                'promessaPagamentoEnte' => 'TRUE',
                 'comuneEnte' => currentCase.CityOrInstitution__c,
                 'note' => currentCase.Note__c
             };
@@ -44,8 +41,9 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
                 'dataPagamento' => currentCase.PaymentDate__c,
                 'modalitaPagamento' => modalitaPagamento,
                 'abi' => currentCase.IbanABI__c,
-                'intestatarioContoOrdinante' => currentCase.BeneficiaryAccount__r.Name,
-                'type' => currentCase.Type
+                'intestatarioContoOrdinante' => currentCase.BankAccountSignatoryFirstName__c + currentCase.BankAccountSignatoryLastName__c,
+                'type' => currentCase.Type,
+                'promessaPagamentoEnte' => 'FALSE'
             };
         }
 

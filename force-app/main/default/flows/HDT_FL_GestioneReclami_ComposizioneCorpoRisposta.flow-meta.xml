@@ -5,7 +5,7 @@
         <name>Assegna_Case_Contenuti</name>
         <label>Assegna Case Contenuti</label>
         <locationX>138</locationX>
-        <locationY>1358</locationY>
+        <locationY>1478</locationY>
         <assignmentItems>
             <assignToReference>CaseContenutiRecord</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>AssegnaModInvio</name>
         <label>AssegnaModInvio</label>
         <locationX>314</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>GetCaseInvioRisposta.MotivatedResponseSendMode__c</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +37,7 @@
         <name>AssegnaModInvio_0</name>
         <label>AssegnaModInvio</label>
         <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>GetCaseInvioRisposta.MotivatedResponseSendMode__c</assignToReference>
             <operator>Assign</operator>
@@ -53,7 +53,7 @@
         <name>AssegnaModInvio_0_0</name>
         <label>AssegnaModInvio</label>
         <locationX>842</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>GetCaseInvioRisposta.MotivatedResponseSendMode__c</assignToReference>
             <operator>Assign</operator>
@@ -69,7 +69,7 @@
         <name>AssegnaParentCaseToCollection</name>
         <label>AssegnaParentCaseToCollection</label>
         <locationX>50</locationX>
-        <locationY>1790</locationY>
+        <locationY>1910</locationY>
         <assignmentItems>
             <assignToReference>CaseContenutiRecord</assignToReference>
             <operator>Add</operator>
@@ -85,7 +85,7 @@
         <name>AssegnaStringCaseContenuti</name>
         <label>AssegnaStringCaseContenuti</label>
         <locationX>50</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Contenitore.Note__c</assignToReference>
             <operator>Assign</operator>
@@ -101,12 +101,12 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>710</locationX>
-        <locationY>1454</locationY>
+        <locationY>1910</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Elaborazione Risposta</stringValue>
+                <elementReference>destinationPhase</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -114,10 +114,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>assignPhase_Default</name>
+        <label>assignPhase</label>
+        <locationX>314</locationX>
+        <locationY>278</locationY>
+        <assignmentItems>
+            <assignToReference>destinationPhase</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Elaborazione Risposta</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Contenitore_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignProcessType</name>
         <label>AssignProcessType</label>
         <locationX>446</locationX>
-        <locationY>1214</locationY>
+        <locationY>1334</locationY>
         <assignmentItems>
             <assignToReference>RequestAccomplished</assignToReference>
             <operator>Assign</operator>
@@ -133,7 +149,7 @@
         <name>Popola_risposta_template</name>
         <label>Popola risposta template</label>
         <locationX>138</locationX>
-        <locationY>1238</locationY>
+        <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>Aggiorna_Case_Contenuti.ComplaintBodyResponse__c</assignToReference>
             <operator>Assign</operator>
@@ -159,7 +175,7 @@
             <assignToReference>Aggiorna_Case_Contenuti.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Elaborazione Risposta</stringValue>
+                <elementReference>destinationPhase</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -191,7 +207,7 @@
         <name>Case_Contenitore_0</name>
         <label>Case Contenitore?</label>
         <locationX>314</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Composizione_Risposta_Reclamo_0_0</targetReference>
         </defaultConnector>
@@ -216,7 +232,7 @@
         <name>Fase_Elaborazione_Risposta</name>
         <label>Fase: Elaborazione Risposta?</label>
         <locationX>578</locationX>
-        <locationY>1214</locationY>
+        <locationY>1670</locationY>
         <defaultConnector>
             <targetReference>GetCaseAggiornato</targetReference>
         </defaultConnector>
@@ -238,7 +254,7 @@
         <name>Il_Case_Contenuto_stato_selezionato</name>
         <label>Il Case Contenuto è stato selezionato?</label>
         <locationX>270</locationX>
-        <locationY>1118</locationY>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Case_Contenuti</targetReference>
         </defaultConnector>
@@ -263,19 +279,26 @@
         <name>Quale_Processo</name>
         <label>Quale Processo?</label>
         <locationX>578</locationX>
-        <locationY>1094</locationY>
+        <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>ScreenInput</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Reclamo/Doppia Fatt.</defaultConnectorLabel>
         <rules>
             <name>Richieste_Info</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>GetCaseInvioRisposta.FirstLevelComplaintClassification__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Richiesta di informazioni</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCaseInvioRisposta.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_ReclamoDaCittadino</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -288,7 +311,7 @@
         <name>ValoreCanaleDiIngresso</name>
         <label>ValoreCanaleDiIngresso?</label>
         <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>AssegnaModInvio_0_0</targetReference>
         </defaultConnector>
@@ -388,7 +411,7 @@
         <name>Aggiorna_Case_Contenuti</name>
         <label>Aggiorna Case Contenuti</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <collectionReference>Get_Case_Contenuti</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -421,7 +444,7 @@
         <name>Get_Case_Contenitore</name>
         <label>Get Case Contenitore</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Case_Contenuti</targetReference>
@@ -442,7 +465,7 @@
         <name>Get_Case_Contenuti</name>
         <label>Get Case Contenuti</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Aggiorna_Case_Contenuti</targetReference>
@@ -466,7 +489,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Case_Contenitore_0</targetReference>
+            <targetReference>assignPhase_Default</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -484,7 +507,7 @@
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
         <locationX>710</locationX>
-        <locationY>1334</locationY>
+        <locationY>1790</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValori</targetReference>
@@ -505,7 +528,7 @@
         <name>GetCaseInvioRisposta</name>
         <label>GetCaseInvioRisposta</label>
         <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ValoreCanaleDiIngresso</targetReference>
@@ -526,21 +549,21 @@
         <name>Aggiorna_Case_Contenuti_0</name>
         <label>Aggiorna Case Contenuti</label>
         <locationX>50</locationX>
-        <locationY>1910</locationY>
+        <locationY>2030</locationY>
         <inputReference>CaseContenutiRecord</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>710</locationX>
-        <locationY>1574</locationY>
+        <locationY>2030</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCaseModInvio</name>
         <label>AggiornaCaseModInvio</label>
         <locationX>578</locationX>
-        <locationY>974</locationY>
+        <locationY>1094</locationY>
         <connector>
             <targetReference>Quale_Processo</targetReference>
         </connector>
@@ -550,7 +573,7 @@
         <name>Composizione_Risposta_Reclamo_0</name>
         <label>Composizione Risposta Reclamo</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -589,7 +612,7 @@
         <name>Composizione_Risposta_Reclamo_0_0</name>
         <label>Composizione Risposta Reclamo</label>
         <locationX>578</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -628,7 +651,7 @@
         <name>ScreenInput</name>
         <label>ScreenInput</label>
         <locationX>578</locationX>
-        <locationY>1094</locationY>
+        <locationY>1550</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -733,7 +756,7 @@
         <name>ScreenInput_0</name>
         <label>ScreenInput</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -838,7 +861,7 @@
         <name>Seleziona_Case_Contenuti_0</name>
         <label>Seleziona Case Contenuti</label>
         <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -885,6 +908,16 @@
         <isOutput>true</isOutput>
         <value>
             <elementReference>Get_Input_Case.Id</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <name>destinationPhase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Elaborazione Risposta</stringValue>
         </value>
     </variables>
     <variables>

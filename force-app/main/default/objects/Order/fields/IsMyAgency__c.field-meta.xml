@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsMyAgency__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+	AND(
+		Owner:User.Profile.Name = &apos;Hera Teleseller Partner User&apos;,
+		$UserRole.DeveloperName = Owner:User.UserRole.DeveloperName,
+		NOT(ISNULL(Owner:User.ContactId))
+	),
+	true,
+	false
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>IsMyAgency</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

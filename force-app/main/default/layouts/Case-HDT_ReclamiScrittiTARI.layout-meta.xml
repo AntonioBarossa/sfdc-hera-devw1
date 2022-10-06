@@ -79,6 +79,14 @@
                 <behavior>Readonly</behavior>
                 <field>WorkableFileNumberDay__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MandatoryAttachments__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ReliefToApply__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

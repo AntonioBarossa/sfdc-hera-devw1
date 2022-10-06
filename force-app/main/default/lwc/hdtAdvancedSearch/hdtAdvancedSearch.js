@@ -67,6 +67,8 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
     @api isRicercainSAP=false;
     postSales=false;
+    isSerialNumber = false;
+    openMeterSearchModal = false;
 
     connectedCallback() {
         permissionForFlagContract().then(data =>{
@@ -244,6 +246,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             title: 'Attenzione',
             message: message,
             variant: 'error',
+            mode:'sticky',
         });
         this.dispatchEvent(event);
     }
@@ -278,6 +281,10 @@ export default class HdtAdvancedSearch extends LightningElement {
     }     
 
     addValuesToDatiCatastaliList() {
+        console.log('****Sono nella funcion****');
+        let errorMessage = [];
+        let concatErrorFields = '';
+        console.log('****Sono dopo le variabili****');
         this.searchInputValue = '';
         if(this.registryCityValue){
             this.datiCatastali.RegistryCity = this.registryCityValue;
@@ -304,29 +311,27 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.searchInputValue += this.subalternValue + ' ';
         }
         if(this.registryCityValue == null && this.registryCityCodeValue == null || this.registryCityValue == '' && this.registryCityCodeValue == '' || this.registryCityValue == null && this.registryCityCodeValue == '' || this.registryCityValue == '' && this.registryCityCodeValue == null){
-            this.showToast("Attenzione! Inserire almeno un valore tra Comune catastale e Codice comune catastale");
+            concatErrorFields = concatErrorFields.concat('Comune catastale o in alternativa Codice comune catastale, ');
         }
-        else if(this.sheetValue == null || this.sheetValue == ''){
-            this.showToast("Attenzione! Il campo Foglio è obbligatorio");
+        if(this.sheetValue == null || this.sheetValue == ''){
+            concatErrorFields = concatErrorFields.concat('Foglio, ');
         }
-        else if(this.particleSheetValue == null || this.particleSheetValue == ''){
-            this.showToast("Attenzione! Il campo Particella è obbligatorio");
+        if(this.particleSheetValue == null || this.particleSheetValue == ''){
+            concatErrorFields = concatErrorFields.concat('Particella');
         }
-        else{
+        if (concatErrorFields.charAt(concatErrorFields.length - 2) == ',') {
+            concatErrorFields = concatErrorFields.slice(0, -2);
+          }
+        
+        if (concatErrorFields !== '') {
+            errorMessage.push('Per poter confermare popolare i seguenti campi: ' + concatErrorFields);
+        }        
+        if(errorMessage.length === 0){
             this.closeModalDatiCatastali();
-        }
-        console.log('this.datiCatastali' + JSON.stringify(this.datiCatastali) );
-/*         let newVariable = (this.datiCatastali).join();
-        let result = newVariable.replace(/,/g,' ');
-        this.searchInputValue = result; */
-        console.log('this.searchInputValue' + this.searchInputValue );
+        }else{
+            this.showToast(errorMessage[0]);
+        }       
         this.submitButtonStatus = false;
-/*         this.registryCityValue = '';
-        this.registryCityCodeValue = '';
-        this.urbanSectionValue = '';
-        this.sheetValue = '';
-        this.particleSheetValue = '';
-        this.subalternValue =''; */
     } 
 
     closeModal() {
@@ -458,6 +463,13 @@ export default class HdtAdvancedSearch extends LightningElement {
         if(this.queryType==='datiCatastali'){
             this.openModalDatiCatastali();
         }
+        
+        if (this.queryType==='serialnumber'){
+            this.isSerialNumber = true;
+        } else {
+            this.isSerialNumber = false;
+        }
+        
         this.apiSearchButtonStatus= true;
     }
 
@@ -516,17 +528,23 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     searchInSAP(){
         
-        this.callApi(this.searchInputValue, 'searchSap').then(() => {
-            this.preloading = true;
-            this.closeModal();
-            if(this.serviceRequestId == null || (this.serviceRequestId != null && !this.isIncompatible)){
-                this.dispatchEvent(new CustomEvent('servicepointselection', {
-                    detail: this.rowToSend
-                }));
-                this.preloading = false;
-            }
-            this.confirmButtonDisabled = true;
-        });
+        if(this.isSerialNumber){
+            console.log('Set openMeterSearchModal -> True');
+            this.openMeterSearchModal = true;
+        }else{
+            this.callApi(this.searchInputValue, 'searchSap').then(() => {
+                this.preloading = true;
+                this.closeModal();
+                if(this.serviceRequestId == null || (this.serviceRequestId != null && !this.isIncompatible)){
+                    this.dispatchEvent(new CustomEvent('servicepointselection', {
+                        detail: this.rowToSend
+                    }));
+                    this.preloading = false;
+                }
+                this.confirmButtonDisabled = true;
+            });
+        }
+
     }
 
     callApi(event, isFrom){
@@ -757,5 +775,18 @@ export default class HdtAdvancedSearch extends LightningElement {
         else{
             this.isSuperUser=false;
         }
+    }
+
+    handleCloseMeterSearch(){
+        console.log('Set openMeterSearchModal -> False');
+        this.openMeterSearchModal = false;
+    }
+
+    handleServicePoinSelectionMeter(event){
+        this.dispatchEvent(new CustomEvent('servicepointselection', {
+            detail: event.detail
+        }));
+        this.handleCloseMeterSearch();
+        this.preloading = false;
     }
 }
