@@ -138,19 +138,14 @@ export default class HdtGeneralInfo extends LightningElement {
             }else{
                 this.createTable([]);
             }
-            if(Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound'){
+
+            console.log('Channel --> '+Channel);
+            if(Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound'|| Channel == 'Telefono'){
                 this.isServiceCommissioning = true;
                 this.requiredInput = true;
             }
             else{
                 this.isServiceCommissioning = false;
-                this.requiredInput = false;
-            }
-
-            if(Channel == 'Telefono'){
-                this.requiredInput = true;
-            }
-            else{
                 this.requiredInput = false;
             }
             
@@ -391,6 +386,24 @@ export default class HdtGeneralInfo extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             return;
         }
+
+        let docDate = new Date(this.template.querySelector("[data-id='DocumentDate__c']").value);
+        let today = new Date();
+
+        console.log('DATE : docDate --> '+docDate);
+        console.log('DATE : today --> '+today);
+
+        if (docDate > today) {
+            this.loading = false;
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Valore non valido nel campo "Data documento".',
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+            return;
+        }
         this.dataToSubmit['Channel__c'] = this.template.querySelector('[data-id="Channel__c"]').value;
         console.log('*******1: ' + JSON.stringify(this.dataToSubmit) );
         this.updateSaleRecord(this.dataToSubmit);
@@ -413,12 +426,14 @@ export default class HdtGeneralInfo extends LightningElement {
         {
             this.valueObj = this.saleRecord.SalesContact__r.Name;
         }
-       if(this.saleRecord.Channel__c == 'Teleselling Inbound' || this.saleRecord.Channel__c == 'Teleselling Outbound'){
+        if(this.saleRecord.Channel__c == 'Teleselling Inbound' || this.saleRecord.Channel__c == 'Teleselling Outbound' || this.saleRecord.Channel__c == 'Telefono'){
             this.isServiceCommissioning = true;
+            this.requiredInput = true;
             console.log('Channel:::::::true');
         }
         else{
             this.isServiceCommissioning = false;
+            this.requiredInput = false;
         }
         console.log('hdtGeneralInfo - connectedCallback - campaignId: ', this.campaignId);
 
