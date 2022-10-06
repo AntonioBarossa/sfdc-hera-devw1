@@ -24,7 +24,7 @@ public with sharing class HDT_UTL_Reclami
     private Map<String,String> calculateDatesWater(Case inputCase, String ato)
     {
         Map<String,String> result = new Map<String,String>();
-        String process = inputCase.FirstLevelComplaintClassification__c;
+        String process = 'Reclamo Scritto/Rich. Info'.equalsIgnoreCase(inputCase.Type) ? inputCase.FirstLevelComplaintClassification__c : inputCase.Type ;
         Integer suspensionDays;
 
         List<HDT_IndemnitiesDays__mdt> configurations = getExpirationDateConfigurations(process,'Acqua');
@@ -32,7 +32,9 @@ public with sharing class HDT_UTL_Reclami
         for(HDT_IndemnitiesDays__mdt config : configurations)
         {
             SuspensionDays = Integer.valueOf(config.SuspensionDays__c);
-            if( ( String.isNotBlank(ato) && config.ObjectName__c.equalsIgnoreCase(ato) ) || config.ObjectName__c.equalsIgnoreCase('Default') )
+            if( ( String.isNotBlank(ato) && config.ObjectName__c.containsIgnoreCase(ato) && config.ObjectName__c.containsIgnoreCase(inputCase.SecondLevelOpinion__c) ) ||
+                ( String.isNotBlank(ato) && config.ObjectName__c.equalsIgnoreCase(ato) ) ||
+                 config.ObjectName__c.equalsIgnoreCase('Default') )
             {
                 result = setDates(inputCase, config);
             }
@@ -48,7 +50,8 @@ public with sharing class HDT_UTL_Reclami
 
         for(HDT_IndemnitiesDays__mdt config : configurations)
         {
-            if(config.ObjectName__c.equalsIgnoreCase('Default'))
+            if( process.equalsIgnoreCase('Richiesta Parere') && config.ObjectName__c.containsIgnoreCase(inputCase.SecondLevelOpinion__c) ||
+                config.ObjectName__c.equalsIgnoreCase('Default'))
             {
                 result = setDates(inputCase, config);
             }
