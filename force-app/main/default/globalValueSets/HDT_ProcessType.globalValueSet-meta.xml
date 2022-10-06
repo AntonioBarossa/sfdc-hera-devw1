@@ -316,6 +316,16 @@
         <label>Doppi pagamenti/Incassi - EE</label>
     </customValue>
     <customValue>
+        <fullName>Doppi pagamenti/Incassi - ACQUA</fullName>
+        <default>false</default>
+        <label>Doppi pagamenti/Incassi - ACQUA</label>
+    </customValue>
+    <customValue>
+        <fullName>Doppi pagamenti/Incassi - AMB</fullName>
+        <default>false</default>
+        <label>Doppi pagamenti/Incassi - AMB</label>
+    </customValue>
+    <customValue>
         <fullName>Doppi pagamenti/Incassi - GAS</fullName>
         <default>false</default>
         <label>Doppi pagamenti/Incassi - GAS</label>
@@ -351,6 +361,11 @@
         <label>Gestione Bonus Sociale - GAS</label>
     </customValue>
     <customValue>
+        <fullName>Gestione Bonus Sociale - ACQ</fullName>
+        <default>false</default>
+        <label>Gestione Bonus Sociale - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Gestione Calamità - EE</fullName>
         <default>false</default>
         <label>Gestione Calamità - EE</label>
@@ -375,6 +390,12 @@
         <default>false</default>
         <label>Gestione disalimentabilità - GAS</label>
     </customValue>
+    <customValue>
+        <fullName>Gestione rifiuti​ - AMB</fullName>
+        <default>false</default>
+        <label>Gestione rifiuti​ - AMB</label>
+    </customValue>
+    
     <customValue>
         <fullName>HVAC</fullName>
         <default>false</default>
@@ -659,6 +680,11 @@
         <fullName>Ricostruzione Consumi - GAS</fullName>
         <default>false</default>
         <label>Ricostruzione Consumi - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Ricostruzione Consumi - ACQ</fullName>
+        <default>false</default>
+        <label>Ricostruzione Consumi - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Rimborso</fullName>
@@ -1234,11 +1260,6 @@
         <fullName>Connessione con attivazione​  - ACQ</fullName>
         <default>false</default>
         <label>Connessione con attivazione​  - ACQ</label>
-    </customValue>
-    <customValue>
-        <fullName>Ricostruzione consumi - ACQ</fullName>
-        <default>false</default>
-        <label>Ricostruzione consumi - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Richiesta domiciliazione - GAS</fullName>

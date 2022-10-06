@@ -839,6 +839,10 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>TownATOTable__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>wrts_prcgvr__CompatibilityHome</tab>
         <visibility>Visible</visibility>
     </tabSettings>
