@@ -242,7 +242,7 @@
             <assignToReference>GetInputCaseAggiornato.DepositAmount__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date_1.DepositAmount</elementReference>
+                <elementReference>Calculate_Expiration_Date_1.depositAmount</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -369,35 +369,35 @@
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.AmountToPayInInstallments__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.AmountToPayInInstallments</elementReference>
+                <elementReference>Calculate_Expiration_Date.amountToPayInInstallments</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.EndDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.EndDate</elementReference>
+                <elementReference>Calculate_Expiration_Date.endDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.CompletedDocumentationDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.CompletedDocumentationDate</elementReference>
+                <elementReference>Calculate_Expiration_Date.completedDocumentationDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.DepositExpirationDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.DepositExpirationDate</elementReference>
+                <elementReference>Calculate_Expiration_Date.depositExpirationDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.DepositAmount__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.DepositAmount</elementReference>
+                <elementReference>Calculate_Expiration_Date.depositAmount</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -413,28 +413,28 @@
             <assignToReference>GetInputCaseAggiornato.AmountToPayInInstallments__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date_1.AmountToPayInInstallments</elementReference>
+                <elementReference>Calculate_Expiration_Date_1.amountToPayInInstallments</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.EndDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date_1.EndDate</elementReference>
+                <elementReference>Calculate_Expiration_Date_1.endDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.CompletedDocumentationDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date_1.CompletedDocumentationDate</elementReference>
+                <elementReference>Calculate_Expiration_Date_1.completedDocumentationDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.DepositExpirationDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date_1.CompletedDocumentationDate</elementReference>
+                <elementReference>Calculate_Expiration_Date_1.completedDocumentationDate</elementReference>
             </value>
         </assignmentItems>
         <connector>

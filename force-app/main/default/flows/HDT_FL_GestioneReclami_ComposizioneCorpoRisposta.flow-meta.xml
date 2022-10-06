@@ -199,7 +199,7 @@
             <assignToReference>GetCaseAggiornato.DepositAmount__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.DepositAmount</elementReference>
+                <elementReference>Calculate_Expiration_Date.depositAmount</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -343,7 +343,7 @@
             <assignToReference>Aggiorna_Case_Contenuti.DepositAmount__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.DepositAmount</elementReference>
+                <elementReference>Calculate_Expiration_Date.depositAmount</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -359,7 +359,7 @@
             <assignToReference>Aggiorna_Case_Contenuti.DepositAmount__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.DepositAmount</elementReference>
+                <elementReference>Calculate_Expiration_Date.depositAmount</elementReference>
             </value>
         </assignmentItems>
         <connector>

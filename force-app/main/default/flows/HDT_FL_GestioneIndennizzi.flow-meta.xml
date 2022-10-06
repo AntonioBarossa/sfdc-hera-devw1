@@ -183,35 +183,35 @@
             <assignToReference>getInputCase.AmountToPayInInstallments__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.AmountToPayInInstallments</elementReference>
+                <elementReference>Calculate_Expiration_Date.amountToPayInInstallments</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getInputCase.EndDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.EndDate</elementReference>
+                <elementReference>Calculate_Expiration_Date.endDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getInputCase.CompletedDocumentationDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.CompletedDocumentationDate</elementReference>
+                <elementReference>Calculate_Expiration_Date.completedDocumentationDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getInputCase.DepositExpirationDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.DepositExpirationDate</elementReference>
+                <elementReference>Calculate_Expiration_Date.depositExpirationDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getInputCase.DepositAmount__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.DepositAmount</elementReference>
+                <elementReference>Calculate_Expiration_Date.depositAmount</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -818,35 +818,35 @@
             <assignToReference>getInputCase.AmountToPayInInstallments__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Copy_1_of_Calculate_Expiration_Date.AmountToPayInInstallments</elementReference>
+                <elementReference>Copy_1_of_Calculate_Expiration_Date.amountToPayInInstallments</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getInputCase.EndDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Copy_1_of_Calculate_Expiration_Date.EndDate</elementReference>
+                <elementReference>Copy_1_of_Calculate_Expiration_Date.endDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getInputCase.CompletedDocumentationDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Copy_1_of_Calculate_Expiration_Date.CompletedDocumentationDate</elementReference>
+                <elementReference>Copy_1_of_Calculate_Expiration_Date.completedDocumentationDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getInputCase.DepositExpirationDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Copy_1_of_Calculate_Expiration_Date.DepositExpirationDate</elementReference>
+                <elementReference>Copy_1_of_Calculate_Expiration_Date.depositExpirationDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getInputCase.DepositAmount__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Copy_1_of_Calculate_Expiration_Date.DepositAmount</elementReference>
+                <elementReference>Copy_1_of_Calculate_Expiration_Date.depositAmount</elementReference>
             </value>
         </assignmentItems>
         <connector>

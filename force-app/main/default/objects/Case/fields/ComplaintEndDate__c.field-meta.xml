@@ -2,10 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ComplaintEndDate__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(ISNULL(EndDate__c),
-    IF(OR(ISPICKVAL(FirstLevelComplaintClassification__c, &quot;Reclamo Scritto&quot;),ISPICKVAL(FirstLevelComplaintClassification__c, &quot;Richiesta di informazioni&quot;)), SendDate__c + 30, SendDate__c + 20),
-    IF(TEXT(Cluster__c) = &apos;Reclami&apos;,EndDate__c, null)
-)</formula>
+    <formula>EndDate__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Data Scadenza Reclamo</label>
     <required>false</required>

@@ -116,28 +116,28 @@
             <assignToReference>Get_Input_Case_Aggiornato.AmountToPayInInstallments__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.AmountToPayInInstallments</elementReference>
+                <elementReference>Calculate_Expiration_Date.amountToPayInInstallments</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.EndDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.EndDate</elementReference>
+                <elementReference>Calculate_Expiration_Date.endDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.CompletedDocumentationDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.CompletedDocumentationDate</elementReference>
+                <elementReference>Calculate_Expiration_Date.completedDocumentationDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.DepositExpirationDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.DepositExpirationDate</elementReference>
+                <elementReference>Calculate_Expiration_Date.depositExpirationDate</elementReference>
             </value>
         </assignmentItems>
         <connector>

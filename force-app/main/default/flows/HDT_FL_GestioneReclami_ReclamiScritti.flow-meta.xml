@@ -54,7 +54,7 @@
             <assignToReference>Get_Input_Case_Aggiornato.DepositAmount__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.DepositAmount</elementReference>
+                <elementReference>Calculate_Expiration_Date.depositAmount</elementReference>
             </value>
         </assignmentItems>
         <connector>

@@ -32,7 +32,7 @@ public with sharing class HDT_UTL_Reclami
         for(HDT_IndemnitiesDays__mdt config : configurations)
         {
             SuspensionDays = Integer.valueOf(config.SuspensionDays__c);
-            if( ( String.isNotBlank(ato) && config.ObjectName__c.containsIgnoreCase(ato) && config.ObjectName__c.containsIgnoreCase(inputCase.SecondLevelOpinion__c) ) ||
+            if( ( process.equalsIgnoreCase('Richiesta Parere') && String.isNotBlank(ato) && config.ObjectName__c.containsIgnoreCase(ato) && config.ObjectName__c.containsIgnoreCase(inputCase.SecondLevelOpinion__c) ) ||
                 ( String.isNotBlank(ato) && config.ObjectName__c.equalsIgnoreCase(ato) ) ||
                  config.ObjectName__c.equalsIgnoreCase('Default') )
             {
@@ -50,7 +50,7 @@ public with sharing class HDT_UTL_Reclami
 
         for(HDT_IndemnitiesDays__mdt config : configurations)
         {
-            if( process.equalsIgnoreCase('Richiesta Parere') && config.ObjectName__c.containsIgnoreCase(inputCase.SecondLevelOpinion__c) ||
+            if( ( process.equalsIgnoreCase('Richiesta Parere') && config.ObjectName__c.containsIgnoreCase(inputCase.SecondLevelOpinion__c) ) ||
                 config.ObjectName__c.equalsIgnoreCase('Default'))
             {
                 result = setDates(inputCase, config);
