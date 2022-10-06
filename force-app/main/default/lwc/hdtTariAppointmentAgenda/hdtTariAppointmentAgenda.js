@@ -3,7 +3,6 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import handleSearch from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleSearch';
 import handleView from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleView';
 import handleConfirm from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleConfirm';
-import handleWithdrawalCreation from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleWithdrawalCreation';
 import getCase from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.getCase';
 import handleNewActivityCreationAndCaseUpdate from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleNewActivityCreationAndCaseUpdate';
 
@@ -11,34 +10,23 @@ import handleNewActivityCreationAndCaseUpdate from '@salesforce/apex/HDT_LC_Appo
 const OBJECT_FIELDS =[
     'CaseNumber',
     'Outcome__c',
-    // 'AppointmentCode__c',
-    // 'JobCenterCode__c',
-    // 'SotCode__c',
     'StartAppointment__c',
     'EndAppointment__c',
     'WithdrawalFee__c',
     'ServicePoint__c',
-    'CreatedDate'
+    'CreatedDate',
+    'SupplyPostalCode__c',
+    'SupplyStreetName__c',
+    'InvoicingStreetCode__c'
 ];
 
-// const COLUMNS = [
-//     { label: 'Data appuntamento', fieldName: 'data', type: 'text' },
-//     { label: 'Fascia oraria', fieldName: 'fascia', type: 'text' },
-//     { label: 'Stima durata', fieldName: 'stima', type: 'text' },
-//     { label: 'Codice Appuntamento', fieldName: 'codice', type: 'text' },
-//     { label: 'Data limite modifica', fieldName: 'dataLimite', type: 'text' },
-//     { label: 'Ora limite validità', fieldName: 'oraLimite', type: 'text' }
-// ];
-
 const COLUMNS = [
-    { label: 'outcome', fieldName: 'outcome', type: 'text' },//TODO
-    { label: 'text', fieldName: 'text', type: 'text' },
     { label: 'Data Inizio Appuntamento', fieldName: 'startDate', type: 'text' },
     { label: 'Data Fine Appuntamento', fieldName: 'endDate', type: 'text' },
 ];
 
 const COLUMNSVIEW = [
-    { label: 'noticeNumber', fieldName: 'noticeNumber', type: 'text' },//TODO
+    { label: 'noticeNumber', fieldName: 'noticeNumber', type: 'text' },
     { label: 'appointmentType', fieldName: 'appointmentType', type: 'text' },
     { label: 'Data Inizio Appuntamento', fieldName: 'startDate', type: 'text' },
     { label: 'Data Fine Appuntamento', fieldName: 'endDate', type: 'text' },
@@ -46,9 +34,6 @@ const COLUMNSVIEW = [
 
 class Objectfields{
     constructor(startAppointment,endAppointment,phase,note,outcome){
-        // this.appointmentCode = appointmentCode;
-        // this.jobCenterCode = jobCenterCode;
-        // this.sotCode = sotCode;
         this.startAppointment = startAppointment;
         this.endAppointment = endAppointment;
         this.phase = phase;
@@ -69,7 +54,6 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     isCommunity = false;
     searchType;
     newDateLabel;
-    selectedCode;
     showSpinner = true;
     @track fieldsToRetrieve;
     @track isView = false;
@@ -113,46 +97,25 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         this.showSpinner = true;
         let row = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
         handleConfirm({
-            caseId : this.caseid,
-            appointmentJson : JSON.stringify(row[0])
+            case : this.case,
+            purchaseOrderNumber : this.caseid,
+            streetCoding : this.case.SupplyPostalCode__c,
+            street : this.case.SupplyStreetName__c,
+            housenumber : this.case.InvoicingStreetCode__c,
+            typeInt : null,
+            indicator : null,
+            numberOfLines : null,
+            startDate : row.startDate,
+            endDate : row.endDate
         }).then(result =>{
             
-            if (!result){
+            if (!result?.status == 'success'){
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
             }else{
                 let data = JSON.parse(result);
                 if(data.status.localeCompare('success') === 0){
                     this.showAlert('Operazione Riuscita','L\'appuntamento è stato confermato','success');
-                    /*Alla pressione del pulsante “Conferma appuntamento”, viene inviato il flusso in uscita verso sap di conferma appuntamento TODO
-                    this.case.AppointmentCode__c = result.AppointmentCode__c;
-                    this.case.JobCenterCode__c = result.JobCenterCode__c; // da creare
-                    this.case.SotCode__c = result.SotCode__c; //da creare
-                    this.case.StartAppointment__c = result.StartAppointment__c; //da creare
-                    this.case.EndAppointment__c = result.EndAppointment__c; //da creare
-                    this.case.Phase__c = 'Da Inviare';
-                    this.updateTheCase(this.case);
-                    */
-
-                    
-                    // this.case.AppointmentCode__c = '1';
-                    // this.case.JobCenterCode__c = '1';
-                    // this.case.SotCode__c = '1';
-                    this.case.StartAppointment__c = data.data.startDate;
-                    this.case.EndAppointment__c = data.data.endDate;
-                    this.case.Phase__c = 'Da Inviare';
-                    this.case.Outcome__c ='Recived_Slots';
-
-                    if(!this.case.WithdrawalFee__c){
-                        let createdDate = this.case.CreatedDate.substring(0,10);
-                        this.createWithdrawal(this.case.ServicePoint__c, createdDate);
-                    }
-
-                    var caseFields = new Objectfields(this.formatData(this.case.StartAppointment__c),this.formatData(this.case.EndAppointment__c),this.case.Phase__c,null,this.case.Outcome__c);
-
-                    var activityFields = new Objectfields(this.formatData(this.case.StartAppointment__c),this.formatData(this.case.EndAppointment__c),null,null,null);
-
-                    this.createNewActivityAndUpdateCase(this.case.Id, caseFields, null, activityFields);
                     this.refreshPage(true);
                 }else{ 
                     this.showAlert('Errore','Impossibile confermare l\'appuntamento selezionato','error');
@@ -162,17 +125,6 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         }).catch(error =>{
             this.showAlert('Errore',error.body.message,'error');
             this.dispatchEvent(new CustomEvent('cancelevent',{detail : this.refreshRecord}));
-        });
-    }
-
-    createWithdrawal(servicePointId, createdDate){
-        handleWithdrawalCreation({
-            servicePointId : servicePointId,
-            dataRitiro : createdDate
-        }).then(result =>{
-            console.log(' ### Ritiro Inserito');
-        }).catch(error =>{
-            this.showAlert('Errore',error.body.message,'error');
         });
     }
 
@@ -219,19 +171,23 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     }
 
     getNewDate(){
-        let appointment = '2022-12-31';
-        console.log('appointment ->' + appointment);
-        let preferentialTime = '15:00/16:00';
-        console.log('preferentialTime -> ' + preferentialTime);
-        this.handleSearchMethod(appointment,preferentialTime);
+        let purchaseOrderNumber = this.caseid;
+        let streetCoding = '';
+        let street = '';
+        let housenumber = '';
+        let typeInt = '';
+        let indicator = '';
+        let numberOfLines = '';
+
+        this.handleSearchMethod(purchaseOrderNumber, streetCoding, street, housenumber,typeInt, indicator, numberOfLines);
     }
 
     handleViewMethod(){
         this.showSpinner = true;
         handleView({
-            caseId : this.caseid
+            purchaseOrderNumber : this.caseid
         }).then(result =>{
-            if (!result){
+            if (!result?.status == 'success'){
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
             }else{
@@ -245,12 +201,6 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                                     appointmentType : slots.appointmentType,
                                     startDate : slots.startDate,
                                     endDate : slots.endDate
-                                    // codice : element.codiceApp, 
-                                    // data : this.formatData(element.appData), 
-                                    // fascia : element.appFasciaOrario, 
-                                    // stima: element.zStimaDurApp, 
-                                    // dataLimite : this.formatData(element.zLimApp),
-                                    // oraLimite : element.zLimAppOra 
                                 });
                     }catch(e){
                         console.error(e);
@@ -269,15 +219,18 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         });
     }
 
-    handleSearchMethod(appointment,preferentialTime){
+    handleSearchMethod(purchaseOrderNumber, streetCoding, street, housenumber,typeInt, indicator, numberOfLines){
         this.showSpinner = true;
         handleSearch({
-            caseId : this.caseid,
-            searchType : 'FirstSearch',
-            preferedDate : appointment,
-            preferedTimeSlot : preferentialTime
+            purchaseOrderNumber : purchaseOrderNumber,
+            streetCoding : streetCoding, 
+            street : street, 
+            housenumber : housenumber, 
+            typeInt : typeInt, 
+            indicator : indicator, 
+            numberOfLines : numberOfLines
         }).then(result =>{
-            if (!result){
+            if(!result?.status == 'success'){ 
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
                 this.disableConfirmButton = true; 
@@ -291,19 +244,17 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                     if(slots.length == 0){
                         this.case.Note__c = 'l’appuntamento non può essere preso perché l’agenda non restituisce alcuna data - ricontattare il cliente';
                         this.case.Outcome__c ='Empty_Slots';
-                        var caseFields = new Objectfields(null,null,null,null,null,null,this.case.Note__c,this.case.Outcome__c);
+                        var caseFields = new Objectfields(null,null,null,this.case.Note__c,this.case.Outcome__c);
                         this.disableConfirmButton = true; 
                     }else{
                         slots.forEach(element => {
                             this.addRecord({
-                                outcome : slots.outcome,
-                                text : slots.text,
                                 startDate : element.startDate,
                                 endDate : element.endDate
                             });
                         });
                         this.case.Outcome__c='Recived_Slots';
-                        var caseFields = new Objectfields(null,null,null,null,null,null,null,this.case.Outcome__c);
+                        var caseFields = new Objectfields(null,null,null,null,this.case.Outcome__c);
                         this.createNewActivityAndUpdateCase(this.caseid, caseFields, null, null);
                         this.disableCancelButton = false; 
                     }
@@ -324,7 +275,6 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         try{
             let row = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
             if (row.length > 0 ){
-                this.selectedCode = row.codice;
                 return true;
             }else{
                 return false;
@@ -352,11 +302,9 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     }
 
     async refreshPage(flagCommunity){
-        let userCommunity;
         if (!flagCommunity){
             setTimeout(function(){window.location.reload()},3000);
         }else{
-            userCommunity = flagCommunity;
             this.dispatchEvent(new CustomEvent('cancelevent',{detail : true}));
         }
     }
