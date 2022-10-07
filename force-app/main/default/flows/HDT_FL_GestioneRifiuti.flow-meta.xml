@@ -458,55 +458,6 @@
         <locationX>3482</locationX>
         <locationY>518</locationY>
         <assignmentItems>
-            <assignToReference>theCase.InvoicingStreetName__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAccount.BillingStreetName__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.InvoicingCity__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAccount.BillingCity</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.InvoicingPostalCode__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAccount.BillingPostalCode</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.InvoicingCountry__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAccount.BillingCountry</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.InvoicingProvince__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAccount.BillingState</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.InvoicingStreetNumberExtension__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAccount.BillingStreetNumberExtension__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.InvoicingStreetNumber__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAccount.BillingStreetNumber__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>theCase.Cluster__c</assignToReference>
             <operator>Assign</operator>
             <value>
