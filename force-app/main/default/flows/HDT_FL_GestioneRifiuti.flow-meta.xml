@@ -458,55 +458,6 @@
         <locationX>3482</locationX>
         <locationY>518</locationY>
         <assignmentItems>
-            <assignToReference>theCase.InvoicingStreetName__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAccount.BillingStreetName__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.InvoicingCity__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAccount.BillingCity</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.InvoicingPostalCode__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAccount.BillingPostalCode</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.InvoicingCountry__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAccount.BillingCountry</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.InvoicingProvince__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAccount.BillingState</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.InvoicingStreetNumberExtension__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAccount.BillingStreetNumberExtension__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.InvoicingStreetNumber__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getAccount.BillingStreetNumber__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>theCase.Cluster__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -887,6 +838,11 @@
         <expression>ISBLANK({!theCase.AccountId})</expression>
     </formulas>
     <formulas>
+        <name>NotaToSend</name>
+        <dataType>String</dataType>
+        <expression>{!theCase.MaterialDescription__c} &amp; IF(ISBLANK( {!theCase.AlternativeAddress__c}), &quot;&quot;, &quot; Indirizzo Alternativo:&quot; &amp; {!theCase.AlternativeAddress__c})</expression>
+    </formulas>
+    <formulas>
         <name>phone_NonBlank</name>
         <dataType>String</dataType>
         <expression>BLANKVALUE({!getAccount.Phone}, BLANKVALUE({!getAccount.MobilePhone__c},  BLANKVALUE({!getAccount.OtherPhone__c}, &apos;&apos;) ))</expression>
@@ -1149,6 +1105,8 @@
         <queriedFields>InvoicingCity__c</queriedFields>
         <queriedFields>TypeOperation__c</queriedFields>
         <queriedFields>AccountId</queriedFields>
+        <queriedFields>MaterialDescription__c</queriedFields>
+        <queriedFields>AlternativeAddress__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>DaInviare</name>
@@ -1166,6 +1124,12 @@
                 <elementReference>theCase.Id</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>Note__c</field>
+            <value>
+                <elementReference>NotaToSend</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Phase__c</field>
             <value>
@@ -1190,6 +1154,9 @@
                 <elementReference>theCase.Id</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>Note__c</field>
+        </inputAssignments>
         <inputAssignments>
             <field>Phase__c</field>
             <value>
@@ -1451,7 +1418,7 @@
         </connector>
         <fields>
             <name>titolo</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Gestione Rifiuti&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;u&gt;Indicare indirizzo completo solo se diverso da campo indirizzo precedente&lt;/u&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Gestione Rifiuti&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;u&gt;Compila il campo &quot;indirizzo alternativo&quot; se diverso dall&apos;indirizzo certificato selezionato&lt;/u&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>

@@ -27,7 +27,7 @@ public with sharing class HDT_UTL_ManageTari {
         for(Object secondLevelObj : indentedList){
             Map<String, Object> secondLevelMap = (Map<String, Object>) secondLevelObj;
             String resulString = (String)secondLevelMap.get('settoreMerceologico');
-            checkTari[0] = 'Tari'.equalsIgnoreCase(resulString); // Potrebbe essere Ambiente e non Tari
+            checkTari[0] = 'Ambiente'.equalsIgnoreCase(resulString); // Potrebbe essere Ambiente e non Tari
             //system.debug(resulString);
             if(!checkTari[0])   break; // Devono essere tutti TARI ??? se si OK(Controllo !) Altrimenti Leva !!!
         }
