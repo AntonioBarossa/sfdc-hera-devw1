@@ -3,9 +3,57 @@
     <fullName>Ato__c</fullName>
     <externalId>false</externalId>
     <label>ATO</label>
-    <length>50</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ATO Bacchiglione</fullName>
+                <default>false</default>
+                <label>ATO Bacchiglione</label>
+            </value>
+            <value>
+                <fullName>ATO Orientale Triestino</fullName>
+                <default>false</default>
+                <label>ATO Orientale Triestino</label>
+            </value>
+            <value>
+                <fullName>Ato 4</fullName>
+                <default>false</default>
+                <label>Ato 4</label>
+            </value>
+            <value>
+                <fullName>Ato 5</fullName>
+                <default>false</default>
+                <label>Ato 5</label>
+            </value>
+            <value>
+                <fullName>Ato 6</fullName>
+                <default>false</default>
+                <label>Ato 6</label>
+            </value>
+            <value>
+                <fullName>Ato 7</fullName>
+                <default>false</default>
+                <label>Ato 7</label>
+            </value>
+            <value>
+                <fullName>Ato 8</fullName>
+                <default>false</default>
+                <label>Ato 8</label>
+            </value>
+            <value>
+                <fullName>Ato 9</fullName>
+                <default>false</default>
+                <label>Ato 9</label>
+            </value>
+            <value>
+                <fullName>AATO 1 MARCHE NORD</fullName>
+                <default>false</default>
+                <label>AATO 1 MARCHE NORD</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>
