@@ -116,6 +116,12 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                                 return true;
                             }
                         }
+                        const surface = this.template.querySelector("[data-id='Surface__c']");
+                        if(this.order.RateCategory__c==='TATUDNR001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente' && surface?.value){
+                            const fam = this.template.querySelector("[data-id='FamilyNumber__c']");
+                            let value = tariNonResidenti[this.order.ServicePoint__r.SupplyCity__c?.toUpperCase()]?.getResident(surface.value);
+                            if(value && fam)    fam.value = value;
+                        }
                         //check mandatory section field section
                         if(checkSectionRequiredFields.call(this, evt?.currentTarget?.value)){   return true;}
                     },
@@ -124,7 +130,7 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                     new fieldData('Servizio','CommodityFormula__c',this.typeVisibility('both'),true, false, '', ''),
                     new fieldData('Tipo Impianto','ImplantType__c', this.typeVisibility('both'), true, true,'',''),
                     new fieldData('Residente','Resident__c', this.typeVisibility('both'), false, true,'',''),
-                    new fieldData('Codice ATECO','AtecoCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
+                    new fieldData('Codice ATECO','AtecoCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'', ''),
                     new fieldData('Codice Ronchi','RonchiCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',''),
                     new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',''),
                     new fieldData('Contratto Precedente','ContractReference__c', ["HDT_RT_CambioTariffa", "HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), true, true,'',''),
@@ -143,14 +149,7 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                     new fieldData('Inizio periodo ravvedibile','OnerousReviewableStartDate__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Inizio periodo non ravvedibile','OnerousUnreviewableStartDate__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Rifiuta supporto al calcolo del ravvedimento operoso','DeclineComputationSupport__c', this.order.Account.CompanyOwner__c!=="MMS", false, false,'',''),
-                    new fieldData('Superficie Mq','Surface__c', ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente"].includes(this.order.RecordType.DeveloperName), true, false,'','', 
-                        function(event){
-                            if(this.order.RateCategory__c==='TATUDNR001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente' && event.detail.value){
-                                const fam = this.template.querySelector("[data-id='FamilyNumber__c']");
-                                let value = tariNonResidenti[this.order.ServicePoint__r.SupplyCity__c?.toUpperCase()]?.getResident(event.detail.value);
-                                if(value && fam)    fam.value = value;
-                            }
-                    })
+                    new fieldData('Superficie Mq','Surface__c', ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente"].includes(this.order.RecordType.DeveloperName), true, false,'', this.order.RecordType.DeveloperName=="HDT_RT_SubentroAmbiente"? this.order.ServicePoint__r.AreaDeclaredTARI__c : "")
                 ]
             },
             {
