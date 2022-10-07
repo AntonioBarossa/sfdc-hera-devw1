@@ -326,16 +326,16 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUND')));
         }
         if(mapRes.get('AFUNDA')!=null && !String.isBlank(mapRes.get('AFUNDA'))){         
-            spNew.AgriculturalHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDA')));
+            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDA')));
         }
         if(mapRes.get('AFUNDC')!=null && !String.isBlank(mapRes.get('AFUNDC'))){         
-            spNew.CommercialHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDC')));
+            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDC')));
         }
         if(mapRes.get('AFUNDI')!=null && !String.isBlank(mapRes.get('AFUNDI'))){         
-            spNew.IndustrialHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDI')));
+            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDI')));
         }
         if(mapRes.get('AFUNDZ')!=null && !String.isBlank(mapRes.get('AFUNDZ'))){         
-            spNew.ZootechnicalHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDZ')));
+            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDZ')));
         }
         if(mapRes.get('AFBI_DIAM1')!=null && !String.isBlank(mapRes.get('AFBI_DIAM1'))){         
             spNew.HydrantMouthsNumberA__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFBI_DIAM1')));
