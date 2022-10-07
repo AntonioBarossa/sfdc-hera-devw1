@@ -1251,8 +1251,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = event.detail.dateX, this.sectionDataToSubmit["OnerousReviewableStartDate__c"]=event.detail.dateX;
         this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = event.detail.dateY, this.sectionDataToSubmit["OnerousUnreviewableStartDate__c"]=event.detail.dateY;
         //this.missedDueDate = this.getFormattedDate(event.detail.missedDue);
-        this.template.querySelector("[data-id='MissingDueAmount__c']").required = event.detail.missedDue? true : false;
-        
+        const MissingDueAmount = this.template.querySelector("[data-id='MissingDueAmount__c']");
+        MissingDueAmount.required = event.detail.missedDue? true : false;
+        MissingDueAmount.disabled = event.detail.missedDue? false : true;
         let isPeriodY = event.detail.period=="Y";
         this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = isPeriodY;
         this.template.querySelector("[data-id='BlockOnComputation__c']").value = isPeriodY? "Y" : "", this.sectionDataToSubmit["BlockOnComputation__c"]=isPeriodY? "Y" : "N";
