@@ -536,10 +536,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         }
         //email
         if( order.ShippingMail__c != null ){
-            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.ShippingMail__c WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.ShippingMail__c AND Type__c = 'E-mail Anagrafica' WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
             maxCount = swapMax(maxCount, count );
         }else if( order.Contact__r.Email != null ){
-            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.Contact__r.Email WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.Contact__r.Email AND Type__c = 'E-mail Anagrafica' WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
             maxCount = swapMax(maxCount, count );
         }
         return maxCount;
