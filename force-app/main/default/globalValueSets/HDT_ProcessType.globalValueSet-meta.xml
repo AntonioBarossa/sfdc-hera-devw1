@@ -1262,6 +1262,11 @@
         <label>Connessione con attivazione - ACQ</label>
     </customValue>
     <customValue>
+        <fullName>Aggiunta Attacco con Attivazione - ACQ</fullName>
+        <default>false</default>
+        <label>Aggiunta Attacco con Attivazione - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Richiesta domiciliazione - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
