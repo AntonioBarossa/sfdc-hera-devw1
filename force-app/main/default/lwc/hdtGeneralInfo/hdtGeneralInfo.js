@@ -302,7 +302,7 @@ export default class HdtGeneralInfo extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             return;
         }
-
+        console.log('PUNTO 1');
         if (this.template.querySelector("[data-id='Agency__c']") !== null
             && (this.template.querySelector("[data-id='Agency__c']").value === ''
                 || this.template.querySelector("[data-id='Agency__c']").value === null)) {
@@ -316,7 +316,7 @@ export default class HdtGeneralInfo extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             return;
         }
-
+        console.log('PUNTO 2');
         if (this.template.querySelector("[data-id='CommercialId']") !== null
             && (this.template.querySelector("[data-id='CommercialId']").value === ''
                 || this.template.querySelector("[data-id='CommercialId']").value === null)) {
@@ -330,7 +330,7 @@ export default class HdtGeneralInfo extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             return;
         }
-
+        console.log('PUNTO 3');
         if (this.template.querySelector("[data-id='Channel__c']") !== null
             && (this.template.querySelector("[data-id='Channel__c']").value === ''
                 || this.template.querySelector("[data-id='Channel__c']").value === null)) {
@@ -344,8 +344,8 @@ export default class HdtGeneralInfo extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             return;
         }
-
-        if (this.template.querySelector("[data-id='DocumentType__c']") !== null
+        console.log('PUNTO 4');
+        if (this.requiredInput == true && this.template.querySelector("[data-id='DocumentType__c']") !== null
             && (this.template.querySelector("[data-id='DocumentType__c']").value === ''
                 || this.template.querySelector("[data-id='DocumentType__c']").value === null)) {
             this.loading = false;
@@ -358,8 +358,8 @@ export default class HdtGeneralInfo extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             return;
         }
-
-        if (this.template.querySelector("[data-id='DocumentNumber__c']") !== null
+        console.log('PUNTO 5');
+        if (this.requiredInput == true && this.template.querySelector("[data-id='DocumentNumber__c']") !== null
             && (this.template.querySelector("[data-id='DocumentNumber__c']").value === ''
                 || this.template.querySelector("[data-id='DocumentNumber__c']").value === null)) {
             this.loading = false;
@@ -372,8 +372,8 @@ export default class HdtGeneralInfo extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             return;
         }
-
-        if (this.template.querySelector("[data-id='DocumentDate__c']") !== null
+        console.log('PUNTO 6');
+        if (this.requiredInput == true && this.template.querySelector("[data-id='DocumentDate__c']") !== null
             && (this.template.querySelector("[data-id='DocumentDate__c']").value === ''
                 || this.template.querySelector("[data-id='DocumentDate__c']").value === null)) {
             this.loading = false;
@@ -386,23 +386,24 @@ export default class HdtGeneralInfo extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             return;
         }
+        if(this.template.querySelector("[data-id='DocumentDate__c']").value != null){
+            let docDate = new Date(this.template.querySelector("[data-id='DocumentDate__c']").value);
+            let today = new Date();
 
-        let docDate = new Date(this.template.querySelector("[data-id='DocumentDate__c']").value);
-        let today = new Date();
+            console.log('DATE : docDate --> '+docDate);
+            console.log('DATE : today --> '+today);
 
-        console.log('DATE : docDate --> '+docDate);
-        console.log('DATE : today --> '+today);
-
-        if (docDate > today) {
-            this.loading = false;
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: 'Valore non valido nel campo "Data documento".',
-                variant: 'error',
-                mode: 'sticky'
-            });
-            this.dispatchEvent(toastErrorMessage);
-            return;
+            if (this.requiredInput == true && docDate > today) {
+                this.loading = false;
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Valore non valido nel campo "Data documento".',
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
         }
         this.dataToSubmit['Channel__c'] = this.template.querySelector('[data-id="Channel__c"]').value;
         console.log('*******1: ' + JSON.stringify(this.dataToSubmit) );
