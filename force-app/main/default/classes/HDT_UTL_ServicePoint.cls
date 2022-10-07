@@ -441,7 +441,7 @@ public with sharing class HDT_UTL_ServicePoint {
             tipoFornitura = tipoImpianto != null && tipoImpianto.equalsIgnoreCase('13A0-Usi di Abitazione BT') ? 'Domestico' : 'Non Domestico';
         }
         else if(servizio.equalsIgnoreCase('Acqua')){
-            tipoFornitura = tipoImpianto != null && tipoImpianto.equalsIgnoreCase('1101-Domestico') ? 'Domestico' : 'Uso diverso da domestico';    
+            tipoFornitura = tipoImpianto != null && tipoImpianto.equalsIgnoreCase('1101-Domestico') ? 'Domestico' : 'Non Domestico';    
         }
         else {
             String fields = 'Id, SupplyType__c';
