@@ -1598,6 +1598,12 @@
         <label>Errore di Fatturazione - GAS</label>
     </customValue>
     <customValue>
+        <fullName>Errore di Fatturazione - ACQ</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Errore di Fatturazione - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Esercizio diritto privacy - EE</fullName>
         <default>false</default>
         <isActive>false</isActive>
