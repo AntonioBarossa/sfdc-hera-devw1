@@ -60,11 +60,13 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
 
         //ServicePoint
-        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(2, true);
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(3, true);
         servPointList[0].CommoditySector__c = 'Energia Elettrica';
         servPointList[0].ServicePointCode__c = 'IT001E12455810';
         servPointList[1].CommoditySector__c = 'Gas';
         servPointList[1].ServicePointCode__c = 'IT001E12455810';
+        servPointList[2].CommoditySector__c = 'Acqua';
+        servPointList[2].ServicePointCode__c = '4001536765';
         update servPointList;
 
         //Contact
@@ -80,7 +82,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
 
         //Case
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(39, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(40, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         CaseList[0].Type = 'Richiesta Parere';
         CaseList[0].OpinionRequest__c = 'Prova parere';
         CaseList[1].Type = 'Piano Rateizzazione';
@@ -163,6 +165,13 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         caseList[38].PhoneNumber__c = '9879873425';
         caseList[38].CertifiedEmail__c = 'myCertifiedEmail@certifiedEmail.com';
         caseList[38].Fax__c = '0898352638';
+        String rtFatturazione = 'HDT_RT_FatturazioneConsumi';
+        String rtIdFatturazione = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtFatturazione).getRecordTypeId();
+        caseList[39].RecordTypeId = rtIdFatturazione;
+        caseList[39].Type = 'Errore di Fatturazione';
+        caseList[39].Cluster__c = 'Fatturazione';
+        caseList[39].Commodity__c = 'Acqua';
+        caseList[39].ServicePoint__c = servPointList[2].Id;
 
         update caseList;
 
@@ -173,6 +182,8 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         List<BillingProfile__c> bPList = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
         BPList[0].PaymentMethod__c = 'Bonifico bancario';
         update BPList[0];
+
+		HDT_UTL_DataFactoryTst.createContentVers(1, true);
 
     }
     
@@ -2342,6 +2353,68 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         System.assert(myCase28 != null, 'myCase28 non può essere null');        
     }
 
+    @IsTest
+    static void validateErrFattFirstCase(){
+        
+        mySetup();
 
+        Case retrievedCase = [SELECT Id, CustomerSelfReading__c, ReadingDate__c, Note__c, BillingErrorArgument__c, CommodityFormula__c FROM Case WHERE Type = 'Errore di Fatturazione' WITH SECURITY_ENFORCED LIMIT 1];
+        String recordFatturazione = retrievedCase.Id;
+        retrievedCase.CustomerSelfReading__c = '500';
+        retrievedCase.ReadingDate__c = null;
+        String fieldsFatturazione = JSON.serialize(retrievedCase);
+
+        Test.startTest();
+            HDT_UTL_CaseValidations fatturazione = new HDT_UTL_CaseValidations();
+            fatturazione.validate(fieldsFatturazione, recordFatturazione);
+        Test.stopTest();
+        
+        System.assert(retrievedCase != null, 'retrievedCase is null');
+    }
+
+    @IsTest
+    static void validateErrFattSecondCase(){
+        
+        mySetup();
+
+        Case retrievedCase = [SELECT Id, CustomerSelfReading__c, ReadingDate__c, Note__c, BillingErrorArgument__c, CommodityFormula__c FROM Case WHERE Type = 'Errore di Fatturazione' WITH SECURITY_ENFORCED LIMIT 1];
+        String recordFatturazione = retrievedCase.Id;
+        retrievedCase.Note__c = '';
+        retrievedCase.BillingErrorArgument__c = 'Richiesta di ricalcolo fuga acqua';
+        String fieldsFatturazione = JSON.serialize(retrievedCase);
+
+        Test.startTest();
+            HDT_UTL_CaseValidations fatturazione = new HDT_UTL_CaseValidations();
+            fatturazione.validate(fieldsFatturazione, recordFatturazione);
+        Test.stopTest();
+        
+        System.assert(retrievedCase != null, 'retrievedCase is null');
+    }
+
+    @IsTest
+    static void validateErrFattThirdCase(){
+        
+        mySetup();
+
+        Case retrievedCase = [SELECT Id, CustomerSelfReading__c, ReadingDate__c, Note__c, BillingErrorArgument__c, CommodityFormula__c FROM Case WHERE Type = 'Errore di Fatturazione' WITH SECURITY_ENFORCED LIMIT 1];
+
+        ContentDocument contDocTst=[SELECT Id FROM ContentDocument LIMIT 1];
+		ContentDocumentLink contentDocLinkTst=new ContentDocumentLink();
+		contentDocLinkTst.LinkedEntityId=retrievedCase.Id;
+		contentDocLinkTst.ContentDocumentId=contDocTst.Id;
+        insert contentDocLinkTst;
+
+        String recordFatturazione = retrievedCase.Id;
+        retrievedCase.Note__c = '';
+        retrievedCase.BillingErrorArgument__c = 'Rimborso retroattivo importo fognatura e depurazione';
+        String fieldsFatturazione = JSON.serialize(retrievedCase);
+
+        Test.startTest();
+            HDT_UTL_CaseValidations fatturazione = new HDT_UTL_CaseValidations();
+            fatturazione.validate(fieldsFatturazione, recordFatturazione);
+        Test.stopTest();
+        
+        System.assert(retrievedCase != null, 'retrievedCase is null');
+    }
 
 }

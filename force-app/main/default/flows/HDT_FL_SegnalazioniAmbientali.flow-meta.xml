@@ -289,6 +289,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Assign_Process_Type_0</targetReference>
         </connector>
     </assignments>
@@ -499,6 +500,7 @@
                 </rightValue>
             </conditions>
             <connector>
+                <isGoTo>true</isGoTo>
                 <targetReference>Context</targetReference>
             </connector>
             <label>isAnonima</label>
@@ -510,6 +512,7 @@
         <locationX>1678</locationX>
         <locationY>1118</locationY>
         <defaultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Selezione_Indirizzi</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Compatibile</defaultConnectorLabel>
@@ -605,6 +608,7 @@
             <label>Indirizzo Sbiancato</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>checkboxIndirizzo</name>
         <dataType>Boolean</dataType>
@@ -662,6 +666,7 @@
         <locationX>1018</locationX>
         <locationY>518</locationY>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Selezione_Indirizzi_0</targetReference>
         </connector>
         <inputReference>theCase</inputReference>
@@ -751,6 +756,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Update_Indirizzo</targetReference>
         </connector>
         <fields>
@@ -972,7 +978,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento prestazione</stringValue>
+                <stringValue>Annullamento Segnalazioni</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

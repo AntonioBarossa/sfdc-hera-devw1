@@ -1,11 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>Calculate_Expiration_Date</name>
+        <label>Calculate Expiration Date</label>
+        <locationX>336</locationX>
+        <locationY>758</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssignExpirationDate</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>GetInputCaseAggiornato</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>55.0</apiVersion>
     <assignments>
         <name>Assegna_Process_Type_0</name>
         <label>Assegna Process Type</label>
         <locationX>468</locationX>
-        <locationY>1214</locationY>
+        <locationY>1670</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +58,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>336</locationX>
-        <locationY>758</locationY>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.CorrectionRight__c</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +74,7 @@
         <name>AssegnaValori_2</name>
         <label>AssegnaValori</label>
         <locationX>182</locationX>
-        <locationY>2510</locationY>
+        <locationY>2966</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -60,7 +97,7 @@
         <name>AssegnaValoriActivity</name>
         <label>AssegnaValoriActivity</label>
         <locationX>182</locationX>
-        <locationY>2270</locationY>
+        <locationY>2726</locationY>
         <assignmentItems>
             <assignToReference>Get_Activity.ActivityEndTime__c</assignToReference>
             <operator>Assign</operator>
@@ -122,10 +159,54 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssignExpirationDate</name>
+        <label>AssignExpirationDate</label>
+        <locationX>336</locationX>
+        <locationY>878</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCaseAggiornato.AmountToPayInInstallments__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.amountToPayInInstallments</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCaseAggiornato.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.endDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCaseAggiornato.CompletedDocumentationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.completedDocumentationDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCaseAggiornato.DepositExpirationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.depositExpirationDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCaseAggiornato.DepositAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.depositAmount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Diritto_Rettifica</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Rimuovi_Link_Reiterazione_0</name>
         <label>Rimuovi Link Reiterazione</label>
         <locationX>468</locationX>
-        <locationY>974</locationY>
+        <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.RelatedCase__c</assignToReference>
             <operator>Assign</operator>
@@ -201,7 +282,7 @@
         <name>Avanzamento_0_0</name>
         <label>Avanzamento</label>
         <locationX>468</locationX>
-        <locationY>1454</locationY>
+        <locationY>1910</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0_0_0</targetReference>
         </defaultConnector>
@@ -233,7 +314,7 @@
         <name>Blocco_Sollecito_0</name>
         <label>Blocco Sollecito? (Fixare al completamento della build DM)</label>
         <locationX>182</locationX>
-        <locationY>1694</locationY>
+        <locationY>2150</locationY>
         <defaultConnector>
             <targetReference>Get_Activity</targetReference>
         </defaultConnector>
@@ -258,7 +339,7 @@
         <name>Diritto_Rettifica</name>
         <label>Diritto Rettifica?</label>
         <locationX>468</locationX>
-        <locationY>638</locationY>
+        <locationY>1094</locationY>
         <defaultConnector>
             <targetReference>Rimuovi_Link_Reiterazione_0</targetReference>
         </defaultConnector>
@@ -277,6 +358,31 @@
                 <targetReference>AssegnaValori</targetReference>
             </connector>
             <label>Diritto alla Rettifica</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Riclassificato</name>
+        <label>Riclassificato?</label>
+        <locationX>468</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>Diritto_Rettifica</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.FirstLevelComplaintClassification__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>GetInputCaseAggiornato.FirstLevelComplaintClassification__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Calculate_Expiration_Date</targetReference>
+            </connector>
+            <label>Si</label>
         </rules>
     </decisions>
     <dynamicChoiceSets>
@@ -325,6 +431,11 @@
         <dataType>String</dataType>
         <expression>IF(ISBLANK({!GetInputCaseAggiornato.ParentId}),{!GetInputCaseAggiornato.RelatedCase__r.ParentId},{!GetInputCaseAggiornato.ParentId} )</expression>
     </formulas>
+    <formulas>
+        <name>SupplyCityFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!GetInputCaseAggiornato.SupplyCity__c}), {!GetInputCaseAggiornato.ServicePoint__r.SupplyCity__c},{!GetInputCaseAggiornato.SupplyCity__c})</expression>
+    </formulas>
     <interviewLabel>HDT_FL_GestioneReclami_ReclamoScrittoDaCittadinoDue {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GestioneReclami_ReclamoScrittoDaCittadinoDue</label>
     <processMetadataValues>
@@ -350,7 +461,7 @@
         <name>Crea_Activity_Blocco_Sollecito</name>
         <label>Crea Activity Blocco Sollecito</label>
         <locationX>50</locationX>
-        <locationY>1934</locationY>
+        <locationY>2390</locationY>
         <connector>
             <targetReference>Get_Activity</targetReference>
         </connector>
@@ -385,7 +496,7 @@
         <name>Get_Activity</name>
         <label>Get Activity</label>
         <locationX>182</locationX>
-        <locationY>2150</locationY>
+        <locationY>2606</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValoriActivity</targetReference>
@@ -434,7 +545,7 @@
         <name>GetActivityBloccoSollecito</name>
         <label>Get Activity Blocco Sollecito</label>
         <locationX>50</locationX>
-        <locationY>1814</locationY>
+        <locationY>2270</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Activity_Blocco_Sollecito</targetReference>
@@ -462,7 +573,7 @@
         <name>GetCaseAggiornatoSecondaClassificazione</name>
         <label>GetCaseAggiornatoSecondaClassificazione</label>
         <locationX>182</locationX>
-        <locationY>1574</locationY>
+        <locationY>2030</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Blocco_Sollecito_0</targetReference>
@@ -486,7 +597,7 @@
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Diritto_Rettifica</targetReference>
+            <targetReference>Riclassificato</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -504,7 +615,7 @@
         <name>Aggiorna_Attivita</name>
         <label>Aggiorna Attivita</label>
         <locationX>182</locationX>
-        <locationY>2390</locationY>
+        <locationY>2846</locationY>
         <connector>
             <targetReference>AssegnaValori_2</targetReference>
         </connector>
@@ -518,14 +629,14 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>182</locationX>
-        <locationY>2630</locationY>
+        <locationY>3086</locationY>
         <inputReference>GetCaseAggiornatoSecondaClassificazione</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase_0</name>
         <label>AggiornaCase</label>
         <locationX>468</locationX>
-        <locationY>1094</locationY>
+        <locationY>1550</locationY>
         <connector>
             <targetReference>Assegna_Process_Type_0</targetReference>
         </connector>
@@ -628,7 +739,7 @@
         <name>Screen_Seconda_Classificazione</name>
         <label>Screen Seconda Classificazione</label>
         <locationX>468</locationX>
-        <locationY>1334</locationY>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -766,7 +877,7 @@
         <name>Annulla_Prestazione_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>754</locationX>
-        <locationY>1574</locationY>
+        <locationY>2030</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

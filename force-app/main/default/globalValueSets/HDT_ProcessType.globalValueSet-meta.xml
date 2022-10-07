@@ -1257,9 +1257,9 @@
         <label>Modifica post accertamento - AMB</label>
     </customValue>
     <customValue>
-        <fullName>Connessione con attivazione​  - ACQ</fullName>
+        <fullName>Connessione con attivazione - ACQ</fullName>
         <default>false</default>
-        <label>Connessione con attivazione​  - ACQ</label>
+        <label>Connessione con attivazione - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Richiesta domiciliazione - GAS</fullName>
@@ -1596,6 +1596,12 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Errore di Fatturazione - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore di Fatturazione - ACQ</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Errore di Fatturazione - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Esercizio diritto privacy - EE</fullName>
