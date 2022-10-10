@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>55.0</apiVersion>
+    <decisions>
+        <name>Order_id_popolato</name>
+        <label>Order id popolato</label>
+        <locationX>182</locationX>
+        <locationY>158</locationY>
+        <defaultConnector>
+            <targetReference>getCase</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Case</defaultConnectorLabel>
+        <rules>
+            <name>Popolato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>OrderId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OrderId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OrderId</leftValueReference>
+                <operator>NotEqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>getOrder</targetReference>
+            </connector>
+            <label>Popolato</label>
+        </rules>
+    </decisions>
     <interviewLabel>HDT_FL_ActiveRepentant {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_ActiveRepentant</label>
     <processMetadataValues>
@@ -23,10 +59,31 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>getCase</name>
+        <label>getCase</label>
+        <locationX>314</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Ravvedimento_Operoso_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getOrder</name>
         <label>getOrder</label>
-        <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationX>50</locationX>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Ravvedimento_Operoso</targetReference>
@@ -44,10 +101,61 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>updateCase</name>
+        <label>updateCase</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>BlockOnComputation__c</field>
+            <value>
+                <elementReference>hdtActiveRepentant_0.outputWrp.bloccoCalcolo</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CustomerRepentanceRefusal__c</field>
+            <value>
+                <elementReference>hdtActiveRepentant_0.outputWrp.declineSupport</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DeclarationDate__c</field>
+            <value>
+                <elementReference>hdtActiveRepentant_0.outputWrp.dateDichiarazione</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>EffectiveDate__c</field>
+            <value>
+                <elementReference>hdtActiveRepentant_0.outputWrp.dateDecorrenza</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OnerousReviewableStartDate__c</field>
+            <value>
+                <elementReference>hdtActiveRepentant_0.outputWrp.dateX</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OnerousUnreviewableStartDate__c</field>
+            <value>
+                <elementReference>hdtActiveRepentant_0.outputWrp.dateY</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>updateOrder</name>
         <label>updateOrder</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -103,8 +211,8 @@
     <screens>
         <name>Ravvedimento_Operoso</name>
         <label>Ravvedimento Operoso</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -144,6 +252,12 @@
                     <elementReference>$Flow.InterviewGuid</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>sottotipo</name>
+                <value>
+                    <stringValue>Subentro</stringValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -151,11 +265,73 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Ravvedimento_Operoso_0</name>
+        <label>Ravvedimento Operoso</label>
+        <locationX>314</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>updateCase</targetReference>
+        </connector>
+        <fields>
+            <name>title_0</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 20px;&quot;&gt;Ravvedimento Operoso&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtActiveRepentant_0</name>
+            <extensionName>c:hdtActiveRepentant</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>city</name>
+                <value>
+                    <elementReference>getCase.SupplyCity__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sottotipo</name>
+                <value>
+                    <stringValue>Subentro</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>ravvDisplayText</name>
+            <fieldText>&lt;p&gt;Ravvedimento operoso:&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://gerav.bingest.net/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;GE*RAV Gestione Ravvedimento Operoso&lt;/a&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>getOrder</targetReference>
+            <targetReference>Order_id_popolato</targetReference>
         </connector>
     </start>
     <status>Active</status>
