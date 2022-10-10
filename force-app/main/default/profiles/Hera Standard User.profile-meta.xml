@@ -11140,6 +11140,11 @@
     </fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
+		<field>ExpRavv__c.Case__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
 		<field>ExpRavv__c.CheckArea__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
@@ -11166,6 +11171,11 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>ExpRavv__c.OperandValue__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ExpRavv__c.Order__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>
