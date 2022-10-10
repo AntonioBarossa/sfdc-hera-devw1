@@ -1,32 +1,21 @@
 import { LightningElement, track, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateCampaignMemberStatusValue from '@salesforce/apex/HDT_LC_CampaignsController.updateCampaignMemberStatus';
-import getNegativeOutcomeValues from '@salesforce/apex/HDT_LC_CampaignsController.getOutcomeValues';
+import getchannel from '@salesforce/apex/HDT_LC_CampaignsController.getCampaignChannel';
+import getPartialOutcomeValues from '@salesforce/apex/HDT_LC_CampaignsController.getOutcomeValues';
 
-export default class HdtCampaignMemberNegativeOutcome extends LightningElement {
+
+export default class HdtCampaignMemberPartialOutcome extends LightningElement {
+
     @track isModalOpen = false;
     @track value;
     @api campaignMemberId;
 
     options;
 
-    // options = [
-    //     { value: 'Black List', label: 'Black List' },
-    //     { value: 'Già Cliente', label: 'Già Cliente' },
-    //     { value: 'Da poco con altro Gestore', label: 'Da poco con altro Gestore' },
-    //     { value: 'Cliente non coperto rete gas', label: 'Cliente non coperto rete gas' },
-    //     { value: 'Non interessato all offerta', label: 'Non interessato all offerta' },
-    //     { value: 'Prima attivazione', label: 'Prima attivazione' },
-    //     { value: 'Script completato', label: 'Script completato' },
-    //     { value: 'Riaggancia e rifiuta il contatto', label: 'Riaggancia e rifiuta il contatto' },
-    //     { value: 'Fuori Target', label: 'Fuori Target' },
-    //     { value: 'Titolare della fornitura non disponibile', label: 'Titolare della fornitura non disponibile' },
-    //     { value: 'La proposta non è competitiva', label: 'La proposta non è competitiva' }
-    // ];
+    partialResultClick() {
 
-    negativeResultClick() {
-       
-        getNegativeOutcomeValues({'campaignMemberId': this.campaignMemberId , 'outcomeType': 'Utile Negativo'}).then(result => {
+        getPartialOutcomeValues({'campaignMemberId': this.campaignMemberId , 'outcomeType': 'Esito Parziale'}).then(result => {
 
             console.log('result --> '+JSON.stringify(result));
             var conts = result;
@@ -60,6 +49,7 @@ export default class HdtCampaignMemberNegativeOutcome extends LightningElement {
     }
 
     submitDetails() {
+        console.log('this.value --> '+this.value);
         updateCampaignMemberStatusValue({ 'campaignMemberId': this.campaignMemberId, 'statusValue': this.value }).then(data => {
             console.log("ok" + JSON.stringify(data));
             this.isModalOpen = false;
@@ -74,5 +64,4 @@ export default class HdtCampaignMemberNegativeOutcome extends LightningElement {
         this.value = event.detail.value;
         console.log(this.value);
     }
-
 }

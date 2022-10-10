@@ -426,8 +426,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 /* Gli ordini Ambiente ed Acqua hanno la necessita' di avere il BP e il CA prima di poter essere inviati verso Heroku
                 * e' stata percio' introdotta una fase intermedia "Creazione BP-CA" per permettere la chiamata verso SAP per la registrazione
                 * delle due entita' e aggiornarle con i relativi codici
+                * Update 2022-10-10 logica non risulta essere necessaria per la commodity ambiente
                 */
-                else if(o.Commodity__c.equalsIgnoreCase('Acqua') || o.Commodity__c.equalsIgnoreCase('Ambiente'))
+                else if(o.Commodity__c.equalsIgnoreCase('Acqua') /*|| o.Commodity__c.equalsIgnoreCase('Ambiente')*/)
                 {
                     ordersNonEnergy.add(o);
                 }

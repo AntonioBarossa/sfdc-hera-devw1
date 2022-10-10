@@ -14,7 +14,7 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
     @api outputSupplyCity;          //OUTPUT ONLY FOR FLOW USING
 
     @api validate (){
-        let isValid = this.required ? this.selectedSupplyCity != null : true;
+        let isValid = this.required ? this.outputSupplyCity != null : true;
         let msg = isValid? null : 'Selezionare un comune';
         return { isValid : isValid, errorMessage: msg };
     }
