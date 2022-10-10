@@ -490,15 +490,4 @@ export default class HdtAccountStatementPicker extends LightningElement {
     getBillingProfileId(){
         return this.billingProfileId;
     }
-
-    @api validateForFlow(){
-        if(this.processType=='Doppi Pagamenti/Incassi'){
-            if(this.documents == undefined || this.documents.length==0){
-                return {isValid: false, message: 'Nessun documento selezionato'};
-            }
-            return {isValid: true};
-        }
-        return {isValid: true};
-    }
-
 }
