@@ -300,7 +300,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Dati_Anagrafica_VAS_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[2. Dati Anagrafici]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo Cognome e Nome {!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica il Cognome e Nome della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma di essere autorizzato, a concludere il presente contratto e a rilasciare i consensi privacy?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.CustomerFiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è XXXXXXX e la Data di rilascio è XXXXXXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[2. Dati Anagrafici]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo Cognome e Nome {!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica il Cognome e Nome della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma di essere autorizzato, a concludere il presente contratto e a rilasciare i consensi privacy?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.CustomerFiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -366,7 +366,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Dati_Anagrafica_VAS_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[2. Dati Anagrafici]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo Cognome e Nome {!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di residenza della persona a cui va intestato il contratto è {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è XXXXXXX e la Data di rilascio è XXXXXXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[2. Dati Anagrafici]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo Cognome e Nome {!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di residenza della persona a cui va intestato il contratto è {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -437,7 +437,7 @@
         </fields>
         <fields>
             <name>text8</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è XXXXXXXXX e la Data di rilascio è XXXXXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -594,7 +594,7 @@
         </fields>
         <fields>
             <name>text13_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è XXXXXX e la Data di rilascio è &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;XXXXXX&lt;/span&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -783,7 +783,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_10_0_0</name>
-            <fieldText>&lt;p&gt;Il numero della Carta d’identità è XXXXXXXX e la data di rilascio è XXXXXXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il numero della Carta d’identità è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -813,7 +813,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_11_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è XXXXXX e la data di rilascio è XXXXX?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1064,7 +1064,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_8_0_0_0</name>
-            <fieldText>&lt;p&gt;Il numero della Carta d’identità è XXXXXXXX e la data di rilascio è XXXXXXXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il numero della Carta d’identità è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1094,7 +1094,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_9_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è XXXXXX e la data di rilascio è XXXXXXXX?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1258,7 +1258,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_3_0_0_4_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt; il numero della Carta d’identità è XXXXXXXX e la data di rilascio è XXXXXXXXX?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt; il numero della Carta d’identità è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1288,7 +1288,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_3_0_0_5_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è XXXXXX e la data di rilascio è XXXXXXX?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il numero della Carta d&apos;identità del legale rappresentante è {!OrderData.DocumentNumber__c} e la data di rilascio è {!OrderData.DocumentDate__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>

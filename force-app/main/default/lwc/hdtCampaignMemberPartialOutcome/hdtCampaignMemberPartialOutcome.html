@@ -1,5 +1,5 @@
 <template>
-    <lightning-button label="Esito Negativo" title="Esito Negativo" onclick={negativeResultClick}
+    <lightning-button label="Esito Parziale" title="Esito Parziale" onclick={partialResultClick}
         class="slds-m-right_xx-small phxxsmall">
     </lightning-button>
     <template if:true={isModalOpen}>
@@ -21,7 +21,7 @@
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"
                     style="min-height: 400px;">
                     <!-- <div  role="alert" class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning slds-m-bottom--small">
-                        <h2>L'esitazione negativa deve avvenire solo a termine chiamata in fase di off-line</h2>
+                        <h2>L'esitazione parziale deve avvenire solo a termine chiamata in fase di off-line</h2>
                     </div> -->
                     <lightning-combobox name="status" label="Status" value={value} onchange={handleChange}
                         options={options}>
