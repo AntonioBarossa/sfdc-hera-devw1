@@ -8643,16 +8643,6 @@
 		<field>Case.MissingDue__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
-		<field>CaseVolumetricaJunction__c.Case__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
-		<field>CaseVolumetricaJunction__c.VolumetricEstimate__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>City__c.BelfioreCode__c</field>
