@@ -21,7 +21,7 @@
     <actionCalls>
         <name>checkTari</name>
         <label>checkTari</label>
-        <locationX>1837</locationX>
+        <locationX>1743</locationX>
         <locationY>638</locationY>
         <actionName>HDT_UTL_ManageTari</actionName>
         <actionType>apex</actionType>
@@ -41,7 +41,7 @@
     <assignments>
         <name>Assegna_Mod_Pag_VA</name>
         <label>Assegna Mod Pag VA</label>
-        <locationX>781</locationX>
+        <locationX>1710</locationX>
         <locationY>6134</locationY>
         <assignmentItems>
             <assignToReference>ModalitaPagamento</assignToReference>
@@ -57,8 +57,8 @@
     <assignments>
         <name>Assegna_Titolare_Conto_From_Case</name>
         <label>Assegna Titolare Conto From Case</label>
-        <locationX>50</locationX>
-        <locationY>1934</locationY>
+        <locationX>1710</locationX>
+        <locationY>6470</locationY>
         <assignmentItems>
             <assignToReference>NomeIntestatario_CC</assignToReference>
             <operator>Assign</operator>
@@ -87,8 +87,8 @@
     <assignments>
         <name>Assegna_Titolare_Conto_From_Flow_Screen</name>
         <label>Assegna Titolare Conto From Flow Screen</label>
-        <locationX>314</locationX>
-        <locationY>1934</locationY>
+        <locationX>1974</locationX>
+        <locationY>6470</locationY>
         <assignmentItems>
             <assignToReference>NomeIntestatario_CC</assignToReference>
             <operator>Assign</operator>
@@ -117,7 +117,7 @@
     <assignments>
         <name>Assegna_Valori_Abi_Mod_Pagamento</name>
         <label>Assegna Valori Abi - Mod Pagamento</label>
-        <locationX>913</locationX>
+        <locationX>1842</locationX>
         <locationY>5894</locationY>
         <assignmentItems>
             <assignToReference>AbiCode</assignToReference>
@@ -250,7 +250,7 @@
     <assignments>
         <name>AssegnaPredefault</name>
         <label>AssegnaPredefault</label>
-        <locationX>1837</locationX>
+        <locationX>1743</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>CaseInput.Amount__c</assignToReference>
@@ -270,7 +270,7 @@
     <assignments>
         <name>AssegnaVariabili</name>
         <label>AssegnaVariabili</label>
-        <locationX>1243</locationX>
+        <locationX>2172</locationX>
         <locationY>7022</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.CausalCode__c</assignToReference>
@@ -363,7 +363,7 @@
     <assignments>
         <name>AssegnaVariabili_0_0</name>
         <label>AssegnaVariabili</label>
-        <locationX>2939</locationX>
+        <locationX>2964</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>GetCaseNonBozza.Phase__c</assignToReference>
@@ -386,7 +386,7 @@
     <assignments>
         <name>AssegnaVariabili_0_0_0_0</name>
         <label>AssegnaVariabili</label>
-        <locationX>979</locationX>
+        <locationX>1908</locationX>
         <locationY>7022</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.CausalCode__c</assignToReference>
@@ -430,7 +430,7 @@
     <assignments>
         <name>AssegnaVariabili_0_0_0_0_0</name>
         <label>AssegnaVariabili</label>
-        <locationX>1771</locationX>
+        <locationX>2700</locationX>
         <locationY>5774</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
@@ -460,7 +460,7 @@
     <assignments>
         <name>AssegnaVariabili_0_0_0_0_0_0</name>
         <label>AssegnaVariabili</label>
-        <locationX>1507</locationX>
+        <locationX>2436</locationX>
         <locationY>5774</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
@@ -483,7 +483,7 @@
     <assignments>
         <name>ModalitaPagamentoNoVA</name>
         <label>ModalitaPagamentoNoVA</label>
-        <locationX>1045</locationX>
+        <locationX>1974</locationX>
         <locationY>6134</locationY>
         <assignmentItems>
             <assignToReference>ModalitaPagamento</assignToReference>
@@ -515,7 +515,7 @@
     <assignments>
         <name>Valorizzazione_Commodity_a_Tari</name>
         <label>Valorizzazione Commodity a Tari</label>
-        <locationX>1487</locationX>
+        <locationX>2147</locationX>
         <locationY>2510</locationY>
         <assignmentItems>
             <assignToReference>Get_Commodity.Commodity__c</assignToReference>
@@ -586,7 +586,7 @@
     <decisions>
         <name>Assegna_Account_Erede_Beneficiario</name>
         <label>Assegna Account Erede Beneficiario</label>
-        <locationX>913</locationX>
+        <locationX>1842</locationX>
         <locationY>6350</locationY>
         <defaultConnector>
             <targetReference>Assegna_Titolare_Conto_From_Flow_Screen</targetReference>
@@ -611,7 +611,7 @@
     <decisions>
         <name>Bonifico_da_effettuare_verso_VA</name>
         <label>Bonifico da effettuare verso VA?</label>
-        <locationX>913</locationX>
+        <locationX>1842</locationX>
         <locationY>6014</locationY>
         <defaultConnector>
             <targetReference>ModalitaPagamentoNoVA</targetReference>
@@ -636,7 +636,7 @@
     <decisions>
         <name>Canale_di_Pagamento</name>
         <label>Canale di Pagamento?</label>
-        <locationX>1111</locationX>
+        <locationX>2040</locationX>
         <locationY>5654</locationY>
         <defaultConnector>
             <targetReference>CalcoloCodiceCausale</targetReference>
@@ -668,7 +668,7 @@
     <decisions>
         <name>Case_In_Bozza_Question</name>
         <label>Case In Bozza?</label>
-        <locationX>2388</locationX>
+        <locationX>2354</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Screen_Review_Dati_0</targetReference>
@@ -743,7 +743,7 @@
     <decisions>
         <name>Comunicazione_Pagamento_o_Doppi_Pagamenti_Incassi</name>
         <label>Comunicazione Pagamento o Doppi Pagamenti/Incassi?</label>
-        <locationX>1375</locationX>
+        <locationX>2304</locationX>
         <locationY>5534</locationY>
         <defaultConnector>
             <targetReference>Ok_Tari_e_Stato_in_Lavorazione_0</targetReference>
@@ -775,7 +775,7 @@
     <decisions>
         <name>Comunicazione_Pagamento_o_Doppi_Pagamenti_Incassi_0</name>
         <label>Comunicazione Pagamento o Doppi Pagamenti/Incassi?</label>
-        <locationX>999</locationX>
+        <locationX>812</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Screen_Inserimento_Dati_TARI_Start</targetReference>
@@ -800,7 +800,7 @@
     <decisions>
         <name>Ok_Tari_e_Stato_in_Lavorazione</name>
         <label>Ok Tari e Stato in Lavorazione?</label>
-        <locationX>1111</locationX>
+        <locationX>2040</locationX>
         <locationY>6902</locationY>
         <defaultConnector>
             <targetReference>AssegnaVariabili</targetReference>
@@ -832,7 +832,7 @@
     <decisions>
         <name>Ok_Tari_e_Stato_in_Lavorazione_0</name>
         <label>Ok Tari e Stato in Lavorazione?</label>
-        <locationX>1639</locationX>
+        <locationX>2568</locationX>
         <locationY>5654</locationY>
         <defaultConnector>
             <targetReference>AssegnaVariabili_0_0_0_0_0</targetReference>
@@ -864,79 +864,79 @@
     <decisions>
         <name>Salva_In_Bozza_o_Conferma_0</name>
         <label>Salva In Bozza o Conferma?</label>
-        <locationX>1837</locationX>
+        <locationX>1743</locationX>
         <locationY>5294</locationY>
-        <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
+        <defaultConnector>
+            <targetReference>GetCaseAggiornato</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Avanti</defaultConnectorLabel>
         <rules>
-            <name>Conferma_0</name>
+            <name>Salva_In_Bozza_0_0</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_0.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_2.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_2.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_3.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_3.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_6.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_6.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_5.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_5.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>False</elementReference>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_6_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_6_0.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_5_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_5_0.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_6_0_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_6_0_0.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_5_0_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_5_0_0.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>GetCaseAggiornato</targetReference>
-            </connector>
-            <label>Conferma</label>
+            <label>Salva In Bozza</label>
         </rules>
         <rules>
             <name>Annulla_0</name>
@@ -1013,30 +1013,23 @@
     <decisions>
         <name>Salva_In_Bozza_o_vai_Avanti</name>
         <label>Salva In Bozza o vai Avanti?</label>
-        <locationX>1949</locationX>
+        <locationX>1575</locationX>
         <locationY>1118</locationY>
-        <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
+        <defaultConnector>
+            <targetReference>Aggiorna_Case_Nuova_Motivazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Avanti</defaultConnectorLabel>
         <rules>
-            <name>Avanti</name>
+            <name>SalvaInBozza</name>
             <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>hdtRecordEditForm_1.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>hdtRecordEditForm_1.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Aggiorna_Case_Nuova_Motivazione</targetReference>
-            </connector>
-            <label>Avanti</label>
+            <label>Salva In Bozza</label>
         </rules>
         <rules>
             <name>Annulla_0_0</name>
@@ -1046,13 +1039,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>hdtRecordEditForm_1.saveInDraft</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1115,30 +1101,30 @@
     <decisions>
         <name>Salva_In_Bozza_o_vai_Avanti_0_0</name>
         <label>Salva In Bozza o vai Avanti?</label>
-        <locationX>1487</locationX>
+        <locationX>1795</locationX>
         <locationY>1598</locationY>
-        <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
+        <defaultConnector>
+            <targetReference>get_comuni_options</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Avanti</defaultConnectorLabel>
         <rules>
-            <name>Avanti_0_0</name>
+            <name>Salva_In_Bozza_0</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_3.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_3.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_2.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_2.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>get_comuni_options</targetReference>
-            </connector>
-            <label>Avanti</label>
+            <label>Salva In Bozza</label>
         </rules>
         <rules>
             <name>Annulla_0_0_0_0_0</name>
@@ -1585,7 +1571,7 @@
     <decisions>
         <name>Validazione_Check_Tari</name>
         <label>Validazione Check Tari</label>
-        <locationX>1837</locationX>
+        <locationX>1743</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Screen_Inserimento_Dati</targetReference>
@@ -1610,7 +1596,7 @@
     <decisions>
         <name>Valore_Motivazione</name>
         <label>Valore Motivazione</label>
-        <locationX>1487</locationX>
+        <locationX>2147</locationX>
         <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>get_comuni_options</targetReference>
@@ -1911,7 +1897,7 @@
     <recordLookups>
         <name>Aggiorna_Case_Nuova_Motivazione</name>
         <label>Aggiorna Case Nuova Motivazione</label>
-        <locationX>1487</locationX>
+        <locationX>2147</locationX>
         <locationY>1238</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2058,7 +2044,7 @@
     <recordLookups>
         <name>CalcoloCodiceCausale</name>
         <label>CalcoloCodiceCausale</label>
-        <locationX>1111</locationX>
+        <locationX>2040</locationX>
         <locationY>6782</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2100,7 +2086,7 @@
     <recordLookups>
         <name>Get_Commodity</name>
         <label>Get Commodity</label>
-        <locationX>1487</locationX>
+        <locationX>2147</locationX>
         <locationY>2390</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2121,7 +2107,7 @@
     <recordLookups>
         <name>get_comuni_options</name>
         <label>get comuni options</label>
-        <locationX>1487</locationX>
+        <locationX>2147</locationX>
         <locationY>2150</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2163,7 +2149,7 @@
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>1375</locationX>
+        <locationX>2304</locationX>
         <locationY>5414</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2184,7 +2170,7 @@
     <recordLookups>
         <name>GetCaseNonBozza</name>
         <label>GetCaseNonBozza</label>
-        <locationX>2939</locationX>
+        <locationX>2964</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2344,14 +2330,14 @@
     <recordUpdates>
         <name>Aggiorna_In_Lavorazione</name>
         <label>Aggiorna In Lavorazione</label>
-        <locationX>1639</locationX>
+        <locationX>2568</locationX>
         <locationY>5990</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
-        <locationX>1837</locationX>
+        <locationX>1743</locationX>
         <locationY>398</locationY>
         <connector>
             <targetReference>Inserire_altri_documenti_0_0_0</targetReference>
@@ -2361,7 +2347,7 @@
     <recordUpdates>
         <name>AggiornaCase_0_0_0</name>
         <label>AggiornaCase</label>
-        <locationX>1487</locationX>
+        <locationX>2147</locationX>
         <locationY>2630</locationY>
         <connector>
             <targetReference>Salva_In_Bozza_o_Conferma_0</targetReference>
@@ -2371,7 +2357,7 @@
     <recordUpdates>
         <name>Aggiornamento_Case_Fine_Bozza</name>
         <label>Aggiornamento In Da Inviare</label>
-        <locationX>1111</locationX>
+        <locationX>2040</locationX>
         <locationY>7238</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
@@ -2381,7 +2367,7 @@
     <recordUpdates>
         <name>Aggiornamento_Case_Fine_Bozza_0</name>
         <label>Aggiornamento In Da Inviare</label>
-        <locationX>2939</locationX>
+        <locationX>2964</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Loading_Screen_0</targetReference>
@@ -3528,7 +3514,7 @@
     <screens>
         <name>inserimentoComune</name>
         <label>inserimentoComune</label>
-        <locationX>1487</locationX>
+        <locationX>2147</locationX>
         <locationY>2270</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3552,7 +3538,7 @@
     <screens>
         <name>Inserire_altri_documenti_0_0_0</name>
         <label>Inserire altri documenti?</label>
-        <locationX>1837</locationX>
+        <locationX>1743</locationX>
         <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3639,7 +3625,7 @@
     <screens>
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
-        <locationX>1111</locationX>
+        <locationX>2040</locationX>
         <locationY>7358</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3670,7 +3656,7 @@
     <screens>
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
-        <locationX>2939</locationX>
+        <locationX>2964</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3830,13 +3816,12 @@
     <screens>
         <name>Screen_Inserimento_Dati_TARI_Required</name>
         <label>Screen Inserimento Dati TARI Required</label>
-        <locationX>1003</locationX>
+        <locationX>1795</locationX>
         <locationY>1478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Salva_In_Bozza_o_vai_Avanti_0_0</targetReference>
         </connector>
         <fields>
@@ -3960,7 +3945,7 @@
     <screens>
         <name>Screen_Inserimento_Dati_TARI_Start</name>
         <label>Screen Inserimento Dati TARI Start</label>
-        <locationX>1949</locationX>
+        <locationX>1575</locationX>
         <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4089,12 +4074,13 @@
     <screens>
         <name>Screen_Inserimento_Dati_TARI_Start_NoRequired</name>
         <label>Screen Inserimento Dati TARI NoRequired</label>
-        <locationX>1487</locationX>
+        <locationX>2235</locationX>
         <locationY>1478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Salva_In_Bozza_o_vai_Avanti_0_0</targetReference>
         </connector>
         <fields>
@@ -4218,7 +4204,7 @@
     <screens>
         <name>Screen_Review_Dati_0</name>
         <label>Screen Review Dati</label>
-        <locationX>2939</locationX>
+        <locationX>2964</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4323,7 +4309,7 @@
     <screens>
         <name>Virtual_Account_0</name>
         <label>Virtual Account</label>
-        <locationX>913</locationX>
+        <locationX>1842</locationX>
         <locationY>5774</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4485,7 +4471,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>2262</locationX>
+        <locationX>2228</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Case_In_Bozza_Question</targetReference>
@@ -4495,7 +4481,7 @@
     <subflows>
         <name>Annullamento_Prestazione_0</name>
         <label>Annullamento Prestazione</label>
-        <locationX>2035</locationX>
+        <locationX>1446</locationX>
         <locationY>5414</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -4520,7 +4506,7 @@
     <subflows>
         <name>Annullamento_Prestazione_0_0</name>
         <label>Annullamento Prestazione</label>
-        <locationX>2147</locationX>
+        <locationX>1267</locationX>
         <locationY>1238</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -4595,7 +4581,7 @@
     <subflows>
         <name>Annullamento_Prestazione_0_0_0_0_0</name>
         <label>Annullamento Prestazione</label>
-        <locationX>1443</locationX>
+        <locationX>1795</locationX>
         <locationY>1718</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
