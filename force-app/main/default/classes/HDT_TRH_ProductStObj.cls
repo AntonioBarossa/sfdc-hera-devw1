@@ -25,7 +25,7 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
         Map<Id, Integer> technicalOfferMap;
         //allUniqueProductCodeSet = checkProduct2Duplicate(allUniqueProductCodeSet);
 
-        List<Product2> product2ForTrigger = new List<Product2>();
+        List<Product2> productForTrigger = new List<Product2>();
         Set<Id> productIds = new  Set<Id>();// = Trigger.NewMap.keySet();
         Set<Id> productIdsForProductOption = new  Set<Id>();
         Set<Id> productIdsForTechOff = new  Set<Id>();
@@ -45,7 +45,7 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
                 continue;
             }
             
-            product2ForTrigger.add(p);
+            productForTrigger.add(p);
 
             if(familySet.contains(p.Family)){
                 productIds.add(p.Id);
@@ -66,12 +66,12 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
 
         }
 
-        System.debug(LoggingLevel.DEBUG, '>>> product2ForTrigger ' + product2ForTrigger.size());
+        System.debug(LoggingLevel.DEBUG, '>>> productForTrigger ' + productForTrigger.size());
         System.debug(LoggingLevel.DEBUG, '>>> productIds ' + productIds.size());
         System.debug(LoggingLevel.DEBUG, '>>> productIdsForProductOption ' + productIdsForProductOption.size());
         System.debug(LoggingLevel.DEBUG, '>>> productIdsForTechOff ' + productIdsForTechOff.size());
 
-        if(product2ForTrigger.size()==0){
+        if(productForTrigger.size()==0){
             return;
         }
 
@@ -92,7 +92,7 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
         Integer technicalOfferNumber;
         Integer productOptioNumber;
         //for(Product2 p : (Product2[])Trigger.New){
-        for(Product2 p : product2ForTrigger){
+        for(Product2 p : productForTrigger){
 
             //if(allUniqueProductCodeSet.size() > 0 && allUniqueProductCodeSet.contains(generateUniqueCode(p))){
             //    System.debug(LoggingLevel.DEBUG, '>>> ADD ERROR');
