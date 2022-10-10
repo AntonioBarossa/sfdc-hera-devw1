@@ -751,21 +751,6 @@
         <field>MatriceRemiCode__c.VATNumberUdb__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>ServicePoint__c.AgriculturalHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	    <fieldPermissions>
-        <editable>true</editable>
-        <field>ServicePoint__c.CommercialHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	    <fieldPermissions>
-        <editable>true</editable>
-        <field>ServicePoint__c.IndustrialHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
 	    <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.SupplySubtype__c</field>
@@ -15945,16 +15930,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Order.AgriculturalHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Order.CommercialHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Order.DomesticResidentNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -15966,11 +15941,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.HydrantMouthsNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Order.IndustrialHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16011,11 +15981,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.SeasonUse__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Order.ZootechnicalHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -37831,6 +37796,16 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_TroubleshootingReclamiSecondario</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
