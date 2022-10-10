@@ -411,7 +411,17 @@
                 <default>false</default>
                 <isActive>true</isActive>
                 <label>Delibera 2018</label>
-            </value>	
+            </value>
+            <value>
+                <fullName>Ricalcolo consumi</fullName>
+                <default>false</default>
+                <label>Ricalcolo consumi</label>
+            </value>
+            <value>
+                <fullName>Monitoraggio</fullName>
+                <default>false</default>
+                <label>Monitoraggio</label>
+            </value>
             <value>
                 <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
                 <default>false</default>
@@ -632,6 +642,14 @@
             <valueName>Blocco per frode</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Ricalcolo consumi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Monitoraggio</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Sollecito Emissione Bolletta</controllingFieldValue>
             <valueName>Prima Bolletta</valueName>
         </valueSettings>
@@ -658,6 +676,14 @@
         <valueSettings>
             <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
             <valueName>Permanenza condizioni di disagio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Bonus integrativo solo per non Energy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Agevolazioni non Energy indirette</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Contratto Non Richiesto</controllingFieldValue>

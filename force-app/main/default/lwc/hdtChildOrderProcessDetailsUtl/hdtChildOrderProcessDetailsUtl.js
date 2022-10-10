@@ -145,9 +145,9 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                     new fieldData('Rifiuta supporto al calcolo del ravvedimento operoso','DeclineComputationSupport__c', this.order.Account.CompanyOwner__c!=="MMS", false, false,'',''),
                     new fieldData('Superficie Mq','Surface__c', ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente"].includes(this.order.RecordType.DeveloperName), true, false,'','', 
                         function(event){
-                            if(this.order.RateCategory__c==='TATUDNR001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente' && surf){
+                            if(this.order.RateCategory__c==='TATUDNR001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente' && event.detail.value){
                                 const fam = this.template.querySelector("[data-id='FamilyNumber__c']");
-                                let value = cities[order.ServicePoint__r.SupplyCity__c?.toUpperCase()]?.getResident(event.target.value);
+                                let value = tariNonResidenti[this.order.ServicePoint__r.SupplyCity__c?.toUpperCase()]?.getResident(event.detail.value);
                                 if(value && fam)    fam.value = value;
                             }
                     })
@@ -384,10 +384,10 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                 new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUADNR), rateCategoryVisibility(rateCategories.AFUADNRreq), false, '',''),
                 new fieldData('','ResidentDomesticHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUADRS), false, true, '',''),
                 new fieldData('','NotDomesticHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUND), rateCategoryVisibility(rateCategories.AFUNDreq), false, '',''),
-                new fieldData('','AgriculturalHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUNDA), rateCategoryVisibility(rateCategories.AFUNDAreq), false, '',''),
-                new fieldData('','CommercialHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUNDC), rateCategoryVisibility(rateCategories.AFUNDCreq), false, '',''),
-                new fieldData('','IndustrialHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUNDI), rateCategoryVisibility(rateCategories.AFUNDIreq), false, '',''),
-                new fieldData('','ZootechnicalHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUNDZ), rateCategoryVisibility(rateCategories.AFUNDZreq), false, '',''),
+                new fieldData('','NotDomesticHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUNDA), rateCategoryVisibility(rateCategories.AFUNDAreq), false, '',''),
+                new fieldData('','NotDomesticHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUNDC), rateCategoryVisibility(rateCategories.AFUNDCreq), false, '',''),
+                new fieldData('','NotDomesticHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUNDI), rateCategoryVisibility(rateCategories.AFUNDIreq), false, '',''),
+                new fieldData('','NotDomesticHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUNDZ), rateCategoryVisibility(rateCategories.AFUNDZreq), false, '',''),
                 new fieldData('Tipo Mercato','Market__c', this.typeVisibility('gas') || this.typeVisibility('ele'), false, true, '',''),
                 new fieldData('Settore merceologico','CommodityFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Distributore','DistributorFormula__c', this.typeVisibility('both'), false, true, '',''),

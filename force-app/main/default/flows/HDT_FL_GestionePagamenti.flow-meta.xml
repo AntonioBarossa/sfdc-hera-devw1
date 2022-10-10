@@ -4588,15 +4588,15 @@
         <locationY>1094</locationY>
         <flowName>HDT_FL_GestionePagamenti_PianoRateizzazione</flowName>
         <inputAssignments>
-            <name>CaseInput</name>
+            <name>accountStatementFilderId</name>
             <value>
-                <elementReference>GetCasePreFlow_0</elementReference>
+                <elementReference>serviceCatalogId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>accountStatementFilderId</name>
+            <name>CaseInput</name>
             <value>
-                <elementReference>accountStatementFilderId</elementReference>
+                <elementReference>GetCasePreFlow_0</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>

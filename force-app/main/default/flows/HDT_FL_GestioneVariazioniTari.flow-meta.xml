@@ -1511,7 +1511,7 @@
         <defaultConnectorLabel>altri sottoprocessi</defaultConnectorLabel>
         <rules>
             <name>concatenazioneToDo_0_0</name>
-            <conditionLogic>1 AND (2 OR 3 OR 4)</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3 OR 4 OR 5)</conditionLogic>
             <conditions>
                 <leftValueReference>tryGet.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -1523,21 +1523,28 @@
                 <leftValueReference>tryGet.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Componenti non residenti</stringValue>
+                    <stringValue>DOM_Componenti non residenti</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>tryGet.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Componenti residenti</stringValue>
+                    <stringValue>DOM_Componenti residenti</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>tryGet.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Coabitazioni</stringValue>
+                    <stringValue>DOM_Coabitazioni</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>tryGet.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Domiciliato in nucleo residente</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1666,7 +1673,7 @@
                 <leftValueReference>getAfterAddress.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>ISTAT/Ronchi</stringValue>
+                    <stringValue>NON DOM_ISTAT/Ronchi</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2570,6 +2577,12 @@
                     <elementReference>getAfterSecondForm.SupplyCity__c</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -3202,6 +3215,12 @@
                     <elementReference>getAfterForm_0.ModuleFromContributor__c</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>caseId</name>
+                <value>
+                    <elementReference>getPreLandRegistry.Id</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -3718,7 +3737,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Surface</name>
-                    <fieldText>&lt;p&gt;Superficie: 80&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;Superficie: {!getCase.Surface__c}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
@@ -3744,7 +3763,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>NumberOfPeople</name>
-                    <fieldText>&lt;p&gt;Numero abitanti: 3&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;Numero componenti: {!getCase.NumberMembers__c}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>

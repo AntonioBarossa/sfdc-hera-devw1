@@ -1,0 +1,9 @@
+<aura:component implements="lightning:isUrlAddressable">
+
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />    
+    <aura:attribute name="recordid" type="String"/>
+
+    <c:hdtVistaDatiCatastali recordId="{!v.recordid}"/>
+
+</aura:component>	

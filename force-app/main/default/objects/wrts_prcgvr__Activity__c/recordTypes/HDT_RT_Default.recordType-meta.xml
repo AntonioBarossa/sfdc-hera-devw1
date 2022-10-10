@@ -2802,6 +2802,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Approvazione Gestione Fuga</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Approvazione Offerte</fullName>
             <default>false</default>
         </values>
@@ -2885,7 +2889,10 @@
             <fullName>Errore Comunicazione e-BDM</fullName>
             <default>false</default>
         </values>
-        
+        <values>
+            <fullName>Esito approvazione</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Esito Da Gestire</fullName>
             <default>false</default>
@@ -2910,6 +2917,10 @@
             <fullName>Esito OK Riduzione Potenza</fullName>
             <default>false</default>
         </values>   
+        <values>
+            <fullName>Gestione blocco sollecito</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Gestione Iva e Accise</fullName>
             <default>false</default>
@@ -2998,11 +3009,6 @@
             <fullName>Risposta Motivata Con Allegato</fullName>
             <default>false</default>
         </values>
-
-
-
-
-        
         <values>
             <fullName>Segnalazioni Commissioni Agenzie</fullName>
             <default>false</default>
@@ -3073,6 +3079,10 @@
         </values>
         <values>
             <fullName>Verifiche pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Back Office</fullName>
             <default>false</default>
         </values>
     </picklistValues>

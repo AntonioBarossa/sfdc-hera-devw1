@@ -56,6 +56,11 @@
                 <label>Approvazione Bonus Commerciale</label>
             </value>
             <value>
+                <fullName>Approvazione Gestione Fuga</fullName>
+                <default>false</default>
+                <label>Approvazione Gestione Fuga</label>
+            </value>
+            <value>
                 <fullName>Approvazione Offerte</fullName>
                 <default>false</default>
                 <label>Approvazione Offerte</label>
@@ -301,6 +306,11 @@
                 <label>Eseguire Gestione Manuale SAP</label>
             </value>
             <value>
+                <fullName>Esito approvazione</fullName>
+                <default>false</default>
+                <label>Esito approvazione</label>
+            </value>
+            <value>
                 <fullName>Esito Da Gestire</fullName>
                 <default>false</default>
                 <label>Esito Da Gestire</label>
@@ -364,6 +374,11 @@
                 <fullName>Gestione Back Office</fullName>
                 <default>false</default>
                 <label>Gestione Back Office</label>
+            </value>
+            <value>
+                <fullName>Gestione blocco sollecito</fullName>
+                <default>false</default>
+                <label>Gestione blocco sollecito</label>
             </value>
             <value>
                 <fullName>Gestione dati discordanti</fullName>
@@ -496,14 +511,14 @@
                 <label>Iva e Accise da validare</label>
             </value>
             <value>
-                <fullName>KO Credit Check</fullName>
-                <default>false</default>
-                <label>KO Credit Check</label>
-            </value>
-            <value>
                 <fullName>KO creazione BP CA</fullName>
                 <default>false</default>
                 <label>KO creazione BP CA</label>
+            </value>
+            <value>
+                <fullName>KO Credit Check</fullName>
+                <default>false</default>
+                <label>KO Credit Check</label>
             </value>
             <value>
                 <fullName>KO definitivo</fullName>
@@ -651,11 +666,6 @@
                 <label>Protocollo - Reclami</label>
             </value>
             <value>
-                <fullName>Protocollo - Segnalazioni</fullName>
-                <default>false</default>
-                <label>Protocollo - Segnalazioni</label>
-            </value>
-            <value>
                 <fullName>Protocollo - Reclami Contratti</fullName>
                 <default>false</default>
                 <label>Protocollo - Reclami Contratti</label>
@@ -664,6 +674,11 @@
                 <fullName>Protocollo - Reclami Post Vendita</fullName>
                 <default>false</default>
                 <label>Protocollo - Reclami Post Vendita</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Segnalazioni</fullName>
+                <default>false</default>
+                <label>Protocollo - Segnalazioni</label>
             </value>
             <value>
                 <fullName>Protocollo - Variazioni</fullName>
@@ -899,6 +914,11 @@
                 <fullName>Venditore Non Definito</fullName>
                 <default>false</default>
                 <label>Venditore Non Definito</label>
+            </value>
+            <value>
+                <fullName>Verifica Back Office</fullName>
+                <default>false</default>
+                <label>Verifica Back Office</label>
             </value>
             <value>
                 <fullName>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</fullName>
