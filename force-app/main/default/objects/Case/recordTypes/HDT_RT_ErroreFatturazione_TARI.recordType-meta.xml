@@ -10964,7 +10964,7 @@
         </values>
         <values>
             <fullName>Da contribuente</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>
