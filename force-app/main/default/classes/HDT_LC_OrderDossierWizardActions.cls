@@ -553,7 +553,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         Order.ServicePointCode__c,
         Order.VasSubtype__c
         FROM OrderItem
-        WHERE Order.ParentOrder__c = :orderParentId
+        WHERE Order.ParentOrder__c = :orderParentId AND Order.Status NOT IN ('Annullato')
         WITH SECURITY_ENFORCED];
 
         List<SObject> sobjToUpdate = new List<SObject>();
