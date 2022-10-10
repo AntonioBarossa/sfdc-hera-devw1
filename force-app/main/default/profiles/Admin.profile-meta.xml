@@ -11440,11 +11440,6 @@
 	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
-		<field>FreeWithdraw__c.ServicePoint__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
 		<field>FreeWithdrawConfig__c.FreeWithdrawCalculation__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
