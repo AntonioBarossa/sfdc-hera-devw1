@@ -780,6 +780,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.IstatCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.RonchiCategoryCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.RonchiSubCategoryCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CampaignMemberLeadAssigmentItem__c.Agency__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -16012,16 +16027,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Order.AgriculturalHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Order.CommercialHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Order.DomesticResidentNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -16033,11 +16038,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.HydrantMouthsNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Order.IndustrialHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16078,11 +16078,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.SeasonUse__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Order.ZootechnicalHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -27725,21 +27720,6 @@
         <field>ServicePoint__c.Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>ServicePoint__c.AgriculturalHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	    <fieldPermissions>
-        <editable>true</editable>
-        <field>ServicePoint__c.CommercialHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	    <fieldPermissions>
-        <editable>true</editable>
-        <field>ServicePoint__c.IndustrialHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
 	    <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.SupplySubtype__c</field>
@@ -37689,6 +37669,16 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_TroubleshootingReclamiSecondario</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

@@ -43,9 +43,9 @@ public with sharing class HDT_LC_ActiveRepentant {
     public Date dateDichiarazione {get;set;}
 
     @AuraEnabled
-    public static List<TermTable__c> getPeriods(String comune, String sottotipo){
+    public static List<TermTable__c> getPeriods(String comune, String searchKey){
         List<TermTable__c> periods =  [SELECT Id, CriteriaX__c, EffectiveDate__c, DayX__c, CriteriaY__c, DayY__c, PopupY__c, PopupZ__c 
-                                            FROM TermTable__c WHERE City__c = :comune AND Subtype__c =:sottotipo WITH SECURITY_ENFORCED LIMIT 1];
+                                            FROM TermTable__c WHERE City__c = :comune AND (Subtype__c =:searchKey OR Type__c=:searchKey) WITH SECURITY_ENFORCED LIMIT 1];
         return periods;
     }
 
