@@ -16027,16 +16027,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Order.AgriculturalHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Order.CommercialHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Order.DomesticResidentNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -16048,11 +16038,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.HydrantMouthsNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Order.IndustrialHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16093,11 +16078,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.SeasonUse__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Order.ZootechnicalHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -27738,21 +27718,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.Account__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>ServicePoint__c.AgriculturalHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	    <fieldPermissions>
-        <editable>true</editable>
-        <field>ServicePoint__c.CommercialHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	    <fieldPermissions>
-        <editable>true</editable>
-        <field>ServicePoint__c.IndustrialHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	    <fieldPermissions>
