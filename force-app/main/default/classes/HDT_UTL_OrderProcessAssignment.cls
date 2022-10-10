@@ -242,7 +242,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                     /* Controllo WinBack */
                 &&  (process.OngoingSwitchOutNew__c == isWinback || process.OngoingSwitchOutNew__c.equalsIgnoreCase('All'))
                     /* Controllo Variazione Potenza */
-                &&  (process.PowerChange__c == isPowerChange && !process.processName__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))
+                &&  (process.PowerChange__c == isPowerChange)
                     /* Controllo Commodity */
                 &&  ((process.commodity__c == commodity || process.commodity__c == null))
                     /* Controllo Amendment */

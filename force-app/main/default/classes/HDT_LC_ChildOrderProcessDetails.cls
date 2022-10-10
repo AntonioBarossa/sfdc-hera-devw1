@@ -361,5 +361,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         return result = ( !ords.isEmpty() && ords[0].QuotationType__c != null && !String.isBlank(ords[0].QuotationType__c) )? true:false;
 
     }
+    @AuraEnabled
+    public static Boolean checkPermissionSet(){
+
+
+        if(FeatureManagement.checkPermission('HDT_CP_EnableMUC')){
+            return true;
+        } 
+
+        return false;
+
+    }
 
 }

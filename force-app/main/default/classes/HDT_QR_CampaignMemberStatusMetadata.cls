@@ -13,7 +13,7 @@ public inherited sharing class HDT_QR_CampaignMemberStatusMetadata {
      */
     public static List<HDT_CampaignMemberStatus__mdt> getRecords(){
 
-        String query = 'SELECT Id, DeveloperName, MasterLabel, StatusName__c, Category__c,Channel__c, HasResponded__c, Default__c FROM HDT_CampaignMemberStatus__mdt';
+        String query = 'SELECT Id, DeveloperName, MasterLabel, StatusName__c, Category__c,Channel__c, HasResponded__c, Default__c, OutcomeCategory__c FROM HDT_CampaignMemberStatus__mdt';
         List<HDT_CampaignMemberStatus__mdt> campaignStatuses = Database.query(query);
 
         return campaignStatuses;
