@@ -126,11 +126,11 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                         if(checkSectionRequiredFields.call(this, evt?.currentTarget?.value)){   return true;}
                     },
                 data:[
-                    new fieldData('Codice Punto','ServicePointCode__c',this.typeVisibility('both'),true, true, '', ''),
-                    new fieldData('Servizio','CommodityFormula__c',this.typeVisibility('both'),true, false, '', ''),
+                    //new fieldData('Codice Punto','ServicePointCode__c',this.typeVisibility('both'),true, true, '', ''),
+                    //new fieldData('Servizio','CommodityFormula__c',this.typeVisibility('both'),true, false, '', ''),
                     new fieldData('Tipo Impianto','ImplantType__c', this.typeVisibility('both'), true, true,'',''),
                     new fieldData('Residente','Resident__c', this.typeVisibility('both'), false, true,'',''),
-                    new fieldData('Codice ATECO','AtecoCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'', ''),
+                    new fieldData('Codice ATECO','AtecoCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
                     new fieldData('Codice Ronchi','RonchiCode__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',''),
                     new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',''),
                     new fieldData('Contratto Precedente','ContractReference__c', ["HDT_RT_CambioTariffa", "HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), true, true,'',''),
@@ -215,7 +215,7 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                 processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),
                 nextActions: (evt) => {
                     //check mandatory section field section
-                    if(checkSectionRequiredFields.call(this, evt?.currentTarget?.value)){   return true;}
+                    //if(checkSectionRequiredFields.call(this, evt?.currentTarget?.value)){   return true;}
                 },
                 data: [
                     new fieldData('Modalità Invio Bolletta', 'BillSendMode__c',this.typeVisibility('both'),false,true,'',''),
@@ -231,7 +231,7 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                     new fieldData('Civico', 'BillingStreetNumber__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('CAP', 'BillingPostalCode__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('Codice ISTAT', 'BillingCityCode__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('AggregateBilling__c', 'AggregateBilling__c',this.typeVisibility('both'),true,false,'',''),
+                    //new fieldData('AggregateBilling__c', 'AggregateBilling__c',this.typeVisibility('both'),true,false,'',''),
                 ]
             },
             {
