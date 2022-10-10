@@ -706,6 +706,11 @@
                 <label>Quality Call</label>
             </value>
             <value>
+                <fullName>Quality Scaduta</fullName>
+                <default>false</default>
+                <label>Quality Scaduta</label>
+            </value>
+            <value>
                 <fullName>Rapporti con i distributori e SII</fullName>
                 <default>false</default>
                 <label>Rapporti con i distributori e SII</label>
