@@ -547,13 +547,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Case_0.SupplyCity__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Comune_di_fornitura</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>Get_Case_0.CutomerAssisted__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -590,9 +583,9 @@
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Case_0.Note__c</assignToReference>
-            <operator>Add</operator>
+            <operator>Assign</operator>
             <value>
-                <stringValue>; Importo Minimo Singola Rata: €{!Calcola_parametri_rate.importoMinimoSingolaRata}</stringValue>
+                <stringValue>Importo Minimo Singola Rata: €{!Calcola_parametri_rate.importoMinimoSingolaRata}</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -641,6 +634,22 @@
         </value>
     </choices>
     <choices>
+        <name>In_compartecipazione_o_totalmente_da_istituzioni_pubbliche</name>
+        <choiceText>In compartecipazione o totalmente da istituzioni pubbliche</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>In compartecipazione o totalmente da istituzioni pubbliche</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>N</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>RadioButtonKOChoice</name>
         <choiceText>Passa in KO Rilavorato</choiceText>
         <dataType>Boolean</dataType>
@@ -673,27 +682,11 @@
         </value>
     </choices>
     <choices>
-        <name>TAT0000000</name>
-        <choiceText>Generico</choiceText>
+        <name>S</name>
+        <choiceText>Sì</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>TAT0000000</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>TATND00001</name>
-        <choiceText>Non domestico</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>TATND00001</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>TATUDNR001</name>
-        <choiceText>Domestico non residenziale</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>TATUDNR001</stringValue>
+            <stringValue>Sì</stringValue>
         </value>
     </choices>
     <choices>
@@ -712,6 +705,38 @@
             <stringValue>TIA_VAR_DATI</stringValue>
         </value>
     </choices>
+    <choices>
+        <name>Totalmente_dal_cliente</name>
+        <choiceText>Totalmente dal cliente</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Totalmente dal Cliente</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>UsoDomesticoResidenteTIA_Domesticinonresidenti</name>
+        <choiceText>Uso Domestico ResidenteTIA - Domestici non residenti</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Uso Domestico ResidenteTIA - Domestici non residenti</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>UsoDomesticoResidenteTIA_Domesticiresidenti</name>
+        <choiceText>Uso Domestico ResidenteTIA - Domestici residenti</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Uso Domestico ResidenteTIA - Domestici residenti</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>UsoNonDomesticoTIA_Utenzenondomestiche</name>
+        <choiceText>Uso Non DomesticoTIA - Utenze non domestiche</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Uso Non DomesticoTIA - Utenze non domestiche</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Alert_comune_di_fornitura</name>
         <label>Alert comune di fornitura?</label>
@@ -725,10 +750,10 @@
             <name>Alert</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Comune_di_fornitura</leftValueReference>
+                <leftValueReference>Get_Case_Tari_Layout.SupplyCity__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Granarolo dell’Emilia</stringValue>
+                    <stringValue>GRANAROLO DELL&apos;EMILIA</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1980,7 +2005,7 @@
         </connector>
         <fields>
             <name>Alert_fornitura</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;È stata selezionato il comune di fornitura &lt;strong style=&quot;font-size: 12px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!Comune_di_fornitura}, &lt;/strong&gt;&lt;span style=&quot;font-size: 11pt; font-family: Calibri, sans-serif;&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;la richiesta di rateizzazione può essere fatta anche oltre la scadenza purché non oltre quella dell’ultima rata dell’anno.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;È stata selezionato il comune di fornitura &lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 12px;&quot;&gt;{!Get_Case_Tari_Layout.SupplyCity__c}, &lt;/strong&gt;&lt;span style=&quot;font-size: 11pt; font-family: Calibri, sans-serif;&quot;&gt;﻿la richiesta di rateizzazione può essere fatta anche oltre la scadenza purché non oltre quella dell’ultima rata dell’anno.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -2526,15 +2551,13 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Comune_di_fornitura</name>
-            <choiceReferences>citiesPicklist</choiceReferences>
+            <name>Ritirata_richiesta_scritta_cliente</name>
+            <choiceReferences>S</choiceReferences>
+            <choiceReferences>N</choiceReferences>
             <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>Get_Case_Tari_Layout.SupplyCity__c</elementReference>
-            </defaultValue>
-            <fieldText>Comune di Fornitura</fieldText>
+            <fieldText>Ritirata richiesta scritta cliente</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
+            <isRequired>false</isRequired>
         </fields>
         <fields>
             <name>Cliente_Assistito</name>
@@ -2545,11 +2568,6 @@
             <fieldText>Cliente Assistito</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>Importo_Minimo_Singola_Rata</name>
-            <fieldText>&lt;p&gt;Importo Minimo Singola Rata&lt;/p&gt;&lt;p&gt;€{!Calcola_parametri_rate.importoMinimoSingolaRata}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>hdtRecordEditForm_0_tari</name>
@@ -2670,7 +2688,8 @@
         </fields>
         <fields>
             <name>Tipo_pagamento</name>
-            <choiceReferences>paymentTypes</choiceReferences>
+            <choiceReferences>Totalmente_dal_cliente</choiceReferences>
+            <choiceReferences>In_compartecipazione_o_totalmente_da_istituzioni_pubbliche</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Tipo pagamento</fieldText>
             <fieldType>DropdownBox</fieldType>
@@ -2755,20 +2774,15 @@
             <name>Comune_di_ubicazione_0</name>
             <choiceReferences>citiesPicklist</choiceReferences>
             <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>GetCaseImporto.BillingCity__c</elementReference>
-            </defaultValue>
             <fieldText>Comune di Ubicazione</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>Prodotto_di_Servizio_0</name>
-            <choiceReferences>TAT0000000</choiceReferences>
-            <choiceReferences>TATND00001</choiceReferences>
-            <choiceReferences>TATUDNR001</choiceReferences>
-            <choiceReferences>TATUDRES01</choiceReferences>
-            <choiceReferences>TIA_VAR_DATI</choiceReferences>
+            <choiceReferences>UsoNonDomesticoTIA_Utenzenondomestiche</choiceReferences>
+            <choiceReferences>UsoDomesticoResidenteTIA_Domesticinonresidenti</choiceReferences>
+            <choiceReferences>UsoDomesticoResidenteTIA_Domesticiresidenti</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Prodotto di Servizio</fieldText>
             <fieldType>DropdownBox</fieldType>
