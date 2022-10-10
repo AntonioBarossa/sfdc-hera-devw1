@@ -632,6 +632,26 @@
             <fullName>Ok contattato</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Quality Call OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comfort Call OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiusa Per Fine Intervallo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato Quality Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato Comfort Call</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CreatorGroup__c</picklist>
@@ -2746,6 +2766,14 @@
         </values>
         <values>
             <fullName>Preavviso Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Scaduta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
