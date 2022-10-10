@@ -161,7 +161,7 @@
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>10</rightValue>
+                        <rightValue>05</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
