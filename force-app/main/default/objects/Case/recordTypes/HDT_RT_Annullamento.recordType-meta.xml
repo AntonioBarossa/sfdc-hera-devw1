@@ -7964,7 +7964,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DBO</fullName>
             <default>false</default>
         </values>
         <values>
