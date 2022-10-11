@@ -378,7 +378,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         let columnsUniq = [...new Set(columns)];
         columnsUniq.forEach(field => 
             {
-                if(field != 'iconCompatibility' && field != 'compatibilityMessage' && field != 'Id' && field != 'serviceRequestId' && field != 'isCompatible'){
+                if(field != 'iconCompatibility' && field != 'compatibilityMessage' && field != 'Id' && field != 'serviceRequestId' && field != 'isCompatible' && field !== 'ServicePointId'){
                     this.tableColumns.push({label: field, fieldName: field});
                 }                 
             });
@@ -508,7 +508,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
-                console.log('this.originalData ' + this.originalData);
+                console.log('this.originalData ' + JSON.stringify(this.originalData));
                 for(var i=0; i<this.originalData.length; i++){
                     this.originalData[i].Id=i.toString();
                 }
@@ -658,6 +658,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         if(this.processtype != ''){
             let srvRequest= {
                 'servicePointCode': this.rowToSend['Codice Punto'],
+                'servicePoint': this.rowToSend['ServicePointId'],
                 'commoditySector': this.rowToSend['Servizio'],
                 'processType': this.processtype,
                 'type': 'Case'
