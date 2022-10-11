@@ -35,20 +35,26 @@ export default class HdtMaterialSelection extends LightningElement {
             this.isAlreadyWarned=false;
         }
 
+        let doCloseLogic = false;
+
         if(this.isCubatureLimited=="Y"){
             if(this._cubatureLimit <= this.allCubatureSelected && value <= this.allCubatureSelected){
-                this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');//Cambio di motivazione
-                this.closeModal();
+                console.log("SetCubature -> 1");
+                doCloseLogic=true;
             }else if(this._cubatureLimit > this.allCubatureSelected &&  value <= this.allCubatureSelected){
-                this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');//vecchio limite ok, nuovo ko
-                this.isPaymentNeeded = true;
-                this.closeModal();
+                console.log("SetCubature -> 2");
+                doCloseLogic=true;
             }else if(!this._cubatureLimit && this.allCubatureSelected >= value){
+                console.log("SetCubature -> 3");
+                doCloseLogic=true;
+            }else if(this._cubatureLimit <= this.allCubatureSelected && value > this.allCubatureSelected){
+                if(this._cubatureLimit) this.showMessage('Attenzione','Ritiro non più a pagamento per i metri cubi selezionati','success');//vecchio limite ko, nuovo ok
+            }
+
+            if(doCloseLogic){
                 this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');
                 this.isPaymentNeeded = true;
                 this.closeModal();
-            }else if(this._cubatureLimit <= this.allCubatureSelected && value > this.allCubatureSelected){
-                this.showMessage('Attenzione','Ritiro non più a pagamento per i metri cubi selezionati','success');//vecchio limite ko, nuovo ok
             }
         }
         this._cubatureLimit = value;
@@ -89,7 +95,12 @@ export default class HdtMaterialSelection extends LightningElement {
             this._initialRecords = data;
             this.preSelectedKeys=preSelectedKeys;
             this.selectedData=preselectedValues;
-            preselectedValues?.forEach(elem=>{this._globalSelectionMap.set(elem.Id, elem)});
+            let allCubatureSelected =0;
+            preselectedValues?.forEach(elem=>{
+                this._globalSelectionMap.set(elem.Id, elem);
+                allCubatureSelected+=elem.CubicMeters__c;
+            });
+            this.allCubatureSelected=allCubatureSelected;
         }else{
             console.log("#getTablesConfig -> Data not found! ");
         }
