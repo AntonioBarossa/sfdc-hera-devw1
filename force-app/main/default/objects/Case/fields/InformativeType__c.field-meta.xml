@@ -689,11 +689,6 @@
                 <label>Documentale/Copia Contratto</label>
             </value>
             <value>
-                <fullName>Notifica Addebito/Rimborso Canone Rai</fullName>
-                <default>false</default>
-                <label>Notifica Addebito/Rimborso Canone Rai</label>
-            </value>
-            <value>
                 <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
