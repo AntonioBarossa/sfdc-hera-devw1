@@ -26,6 +26,7 @@
             <label>Cluster Generiche Attivazioni</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <interviewLabel>HDT_FL_ {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_CopiaContratto</label>
     <processMetadataValues>
@@ -89,6 +90,12 @@
             <field>RecordTypeId</field>
             <value>
                 <elementReference>Get_RT_Generiche_Attivazioni.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SendMode__c</field>
+            <value>
+                <stringValue>E-Mail</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

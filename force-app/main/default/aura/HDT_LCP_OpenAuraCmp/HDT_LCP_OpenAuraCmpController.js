@@ -46,6 +46,8 @@
         // activityId
         var activityId = myPageRef.state.c__activityId;
         var documentPaymentMethod = myPageRef.state.c__documentPaymentMethod;
+        /* Innesco Comunicazione Documentale */
+        var documentSendTracking = myPageRef.state.c__documentSendTracking;
 
         //Gestione Risottomissione Annullamento
         let discardRework = undefined;
@@ -83,6 +85,7 @@
         console.log('# InteractionId -> '           + interactionId);
         console.log('# activityId -> '              + activityId);
         console.log('# documentPaymentMethod -> '   + documentPaymentMethod);
+        console.log('# documentSendTracking -> '   + documentSendTracking);
 
                 
         var workspaceAPI = component.find("workspace");
@@ -114,6 +117,10 @@
                         parentId = element.tabId;
                     } else if(element.pageReference.attributes.recordId === parentRecordId){
                         caseTabId=element.tabId;
+                    }
+                    else if(element.pageReference.attributes.recordId === documentSendTracking)
+                    {
+                        parentId = element.tabId;
                     }
                 }
             });
@@ -157,7 +164,9 @@
                         //activityId per annullamento Attività
                         c__activityId:activityId,
                         //introdotto per Paperless
-                        c__documentPaymentMethod:documentPaymentMethod
+                        c__documentPaymentMethod:documentPaymentMethod,
+                        /* Innesco da document sendTracking */
+                        c__documentSendTracking: documentSendTracking
                     }
                 },
                 focus: true
