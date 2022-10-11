@@ -44,7 +44,7 @@
             },
             {
                 &quot;FieldName&quot;: &quot;Reason__c&quot;,
-                &quot;Label&quot;: &quot;Motivazione&quot;,
+                &quot;Label&quot;: &quot;Motivo&quot;,
                 &quot;Required&quot;: true,
                 &quot;ReadOnly&quot;: true,
                 &quot;Column&quot;: 2
@@ -54,7 +54,7 @@
                 &quot;Required&quot;: true,
                 &quot;ReadOnly&quot;: true,
                 &quot;Column&quot;: 2
-            },
+            }
         ]</value>
     </values>
     <values>
