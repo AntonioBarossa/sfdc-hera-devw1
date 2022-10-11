@@ -230,7 +230,6 @@ export default class HdtActiveRepentant extends LightningElement {
         }finally{
             this.finish();
         }
-        //this.checkMissedDue();
     }
 
     getLimitDateX(data) {
