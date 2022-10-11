@@ -590,7 +590,7 @@
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.isUserActivity__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>VocalOrderPublicConfirm__c.Order__c</field>
@@ -601,6 +601,21 @@
         <field>VocalOrderPublicConfirm__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>VolumetricEstimate__c.CubicMeters__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>VolumetricEstimate__c.Description__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>VolumetricEstimate__c.Typology__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>RateCategory__c.CalculatedValue__c</field>
@@ -11411,6 +11426,66 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>ExpRavv__c.Type__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdraw__c.Canceled__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdraw__c.LastFreeWithdrawDate__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.FreeWithdrawCalculation__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.Municipality__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.PayIfIsPrivateAreaDom__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.PayIfIsPrivateAreaNotDom__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.ToPayIfVolumeEqualOrHigherDom__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.ToPayIfVolumeEqualOrHigherNotDom__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.PicklistRestriction__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.ToBePaidWithinMonthsDomestic__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.ToBePaidWithinMonthsNotDomestic__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.TypeOperation__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
     <fieldPermissions>
@@ -29915,6 +29990,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.MaxFreeWithdrawDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.CountFreeWithdraw__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.isSTG__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -37424,6 +37509,42 @@
         <layout>SlaAdministration__c-HDT_Sales</layout>
         <recordType>SlaAdministration__c.HDT_RT_Sales</recordType>
     </layoutAssignments>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>VolumetricEstimate__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>CaseVolumetricaJunction__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>FreeWithdraw__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>FreeWithdrawConfig__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>

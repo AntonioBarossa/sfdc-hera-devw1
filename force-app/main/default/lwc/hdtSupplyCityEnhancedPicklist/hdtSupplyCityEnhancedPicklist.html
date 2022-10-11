@@ -1,0 +1,16 @@
+<template>    
+    <template if:true={cityOptions}>
+        <lightning-layout>
+            <lightning-layout-item size="4" class="slds-p-bottom_small">
+                <lightning-combobox required={required}
+                                    field-level-help="Digitare un comune per selezionarlo"
+                                    name="RegistryCity__c"
+                                    label={_label}
+                                    value={inputSupplyCity}
+                                    options={cityOptions}
+                                    onchange={handleFieldChange}>
+                </lightning-combobox>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+</template>

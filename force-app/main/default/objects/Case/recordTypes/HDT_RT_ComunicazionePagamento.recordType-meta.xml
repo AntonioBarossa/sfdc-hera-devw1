@@ -821,16 +821,24 @@
             <fullName>Banca SPORTELLO</fullName>
             <default>false</default>
         </values>
-        <!-- <values>
-            <fullName>Bollettino postale</fullName>
+        <values>
+            <fullName>Bonifico Tesoreria ente creditore</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>Carta di credito online</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Cassa COOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>F24</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PagaPA</fullName>
             <default>false</default>
         </values>
         <values>
