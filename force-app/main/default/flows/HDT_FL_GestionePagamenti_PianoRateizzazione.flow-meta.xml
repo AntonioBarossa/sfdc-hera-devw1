@@ -14,7 +14,7 @@
         <inputParameters>
             <name>comuneUbicazione</name>
             <value>
-                <elementReference>Comune_di_ubicazione_0</elementReference>
+                <elementReference>Comune_di_ubicazione_0.outputSupplyCity</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -543,7 +543,7 @@
             <assignToReference>Get_Case_0.BillingCity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Comune_di_ubicazione_0</elementReference>
+                <elementReference>Comune_di_ubicazione_0.outputSupplyCity</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -2816,11 +2816,29 @@
         </fields>
         <fields>
             <name>Comune_di_ubicazione_0</name>
-            <choiceReferences>citiesPicklist</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Comune di Ubicazione</fieldText>
-            <fieldType>DropdownBox</fieldType>
+            <extensionName>c:hdtSupplyCityEnhancedPicklist</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Comune di Ubicazione</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>inputSupplyCity</name>
+                <value>
+                    <elementReference>GetCaseImporto.BillingCity__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>Prodotto_di_Servizio_0</name>
