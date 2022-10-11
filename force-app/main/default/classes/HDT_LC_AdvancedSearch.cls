@@ -602,7 +602,11 @@ public with sharing class HDT_LC_AdvancedSearch {
 
         List<Map<String,String>> customSp = new List<Map<String,String>>();
 		for (ServicePoint__c sp : servicePoints) {
-            Map<String,String> row = new Map<String, String>();	
+            Map<String,String> row = new Map<String, String>();
+			if(sp.Id != null)
+			{
+				row.put('ServicePointId', sp.Id);
+			}
 			for(String field : listField){
 				String value = '';
 				String label = '';

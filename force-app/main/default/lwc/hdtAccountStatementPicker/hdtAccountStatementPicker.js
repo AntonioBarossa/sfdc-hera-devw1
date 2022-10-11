@@ -490,5 +490,4 @@ export default class HdtAccountStatementPicker extends LightningElement {
     getBillingProfileId(){
         return this.billingProfileId;
     }
-
 }

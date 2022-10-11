@@ -10,6 +10,7 @@ import isPreventivo from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.isPre
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
 import getReadingId from '@salesforce/apex/HDT_LC_SelfReading.getReadingId';
 import isAfterthoughtDaysZero from '@salesforce/apex/HDT_UTL_ProcessDateManager.isAfterthoughtDaysZero';
+import checkPermissionSet from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.checkPermissionSet';
 import {handleSections, equalsIgnoreCase, safeStr} from 'c/hdtChildOrderProcessDetailsUtl';
 
 export default class hdtChildOrderProcessDetails extends LightningElement {
@@ -46,6 +47,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     acceptedFormatsIvaAcciseUpload = ['.pdf', '.png'];
     @track lastStepData = {};
     @track isNoDayAfterthought = false;
+    @track permissionFlag = true;
     loginChannel;
     closeAttachmentEvent;
     @track additionalAttachments;
@@ -1102,6 +1104,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
 
     async connectedCallback(){
+
+        checkPermissionSet({}).then(data =>{
+            console.log('DATA£££' + data);
+
+            this.permissionFlag = !data;
+            console.log('PERMISSIONFLAG££' + this.permissionFlag);
+        })
+
         console.log('Details Callback Start');
 
         console.log('### VasSubtype__c >>> ' + this.order.VasSubtype__c);
@@ -1251,8 +1261,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = event.detail.dateX, this.sectionDataToSubmit["OnerousReviewableStartDate__c"]=event.detail.dateX;
         this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = event.detail.dateY, this.sectionDataToSubmit["OnerousUnreviewableStartDate__c"]=event.detail.dateY;
         //this.missedDueDate = this.getFormattedDate(event.detail.missedDue);
-        this.template.querySelector("[data-id='MissingDueAmount__c']").required = event.detail.missedDue? true : false;
-        
+        const MissingDueAmount = this.template.querySelector("[data-id='MissingDueAmount__c']");
+        MissingDueAmount.required = event.detail.missedDue? true : false;
+        MissingDueAmount.disabled = event.detail.missedDue? false : true;
         let isPeriodY = event.detail.period=="Y";
         this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = isPeriodY;
         this.template.querySelector("[data-id='BlockOnComputation__c']").value = isPeriodY? "Y" : "", this.sectionDataToSubmit["BlockOnComputation__c"]=isPeriodY? "Y" : "N";

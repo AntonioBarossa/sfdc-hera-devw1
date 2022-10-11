@@ -258,6 +258,12 @@
                     <stringValue>Subentro</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>companyOwner</name>
+                <value>
+                    <elementReference>getOrder.Account.CompanyOwner__c</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -313,6 +319,12 @@
                 <name>sottotipo</name>
                 <value>
                     <stringValue>Subentro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>companyOwner</name>
+                <value>
+                    <elementReference>getCase.Account.CompanyOwner__c</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

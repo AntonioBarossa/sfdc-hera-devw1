@@ -244,6 +244,14 @@
             <fullName>Storno per dati fiscali errati</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Richiesta di ricalcolo fuga acqua</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimborso retroattivo importo fognatura e depurazione</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>BillingFrequency__c</picklist>
@@ -7967,11 +7975,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito OK</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Esito OK da SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DBO</fullName>
             <default>false</default>
         </values>
         <values>
