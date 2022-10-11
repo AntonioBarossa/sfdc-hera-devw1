@@ -318,10 +318,18 @@ export default class HdtActiveRepentant extends LightningElement {
 
     finish() {
 
+        let dx = this.limitDateX? new Date(this.limitDateX) : null;
+        dx?.setDate(dx?.getDate() + 1);//add 1 day
+        dx = dx? this.getFormattedDate(dx) : null;
+
+        let dy = this.limitDateY? new Date(this.limitDateY) : null;
+        dy?.setDate(dy?.getDate() + 1);//add 1 day
+        dy = dy? this.getFormattedDate(dy) : null;
+
         const evt = new CustomEvent("end_algorithm", {
             detail: {
-                dateX: this.limitDateX? this.getFormattedDate(new Date(this.limitDateX).setDate(this.limitDateX.getDate() + 1 )) : null,
-                dateY: this.limitDateY? this.getFormattedDate(new Date(this.limitDateY).setDate(this.limitDateY.getDate() + 1)) : null,
+                dateX: dx,
+                dateY: dy,
                 missedDue: this.missedDueDate,
                 period: this.periodType
             }
@@ -334,6 +342,10 @@ export default class HdtActiveRepentant extends LightningElement {
         this.limitDateY=null;
         this.missedDueDate=null;//reset data to avoid conflicts
         this.disabled=false;
+    }
+
+    addDays(date, days){
+        date.setDate()
     }
 
     populateFormFields(event) {//function executed on parent context
