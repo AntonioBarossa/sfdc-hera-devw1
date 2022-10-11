@@ -589,7 +589,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>SelezioneForniture</targetReference>
+                <targetReference>Selezione_Fornitura</targetReference>
             </connector>
             <label>MMS</label>
         </rules>
@@ -827,6 +827,7 @@
             <label>Salva In Bozza</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>checkboxIndirizzo</name>
         <dataType>Boolean</dataType>
@@ -1047,7 +1048,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Punto_di_Fornitura_Tari</elementReference>
+                <elementReference>Selezione_Fornitura.ServicePointId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -1226,7 +1227,7 @@
         <inputAssignments>
             <field>ServicePoint__c</field>
             <value>
-                <elementReference>Punto_di_Fornitura_Tari</elementReference>
+                <elementReference>Selezione_Fornitura.ServicePointId</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -1383,27 +1384,6 @@
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>SelezioneForniture</name>
-        <label>SelezioneForn</label>
-        <locationX>2954</locationX>
-        <locationY>1358</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>getServicePoint</targetReference>
-        </connector>
-        <fields>
-            <name>Punto_di_Fornitura_Tari</name>
-            <dataType>String</dataType>
-            <fieldText>Punto di Fornitura Tari</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>false</isRequired>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>WizardScreen</name>
@@ -1563,6 +1543,35 @@
                 <stringValue>Case</stringValue>
             </value>
         </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Selezione_Fornitura</name>
+        <label>Selezione Fornitura</label>
+        <locationX>2954</locationX>
+        <locationY>1358</locationY>
+        <connector>
+            <targetReference>getServicePoint</targetReference>
+        </connector>
+        <flowName>HDT_FL_SupplySelection</flowName>
+        <inputAssignments>
+            <name>AccountId</name>
+            <value>
+                <elementReference>getAccount.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <elementReference>theCase.Type</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>TargetObject</name>
+            <value>
+                <stringValue>Fornitura</stringValue>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
         <name>esitoBozza</name>
