@@ -16,5 +16,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__processType=Documentale/Copia+Contratto&amp;c__recordTypeName=HDT_RT_GenericheAttivazioni&amp;c__accid={!DocumentSendTracking__c.AccountId__c}&amp;c__flowName=HDT_FL_CopiaContratto</url>
+    <url>/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__processType=Documentale/Copia+Contratto&amp;c__recordTypeName=HDT_RT_GenericheAttivazioni&amp;c__accid={!DocumentSendTracking__c.AccountId__c}&amp;c__flowName=HDT_FL_CopiaContratto&amp;c__documentSendTracking={!DocumentSendTracking__c.Id}</url>
 </WebLink>

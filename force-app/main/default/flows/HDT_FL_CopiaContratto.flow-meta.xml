@@ -27,6 +27,11 @@
         </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <name>DocumentSelectedName</name>
+        <dataType>String</dataType>
+        <expression>{!Get_Document_Send_Tracking.Name} &amp; &quot; &quot; &amp; TEXT({!$Flow.CurrentDateTime})</expression>
+    </formulas>
     <interviewLabel>HDT_FL_ {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_CopiaContratto</label>
     <processMetadataValues>
@@ -54,7 +59,7 @@
         <locationX>50</locationX>
         <locationY>518</locationY>
         <connector>
-            <targetReference>Edit_Form</targetReference>
+            <targetReference>Get_Document_Send_Tracking</targetReference>
         </connector>
         <inputAssignments>
             <field>AccountId</field>
@@ -107,6 +112,41 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordCreates>
+        <name>Create_Document_Selected</name>
+        <label>Create Document Selected</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <connector>
+            <targetReference>Edit_Form</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>Crea_Case</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DocumentalSystem__c</field>
+            <value>
+                <elementReference>Get_Document_Send_Tracking.DocumentalSystem__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>EnvelopeId__c</field>
+            <value>
+                <elementReference>Get_Document_Send_Tracking.EnvelopeId__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>DocumentSelectedName</elementReference>
+            </value>
+        </inputAssignments>
+        <object>DocumentSelected__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>Cerca_Contatto_Primario</name>
         <label>Cerca Contatto Primario</label>
@@ -143,6 +183,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Document_Send_Tracking</name>
+        <label>Get Document Send Tracking</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_Document_Selected</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>DocumentSendTracking</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>DocumentSendTracking__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_RT_Generiche_Attivazioni</name>
         <label>Get RT Generiche Attivazioni</label>
         <locationX>50</locationX>
@@ -167,7 +228,7 @@
         <name>Edit_Form</name>
         <label>Edit Form</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -273,6 +334,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>DocumentSendTracking</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

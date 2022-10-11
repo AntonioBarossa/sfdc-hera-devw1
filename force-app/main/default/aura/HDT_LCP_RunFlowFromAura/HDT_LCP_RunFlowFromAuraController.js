@@ -242,6 +242,10 @@
         if(documentPaymentMethod != null){
             inputVariables.push({ name : 'DocumentPaymentMethod', type : 'String', value : documentPaymentMethod});
         }
+        if(documentSendTracking != null)
+        {
+            inputVariables.push({ name : 'DocumentSendTracking', type : 'String', value : documentSendTracking});
+        }
 
         console.log('## inputVariables -> ');
         inputVariables.forEach(e => console.log('# ' + e.name + '- ' + e.value));
