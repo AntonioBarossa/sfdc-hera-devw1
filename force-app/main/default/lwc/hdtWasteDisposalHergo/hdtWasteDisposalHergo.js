@@ -102,6 +102,7 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
             this.isCubatureLimited = 'N';
             this.disableMaterialButton = false;
             this.cubatureLimit=null;
+            return false;
         }else{
             this.isCubatureLimited = 'Y';
             this.disableMaterialButton = false;

@@ -29,6 +29,8 @@ export default class HdtMaterialSelection extends LightningElement {
             this.isAlreadyWarned=true;
             this._cubatureLimit = value;
             return;
+        //}else if(value!=null && !this.allCubatureSelected){ // Riprendi Processo salvato in bozza
+            //this.checkCubatureLimit();
         }else if(this._cubatureLimit===null){
             this.isAlreadyWarned=false;
         }
@@ -42,7 +44,7 @@ export default class HdtMaterialSelection extends LightningElement {
                 this.isPaymentNeeded = true;
                 this.closeModal();
             }else if(!this._cubatureLimit && this.allCubatureSelected >= value){
-                this.showMessage('Attenzione','3 Il ritiro è a pagamento per i metri cubi selezionati','error');
+                this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');
                 this.isPaymentNeeded = true;
                 this.closeModal();
             }else if(this._cubatureLimit <= this.allCubatureSelected && value > this.allCubatureSelected){
