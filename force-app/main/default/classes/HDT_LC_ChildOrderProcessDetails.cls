@@ -222,9 +222,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
             if(recordTypeDevName=='HDT_RT_ConnessioneConAttivazione'){
                 //ConnessioneConAttivazione
-                metas= [SELECT QuoteType__c, OperationCode__c FROM QuoteManagement__c WHERE CausalCode__c=:ord.ProcessCode__c AND Operation_type__c='HDT_RT_ConnessioneConAttivazione' WITH SECURITY_ENFORCED] ;
-                wrp.quoteType= metas[0].QuoteType__c;
-                wrp.quoteCode= 'Aggiunta Attacco con Attivazione'.equalsIgnoreCase(ord.ProcessType__c)? formatCode(Decimal.ValueOf(2)) : formatCode(Decimal.ValueOf(4)) ; 
+                metas = [SELECT QuoteType__c, OperationCode__c FROM QuoteManagement__c WHERE CausalCode__c=:ord.ProcessCode__c AND Operation_type__c=:ord.ProcessType__c WITH SECURITY_ENFORCED];
+                wrp.quoteType = metas[0].QuoteType__c; 
+                wrp.quoteCode = formatCode( Decimal.ValueOf(metas[0].OperationCode__c) ); 
                 system.debug(metas);
                 return wrp;
             }
