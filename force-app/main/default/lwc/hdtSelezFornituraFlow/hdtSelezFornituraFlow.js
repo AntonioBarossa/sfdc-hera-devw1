@@ -242,6 +242,8 @@ export default class HdtSelezFornituraFlow extends LightningElement {
     @track tableColumns = [];
 
     radioGroupOptions;
+    
+    defaultSelection;
 
     connectedCallback(){
         const keys = this.groupOptions.split(";").map(key => key.trim());
@@ -251,7 +253,13 @@ export default class HdtSelezFornituraFlow extends LightningElement {
                 value: key
             };
         });
-        
+        if(this.radioGroupOptions?.length === 1){
+            let key = this.radioGroupOptions[0].value;
+            this.handleRadioGroupChange({detail:{value : key}});
+            if(keys.length > this.radioGroupOptions.length && keys[keys.length-1] && DATA_ACCESS_MAP[key].defaultSelection){
+                this.defaultSelection = keys[keys.length-1];
+            }
+        }
         //this.handleRadioGroupChange({detail:{value:this.groupOption}});
     }
 
