@@ -37,6 +37,11 @@
                 <default>false</default>
                 <label>Ammissibilità KO</label>
             </value>
+            <value>
+                <fullName>Esito KO da DBO</fullName>
+                <default>false</default>
+                <label>Esito KO da DBO</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Sospensione Fornitura</controllingFieldValue>
@@ -126,6 +131,11 @@
         <valueSettings>
             <controllingFieldValue>Autolettura da cliente</controllingFieldValue>
             <valueName>Esito KO pre-MDM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
+            <controllingFieldValue>Riattivazione Fornitura</controllingFieldValue>
+            <valueName>Esito KO da DBO</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

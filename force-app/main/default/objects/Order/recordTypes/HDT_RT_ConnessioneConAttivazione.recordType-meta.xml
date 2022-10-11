@@ -2479,6 +2479,10 @@
     <picklistValues>
         <picklist>ProcessType__c</picklist>
         <values>
+            <fullName>Aggiunta Attacco con Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Connessione con Attivazione</fullName>
             <default>false</default>
         </values>
