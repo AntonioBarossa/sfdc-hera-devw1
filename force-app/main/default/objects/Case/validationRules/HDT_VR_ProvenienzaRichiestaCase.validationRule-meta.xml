@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_VR_ProvenienzaRichiestaCase</fullName>
+    <active>true</active>
+    <description>Faccio scattare un errore quando l&apos;utente tenta di modificare il campo Provenienza Richiesta in diverso da &quot;Da Contribuente&quot; per un processo TARI e senza il Permission Set specifico.</description>
+    <errorConditionFormula>AND(
+	ISCHANGED(RequestSource__c),
+	$Permission.HDT_CP_ProvenienzaRichiesta = false,
+	OR(
+		RecordType.DeveloperName = &apos;HDT_RT_DisattivazioniTari&apos;,
+		RecordType.DeveloperName = &apos;HDT_RT_ErroreFatturazione_TARI&apos;,
+		RecordType.DeveloperName = &apos;HDT_RT_GenericheTari&apos;,
+		RecordType.DeveloperName = &apos;HDT_RT_PagamentoUnicoAnnuale_TARI&apos;,
+		RecordType.DeveloperName = &apos;HDT_RT_ReclamiScrittiTARI&apos;,
+		RecordType.DeveloperName = &apos;HDT_RT_StornoRateizzazione_TARI&apos;,
+		RecordType.DeveloperName = &apos;HDT_RT_VariazioniTari&apos;
+	)
+)</errorConditionFormula>
+    <errorDisplayField>RequestSource__c</errorDisplayField>
+    <errorMessage>Non si dispone dei permessi necessari per modificare il campo.</errorMessage>
+</ValidationRule>

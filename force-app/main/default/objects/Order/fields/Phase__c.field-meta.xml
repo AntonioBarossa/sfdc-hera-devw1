@@ -389,6 +389,11 @@
                 <label>Esito KO da SII</label>
             </value>
             <value>
+                <fullName>Esito OK da DBO</fullName>
+                <default>false</default>
+                <label>Esito OK da DBO</label>
+            </value>
+            <value>
                 <fullName>Esito OK da DL</fullName>
                 <default>false</default>
                 <label>Esito OK da DL</label>
