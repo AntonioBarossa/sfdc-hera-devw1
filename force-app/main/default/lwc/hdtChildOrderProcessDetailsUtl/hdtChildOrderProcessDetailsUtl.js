@@ -91,7 +91,7 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                 recordId: this.order.Id,
                 hasCodiceRonchiButton: this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName),
                 //hasCodiceAtecoButton: this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName),
-                hasVerificaRavv: this.order.Account.CompanyOwner__c!=="MMS",
+                hasVerificaRavv: true,
                 hasAllegatiObbligatori: true,
                 diffObjApi: 'Sale',
                 processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),

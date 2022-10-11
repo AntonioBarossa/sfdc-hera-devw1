@@ -46,7 +46,7 @@ public with sharing class HDT_UTL_LandRegistry {
     
     @AuraEnabled
     public static list<CityTechnicalData__c> getCities() {        
-	    list<CityTechnicalData__c> cities = [ SELECT Id, CadastralCity__c, CityCode__c, Province__c FROM CityTechnicalData__c WITH SECURITY_ENFORCED];
+	    list<CityTechnicalData__c> cities = [ SELECT Id, CadastralCity__c, CityCode__c, Province__c FROM CityTechnicalData__c WITH SECURITY_ENFORCED ORDER BY CadastralCity__c ASC];
         return cities;
     }
     

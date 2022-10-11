@@ -390,7 +390,6 @@
             <value>
                 <fullName>Esito KO da DBO</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Esito KO da DBO</label>
             </value>
             <value>
@@ -432,6 +431,11 @@
                 <fullName>Esito OK</fullName>
                 <default>false</default>
                 <label>Esito OK</label>
+            </value>
+            <value>
+                <fullName>Esito OK da DBO</fullName>
+                <default>false</default>
+                <label>Esito OK da DBO</label>
             </value>
             <value>
                 <fullName>Esito OK da DL</fullName>

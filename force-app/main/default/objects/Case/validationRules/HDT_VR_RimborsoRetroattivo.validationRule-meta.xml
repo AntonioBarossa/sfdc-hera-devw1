@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_VR_RimborsoRetroattivo</fullName>
+    <active>true</active>
+    <description>Inibisco l&apos;inserimento nel campo Argomento del valore Rimborso retroattivo importo fognatura e depurazione se non si dispone del permesso specifico.</description>
+    <errorConditionFormula>AND(
+	$Permission.HDT_CP_RimborsoRetroattivo = false,
+	ISCHANGED(BillingErrorArgument__c),
+	ISPICKVAL(BillingErrorArgument__c, &apos;Rimborso retroattivo importo fognatura e depurazione&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>BillingErrorArgument__c</errorDisplayField>
+    <errorMessage>Non si dispone del permesso necessario per poter inserire questo valore.</errorMessage>
+</ValidationRule>
