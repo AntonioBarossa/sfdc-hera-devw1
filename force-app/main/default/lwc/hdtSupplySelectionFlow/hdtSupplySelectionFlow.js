@@ -36,9 +36,10 @@ export default class HdtSupplySelectionFlow extends LightningElement {
 
     handleConfirmServicePoint(event){
         console.log('handleConfirmServicePoint '+ JSON.stringify(event.detail));
-        var spCode = event.detail["ServicePointCode__c"];
-        if(spCode != null && spCode != undefined && spCode != ''){
-            this.selectedServicePointFlow = event.detail["ServicePointCode__c"];
+        console.log('handleConfirmServicePoint: event.detail["ServicePointId"] '+ event.detail["ServicePointId"]);
+        var spId = event.detail["ServicePointId"];
+        if(spId != null && spId != undefined && spId != ''){
+            this.selectedServicePointFlow = spId;
         }
         this.handleSave(event);
     }
