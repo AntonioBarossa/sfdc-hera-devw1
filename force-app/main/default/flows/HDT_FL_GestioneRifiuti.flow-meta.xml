@@ -4,7 +4,7 @@
         <name>Redirect</name>
         <label>Redirect</label>
         <locationX>1832</locationX>
-        <locationY>2558</locationY>
+        <locationY>2642</locationY>
         <actionName>c:HDT_LCP_FlowRedirectAdvanced</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -27,7 +27,7 @@
         <name>Assign_Configs_Records</name>
         <label>Assign Configs Records</label>
         <locationX>2954</locationX>
-        <locationY>1718</locationY>
+        <locationY>1838</locationY>
         <assignmentItems>
             <assignToReference>ritiri_gratuiti_configs</assignToReference>
             <operator>Assign</operator>
@@ -52,7 +52,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Screen_Hergo</targetReference>
+            <targetReference>getServicePoint_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -133,6 +133,38 @@
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Company_Owner_MMS</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignServicePoint</name>
+        <label>AssignServicePoint</label>
+        <locationX>2954</locationX>
+        <locationY>1598</locationY>
+        <assignmentItems>
+            <assignToReference>ServicePointFornitura</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getServicePoint</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>getRitiriGratuitiConfig</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignServicePoint_0</name>
+        <label>AssignServicePoint</label>
+        <locationX>2338</locationX>
+        <locationY>1718</locationY>
+        <assignmentItems>
+            <assignToReference>ServicePointFornitura</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getServicePoint_0</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Hergo</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -827,7 +859,6 @@
             <label>Salva In Bozza</label>
         </rules>
     </decisions>
-    <environments>Default</environments>
     <formulas>
         <name>checkboxIndirizzo</name>
         <dataType>Boolean</dataType>
@@ -996,7 +1027,7 @@
         <name>getRitiriGratuitiConfig</name>
         <label>getRitiriGratuitiConfig</label>
         <locationX>2954</locationX>
-        <locationY>1598</locationY>
+        <locationY>1718</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_Configs_Records</targetReference>
@@ -1041,7 +1072,7 @@
         <locationY>1478</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>getRitiriGratuitiConfig</targetReference>
+            <targetReference>AssignServicePoint</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1049,6 +1080,27 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Selezione_Fornitura.ServicePointId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>ServicePoint__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getServicePoint_0</name>
+        <label>getServicePoint</label>
+        <locationX>2338</locationX>
+        <locationY>1598</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssignServicePoint_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>theCase.ServicePoint__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -1170,7 +1222,7 @@
         <name>servicePointUpdate</name>
         <label>servicePointUpdate</label>
         <locationX>2954</locationX>
-        <locationY>1838</locationY>
+        <locationY>1958</locationY>
         <connector>
             <targetReference>Screen_Hergo</targetReference>
         </connector>
@@ -1246,7 +1298,7 @@
         <name>Screen_Hergo</name>
         <label>Screen_Hergo</label>
         <locationX>2778</locationX>
-        <locationY>2090</locationY>
+        <locationY>2174</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1331,7 +1383,7 @@
             <inputParameters>
                 <name>lastWithdrawDate</name>
                 <value>
-                    <elementReference>getServicePoint.MaxFreeWithdrawDate__c</elementReference>
+                    <elementReference>ServicePointFornitura.MaxFreeWithdrawDate__c</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1617,6 +1669,14 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>FreeWithdrawConfig__c</objectType>
+    </variables>
+    <variables>
+        <name>ServicePointFornitura</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ServicePoint__c</objectType>
     </variables>
     <variables>
         <name>theCase</name>
