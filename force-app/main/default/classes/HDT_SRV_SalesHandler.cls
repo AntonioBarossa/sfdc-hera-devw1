@@ -500,7 +500,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     {
                                         Boolean redirectPreventivo = false;
                                         switch on ordRetrieved.ProcessType__c{
-                                            when 'Connessione con Attivazione', 'Temporanea - Nuova Attivazione'{
+                                            when 'Connessione con Attivazione', 'Aggiunta Attacco con Attivazione', 'Temporanea - Nuova Attivazione'{
                                                 redirectPreventivo=true;
                                             }
                                         }                            
