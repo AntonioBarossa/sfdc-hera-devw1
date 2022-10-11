@@ -14192,6 +14192,16 @@
     </fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
+		<field>Order.FlagSending__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.SubscriberPlace__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
 		<field>Order.RonchiCode__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
