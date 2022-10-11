@@ -7160,10 +7160,6 @@
     <picklistValues>
         <picklist>InformativeType__c</picklist>
         <values>
-            <fullName>Aggiunta Attacco con Attivazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Modifica Contratti Preattivazione</fullName>
             <default>false</default>
         </values>

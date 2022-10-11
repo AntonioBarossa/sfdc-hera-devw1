@@ -689,9 +689,9 @@
                 <label>Documentale/Copia Contratto</label>
             </value>
             <value>
-                <fullName>Aggiunta Attacco con Attivazione</fullName>
+                <fullName>Notifica Addebito/Rimborso Canone Rai</fullName>
                 <default>false</default>
-                <label>Aggiunta Attacco con Attivazione</label>
+                <label>Notifica Addebito/Rimborso Canone Rai</label>
             </value>
             <value>
                 <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
