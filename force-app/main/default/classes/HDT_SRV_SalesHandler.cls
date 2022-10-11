@@ -406,7 +406,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                         finalCancellationPhase = 'Ripensato';
                                     }
                                 }
-                                when 'Esito KO da DL/SII' {
+                                when 'Esito KO da DL/SII', 'Esito KO da DBO' {
                                     if(previousPhase.indexOf('Annullamento') > -1) {
                                         ord.Phase__c = 'Annullamento - ' + nextPhase;
                                         Datetime nowDate = Datetime.now();

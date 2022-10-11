@@ -96,9 +96,19 @@
                 <label>Annullamento - Errore invio a DL/SII</label>
             </value>
             <value>
+                <fullName>Annullamento - Esito KO da DBO</fullName>
+                <default>false</default>
+                <label>Annullamento - Esito KO da DBO</label>
+            </value>
+            <value>
                 <fullName>Annullamento - Esito KO da DL/SII</fullName>
                 <default>false</default>
                 <label>Annullamento - Esito KO da DL/SII</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Esito OK da DBO</fullName>
+                <default>false</default>
+                <label>Annullamento - Esito OK da DBO</label>
             </value>
             <value>
                 <fullName>Annullamento - Esito OK da DL/SII</fullName>
