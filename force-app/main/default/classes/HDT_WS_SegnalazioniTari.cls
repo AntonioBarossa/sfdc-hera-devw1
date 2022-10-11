@@ -143,7 +143,7 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
                 Date dataUltimoRitiro = Date.newinstance(createdDate.year(), createdDate.month(), createdDate.day());
                 FreeWithdraw__c ritiro = new FreeWithdraw__c(
                     LastFreeWithdrawDate__c = dataUltimoRitiro,
-                    ServicePointMaster__c = currentCase.ServicePoint__c
+                    ServicePoint__c = currentCase.ServicePoint__c
                 );
 
                 HDT_UTL_DatabaseService.insertSObject(ritiro);

@@ -12,7 +12,7 @@ public with sharing class HDT_BA_CancelFreeWithdrawsTest {
         FreeWithdraw__c ritiro = new FreeWithdraw__c(
             Canceled__c = false,
             Name = 'Test_FreeWithdraw',
-            ServicePointMaster__c = pointList[0].Id
+            ServicePoint__c = pointList[0].Id
         );
         insert ritiro;
     }

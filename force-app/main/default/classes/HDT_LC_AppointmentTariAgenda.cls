@@ -136,7 +136,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             if(!theCase.WithdrawalFee__c){
                 Date dataRitiro = Date.newinstance(theCase.CreatedDate.year(), theCase.CreatedDate.month(), theCase.CreatedDate.day());
                 FreeWithdraw__c ritiro = new FreeWithdraw__c();
-                ritiro.ServicePointMaster__c = theCase.ServicePoint__c;
+                ritiro.ServicePoint__c = theCase.ServicePoint__c;
                 ritiro.LastFreeWithdrawDate__c = dataRitiro;
                 System.debug('ritiro -> ' + ritiro);
                 HDT_UTL_DatabaseService.insertSObject(ritiro);
