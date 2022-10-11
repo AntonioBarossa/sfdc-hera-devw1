@@ -87,7 +87,7 @@ export default class HdtActiveRepentant extends LightningElement {
             else{   this.showMessage("Attenzione!", "Popolare Data Dichiarazione", "error");this.disabled=false;    }
         }else{
             //wizard Attivazioni
-            this.dispatchEvent(CustomEvent("request_data"));
+            this.dispatchEvent(new CustomEvent("request_data"));
         }
         return;
     }
@@ -317,7 +317,7 @@ export default class HdtActiveRepentant extends LightningElement {
     }
 
     finish() {
-        const evt = CustomEvent("end_algorithm", {
+        const evt = new CustomEvent("end_algorithm", {
             detail: {
                 dateX: this.limitDateX? this.getFormattedDate(new Date(this.limitDateX.getDate() + 1 )) : null,
                 dateY: this.limitDateY? this.getFormattedDate(new Date(this.limitDateY.getDate() + 1 )) : null,
