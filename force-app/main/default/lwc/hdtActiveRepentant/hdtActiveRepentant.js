@@ -40,12 +40,17 @@ export default class HdtActiveRepentant extends LightningElement {
     @api objectApiName;
     @api outputWrp={};
     @api sessionid;
+    @api companyOwner;
 
     @wire(MessageContext)
 	messageContext;
 
     get showSpinner(){
         return this.formLoading || this.loading>0;
+    }
+
+    get isCompanyMms(){
+        return "MMS".localeCompare(this.companyOwner) === 0;
     }
 
     get isCase(){
@@ -291,13 +296,13 @@ export default class HdtActiveRepentant extends LightningElement {
         if (declarationDate.getTime() >= this.limitDateY.getTime()) {
             console.log("Periodo non ravv Z");
             this.periodType ="Z";
-            this.showMessage("Attenzione!", this.period.PopupZ__c, " error", "sticky");
+            if(!this.isCompanyMms)   this.showMessage("Attenzione!", this.period.PopupZ__c, " error", "sticky");
             return;
         } else {
             console.log("Periodo Ravvedibile Y");
             this.periodType ="Y";
             this.calculateMissedDue(terms, declarationDate);
-            this.showMessage("Attenzione!", this.period.PopupY__c, " error", "sticky");
+            if(!this.isCompanyMms)   this.showMessage("Attenzione!", this.period.PopupY__c, " error", "sticky");
         }
     }
 
