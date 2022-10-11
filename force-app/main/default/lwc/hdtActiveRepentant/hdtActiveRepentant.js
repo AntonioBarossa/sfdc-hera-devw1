@@ -320,8 +320,8 @@ export default class HdtActiveRepentant extends LightningElement {
     finish() {
         const evt = CustomEvent("end_algorithm", {
             detail: {
-                dateX: this.limitDateX? this.getFormattedDate(new Date(this.limitDateX.getDate() + 1)) : null,
-                dateY: this.limitDateY? this.getFormattedDate(new Date(this.limitDateY.getDate() + 1)) : null,
+                dateX: this.limitDateX? this.getFormattedDate(new Date(this.limitDateX.getDate() + 1 )) : null,
+                dateY: this.limitDateY? this.getFormattedDate(new Date(this.limitDateY.getDate() + 1 )) : null,
                 missedDue: this.missedDueDate,
                 period: this.periodType
             }
