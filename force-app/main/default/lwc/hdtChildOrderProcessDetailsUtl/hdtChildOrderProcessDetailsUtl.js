@@ -382,11 +382,13 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                 new fieldData('','PaySewer__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUADNR), rateCategoryVisibility(rateCategories.AFUADNRreq), false, '',''),
                 new fieldData('','ResidentDomesticHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUADRS), false, true, '',''),
-                new fieldData('','NotDomesticHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUND), rateCategoryVisibility(rateCategories.AFUNDreq), false, '',''),
-                new fieldData('','NotDomesticHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUNDA), rateCategoryVisibility(rateCategories.AFUNDAreq), false, '',''),
-                new fieldData('','NotDomesticHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUNDC), rateCategoryVisibility(rateCategories.AFUNDCreq), false, '',''),
-                new fieldData('','NotDomesticHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUNDI), rateCategoryVisibility(rateCategories.AFUNDIreq), false, '',''),
-                new fieldData('','NotDomesticHousingUnit__c', this.typeVisibility('both') && rateCategoryVisibility(rateCategories.AFUNDZ), rateCategoryVisibility(rateCategories.AFUNDZreq), false, '',''),
+                new fieldData('','NotDomesticHousingUnit__c', 
+                    this.typeVisibility('both') && ( rateCategoryVisibility(rateCategories.AFUND) || rateCategoryVisibility(rateCategories.AFUNDA) || rateCategoryVisibility(rateCategories.AFUNDC) || rateCategoryVisibility(rateCategories.AFUNDI) || rateCategoryVisibility(rateCategories.AFUNDZ) ), 
+                    ( rateCategoryVisibility(rateCategories.AFUND) && rateCategoryVisibility(rateCategories.AFUNDreq) ) ||
+                    ( rateCategoryVisibility(rateCategories.AFUNDA) && rateCategoryVisibility(rateCategories.AFUNDAreq) ) ||
+                    ( rateCategoryVisibility(rateCategories.AFUNDC) && rateCategoryVisibility(rateCategories.AFUNDCreq) ) ||
+                    ( rateCategoryVisibility(rateCategories.AFUNDI) && rateCategoryVisibility(rateCategories.AFUNDIreq) ) ||
+                    ( rateCategoryVisibility(rateCategories.AFUNDZ) && rateCategoryVisibility(rateCategories.AFUNDZreq) ) , false, '',''),
                 new fieldData('Tipo Mercato','Market__c', this.typeVisibility('gas') || this.typeVisibility('ele'), false, true, '',''),
                 new fieldData('Settore merceologico','CommodityFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Distributore','DistributorFormula__c', this.typeVisibility('both'), false, true, '',''),
