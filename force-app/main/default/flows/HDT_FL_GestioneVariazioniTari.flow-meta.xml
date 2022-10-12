@@ -289,7 +289,7 @@
     </assignments>
     <assignments>
         <name>AssignNewAddress_0_0_0</name>
-        <label>AssignNewAddress</label>
+        <label>AssignNewAddress AND Integration</label>
         <locationX>3154</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
@@ -346,6 +346,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>getAfterSubprocess.ServicePoint__r.SupplyPlace__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSubprocess.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>MDC</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -2001,6 +2008,7 @@
         </rules>
     </decisions>
     <description>SubFlow chiamato da HDT_FL_GestioneVariazioni per la gestione dei processi di Variazioni Tari</description>
+    <environments>Default</environments>
     <interviewLabel>HDT_FL_GestioneVariazioniTari {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GestioneVariazioniTari</label>
     <processMetadataValues>
@@ -3807,6 +3815,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>

@@ -682,6 +682,13 @@
                 <elementReference>Get_Input_Case.ServicePoint__r.SupplyPlace__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>D01</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>getContract</targetReference>
         </connector>
@@ -2012,6 +2019,7 @@
         <picklistField>BillSendingMethod__c</picklistField>
         <picklistObject>BillingProfile__c</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <name>DataRicezioneRichiesta</name>
         <dataType>Date</dataType>
