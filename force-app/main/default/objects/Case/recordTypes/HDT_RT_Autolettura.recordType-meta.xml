@@ -7992,6 +7992,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento - Ammissibilità KO</fullName>
             <default>false</default>
         </values>
@@ -8016,11 +8024,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Annullamento - Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DBO</fullName>
             <default>false</default>
         </values>
         <values>
