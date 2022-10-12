@@ -394,8 +394,7 @@
         <fullName>Gestione rifiuti​ - AMB</fullName>
         <default>false</default>
         <label>Gestione rifiuti​ - AMB</label>
-    </customValue>
-    
+    </customValue>    
     <customValue>
         <fullName>HVAC</fullName>
         <default>false</default>
@@ -755,6 +754,11 @@
         <fullName>Sconti e bonus - GAS</fullName>
         <default>false</default>
         <label>Sconti e bonus - GAS</label>
+    </customValue>    
+    <customValue>
+        <fullName>Segnalazioni varie/ambientali​ - AMB</fullName>
+        <default>false</default>
+        <label>Segnalazioni varie/ambientali​ - AMB</label>
     </customValue>
     <customValue>
         <fullName>Segnalazioni VAS</fullName>
