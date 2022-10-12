@@ -16,14 +16,6 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
-        <recordType>SlaAdministration__c.HDT_RT_CaseSLA</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>SlaAdministration__c.HDT_RT_OrderSLA</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
         <recordType>SlaAdministration__c.HDT_RT_PostSales</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
