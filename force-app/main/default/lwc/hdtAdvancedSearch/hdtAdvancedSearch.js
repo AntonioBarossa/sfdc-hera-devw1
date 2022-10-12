@@ -95,6 +95,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                 console.log('data.RateCategory__c '+ JSON.stringify(data.RateCategory__c ));
 
                 let statusSplit=[];
+                let contractStatusSplit=[];
                 let TipoServizioSplit=[];
                 let RateCategorySplit=[];
 
@@ -110,63 +111,47 @@ export default class HdtAdvancedSearch extends LightningElement {
                     if(data.StatoFornitura__c != undefined && data.StatoFornitura__c!='')
                     {
                         statusSplit = data.StatoFornitura__c.split(",");
-                        console.log('statusSplit in statoFornitura *****'+JSON.stringify(statusSplit));
+                        this.additionalfilter+=" AND MeterStatus__c IN('" + contractStatusSplit.join("','") + "')";
                         
-                        this.additionalfilter+=' AND MeterStatus__c IN('
-                        for(let i=0; i<statusSplit.length-1;i++) {
-                            this.additionalfilter+='\''+ statusSplit[i]+'\',';
-                        }
-                        this.additionalfilter+= '\''+ statusSplit[statusSplit.length-1]+'\'';
-                        this.additionalfilter+=')';
                         console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
                     }
-                    
+
+                    if(data.StatoContratto__c != undefined && data.StatoContratto__c!='')
+                    {
+                        contractStatusSplit = data.StatoContratto__c.split(",");
+                        if(contractStatusSplit.includes("Bozza")){
+                            contractStatusSplit.push("");
+                        }
+                        this.additionalfilter+=" AND SapContractStatus__c IN('" + contractStatusSplit.join("','") + "')"; 
+                        
+                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
+                    }
+
                     if(data.TipoServizio__c!= undefined && data.TipoServizio__c!='')
                     {
                         TipoServizioSplit = data.TipoServizio__c.split(",");
-                        console.log('TipoServizioSplit *****'+JSON.stringify(TipoServizioSplit));
+                        this.additionalfilter+=" AND CommoditySector__c IN('" + TipoServizioSplit.join("','") + "')";
                         
-                        this.additionalfilter+=' AND CommoditySector__c IN('
-                        for(let i=0; i<TipoServizioSplit.length-1;i++) {
-                            this.additionalfilter+='\''+ TipoServizioSplit[i]+'\',';
-                        }
-                        this.additionalfilter+= '\''+ TipoServizioSplit[TipoServizioSplit.length-1]+'\'';
-                        this.additionalfilter+=')';
                         console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
                     }
                             
                     if(data.Disalimentabile__c!= undefined && data.Disalimentabile__c!=''){
                         this.additionalfilter+=' AND Disconnectable__c = \''+data.Disalimentabile__c+'\'';
+                        
                         console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
                     }
 
                     if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && this.processtype !='Chiusura Contatore' && this.processtype != 'Esenzione Modifica Fognatura Depurazione'){
                         RateCategorySplit = data.RateCategory__c.split(",");
-                        console.log('RateCategorySplit *****'+JSON.stringify(RateCategorySplit));
-
-                            this.additionalfilter+=' AND RateCategory__c IN('
-                            for(let i=0; i<RateCategorySplit.length-1;i++) {
-                                this.additionalfilter+='\''+ RateCategorySplit[i]+'\',';
-                            }
-                            this.additionalfilter+= '\''+ RateCategorySplit[RateCategorySplit.length-1]+'\'';
-                            this.additionalfilter+=')';
-                            console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    }
-
-                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && (this.processtype ==='Chiusura Contatore' || this.processtype === 'Esenzione Modifica Fognatura Depurazione')){
-                        RateCategorySplit = data.RateCategory__c.split(",");
-                        console.log('RateCategorySplit *****'+JSON.stringify(RateCategorySplit));
-
-                            this.additionalfilter+=' AND RateCategory__c NOT IN('
-                            for(let i=0; i<RateCategorySplit.length-1;i++) {
-                                this.additionalfilter+='\''+ RateCategorySplit[i]+'\',';
-                            }
-                            this.additionalfilter+= '\''+ RateCategorySplit[RateCategorySplit.length-1]+'\'';
-                            this.additionalfilter+=')';
-
+                        if(this.processtype !='Chiusura Contatore' && this.processtype != 'Esenzione Modifica Fognatura Depurazione'){
+                            this.additionalfilter+=" AND RateCategory__c IN('" + RateCategorySplit.join("','") + "')";
+                        }else{
+                            this.additionalfilter+=" AND RateCategory__c NOT IN('" + RateCategorySplit.join("','") + "')";                               
+                        }
+                                                
                         console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
                     }
-                    
+                   
                     console.log('additionalFilter pre final :  '+ this.additionalfilter);
                     this.additionalFilterFinal = this.additionalfilter;
                     console.log('additionalFilter post final :  '+ this.additionalFilterFinal);
@@ -493,9 +478,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                     this.alert('Dati tabella','Nessun record trovato','warn')
                     this.tableData = data;
                 }
-            });
-       
-        
+            });       
     }
 
 @api
@@ -544,7 +527,6 @@ export default class HdtAdvancedSearch extends LightningElement {
                 this.confirmButtonDisabled = true;
             });
         }
-
     }
 
     callApi(event, isFrom){
