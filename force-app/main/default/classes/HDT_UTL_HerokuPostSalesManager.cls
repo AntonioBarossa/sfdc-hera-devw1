@@ -590,6 +590,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.Phase__c = 'Completata';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
+        }else if(currentCase.Phase__c.equalsIgnoreCase('Esito OK da DBO')){
+            //DBO non invia mai il completata
+            currentCase.Phase__c = 'Completata';
+            currentCase.Status = 'Closed';
+            updateFuture(JSON.serialize(currentCase));
         }
     }
     //se Annullamento SII - Ricezione e Storno N --> Aggiornare in Annullamento SII e dopo in Annullato SII
