@@ -92,11 +92,6 @@
 &quot;Required&quot;: true,
 &quot;Column&quot;: 1,
   &quot;Label&quot; : &quot;Civico&quot;
-},
-{
-&quot;FieldName&quot;: &quot;Note__c&quot;,
-&quot;Required&quot;: true,
-&quot;Column&quot;: 2
 }
 ]</value>
     </values>
