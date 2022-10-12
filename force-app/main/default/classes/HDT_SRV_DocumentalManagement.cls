@@ -663,6 +663,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					}
 					
 				}catch(Exception ex){
+					HDT_UTL_IntegrationLog.handleGenericErrorRequest(JSON.serialize(listOfRadio),'POST', ex.getMessage()+' row number --> ' + ex.getLineNumber(), 'Handle Docusign Notify', (String)record.get('Id'));
 					System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
 				}
 			}
