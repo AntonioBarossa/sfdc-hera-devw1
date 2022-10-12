@@ -1,4 +1,4 @@
-import { LightningElement, api,  } from 'lwc';
+import { LightningElement, api, track} from 'lwc';
 import getCities from '@salesforce/apex/HDT_UTL_LandRegistry.getCities';
 
 export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
@@ -11,7 +11,7 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
     }
     @api inputSupplyCity;
     @api required;
-    @api outputSupplyCity;          //OUTPUT ONLY FOR FLOW USING
+    @api outputSupplyCity;
 
     @api validate (){
         let isValid = this.required ? this.outputSupplyCity != null : true;
@@ -19,10 +19,26 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
         return { isValid : isValid, errorMessage: msg };
     }
 
-    _label = 'Comune di fornitura';
+    @track textInputValue;
 
+    _label = 'Comune di fornitura';
     cityTechnicalData = [];
     cityOptions = [];
+
+    get valueSelected(){
+        return this.outputSupplyCity != null && this.outputSupplyCity !== "";
+    }
+    
+    get cityFilteredOptions(){
+        if(this.textInputValue != null && this.textInputValue.length > 3){
+            let filteredOptions = [];
+            this.cityOptions.forEach( curOpt => {
+                if(curOpt.value.includes(this.textInputValue)) filteredOptions.push(curOpt);
+            });
+            return filteredOptions;
+        }
+        else return [];
+    }
 
     connectedCallback(){
         this.outputSupplyCity = this.inputSupplyCity;
@@ -48,7 +64,16 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
             });
     }
 
-    handleFieldChange(event) {
-        this.outputSupplyCity = event.detail.value;
+    handleTextChange(event) {
+        this.textInputValue = event.detail.value;
+        this.cityOptions.forEach( curOpt => {
+            if(curOpt.value.toUpperCase() === this.textInputValue.toUpperCase()) this.outputSupplyCity = curOpt.value;
+        });
     }
+
+    handleRemoveButton(){
+        this.outputSupplyCity = null;
+        this.textInputValue = null;
+    }
+    
 }

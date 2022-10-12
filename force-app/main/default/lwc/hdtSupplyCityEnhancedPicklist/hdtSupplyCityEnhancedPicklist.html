@@ -2,15 +2,59 @@
     <template if:true={cityOptions}>
         <lightning-layout>
             <lightning-layout-item size="4" class="slds-p-bottom_small">
-                <lightning-combobox required={required}
-                                    field-level-help="Digitare un comune per selezionarlo"
-                                    name="RegistryCity__c"
-                                    label={_label}
-                                    value={inputSupplyCity}
-                                    options={cityOptions}
-                                    onchange={handleFieldChange}>
-                </lightning-combobox>
+                
+
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label">
+                        <template if:true={required}><abbr class="slds-required" title="required">* </abbr></template>{_label}
+                    </label>
+                    <div class="slds-form-element__control">
+                        <template if:true={valueSelected}>
+                            <div class="slds-combobox_container">
+                                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false" role="combobox">
+                                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                                        <input data-id="selectedCityInput"
+                                                value={outputSupplyCity}
+                                                type="text"
+                                                role="textbox"
+                                                readonly
+                                                class="slds-input slds-combobox__input slds-combobox__input-value"/>
+                                        <button disabled={disabled}
+                                                title="Clear"
+                                                class="slds-button slds-button_icon slds-input__icon slds-input__icon_right"
+                                                onclick={handleRemoveButton}>
+                                            <lightning-button-icon aria-hidden
+                                                                icon-name="utility:clear"
+                                                                variant="bare"
+                                                                size="medium"></lightning-button-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <template if:false={valueSelected}>
+                            <div class="slds-input-has-icon slds-input-has-icon_right">
+                                <input data-id="unselectedCityInput"
+                                    list="cityList"
+                                    class="slds-input"
+                                    onchange={handleTextChange}/>
+                                <lightning-button-icon icon-name="utility:search"
+                                                        aria-hidden="true"
+                                                        variant="bare"
+                                                        size="medium"
+                                                        class="slds-input__icon slds-input__icon_right"></lightning-button-icon>
+                            </div>
+                            <datalist id="cityList" data-id="dataList">
+                                <template for:each={cityFilteredOptions} for:item='option'>
+                                    <option key={option.value} value={option.label}></option>
+                                </template>
+                            </datalist>
+                        </template>
+                    </div>
+                </div>
+
             </lightning-layout-item>
         </lightning-layout>
     </template>
+
 </template>
