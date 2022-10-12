@@ -37,14 +37,14 @@
                                 <input data-id="unselectedCityInput"
                                     list="cityList"
                                     class="slds-input"
-                                    onchange={handleTextChange}/>
+                                    onkeyup={handleTextKeyup}/>
                                 <lightning-button-icon icon-name="utility:search"
                                                         aria-hidden="true"
                                                         variant="bare"
                                                         size="medium"
                                                         class="slds-input__icon slds-input__icon_right"></lightning-button-icon>
                             </div>
-                            <datalist id="cityList" data-id="dataList">
+                            <datalist id="cityList" data-id="citydataList">
                                 <template for:each={cityFilteredOptions} for:item='option'>
                                     <option key={option.value} value={option.label}></option>
                                 </template>

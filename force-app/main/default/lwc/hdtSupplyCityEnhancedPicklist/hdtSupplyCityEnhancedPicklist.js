@@ -19,7 +19,8 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
         return { isValid : isValid, errorMessage: msg };
     }
 
-    @track textInputValue;
+    @track textInputValue = null;
+    @track cityFilteredOptions = [];
 
     _label = 'Comune di fornitura';
     cityTechnicalData = [];
@@ -29,16 +30,16 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
         return this.outputSupplyCity != null && this.outputSupplyCity !== "";
     }
     
-    get cityFilteredOptions(){
-        if(this.textInputValue != null && this.textInputValue.length > 3){
-            let filteredOptions = [];
-            this.cityOptions.forEach( curOpt => {
-                if(curOpt.value.includes(this.textInputValue)) filteredOptions.push(curOpt);
-            });
-            return filteredOptions;
-        }
-        else return [];
-    }
+    // get cityFilteredOptions(){
+    //     if(this.textInputValue != null && this.textInputValue.length > 3){
+    //         let filteredOptions = [];
+    //         this.cityOptions.forEach( curOpt => {
+    //             if(curOpt.value.toUpperCase().includes(this.textInputValue.toUpperCase())) filteredOptions.push(curOpt);
+    //         });
+    //         return filteredOptions;
+    //     }
+    //     else return [];
+    // }
 
     connectedCallback(){
         this.outputSupplyCity = this.inputSupplyCity;
@@ -64,16 +65,31 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
             });
     }
 
-    handleTextChange(event) {
-        this.textInputValue = event.detail.value;
-        this.cityOptions.forEach( curOpt => {
-            if(curOpt.value.toUpperCase() === this.textInputValue.toUpperCase()) this.outputSupplyCity = curOpt.value;
-        });
+    handleTextKeyup(event) {
+        this.textInputValue = event.target.value;
+        if(this.textInputValue != null && this.textInputValue.length >= 3){
+            let found = false;
+            this.cityOptions.forEach( curOpt => {
+                if(curOpt.value.toUpperCase() === this.textInputValue.toUpperCase()){
+                    found = true;
+                    this.outputSupplyCity = curOpt.value;
+                }
+            });
+            if(!found){
+                let filteredOptions = [];
+                this.cityOptions.forEach( curOpt => {
+                    if(curOpt.value.toUpperCase().includes(this.textInputValue.toUpperCase())) filteredOptions.push(curOpt);
+                });
+                this.cityFilteredOptions = filteredOptions;
+            }
+        }
+        else this.cityFilteredOptions = [];
     }
 
     handleRemoveButton(){
         this.outputSupplyCity = null;
         this.textInputValue = null;
+        this.cityFilteredOptions = [];
     }
     
 }
