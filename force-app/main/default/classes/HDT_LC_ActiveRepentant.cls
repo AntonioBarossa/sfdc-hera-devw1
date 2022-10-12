@@ -62,8 +62,8 @@ public with sharing class HDT_LC_ActiveRepentant {
 
     @AuraEnabled
     public static HDT_WRP_Data getTables(String comune, String sottotipo){
-        //return new HDT_WRP_Data(getTerms(comune), getPeriods(comune, sottotipo), getCityTecData(comune));
-        return new HDT_WRP_Data(null, getPeriods(comune, sottotipo), getCityTecData(comune));
+        return new HDT_WRP_Data(getTerms(comune), getPeriods(comune, sottotipo), getCityTecData(comune));
+        //return new HDT_WRP_Data(null, getPeriods(comune, sottotipo), getCityTecData(comune));
     }
 
 }

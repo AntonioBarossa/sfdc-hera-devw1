@@ -40,12 +40,17 @@ export default class HdtActiveRepentant extends LightningElement {
     @api objectApiName;
     @api outputWrp={};
     @api sessionid;
+    @api companyOwner;
 
     @wire(MessageContext)
 	messageContext;
 
     get showSpinner(){
         return this.formLoading || this.loading>0;
+    }
+
+    get isCompanyMms(){
+        return "MMS".localeCompare(this.companyOwner) === 0;
     }
 
     get isCase(){
@@ -82,7 +87,7 @@ export default class HdtActiveRepentant extends LightningElement {
             else{   this.showMessage("Attenzione!", "Popolare Data Dichiarazione", "error");this.disabled=false;    }
         }else{
             //wizard Attivazioni
-            this.dispatchEvent(CustomEvent("request_data"));
+            this.dispatchEvent(new CustomEvent("request_data"));
         }
         return;
     }
@@ -225,7 +230,6 @@ export default class HdtActiveRepentant extends LightningElement {
         }finally{
             this.finish();
         }
-        //this.checkMissedDue();
     }
 
     getLimitDateX(data) {
@@ -291,13 +295,13 @@ export default class HdtActiveRepentant extends LightningElement {
         if (declarationDate.getTime() >= this.limitDateY.getTime()) {
             console.log("Periodo non ravv Z");
             this.periodType ="Z";
-            this.showMessage("Attenzione!", this.period.PopupZ__c, " error", "sticky");
+            if(!this.isCompanyMms)   this.showMessage("Attenzione!", this.period.PopupZ__c, " error", "sticky");
             return;
         } else {
             console.log("Periodo Ravvedibile Y");
             this.periodType ="Y";
             this.calculateMissedDue(terms, declarationDate);
-            this.showMessage("Attenzione!", this.period.PopupY__c, " error", "sticky");
+            if(!this.isCompanyMms)   this.showMessage("Attenzione!", this.period.PopupY__c, " error", "sticky");
         }
     }
 
@@ -313,10 +317,19 @@ export default class HdtActiveRepentant extends LightningElement {
     }
 
     finish() {
-        const evt = CustomEvent("end_algorithm", {
+
+        let dx = this.limitDateX? new Date(this.limitDateX) : null;
+        dx?.setDate(dx?.getDate() + 1);//add 1 day
+        dx = dx? this.getFormattedDate(dx) : null;
+
+        let dy = this.limitDateY? new Date(this.limitDateY) : null;
+        dy?.setDate(dy?.getDate() + 1);//add 1 day
+        dy = dy? this.getFormattedDate(dy) : null;
+
+        const evt = new CustomEvent("end_algorithm", {
             detail: {
-                dateX: this.limitDateX? this.getFormattedDate(this.limitDateX.setDate(this.limitDateX.getDate() + 1)) : null,
-                dateY: this.limitDateY? this.getFormattedDate(this.limitDateY.setDate(this.limitDatey.getDate() + 1)) : null,
+                dateX: dx,
+                dateY: dy,
                 missedDue: this.missedDueDate,
                 period: this.periodType
             }
@@ -329,6 +342,10 @@ export default class HdtActiveRepentant extends LightningElement {
         this.limitDateY=null;
         this.missedDueDate=null;//reset data to avoid conflicts
         this.disabled=false;
+    }
+
+    addDays(date, days){
+        date.setDate()
     }
 
     populateFormFields(event) {//function executed on parent context

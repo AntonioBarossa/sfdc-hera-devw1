@@ -602,7 +602,11 @@ public with sharing class HDT_LC_AdvancedSearch {
 
         List<Map<String,String>> customSp = new List<Map<String,String>>();
 		for (ServicePoint__c sp : servicePoints) {
-            Map<String,String> row = new Map<String, String>();	
+            Map<String,String> row = new Map<String, String>();
+			if(sp.Id != null)
+			{
+				row.put('ServicePointId', sp.Id);
+			}
 			for(String field : listField){
 				String value = '';
 				String label = '';
@@ -612,13 +616,14 @@ public with sharing class HDT_LC_AdvancedSearch {
 					if(sp.getSObject(s[0]+'__r')!=null){						
 						value = (String)sp.getSObject(s[0]+'__r').get(s[1]);
 						label = fieldMap.get(s[0]+'__c').getDescribe().getLabel();
+						row.put(label,value);
 					}
 				}
 				else{
 					value = (String)sp.get(field);
 					label = fieldMap.get(field).getDescribe().getLabel();
+					row.put(label,value);
 				}
-				row.put(label,value);
 			}
 			if(!c.isEmpty() ){
 				for(Contract con :c){
