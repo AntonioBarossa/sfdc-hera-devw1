@@ -162,7 +162,7 @@ export default class HdtActiveRepentant extends LightningElement {
         if(!(this.cityData?.TARIManagingStartDate__c && this.cityData?.TARIManagingEndDate__c && this.cityData?.CutOverEndDate__c)){
             this.showMessage(
                 "Attenzione!",
-                this.cityData.CityNotManagedAlert__c? this.cityData.CityNotManagedAlert__c : "Comune Non Gestito",
+                this.cityData?.CityNotManagedAlert__c? this.cityData.CityNotManagedAlert__c : "Comune Non Gestito",
                 "error"
             );
             this.dateDecorrenza=null;
