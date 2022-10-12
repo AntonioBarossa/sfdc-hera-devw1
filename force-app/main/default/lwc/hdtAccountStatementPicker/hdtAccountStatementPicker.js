@@ -383,6 +383,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 'PaymentMode__c' : row.payment,
                 'TvFeeResidual__c' : row.restituzioneCanoneRai,
                 'IssuingCompany__c' : row.socEmittenteDesc,
+                'IssuingCompanyCode__c': row.socEmittente,
                 'ContractualAccount__c' : row.contoContrattuale,
                 'TotalCommunicationPayment__c' : row.totPagare,
                 'Case__c' : this.caseId,        
@@ -490,15 +491,4 @@ export default class HdtAccountStatementPicker extends LightningElement {
     getBillingProfileId(){
         return this.billingProfileId;
     }
-
-    @api validateForFlow(){
-        if(this.processType=='Doppi Pagamenti/Incassi'){
-            if(this.documents == undefined || this.documents.length==0){
-                return {isValid: false, message: 'Nessun documento selezionato'};
-            }
-            return {isValid: true};
-        }
-        return {isValid: true};
-    }
-
 }

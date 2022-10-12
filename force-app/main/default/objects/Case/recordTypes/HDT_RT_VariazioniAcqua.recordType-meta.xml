@@ -8193,7 +8193,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DBO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8261,7 +8269,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DBO</fullName>
             <default>false</default>
         </values>
         <values>

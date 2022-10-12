@@ -7,7 +7,7 @@
         <picklist>RequestSource__c</picklist>
         <values>
             <fullName>Da contribuente</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>D'ufficio</fullName>

@@ -4,6 +4,7 @@
     <div class="slds-grid">
         <c-hdt-campaign-member-button-list record-id={recordId}></c-hdt-campaign-member-button-list>
         <c-hdt-campaign-member-negative-outcome campaign-member-id={recordId} onaftersubmit={submitHandlerNegativeOutcome}></c-hdt-campaign-member-negative-outcome>
+        <c-hdt-campaign-member-partial-outcome campaign-member-id={recordId} onaftersubmit={submitHandlerNegativeOutcome}></c-hdt-campaign-member-partial-outcome>
         <c-hdt-campaign-member-button-list2 record-id={recordId} object-api-name="campaignmember" reiteklink={reiteklink}>
         </c-hdt-campaign-member-button-list2>
         <lightning-button variant="neutral" label="Richiamami" title="Richiamami" onclick={handleRecallMe}>

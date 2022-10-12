@@ -848,7 +848,7 @@
                         <valueListItems>
                             <value>CustomButton.Case.Riprendi_Processo_Sales</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2 OR 3) AND 4 AND 5</booleanFilter>
+                                <booleanFilter>(1 OR 2 OR 3) AND 4 AND 5 AND 6</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Phase__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -873,6 +873,11 @@
                                     <leftValue>{!Record.Type}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Documentale/Copia Contratto</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CommodityFormula__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Ambiente</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

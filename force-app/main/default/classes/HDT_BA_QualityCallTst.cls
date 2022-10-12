@@ -143,8 +143,11 @@ public with sharing class HDT_BA_QualityCallTst {
             campaign[0].Tipology__c = 'Quality Call';
             campaign[0].Status = 'In Corso';
             insert campaign;
-
+            
             List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(1, false);
+            List<Individual> inds = HDT_UTL_DataFactoryTst.createIndividual(1, false);
+            insert inds;
+            leads[0].IndividualId=inds[0].id;
             insert leads;
 
             List<CampaignMember> campaignMember = HDT_UTL_DataFactoryTst.createCampaignMember( false, campaign[0].Id, leads, contacts);

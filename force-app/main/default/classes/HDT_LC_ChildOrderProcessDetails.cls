@@ -222,9 +222,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
             if(recordTypeDevName=='HDT_RT_ConnessioneConAttivazione'){
                 //ConnessioneConAttivazione
-                metas= [SELECT QuoteType__c, OperationCode__c FROM QuoteManagement__c WHERE CausalCode__c=:ord.ProcessCode__c AND Operation_type__c='HDT_RT_ConnessioneConAttivazione' WITH SECURITY_ENFORCED] ;
-                wrp.quoteType= metas[0].QuoteType__c; 
-                wrp.quoteCode=formatCode( Decimal.ValueOf(metas[0].OperationCode__c) ); 
+                metas = [SELECT QuoteType__c, OperationCode__c FROM QuoteManagement__c WHERE CausalCode__c=:ord.ProcessCode__c AND Operation_type__c=:ord.ProcessType__c WITH SECURITY_ENFORCED];
+                wrp.quoteType = metas[0].QuoteType__c; 
+                wrp.quoteCode = formatCode( Decimal.ValueOf(metas[0].OperationCode__c) ); 
                 system.debug(metas);
                 return wrp;
             }
@@ -359,6 +359,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         boolean result;
         List<Order> ords = [SELECT QuotationType__c FROM Order WHERE Id =:ord.Id WITH SECURITY_ENFORCED];
         return result = ( !ords.isEmpty() && ords[0].QuotationType__c != null && !String.isBlank(ords[0].QuotationType__c) )? true:false;
+
+    }
+    @AuraEnabled
+    public static Boolean checkPermissionSet(){
+
+
+        if(FeatureManagement.checkPermission('HDT_CP_EnableMUC')){
+            return true;
+        } 
+
+        return false;
 
     }
 

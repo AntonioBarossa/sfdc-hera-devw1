@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : Giacinto Florio
+ * @group             : 
+ * @last modified on  : 03-10-2022
+ * @last modified by  : Giacinto Florio
+**/
 public inherited sharing class HDT_UTL_SegnalazioniTariValidation implements HDT_UTL_CaseValidationInterface{
 
     HDT_QR_CaseValidations caseValidationQr = new HDT_QR_CaseValidations();
@@ -29,6 +36,9 @@ public inherited sharing class HDT_UTL_SegnalazioniTariValidation implements HDT
 
     private String gestioneRifiutiValidate(Case currCase, String fields){
         if(STRING.isBlank(currCase.InvoicingCity__c) && STRING.isBlank(getFieldValue(fields, 'AlternativeAddress__c'))) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Indirizzo!'));
+
+        if(STRING.isBlank(getFieldValue(fields, 'MaterialDescription__c'))) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Selezionare i materiali da ritirare!'));
+
         return null;
     }
 

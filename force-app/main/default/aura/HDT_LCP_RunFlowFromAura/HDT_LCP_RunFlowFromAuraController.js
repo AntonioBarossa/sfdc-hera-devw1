@@ -49,6 +49,7 @@
         //id dell'activity
         var activityId = myPageRef.state.c__activityId;
         var documentPaymentMethod = myPageRef.state.c__documentPaymentMethod;
+        var documentSendTracking = myPageRef.state.c__documentSendTracking;
 
         //Gestione Risottomissione Annullamento
         let discardRework = undefined;
@@ -88,6 +89,7 @@
         console.log('# interactionId -> '             + interactionId);
         console.log('# activityId -> '                  + activityId);
         console.log('# documentPaymentMethod -> '             + documentPaymentMethod);
+        console.log('# documentSendTracking -> '    +documentSendTracking);
         console.log('# ----------------- #');
         
         var workspaceAPI = component.find("workspace");
@@ -239,6 +241,10 @@
         }
         if(documentPaymentMethod != null){
             inputVariables.push({ name : 'DocumentPaymentMethod', type : 'String', value : documentPaymentMethod});
+        }
+        if(documentSendTracking != null)
+        {
+            inputVariables.push({ name : 'DocumentSendTracking', type : 'String', value : documentSendTracking});
         }
 
         console.log('## inputVariables -> ');

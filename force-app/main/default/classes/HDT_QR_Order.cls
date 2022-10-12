@@ -109,6 +109,7 @@ public inherited sharing class HDT_QR_Order {
             Account.BirthDate__c,
             Account.FirstName__c,
             Account.LastName__c,
+            Account.BillingPlace__c,
             Account.CompanyOwner__c,
             Account.RecordTypeName__c,
             Sale__r.SalesContact__c,
@@ -258,6 +259,7 @@ public inherited sharing class HDT_QR_Order {
             ConfirmCustomerContract__c,
             IsVAS__c,
             ServicePoint__r.Resident__c,                     // [ 26/08/2021 gabriele.rota@webresults.it - Calcolo IVA ]
+            ServicePoint__r.AreaDeclaredTARI__c, 
             ServicePoint__r.Account__r.VATNumber__c,
             ServicePoint__r.Account__r.RecordType.DeveloperName,
             ServicePoint__r.Account__r.BirthDate__c, //17/05/2022 HRADTR_GV_Main
@@ -1359,7 +1361,7 @@ public inherited sharing class HDT_QR_Order {
             Select 
             id,
             Phase__c,
-            AgencyCode__c
+            AgencyCode__c, SignedDate__c
             from Order 
             Where id = :id
             WITH SECURITY_ENFORCED
@@ -1372,8 +1374,13 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getOrderForComfort(String id){
-        return [SELECT Id, Phase__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, RecordType.DeveloperName FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
+        return [SELECT Id, Phase__c, SignedDate__c, isTransition__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, ParentOrder__c, RecordType.DeveloperName, DateComfortCall__c FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
     }
+
+    public List<Order> getAllOrdersForComfort(String id){
+        return [SELECT Id, Phase__c, ConfirmCustomerContract__c, CancellationReason__c, ParentOrder__c, QualityCall__c FROM Order WHERE QualityCall__c =true AND ParentOrder__c = :id WITH SECURITY_ENFORCED];
+    }
+
 
     public List<Order> getOrdersList(List<String> ordIdList){
         return [SELECT Id, Phase__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, RecordType.DeveloperName FROM Order WHERE Id = :ordIdList WITH SECURITY_ENFORCED];

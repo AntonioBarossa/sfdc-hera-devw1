@@ -205,6 +205,18 @@
     </picklistValues>
     <picklistValues>
         <picklist>BillingErrorArgument__c</picklist>
+		<values>
+			<fullName>Agevolazione non corretta</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Argomento non censito</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Categoria Tariffaria non corretta</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>CMOR</fullName>
             <default>false</default>
@@ -213,6 +225,10 @@
             <fullName>Commissioni</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Componenti non corretti</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Deposito cauzionale</fullName>
             <default>false</default>
@@ -221,6 +237,10 @@
             <fullName>Diritti fissi contratto</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Diversi parametri non corretti</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Eventi eccezionali</fullName>
             <default>false</default>
@@ -229,6 +249,10 @@
             <fullName>Interessi</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Periodo calcolato non di competenza</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Potenza%2FCalibro</fullName>
             <default>false</default>
@@ -249,6 +273,10 @@
             <fullName>Storno per dati fiscali errati</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Superficie non corretta</fullName>
+			<default>false</default>
+		</values>
     </picklistValues>
     <picklistValues>
         <picklist>BillingFrequency__c</picklist>
@@ -10964,7 +10992,7 @@
         </values>
         <values>
             <fullName>Da contribuente</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>
