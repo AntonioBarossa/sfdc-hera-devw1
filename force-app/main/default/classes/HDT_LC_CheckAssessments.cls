@@ -24,6 +24,7 @@ public with sharing class HDT_LC_CheckAssessments {
 	public class HDT_WS_CheckAssessmentsResponse extends HDT_WS_Response{
 		@AuraEnabled public String status {get;set;}
 		@AuraEnabled public List<HDT_WRP_RowAssessment> data {get;set;}
+		@AuraEnabled public List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails> errorDetails {get;set;}
 	}
 
 	@SuppressWarnings('PMD.TooManyFields')

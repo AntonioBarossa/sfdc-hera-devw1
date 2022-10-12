@@ -8520,6 +8520,16 @@
 	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.WithdrawalFee__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Case.WithdrawalPrivateArea__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>City__c.BelfioreCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -37314,6 +37324,24 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
+        <object>SlaAdministration__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>SlaTracking__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>wrts_prcgvr__Compatibility__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
@@ -38385,6 +38413,26 @@
         <default>false</default>
         <personAccountDefault>true</personAccountDefault>
         <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SlaAdministration__c.HDT_RT_CaseSLA</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SlaAdministration__c.HDT_RT_OrderSLA</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SlaAdministration__c.HDT_RT_PostSales</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>SlaAdministration__c.HDT_RT_Sales</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
