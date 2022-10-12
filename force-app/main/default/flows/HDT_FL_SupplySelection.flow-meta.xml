@@ -26,14 +26,14 @@
             <assignToReference>ServicePointId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>ServicePointOutcome.Id</elementReference>
+                <elementReference>ServicePointId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Commodity</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>ServicePointOutcome.CommoditySector__c</elementReference>
+                <elementReference>Get_Service_Point.CommoditySector__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -111,7 +111,7 @@
             <field>ServicePoint__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>ServicePointOutcome.Id</elementReference>
+                <elementReference>ServicePointId</elementReference>
             </value>
         </filters>
         <filters>
@@ -144,8 +144,6 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>ServicePoint__c</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>CommoditySector__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
