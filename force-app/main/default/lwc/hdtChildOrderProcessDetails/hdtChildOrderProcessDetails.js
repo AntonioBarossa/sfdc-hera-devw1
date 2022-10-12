@@ -1265,8 +1265,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         MissingDueAmount.required = event.detail.missedDue? true : false;
         MissingDueAmount.disabled = event.detail.missedDue? false : true;
         let isPeriodY = event.detail.period=="Y";
-        this.template.querySelector("[data-id='DeclineComputationSupport__c']").required = isPeriodY;
-        this.template.querySelector("[data-id='BlockOnComputation__c']").value = isPeriodY? "Y" : "", this.sectionDataToSubmit["BlockOnComputation__c"]=isPeriodY? "Y" : "N";
+        const declineSupport = this.template.querySelector("[data-id='DeclineComputationSupport__c']");
+        if(declineSupport)  declineSupport.required = isPeriodY;
+        const blockCalcolo = this.template.querySelector("[data-id='BlockOnComputation__c']");
+        if(blockCalcolo)    blockCalcolo.value = isPeriodY? "Y" : "", this.sectionDataToSubmit["BlockOnComputation__c"]=isPeriodY? "Y" : "N";
     }
     
 }
