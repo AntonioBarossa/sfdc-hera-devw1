@@ -845,8 +845,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 if ( String.isNotBlank(String.valueOf(temp.ServicePoint__c))) {
                     ServicePoint__c sp=new ServicePoint__c(id=temp.ServicePoint__c);
                     sp.supplytype__c = temp.ServicePoint__r.supplytypeTemp__c;
-                    sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;    
-                    sp.SAPImplantCode__c=temp.SapImplantCode__c; 
+                    sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;  
+                    if (String.isNotBlank(temp.SAPImplantCode__c)) {
+                        sp.SAPImplantCode__c= temp.SapImplantCode__c; 
+                    }  
                     sp.account__c = temp.AccountId;
                     mapObjToUpdate.put(sp.Id, sp);
                 }
