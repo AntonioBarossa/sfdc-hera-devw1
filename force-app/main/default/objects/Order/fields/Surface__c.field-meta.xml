@@ -2,10 +2,10 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Surface__c</fullName>
     <externalId>false</externalId>
-    <label>Superficie</label>
-    <precision>18</precision>
+    <label>Superficie [m2]</label>
+    <precision>10</precision>
     <required>false</required>
-    <scale>2</scale>
+    <scale>0</scale>
     <trackHistory>false</trackHistory>
     <type>Number</type>
     <unique>false</unique>

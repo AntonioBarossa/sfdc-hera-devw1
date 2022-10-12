@@ -175,9 +175,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     newOrder.WaiverRightAfterthought__c = 'Si';
                 }
                 when 'Prima Attivazione'{
-                    processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
-                    processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
-                    newOrder.PressureLevel__c  = 'BP';
+                    if(order.CommodityFormula__c == 'Gas')
+                    {
+                        processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
+                        processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
+                        newOrder.PressureLevel__c  = 'BP';
+                    }
                 }
             }
 

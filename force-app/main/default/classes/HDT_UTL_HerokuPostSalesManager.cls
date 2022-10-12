@@ -273,8 +273,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }else if(method.equalsIgnoreCase('esito_intermedio')){
             if(nextPhase != null && nextPhase != ''){
                 //Gestione ad hoc per E150 Annullamento - Esito OK/KO da DL/SII
-                if((nextPhase.equalsIgnoreCase('Esito OK da DL/SII') || nextPhase.equalsIgnoreCase('Esito KO da DL/SII')) &&
-                    currentPhase.indexOf('Annullamento') > -1){
+                // if((nextPhase.equalsIgnoreCase('Esito OK da DL/SII') || nextPhase.equalsIgnoreCase('Esito KO da DL/SII')) && currentPhase.indexOf('Annullamento') > -1){
+                Set<String> nextPhaseSet = new Set<String>{'Esito OK da DL/SII','Esito KO da DL/SII','Esito OK da DBO', 'Esito KO da DBO'};
+                if(nextPhaseSet.contains(nextPhase) && currentPhase.indexOf('Annullamento') > -1){
                         nextPhase = 'Annullamento - ' + nextPhase;
                 }
                 currentCase.Phase__c = nextPhase;
@@ -417,6 +418,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String paymentDate = reqWrp.requestMap.get('DT_CREA');
             String currentDescription = recordCase.Description != null?recordCase.Description:'';
             String contractAccount = reqWrp.requestMap.get('VKONT');
+            //START>>>marco.arci@webresults.it Gestione Risposta per postSales Ambiente
+            String implant = reqWrp.requestMap.get('ANLAGE');
+            String implantStatus = reqWrp.requestMap.get('ANLAGE_ST');
+            String contractCode = reqWrp.requestMap.get('VERTRAG');
+            String contractStatus = reqWrp.requestMap.get('VERTRAG_ST');
+            //END>>>marco.arci@webresults.it Gestione Risposta per postSales Ambiente
             String newDescription = '';
             
             Boolean noActionNeeded = false;
@@ -483,7 +490,37 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 ca.ContractAccountCode__c = contractAccount;
                 HDT_UTL_DatabaseService.updateSObject(ca);
             }
-            
+            //START>>>marco.arci@webresults.it Gestione Risposta per postSales Ambiente
+            Contract contractAmb = new Contract();
+            ServicePoint__c spAmb = new ServicePoint__c();
+            if(implant != null && implant != recordCase.ServicePoint__r.SAPImplantCode__c){
+                spAmb.Id = recordCase.ServicePoint__c;
+                spAmb.SAPImplantCode__c = implant;
+            }
+            if(implantStatus != null && implantStatus != recordCase.ServicePoint__r.Status__c ){
+                spAmb.Id = recordCase.ServicePoint__c;
+                spAmb.Status__c = implantStatus;
+            }
+            if(contractCode != null && contractCode != recordCase.Contract__r.SAPContractCode__c ){
+                contractAmb.Id = recordCase.Contract__c;
+                contractAmb.SAPContractCode__c = contractCode;
+            }
+            if(contractStatus != null && 
+              (contractStatus != recordCase.servicePoint__r.SapContractStatus__c ||
+               contractStatus != recordCase.Contract__r.Status)){
+                contractAmb.Id = recordCase.Contract__c;
+                spAmb.Id = recordCase.ServicePoint__c;
+                contractAmb.Status = contractStatus;
+                spAmb.SapContractStatus__c = contractStatus;
+            }
+            if(contractAmb.Id != null){
+                HDT_UTL_DatabaseService.updateSObject(contractAmb);
+            }
+            if(spAmb.Id != null){
+                HDT_UTL_DatabaseService.updateSObject(spAmb);
+            }
+            //END>>>marco.arci@webresults.it Gestione Risposta per postSales Ambiente
+
         }else if(method.equalsIgnoreCase('AddAttivita')){
             String type = reqWrp.requestMap.get('TIPO_ATTIVITA');
             String message = reqWrp.requestMap.get('MESSAGGIO');

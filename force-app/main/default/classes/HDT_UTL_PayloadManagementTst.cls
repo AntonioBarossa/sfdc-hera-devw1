@@ -1257,20 +1257,21 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         indemnityConfirmed = True;
         indemnityMotivation = null;
         correctionRight = 'Si';
-        expiredCorrection = False;
-        correctionDocumentEmissionDate = String.valueOf(Date.today());
-        boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
-        System.assertEquals('1', boxType, 'Indemnity Box Test OK');
-
-        complaintClassification = 'Reclamo Scritto';
-        indemnityConfirmed = True;
-        indemnityMotivation = null;
-        correctionRight = 'Si';
         expiredCorrection = True;
         indemnityDueSendResponse = 0;
         correctionDocumentEmissionDate = String.valueOf(Date.today());
         boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
         System.assertEquals('2', boxType, 'Indemnity Box Test OK');
+        
+        complaintClassification = 'Reclamo Scritto';
+        indemnityConfirmed = True;
+        indemnityMotivation = null;
+        correctionRight = 'Si';
+        expiredCorrection = False;
+        indemnityDueSendResponse = 0;
+        correctionDocumentEmissionDate = '';
+        boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
+        System.assertEquals('3', boxType, 'Indemnity Box Test OK');
 
         complaintClassification = 'Reclamo Scritto';
         indemnityConfirmed = True;
@@ -1286,54 +1287,58 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         indemnityMotivation = null;
         correctionRight = 'Si';
         expiredCorrection = True;
-        correctionDocumentEmissionDate = null;
+        correctionDocumentEmissionDate =  '';
+        indemnityDueSendResponse = 2;
         boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
         System.assertEquals('5', boxType, 'Indemnity Box Test OK');
 
         complaintClassification = 'Reclamo Scritto';
-        indemnityConfirmed = True;
+        indemnityConfirmed = false;
+        indemnityDueSendResponse = 2;
         indemnityMotivation = null;
-        correctionRight = 'Si';
-        expiredCorrection = False;
+        correctionRight = 'No';
+        expiredCorrection = false;
         correctionDocumentEmissionDate = null;
         boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
-        System.assertEquals('', boxType, 'Indemnity Box Test OK');
+        System.assertEquals('6', boxType, 'Indemnity Box Test OK');
 
-        complaintClassification = 'Rettifica Doppia Fatturazione';
-        indemnityConfirmed = True;
+        complaintClassification = 'Reclamo Scritto';
+        indemnityConfirmed = true;
         indemnityMotivation = null;
-        correctionRight = 'Si';
-        expiredCorrection = True;
+        correctionRight = 'No';
+        expiredCorrection = false;
+        indemnityDueSendResponse = 0;
         correctionDocumentEmissionDate = null;
         boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
         System.assert(String.isBlank(boxType), 'Indemnity Box Test OK');
 
         complaintClassification = 'Rettifica Doppia Fatturazione';
-        indemnityConfirmed = True;
+        indemnityConfirmed = true;
         indemnityMotivation = null;
         correctionRight = 'Si';
-        expiredCorrection = False;
-        correctionDocumentEmissionDate = String.valueOf(Date.today());
-        boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
-        System.assert(String.isBlank(boxType), 'Indemnity Box Test OK');
-
-        complaintClassification = 'Rettifica Doppia Fatturazione';
-        indemnityConfirmed = True;
-        indemnityMotivation = null;
-        correctionRight = 'Si';
-        expiredCorrection = True;
+        expiredCorrection = true;
         correctionDocumentEmissionDate = String.valueOf(Date.today());
         boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
         System.assertEquals('8', boxType, 'Indemnity Box Test OK');
 
         complaintClassification = 'Rettifica Doppia Fatturazione';
-        indemnityConfirmed = False;
+        indemnityConfirmed = false;
         indemnityMotivation = 'Altro indennizzo stesso anno solare';
         correctionRight = 'Si';
-        expiredCorrection = True;
+        expiredCorrection = true;
         correctionDocumentEmissionDate = String.valueOf(Date.today());
         boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
-        System.assertEquals('6', boxType, 'Indemnity Box Test OK');
+        System.assertEquals('9', boxType, 'Indemnity Box Test OK');
+
+        complaintClassification = 'Reclamo Scritto';
+        indemnityConfirmed = false;
+        indemnityMotivation = 'Altro indennizzo stesso anno solare';
+        correctionRight = 'Si';
+        indemnityDueSendResponse = 2;
+        expiredCorrection = true;
+        correctionDocumentEmissionDate = String.valueOf(Date.today());
+        boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
+        System.assertEquals('10', boxType, 'Indemnity Box Test OK');
 
         Test.stopTest();
     }

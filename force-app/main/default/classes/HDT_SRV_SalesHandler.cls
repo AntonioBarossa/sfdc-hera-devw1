@@ -406,7 +406,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                         finalCancellationPhase = 'Ripensato';
                                     }
                                 }
-                                when 'Esito KO da DL/SII' {
+                                when 'Esito KO da DL/SII', 'Esito KO da DBO' {
                                     if(previousPhase.indexOf('Annullamento') > -1) {
                                         ord.Phase__c = 'Annullamento - ' + nextPhase;
                                         Datetime nowDate = Datetime.now();
@@ -500,7 +500,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     {
                                         Boolean redirectPreventivo = false;
                                         switch on ordRetrieved.ProcessType__c{
-                                            when 'Connessione con Attivazione', 'Temporanea - Nuova Attivazione'{
+                                            when 'Connessione con Attivazione', 'Aggiunta Attacco con Attivazione', 'Temporanea - Nuova Attivazione'{
                                                 redirectPreventivo=true;
                                             }
                                         }                            
