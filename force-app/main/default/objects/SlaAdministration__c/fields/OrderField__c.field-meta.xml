@@ -11,38 +11,41 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Data consenso E-mail PEC Invio Bolletta</fullName>
+                <fullName>SendCertifiedEmailConsentDate__c</fullName>
                 <default>false</default>
                 <label>Data consenso E-mail PEC Invio Bolletta</label>
             </value>
             <value>
-                <fullName>Data inizio Validità Codice Destinatario</fullName>
+                <fullName>SubjectCodeStartDate__c</fullName>
                 <default>false</default>
                 <label>Data inizio Validità Codice Destinatario</label>
             </value>
             <value>
-                <fullName>Data invio richiesta</fullName>
+                <fullName>SendRequestDate__c</fullName>
                 <default>false</default>
                 <label>Data invio richiesta</label>
             </value>
             <value>
-                <fullName>Data decorrenza</fullName>
+                <fullName>EffectiveDate__c</fullName>
                 <default>false</default>
                 <label>Data decorrenza</label>
             </value>
             <value>
                 <fullName>Data differita</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Data differita</label>
             </value>
             <value>
                 <fullName>Data lettura Attuale</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Data lettura Attuale</label>
             </value>
             <value>
                 <fullName>Data lettura retroattiva</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Data lettura retroattiva</label>
             </value>
         </valueSetDefinition>

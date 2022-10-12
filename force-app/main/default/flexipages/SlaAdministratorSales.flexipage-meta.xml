@@ -351,8 +351,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Process__c</fieldItem>
-                <identifier>RecordProcess_cField</identifier>
+                <fieldItem>Record.FirstLevelComplaintClassification__c</fieldItem>
+                <identifier>RecordFirstLevelComplaintClassification_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -361,8 +361,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.FirstLevelComplaintClassification__c</fieldItem>
-                <identifier>RecordFirstLevelComplaintClassification_cField</identifier>
+                <fieldItem>Record.SecondLevelComplaintClassification__c</fieldItem>
+                <identifier>RecordSecondLevelComplaintClassification_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -395,6 +395,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Process__c</fieldItem>
+                <identifier>RecordProcess_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.CompanyOwner__c</fieldItem>
                 <identifier>RecordCompanyOwner_cField</identifier>
             </fieldInstance>
@@ -407,16 +417,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Commodity__c</fieldItem>
                 <identifier>RecordCommodity_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.SecondLevelComplaintClassification__c</fieldItem>
-                <identifier>RecordSecondLevelComplaintClassification_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-1e8b87d4-6ff0-467f-91a9-a989bedfbdb4</name>
