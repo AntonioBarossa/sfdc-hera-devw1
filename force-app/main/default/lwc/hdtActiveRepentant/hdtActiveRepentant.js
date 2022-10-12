@@ -83,6 +83,8 @@ export default class HdtActiveRepentant extends LightningElement {
             //flow
             let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
             let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
+            this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = "";//blank values
+            this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = "";//blank values
             if(dichiarazione){     this.startActiveRepentant(decorrenza, dichiarazione);  }  
             else{   this.showMessage("Attenzione!", "Popolare Data Dichiarazione", "error");this.disabled=false;    }
         }else{
