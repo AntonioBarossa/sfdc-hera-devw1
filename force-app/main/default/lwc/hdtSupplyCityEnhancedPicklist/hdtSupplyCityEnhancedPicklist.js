@@ -25,6 +25,7 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
     cityOptions = [];
 
     connectedCallback(){
+        this.outputSupplyCity = this.inputSupplyCity;
         this.call_getCities();
     }
 
