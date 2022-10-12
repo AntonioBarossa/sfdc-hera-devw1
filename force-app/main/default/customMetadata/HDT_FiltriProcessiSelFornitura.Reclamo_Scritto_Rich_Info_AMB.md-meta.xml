@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Riduz. superficie rifiuti spec promiscui</label>
+    <label>Reclamo Scritto/Rich. Info AMB</label>
     <protected>false</protected>
     <values>
         <field>ContrattiCliente__c</field>
@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>StatoContratto__c</field>
-        <value xsi:type="xsd:string">Attivo</value>
+        <value xsi:type="xsd:string">Attivo,Cessato,Sospeso</value>
     </values>
     <values>
         <field>StatoFornitura__c</field>
@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>TipoProcesso__c</field>
-        <value xsi:type="xsd:string">Riduz. superficie rifiuti spec promiscui</value>
+        <value xsi:type="xsd:string">Reclamo Scritto/Rich. Info</value>
     </values>
     <values>
         <field>TipoServizio__c</field>

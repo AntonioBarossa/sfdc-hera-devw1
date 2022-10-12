@@ -20,11 +20,11 @@
     </values>
     <values>
         <field>StatoContratto__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Attivo</value>
     </values>
     <values>
         <field>StatoFornitura__c</field>
-        <value xsi:type="xsd:string">Attivo</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>TipoProcesso__c</field>
