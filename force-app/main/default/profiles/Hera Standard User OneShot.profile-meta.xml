@@ -460,6 +460,21 @@
     <description>Identico al profilo Hera Standard User, ha la possibilità di inviare comunicazione One Shot grazie al Publisher Layout</description>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DocumentSelected__c.DocumentalSystem__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentSelected__c.EnvelopeId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentSelected__c.IssuingCompanyCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DocumentSelected__c.CommoditySector__c</field>
         <readable>true</readable>
     </fieldPermissions>

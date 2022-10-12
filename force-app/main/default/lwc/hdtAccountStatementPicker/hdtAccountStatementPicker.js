@@ -383,6 +383,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 'PaymentMode__c' : row.payment,
                 'TvFeeResidual__c' : row.restituzioneCanoneRai,
                 'IssuingCompany__c' : row.socEmittenteDesc,
+                'IssuingCompanyCode__c': row.socEmittente,
                 'ContractualAccount__c' : row.contoContrattuale,
                 'TotalCommunicationPayment__c' : row.totPagare,
                 'Case__c' : this.caseId,        

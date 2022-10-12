@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_SendContract</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <hasMenubar>false</hasMenubar>
+    <hasScrollbars>true</hasScrollbars>
+    <hasToolbar>false</hasToolbar>
+    <height>600</height>
+    <isResizable>true</isResizable>
+    <linkType>url</linkType>
+    <masterLabel>Invia copia Plico</masterLabel>
+    <openType>newWindow</openType>
+    <position>none</position>
+    <protected>false</protected>
+    <showsLocation>false</showsLocation>
+    <showsStatus>false</showsStatus>
+    <url>/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__processType=Documentale/Copia+Contratto&amp;c__recordTypeName=HDT_RT_GenericheAttivazioni&amp;c__accid={!DocumentSendTracking__c.AccountId__c}&amp;c__flowName=HDT_FL_CopiaContratto&amp;c__documentSendTracking={!DocumentSendTracking__c.Id}</url>
+</WebLink>

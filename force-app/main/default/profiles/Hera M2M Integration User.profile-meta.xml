@@ -10427,6 +10427,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DocumentSelected__c.DocumentalSystem__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentSelected__c.EnvelopeId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentSelected__c.IssuingCompanyCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DocumentSelected__c.Amount__c</field>
         <readable>true</readable>
     </fieldPermissions>
