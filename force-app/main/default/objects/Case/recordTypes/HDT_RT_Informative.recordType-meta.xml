@@ -6714,6 +6714,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Approfondimento avanzamento pratica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Appuntamento sopralluogo e esecuzione</fullName>
             <default>false</default>
         </values>
@@ -6774,6 +6778,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Creazione catena tecnica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Disallineamento dati %28Sol%2FApp%29</fullName>
             <default>false</default>
         </values>
@@ -6786,6 +6794,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esitazione positiva campagna</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Fattura rettificata</fullName>
             <default>false</default>
         </values>
@@ -6795,6 +6807,14 @@
         </values>
         <values>
             <fullName>Fornite info su variazione richiesta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Il cliente non accetta il preventivo%2C che scadrà naturalmente %2D Valido anche per processo Connesione con attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Indirizzato a ufficio Ente competente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6878,6 +6898,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Mancanza dati per procedere</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Mancata ricezione Plico</fullName>
             <default>false</default>
         </values>
@@ -6890,7 +6914,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Modalità accesso per agevolazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Modalità di ripensamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modalità indirizzo di fornitura</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6979,6 +7011,14 @@
         </values>
         <values>
             <fullName>Sospensione fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Specifica su esenzione fognatura e depurazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Specifica su fognatura e depurazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7733,6 +7773,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Comunicazioni di non accettazione preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Consenso ricontatto</fullName>
             <default>false</default>
         </values>
@@ -7781,7 +7825,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Info procedure%2Fmodulistica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Info servizi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info servizi altri Enti</fullName>
             <default>false</default>
         </values>
         <values>
