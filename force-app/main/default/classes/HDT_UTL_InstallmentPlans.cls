@@ -22,6 +22,11 @@ public inherited sharing class HDT_UTL_InstallmentPlans {
             'Deposit__c',
             'RefundableEscape__c',
             'WorkStatus__c'};
+
+        if (inputs[0].isTariProcess) {
+            criteriaFields.addAll( new Set<String>{'BillingCity__c', 'RateCategory__c'});
+        }
+
         Map<String, Object> criteriaMap = new Map<String, Object>();
         for(String fieldName : criteriaFields){
             criteriaMap.put(fieldName, c.get(fieldName));
@@ -41,6 +46,9 @@ public inherited sharing class HDT_UTL_InstallmentPlans {
 
         @InvocableVariable
         public String caseId;
+
+        @InvocableVariable
+        public Boolean isTariProcess;
 
     }
 
