@@ -33,6 +33,8 @@ public with sharing class HDT_SRV_InstallmentPlansTari {
             currentCase.MinInstallmentAmount__c = instalmentsPlans.get(0).MinInstallmentAmount__c;
             currentcase.MandatoryAttachments__c = instalmentsPlans.get(0).MandatoryAttachments__c;
             currentcase.MaxInstallmentsNumber__c = instalmentsPlans.get(0).MaxInstallmentsNumber__c;
+            currentCase.Note__c = '€ ' + instalmentsPlans.get(0).MinAmountForSingleInstalment__c;
+            currentCase.SupplyCity__c = input.comuneUbicazione;
 
             output.importoMinimoSingolaRata = instalmentsPlans.get(0).MinAmountForSingleInstalment__c;
 

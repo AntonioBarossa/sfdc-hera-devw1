@@ -273,8 +273,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }else if(method.equalsIgnoreCase('esito_intermedio')){
             if(nextPhase != null && nextPhase != ''){
                 //Gestione ad hoc per E150 Annullamento - Esito OK/KO da DL/SII
-                if((nextPhase.equalsIgnoreCase('Esito OK da DL/SII') || nextPhase.equalsIgnoreCase('Esito KO da DL/SII')) &&
-                    currentPhase.indexOf('Annullamento') > -1){
+                // if((nextPhase.equalsIgnoreCase('Esito OK da DL/SII') || nextPhase.equalsIgnoreCase('Esito KO da DL/SII')) && currentPhase.indexOf('Annullamento') > -1){
+                Set<String> nextPhaseSet = new Set<String>{'Esito OK da DL/SII','Esito KO da DL/SII','Esito OK da DBO', 'Esito KO da DBO'};
+                if(nextPhaseSet.contains(nextPhase) && currentPhase.indexOf('Annullamento') > -1){
                         nextPhase = 'Annullamento - ' + nextPhase;
                 }
                 currentCase.Phase__c = nextPhase;
@@ -586,6 +587,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
          */
         }else if(currentCase.Type.equalsIgnoreCase('Verifica Dati al DL') && currentCase.Phase__c.equalsIgnoreCase('Esito OK da DL'))
         {
+            currentCase.Phase__c = 'Completata';
+            currentCase.Status = 'Closed';
+            updateFuture(JSON.serialize(currentCase));
+        }else if(currentCase.Phase__c.equalsIgnoreCase('Esito OK da DBO')){
+            //DBO non invia mai il completata
             currentCase.Phase__c = 'Completata';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));

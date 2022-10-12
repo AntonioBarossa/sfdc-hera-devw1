@@ -88,6 +88,7 @@ public with sharing class HDT_QR_BpCaCreate
     /* This method queries all orders with same Billing Profile (and Account) that need to be updated
     * SaleId parameter is not used yet but it can be useful to eventually restrict the query to orders
     * linked to the same Sale
+    * update 2022-10-10 this logic is not need for "Ambiente" commodity
     */
     public List<Order> getOtherOrdersToUpdate(String orderId, String saleId, String billingProfileId)
     {
@@ -102,7 +103,7 @@ public with sharing class HDT_QR_BpCaCreate
             FROM Order
             WHERE BillingProfile__c = :billingProfileId
             AND Status NOT IN ('Activated', 'Annullato')
-            AND CommodityFormula__c IN ('Acqua', 'Ambiente')
+            AND CommodityFormula__c IN ('Acqua')
             AND ParentOrder__c != null
             AND (CustomerCode__c = NULL OR ContractAccountCode__c = NULL)
             AND Id != :orderId

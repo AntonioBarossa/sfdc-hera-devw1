@@ -47,7 +47,9 @@ public inherited sharing class HDT_QR_Case {
             RecordType.DeveloperName,
             MaxInstallmentsNumber__c,
             MinInstallmentAmount__c,
-            MandatoryAttachments__c
+            MandatoryAttachments__c,
+            Note__c,
+            SupplyCity__c
             FROM Case
             where Id = :Id
             WITH SECURITY_ENFORCED
@@ -283,7 +285,7 @@ public inherited sharing class HDT_QR_Case {
         List<Case> childCases = new List<Case>();
         try
         {
-            childCases = [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE ParentId = :recordId AND Id IN :childIds WITH SECURITY_ENFORCED];
+            childCases = [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Commodity__c, Status FROM Case WHERE ParentId = :recordId AND Id IN :childIds WITH SECURITY_ENFORCED];
         }
         catch(Exception e)
         {
