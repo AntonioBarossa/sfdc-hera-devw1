@@ -3342,7 +3342,7 @@
             <targetReference>Check_If_Process_Is_TARI</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annullamento_Prestazione</name>
         <label>Annullamento Prestazione</label>
