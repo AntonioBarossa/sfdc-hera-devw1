@@ -194,7 +194,7 @@
         <fields>LastFreeWithdrawDate__c</fields>
         <fields>Canceled__c</fields>
         <fields>CREATED_DATE</fields>
-        <relatedList>FreeWithdraw__c.ServicePointMaster__c</relatedList>
+        <relatedList>FreeWithdraw__c.ServicePoint__c</relatedList>
         <sortField>LastFreeWithdrawDate__c</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>

@@ -15,7 +15,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>ServicePointMaster__c</field>
+                <field>ServicePoint__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -61,7 +61,7 @@
     </layoutSections>
     <miniLayout>
         <fields>Name</fields>
-        <fields>ServicePointMaster__c</fields>
+        <fields>ServicePoint__c</fields>
         <fields>LastFreeWithdrawDate__c</fields>
         <fields>Canceled__c</fields>
     </miniLayout>
