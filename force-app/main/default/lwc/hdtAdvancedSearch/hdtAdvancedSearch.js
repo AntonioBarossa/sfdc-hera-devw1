@@ -111,7 +111,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                     if(data.StatoFornitura__c != undefined && data.StatoFornitura__c!='')
                     {
                         statusSplit = data.StatoFornitura__c.split(",");
-                        this.additionalfilter+=" AND MeterStatus__c IN('" + contractStatusSplit.join("','") + "')";
+                        this.additionalfilter+=" AND MeterStatus__c IN('" + statusSplit.join("','") + "')";
                         
                         console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
                     }
