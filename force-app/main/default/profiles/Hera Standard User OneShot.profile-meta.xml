@@ -549,6 +549,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>TownATOTable__c.CompanyOwner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>ProcessMatrix__c.ExistActivityDatiDiscordantiNew__c</field>
         <readable>true</readable>
@@ -34465,6 +34470,10 @@
     <layoutAssignments>
         <layout>Case-HDT_PraticaInVolo</layout>
         <recordType>Case.HDT_RT_FlyingRequest</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Segnalazioni</layout>
+        <recordType>Case.HDT_RT_Segnalazioni</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-Close Case Layout</layout>
