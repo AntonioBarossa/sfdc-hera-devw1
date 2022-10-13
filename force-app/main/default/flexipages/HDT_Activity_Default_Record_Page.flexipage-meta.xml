@@ -181,6 +181,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_EsitoQualityComfortCall</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>EQUAL</operator>
@@ -190,6 +191,11 @@
                                     <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Non Esitata</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_EsitoCQCall}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
