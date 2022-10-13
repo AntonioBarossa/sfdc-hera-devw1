@@ -20,7 +20,9 @@ public with sharing class HDT_QR_InstallmentPlans {
             SuspensionInPastTwelveMonths__c,
             Deposit__c,
             RefundableEscape__c,
-            WorkStatus__c
+            WorkStatus__c,
+            City__c,
+            RateCategory__c
             FROM RentProcessRule__c
             WHERE Category__c = :c.ClientCategory__c
             AND InstallmentPlanReason__c = :c.Reason__c
@@ -92,7 +94,9 @@ public with sharing class HDT_QR_InstallmentPlans {
         ApplicationInterests__c,
         SuspensionInThePastTwelveMonths__c,
         CreatedDate,
-        ExpirationDate__c
+        ExpirationDate__c,
+        BillingCity__c,
+        RateCategory__c
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED

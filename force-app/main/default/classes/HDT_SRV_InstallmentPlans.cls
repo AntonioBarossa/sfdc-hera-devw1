@@ -262,10 +262,16 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         for(RentProcessRule__c rule : ruleList){
             Map<String,Object> notFoundMap = new Map<String,Object>();
             for(String fieldName : criteriaMap.keySet()){
-                if(fieldName == 'SuspensionInThePastTwelveMonths__c'){
-                    fineTuningField = 'SuspensionInPastTwelveMonths__c';
-                }else{
-                    fineTuningField = fieldName;
+                switch on fieldName {
+                    when 'SuspensionInThePastTwelveMonths__c' {
+                        fineTuningField = 'SuspensionInPastTwelveMonths__c';
+                    }
+                    when 'BillingCity__c' {
+                        fineTuningField = 'City__c';
+                    }
+                    when else {
+                        fineTuningField = fieldName;
+                    }
                 }
                 if(!(rule.get(fineTuningField) == criteriaMap.get(fieldName))){
                     notFoundMap.put(fieldName, criteriaMap.get(fieldName));

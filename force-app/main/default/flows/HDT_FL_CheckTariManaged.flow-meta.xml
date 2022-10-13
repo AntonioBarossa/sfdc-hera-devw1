@@ -4,8 +4,8 @@
     <assignments>
         <name>assignResultTrue</name>
         <label>assignResultTrue</label>
-        <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationX>842</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>result</assignToReference>
             <operator>Assign</operator>
@@ -15,9 +15,41 @@
         </assignmentItems>
     </assignments>
     <decisions>
+        <name>checkCompanyOwner</name>
+        <label>checkCompanyOwner</label>
+        <locationX>710</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>assignResultTrue</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>companyOwnerOk</defaultConnectorLabel>
+        <rules>
+            <name>companyOwnerKo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>companyOwner</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getCityData.CompanyOwner__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>companyOwner</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>showToast_1_0</targetReference>
+            </connector>
+            <label>companyOwnerKo</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>checkData</name>
         <label>checkData</label>
-        <locationX>545</locationX>
+        <locationX>693</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>showToast</targetReference>
@@ -56,10 +88,10 @@
     <decisions>
         <name>checkDclarationDate</name>
         <label>checkDclarationDate</label>
-        <locationX>446</locationX>
+        <locationX>512</locationX>
         <locationY>518</locationY>
         <defaultConnector>
-            <targetReference>assignResultTrue</targetReference>
+            <targetReference>checkCompanyOwner</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>okData</defaultConnectorLabel>
         <rules>
@@ -81,7 +113,7 @@
     <decisions>
         <name>checkEffectiveDate</name>
         <label>checkEffectiveDate</label>
-        <locationX>248</locationX>
+        <locationX>281</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>checkDclarationDate</targetReference>
@@ -110,7 +142,6 @@
             <label>errorData</label>
         </rules>
     </decisions>
-    <environments>Default</environments>
     <formulas>
         <name>errorMessage</name>
         <dataType>String</dataType>
@@ -140,7 +171,7 @@
     <recordLookups>
         <name>getCityData</name>
         <label>getCityData</label>
-        <locationX>545</locationX>
+        <locationX>693</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -161,7 +192,7 @@
     <screens>
         <name>showToast</name>
         <label>showToast</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -287,8 +318,51 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>showToast_1_0</name>
+        <label>showToast</label>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>screenToast_1_0_0</name>
+            <extensionName>c:hdtShowToastForFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>mode</name>
+                <value>
+                    <stringValue>sticky</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>title</name>
+                <value>
+                    <stringValue>Attenzione!</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>error</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <stringValue>Il Company Owner di riferimento deferisce da quanto presente a sistema per il comune selezionato</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
-        <locationX>419</locationX>
+        <locationX>567</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>getCityData</targetReference>
@@ -297,6 +371,13 @@
     <status>Active</status>
     <variables>
         <name>city</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>companyOwner</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
