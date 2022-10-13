@@ -293,6 +293,8 @@
         <relatedList>OrderItem.ServicePoint__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>LastFreeWithdrawDate__c</fields>
         <fields>Canceled__c</fields>
