@@ -627,9 +627,16 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
         }else if(currentCase.Phase__c.equalsIgnoreCase('Esito OK da DBO')){
-            //DBO non invia mai il completata
-            currentCase.Phase__c = 'Completata';
-            currentCase.Status = 'Closed';
+            //per i preventivi alla ricezione dell'esito da DBO è necessario inviare il preventivo al cliente
+            if(currentCase.Cluster__c.equalsIgnoreCase('Preventivi') && !currentCase.CausalCode__c.equalsIgnoreCase('E01')){
+                //DBO non invia mai il completata
+                currentCase.Phase__c = 'Inviare preventivo';
+            }else{
+                //DBO non invia mai il completata
+                currentCase.Phase__c = 'Completata';
+                currentCase.Status = 'Closed';
+            }
+            
             updateFuture(JSON.serialize(currentCase));
         }
     }

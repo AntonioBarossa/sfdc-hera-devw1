@@ -52,7 +52,7 @@
    },
    {
       &quot;FieldName&quot;:&quot;Note__c&quot;,
-      &quot;Required&quot;:true,
+      &quot;Required&quot;:false,
       &quot;Column&quot;:1
    },
    {
