@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>StatoContratto__c</field>
-        <value xsi:type="xsd:string">Sospeso</value>
+        <value xsi:type="xsd:string"/>
     </values>
     <values>
         <field>StatoFornitura__c</field>
