@@ -50,7 +50,7 @@ public class HDT_SRV_FieldCoerenceServicePoint {
             String comune = (String)inputFieldMap.get('SupplyCity__c');
             String companyOwner = (String)inputFieldMap.get('CompanyOwner__c');
             
-            List<TownATOTable__c> townAtoTableList = [SELECT Id FROM TownATOTable__c WHERE CompanyOwner__c = :companyOwner AND Town__c = :comune ];
+            List<TownATOTable__c> townAtoTableList = [SELECT Id FROM TownATOTable__c WHERE CompanyOwner__c = :companyOwner AND Town__c = :comune WITH SECURITY_ENFORCED];
 
             if( townAtoTableList.isEmpty() )
             {
