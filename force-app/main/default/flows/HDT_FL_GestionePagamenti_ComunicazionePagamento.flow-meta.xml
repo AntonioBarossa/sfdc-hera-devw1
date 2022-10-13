@@ -41,7 +41,7 @@
     <assignments>
         <name>Assegna_Mod_Pag_VA</name>
         <label>Assegna Mod Pag VA</label>
-        <locationX>6790</locationX>
+        <locationX>6746</locationX>
         <locationY>6374</locationY>
         <assignmentItems>
             <assignToReference>ModalitaPagamento</assignToReference>
@@ -57,7 +57,7 @@
     <assignments>
         <name>Assegna_Titolare_Conto_From_Case</name>
         <label>Assegna Titolare Conto From Case</label>
-        <locationX>6790</locationX>
+        <locationX>6746</locationX>
         <locationY>6710</locationY>
         <assignmentItems>
             <assignToReference>NomeIntestatario_CC</assignToReference>
@@ -87,7 +87,7 @@
     <assignments>
         <name>Assegna_Titolare_Conto_From_Flow_Screen</name>
         <label>Assegna Titolare Conto From Flow Screen</label>
-        <locationX>7054</locationX>
+        <locationX>7010</locationX>
         <locationY>6710</locationY>
         <assignmentItems>
             <assignToReference>NomeIntestatario_CC</assignToReference>
@@ -117,7 +117,7 @@
     <assignments>
         <name>Assegna_Valori_Abi_Mod_Pagamento</name>
         <label>Assegna Valori Abi - Mod Pagamento</label>
-        <locationX>6922</locationX>
+        <locationX>6878</locationX>
         <locationY>6134</locationY>
         <assignmentItems>
             <assignToReference>AbiCode</assignToReference>
@@ -290,7 +290,7 @@
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>In Lavorazione</stringValue>
+                <stringValue>Da Inviare</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -363,7 +363,7 @@
     <assignments>
         <name>AssegnaVariabili_0_0</name>
         <label>AssegnaVariabili</label>
-        <locationX>8044</locationX>
+        <locationX>8220</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>GetCaseNonBozza.Phase__c</assignToReference>
@@ -387,7 +387,7 @@
         <name>AssegnaVariabili_0_0_0_0</name>
         <label>AssegnaVariabili</label>
         <locationX>6988</locationX>
-        <locationY>7262</locationY>
+        <locationY>7382</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -406,7 +406,7 @@
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Da Inviare</stringValue>
+                <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -423,6 +423,13 @@
                 <elementReference>AmountDifference</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiornamento_Case_Fine_Bozza</targetReference>
         </connector>
@@ -430,7 +437,7 @@
     <assignments>
         <name>AssegnaVariabili_0_0_0_0_0</name>
         <label>AssegnaVariabili</label>
-        <locationX>7780</locationX>
+        <locationX>7956</locationX>
         <locationY>6014</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
@@ -460,8 +467,8 @@
     <assignments>
         <name>AssegnaVariabili_0_0_0_0_0_0</name>
         <label>AssegnaVariabili</label>
-        <locationX>7516</locationX>
-        <locationY>6014</locationY>
+        <locationX>7692</locationX>
+        <locationY>6134</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -476,6 +483,13 @@
                 <elementReference>AmountDifference</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_In_Lavorazione</targetReference>
         </connector>
@@ -483,7 +497,7 @@
     <assignments>
         <name>ModalitaPagamentoNoVA</name>
         <label>ModalitaPagamentoNoVA</label>
-        <locationX>7054</locationX>
+        <locationX>7010</locationX>
         <locationY>6374</locationY>
         <assignmentItems>
             <assignToReference>ModalitaPagamento</assignToReference>
@@ -586,7 +600,7 @@
     <decisions>
         <name>Assegna_Account_Erede_Beneficiario</name>
         <label>Assegna Account Erede Beneficiario</label>
-        <locationX>6922</locationX>
+        <locationX>6878</locationX>
         <locationY>6590</locationY>
         <defaultConnector>
             <targetReference>Assegna_Titolare_Conto_From_Flow_Screen</targetReference>
@@ -611,7 +625,7 @@
     <decisions>
         <name>Bonifico_da_effettuare_verso_VA</name>
         <label>Bonifico da effettuare verso VA?</label>
-        <locationX>6922</locationX>
+        <locationX>6878</locationX>
         <locationY>6254</locationY>
         <defaultConnector>
             <targetReference>ModalitaPagamentoNoVA</targetReference>
@@ -636,7 +650,7 @@
     <decisions>
         <name>Canale_di_Pagamento</name>
         <label>Canale di Pagamento?</label>
-        <locationX>7120</locationX>
+        <locationX>7076</locationX>
         <locationY>5894</locationY>
         <defaultConnector>
             <targetReference>CalcoloCodiceCausale</targetReference>
@@ -668,7 +682,7 @@
     <decisions>
         <name>Case_In_Bozza_Question</name>
         <label>Case In Bozza?</label>
-        <locationX>5740</locationX>
+        <locationX>5828</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Screen_Review_Dati_0</targetReference>
@@ -743,10 +757,10 @@
     <decisions>
         <name>Comunicazione_Pagamento_o_Doppi_Pagamenti_Incassi</name>
         <label>Comunicazione Pagamento o Doppi Pagamenti/Incassi?</label>
-        <locationX>7384</locationX>
+        <locationX>7428</locationX>
         <locationY>5774</locationY>
         <defaultConnector>
-            <targetReference>Ok_Tari_e_Stato_in_Lavorazione_0</targetReference>
+            <targetReference>Ok_Tari_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Doppi Pagamenti/Incassi</defaultConnectorLabel>
         <rules>
@@ -823,16 +837,16 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Ok_Tari_e_Stato_in_Lavorazione</name>
-        <label>Ok Tari e Stato in Lavorazione?</label>
-        <locationX>7120</locationX>
+        <name>Ok_Tari</name>
+        <label>Ok Tari</label>
+        <locationX>7076</locationX>
         <locationY>7142</locationY>
         <defaultConnector>
             <targetReference>AssegnaVariabili</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Aggiorna come da Vecchio Processo</defaultConnectorLabel>
         <rules>
-            <name>Non_Aggiornare_lo_Stato</name>
+            <name>Aggiorna_Tari</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>checkTari</leftValueReference>
@@ -841,30 +855,23 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>GetCaseAggiornato.Status</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>In Lavorazione</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>AssegnaVariabili_0_0_0_0</targetReference>
+                <targetReference>Se_In_Lavorazione</targetReference>
             </connector>
-            <label>Non Aggiornare lo Stato</label>
+            <label>Aggiorna Tari</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Ok_Tari_e_Stato_in_Lavorazione_0</name>
-        <label>Ok Tari e Stato in Lavorazione?</label>
-        <locationX>7648</locationX>
+        <name>Ok_Tari_0</name>
+        <label>Ok Tari</label>
+        <locationX>7780</locationX>
         <locationY>5894</locationY>
         <defaultConnector>
             <targetReference>AssegnaVariabili_0_0_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Aggiorna come da Vecchio Processo</defaultConnectorLabel>
         <rules>
-            <name>Non_Aggiornare_lo_Stato_0</name>
+            <name>Aggiorna_Tari_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>checkTari</leftValueReference>
@@ -873,17 +880,10 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>GetCaseAggiornato.Status</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>In Lavorazione</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>AssegnaVariabili_0_0_0_0_0_0</targetReference>
+                <targetReference>Se_In_Lavorazione_0</targetReference>
             </connector>
-            <label>Non Aggiornare lo Stato</label>
+            <label>Aggiorna Tari</label>
         </rules>
     </decisions>
     <decisions>
@@ -1569,6 +1569,56 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Se_In_Lavorazione</name>
+        <label>Se In Lavorazione</label>
+        <locationX>6900</locationX>
+        <locationY>7262</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaVariabili_0_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Aggiorna</defaultConnectorLabel>
+        <rules>
+            <name>Non_Aggiornare</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Lavorazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiornamento_Case_Fine_Bozza</targetReference>
+            </connector>
+            <label>Non Aggiornare</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Se_In_Lavorazione_0</name>
+        <label>Se In Lavorazione</label>
+        <locationX>7604</locationX>
+        <locationY>6014</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaVariabili_0_0_0_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Aggiorna</defaultConnectorLabel>
+        <rules>
+            <name>Non_Aggiornare_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Lavorazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiorna_In_Lavorazione</targetReference>
+            </connector>
+            <label>Non Aggiornare</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>selezione_nuovo_comune</name>
         <label>comune gestito?</label>
         <locationX>7350</locationX>
@@ -2092,11 +2142,11 @@
     <recordLookups>
         <name>CalcoloCodiceCausale</name>
         <label>CalcoloCodiceCausale</label>
-        <locationX>7120</locationX>
+        <locationX>7076</locationX>
         <locationY>7022</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Ok_Tari_e_Stato_in_Lavorazione</targetReference>
+            <targetReference>Ok_Tari</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2184,7 +2234,7 @@
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>7384</locationX>
+        <locationX>7428</locationX>
         <locationY>5654</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2205,7 +2255,7 @@
     <recordLookups>
         <name>GetCaseNonBozza</name>
         <label>GetCaseNonBozza</label>
-        <locationX>8044</locationX>
+        <locationX>8220</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2386,8 +2436,8 @@
     <recordUpdates>
         <name>Aggiorna_In_Lavorazione</name>
         <label>Aggiorna In Lavorazione</label>
-        <locationX>7648</locationX>
-        <locationY>6230</locationY>
+        <locationX>7780</locationX>
+        <locationY>6446</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -2413,8 +2463,8 @@
     <recordUpdates>
         <name>Aggiornamento_Case_Fine_Bozza</name>
         <label>Aggiornamento In Da Inviare</label>
-        <locationX>7120</locationX>
-        <locationY>7478</locationY>
+        <locationX>7076</locationX>
+        <locationY>7694</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
@@ -2423,7 +2473,7 @@
     <recordUpdates>
         <name>Aggiornamento_Case_Fine_Bozza_0</name>
         <label>Aggiornamento In Da Inviare</label>
-        <locationX>8044</locationX>
+        <locationX>8220</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Loading_Screen_0</targetReference>
@@ -3693,8 +3743,8 @@
     <screens>
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
-        <locationX>7120</locationX>
-        <locationY>7598</locationY>
+        <locationX>7076</locationX>
+        <locationY>7814</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3724,7 +3774,7 @@
     <screens>
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
-        <locationX>8044</locationX>
+        <locationX>8220</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4288,7 +4338,7 @@
     <screens>
         <name>Screen_Review_Dati_0</name>
         <label>Screen Review Dati</label>
-        <locationX>8044</locationX>
+        <locationX>8220</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4393,7 +4443,7 @@
     <screens>
         <name>Virtual_Account_0</name>
         <label>Virtual Account</label>
-        <locationX>6922</locationX>
+        <locationX>6878</locationX>
         <locationY>6014</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4555,7 +4605,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>5614</locationX>
+        <locationX>5702</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Case_In_Bozza_Question</targetReference>
@@ -4565,7 +4615,7 @@
     <subflows>
         <name>Annullamento_Prestazione_0</name>
         <label>Annullamento Prestazione</label>
-        <locationX>6526</locationX>
+        <locationX>6482</locationX>
         <locationY>5654</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
