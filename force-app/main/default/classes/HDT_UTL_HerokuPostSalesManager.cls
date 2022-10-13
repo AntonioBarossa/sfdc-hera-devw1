@@ -491,33 +491,35 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 HDT_UTL_DatabaseService.updateSObject(ca);
             }
             //START>>>marco.arci@webresults.it Gestione Risposta per postSales Ambiente
-            Contract contractAmb = new Contract();
-            ServicePoint__c spAmb = new ServicePoint__c();
-            if(implant != null && implant != recordCase.ServicePoint__r.SAPImplantCode__c){
-                spAmb.Id = recordCase.ServicePoint__c;
-                spAmb.SAPImplantCode__c = implant;
-            }
-            if(implantStatus != null && implantStatus != recordCase.ServicePoint__r.Status__c ){
-                spAmb.Id = recordCase.ServicePoint__c;
-                spAmb.Status__c = implantStatus;
-            }
-            if(contractCode != null && contractCode != recordCase.Contract__r.SAPContractCode__c ){
-                contractAmb.Id = recordCase.Contract__c;
-                contractAmb.SAPContractCode__c = contractCode;
-            }
-            if(contractStatus != null && 
-              (contractStatus != recordCase.servicePoint__r.SapContractStatus__c ||
-               contractStatus != recordCase.Contract__r.Status)){
-                contractAmb.Id = recordCase.Contract__c;
-                spAmb.Id = recordCase.ServicePoint__c;
-                contractAmb.Status = contractStatus;
-                spAmb.SapContractStatus__c = contractStatus;
-            }
-            if(contractAmb.Id != null){
-                HDT_UTL_DatabaseService.updateSObject(contractAmb);
-            }
-            if(spAmb.Id != null){
-                HDT_UTL_DatabaseService.updateSObject(spAmb);
+            if(recordCase.Commodity__c.equalsIgnoreCase('Ambiente')){
+                Contract contractAmb = new Contract();
+                ServicePoint__c spAmb = new ServicePoint__c();
+                if(implant != null && implant != recordCase.ServicePoint__r.SAPImplantCode__c){
+                    spAmb.Id = recordCase.ServicePoint__c;
+                    spAmb.SAPImplantCode__c = implant;
+                }
+                if(implantStatus != null && implantStatus != recordCase.ServicePoint__r.Status__c ){
+                    spAmb.Id = recordCase.ServicePoint__c;
+                    spAmb.Status__c = implantStatus;
+                }
+                if(contractCode != null && contractCode != recordCase.Contract__r.SAPContractCode__c ){
+                    contractAmb.Id = recordCase.Contract__c;
+                    contractAmb.SAPContractCode__c = contractCode;
+                }
+                if(contractStatus != null && 
+                (contractStatus != recordCase.servicePoint__r.SapContractStatus__c ||
+                contractStatus != recordCase.Contract__r.Status)){
+                    contractAmb.Id = recordCase.Contract__c;
+                    spAmb.Id = recordCase.ServicePoint__c;
+                    contractAmb.Status = contractStatus;
+                    spAmb.SapContractStatus__c = contractStatus;
+                }
+                if(contractAmb.Id != null){
+                    HDT_UTL_DatabaseService.updateSObject(contractAmb);
+                }
+                if(spAmb.Id != null){
+                    HDT_UTL_DatabaseService.updateSObject(spAmb);
+                }
             }
             //END>>>marco.arci@webresults.it Gestione Risposta per postSales Ambiente
 
