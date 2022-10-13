@@ -57,17 +57,6 @@
                 <componentName>hdtActivityTrace</componentName>
             </componentInstance>
         </itemInstances>
-        <!-- <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>activityId</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>recordId</name>
-                </componentInstanceProperties>
-                <componentName>hdtActivityTrace</componentName>
-            </componentInstance>
-        </itemInstances> -->
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -678,6 +667,13 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Order.Conferma_finale</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_EsitoCQCall}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
