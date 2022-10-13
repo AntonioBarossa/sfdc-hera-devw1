@@ -1628,6 +1628,14 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
                 resolve();
             }*/
+
+            if ( this.sale ) {
+                checkFieldMap['CompanyOwner__c'] = this.sale['Account__r']['CompanyOwner__c'];
+            }
+            if ( !checkFieldMap['SupplyCity__c'] ) 
+            {
+                checkFieldMap['SupplyCity__c'] = this.theRecord['Comune'];
+            }
             
             /**Check coerenza tipo fornitura - mercato di provenienza */
             checkCoerenceServicePoint({servicePoint: this.allSubmitedFields, inputFieldMap: checkFieldMap})
