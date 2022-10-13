@@ -1253,6 +1253,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log("test call");
         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
         let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
+        this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = "", this.sectionDataToSubmit["OnerousReviewableStartDate__c"]="";
+        this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = "", this.sectionDataToSubmit["OnerousUnreviewableStartDate__c"]="";
         this.template.querySelector("c-hdt-active-repentant").startActiveRepentant(decorrenza, dichiarazione);
     }
 

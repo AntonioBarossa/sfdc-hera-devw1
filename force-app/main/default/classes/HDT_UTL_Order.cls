@@ -57,7 +57,7 @@ public inherited sharing class HDT_UTL_Order {
         HDT_QR_Order orQr = new HDT_QR_Order();
         Order o = orQr.getRecordById(ord.id);
 
-        if( 'Acqua'.equalsIgnoreCase(o.Commodity__c) ) {
+        if( 'Acqua'.equalsIgnoreCase(o.Commodity__c) || 'Ambiente'.equalsIgnoreCase(o.Commodity__c)) {
             return true;
         }
         
