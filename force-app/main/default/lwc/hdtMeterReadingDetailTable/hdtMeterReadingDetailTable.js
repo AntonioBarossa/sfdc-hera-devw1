@@ -1,54 +1,119 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getMeterReadingRecords from '@salesforce/apex/HDT_LC_MeterReadingController.getMeterReadingRecords';
+import getConfigurationDetailTable from '@salesforce/apex/HDT_LC_MeterReadingController.getConfigurationDetailTable';
 
 export default class HdtMeterReadingDetailTable extends LightningElement {
 
-    @api columnsobj;
+    columnsobj;
     @api contractNumber;
     @api loadData;
     @api hideCheckboxColumn;
-    //addtionalInputsForNonStandAlone
     @api nonStandAlone;
     @api maxRows;
-
+    @api showModality;
+    @api contractService;
+    showChooseType = false;
     @track meterReadingData;
     @track detailTableHeader = 'Letture';
+    tempList = [
+        {label: 'DEFAULT', name: 'DEFAULT', iconName: 'utility:topic', desc: 'Imposta il valore "default"'},
+        {label: 'FULL', name: 'FULL', iconName: 'utility:wellness', desc: 'Imposta il valore "full"'}
+    ];
     meterReadingError = false;
     meterReadingErrorMessage = '';
     sortedBy;
     defaultSortDirection = 'asc';
     sortDirection = 'asc';
+    modality = 'DEFAULT';
 
     connectedCallback(){
         console.log('HdtMeterReadingDetailTable loaded.');
+        console.log('>>> use new service -> ' + this.showModality);
+        console.log('>>> contractService -> ' + this.contractService);
+        this.configurationData();
     }
 
-    @api loadingData(){
+    configurationData(){
+        getConfigurationDetailTable({contractService: this.contractService})
+        .then(result => {
+
+            if(result.success){
+                this.columnsobj = JSON.parse(result.meterReadingTable);
+                this.showModality = result.trbEnable;
+                this.detailBackendCall();
+            } else {
+                console.log('>>>> ERROR > getContractRecords');
+                this.error = true;
+                this.errorMessage = result.message;
+                this.spinner = false;                
+            }
+
+        }).catch(error => {
+            console.log('>>>> ERROR - catch');
+            console.log(error);
+        });
+    }
+
+    detailBackendCall(){
+
+        getMeterReadingRecords({contractCode : this.contractNumber, modality: this.modality, contractService: this.contractService})
+        .then(result => {
+
+            if(result) {
+                if(result.success){
+                    var obj = JSON.parse(result.data);
+                    this.meterReadingData = obj.data;
+
+                    console.log('>>> data: ' + JSON.stringify(this.meterReadingData));
+
+                    this.detailTableHeader = 'Letture contratto > ' + this.contractNumber;
+                    this.loadData = true;
+
+                } else {
+                    console.log('>>> result error');
+                    this.meterReadingError = true;
+                    this.meterReadingErrorMessage = result.message;
+                }
+                //this.dataLoaded();
+            }
+
+        }).catch(error => {
+            console.log('>>>> ERROR - getContractRecords');
+            console.log(error);
+        });
+    }
+
+    @api loadingData(contractNumber, contractService){
         this.loadData = false;
         this.meterReadingError = false;
         this.meterReadingErrorMessage = '';
+        console.log('>>> contractService -> ' + contractService);
+        console.log('>>> contractNumber -> ' + contractNumber);
+        this.contractNumber = contractNumber;
+        this.contractService = contractService;
+        this.configurationData();
     }
 
-    @wire(getMeterReadingRecords, {contractCode : '$contractNumber'})
-    wiredRecords({ error, data }) {
-        if(data) {
-            if(data.success){
-                var obj = JSON.parse(data.data);
-                this.meterReadingData = obj.data;
-                //console.log(JSON.stringify(this.meterReadingData));
-                this.detailTableHeader = 'Letture contratto > ' + this.contractNumber;
-                this.loadData = true;
-            } else {
-                this.meterReadingError = true;
-                this.meterReadingErrorMessage = data.message;
-            }
-            this.dataLoaded();
-        } else if(error) {
-            console.log('>>>> ERROR > getMeterReadingRecords');
-            this.meterReadingError = true;
-            this.meterReadingErrorMessage = 'ERROR';
-        }
-    }
+    //@wire(getMeterReadingRecords, {contractCode : '$contractNumber', modality: '$modality'})
+    //wiredRecords({ error, data }) {
+    //    if(data) {
+    //        if(data.success){
+    //            var obj = JSON.parse(data.data);
+    //            this.meterReadingData = obj.data;
+    //            console.log(JSON.stringify(this.meterReadingData));
+    //            this.detailTableHeader = 'Letture contratto > ' + this.contractNumber;
+    //            this.loadData = true;
+    //        } else {
+    //            this.meterReadingError = true;
+    //            this.meterReadingErrorMessage = data.message;
+    //        }
+    //        this.dataLoaded();
+    //    } else if(error) {
+    //        console.log('>>>> ERROR > getMeterReadingRecords');
+    //        this.meterReadingError = true;
+    //        this.meterReadingErrorMessage = 'ERROR';
+    //    }
+    //}
 
     dataLoaded(){
         const dataLoad = new CustomEvent("dataload", {
@@ -166,66 +231,20 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
         return;
     }
 
-    /*onHandleSort(event){
-        console.log('## sort event ## ');
-
-        try {
-            const { fieldName: sortedBy, sortDirection } = event.detail;
-            console.log('>>> sortDirection ' + sortDirection);
-            const cloneData = [...this.meterReadingData];
-            cloneData.sort(this.sortBy(sortedBy, sortDirection === 'asc' ? 1 : -1));
-            this.meterReadingData = cloneData;
-
-            this.sortDirection = sortDirection;
-            this.sortedBy = sortedBy;
-
-        } catch(e) {
-            console.log(e);
-        }
-     
+    changeModality(event){
+        this.showChooseType = true;
     }
 
-    sortBy(field, reverse, primer) {
-        const key = primer
-            ? function(x) {
-                  return primer(x[field]);
-              }
-            : function(x) {
-                  return x[field];
-              };
-
-        return function(a, b) {
-            a = key(a);
-            b = key(b);
-            return reverse * ((a > b) - (b > a));
-        };
+    closeModalHandler(event){
+        this.showChooseType = false;
     }
 
-    @api meterReadingBackendCall(contractNumber){
-        console.log('>>>> contractNumber  > ' + contractNumber);
+    setNewChoise(event){
+        this.showChooseType = false;
+        this.modality = event.detail.stmtName;
+        console.log('>>> modality -> ' + this.modality);
         this.loadData = false;
-        getMeterReadingRecords({contractCode: contractNumber}).then(result => {
-
-            if(result.success){
-                this.meterReadingData = result.data;
-                this.detailTableHeader = 'Letture contratto > ' + contractNumber;
-                this.loadData = true;
-            } else {
-                console.log('>>>> ERROR > getMeterReadingRecords');
-                this.meterReadingError = true;
-                this.meterReadingErrorMessage = result.message;
-            }
-
-            const dataLoad = new CustomEvent("dataload", {
-                detail:  {spinner: false}
-            });
-            // Dispatches the event.
-            this.dispatchEvent(dataLoad);
-
-        }).catch(error => {
-            console.log('>>>> ERROR - catch');
-            console.log(JSON.stringify(error));
-        });
-    }*/
+        this.detailBackendCall();
+    }
 
 }

@@ -966,4 +966,11 @@
         <shortDescription>CompanyNameLabel</shortDescription>
         <value>HERA COMM</value>
     </labels>
+    <labels>
+        <fullName>TRB_Enable</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>Enable Turbobilling</shortDescription>
+        <value>Y</value>
+    </labels>
 </CustomLabels>
