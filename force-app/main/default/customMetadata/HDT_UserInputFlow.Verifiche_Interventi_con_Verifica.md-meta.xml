@@ -77,10 +77,6 @@
   {
   &quot;FieldName&quot;:&quot;DistributorName__c&quot;,
   &quot;Column&quot;:2
-  },
-  {
-  &quot;FieldName&quot;:&quot;MeterRelation__c&quot;,
-  &quot;Column&quot;:1
   }
 ]</value>
     </values>
