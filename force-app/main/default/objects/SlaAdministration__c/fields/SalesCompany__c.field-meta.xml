@@ -2,12 +2,44 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SalesCompany__c</fullName>
     <externalId>false</externalId>
-    <label>Societa di vendita</label>
+    <label>Società di vendita</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>HDT_SalesCompany</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Hera Comm Marche</fullName>
+                <default>false</default>
+                <label>Hera Comm Marche</label>
+            </value>
+            <value>
+                <fullName>Acegas Aps Service</fullName>
+                <default>false</default>
+                <label>Acegas Aps Service</label>
+            </value>
+            <value>
+                <fullName>Hera Comm S.p.A.</fullName>
+                <default>false</default>
+                <label>Hera Comm S.p.A.</label>
+            </value>
+            <value>
+                <fullName>EstEnergy S.p.A.</fullName>
+                <default>false</default>
+                <label>EstEnergy S.p.A.</label>
+            </value>
+            <value>
+                <fullName>Hera Spa</fullName>
+                <default>false</default>
+                <label>Hera Spa</label>
+            </value>
+            <value>
+                <fullName>MMS</fullName>
+                <default>false</default>
+                <label>MMS</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>
