@@ -37,7 +37,7 @@
 
                         <template if:false={valueSelected}>
                             <div class="slds-combobox_container slds-size_small">
-                                <div class={cssForContainer}>
+                                <div data-id="comboboxContainer" class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
                                     <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
                                         <input data-id="unselectedCityInput"
                                             class="slds-input"
@@ -53,8 +53,8 @@
                                             <template for:each={cityFilteredOptions} for:item='option'>
                                                 <li key={option.value} role="presentation" class="slds-listbox__item">
                                                     <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
-                                                        <span class="slds-media__body">
-                                                            <span data-id={option.value} class="slds-truncate" title={option.label} onclick={handleOptionClick}>{option.label}</span>
+                                                        <span data-id={option.value} class="slds-media__body" onclick={handleOptionClick}>
+                                                            <span data-id={option.value} class="slds-truncate" title={option.label}>{option.label}</span>
                                                         </span>
                                                     </div>
                                                 </li>
