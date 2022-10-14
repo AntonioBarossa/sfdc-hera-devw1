@@ -26,7 +26,8 @@ public inherited sharing class HDT_UTL_ElectronicInvoicing {
                 if (!String.isBlank(electronicInvoicing.billSendMode) && electronicInvoicing.billSendMode.equals('Fatturazione PA')) {
                     return 'La modalità di invio bolletta non può essere valorizzata con Fatturazione PA.';
                 }
-                if (electronicInvoicing.accountRecordTypeName == 'HDT_RT_Business' && String.isBlank(electronicInvoicing.officeCode) && String.isBlank(electronicInvoicing.certifiedEmail)) {
+                //TK 908382C introdotto check sulla marcatura. Il controllo non deve scattare per il Condominio
+                if (electronicInvoicing.accountRecordTypeName == 'HDT_RT_Business' && !electronicInvoicing.customerMarking.containsIgnoreCase('Condominio') && String.isBlank(electronicInvoicing.officeCode) && String.isBlank(electronicInvoicing.certifiedEmail)) {
                     return 'Per clienti Business è obbligatorio valorizzare almeno uno dei campi: Codice Ufficio/Destinatario oppure PEC Fatturazione Elettronica';
                 }
             }
@@ -70,5 +71,7 @@ public inherited sharing class HDT_UTL_ElectronicInvoicing {
         public String officeCode;
         public String certifiedEmail;
         public String accountRecordTypeName;
+        //TK 908382C introdotto attributo marcatura cliente
+        public String customerMarking;
     }
 }
