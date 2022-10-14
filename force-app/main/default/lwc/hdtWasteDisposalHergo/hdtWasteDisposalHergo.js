@@ -62,7 +62,8 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
             this._checkOnLoadHergo = true;
             this._checkResidente = this.template.querySelector("[data-id='ClientTypology__c']").value == 'Domestico';
             this._typeOperation = this.template.querySelector("[data-id='TypeOperation__c']").value;
-            this.checkConfiguration(event);
+            const checkPayment = this.template.querySelector("[data-id='WithdrawalFee__c']");
+            checkPayment.value = this.checkConfiguration(event);
         }
 
     }
@@ -78,7 +79,7 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
 
         //if(event.target.fieldName == 'TypeOperation__c' || !this._typeOperation){
             this._withdrawConfiguration = null;
-            this.freeWithdrawConfig.forEach((currentItem)=>{
+            this.freeWithdrawConfig?.forEach((currentItem)=>{
                 if(currentItem.TypeOperation__c?.includes(this._typeOperation)){ // multiselect picklist
                     this._withdrawConfiguration = currentItem;
                 }

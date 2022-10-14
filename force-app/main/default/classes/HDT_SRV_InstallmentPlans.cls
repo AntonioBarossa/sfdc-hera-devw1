@@ -64,8 +64,14 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         //SetExpirationDate at CreatedDate+20businessDay
         DateTime createdCase = installmentsQr.getCaseById(recordId).CreatedDate;
         System.debug(LoggingLevel.DEBUG, 'SRV_InstallmentPlans created date -> ' + createdCase);
-        currentCase.ExpirationDate__c = Date.valueOf(createdCase) + 19;
-        currentCase.ExpirationDate__c = paymentsUtl.addBusinessDay(currentCase.ExpirationDate__c, 1);
+        // Expiration Date should be empty for TARI process
+        if (inputs[0].isTariProcess == null || !inputs[0].isTariProcess) {
+
+            currentCase.ExpirationDate__c = Date.valueOf(createdCase) + 19;
+            currentCase.ExpirationDate__c = paymentsUtl.addBusinessDay(currentCase.ExpirationDate__c, 1);
+            
+        }
+        
         System.debug(LoggingLevel.DEBUG, 'SRV_InstallmentPlans expiration date -> ' + currentCase.ExpirationDate__c);
 
         //Set AmountToPayInstallments to TotalPay
@@ -340,6 +346,9 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
 
         @InvocableVariable
         public Boolean applicazioneInteressi;
+
+        @InvocableVariable
+        public Boolean isTariProcess;
     }
 
 
