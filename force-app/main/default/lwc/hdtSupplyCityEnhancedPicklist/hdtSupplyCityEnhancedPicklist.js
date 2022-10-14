@@ -22,7 +22,6 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
     }
 
     @track textInputValue = null;
-    @track cssForContainer = CLOSED_CSS;
 
     _label = 'Comune di fornitura';
     cityTechnicalData = [];
@@ -33,18 +32,16 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
     }
     
     get cityFilteredOptions(){
-        if(this.textInputValue != null && this.textInputValue.length >= 3){
+        this.setContainerCss(CLOSED_CSS);
+        if(this.textInputValue != null && this.textInputValue.length > 2){
             let filteredOptions = [];
             this.cityOptions.forEach( curOpt => {
                 if(curOpt.value.toUpperCase().includes(this.textInputValue.toUpperCase())) filteredOptions.push(curOpt);
             });
-            this.cssForContainer = OPENED_CSS;
+            if(filteredOptions.length > 0) this.setContainerCss(OPENED_CSS);
             return filteredOptions;
         }
-        else{
-            this.cssForContainer = CLOSED_CSS;
-            return null;
-        }
+        else return null;
     }
 
     connectedCallback(){
@@ -81,8 +78,13 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
     }
 
     handleOptionClick(event){
-        this.cssForContainer = CLOSED_CSS;
+        this.setContainerCss(CLOSED_CSS);
         this.outputSupplyCity = event.target.getAttribute('data-id');
+    }
+
+    setContainerCss(cssValue){
+        if(this.template.querySelector('[data-id="comboboxContainer"]'))
+            this.template.querySelector('[data-id="comboboxContainer"]').setAttribute("class", cssValue);
     }
     
 }
