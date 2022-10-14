@@ -63,6 +63,10 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
                     lastNameCode=consonantsLetters.get(0)+vowelsLetters.get(0)+ 'X';
                 }
             }
+            //Caso di Cognome con Due lettere bisogna aggiungere una X
+            if(consonantsLetters.size() <3 && vowelsLetters.size()<1){
+                lastNameCode= consonantsLetters.get(0)+consonantsLetters.get(1) + 'X';
+            }
         }
         return lastNameCode;   
     }

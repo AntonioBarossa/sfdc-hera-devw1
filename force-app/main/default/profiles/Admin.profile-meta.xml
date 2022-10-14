@@ -459,6 +459,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>TownATOTable__c.CompanyOwner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <field>ProcessMatrix__c.ExistActivityDatiDiscordantiNew__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -37129,6 +37134,10 @@
     <layoutAssignments>
         <layout>Case-HDT_VotiveModena</layout>
         <recordType>Case.HDT_RT_VotiveModena</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Segnalazioni</layout>
+        <recordType>Case.HDT_RT_Segnalazioni</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-Close Case Layout</layout>

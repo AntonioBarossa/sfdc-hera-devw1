@@ -420,7 +420,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String contractAccount = reqWrp.requestMap.get('VKONT');
             //START>>>marco.arci@webresults.it Gestione Risposta per postSales Ambiente
             String implant = reqWrp.requestMap.get('ANLAGE');
-            String implantStatus = reqWrp.requestMap.get('ANLAGE_ST');
+            //String implantStatus = reqWrp.requestMap.get('ANLAGE_ST');
             String contractCode = reqWrp.requestMap.get('VERTRAG');
             String contractStatus = reqWrp.requestMap.get('VERTRAG_ST');
             //END>>>marco.arci@webresults.it Gestione Risposta per postSales Ambiente
@@ -491,33 +491,37 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 HDT_UTL_DatabaseService.updateSObject(ca);
             }
             //START>>>marco.arci@webresults.it Gestione Risposta per postSales Ambiente
-            Contract contractAmb = new Contract();
-            ServicePoint__c spAmb = new ServicePoint__c();
-            if(implant != null && implant != recordCase.ServicePoint__r.SAPImplantCode__c){
-                spAmb.Id = recordCase.ServicePoint__c;
-                spAmb.SAPImplantCode__c = implant;
-            }
-            if(implantStatus != null && implantStatus != recordCase.ServicePoint__r.Status__c ){
-                spAmb.Id = recordCase.ServicePoint__c;
-                spAmb.Status__c = implantStatus;
-            }
-            if(contractCode != null && contractCode != recordCase.Contract__r.SAPContractCode__c ){
-                contractAmb.Id = recordCase.Contract__c;
-                contractAmb.SAPContractCode__c = contractCode;
-            }
-            if(contractStatus != null && 
-              (contractStatus != recordCase.servicePoint__r.SapContractStatus__c ||
-               contractStatus != recordCase.Contract__r.Status)){
-                contractAmb.Id = recordCase.Contract__c;
-                spAmb.Id = recordCase.ServicePoint__c;
-                contractAmb.Status = contractStatus;
-                spAmb.SapContractStatus__c = contractStatus;
-            }
-            if(contractAmb.Id != null){
-                HDT_UTL_DatabaseService.updateSObject(contractAmb);
-            }
-            if(spAmb.Id != null){
-                HDT_UTL_DatabaseService.updateSObject(spAmb);
+            if(recordCase.Commodity__c.equalsIgnoreCase('Ambiente')){
+                Contract contractAmb = new Contract();
+                ServicePoint__c spAmb = new ServicePoint__c();
+                if(implant != null && implant != recordCase.ServicePoint__r.SAPImplantCode__c){
+                    spAmb.Id = recordCase.ServicePoint__c;
+                    spAmb.SAPImplantCode__c = implant;
+                }
+                /*
+                if(implantStatus != null && implantStatus != recordCase.ServicePoint__r.Status__c ){
+                    spAmb.Id = recordCase.ServicePoint__c;
+                    spAmb.Status__c = implantStatus;
+                }
+                */
+                if(contractCode != null && contractCode != recordCase.Contract__r.SAPContractCode__c ){
+                    contractAmb.Id = recordCase.Contract__c;
+                    contractAmb.SAPContractCode__c = contractCode;
+                }
+                if(contractStatus != null && 
+                (contractStatus != recordCase.servicePoint__r.SapContractStatus__c ||
+                contractStatus != recordCase.Contract__r.Status)){
+                    contractAmb.Id = recordCase.Contract__c;
+                    spAmb.Id = recordCase.ServicePoint__c;
+                    contractAmb.Status = contractStatus;
+                    spAmb.SapContractStatus__c = contractStatus;
+                }
+                if(contractAmb.Id != null){
+                    HDT_UTL_DatabaseService.updateSObject(contractAmb);
+                }
+                if(spAmb.Id != null){
+                    HDT_UTL_DatabaseService.updateSObject(spAmb);
+                }
             }
             //END>>>marco.arci@webresults.it Gestione Risposta per postSales Ambiente
 
@@ -627,9 +631,16 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
         }else if(currentCase.Phase__c.equalsIgnoreCase('Esito OK da DBO')){
-            //DBO non invia mai il completata
-            currentCase.Phase__c = 'Completata';
-            currentCase.Status = 'Closed';
+            //per i preventivi alla ricezione dell'esito da DBO è necessario inviare il preventivo al cliente
+            if(currentCase.Cluster__c.equalsIgnoreCase('Preventivi') && !currentCase.CausalCode__c.equalsIgnoreCase('E01')){
+                //DBO non invia mai il completata
+                currentCase.Phase__c = 'Inviare preventivo';
+            }else{
+                //DBO non invia mai il completata
+                currentCase.Phase__c = 'Completata';
+                currentCase.Status = 'Closed';
+            }
+            
             updateFuture(JSON.serialize(currentCase));
         }
     }
