@@ -67,8 +67,6 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         // Expiration Date should be empty for TARI process
         if (inputs[0].isTariProcess == null || !inputs[0].isTariProcess) {
 
-            System.debug('sto valorizzando expirationdate');
-
             currentCase.ExpirationDate__c = Date.valueOf(createdCase) + 19;
             currentCase.ExpirationDate__c = paymentsUtl.addBusinessDay(currentCase.ExpirationDate__c, 1);
             
