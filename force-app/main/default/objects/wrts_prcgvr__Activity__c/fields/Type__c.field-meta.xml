@@ -16,6 +16,11 @@
                 <label>Accettazione Voltura</label>
             </value>
             <value>
+                <fullName>Acconto scaduto non pagato da gestire</fullName>
+                <default>false</default>
+                <label>Acconto scaduto non pagato da gestire</label>
+            </value>
+            <value>
                 <fullName>Amm. Precheck KO SII</fullName>
                 <default>false</default>
                 <label>Amm. Precheck KO SII</label>
@@ -401,6 +406,11 @@
                 <label>Gestione processi Ultima Istanza</label>
             </value>
             <value>
+                <fullName>Gestione richiesta social</fullName>
+                <default>false</default>
+                <label>Gestione richiesta social</label>
+            </value>
+            <value>
                 <fullName>Gestione Sblocco al Calcolo</fullName>
                 <default>false</default>
                 <label>Gestione Sblocco al Calcolo</label>
@@ -659,6 +669,11 @@
                 <fullName>Quality Call</fullName>
                 <default>false</default>
                 <label>Quality Call</label>
+            </value>
+            <value>
+                <fullName>Quality Scaduta</fullName>
+                <default>false</default>
+                <label>Quality Scaduta</label>
             </value>
             <value>
                 <fullName>Rapporti con i distributori e SII</fullName>

@@ -642,7 +642,7 @@ public inherited sharing class HDT_QR_CampaignMember {
     * @return List<CampaignMember>
     */
     public static List<CampaignMember> getSiblingMembersByAccountId(List<String> accountIds, String campaignChannel) {
-        List<CampaignMember> allMembers = [
+        /* List<CampaignMember> allMembers = [
             SELECT CampaignId 
             FROM CampaignMember 
             WHERE Campaign.Required__c = true
@@ -663,7 +663,17 @@ public inherited sharing class HDT_QR_CampaignMember {
             AND HasResponded = false
             AND Status != 'Non Proposto Auto'
             WITH SECURITY_ENFORCED
-        ];
+        ]; */
+        Date d = Date.today();
+        return [SELECT Id FROM CampaignMember WHERE Contact.AccountId IN :accountIds
+                    AND Campaign.Channel__c = :campaignChannel
+                    AND Campaign.Required__c = true
+                    AND Campaign.Category__c = 'Campagna CRM'
+                    AND Campaign.isActive = true
+                    AND Campaign.StartDate <= :d
+                    AND (Campaign.EndDate >= :d OR Campaign.EndDate = NULL)
+                    AND Status != 'Non Proposto Auto'
+                    AND HasResponded = false WITH SECURITY_ENFORCED];
     }
 
     public CampaignMember getRecordById(String campaignMemberId) {

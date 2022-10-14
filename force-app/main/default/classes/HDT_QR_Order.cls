@@ -616,8 +616,8 @@ public inherited sharing class HDT_QR_Order {
             Order
             WHERE ParentOrder__c IN :parentOrderIds
             AND Phase__c NOT IN ('Annullato')
-            AND ProcessType__c != ''
-            AND ProcessType__c != 'VAS'
+            /* AND ProcessType__c != ''
+            AND ProcessType__c != 'VAS' */
             WITH SECURITY_ENFORCED
         ];
     }
@@ -1334,7 +1334,7 @@ public inherited sharing class HDT_QR_Order {
             Select 
             id,
             Phase__c,
-            AgencyCode__c
+            AgencyCode__c, SignedDate__c
             from Order 
             Where id = :id
             WITH SECURITY_ENFORCED
@@ -1347,8 +1347,13 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getOrderForComfort(String id){
-        return [SELECT Id, Phase__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, RecordType.DeveloperName FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
+        return [SELECT Id, Phase__c, SignedDate__c, isTransition__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, ParentOrder__c, RecordType.DeveloperName, DateComfortCall__c FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
     }
+
+    public List<Order> getAllOrdersForComfort(String id){
+        return [SELECT Id, Phase__c, ConfirmCustomerContract__c, CancellationReason__c, ParentOrder__c, QualityCall__c FROM Order WHERE QualityCall__c =true AND ParentOrder__c = :id WITH SECURITY_ENFORCED];
+    }
+
 
     public List<Order> getOrdersList(List<String> ordIdList){
         return [SELECT Id, Phase__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, RecordType.DeveloperName FROM Order WHERE Id = :ordIdList WITH SECURITY_ENFORCED];

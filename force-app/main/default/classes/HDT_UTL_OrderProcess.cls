@@ -275,14 +275,27 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         if(!orderParentIds.isEmpty()){
             List<Order> childOrders = orderQr.getChildOrdersForDateCalculation(orderParentIds);
+            List<Order> childOrdersToWork = new List<Order>();
+            List<Order> onlySignedDateUpdate = new List<Order>();
             for(Order singleOrder : childOrders){
+                Boolean changeDate = false;
                 if(singleOrder.SignedDate__c == null){
+                    changeDate=true;
                     singleOrder.SignedDate__c = Date.today();
                 }
+                if (changeDate && ('VAS'.equalsIgnoreCase(singleOrder.ProcessType__c) || String.isBlank(singleOrder.ProcessType__c))){
+                    onlySignedDateUpdate.add(singleOrder);
+                    continue;
+                }
+                childOrdersToWork.add(singleOrder);
             }
-            HDT_UTL_ProcessDateManager.calculateOrderProcessDate(childOrders);
-            if (!childOrders.isEmpty()) {
-                HDT_UTL_DatabaseService.updateSObject(childOrders);
+            childOrders = null;
+            HDT_UTL_ProcessDateManager.calculateOrderProcessDate(childOrdersToWork);
+            if(!onlySignedDateUpdate.isEmpty()){
+                childOrdersToWork.addAll(onlySignedDateUpdate);
+            }
+            if (!childOrdersToWork.isEmpty()) {
+                HDT_UTL_DatabaseService.updateSObject(childOrdersToWork);
             }
         }
     }
@@ -511,7 +524,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                             }else{
                                 newOrder.DateSentToSII__c = Date.today();
                                 String category = newOrder.CustomerCategory__c;
-                                if(category.equalsIgnoreCase('Famiglie')){
+                                if('Famiglie'.equalsIgnoreCase(category) || newOrder.RecessNotice__c == 0){
                                     newOrdersListRecalc.add(newOrder);
                                 }
                             }
@@ -832,8 +845,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 if ( String.isNotBlank(String.valueOf(temp.ServicePoint__c))) {
                     ServicePoint__c sp=new ServicePoint__c(id=temp.ServicePoint__c);
                     sp.supplytype__c = temp.ServicePoint__r.supplytypeTemp__c;
-                    sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;    
-                    sp.SAPImplantCode__c=temp.SapImplantCode__c; 
+                    sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;  
+                    if (String.isNotBlank(temp.SAPImplantCode__c)) {
+                        sp.SAPImplantCode__c= temp.SapImplantCode__c; 
+                    }  
                     sp.account__c = temp.AccountId;
                     mapObjToUpdate.put(sp.Id, sp);
                 }
@@ -1383,10 +1398,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+newOrder.PhaseStory__c
                     : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
                     /* Contracted */
-                    if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& newOrder.Status.equalsIgnoreCase('Activated') && !newOrder.SBQQ__Contracted__c && !oldOrder.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) 
+                    /* if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& newOrder.Status.equalsIgnoreCase('Activated') && !newOrder.SBQQ__Contracted__c && !oldOrder.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) 
                     { 
                         newOrder.SBQQ__Contracted__c=true; 
-                    }      
+                    } */      
                     if(!orderIds.contains(newOrder.Id))
                     {
                         orderIds.add(newOrder.Id);

@@ -14,17 +14,30 @@ public with sharing class HDT_SRV_Paperless {
         List<DocumentSelected__c> documents = new List<DocumentSelected__c>();
         Case currentCase = new Case();
         String pretty;
+        String modalitaPagamento;
 
         currentCase = paperlessQr.getCaseById(recordId);
         documents = paperlessQr.getDocumentSelectedByCase(recordId);
-
+        switch on (currentCase.DocumentPaymentMethod__c){
+            when 'Bollettino Paperless' {
+                modalitaPagamento = 'P';
+            }
+            when 'Bonifico Paperless' {
+                modalitaPagamento = 'B';
+            }
+            when else {
+                modalitaPagamento = '';
+            }
+        }
         System.debug(LoggingLevel.DEBUG, 'SRV_Paperless Case--> '+currentCase);
         System.debug(LoggingLevel.DEBUG, 'SRV_Paperless Documetns--> '+documents);
+
 
         Map<String, Object> caseMap = new Map<String, Object>{
             'codiceCliente' => currentCase.AccountCode__c,
             'contoContrattuale' => currentCase.BillingProfile__r.ContractAccountCode__c,
-            'rds' => currentCase.CaseNumber
+            'rds' => currentCase.CaseNumber,
+            'modalitaPagamento' => modalitaPagamento
         };
 
         caseListMap.add(caseMap);

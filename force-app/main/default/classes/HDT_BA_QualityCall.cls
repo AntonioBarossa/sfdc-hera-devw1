@@ -149,12 +149,12 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     if(ordersAlreadyAssigned.contains(ord.ParentOrder__c)){
                         ordIdToAssoc = ord.ParentOrder__c;
                     }
-                    String activityType = ord.isTransition__c ? HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL : HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO;
+                    //String activityType = ord.isTransition__c ? HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL : HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO;
                     activityVas.add(new wrts_prcgvr__Activity__c(
                         RecordTypeId = rc.Id,
                         Account__c = ord.AccountId,
                         Order__c = ordIdToAssoc,
-                        Type__c = activityType,
+                        Type__c = 'Quality Scaduta',
                         wrts_prcgvr__Status__c = 'Aperta',
                         wrts_prcgvr__Description__c = 'Non è stato possibile procedere all’annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS'
                     ));
@@ -212,6 +212,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                         //Devo andare a controllare se sul Parent Order è presente una QualityCall aperta. Nel caso, vado a chiuderla.
                         wrts_prcgvr__Activity__c actToClose = parentQualCallMap.get(parent);
                         actToClose.wrts_prcgvr__Status__c = 'Chiusa';
+                        actToClose.ContactResult__c='Chiusa Per Fine Intervallo';
                         activitiesToClose.add(actToClose);
                     }
                 }

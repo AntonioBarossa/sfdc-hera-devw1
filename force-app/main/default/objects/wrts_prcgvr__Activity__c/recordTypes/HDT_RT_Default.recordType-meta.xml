@@ -2798,6 +2798,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Acconto scaduto non pagato da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Approvazione Offerte</fullName>
             <default>false</default>
         </values>
@@ -2936,6 +2940,10 @@
         </values>
         <values>
             <fullName>Gestione processi di Misura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione richiesta social</fullName>
             <default>false</default>
         </values>
         <values>

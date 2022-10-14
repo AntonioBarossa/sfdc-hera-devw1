@@ -115,6 +115,16 @@
                 <default>false</default>
                 <label>Piano Straordinario</label>
             </value>
+            <value>
+                <fullName>Assistenza sociale (cliente)</fullName>
+                <default>false</default>
+                <label>Assistenza sociale (cliente)</label>
+            </value>
+            <value>
+                <fullName>Assistenza sociale (ente)</fullName>
+                <default>false</default>
+                <label>Assistenza sociale (ente)</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

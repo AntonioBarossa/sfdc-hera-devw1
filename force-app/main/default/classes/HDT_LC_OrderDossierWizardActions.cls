@@ -536,10 +536,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         }
         //email
         if( order.ShippingMail__c != null ){
-            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.ShippingMail__c WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.ShippingMail__c AND Type__c = 'E-mail Anagrafica' WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
             maxCount = swapMax(maxCount, count );
         }else if( order.Contact__r.Email != null ){
-            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.Contact__r.Email WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.Contact__r.Email AND Type__c = 'E-mail Anagrafica' WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
             maxCount = swapMax(maxCount, count );
         }
         return maxCount;
@@ -565,7 +565,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         Order.ServicePointCode__c,
         Order.VasSubtype__c
         FROM OrderItem
-        WHERE Order.ParentOrder__c = :orderParentId
+        WHERE Order.ParentOrder__c = :orderParentId AND Order.Status NOT IN ('Annullato')
         WITH SECURITY_ENFORCED];
 
         List<SObject> sobjToUpdate = new List<SObject>();

@@ -9,14 +9,14 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
     private static Set<String> dynamicWorkGroupChannels = new Set<String> {
         'Assistente web',
         'Back office',
-        'Consip ',
+        'Consip',
         'PA',
         'Protocollo',
         'ServiziSociali',
         'Staff',
         'Supporto agenzie',
         'Supporto GDA',
-        'Back office Vendita ',
+        'Back office Vendita',
         'Back office Teleselling'
     };
 
