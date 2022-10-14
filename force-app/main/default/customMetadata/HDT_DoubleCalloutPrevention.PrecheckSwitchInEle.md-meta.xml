@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>PrecheckSwitchInEle</label>
+    <protected>false</protected>
+    <values>
+        <field>ApexClass__c</field>
+        <value xsi:type="xsd:string">HDT_WS_SalesApexCalloutAction</value>
+    </values>
+    <values>
+        <field>Arguments__c</field>
+        <value xsi:type="xsd:string">$CalloutTemplate=PKETEMP0007;requestType=CREA_RIC;</value>
+    </values>
+    <values>
+        <field>CheckOnPhaseStory__c</field>
+        <value xsi:type="xsd:string">Amm. Precheck OK SII</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>MethodToCheck__c</field>
+        <value xsi:type="xsd:string">PrecheckEECreaRich</value>
+    </values>
+    <values>
+        <field>ObjectName__c</field>
+        <value xsi:type="xsd:string">Order</value>
+    </values>
+    <values>
+        <field>PhaseToCheck__c</field>
+        <value xsi:type="xsd:string">Comunicazione verso Heroku</value>
+    </values>
+    <values>
+        <field>ProcessType__c</field>
+        <value xsi:type="xsd:string">Switch in Ele</value>
+    </values>
+</CustomMetadata>
