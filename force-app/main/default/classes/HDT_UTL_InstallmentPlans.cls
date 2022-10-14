@@ -23,7 +23,7 @@ public inherited sharing class HDT_UTL_InstallmentPlans {
             'RefundableEscape__c',
             'WorkStatus__c'};
 
-        if (inputs[0].isTariProcess) {
+        if (inputs[0].isTariProcess != null && inputs[0].isTariProcess) {
             criteriaFields.addAll( new Set<String>{'BillingCity__c', 'RateCategory__c'});
         }
 
