@@ -766,7 +766,7 @@
     </choices>
     <choices>
         <name>UsoDomesticoResidenteTIA_Domesticinonresidenti</name>
-        <choiceText>Uso Domestico ResidenteTIA - Domestici non residenti</choiceText>
+        <choiceText>TIA - Domestici non residenti</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>TIA - Domestici non residenti</stringValue>
@@ -774,7 +774,7 @@
     </choices>
     <choices>
         <name>UsoDomesticoResidenteTIA_Domesticiresidenti</name>
-        <choiceText>Uso Domestico ResidenteTIA - Domestici residenti</choiceText>
+        <choiceText>TIA - Domestici residenti</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>TIA - Domestici residenti</stringValue>
@@ -782,7 +782,7 @@
     </choices>
     <choices>
         <name>UsoNonDomesticoTIA_Utenzenondomestiche</name>
-        <choiceText>Uso Non DomesticoTIA - Utenze non domestiche</choiceText>
+        <choiceText>TIA - Utenze non domestiche</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>TIA - Utenze non domestiche</stringValue>
