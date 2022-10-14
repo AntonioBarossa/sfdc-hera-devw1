@@ -1024,7 +1024,7 @@
         </rules>
         <rules>
             <name>Valore_numero_massimo_rate_concedibili_non_valido</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Case_Tari_Layout.RequestSource__c</leftValueReference>
                 <operator>NotEqualTo</operator>
