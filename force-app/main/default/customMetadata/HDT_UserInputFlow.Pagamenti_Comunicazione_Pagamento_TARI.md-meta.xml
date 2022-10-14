@@ -39,7 +39,9 @@
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[
 {&quot;FieldName&quot;:&quot;AccountId&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;BillingProfile__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1}
+{&quot;FieldName&quot;:&quot;BillingProfile__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
+{&quot;FieldName&quot;:&quot;ContactPhone&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
+{&quot;FieldName&quot;:&quot;ContactMobile&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1}
 ]</value>
     </values>
     <values>
