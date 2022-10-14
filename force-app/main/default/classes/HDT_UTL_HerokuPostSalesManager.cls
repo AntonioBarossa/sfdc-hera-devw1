@@ -420,7 +420,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String contractAccount = reqWrp.requestMap.get('VKONT');
             //START>>>marco.arci@webresults.it Gestione Risposta per postSales Ambiente
             String implant = reqWrp.requestMap.get('ANLAGE');
-            String implantStatus = reqWrp.requestMap.get('ANLAGE_ST');
+            //String implantStatus = reqWrp.requestMap.get('ANLAGE_ST');
             String contractCode = reqWrp.requestMap.get('VERTRAG');
             String contractStatus = reqWrp.requestMap.get('VERTRAG_ST');
             //END>>>marco.arci@webresults.it Gestione Risposta per postSales Ambiente
@@ -498,10 +498,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     spAmb.Id = recordCase.ServicePoint__c;
                     spAmb.SAPImplantCode__c = implant;
                 }
+                /*
                 if(implantStatus != null && implantStatus != recordCase.ServicePoint__r.Status__c ){
                     spAmb.Id = recordCase.ServicePoint__c;
                     spAmb.Status__c = implantStatus;
                 }
+                */
                 if(contractCode != null && contractCode != recordCase.Contract__r.SAPContractCode__c ){
                     contractAmb.Id = recordCase.Contract__c;
                     contractAmb.SAPContractCode__c = contractCode;
