@@ -752,60 +752,9 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>CustomButton.Case.HDT_Annullamento</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND (6 OR (7 AND 8)) AND 9</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.NotCancellable__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>false</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Status}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Closed</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Ammissibilità KO</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Esito KO da DL</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Esito KO da SII</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.FlyingRequest__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>false</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.FlyingRequest__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_AnnullamentoPraticheInVolo}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Commodity__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Ambiente</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>CustomButton.Case.HDT_DynamicCancellation</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>NE</operator>
@@ -815,11 +764,6 @@
                                     <leftValue>{!Record.NotCancellable__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>false</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Commodity__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Ambiente</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -870,37 +814,6 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Case.HDT_ChangePriority</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>CustomButton.Case.Riprendi_Processo_Sales</value>
-                            <visibilityRule>
-                                <booleanFilter>(1 OR 2 OR 3) AND 4 AND 5</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Bozza</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Sospesa</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>In Lavorazione</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Type}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Contratti/Bonus Commerciale</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Type}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Documentale/Copia Contratto</rightValue>
-                                </criteria>
-                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Case.HDT_CreateDistributorApointment</value>
@@ -1079,7 +992,7 @@
         <name>rightsidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>HDT General Case Record Page</masterLabel>
+    <masterLabel>HDT Reclami Tari</masterLabel>
     <parentFlexiPage>support__Case_rec_L_3col</parentFlexiPage>
     <sobjectType>Case</sobjectType>
     <template>
