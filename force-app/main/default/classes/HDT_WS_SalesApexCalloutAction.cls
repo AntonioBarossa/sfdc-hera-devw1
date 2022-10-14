@@ -116,7 +116,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             try{
                 map<String,String> fieldValueResponse = new map<String,String>();
                 wrts_prcgvr.MRR_1_0.MultiResponse responseService= makeCallout(multirequestObj, action, getEndpoint(obj));
-                
+                //system.debug('Debug response: '+HDT_SRV_BillableVasDeactivation.createLogObj(multirequestObj, responseService, argsMap)?.wrts_prcgvr__Description__c);
                 Order ord = new Order();
                 ord.id = (id)obj.get('Id');
                 ord.AccountId = (id)obj.get('AccountId'); 

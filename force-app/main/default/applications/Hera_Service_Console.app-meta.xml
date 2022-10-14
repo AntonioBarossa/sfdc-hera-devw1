@@ -93,7 +93,7 @@
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>HDT_Comunicazione_Documentale_Record_Page</content>
-        <formFactor>Small</formFactor>
+        <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
         <pageOrSobjectType>DocumentSendTracking__c</pageOrSobjectType>
@@ -102,7 +102,7 @@
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>HDT_Comunicazione_Documentale_Record_Page</content>
-        <formFactor>Large</formFactor>
+        <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
         <pageOrSobjectType>DocumentSendTracking__c</pageOrSobjectType>
@@ -310,6 +310,30 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
+        <content>Case_Record_Page2</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Case_Record_Page2</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Vendita_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Sale__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
         <content>HDT_Order_Default</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Order</pageOrSobjectType>
@@ -319,6 +343,14 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
+        <content>Vendita_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Sale__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
         <content>Case_Record_Page2</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
@@ -348,38 +380,6 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <type>Flexipage</type>
         <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Case_Record_Page2</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Case_Record_Page2</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Vendita_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Sale__c</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Vendita_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Sale__c</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -762,6 +762,1932 @@
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Order</pageOrSobjectType>
         <recordType>Order.HDT_RT_Voltura</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Disattivazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_StornoRateizzazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ErroreFatturazione_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Variazioni_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Scarti</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Scarto</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Scarti</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Scarto</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Scarti</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Scarto</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Scarti</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Scarto</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Scarti</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Scarto</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Scarti</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Scarto</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Scarti</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Scarto</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Analytics Cloud Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Analytics Cloud Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Analytics Cloud Security User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Analytics Cloud Security User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Chatter External User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Chatter External User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Chatter Free User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>CPQ Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>CPQ Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Door2Door Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Door2Door Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Guest License User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Guest License User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Identity User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Identity User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>MarketingProfile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Chatter Free User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Chatter Moderator User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Chatter Moderator User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>ContractManager</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>ContractManager</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>MarketingProfile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Minimum Access - Salesforce</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Minimum Access - Salesforce</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Partner Community User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Partner Community User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>PrendiAppuntamento Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>PrendiAppuntamento Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Read Only</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Read Only</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Sales Insights Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Sales Insights Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>SolutionManager</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>SolutionManager</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>SalesforceIQ Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>SalesforceIQ Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Standard</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Standard</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>THIntegrationProfile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>THIntegrationProfile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Trailhead</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Pagamenti_Rimborso</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+        <type>Flexipage</type>
+        <profile>Trailhead</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Scarti</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Scarto</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Scarti</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Scarto</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Scarti</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Scarto</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Scarti</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Scarto</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Scarti</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Scarto</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Scarti</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Scarto</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Scarti</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Scarto</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Reclami_Tari</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
         <type>Flexipage</type>
         <profile>Hera M2M Integration User</profile>
     </profileActionOverrides>
