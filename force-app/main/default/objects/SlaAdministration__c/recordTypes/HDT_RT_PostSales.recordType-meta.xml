@@ -555,26 +555,61 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Ato__c</picklist>
+        <values>
+            <fullName>AATO 1 MARCHE NORD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ATO Bacchiglione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ATO Orientale Triestino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 9</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CaseField__c</picklist>
         <values>
-            <fullName>Data Inserimento Richiesta</fullName>
+            <fullName>CustomerRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Data Pagamento</fullName>
+            <fullName>PaymentDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Data Ricezione Richiesta</fullName>
+            <fullName>WrittenReceiptRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Cluster__c</picklist>
-        <values>
-            <fullName>Ambiente</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Annullamento</fullName>
             <default>false</default>
@@ -600,19 +635,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Generiche Attivazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Generiche VAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HERA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Indennizzi</fullName>
             <default>false</default>
         </values>
         <values>
@@ -645,14 +668,6 @@
         </values>
         <values>
             <fullName>Reclami</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Segnalazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Social</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1913,38 +1928,522 @@
     <picklistValues>
         <picklist>OrderField__c</picklist>
         <values>
-            <fullName>Data consenso E-mail PEC Invio Bolletta</fullName>
+            <fullName>EffectiveDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Data decorrenza</fullName>
+            <fullName>SendCertifiedEmailConsentDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Data differita</fullName>
+            <fullName>SendRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Data inizio Validità Codice Destinatario</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Data invio richiesta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Data lettura Attuale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Data lettura retroattiva</fullName>
+            <fullName>SubjectCodeStartDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Process__c</picklist>
         <values>
+            <fullName>Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Allineamento Anagrafica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Allineamento Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Altre Verifiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento Contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Associazione Utente Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attivazione Click%26Pay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autoelettrica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autolettura da cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autolettura da processo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BP%2FCA - errata categoria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caduta Linea%2FChiamata Muta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio contatore non registrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiusura Contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comportamento Altri Venditori</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comportamento Venditori HC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione Pagamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione di Fallimento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Condizioni Contrattuali Errate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consegna copia chiave GdM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contenzioso In Corso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratti%2FBonus Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratto Non Richiesto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Copia Bolletta%2FBollettino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dettaglio Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dichiarazione di intento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disassociazione Utente Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivazione VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentale%2FCopia Contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doppi Pagamenti%2FIncassi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emissione Impulsi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore Chiamata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore di Fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esercizio Diritti Privacy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fiscale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Bonus Sociale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Calamità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Disalimentabilità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HVAC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Indennizzo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazioni ambientali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazioni servizi Hera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interruzione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inversione del Contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mancata Telelettura%2Flettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marcatura%2FUso PdR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Alert</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Contr Preattivazione Anagr Res</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Contr Preattivazione Pagamento Residenziale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Contratto Preattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Layout di dettaglio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Portale SOL Gestione Energia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Privacy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Tariffa Residente%2FNon Residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica%2FAzzeramento Consumo Annuo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notifica Attivazione POD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notifica Variazione Stato PDR SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuovo Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuovo Impianto - Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamento ClickPay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamento Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paperless</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piano Rateizzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prescrizione Fatture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proroga Temporanea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recesso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recesso per Altri Motivi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recesso per Rifiuto Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recesso per Ripensamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recesso su Richiesta Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reclamo Scritto%2FRich%2E Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rettifica Consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca Domiciliazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riattivazione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riattivazione Non Morose</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riattivazione a seguito di cessato pericolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Domiciliazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta lettura cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ricostruzione Consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimborso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimozione Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripristino Fornitura Interrotta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione No Disalimentabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione No Punto Sospeso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione No Sospensione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione Punto Sospeso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ritorno a Fatturazione Bimestrale%2FMensile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito Emissione Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospensione Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospensione Canone Rai Calamità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospensione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospensione a seguito di potenziale pericolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sost%2E contatore cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Split Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spostamento Contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spostamento Votive Modena</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Storno Rateizzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch Out SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch Out per Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Testo Contratto in Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Tutti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione POD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione%2FSeparazione BP-CA-Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena%2FIntervento Riattivazione luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena%2FNuovo contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena%2FSubentro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Anagrafica Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Domiciliazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Fase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Portata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Potenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Tensione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione indirizzo di fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione su Amministratore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Dati al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica GDM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Tensione - Pressione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Titolarità POD%2FPDR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Votive Modena Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Votive Modena Contestazione Fattura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
     </picklistValues>
