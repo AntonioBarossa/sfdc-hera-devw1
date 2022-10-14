@@ -5698,6 +5698,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>ServicePoint__c</field>
+            <value>
+                <elementReference>InputServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Type</field>
             <value>
                 <elementReference>ProcessType</elementReference>
