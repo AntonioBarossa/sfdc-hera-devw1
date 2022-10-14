@@ -596,90 +596,22 @@
     <picklistValues>
         <picklist>CaseField__c</picklist>
         <values>
-            <fullName>CustomerRequestDate%5F%5Fc</fullName>
+            <fullName>CustomerRequestDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>PaymentDate%5F%5Fc</fullName>
+            <fullName>PaymentDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>WrittenReceiptRequestDate%5F%5Fc</fullName>
+            <fullName>WrittenReceiptRequestDate__c</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Cluster__c</picklist>
         <values>
-            <fullName>Annullamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Attivazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Autolettura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Canone Rai</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Disattivazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fatturazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Generiche VAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Informative</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Modifiche Anagrafiche</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Morosità</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Notifiche</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pagamenti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PostSales VAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reclami</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Variazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifiche</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Voltura</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1928,67 +1860,67 @@
     <picklistValues>
         <picklist>OrderField__c</picklist>
         <values>
-            <fullName>CancellationRequestDate%5F%5Fc</fullName>
+            <fullName>CancellationRequestDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>ChangePhaseDate%5F%5Fc</fullName>
+            <fullName>ChangePhaseDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>CustomerRequestDate%5F%5Fc</fullName>
+            <fullName>CustomerRequestDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>DocumentReceiptDate%5F%5Fc</fullName>
+            <fullName>DocumentReceiptDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>EffectiveDate%5F%5Fc</fullName>
+            <fullName>EffectiveDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>RetroactiveDate%5F%5Fc</fullName>
+            <fullName>RetroactiveDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SapContractActivationDate%5F%5Fc</fullName>
+            <fullName>SapContractActivationDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SendCertifiedEmailConsentDate%5F%5Fc</fullName>
+            <fullName>SendCertifiedEmailConsentDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SendRequestDate%5F%5Fc</fullName>
+            <fullName>SendRequestDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SendToDistributorDate%5F%5Fc</fullName>
+            <fullName>SendToDistributorDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SignedDate%5F%5Fc</fullName>
+            <fullName>SignedDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SubjectCodeEndDate%5F%5Fc</fullName>
+            <fullName>SubjectCodeEndDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SubjectCodeStartDate%5F%5Fc</fullName>
+            <fullName>SubjectCodeStartDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>TerminationDate%5F%5Fc</fullName>
+            <fullName>TerminationDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>ValidityDateEstimate%5F%5Fc</fullName>
+            <fullName>ValidityDateEstimate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>WizardCompletedDate%5F%5Fc</fullName>
+            <fullName>WizardCompletedDate__c</fullName>
             <default>false</default>
         </values>
     </picklistValues>

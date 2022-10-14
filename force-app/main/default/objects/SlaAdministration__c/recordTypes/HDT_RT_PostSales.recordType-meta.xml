@@ -596,15 +596,15 @@
     <picklistValues>
         <picklist>CaseField__c</picklist>
         <values>
-            <fullName>CustomerRequestDate%5F%5Fc</fullName>
+            <fullName>CustomerRequestDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>PaymentDate%5F%5Fc</fullName>
+            <fullName>PaymentDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>WrittenReceiptRequestDate%5F%5Fc</fullName>
+            <fullName>WrittenReceiptRequestDate__c</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1928,19 +1928,19 @@
     <picklistValues>
         <picklist>OrderField__c</picklist>
         <values>
-            <fullName>EffectiveDate%5F%5Fc</fullName>
+            <fullName>EffectiveDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SendCertifiedEmailConsentDate%5F%5Fc</fullName>
+            <fullName>SendCertifiedEmailConsentDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SendRequestDate%5F%5Fc</fullName>
+            <fullName>SendRequestDate__c</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SubjectCodeStartDate%5F%5Fc</fullName>
+            <fullName>SubjectCodeStartDate__c</fullName>
             <default>false</default>
         </values>
     </picklistValues>
