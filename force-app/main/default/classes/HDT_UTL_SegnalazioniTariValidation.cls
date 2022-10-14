@@ -35,7 +35,7 @@ public inherited sharing class HDT_UTL_SegnalazioniTariValidation implements HDT
     }
 
     private String gestioneRifiutiValidate(Case currCase, String fields){
-        if(STRING.isBlank(currCase.InvoicingCity__c) && STRING.isBlank(getFieldValue(fields, 'AlternativeAddress__c'))) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Indirizzo!'));
+        if(STRING.isBlank(currCase.SupplyCity__c) && STRING.isBlank(currCase.InvoicingCity__c) && STRING.isBlank(getFieldValue(fields, 'AlternativeAddress__c'))) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Indirizzo!'));
 
         if(STRING.isBlank(getFieldValue(fields, 'MaterialDescription__c'))) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Selezionare i materiali da ritirare!'));
 
