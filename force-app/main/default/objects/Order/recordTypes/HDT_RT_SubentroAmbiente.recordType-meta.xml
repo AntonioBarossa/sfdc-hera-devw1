@@ -2618,10 +2618,10 @@
 			<fullName>Documentazione Validata</fullName>
 			<default>false</default>
 		</values>
-        <value>
+        <values>
             <fullName>Errore lavorazione SAP</fullName>
             <default>false</default>
-        </value>
+        </values>
 		<values>
 			<fullName>Esito KO Da SAP</fullName>
 			<default>false</default>
