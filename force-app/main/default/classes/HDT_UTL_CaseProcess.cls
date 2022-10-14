@@ -178,7 +178,7 @@ public with sharing class HDT_UTL_CaseProcess {
                 /* Richiesta Parere
                 * Il case padre (reclamo scritto) viene riportato In Lavorazione
                 */
-                if(caseNew.Type.equalsIgnoreCase('Richiesta Parere') && newPhase.equalsIgnoreCase('Annullato'))
+                if(caseNew.Type.equalsIgnoreCase('Richiesta Parere') && newPhase.equalsIgnoreCase('Annullato') && caseNew.ParentId != null)
                 {
                     Case complaintCase = new Case();
                     complaintCase.Id = caseNew.ParentId;
