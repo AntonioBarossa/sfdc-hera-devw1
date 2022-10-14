@@ -2607,6 +2607,10 @@
 			<fullName>In attesa Validazione</fullName>
 			<default>false</default>
 		</values>
+        <values>
+            <fullName>Errore lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
 		<values>
 			<fullName>Esito KO Da SAP</fullName>
 			<default>false</default>
