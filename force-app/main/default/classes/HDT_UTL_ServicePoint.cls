@@ -288,6 +288,15 @@ public with sharing class HDT_UTL_ServicePoint {
             if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 2) {
                 spNew.PurificationInfoOnTheInvoice__c = 'Si - Ridotta';                
             }
+        }        
+        if(mapRes.get('CODICE_ATECO')!=null && !String.isBlank(mapRes.get('CODICE_ATECO'))){
+            spNew.IstatCode__c = mapRes.get('CODICE_ATECO');
+        }
+        if(mapRes.get('TUCATCOM00')!=null && !String.isBlank(mapRes.get('TUCATCOM00'))){
+            spNew.RonchiCategoryCode__c = mapRes.get('TUCATCOM00');
+        }
+        if(mapRes.get('TUSCATCOM0')!=null && !String.isBlank(mapRes.get('TUSCATCOM0'))){
+            spNew.RonchiSubCategoryCode__c = mapRes.get('TUSCATCOM0');
         }
         if(mapRes.get('TRATAUNICA')!=null && !String.isBlank(mapRes.get('TRATAUNICA'))){
             spNew.SingleInstallmentOperating__c = mapRes.get('TRATAUNICA');

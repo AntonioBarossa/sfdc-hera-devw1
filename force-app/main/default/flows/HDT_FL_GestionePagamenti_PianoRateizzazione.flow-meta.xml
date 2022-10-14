@@ -1162,12 +1162,19 @@
         <defaultConnectorLabel>Is TARI Process</defaultConnectorLabel>
         <rules>
             <name>Is_Not_TARI_Process</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Check_If_Process_Is_TARI.isTariProcess</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Check_If_Process_Is_TARI.isTariProcess</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1187,12 +1194,19 @@
         <defaultConnectorLabel>Is TARI Process</defaultConnectorLabel>
         <rules>
             <name>Is_Not_TARI_Process_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Check_If_Process_Is_TARI.isTariProcess</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Check_If_Process_Is_TARI.isTariProcess</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1212,12 +1226,19 @@
         <defaultConnectorLabel>Is TARI Process</defaultConnectorLabel>
         <rules>
             <name>Is_Not_TARI_Process_0_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Check_If_Process_Is_TARI.isTariProcess</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Check_If_Process_Is_TARI.isTariProcess</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
