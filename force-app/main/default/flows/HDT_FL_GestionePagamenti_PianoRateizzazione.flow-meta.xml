@@ -118,6 +118,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>isTariProcess</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>recordId</name>
             <value>
                 <elementReference>CaseInput.Id</elementReference>
@@ -157,6 +163,12 @@
             <name>customerCode</name>
             <value>
                 <elementReference>CaseInput.Account.CustomerCode__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>isTariProcess</name>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
         <inputParameters>
