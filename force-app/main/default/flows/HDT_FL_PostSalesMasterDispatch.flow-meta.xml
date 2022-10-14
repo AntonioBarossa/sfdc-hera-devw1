@@ -5698,6 +5698,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>ServicePoint__c</field>
+            <value>
+                <elementReference>InputServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Type</field>
             <value>
                 <elementReference>ProcessType</elementReference>
@@ -11447,12 +11453,6 @@
                 <elementReference>serviceCatalogId</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <name>accountStatementFilderId</name>
-            <value>
-                <elementReference>accountStatementFilderId</elementReference>
-            </value>
-        </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
@@ -11480,13 +11480,6 @@
     <variables>
         <description>Account Id passato in input dal Service Catalog</description>
         <name>AccountId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
-    </variables>
-    <variables>
-        <name>accountStatementFilderId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
