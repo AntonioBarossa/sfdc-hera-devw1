@@ -1236,10 +1236,10 @@
             <name>Se_Cliente_paga_un_acconto_Visualizza_0_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Copy_1_of_refresh_Case.Reason__c</leftValueReference>
+                <leftValueReference>Copy_1_of_refresh_Case.AmountDifferenceReason__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Cliente paga un acconto</stringValue>
+                    <stringValue>Cliente paga un Acconto</stringValue>
                 </rightValue>
             </conditions>
             <connector>
