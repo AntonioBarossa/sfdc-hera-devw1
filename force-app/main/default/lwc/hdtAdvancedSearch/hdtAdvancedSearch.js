@@ -4,6 +4,7 @@ import getContracts from '@salesforce/apex/HDT_LC_AdvancedSearch.getContracts';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import getForniture from '@salesforce/apex/HDT_LC_AdvancedSearch.getForniture';
 import getCustomMetadata from '@salesforce/apex/HDT_QR_FiltriProcessi.getCustomMetadata';
+import getCustomMetadataList from '@salesforce/apex/HDT_QR_FiltriProcessi.getCustomMetadataList';
 import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.callService';
 import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp';
 import isInBlacklist from '@salesforce/apex/HDT_LC_AdvancedSearch.isInBlacklist';
@@ -80,93 +81,70 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.showbuttonforniture=true;
         }
 
-        else { 
-            this.postSales = true;
-            console.log('targetObject'+ JSON.stringify(this.targetobject));
+        else {            
             console.log('processType'+ JSON.stringify(this.processtype));
             
-            getCustomMetadata({processType:this.processtype}).then(data =>{
-                console.log('data custom metadata '+JSON.stringify(data));
-                console.log('data.FornitureCliente__c  '+JSON.stringify(data.FornitureCliente__c ));
-                console.log('data.StatoContratto__c  '+JSON.stringify(data.StatoContratto__c ));
-                console.log('data.ContrattiCliente__c '+ JSON.stringify(data.ContrattiCliente__c ));
-                console.log('data.statoFornitura '+ JSON.stringify(data.StatoFornitura__c ));
-                console.log('data.Disalimentable__c '+ JSON.stringify(data.Disalimentable__c ));
-                console.log('data.RateCategory__c '+ JSON.stringify(data.RateCategory__c ));
+            this.postSales = true;
+            this.additionalfilter = (this.additionalfilter===undefined) ? '' : this.additionalfilter;
+                       
+            getCustomMetadataList({processType:this.processtype}).then(dataArray =>{    
+                console.log('LOG ==> DataArray custom metadata: '+JSON.stringify(dataArray));
+                let dataFilters = [];
+                dataArray.forEach(data =>{              
+            
+                    let statusSplit=[];
+                    let contractStatusSplit=[];
+                    let TipoServizioSplit=[];
+                    let RateCategorySplit=[];
+                    let singleFilter=[];
 
-                let statusSplit=[];
-                let contractStatusSplit=[];
-                let TipoServizioSplit=[];
-                let RateCategorySplit=[];
+                    if(data.FornitureCliente__c == 'SI') {
+                        console.log('entra in forniture cliente == SI');
 
-                if(this.additionalfilter===undefined){
-                    this.additionalfilter='';
-                }
-                console.log('additionalFilter'+ JSON.stringify(this.additionalfilter));
-
-                if(data.FornitureCliente__c == 'SI')
-                {
-                    console.log('entra in forniture cliente == SI');
-
-                    if(data.StatoFornitura__c != undefined && data.StatoFornitura__c!='')
-                    {
-                        statusSplit = data.StatoFornitura__c.split(",");
-                        this.additionalfilter+=" AND MeterStatus__c IN('" + statusSplit.join("','") + "')";
-                        
-                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    }
-
-                    if(data.StatoContratto__c != undefined && data.StatoContratto__c!='')
-                    {
-                        contractStatusSplit = data.StatoContratto__c.split(",");
-                        if(contractStatusSplit.includes("Bozza")){
-                            contractStatusSplit.push("");
+                        if(data.StatoFornitura__c != undefined && data.StatoFornitura__c!='') {
+                            statusSplit = data.StatoFornitura__c.split(",");
+                            singleFilter.push(" MeterStatus__c IN('" + statusSplit.join("','") + "') ");
                         }
-                        this.additionalfilter+=" AND SapContractStatus__c IN('" + contractStatusSplit.join("','") + "')"; 
-                        
-                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    }
 
-                    if(data.TipoServizio__c!= undefined && data.TipoServizio__c!='')
-                    {
-                        TipoServizioSplit = data.TipoServizio__c.split(",");
-                        this.additionalfilter+=" AND CommoditySector__c IN('" + TipoServizioSplit.join("','") + "')";
-                        
-                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    }
-                            
-                    if(data.Disalimentabile__c!= undefined && data.Disalimentabile__c!=''){
-                        this.additionalfilter+=' AND Disconnectable__c = \''+data.Disalimentabile__c+'\'';
-                        
-                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    }
-
-                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && this.processtype !='Chiusura Contatore' && this.processtype != 'Esenzione Modifica Fognatura Depurazione'){
-                        RateCategorySplit = data.RateCategory__c.split(",");
-                        if(this.processtype !='Chiusura Contatore' && this.processtype != 'Esenzione Modifica Fognatura Depurazione'){
-                            this.additionalfilter+=" AND RateCategory__c IN('" + RateCategorySplit.join("','") + "')";
-                        }else{
-                            this.additionalfilter+=" AND RateCategory__c NOT IN('" + RateCategorySplit.join("','") + "')";                               
+                        if(data.StatoContratto__c != undefined && data.StatoContratto__c != '') {
+                            contractStatusSplit = data.StatoContratto__c.split(",");
+                            if(contractStatusSplit.includes("Bozza")){
+                                contractStatusSplit.push("");
+                            }
+                            singleFilter.push(" SapContractStatus__c IN('" + contractStatusSplit.join("','") + "') "); 
                         }
-                                                
-                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    }
-                   
-                    console.log('additionalFilter pre final :  '+ this.additionalfilter);
-                    this.additionalFilterFinal = this.additionalfilter;
-                    console.log('additionalFilter post final :  '+ this.additionalFilterFinal);
-                    this.submitFornitura();
-                }
 
+                        if(data.TipoServizio__c!= undefined && data.TipoServizio__c!='') {
+                            TipoServizioSplit = data.TipoServizio__c.split(",");
+                            singleFilter.push(" CommoditySector__c IN('" + TipoServizioSplit.join("','") + "') ");
+                        }
+                                
+                        if(data.Disalimentabile__c!= undefined && data.Disalimentabile__c!='') {
+                            singleFilter.push(" Disconnectable__c = '"+data.Disalimentabile__c+"' ");
+                        }
+
+                        if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && this.processtype !='Chiusura Contatore' && this.processtype != 'Esenzione Modifica Fognatura Depurazione') {
+                            RateCategorySplit = data.RateCategory__c.split(",");
+                            if(this.processtype !='Chiusura Contatore' && this.processtype != 'Esenzione Modifica Fognatura Depurazione'){
+                                singleFilter.push(" RateCategory__c IN('" + RateCategorySplit.join("','") + "' ");
+                            }else{
+                                singleFilter.push(" RateCategory__c NOT IN('" + RateCategorySplit.join("','") + "') ");                            
+                            }
+                        }
+                    }
+
+                    if (singleFilter.length > 0) {
+                        dataFilters.push( " (" + singleFilter.join(" AND ") + ") ");
+                    }                   
+                }); 
+                if (dataFilters.length > 0) {
+                    this.additionalFilterFinal = " AND (" + dataFilters.join(" OR ") + ") ";
+                }
+                console.log('LOG ==> this.additionalFilterFinal: '+ this.additionalFilterFinal);
+                this.submitFornitura();
             });
         }
-
-        if (this.maxRowSelected ===false){
-            this.maxRowSelected= 1
-        }else {
-            this.maxRowSelected = this.originalData.length
-        }
-        
+        this.maxRowSelected = (this.maxRowSelected ===false) ? 1 : this.originalData.length;        
     }
 
     @api
