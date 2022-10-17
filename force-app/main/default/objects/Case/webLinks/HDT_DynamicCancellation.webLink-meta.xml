@@ -7,7 +7,7 @@
     <encodingKey>UTF-8</encodingKey>
     <height>600</height>
     <linkType>url</linkType>
-    <masterLabel>Annulla Prestazione.</masterLabel>
+    <masterLabel>Annulla Prestazione</masterLabel>
     <openType>sidebar</openType>
     <protected>false</protected>
     <url>/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__id={!Case.Id}&amp;
