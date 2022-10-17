@@ -37,6 +37,8 @@ public with sharing class HDT_SRV_InstallmentPlansTari {
             currentCase.SupplyCity__c = input.comuneUbicazione;
 
             output.importoMinimoSingolaRata = instalmentsPlans.get(0).MinAmountForSingleInstalment__c;
+            output.numeroMassimoRateConcedibili = instalmentsPlans.get(0).MaxInstallmentsNumber__c;
+            output.pianoRateizzazioneTrovato = true;
 
         }
 
@@ -68,6 +70,12 @@ public with sharing class HDT_SRV_InstallmentPlansTari {
 
         @InvocableVariable
         public Decimal importoMinimoSingolaRata;
+
+        @InvocableVariable
+        public Boolean pianoRateizzazioneTrovato = false;
+
+        @InvocableVariable
+        public Decimal numeroMassimoRateConcedibili;
 
     }
 }

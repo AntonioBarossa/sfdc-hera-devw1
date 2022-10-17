@@ -4,7 +4,7 @@
         <name>Calculate_Expiration_Date</name>
         <label>Calculate Expiration Date</label>
         <locationX>50</locationX>
-        <locationY>974</locationY>
+        <locationY>1370</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -42,7 +42,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>50</locationX>
-        <locationY>1430</locationY>
+        <locationY>1826</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.CorrectionRight__c</assignToReference>
             <operator>Assign</operator>
@@ -65,7 +65,7 @@
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
         <locationX>50</locationX>
-        <locationY>1886</locationY>
+        <locationY>2282</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -109,7 +109,7 @@
         <name>AssegnaValori_0_0</name>
         <label>AssegnaValori</label>
         <locationX>314</locationX>
-        <locationY>1886</locationY>
+        <locationY>2282</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -146,7 +146,7 @@
         <name>AssignExpirationDate</name>
         <label>AssignExpirationDate</label>
         <locationX>50</locationX>
-        <locationY>1094</locationY>
+        <locationY>1490</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.EndDate__c</assignToReference>
             <operator>Assign</operator>
@@ -161,7 +161,7 @@
     <assignments>
         <name>assignProcessType</name>
         <label>assignProcessType</label>
-        <locationX>644</locationX>
+        <locationX>688</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>processTypeMetadato</assignToReference>
@@ -177,7 +177,7 @@
     <assignments>
         <name>assignProcessType_0</name>
         <label>assignProcessType</label>
-        <locationX>380</locationX>
+        <locationX>336</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>processTypeMetadato</assignToReference>
@@ -187,14 +187,40 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Prima_Classificazione</targetReference>
+            <targetReference>checkTariManaged</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Gestito</name>
+        <label>Gestito?</label>
+        <locationX>336</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Annulla_Prestazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_ManagedTari</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>checkTariManaged.result</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Prima_Classificazione</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Linkare_Case</name>
         <label>Linkare Case?</label>
         <locationX>182</locationX>
-        <locationY>1766</locationY>
+        <locationY>2162</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_0_0</targetReference>
         </defaultConnector>
@@ -226,7 +252,7 @@
         <name>Non_Energy</name>
         <label>Non Energy</label>
         <locationX>182</locationX>
-        <locationY>854</locationY>
+        <locationY>1250</locationY>
         <defaultConnector>
             <targetReference>Rettifica_Doppia_Fatturazione</targetReference>
         </defaultConnector>
@@ -283,7 +309,7 @@
         <name>Rettifica_Doppia_Fatturazione</name>
         <label>Rettifica Doppia Fatturazione?</label>
         <locationX>182</locationX>
-        <locationY>1310</locationY>
+        <locationY>1706</locationY>
         <defaultConnector>
             <targetReference>Cerca_Case_reiterazione</targetReference>
         </defaultConnector>
@@ -308,7 +334,7 @@
         <name>SalvaOConferma</name>
         <label>Salva in Bozza o Conferma?</label>
         <locationX>512</locationX>
-        <locationY>614</locationY>
+        <locationY>1010</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -356,6 +382,7 @@
         </rules>
     </decisions>
     <description>Flow per la prima classificazione del processo di Reclami Scritti/Richieste Info</description>
+    <environments>Default</environments>
     <formulas>
         <name>CaseVecchioScaduto</name>
         <dataType>Boolean</dataType>
@@ -391,7 +418,7 @@
         <name>Cerca_Case_reiterazione</name>
         <label>Cerca Case reiterazione</label>
         <locationX>182</locationX>
-        <locationY>1646</locationY>
+        <locationY>2042</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Linkare_Case</targetReference>
@@ -440,7 +467,7 @@
         <name>Get_Input_Case_Aggiornato</name>
         <label>Get Input Case Aggiornato</label>
         <locationX>182</locationX>
-        <locationY>734</locationY>
+        <locationY>1130</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Non_Energy</targetReference>
@@ -461,21 +488,21 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>50</locationX>
-        <locationY>2006</locationY>
+        <locationY>2402</locationY>
         <inputReference>Get_Input_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
         <locationX>314</locationX>
-        <locationY>2006</locationY>
+        <locationY>2402</locationY>
         <inputReference>Get_Input_Case_Aggiornato</inputReference>
     </recordUpdates>
     <screens>
         <name>Prima_Classificazione</name>
         <label>Prima Classificazione</label>
         <locationX>512</locationX>
-        <locationY>494</locationY>
+        <locationY>890</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -612,7 +639,7 @@
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
         <locationX>578</locationX>
-        <locationY>734</locationY>
+        <locationY>1130</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -632,6 +659,35 @@
                 <stringValue>Case</stringValue>
             </value>
         </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>checkTariManaged</name>
+        <label>checkTariManaged</label>
+        <locationX>336</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>Gestito</targetReference>
+        </connector>
+        <flowName>HDT_FL_CheckTariManaged</flowName>
+        <inputAssignments>
+            <name>city</name>
+            <value>
+                <elementReference>InputCase.ServicePoint__r.SupplyCity__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>declarationDate</name>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>effectiveDate</name>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
         <name>DirittoRettifica</name>

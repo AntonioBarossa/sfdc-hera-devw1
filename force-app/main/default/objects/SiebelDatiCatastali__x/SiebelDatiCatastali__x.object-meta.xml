@@ -114,6 +114,7 @@
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>SiebelDatiCatastali</description>
     <enableFeeds>false</enableFeeds>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
@@ -121,7 +122,7 @@
     <externalDataSource>Hera_Archive</externalDataSource>
     <externalName>SiebelDatiCatastali</externalName>
     <gender>Masculine</gender>
-    <label>Dato Catastale</label>
-    <pluralLabel>Dati Catastali</pluralLabel>
+    <label>Dato Catastale Siebel</label>
+    <pluralLabel>Dati Catastali Siebel</pluralLabel>
     <searchLayouts></searchLayouts>
 </CustomObject>

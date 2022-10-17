@@ -144,6 +144,11 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                 }
             }
         }
+
+        if(String.isBlank(String.valueOf(transcodeMap.get('Market__c'))) && ('Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c) || 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c))){
+            transcodeMap.put('Market__c', 'Regolamentato');
+        }
+
         //BILLING PROFILE 
         try{
             BillingProfile__c billingRecord = depsQr.getBillingProfileIdBySapCode(billingProfileCode);
