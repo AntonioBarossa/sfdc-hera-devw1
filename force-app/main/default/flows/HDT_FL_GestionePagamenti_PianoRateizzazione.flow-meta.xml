@@ -957,6 +957,35 @@
         </defaultConnector>
         <defaultConnectorLabel>Dati coerenti</defaultConnectorLabel>
         <rules>
+            <name>Valore_numero_massimo_rate_concedibili_non_valido</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Tari_Layout.RequestSource__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>D&apos;ufficio</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Tari_Layout.MaxInstallmentsNumber__c</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Tari_Layout.MaxInstallmentsNumber__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>Calcola_parametri_rate.numeroMassimoRateConcedibili</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Valore_numero_massimo_rate_non_consentito</targetReference>
+            </connector>
+            <label>Valore numero massimo rate concedibili non valido</label>
+        </rules>
+        <rules>
             <name>Numero_rate_non_consentito</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
@@ -1021,35 +1050,6 @@
                 <targetReference>Valore_da_rateizzare_non_consentito</targetReference>
             </connector>
             <label>Valore da rateizzare troppo basso</label>
-        </rules>
-        <rules>
-            <name>Valore_numero_massimo_rate_concedibili_non_valido</name>
-            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Case_Tari_Layout.RequestSource__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>D&apos;ufficio</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Case_Tari_Layout.MaxInstallmentsNumber__c</leftValueReference>
-                <operator>LessThanOrEqualTo</operator>
-                <rightValue>
-                    <numberValue>0.0</numberValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Case_Tari_Layout.MaxInstallmentsNumber__c</leftValueReference>
-                <operator>GreaterThan</operator>
-                <rightValue>
-                    <elementReference>Calcola_parametri_rate.numeroMassimoRateConcedibili</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Valore_numero_massimo_rate_non_consentito</targetReference>
-            </connector>
-            <label>Valore numero massimo rate concedibili non valido</label>
         </rules>
     </decisions>
     <decisions>
@@ -2657,7 +2657,7 @@
     <screens>
         <name>Numero_rate_non_valido</name>
         <label>Numero rate non valido</label>
-        <locationX>3284</locationX>
+        <locationX>3548</locationX>
         <locationY>3914</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3360,7 +3360,7 @@
     <screens>
         <name>Valore_da_rateizzare_non_consentito</name>
         <label>Valore da rateizzare non consentito</label>
-        <locationX>3812</locationX>
+        <locationX>4076</locationX>
         <locationY>3914</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3380,7 +3380,7 @@
     <screens>
         <name>Valore_numero_massimo_rate_non_consentito</name>
         <label>Valore numero massimo rate non consentito</label>
-        <locationX>4076</locationX>
+        <locationX>3284</locationX>
         <locationY>3914</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3400,7 +3400,7 @@
     <screens>
         <name>Valore_singola_rata_non_consentito</name>
         <label>Valore singola rata non consentito</label>
-        <locationX>3548</locationX>
+        <locationX>3812</locationX>
         <locationY>3914</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
