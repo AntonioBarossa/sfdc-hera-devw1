@@ -121,7 +121,9 @@
     <enableSearch>false</enableSearch>
     <externalDataSource>Hera_Archive</externalDataSource>
     <externalName>SiebelPlantAttribute</externalName>
+    <gender>Masculine</gender>
     <label>Attributo impianto Siebel</label>
     <pluralLabel>Attributi impianto Siebel</pluralLabel>
     <searchLayouts></searchLayouts>
+    <startsWith>Vowel</startsWith>
 </CustomObject>

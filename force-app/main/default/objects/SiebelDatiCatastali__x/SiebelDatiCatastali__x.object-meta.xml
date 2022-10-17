@@ -121,6 +121,7 @@
     <enableSearch>false</enableSearch>
     <externalDataSource>Hera_Archive</externalDataSource>
     <externalName>SiebelDatiCatastali</externalName>
+    <gender>Masculine</gender>
     <label>Dato Catastale Siebel</label>
     <pluralLabel>Dati Catastali Siebel</pluralLabel>
     <searchLayouts></searchLayouts>
