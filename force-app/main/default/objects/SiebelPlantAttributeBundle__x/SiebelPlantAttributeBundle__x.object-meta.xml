@@ -114,6 +114,7 @@
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>SiebelPlantAttributeBundle</description>
     <enableFeeds>false</enableFeeds>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
@@ -121,8 +122,8 @@
     <externalDataSource>Hera_Archive</externalDataSource>
     <externalName>SiebelPlantAttributeBundle</externalName>
     <gender>Masculine</gender>
-    <label>Attributo impianto Bundle</label>
-    <pluralLabel>Attributi impianto Bundle</pluralLabel>
+    <label>Attributo impianto Bundle Siebel</label>
+    <pluralLabel>Attributi impianto Bundle Siebel</pluralLabel>
     <searchLayouts></searchLayouts>
     <startsWith>Vowel</startsWith>
 </CustomObject>
