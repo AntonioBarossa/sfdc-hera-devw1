@@ -45,7 +45,7 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(2, false);
             spList[0].CommoditySector__c = 'Energia Elettrica';
             spList[0].SupplyType__c = 'Domestico';
-            spList[0].ImplantType__c = '13Z0-Grossisti';
+            spList[0].ImplantType__c = '13A0-Usi di Abitazione BT';
             spList[0].Account__c = accList[0].Id;
             spList[1].CommoditySector__c = 'Gas';
             insert spList;

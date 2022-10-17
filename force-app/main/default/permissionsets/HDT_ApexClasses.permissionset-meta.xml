@@ -1985,6 +1985,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_DoubleCalloutPrevention</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_EligibilityCriteria</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2042,6 +2046,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_HerokuPostSalesManagerTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_HiddenSearchBarPostSales</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -3994,6 +4002,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_DocumentalManagementTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_DoubleCalloutPrevention</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

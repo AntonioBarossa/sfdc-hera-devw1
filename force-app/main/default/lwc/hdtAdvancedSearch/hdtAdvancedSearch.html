@@ -26,7 +26,7 @@
     </div>
         </lightning-layout-item>
     </lightning-layout>
-    <lightning-layout>
+    <lightning-layout if:false={hiddenSearchBarMod}>
         <lightning-layout-item padding="around-small" size="6">
             <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
             <lightning-input

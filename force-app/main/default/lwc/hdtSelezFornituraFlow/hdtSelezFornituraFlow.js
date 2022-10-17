@@ -282,6 +282,8 @@ export default class HdtSelezFornituraFlow extends LightningElement {
     @track tableColumns = [];
 
     radioGroupOptions;
+    
+    defaultSelection;
 
     connectedCallback(){
         const keys = this.groupOptions.split(";").map(key => key.trim());
