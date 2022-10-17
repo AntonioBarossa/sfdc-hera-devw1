@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SecondLevelComplaintClassification__c</fullName>
     <externalId>false</externalId>
-    <label>2° Livello</label>
+    <label>Classificazione 2° Livello</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>

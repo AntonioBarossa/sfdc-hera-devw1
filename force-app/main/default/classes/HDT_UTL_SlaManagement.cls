@@ -13,20 +13,42 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
     public HDT_UTL_SlaManagement(String executionObject) {
         System.debug(logginglevel.DEBUG, '>>> HDT_UTL_SlaManagement...');
+
         this.executionObject = executionObject;
+        criteriaFields = new List<String>{'Cluster__c'};
 
         switch on executionObject {
             when 'Case' {
                 trackingFieldKey = 'Case__c';
                 recordTypeDevName = 'HDT_RT_PostSales';
+                //criteriaFields.add('SalesCompany__c');
+                //criteriaFields.add('FirstLevelComplaintClassification__c');
+                //criteriaFields.add('SecondLevelComplaintClassification__c');
+                //criteriaFields.add('AtoFormula__c');
+                //criteriaFields.add('CompanyOwner__c');
+                //criteriaFields.add('Commodity__c');
             }	
             when 'Order' {
                 trackingFieldKey = 'Order__c';
                 recordTypeDevName = 'HDT_RT_Sales';
+                //criteriaFields.add('CustomerType__c');
+                //criteriaFields.add('SalesCompany__c');
+                //criteriaFields.add('ATO__c');
+                //criteriaFields.add('Process__c');
+                //criteriaFields.add('CompanyOwner__c');
+                //criteriaFields.add('Commodity__c');
             }
         }
 
-        criteriaFields = new List<String>{'Cluster__c'};
+        //CustomerType__c
+        //SalesCompany__c
+        //FirstLevelComplaintClassification__c	
+        //SecondLevelComplaintClassification__c
+        //Ato__c
+        //Cluster__c
+        //Process__c
+        //CompanyOwner__c
+        //Commodity__c
 
     }
 
@@ -165,9 +187,9 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
         List<SlaAdministration__c> slaAdminList = [ 
             SELECT Id, CaseField__c, OrderField__c, Cluster__c, CompanyOwner__c, EndDate__c, StartDate__c,
-                   Description__c, EndCasePhase__c, StartCasePhase__c, Range__c, Name, Process__c,
+                   Description__c, EndCasePhase__c, StartCasePhase__c, Range__c, Name, Process__c, Ato__c,
                    RecordType.DeveloperName, Commodity__c, SalesCompany__c, CustomerType__c, RangeType__c, Type__c, ActivityType__c,
-                   StartOrderPhase__c, EndOrderPhase__c
+                   StartOrderPhase__c, EndOrderPhase__c, FirstLevelComplaintClassification__c, SecondLevelComplaintClassification__c
             FROM SlaAdministration__c
             WHERE RecordType.DeveloperName = :slaRuleType
             AND IsActive__c = true
@@ -355,18 +377,59 @@ public inherited sharing class HDT_UTL_SlaManagement {
             slaMgmt.objectCriteria.put('Cluster__c', slaAdmin.Cluster__c);
         }
 
+        if(String.isNotEmpty(slaAdmin.CompanyOwner__c)){
+            slaMgmt.objectCriteria.put('CompanyOwner__c', slaAdmin.CompanyOwner__c);
+        }
+
+        if(String.isNotEmpty(slaAdmin.Commodity__c)){
+            slaMgmt.objectCriteria.put('Commodity__c', slaAdmin.Commodity__c);
+        }
+
+        if(String.isNotEmpty(slaAdmin.SalesCompany__c)){
+            slaMgmt.objectCriteria.put('SalesCompany__c', slaAdmin.SalesCompany__c);
+        }
+
+        //CustomerType__c
+        //SalesCompany__c
+        //FirstLevelComplaintClassification__c	
+        //SecondLevelComplaintClassification__c
+        //Ato__c
+        //Cluster__c
+        //Process__c
         //CompanyOwner__c
         //Commodity__c
-        //SalesCompany__c
 
         switch on slaAdmin.RecordType.DeveloperName {
             when 'HDT_RT_PostSales' {
-                //FirstLevelComplaintClassification__c
-                //SecondLevelComplaintClassification__c
-                //Process__c ???
+                slaMgmt.objectCriteria.put('Cluster__c', slaAdmin.Cluster__c);
+
+                if(String.isNotEmpty(slaAdmin.FirstLevelComplaintClassification__c)){
+                    slaMgmt.objectCriteria.put('FirstLevelComplaintClassification__c', slaAdmin.FirstLevelComplaintClassification__c);
+                }
+
+                if(String.isNotEmpty(slaAdmin.SecondLevelComplaintClassification__c)){
+                    slaMgmt.objectCriteria.put('SecondLevelComplaintClassification__c', slaAdmin.SecondLevelComplaintClassification__c);
+                }
+
+                if(String.isNotEmpty(slaAdmin.Ato__c)){
+                    slaMgmt.objectCriteria.put('AtoFormula__c', slaAdmin.Ato__c);
+                }
+
             }
             when 'HDT_RT_Sales' {
-                //Process__c
+
+                if(String.isNotEmpty(slaAdmin.CustomerType__c)){
+                    slaMgmt.objectCriteria.put('CustomerType__c', slaAdmin.CustomerType__c);
+                }
+
+                if(String.isNotEmpty(slaAdmin.Ato__c)){
+                    slaMgmt.objectCriteria.put('ATO__c', slaAdmin.Ato__c);
+                }
+
+                if(String.isNotEmpty(slaAdmin.Process__c)){
+                    slaMgmt.objectCriteria.put('Process__c', slaAdmin.Process__c);
+                }
+
             }
 
         }
