@@ -302,17 +302,22 @@ public with sharing class HDT_UTL_ServiceTwentySix {
     @TestVisible
     private Map<String,List<Integer>> getFreePositions(Map<String, List<Service26Config__c>> familyToOperando, Id quoteId){
         Map<String,List<Integer>> freePositionForFamily = new Map<String,List<Integer>>();
+        if (familyToOperando.isEmpty()){
+            return freePositionForFamily;
+        }
         for(SBQQ__QuoteLine__c qLine : [
             SELECT SBQQ__Product__r.Name, SBQQ__Product__r.Family, SBQQ__Product__r.Old__c,SBQQ__Existing__c
             FROM SBQQ__QuoteLine__c 
-            WHERE SBQQ__Quote__c = :quoteId  AND SBQQ__Existing__c = true
+            WHERE SBQQ__Quote__c = :quoteId  
+            AND SBQQ__Existing__c = true
+            AND SBQQ__Product__r.Family IN :familyToOperando.keySet()
             WITH SECURITY_ENFORCED
             ORDER BY SBQQ__Product__r.OLD__c DESC
         ]){
-            if (familyToOperando.keySet().contains(qLine.SBQQ__Product__r.Family) && !freePositionForFamily.keySet().contains(qLine.SBQQ__Product__r.Family)){
+            if (!freePositionForFamily.keySet().contains(qLine.SBQQ__Product__r.Family)){
                 freePositionForFamily.put(qLine.SBQQ__Product__r.Family, this.getAllPositions(familyToOperando.get(qLine.SBQQ__Product__r.Family).size()));
             }
-            if (familyToOperando.keySet().contains(qLine.SBQQ__Product__r.Family) && freePositionForFamily.keySet().contains(qLine.SBQQ__Product__r.Family)){
+            if (freePositionForFamily.keySet().contains(qLine.SBQQ__Product__r.Family)){
                 removePosition(freePositionForFamily.get(qLine.SBQQ__Product__r.Family),qLine);
             }
         }
