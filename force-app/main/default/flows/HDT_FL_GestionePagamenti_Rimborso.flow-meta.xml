@@ -1439,7 +1439,7 @@
         <locationY>1598</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Inserimento_campi_TARI_1</targetReference>
+            <targetReference>inserimentoComune</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1951,7 +1951,7 @@
         <name>Salva_In_Bozza_o_Conferma_0</name>
         <label>Salva In Bozza o Conferma?</label>
         <locationX>2802</locationX>
-        <locationY>1238</locationY>
+        <locationY>1118</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0</name>
@@ -1985,7 +1985,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>updateCase_0_0_0</targetReference>
+                <targetReference>Get_Case</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -2217,11 +2217,11 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>2802</locationX>
-        <locationY>998</locationY>
+        <locationX>2428</locationX>
+        <locationY>1238</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Inserimento_campi_TARI_1</targetReference>
+            <targetReference>inserimentoComune</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2284,7 +2284,7 @@
         <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Case</targetReference>
+            <targetReference>Inserimento_campi_TARI_1</targetReference>
         </connector>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>CityReimbursmentType__c</object>
@@ -2461,16 +2461,6 @@
         </connector>
         <inputReference>Get_Case_0</inputReference>
     </recordUpdates>
-    <recordUpdates>
-        <name>updateCase_0_0_0</name>
-        <label>updateCase</label>
-        <locationX>2428</locationX>
-        <locationY>1358</locationY>
-        <connector>
-            <targetReference>check_comune_gestito</targetReference>
-        </connector>
-        <inputReference>CaseInput</inputReference>
-    </recordUpdates>
     <screens>
         <name>campi_2</name>
         <label>campi 2</label>
@@ -2503,33 +2493,13 @@
         <name>Inserimento_campi_TARI_1</name>
         <label>Inserimento campi TARI 1</label>
         <locationX>2802</locationX>
-        <locationY>1118</locationY>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
             <targetReference>Salva_In_Bozza_o_Conferma_0</targetReference>
         </connector>
-        <fields>
-            <name>pickComune</name>
-            <extensionName>c:hdtSupplyCityEnhancedPicklist</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>inputSupplyCity</name>
-                <value>
-                    <elementReference>Get_Case.SupplyCity__c</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
         <fields>
             <name>screenTari1</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
@@ -2623,6 +2593,42 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>false</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>inserimentoComune</name>
+        <label>inserimentoComune</label>
+        <locationX>2428</locationX>
+        <locationY>1358</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <backButtonLabel>Indietro</backButtonLabel>
+        <connector>
+            <targetReference>check_comune_gestito</targetReference>
+        </connector>
+        <fields>
+            <name>pickComune</name>
+            <extensionName>c:hdtSupplyCityEnhancedPicklist</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>inputSupplyCity</name>
+                <value>
+                    <elementReference>Get_Case.SupplyCity__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <nextOrFinishButtonLabel>Avanti</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <screens>
@@ -3911,7 +3917,7 @@
         <name>Annulla_Prestazione_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>2912</locationX>
-        <locationY>1358</locationY>
+        <locationY>1238</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
