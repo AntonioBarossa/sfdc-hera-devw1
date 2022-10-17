@@ -30,6 +30,7 @@ public with sharing class HDT_QR_FiltriProcessi {
         HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('HDT_FiltriProcessiSelFornitura__mdt', fields, 'read');
         securityAccess.checkSecurityAccess();
         String query = 'SELECT Id, DeveloperName, MasterLabel, Language, NamespacePrefix, Label, QualifiedApiName, ContrattiCliente__c, Disalimentabile__c, StatoContratto__c, StatoFornitura__c, TipoProcesso__c, TipoServizio__c, FornitureCliente__c,RateCategory__c FROM HDT_FiltriProcessiSelFornitura__mdt WHERE  TipoProcesso__c=: processType WITH SECURITY_ENFORCED';
-        return Database.query(query);
+        List<HDT_FiltriProcessiSelFornitura__mdt> processList = Database.query(query);
+        return processList;
     }
 }
