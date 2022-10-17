@@ -212,8 +212,8 @@ public with sharing class HDT_UTL_ServiceTwentySix {
 
          //Gestione Posizioni esistenti
          Map<String,List<Integer>> freePositionForFamily = new Map<String,List<Integer>>();
-         if ('Amendment'.equalsIgnoreCase(ord.SBQQ__Quote__r.SBQQ__Type__c)){
-             Map<String,List<Integer>> freePositionForFamily = this.getFreePositions(familyToOperando,order.SBQQ__Quote__c);
+         if (ord.SBQQ__Quote__c != null && 'Amendment'.equalsIgnoreCase(ord.SBQQ__Quote__r.SBQQ__Type__c)){
+            freePositionForFamily = this.getFreePositions(familyToOperando,ord.SBQQ__Quote__c);
          }
 
         //this for loop builds the list of Object for the callout
@@ -221,12 +221,19 @@ public with sharing class HDT_UTL_ServiceTwentySix {
             List<OrderItem> discountItems = familyToOccurrencies.get(family);
             for(Integer index = 0; index<discountItems.size();index++){
                 Product2 relatedProduct = prods.get(discountItems[index].Product2Id);//product to get values
-                
-                if(familyToOperando.get(family).size()<=index){
+                /* se non entro nell'if successivo operatingIndex resta index e operatingNumber resta quello che è attualmente e funziona come prima */
+                Integer operatingIndex = index;
+                Integer operatingNumber = familyToOperando.get(family).size();
+                /**Questo if ci entro se sono nella casistica degli Amendment e non tutti gli slot sono disponibili */
+                if (freePositionForFamily.get(family) != null && freePositionForFamily.get(family).size() < operatingNumber){
+                    operatingNumber = freePositionForFamily.get(family).size();
+                    operatingIndex = freePositionForFamily.get(family).size() > index ? freePositionForFamily.get(family)[index] -1 : 0;
+                }
+                if(operatingNumber<=index){
                     //there are more discounts than occurrencies
                     break;
                 } 
-                Service26Config__c operando = familyToOperando.get(family)[index];//operando
+                Service26Config__c operando = familyToOperando.get(family)[operatingIndex];//operando
                 /**@frpanico 2022-05-05
                  * The GF_BON_* operando
                  * Need the value of the field Product2.Percentage__c
@@ -306,11 +313,11 @@ public with sharing class HDT_UTL_ServiceTwentySix {
                 freePositionForFamily.put(qLine.SBQQ__Product__r.Family, this.getAllPositions(familyToOperando.get(qLine.SBQQ__Product__r.Family).size()));
             }
             if (familyToOperando.keySet().contains(qLine.SBQQ__Product__r.Family) && freePositionForFamily.keySet().contains(qLine.SBQQ__Product__r.Family)){
-                removePosition(freePositionForFamily.get(qLine.SBQQ__Product__r.Family));
+                removePosition(freePositionForFamily.get(qLine.SBQQ__Product__r.Family),qLine);
             }
         }
 
-        System.debug(LoggingLevel.DEBUG, '@@@@freePositionForFamily ' + JSON.serialized(freePositionForFamily));
+        System.debug(LoggingLevel.DEBUG, '@@@@freePositionForFamily ' + JSON.serialize(freePositionForFamily));
         
         return freePositionForFamily;
     }
@@ -330,19 +337,18 @@ public with sharing class HDT_UTL_ServiceTwentySix {
                 //rimuovo prima tutti i prodotti vecchi (garantito dall'order By della query) che sono stati mandati su occorrenze non necessariamente casuali
                 List<String> splittedName = qLine.SBQQ__Product__r.Name.split(' ');
                 if (splittedName[splittedName.size()-1].isNumeric()){
-                    position = (Integer) splittedName[splittedName.size()-1];
+                    position = actualPositions.indexOf(Integer.valueOf(splittedName[splittedName.size()-1]));
                 }
             }
             if ('N'.equalsIgnoreCase(qLine.SBQQ__Product__r.Old__c)){
                 //Rimuovo la prima occorrenza libera, perchè quelli di SFDC li abbiamo inviati in modo sequenziale
-                position = actualPositions[0];
+                position = 0;
             }
             if (position != null){
                 actualPositions.remove(position);
             }
         }catch(Exception e){
             System.debug(LoggingLevel.ERROR, e.getMessage());
-            actualPositions = new List<Integer>();
         }
     }
 
