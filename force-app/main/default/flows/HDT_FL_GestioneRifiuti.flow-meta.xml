@@ -4,7 +4,7 @@
         <name>Redirect</name>
         <label>Redirect</label>
         <locationX>1832</locationX>
-        <locationY>2642</locationY>
+        <locationY>2882</locationY>
         <actionName>c:HDT_LCP_FlowRedirectAdvanced</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -27,7 +27,7 @@
         <name>Assign_Configs_Records</name>
         <label>Assign Configs Records</label>
         <locationX>2954</locationX>
-        <locationY>1838</locationY>
+        <locationY>2078</locationY>
         <assignmentItems>
             <assignToReference>ritiri_gratuiti_configs</assignToReference>
             <operator>Assign</operator>
@@ -136,10 +136,68 @@
         </connector>
     </assignments>
     <assignments>
+        <name>assignAddressToTheCase</name>
+        <label>assignAddressToTheCase</label>
+        <locationX>2954</locationX>
+        <locationY>1598</locationY>
+        <assignmentItems>
+            <assignToReference>theCase.InvoicingStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getServicePoint.SupplyStreetName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.InvoicingPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getServicePoint.SupplyPostalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.InvoicingCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getServicePoint.SupplyCountry__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.InvoicingProvince__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getServicePoint.SupplyProvince__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.InvoicingStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getServicePoint.SupplyStreetNumberExtension__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.InvoicingStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getServicePoint.SupplyStreetNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.InvoicingPlace__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getServicePoint.SupplyPlace__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignServicePoint</name>
         <label>AssignServicePoint</label>
         <locationX>2954</locationX>
-        <locationY>1598</locationY>
+        <locationY>1838</locationY>
         <assignmentItems>
             <assignToReference>ServicePointFornitura</assignToReference>
             <operator>Assign</operator>
@@ -859,6 +917,7 @@
             <label>Salva In Bozza</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>checkboxIndirizzo</name>
         <dataType>Boolean</dataType>
@@ -1027,7 +1086,7 @@
         <name>getRitiriGratuitiConfig</name>
         <label>getRitiriGratuitiConfig</label>
         <locationX>2954</locationX>
-        <locationY>1718</locationY>
+        <locationY>1958</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_Configs_Records</targetReference>
@@ -1072,7 +1131,7 @@
         <locationY>1478</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AssignServicePoint</targetReference>
+            <targetReference>assignAddressToTheCase</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1222,7 +1281,7 @@
         <name>servicePointUpdate</name>
         <label>servicePointUpdate</label>
         <locationX>2954</locationX>
-        <locationY>1958</locationY>
+        <locationY>2198</locationY>
         <connector>
             <targetReference>Screen_Hergo</targetReference>
         </connector>
@@ -1294,11 +1353,21 @@
         </connector>
         <inputReference>theCaseIndirizzi</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>updateCase</name>
+        <label>updateCase</label>
+        <locationX>2954</locationX>
+        <locationY>1718</locationY>
+        <connector>
+            <targetReference>AssignServicePoint</targetReference>
+        </connector>
+        <inputReference>theCase</inputReference>
+    </recordUpdates>
     <screens>
         <name>Screen_Hergo</name>
         <label>Screen_Hergo</label>
         <locationX>2778</locationX>
-        <locationY>2174</locationY>
+        <locationY>2414</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
