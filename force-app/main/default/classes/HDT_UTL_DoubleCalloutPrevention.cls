@@ -1,6 +1,6 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_UTL_DoubleCalloutPrevention {
-    private final Datetime lastJobDate = Test.isRunningTest()? Datetime.now().addDays(-1) : Datetime.now().addSeconds(-30); // il tempo entro cui vado a verificare l'esistenza della callout     
+    private final Datetime LAST_JOB_DATE = Test.isRunningTest()? Datetime.now().addDays(-1) : Datetime.now().addSeconds(-30); // il tempo entro cui vado a verificare l'esistenza della callout     
 
     //Mappa finale che conterrà gli oggetti (newRecord => oldRecord) da sottoporre al metodo di integrazione;
     Map<SObject,SObject> newOldRecordMap;
@@ -49,7 +49,7 @@ public with sharing class HDT_UTL_DoubleCalloutPrevention {
                 'apexClasses' => apexClasses,
                 'methods' => methods,
                 'objectName' => objectName,
-                'date' => lastJobDate 
+                'date' => LAST_JOB_DATE 
             });
         }
         System.debug(LoggingLevel.DEBUG,'@@@@@phaseConfigMap ' + JSON.serialize(this.phaseConfigMap));
