@@ -971,6 +971,6 @@
         <language>it</language>
         <protected>false</protected>
         <shortDescription>Enable Turbobilling</shortDescription>
-        <value>Y</value>
+        <value>N</value>
     </labels>
 </CustomLabels>
