@@ -98,7 +98,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto HC</controllingFieldValue>
-            <valueName>Supporto HC</valueName>
+            <valueName>Contratti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto HC</controllingFieldValue>
+            <valueName>Post Vendita</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto responsabile HC</controllingFieldValue>

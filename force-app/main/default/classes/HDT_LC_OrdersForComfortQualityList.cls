@@ -97,7 +97,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
     public static CampaignMember cancelContract(String ordId, String activityId, String causal){
 
         List<String> notCancelPhase = new List<String>{
-            'Esito Ok da DL',
+            'Esito OK da DL',
             'Dati discordanti',
             'Annullato',
             'In lavorazione SAP',
