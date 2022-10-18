@@ -41,7 +41,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         'SubentroAmbienteModifica'.toLowerCase(),
         'AttivazAmbiente'.toLowerCase(),
         'CambioTariffaAmbiente'.toLowerCase(),
-        'AgevolazioneContestuale'.toLowerCase(),
+        'AgevolazioneContestualeAmbiente'.toLowerCase(),
         'AttivazioneAcqua'.toLowerCase(),
         'CambioOffertaAcqua'.toLowerCase(),
         'ConnessioneConAttivazioneAcqua'.toLowerCase(),
@@ -65,7 +65,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             Integer count = 0;
             List<Integer> indexOfObjectToRemove = new List<Integer>();
             Map<Integer,Integer> indexOffieldToRemove = new Map<Integer,Integer>();
-            Map<String, HDT_CodificaAgevolazione__mdt> codificaAgevolazioni = 'AgevolazioneContestuale'.equalsIgnoreCase(method)? HDT_CodificaAgevolazione__mdt.getAll() : new Map<String, HDT_CodificaAgevolazione__mdt>();
+            Map<String, HDT_CodificaAgevolazione__mdt> codificaAgevolazioni = (method?.containsIgnoreCase('Ambiente') == true)? HDT_CodificaAgevolazione__mdt.getAll() : new Map<String, HDT_CodificaAgevolazione__mdt>();
             /**Rimozione OrderItems non necessaria per Analisi consumi */
             String vasType = (String)obj.get('VASType__c');
             String commercialProduct = (String)obj.get('CommercialProduct__c');
