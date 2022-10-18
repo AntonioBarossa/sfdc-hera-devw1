@@ -39,14 +39,6 @@
             <valueName>13FM-Non domestici AT</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
-            <valueName>13Y0-Usi interni MT</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
-            <valueName>13Z0-Grossisti</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Gas</controllingFieldValue>
             <valueName>1001-Cottura cibi</valueName>
         </valueSettings>

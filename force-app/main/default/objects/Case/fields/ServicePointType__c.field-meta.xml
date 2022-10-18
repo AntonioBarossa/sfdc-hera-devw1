@@ -116,18 +116,6 @@
             <valueName>13FM-Non domestici AT</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
-            <controllingFieldValue>Gas</controllingFieldValue>
-            <controllingFieldValue>Ambiente</controllingFieldValue>
-            <valueName>13Y0-Usi interni MT</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
-            <controllingFieldValue>Gas</controllingFieldValue>
-            <controllingFieldValue>Ambiente</controllingFieldValue>
-            <valueName>13Z0-Grossisti</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Acqua</controllingFieldValue>
             <controllingFieldValue>Ambiente</controllingFieldValue>
             <valueName>1101-Domestico</valueName>
