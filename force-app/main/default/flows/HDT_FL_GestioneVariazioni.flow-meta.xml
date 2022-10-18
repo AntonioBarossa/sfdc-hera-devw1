@@ -582,12 +582,15 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetInputCaseAggiornato.Status</assignToReference>
+            <assignToReference>GetCaseAggiornato.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_0_0_0_0_0_0</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0</name>
@@ -4337,10 +4340,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Aggiorna_Case_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>4802</locationX>
-        <locationY>1924</locationY>
-        <connector>
-            <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema</targetReference>
-        </connector>
+        <locationY>1928</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -7495,8 +7495,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <subflows>
         <name>Annullamento_Prestazione</name>
         <label>Annullamento Prestazione</label>
-        <locationX>6488</locationX>
-        <locationY>562</locationY>
+        <locationX>6554</locationX>
+        <locationY>573</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

@@ -62,7 +62,8 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
             this._checkOnLoadHergo = true;
             this._checkResidente = this.template.querySelector("[data-id='ClientTypology__c']").value == 'Domestico';
             this._typeOperation = this.template.querySelector("[data-id='TypeOperation__c']").value;
-            this.checkConfiguration(event);
+            const checkPayment = this.template.querySelector("[data-id='WithdrawalFee__c']");
+            checkPayment.value = this.checkConfiguration(event);
         }
 
     }
@@ -78,14 +79,14 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
 
         //if(event.target.fieldName == 'TypeOperation__c' || !this._typeOperation){
             this._withdrawConfiguration = null;
-            this.freeWithdrawConfig.forEach((currentItem)=>{
+            this.freeWithdrawConfig?.forEach((currentItem)=>{
                 if(currentItem.TypeOperation__c?.includes(this._typeOperation)){ // multiselect picklist
                     this._withdrawConfiguration = currentItem;
                 }
             });
         //}
         
-
+        this.disableMaterialButton = false;
         console.log("New Config ")
         console.log(this._withdrawConfiguration);
 
@@ -94,18 +95,19 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
                 this.showMessage('Attenzione','Non è stata trovata una corrispondenza tra la combinazione Comune / Tipo Intervento e la tabella di Configurazione Ritiri Gratuiti. Aprire segnalazione per notificare la problematica.','error');
                 //this.template.querySelector("[data-id='WithdrawalFee__c']").value = true;
             //}
+            //this.disableMaterialButton = false;
             return true;
         }
 
         if(this._withdrawConfiguration.FreeWithdrawCalculation__c == 'N'){
             if(this.isCubatureLimited != 'N' && oldValue)   this.noChargeToast();
             this.isCubatureLimited = 'N';
-            this.disableMaterialButton = false;
+            //this.disableMaterialButton = false;
             this.cubatureLimit=null;
             return false;
         }else{
             this.isCubatureLimited = 'Y';
-            this.disableMaterialButton = false;
+            //this.disableMaterialButton = false;
 
             let n = this._checkResidente? this._withdrawConfiguration.ToBePaidWithinMonthsDomestic__c : this._withdrawConfiguration.ToBePaidWithinMonthsNotDomestic__c;
             console.log('### DataUltimoRitiro -> ' + this.lastWithdrawDate);

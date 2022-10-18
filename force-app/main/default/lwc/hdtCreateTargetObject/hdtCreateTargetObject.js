@@ -149,6 +149,7 @@ export default class hdtCreateTargetObject extends LightningElement {
      */
     handleConfirmServicePoint(event){
         let servicePoint = event.detail;
+        console.log('##17012022_TargetObjectCreate## ServicePoint >>> ' + JSON.stringify(this.servicePoint));
         this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: servicePoint}));
     }
 }

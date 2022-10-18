@@ -1,4 +1,5 @@
 import { cities as tariNonResidenti } from './hdtTariNonResidenti.js';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import * as rateCategories from './hdtRateCategories.js';
 import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
     class fieldData{
@@ -47,6 +48,23 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
     function safeStr(str){
         if(str) return `${str}`;
         return "";
+    }
+
+    function checkHousingUnitRateCategory( housingUnit, rateCateg ){
+        if( housingUnit > 1 && (rateCateg === 'ACDOMRESP0' || rateCateg === 'ACDOMNR000' || rateCateg === 'ACARTCOMM0') )
+        {
+            try{
+                dispatchEvent(new ShowToastEvent({
+                    title: 'Warning',
+                    message: 'Procedendo con la Rate Category selezionata e più unità totali si perderà l\'informazione delle unità immobiliari realmente servite dal contatore',
+                    variant: 'warning'
+                    })
+                );
+            } catch(e) {
+                console.log(e)
+            }
+        }
+        return;
     }
 
     function checkSectionRequiredFields(sectionName){
@@ -288,6 +306,12 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                     new fieldData('','SupplyAddressFormula__c',this.typeVisibility('acqua'),false,true,'',''),
                     new fieldData('','SupplyCity__c',this.typeVisibility('acqua'),false,true,'',''),
                     new fieldData('','ProcessType__c',this.typeVisibility('acqua'),false,true,'',''),
+                    new fieldData('Tariffa','RateCategory__c', this.typeVisibility('acqua'), false, true, '',''),
+                    new fieldData('Unita Immobiliari','RealEstateUnit__c', this.typeVisibility('acqua')  && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura', false, false, '','',
+                        function(event){
+                            checkHousingUnitRateCategory(event.target.value, this.order.RateCategory__c );
+                        }
+                    ),
                     //new fieldData('','Email__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','WithdrawalClass__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','AnnualConsumption__c',this.typeVisibility('both'),false,true,'',''),
@@ -350,7 +374,11 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                 new fieldData('Attivazione Anticipata','WaiverRightAfterthought__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', true, (this.order.ProcessType__c == 'Switch in Ripristinatorio' || this.loginChannel == 'SPORTELLO') && !this.isNoDayAfterthought, this.isNoDayAfterthought , '',''),
                 new fieldData('Azione commerciale','CommercialAction__c', this.typeVisibility('ele') || this.typeVisibility('gas') , false, false, '',''),
                 new fieldData('Note per il DL','CommentForDL__c', this.typeVisibility('both'), false, false, '',''),
-                new fieldData('Unita Immobiliari','RealEstateUnit__c', this.typeVisibility('acqua')  && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta', false, false, '',''),
+                new fieldData('Unita Immobiliari','RealEstateUnit__c', this.typeVisibility('acqua')  && ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' ) , false, false, '','',
+                    function(event){
+                        checkHousingUnitRateCategory(event.target.value, this.order.RateCategory__c );
+                    }
+                ),
                 new fieldData('Esclusione dal deposito cauzionale','SecurityDepositExcluded__c', this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'), false, false, '','N'),
                 new fieldData('Data Inizio Connessione Temporanea','TemporaryConnectionStartDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
                 new fieldData('Data fine connessione temporanea','TemporaryConnectionEndDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),

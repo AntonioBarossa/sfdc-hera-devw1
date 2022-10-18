@@ -73,8 +73,13 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             String commodity = (String)obj.get('CommodityFormula__c');
             if(String.isBlank(vasType) || !vasType.equalsIgnoreCase('VAS Fatturabili'))
             {
+                Map<String, wrts_prcgvr.MRR_1_0.Field> fieldsToAdd = new Map<String, wrts_prcgvr.MRR_1_0.Field>();
+                wrts_prcgvr.MRR_1_0.WObject processOrder;
                 for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
-                    if(w.objectType == 'OrderItem'){
+                    if(w.id != null && Id.valueOf(w.id, true) == (Id) obj.get('Id')){
+                        processOrder = w;
+                    }
+                    else if(w.objectType == 'OrderItem'){
                         boolean find = false;
                         Integer k = 0;
                         for( wrts_prcgvr.MRR_1_0.Field f : w.fields){
@@ -89,7 +94,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                 }
                             }
                             if(f.name.equalsIgnoreCase('AGEVTARI_CODE') && STRING.isNotBlank(f.value) && STRING.isNotBlank(codificaAgevolazioni.get(f.value)?.HerokuTag__c)){
-                                f.name = codificaAgevolazioni.get(f.value)?.HerokuTag__c;
+                                fieldsToAdd.put(codificaAgevolazioni.get(f.value)?.HerokuTag__c, this.createMrrField(codificaAgevolazioni.get(f.value)?.HerokuTag__c, f.value));//Nome Tag dinamico
+                                //f.name = codificaAgevolazioni.get(f.value)?.HerokuTag__c;
                             }
                         }
                         if(!find){
@@ -101,11 +107,13 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                 // for(integer i : indexOffieldToRemove.keyset()){
                 //     multirequestObj.requests[0].objects[i].fields.remove(indexOffieldToRemove.get(i));
                 // }
-                if(!'AgevolazioneContestuale'.equalsIgnoreCase(method)){//Agevolazione deve contenere tutti gli OrderItems
-                    for (integer i = indexOfObjectToRemove.size() - 1 ; i >= 0 ; i--) {
-                        multirequestObj.requests[0].objects.remove(indexOfObjectToRemove[i]);
-                    }
+                for (integer i = indexOfObjectToRemove.size() - 1 ; i >= 0 ; i--) {
+                    multirequestObj.requests[0].objects.remove(indexOfObjectToRemove[i]);
                 }
+                if(!fieldsToAdd.isEmpty()){
+                    processOrder.fields.addAll(fieldsToAdd.values());
+                }
+                
                 //Verificare Se ELE
             }else if ('VAS Fatturabili'.equalsIgnoreCase(vasType) && String.isBlank(commercialProductCode) && 'Analisi Consumi'.equalsIgnoreCase(commercialProduct)
                 &&('AggScontiBonusEECreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusGGCreaRich'.equalsIgnoreCase(method)) 
@@ -116,7 +124,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             try{
                 map<String,String> fieldValueResponse = new map<String,String>();
                 wrts_prcgvr.MRR_1_0.MultiResponse responseService= makeCallout(multirequestObj, action, getEndpoint(obj));
-                
+                //system.debug('Debug response: '+HDT_SRV_BillableVasDeactivation.createLogObj(multirequestObj, responseService, argsMap)?.wrts_prcgvr__Description__c);
                 Order ord = new Order();
                 ord.id = (id)obj.get('Id');
                 ord.AccountId = (id)obj.get('AccountId'); 
@@ -132,6 +140,11 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Subentro').getRecordTypeId(),
                     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchIn').getRecordTypeId(),
                     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchInVolturaTecnica').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SubentroAmbiente').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ModificaTariffaRimozione').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_CambioTariffa').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_AttivazioneAmbiente').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_AgevolazioniAmbiente').getRecordTypeId(),
                     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_TemporaneaNuovaAtt').getRecordTypeId(),
                     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId(),
                     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId()
@@ -404,7 +417,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         Id servicePointId = ord.ServicePoint__c;
         Id parentOrderId = ord.ParentOrder__c;
         String commercialProductCode = '';
-        String commercialVersion = ''; 
+        String commercialVersion = '';
         try{
             if(String.isNotBlank(contractId)){
                 HDT_QR_Contract qrContract = new HDT_QR_Contract();
@@ -462,5 +475,17 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                 break;
             }
         }
+    }
+
+    private wrts_prcgvr.MRR_1_0.Field createMrrField(String name, Object Value){
+        return this.createMrrField(name, value, 'STRING');
+    }
+
+    private wrts_prcgvr.MRR_1_0.Field createMrrField(String name, Object value, String type){
+        wrts_prcgvr.MRR_1_0.Field field = new wrts_prcgvr.MRR_1_0.Field();
+        field.name = name;
+        field.fieldType = type;
+        field.value = STRING.valueOf(value);
+        return field;
     }
 }

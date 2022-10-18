@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PostSales_Rule_02_03</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(OR(ISPICKVAL(Type__c,&apos;02&apos;),ISPICKVAL(Type__c,&apos;03&apos;)),
+OR(ISPICKVAL(CaseField__c,&apos;&apos;), ISPICKVAL(ActivityType__c,&apos;&apos;))
+)</errorConditionFormula>
+    <errorMessage>Per questo tipo di regola devono essere compilati i campi &quot;Campo Case&quot; e &quot;Tipo attività&quot;</errorMessage>
+</ValidationRule>
