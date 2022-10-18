@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Nuovo Impianto - Aggiunta Attacco</value>
+        <value xsi:type="xsd:string">Nuovo Impianto</value>
     </values>
     <values>
         <field>ServiceRequestType__c</field>

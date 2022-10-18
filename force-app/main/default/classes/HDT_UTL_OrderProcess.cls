@@ -845,8 +845,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 if ( String.isNotBlank(String.valueOf(temp.ServicePoint__c))) {
                     ServicePoint__c sp=new ServicePoint__c(id=temp.ServicePoint__c);
                     sp.supplytype__c = temp.ServicePoint__r.supplytypeTemp__c;
-                    sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;    
-                    sp.SAPImplantCode__c=temp.SapImplantCode__c; 
+                    sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;  
+                    if (String.isNotBlank(temp.SAPImplantCode__c)) {
+                        sp.SAPImplantCode__c= temp.SapImplantCode__c; 
+                    }  
                     sp.account__c = temp.AccountId;
                     mapObjToUpdate.put(sp.Id, sp);
                 }
@@ -1331,7 +1333,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              * Pratica Gestita
              * per pratiche a transitorio
              */
-            Set<String> finalStatuses = new Set<String>{'Annullato','KO definitivo','Pratica gestita','KO gestito','Eliminato','KO','Pratica Rifiutata','Chiuso'};
+            Set<String> finalStatuses = new Set<String>{'Annullato','KO definitivo','Pratica gestita','KO gestito','Eliminato','KO','Pratica rifiutata','Chiuso'};
             if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))&&(finalStatuses.contains((String)newOrder.get('SiebelStatus__c'))))
             {
                 response = true;
@@ -1355,7 +1357,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Set<Id> parentOrderIds = new Set<Id>();
         Map<Id,String> mapVasPhase = new Map<Id,String>();
         Map<Id,String> mapVasStatus = new Map<Id,String>();
-        Set<String> negativeOutcomes = new Set<String>{'Annullato','KO definitivo','Eliminato','KO','Pratica Rifiutata','KO gestito'};
+        Set<String> negativeOutcomes = new Set<String>{'Annullato','KO definitivo','Eliminato','KO','Pratica rifiutata','KO gestito'};
         Set<String> positiveOutcomes = new Set<String>{'Pratica gestita','Chiuso'};
         for(Order newOrder : (List<Order>) newOrderList)
         {
