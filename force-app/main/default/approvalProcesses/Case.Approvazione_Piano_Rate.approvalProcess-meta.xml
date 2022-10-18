@@ -44,7 +44,7 @@
         <criteriaItems>
             <field>Case.Phase__c</field>
             <operation>equals</operation>
-            <value>In Attesa Approvazione,Attesa Modulo Firmato</value>
+            <value>In Attesa Approvazione</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.TotalResidue__c</field>
