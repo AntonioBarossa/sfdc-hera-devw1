@@ -49,7 +49,6 @@ export default class HdtCambioUso extends NavigationMixin(LightningElement){
         {label:"13DM-Illuminazione pubblica MT", value:"13DM-Illuminazione pubblica MT"},
         {label:"13EM-Non domestici MT", value:"13EM-Non domestici MT"},
         {label:"13FM-Non domestici AT", value:"13FM-Non domestici AT"},
-        {label:"13X0-Usi interni BT", value:"13X0-Usi interni BT"},
         {label:"13Y0-Usi interni MT", value:"13Y0-Usi interni MT"},
         {label:"13Z0-Grossisti", value:"13Z0-Grossisti"}
     ];

@@ -119,12 +119,6 @@
             <controllingFieldValue>Energia Elettrica</controllingFieldValue>
             <controllingFieldValue>Gas</controllingFieldValue>
             <controllingFieldValue>Ambiente</controllingFieldValue>
-            <valueName>13X0-Usi interni BT</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
-            <controllingFieldValue>Gas</controllingFieldValue>
-            <controllingFieldValue>Ambiente</controllingFieldValue>
             <valueName>13Y0-Usi interni MT</valueName>
         </valueSettings>
         <valueSettings>

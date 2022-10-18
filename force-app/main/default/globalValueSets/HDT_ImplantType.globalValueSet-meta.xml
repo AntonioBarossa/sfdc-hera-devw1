@@ -86,11 +86,6 @@
         <label>13FM-Non domestici AT</label>
     </customValue>
     <customValue>
-        <fullName>13X0-Usi interni BT</fullName>
-        <default>false</default>
-        <label>13X0-Usi interni BT</label>
-    </customValue>
-    <customValue>
         <fullName>13Y0-Usi interni MT</fullName>
         <default>false</default>
         <label>13Y0-Usi interni MT</label>
