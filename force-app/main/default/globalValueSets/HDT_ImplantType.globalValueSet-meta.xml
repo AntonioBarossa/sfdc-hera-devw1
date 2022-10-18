@@ -86,21 +86,6 @@
         <label>13FM-Non domestici AT</label>
     </customValue>
     <customValue>
-        <fullName>13X0-Usi interni BT</fullName>
-        <default>false</default>
-        <label>13X0-Usi interni BT</label>
-    </customValue>
-    <customValue>
-        <fullName>13Y0-Usi interni MT</fullName>
-        <default>false</default>
-        <label>13Y0-Usi interni MT</label>
-    </customValue>
-    <customValue>
-        <fullName>13Z0-Grossisti</fullName>
-        <default>false</default>
-        <label>13Z0-Grossisti</label>
-    </customValue>
-    <customValue>
         <fullName>1100-ACQUA --- Non definito ---</fullName>
         <default>false</default>
         <label>1100-ACQUA --- Non definito ---</label>

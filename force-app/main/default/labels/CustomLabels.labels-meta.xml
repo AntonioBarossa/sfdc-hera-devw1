@@ -939,13 +939,6 @@
         <value>The certification request was created successfully</value>
     </labels>
     <labels>
-        <fullName>TRB_Enable</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Enable Turbobilling</shortDescription>
-        <value>Y</value>
-    </labels>
-    <labels>
         <fullName>HDT_DocTraceEnable</fullName>
         <language>en_US</language>
         <protected>false</protected>
