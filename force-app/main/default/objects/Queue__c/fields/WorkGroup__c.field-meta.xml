@@ -47,6 +47,11 @@
                 <label>ESTENERGY_BACK</label>
             </value>
             <value>
+                <fullName>ESTENERGY_Credit_Check_Target</fullName>
+                <default>false</default>
+                <label>ESTENERGY_Credit_Check_Target</label>
+            </value>
+            <value>
                 <fullName>ESTENERGY_ESCALATION</fullName>
                 <default>false</default>
                 <label>ESTENERGY_ESCALATION</label>
@@ -120,6 +125,16 @@
                 <fullName>HC_CRM_CC_CV_qualità</fullName>
                 <default>false</default>
                 <label>HC_CRM_CC_CV_qualità</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_CC_CV_social</fullName>
+                <default>false</default>
+                <label>HC_CRM_CC_CV_social</label>
+            </value>
+            <value>
+                <fullName>HC_CRM_CC_CV_solapp</fullName>
+                <default>false</default>
+                <label>HC_CRM_CC_CV_solapp</label>
             </value>
             <value>
                 <fullName>HC_CRM_CC_CV_TL</fullName>
@@ -1177,6 +1192,16 @@
                 <label>HC_VenditaMM</label>
             </value>
             <value>
+                <fullName>HCM_BACK_CON_Fatturazione</fullName>
+                <default>false</default>
+                <label>HCM_BACK_CON_Fatturazione</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_CON_Protocollo</fullName>
+                <default>false</default>
+                <label>HCM_BACK_CON_Protocollo</label>
+            </value>
+            <value>
                 <fullName>HCM_BACK_Contattare il cliente</fullName>
                 <default>false</default>
                 <label>HCM_BACK_Contattare il cliente</label>
@@ -1222,6 +1247,26 @@
                 <label>HCM_BACK_Reclami</label>
             </value>
             <value>
+                <fullName>HCM_BACK_TRG_Fatturazione</fullName>
+                <default>false</default>
+                <label>HCM_BACK_TRG_Fatturazione</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_TRG_Modifiche anagrafiche</fullName>
+                <default>false</default>
+                <label>HCM_BACK_TRG_Modifiche anagrafiche</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_TRG_Pagamenti</fullName>
+                <default>false</default>
+                <label>HCM_BACK_TRG_Pagamenti</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_TRG_Variazioni</fullName>
+                <default>false</default>
+                <label>HCM_BACK_TRG_Variazioni</label>
+            </value>
+            <value>
                 <fullName>HCM_BACK_Variazioni</fullName>
                 <default>false</default>
                 <label>HCM_BACK_Variazioni</label>
@@ -1230,16 +1275,6 @@
                 <fullName>HCM_BACK_Verifiche</fullName>
                 <default>false</default>
                 <label>HCM_BACK_Verifiche</label>
-            </value>
-            <value>
-                <fullName>HCM_CON_Fatturazione</fullName>
-                <default>false</default>
-                <label>HCM_CON_Fatturazione</label>
-            </value>
-            <value>
-                <fullName>HCM_CON_Protocollo</fullName>
-                <default>false</default>
-                <label>HCM_CON_Protocollo</label>
             </value>
             <value>
                 <fullName>HCM_DISCO_ Appuntamenti</fullName>
@@ -1262,29 +1297,24 @@
                 <label>HCM_DISCO_Notifiche</label>
             </value>
             <value>
-                <fullName>HCM_TRG_Fatturazione</fullName>
+                <fullName>HCM_RECLAMI</fullName>
                 <default>false</default>
-                <label>HCM_TRG_Fatturazione</label>
+                <label>HCM_RECLAMI</label>
             </value>
             <value>
-                <fullName>HCM_TRG_Modifiche anagrafiche</fullName>
+                <fullName>HCM_RECLAMI_TRG</fullName>
                 <default>false</default>
-                <label>HCM_TRG_Modifiche anagrafiche</label>
+                <label>HCM_RECLAMI_TRG</label>
             </value>
             <value>
-                <fullName>HCM_TRG_Pagamenti</fullName>
+                <fullName>HCM_SPORT_Escalation</fullName>
                 <default>false</default>
-                <label>HCM_TRG_Pagamenti</label>
+                <label>HCM_SPORT_Escalation</label>
             </value>
             <value>
                 <fullName>HCM_TRG_Reclami_scritti</fullName>
                 <default>false</default>
                 <label>HCM_TRG_Reclami_scritti</label>
-            </value>
-            <value>
-                <fullName>HCM_TRG_Variazioni</fullName>
-                <default>false</default>
-                <label>HCM_TRG_Variazioni</label>
             </value>
             <value>
                 <fullName>HS_DAFC_Tesoreria_Verifica comportamento banca</fullName>
