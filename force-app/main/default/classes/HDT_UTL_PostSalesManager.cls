@@ -20,6 +20,11 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     }
 
+    public void submitForApproval(SObject inputCase){
+        List<Case> listCase = new List<Case>();
+        listCase.add((Case)inputCase);
+        HDT_UTL_CaseApprovalProcess.submitForApproval(listCase);
+    }
 
     public void changeQuotationType(SObject inputCase){
 
