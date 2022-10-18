@@ -508,7 +508,7 @@
         <name>assignProcessTypeToSubFlow</name>
         <label>assignProcessTypeToSubFlow</label>
         <locationX>686</locationX>
-        <locationY>10670</locationY>
+        <locationY>11006</locationY>
         <assignmentItems>
             <assignToReference>processToCancellation</assignToReference>
             <operator>Assign</operator>
@@ -524,7 +524,7 @@
         <name>assignProcessTypeToSubFlow_0</name>
         <label>assignProcessTypeToSubFlow</label>
         <locationX>950</locationX>
-        <locationY>10670</locationY>
+        <locationY>11006</locationY>
         <assignmentItems>
             <assignToReference>processToCancellation</assignToReference>
             <operator>Assign</operator>
@@ -540,7 +540,7 @@
         <name>assignProcessTypeToSubFlow_0_0</name>
         <label>assignProcessTypeToSubFlow</label>
         <locationX>1214</locationX>
-        <locationY>10670</locationY>
+        <locationY>11006</locationY>
         <assignmentItems>
             <assignToReference>processToCancellation</assignToReference>
             <operator>Assign</operator>
@@ -636,6 +636,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>calculateNumberMembers</name>
+        <label>calculateNumberMembers</label>
+        <locationX>4326</locationX>
+        <locationY>9566</locationY>
+        <assignmentItems>
+            <assignToReference>getAfterSecondForm.NumberMembers__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newNumberMembers</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateafterSecondForm</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>ChangePhase</name>
         <label>ChangePhase</label>
         <locationX>3798</locationX>
@@ -664,7 +680,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateafterSecondForm</targetReference>
+            <targetReference>integrationLogic</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -680,7 +696,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateafterSecondForm</targetReference>
+            <targetReference>integrationLogic</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -728,7 +744,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateafterSecondForm</targetReference>
+            <targetReference>integrationLogic</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -744,7 +760,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateafterSecondForm</targetReference>
+            <targetReference>integrationLogic</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1640,6 +1656,52 @@
         </rules>
     </decisions>
     <decisions>
+        <name>integrationLogic</name>
+        <label>integrationLogic</label>
+        <locationX>4458</locationX>
+        <locationY>9446</locationY>
+        <defaultConnector>
+            <targetReference>updateafterSecondForm</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ComponentiNonResidenti_integrationLogic</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getAfterSecondForm.NumberMembers__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getAfterSecondForm.NumberMembers__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getAfterSecondForm.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>DOM_Componenti non residenti</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getAfterSecondForm.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica dati contrattuali</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>calculateNumberMembers</targetReference>
+            </connector>
+            <label>ComponentiNonResidenti</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>IsSurfaceNull</name>
         <label>IsSurfaceNull</label>
         <locationX>4128</locationX>
@@ -1739,7 +1801,7 @@
         <name>processTypeAnnullamento</name>
         <label>processTypeAnnullamento</label>
         <locationX>1082</locationX>
-        <locationY>10550</locationY>
+        <locationY>10886</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Modifica_dati_contrattuali_choice</name>
@@ -2008,7 +2070,12 @@
         </rules>
     </decisions>
     <description>SubFlow chiamato da HDT_FL_GestioneVariazioni per la gestione dei processi di Variazioni Tari</description>
-    <environments>Default</environments>
+    <formulas>
+        <name>newNumberMembers</name>
+        <dataType>Number</dataType>
+        <expression>{!getAfterSecondForm.NumberMembers__c} - {!getAfterSecondForm.NotResidentMembers__c}</expression>
+        <scale>0</scale>
+    </formulas>
     <interviewLabel>HDT_FL_GestioneVariazioniTari {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GestioneVariazioniTari</label>
     <processMetadataValues>
@@ -2267,7 +2334,7 @@
         <name>updateafterSecondForm</name>
         <label>updateafterSecondForm</label>
         <locationX>4128</locationX>
-        <locationY>9542</locationY>
+        <locationY>9878</locationY>
         <inputReference>getAfterSecondForm</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -4010,7 +4077,7 @@
         <name>flowAnnullamento</name>
         <label>flowAnnullamento</label>
         <locationX>1082</locationX>
-        <locationY>10886</locationY>
+        <locationY>11222</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
