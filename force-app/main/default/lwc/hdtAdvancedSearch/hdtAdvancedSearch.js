@@ -128,7 +128,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                         if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && this.processtype !='Chiusura Contatore' && this.processtype != 'Esenzione Modifica Fognatura Depurazione') {
                             RateCategorySplit = data.RateCategory__c.split(",");
                             if(this.processtype !='Chiusura Contatore' && this.processtype != 'Esenzione Modifica Fognatura Depurazione'){
-                                singleFilter.push(" RateCategory__c IN('" + RateCategorySplit.join("','") + "' ");
+                                singleFilter.push(" RateCategory__c IN('" + RateCategorySplit.join("','") + "') ");
                             }else{
                                 singleFilter.push(" RateCategory__c NOT IN('" + RateCategorySplit.join("','") + "') ");                            
                             }

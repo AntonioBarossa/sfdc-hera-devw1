@@ -102,7 +102,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @track spCodeChanged = false;
 
     @track recordTypeId;
-
+    @track existsServicePoint = false;
     callWinBack = false;
     
     /**
@@ -951,6 +951,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     getServicePoint({ code: codeToSearch, fields: queryFields.join() }).then(data => {
 
                         this.handleCallServiceSap(this.selectedservicepoint);
+                        this.existsServicePoint = true;
                         this.servicePointRetrievedData = data[0];
                         this.recordTypeId = this.servicePointRetrievedData['RecordTypeId'];
                         let recordtype = {};
@@ -1886,9 +1887,15 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     confirm() {
 
+
+        if(this.existsServicePoint)
+        {
+            this.isSap = false;
+        }
         if (this.allSubmitedFields['Id'] != undefined && this.isSap == true) {
             delete this.allSubmitedFields['Id'];
         }
+        console.log('##171020222_TargetObjectCreateForm## isSap >>> ' + this.isSap);
         confirmServicePoint({ servicePoint: this.allSubmitedFields, sap: this.isSap, sale: this.sale }).then(data => {
             this.loading = false;
             this.closeCreateTargetObjectModal();

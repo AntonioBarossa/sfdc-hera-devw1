@@ -8826,9 +8826,6 @@
             <fullName>13FM-Non domestici AT</fullName>
             <default>false</default>
         </values>
-        
-        
-        
     </picklistValues>
     <picklistValues>
         <picklist>SignMode__c</picklist>

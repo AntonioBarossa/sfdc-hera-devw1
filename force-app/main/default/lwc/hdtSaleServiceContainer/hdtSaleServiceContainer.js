@@ -76,7 +76,7 @@ export default class hdtSaleServiceContainer extends LightningElement {
         if(event.detail.oldSupplyType !== undefined) {
             oldSupplyType = event.detail.oldSupplyType;
         }
-
+        console.log('##17012022## ServicePoint >>> ' + JSON.stringify(this.servicePoint));
         createSaleServiceItemTile({servicePoint:this.servicePoint, sale:this.saleRecord, oldSupplyType: oldSupplyType}).then(data =>{
 
             this.refreshTileData();
