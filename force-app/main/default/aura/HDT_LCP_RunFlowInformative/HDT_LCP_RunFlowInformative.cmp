@@ -1,17 +1,5 @@
-<aura:component implements="force:lightningQuickAction, force:hasRecordId">
-    <aura:attribute name="recordId" type="Id"/>
-    <aura:attribute name="servicePointRecord" type="Object"/>
-    <aura:attribute name="recordError" type="String"/>
-
-    <force:recordData aura:id="recordLoader"
-      fields="Account__c"
-      recordId="{!v.recordId}"
-      targetFields="{!v.servicePointRecord}"
-      targetError="{!v.recordError}"
-      recordUpdated="{!c.doInit}"
-      />
-
-    <!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> -->
+<aura:component implements="force:lightningQuickAction">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <div class="slds-box slds-theme_default">
     	<lightning:flow aura:id="flowData" onstatuschange="{!c.handleStatusChange}" />
     </div>

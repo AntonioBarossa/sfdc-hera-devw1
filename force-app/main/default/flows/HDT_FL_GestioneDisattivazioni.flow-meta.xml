@@ -863,7 +863,7 @@
             <assignToReference>getTariCase_1.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Bozza</stringValue>
+                <stringValue>Da Inviare</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -2019,7 +2019,6 @@
         <picklistField>BillSendingMethod__c</picklistField>
         <picklistObject>BillingProfile__c</picklistObject>
     </dynamicChoiceSets>
-    <environments>Default</environments>
     <formulas>
         <name>DataRicezioneRichiesta</name>
         <dataType>Date</dataType>

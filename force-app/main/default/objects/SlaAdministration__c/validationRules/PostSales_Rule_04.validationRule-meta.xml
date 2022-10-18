@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PostSales_Rule_04</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(Type__c,&apos;04&apos;),
+OR(ISPICKVAL(CaseField__c,&apos;&apos;),
+ISPICKVAL(EndCasePhase__c,&apos;&apos;))
+)</errorConditionFormula>
+    <errorDisplayField>Ato__c</errorDisplayField>
+    <errorMessage>Per questo tipo di regola devono essere compilati i campi &quot;Campo Case&quot; e &quot;Fine Fase Case&quot;</errorMessage>
+</ValidationRule>
