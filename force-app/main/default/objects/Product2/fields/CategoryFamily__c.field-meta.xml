@@ -149,6 +149,11 @@
                 <label>Prezzo Netto Comunita Solare</label>
             </value>
             <value>
+                <fullName>Prezzo Netto PiuControllo</fullName>
+                <default>false</default>
+                <label>Prezzo Netto PiuControllo</label>
+            </value>
+            <value>
                 <fullName>Prezzo Netto Ranton</fullName>
                 <default>false</default>
                 <label>Prezzo Netto Ranton</label>
