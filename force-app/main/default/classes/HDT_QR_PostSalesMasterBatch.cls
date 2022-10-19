@@ -157,10 +157,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
             FROM Case
             WHERE 
             RecordTypeId = :processTypeId
-            AND (
-                ( Phase__c = :this.bozzaCase AND CreatedDate < :d) 
-                OR ( Phase__c ='Inviata a SAP' AND StartAppointment__c!=null AND StartAppointment__c < TODAY)
-            )
+            AND Phase__c = :this.bozzaCase AND CreatedDate < :d // HRAWRM-1941 (3 Riadattamento Processo)
             WITH SECURITY_ENFORCED
         ];
     }
