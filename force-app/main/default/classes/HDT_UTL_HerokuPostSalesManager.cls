@@ -516,6 +516,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     contractAmb.Status = contractStatus;
                     spAmb.SapContractStatus__c = contractStatus;
                 }
+                DateTime endDateTimeContractAmb = DateTime.valueOf(reqWrp.requestMap.get('DATA_EVENTO'));
+                Date endDateContractAmb = date.newinstance(endDateTimeContractAmb.year(), endDateTimeContractAmb.month(), endDateTimeContractAmb.day()); 
+                if( endDateContractAmb != null ){
+                    contractAmb.Id = recordCase.Contract__c;
+                    contractAmb.EndDate = endDateContractAmb; 
+                }
                 if(contractAmb.Id != null){
                     HDT_UTL_DatabaseService.updateSObject(contractAmb);
                 }
