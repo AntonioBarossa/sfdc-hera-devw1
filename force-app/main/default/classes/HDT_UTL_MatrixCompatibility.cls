@@ -78,12 +78,15 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             resMap.put('ServiceRequest', srRequest);
             if(!result.incompatibilities.isEmpty()){
                 resMap.put('compatibility', getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities));
-                if(isPostSales!= null &&isPostSales){
+                if(isPostSales!= null && isPostSales){
                     try {
-                        List<ServiceRequest__c> srToDeletes = HDT_QR_ServiceRequest.getCanceledServiceRequests(sReq.ServicePointCode__c);
-                        for(ServiceRequest__c srToDelete : srToDeletes){
-                            HDT_SRV_ServiceRequest.deleteRecord(srToDelete);
-                        }
+                        List<ServiceRequest__c> srToDeletes = new List<ServiceRequest__c>();
+                        if(String.isNotBlank(sReq.ServicePointCode__c)){
+                            srToDeletes = HDT_QR_ServiceRequest.getCanceledServiceRequests(sReq.ServicePointCode__c);
+                        }else if(String.isNotBlank(sReq.ServicePoint__c)) {
+                            srToDeletes = HDT_QR_ServiceRequest.getCanceledServiceRequestsBySpId(sReq.ServicePoint__c);
+                        }               
+                        HDT_SRV_ServiceRequest.deleteRecord(srToDeletes);
                     } catch (Exception err) {
                         System.debug(err.getMessage());
                     }

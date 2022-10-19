@@ -4,7 +4,7 @@
         <name>Close_Discard_Activity</name>
         <label>Chiudi Activity Scarto</label>
         <locationX>4085</locationX>
-        <locationY>3182</locationY>
+        <locationY>3302</locationY>
         <actionName>HDT_LC_EditScartiComplessi</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -42,7 +42,7 @@
         <name>Submit_Request_0</name>
         <label>Submit Request</label>
         <locationX>4063</locationX>
-        <locationY>2270</locationY>
+        <locationY>2390</locationY>
         <actionName>HDT_SRV_BpCaVariationFacade</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -328,9 +328,9 @@
         <name>Assegna_Output_0</name>
         <label>Assegna Output</label>
         <locationX>4217</locationX>
-        <locationY>2030</locationY>
+        <locationY>2150</locationY>
         <assignmentItems>
-            <assignToReference>Get_Input_Case.Phase__c</assignToReference>
+            <assignToReference>GetCaseAfterDiscardEdit.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Da Inviare</stringValue>
@@ -367,16 +367,16 @@
         <name>Assegna_Phase_KO_SAP_0</name>
         <label>Assegna Phase KO SAP</label>
         <locationX>3931</locationX>
-        <locationY>2510</locationY>
+        <locationY>2630</locationY>
         <assignmentItems>
-            <assignToReference>Get_Input_Case.Phase__c</assignToReference>
+            <assignToReference>GetCaseAfterDiscardEdit.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Errore Lavorazione SAP</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Input_Case.Status</assignToReference>
+            <assignToReference>GetCaseAfterDiscardEdit.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>New</stringValue>
@@ -682,6 +682,13 @@
                 <elementReference>Get_Input_Case.ServicePoint__r.SupplyPlace__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>D01</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>getContract</targetReference>
         </connector>
@@ -856,7 +863,7 @@
             <assignToReference>getTariCase_1.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Bozza</stringValue>
+                <stringValue>Da Inviare</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -922,16 +929,16 @@
         <name>Init_Case_Per_Risottomissione</name>
         <label>Init Case Per Risottomissione</label>
         <locationX>4085</locationX>
-        <locationY>3302</locationY>
+        <locationY>3422</locationY>
         <assignmentItems>
-            <assignToReference>Get_Input_Case.HerokuPracticeCode__c</assignToReference>
+            <assignToReference>GetCaseAfterDiscardEdit.HerokuPracticeCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue></stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Input_Case.DistributorPracticeCode__c</assignToReference>
+            <assignToReference>GetCaseAfterDiscardEdit.DistributorPracticeCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue></stringValue>
@@ -1043,7 +1050,7 @@
         <name>Check_Rilavorazione_Scarto</name>
         <label>Rilavorazione Scarto?</label>
         <locationX>4217</locationX>
-        <locationY>3062</locationY>
+        <locationY>3182</locationY>
         <defaultConnector>
             <targetReference>Update_Status_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1169,7 +1176,7 @@
         <name>Esito_Callout_0</name>
         <label>Esito Callout</label>
         <locationX>4063</locationX>
-        <locationY>2390</locationY>
+        <locationY>2510</locationY>
         <defaultConnector>
             <targetReference>Check_Rilavorazione_Scarto</targetReference>
         </defaultConnector>
@@ -1302,7 +1309,7 @@
         <name>inviaMA3_0</name>
         <label>inviaMA3?</label>
         <locationX>4217</locationX>
-        <locationY>2150</locationY>
+        <locationY>2270</locationY>
         <defaultConnector>
             <targetReference>Check_Rilavorazione_Scarto</targetReference>
         </defaultConnector>
@@ -2166,6 +2173,27 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetCaseAfterDiscardEdit</name>
+        <label>GetCaseAfterDiscardEdit</label>
+        <locationX>4217</locationX>
+        <locationY>2030</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Output_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getContract</name>
         <label>getContract</label>
         <locationX>842</locationX>
@@ -2339,11 +2367,11 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>Update_Status_0_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>4217</locationX>
-        <locationY>3518</locationY>
+        <locationY>3638</locationY>
         <connector>
             <targetReference>Loading_Spinner_screen_0</targetReference>
         </connector>
-        <inputReference>Get_Input_Case</inputReference>
+        <inputReference>GetCaseAfterDiscardEdit</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Status_0_0_0_0_0</name>
@@ -2356,8 +2384,8 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>Update_Status_0_0_0_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>3931</locationX>
-        <locationY>2630</locationY>
-        <inputReference>Get_Input_Case</inputReference>
+        <locationY>2750</locationY>
+        <inputReference>GetCaseAfterDiscardEdit</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>updateAddress_0</name>
@@ -2546,7 +2574,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Assegna_Output_0</targetReference>
+            <targetReference>GetCaseAfterDiscardEdit</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_0</name>
@@ -3007,7 +3035,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>Loading_Spinner_screen_0</name>
         <label>Loading Spinner screen</label>
         <locationX>4217</locationX>
-        <locationY>3638</locationY>
+        <locationY>3758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>

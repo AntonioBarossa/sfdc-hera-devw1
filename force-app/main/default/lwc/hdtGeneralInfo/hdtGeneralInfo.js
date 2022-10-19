@@ -735,6 +735,7 @@ export default class HdtGeneralInfo extends LightningElement {
             this.ChannelSelection = 'Telefono';
             channelCheck = 'Telefono';
             this.channelDisabled = true;
+            this.requiredInput = true;
             handleAutomaticAgentAssign ({Channel:'Telefono',saleId:this.saleRecord.Id }).then(data =>{
                 console.log("************* "+JSON.stringify(data))
                 this.loaded = true;
@@ -763,6 +764,7 @@ export default class HdtGeneralInfo extends LightningElement {
             this.ChannelSelection = 'Telefono';
             channelCheck = 'Telefono';
             this.channelDisabled = true;
+            this.requiredInput = true;
             handleAutomaticAgentAssign ({Channel:'Telefono',saleId:this.saleRecord.Id }).then(data =>{
                 console.log("************* "+JSON.stringify(data))
                 this.loaded = true;

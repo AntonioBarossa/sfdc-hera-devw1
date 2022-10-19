@@ -223,6 +223,16 @@ public with sharing class HDT_UTL_CaseProcess {
                         HDT_UTL_DatabaseService.updateSObject(updateList);
                     }
                 }
+                /* Richiesta Parere
+                * Il case padre (reclamo scritto) viene riportato In Lavorazione
+                */
+                if(caseNew.Type.equalsIgnoreCase('Richiesta Parere') && newPhase.equalsIgnoreCase('Annullato') && caseNew.ParentId != null)
+                {
+                    Case complaintCase = new Case();
+                    complaintCase.Id = caseNew.ParentId;
+                    complaintCase.Phase__c = 'In Lavorazione';
+                    HDT_UTL_DatabaseService.updateSObject(complaintCase);
+                }
                 //Contratto Non Richiesto
                 if(newPhase.equalsIgnoreCase('Annullato')){
                     Case nonReqContr = new Case();
@@ -469,8 +479,8 @@ public with sharing class HDT_UTL_CaseProcess {
                 for(Contract currContract : relatedContracts){
                     system.debug('@@@ serching contract: '+currContract.Id);
                     if( ((String)caseItem.AccountId)?.equalsIgnoreCase(currContract.AccountId) &&
-                        caseItem.SupplyCity__c?.equalsIgnoreCase(currContract.BillingCity) == true && 
-                        caseItem.SupplyStreetName__c?.equalsIgnoreCase(currContract.BillingStreet) &&
+                        caseItem.SupplyCity__c?.equalsIgnoreCase(currContract.ServicePoint__r.SupplyCity__c) == true && 
+                        caseItem.SupplyStreetName__c?.equalsIgnoreCase(currContract.ServicePoint__r.SupplyStreetName__c) &&
                         !excludedCases.contains(CaseItem.Id) ){
                             if('Modifica post accertamento'.equalsIgnoreCase(caseItem.Type)){
                                 findContract = true;

@@ -14,4 +14,8 @@ public inherited sharing class HDT_QR_UserQueries {
         }
         return null;
     }
+
+    public static List<User> getUsersStatus(Set<Id> idSet){
+        return [SELECT Id,IsActive from User WHERE Id IN:idSet];
+    }
 }

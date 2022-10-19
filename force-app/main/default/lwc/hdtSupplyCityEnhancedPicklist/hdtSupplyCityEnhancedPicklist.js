@@ -1,6 +1,8 @@
-import { LightningElement, api,  } from 'lwc';
+import { LightningElement, api, track} from 'lwc';
 import getCities from '@salesforce/apex/HDT_UTL_LandRegistry.getCities';
 
+const CLOSED_CSS = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
+const OPENED_CSS = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open';
 export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
     
     @api get label(){
@@ -11,7 +13,7 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
     }
     @api inputSupplyCity;
     @api required;
-    @api outputSupplyCity;          //OUTPUT ONLY FOR FLOW USING
+    @api outputSupplyCity;
 
     @api validate (){
         let isValid = this.required ? this.outputSupplyCity != null : true;
@@ -19,10 +21,28 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
         return { isValid : isValid, errorMessage: msg };
     }
 
-    _label = 'Comune di fornitura';
+    @track textInputValue = null;
 
+    _label = 'Comune di fornitura';
     cityTechnicalData = [];
     cityOptions = [];
+
+    get valueSelected(){
+        return this.outputSupplyCity != null && this.outputSupplyCity !== "";
+    }
+    
+    get cityFilteredOptions(){
+        this.setContainerCss(CLOSED_CSS);
+        if(this.textInputValue != null && this.textInputValue.length > 2){
+            let filteredOptions = [];
+            this.cityOptions.forEach( curOpt => {
+                if(curOpt.value.toUpperCase().includes(this.textInputValue.toUpperCase())) filteredOptions.push(curOpt);
+            });
+            if(filteredOptions.length > 0) this.setContainerCss(OPENED_CSS);
+            return filteredOptions;
+        }
+        else return null;
+    }
 
     connectedCallback(){
         this.outputSupplyCity = this.inputSupplyCity;
@@ -34,7 +54,7 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
         this.showSpinner = true;
         getCities({ })
             .then(result => {
-                console.log('### result -> getCities', JSON.stringify(result));
+                console.log('### result -> getCities', JSON.stringify(result.length));
                 this.cityTechnicalData = result;
                 for (var i = 0; i < result.length; i++) {
                     this.cityOptions=[...this.cityOptions,{label: result[i].CadastralCity__c , value: result[i].CadastralCity__c} ];
@@ -48,7 +68,23 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
             });
     }
 
-    handleFieldChange(event) {
-        this.outputSupplyCity = event.detail.value;
+    handleTextKeyup(event) {
+        this.textInputValue = event.target.value;
     }
+
+    handleRemoveButton(){
+        this.outputSupplyCity = null;
+        this.textInputValue = null;
+    }
+
+    handleOptionClick(event){
+        this.setContainerCss(CLOSED_CSS);
+        this.outputSupplyCity = event.target.getAttribute('data-id');
+    }
+
+    setContainerCss(cssValue){
+        if(this.template.querySelector('[data-id="comboboxContainer"]'))
+            this.template.querySelector('[data-id="comboboxContainer"]').setAttribute("class", cssValue);
+    }
+    
 }
