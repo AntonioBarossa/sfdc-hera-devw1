@@ -410,13 +410,11 @@ public with sharing class HDT_UTL_CaseProcess {
     * @param1 List<Case> lista dei cases inseriti
     * @param1 Map<Id,SObject> Mappa della vecchia versione dei cases inseriti
     */
-    //Metodo non più necessario dato che la logica di chiusura avviene dalla activity verso il case gestita nella classe HDT_UTL_ActivityCloseActions
-    /*
     public static void closeRelatedActivity(List<Case> triggerNew, Map<Id,SObject> oldMap){
         list<Id> effectiveCase = new List<Id>();
         for(Case currCase : triggerNew){
             if('Confermato'.equalsIgnoreCase(currCase.Phase__c) && 
-               'HDT_RT_DisattivazioniTari'.equalsIgnoreCase(currCase.RecordType.DeveloperName) &&
+               'HDT_RT_CessazioniTari'.equalsIgnoreCase(currCase.RecordType.DeveloperName) &&
                'Cessazione post accertamento'.equalsIgnoreCase(currCase.Type) &&
                ((Case)oldMap.get(currCase.Id)).Phase__c != currCase.Phase__c){
                 effectiveCase.add(currCase.Id);
@@ -433,7 +431,6 @@ public with sharing class HDT_UTL_CaseProcess {
         }
         Database.update(toClose);
     }
-    */
 
     /**
     * @author Marco Arci (marco.arci@webresults.it)
@@ -457,11 +454,15 @@ public with sharing class HDT_UTL_CaseProcess {
                 system.debug('@@@ Case SupplyCity__c:'+fieldsMap.get('SupplyCity__c'));
                 system.debug('@@@ Case SupplyStreetName__c:'+fieldsMap.get('SupplyStreetName__c'));
             }
-            List<Contract> relatedContracts = [SELECT Id, AccountId, ServicePoint__r.SupplyCity__c, ServicePoint__r.SupplyStreetName__c
+            //verificare che selezione fornitura effettui questo controllo in fase di UAT
+            //querare tabella 'dato tecnico comunale' con chiave i comuni del case e verificare se il flag di gestione è attivo
+            // o se la data odierna rientra nel range tra 'data da' e 'data cutover',
+            //con il risultato modificare la lista fieldsMap.get('SupplyCity__c') lasciando quelli trovati e togliendo quelli non trovati nella tabella
+            List<Contract> relatedContracts = [SELECT Id, AccountId, BillingCity, BillingStreet
                                             FROM Contract
                                             WHERE AccountId IN: fieldsMap.get('AccountId')
-                                            AND ServicePoint__r.SupplyCity__c IN: fieldsMap.get('SupplyCity__c')
-                                            AND ServicePoint__r.SupplyStreetName__c	 IN: fieldsMap.get('SupplyStreetName__c')
+                                            AND BillingCity IN: fieldsMap.get('SupplyCity__c')
+                                            AND BillingStreet IN: fieldsMap.get('SupplyStreetName__c')
                                             AND Status = 'Attivo'];
             system.debug('@@@@ related contract: '+relatedContracts);
             List<wrts_prcgvr__Activity__c> notInsertActivity = HDT_QR_Activity.getActivityFromTypeList(caseIds, new Set<String>{'Aprire variazione','Aprire Cessazione'});
