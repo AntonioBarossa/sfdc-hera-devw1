@@ -3,7 +3,7 @@
     <fullName>HDT_RT_GenericheTari</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>HDT_RT_GenericheTari</label>
+    <label>Generiche Tari</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
