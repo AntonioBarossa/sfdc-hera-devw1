@@ -20,6 +20,11 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     }
 
+    public void submitForApproval(SObject inputCase)
+    {
+        Case currentCase = (Case) inputCase;
+        System.enqueueJob(new HDT_QBL_VoltureChangeManager(new List<Case>{currentCase}));
+    }
 
     public void changeQuotationType(SObject inputCase){
 

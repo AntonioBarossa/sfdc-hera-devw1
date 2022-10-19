@@ -89,6 +89,10 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
             {
                 psmUtl.handleSelfReadings(sender);
             }
+            when 'submitForApproval'
+            {
+                psmUtl.submitForApproval(sender);
+            }
         }
 
         return null;
