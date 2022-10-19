@@ -40,7 +40,7 @@
     <actionCalls>
         <name>Check_If_Process_Is_TARI</name>
         <label>Check if Process is TARI</label>
-        <locationX>4795</locationX>
+        <locationX>4839</locationX>
         <locationY>158</locationY>
         <actionName>HDT_UTL_TariManagement</actionName>
         <actionType>apex</actionType>
@@ -49,15 +49,21 @@
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
-            <name>method</name>
+            <name>caseId</name>
             <value>
-                <stringValue>checkTariProcess</stringValue>
+                <elementReference>CaseInput.Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>recordId</name>
+            <name>catalogId</name>
             <value>
                 <elementReference>accountStatementFilderId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>method</name>
+            <value>
+                <stringValue>checkTariProcess</stringValue>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -1134,7 +1140,7 @@
     <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
-        <locationX>4795</locationX>
+        <locationX>4839</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -3575,7 +3581,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>4669</locationX>
+        <locationX>4713</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_If_Process_Is_TARI</targetReference>
