@@ -3,6 +3,7 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
     private HDT_QR_RecordType qrRecordType = new HDT_QR_RecordType();
     private String codiceCausale='';
     private static String emptyEmailDefault = 'mailnondisponibile@acquirenteunico.it';
+    private List<Case> caseList = new List<Case>(); 
 
     class HDT_UTL_CustomException extends Exception{}
 
@@ -13,6 +14,11 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
     public HDT_QBL_VoltureChangeManager(Order ord, string codiceCausale ) {
         this.order = ord;
         this.codiceCausale = codiceCausale;
+    }
+
+    public HDT_QBL_VoltureChangeManager(List<Case> caseList)
+    {
+        this.caseList = caseList;
     }
 
     public void execute(QueueableContext context) {

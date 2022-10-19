@@ -2,7 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_ModificaTariffaRimozione</fullName>
     <active>true</active>
-    <label>HDT_RT_ModificaTariffaRimozione</label>
+    <label>Rimozione Tariffa</label>
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
