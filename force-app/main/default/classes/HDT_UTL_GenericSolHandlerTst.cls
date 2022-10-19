@@ -24,7 +24,7 @@ public class HDT_UTL_GenericSolHandlerTst {
         insert servicePoints;
         HDT_UTL_DataFactoryTst.createContact(1, true, residentialAccount[0].Id);
         List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, true, residentialAccount[0].Id, 'Attiva');
-        List<Order> orderList=HDT_UTL_DataFactoryTst.createOrder(1, false, residentialAccount[0].Id, sales);
+        List<Order> orderList=HDT_UTL_DataFactoryTst.createOrder(1, true, residentialAccount[0].Id, sales);
         List<Contract> contracts= HDT_UTL_DataFactoryTst.createContract(1, false, residentialAccount[0].Id);
         contracts[0].ServicePoint__c=servicePoints[0].Id;
         contracts[0].ContractSalesCompany__c=recordMatrice.SellerCompany__c;
@@ -49,7 +49,7 @@ public class HDT_UTL_GenericSolHandlerTst {
         Test.startTest();
         HDT_UTL_GenericSolHandler.createSale(cont.AccountId, cont.Id);
         Test.stopTest();
-        Sale__c generatedSale=[SELECT Id,Account__c FROM Sale__c WHERE Account__c=:cont.AccountId];
+        Sale__c generatedSale=[SELECT Id,Account__c FROM Sale__c WHERE Account__c=:cont.AccountId LIMIT 1];
         System.assertEquals(cont.AccountId, generatedSale.Account__c, 'oggetto Sale__c generato con successo');
     }
 
