@@ -2645,7 +2645,7 @@
             <targetReference>GetSelectedDocuments_InLavorazione</targetReference>
         </connector>
         <fields>
-            <name>Copy_1_of_DisplayHeader_0_0</name>
+            <name>DisplayHeader_0_0_InLavorazione</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
