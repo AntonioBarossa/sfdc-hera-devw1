@@ -478,8 +478,8 @@ public with sharing class HDT_UTL_CaseProcess {
                 for(Contract currContract : relatedContracts){
                     system.debug('@@@ serching contract: '+currContract.Id);
                     if( ((String)caseItem.AccountId)?.equalsIgnoreCase(currContract.AccountId) &&
-                        caseItem.SupplyCity__c?.equalsIgnoreCase(currContract.BillingCity) == true && 
-                        caseItem.SupplyStreetName__c?.equalsIgnoreCase(currContract.BillingStreet) &&
+                        caseItem.SupplyCity__c?.equalsIgnoreCase(currContract.ServicePoint__r.SupplyCity__c) == true && 
+                        caseItem.SupplyStreetName__c?.equalsIgnoreCase(currContract.SupplyStreetName__c) &&
                         !excludedCases.contains(CaseItem.Id) ){
                             if('Modifica post accertamento'.equalsIgnoreCase(caseItem.Type)){
                                 findContract = true;
