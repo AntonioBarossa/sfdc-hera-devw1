@@ -2,17 +2,13 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 18-10-2022
+ * @last modified on  : 19-10-2022
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.AvoidGlobalModifier, PMD.AvoidDebugStatements')
 global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction{
     
     private static final String REQUEST_PATH = '/toBeDefined';
-
-    global HDT_WS_AnnullamentoSegnalazione() {
-        return;
-    }
 
     public class HDT_WS_AnnullamentoSegnalazioneResponse extends HDT_WS_Response{
         @AuraEnabled public List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails> errorDetails {get;set;}
@@ -37,7 +33,7 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
     }
       
     global Object execute(Object args){
-        
+        List<SObject> sobjToUpdate = new List<SObject>();
         Map<String, Object> argsMap = (Map<String, Object>) args;
         SObject obj = (SObject) argsMap.get('sender');
         Case currentCase = (Case) obj;
@@ -59,14 +55,19 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
                     Date dataUltimoRitiro = Date.newinstance(createdDate.year(), createdDate.month(), createdDate.day());
 
                     List<FreeWithdraw__c> ritiri = [SELECT Id , ServicePoint__c, LastFreeWithdrawDate__c
-                                                FROM FreeWithdraw__c
-                                                WHERE ServicePoint__c =:currentCase.ServicePoint__c
-                                                AND LastFreeWithdrawDate__c =:dataUltimoRitiro
-                                                WITH SECURITY_ENFORCED];
+                                                    FROM FreeWithdraw__c
+                                                    WHERE ServicePoint__c =:currentCase.ServicePoint__c
+                                                    AND LastFreeWithdrawDate__c =:dataUltimoRitiro
+                                                    WITH SECURITY_ENFORCED];
                     
-                    FreeWithdraw__c ritiro = ritiri[0];
-                    ritiro.Canceled__c = true;
-                    HDT_UTL_DatabaseService.updateSObject(ritiro);
+                    for(FreeWithdraw__c ritiro : ritiri){
+                        ritiro.Canceled__c = true;
+                        sobjToUpdate.add(ritiro);
+                    }
+
+                    if(!sobjToUpdate.isEmpty()){
+                        HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
+                    }
                 }
 
             }else{
