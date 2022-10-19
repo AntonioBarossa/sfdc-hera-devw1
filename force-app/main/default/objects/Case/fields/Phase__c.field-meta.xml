@@ -595,6 +595,11 @@
                 <label>In sequenzializzazione</label>
             </value>
             <value>
+                <fullName>Intermedia</fullName>
+                <default>false</default>
+                <label>Intermedia</label>
+            </value>
+            <value>
                 <fullName>Inviare preventivo</fullName>
                 <default>false</default>
                 <label>Inviare preventivo</label>

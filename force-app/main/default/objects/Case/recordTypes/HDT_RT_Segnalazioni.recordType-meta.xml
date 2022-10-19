@@ -3,7 +3,7 @@
     <fullName>HDT_RT_Segnalazioni</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>HDT_RT_Segnalazioni</label>
+    <label>Segnalazioni</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
@@ -9773,6 +9773,10 @@
 		</values>
 		<values>
 			<fullName>In Lavorazione</fullName>
+			<default>false</default>
+		</values>
+        <values>
+			<fullName>Intermedia</fullName>
 			<default>false</default>
 		</values>
 		<values>
