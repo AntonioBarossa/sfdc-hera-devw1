@@ -5860,6 +5860,10 @@
     <picklistValues>
         <picklist>FourthLevelComplaintClassification__c</picklist>
         <values>
+            <fullName>Rinnovo condizioni economiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Evoluzioni automatiche</fullName>
             <default>false</default>
         </values>
@@ -8566,18 +8570,6 @@
         </values>
         <values>
             <fullName>13FM-Non domestici AT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
             <default>false</default>
         </values>
     </picklistValues>
