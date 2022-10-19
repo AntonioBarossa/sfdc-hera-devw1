@@ -31,7 +31,7 @@ public with sharing class HDT_TRH_OrderChangeEvent {
                 }
 
                 List<String> objFields;
-                objFields = HDT_UTL_SlaManagement.getFieldsForChangeEvent('Case', 'ChangeEventFields');
+                objFields = HDT_UTL_SlaManagement.getFieldsForChangeEvent('Order', 'ChangeEventFields');
 
                 //switch on header.changeType {
                 //    when 'CREATE' {

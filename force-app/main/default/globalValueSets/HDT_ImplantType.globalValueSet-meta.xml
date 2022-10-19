@@ -85,7 +85,7 @@
         <default>false</default>
         <label>13FM-Non domestici AT</label>
     </customValue>
-    <customValue>
+    <!--<customValue>
         <fullName>13X0-Usi interni BT</fullName>
         <default>false</default>
         <label>13X0-Usi interni BT</label>
@@ -99,7 +99,7 @@
         <fullName>13Z0-Grossisti</fullName>
         <default>false</default>
         <label>13Z0-Grossisti</label>
-    </customValue>
+    </customValue>-->
     <customValue>
         <fullName>1100-ACQUA --- Non definito ---</fullName>
         <default>false</default>
