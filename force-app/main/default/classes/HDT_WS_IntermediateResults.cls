@@ -1,12 +1,12 @@
 @RestResource(urlMapping='/IntermediateResults/*')
 global with sharing class HDT_WS_IntermediateResults {
 
+    
+
     @HttpPost
     global static HDT_WRP_Response postIntermediateResults()  {
-        HDT_WRP_Response response;
         try{
             String body = RestContext.request.requestBody.toString();
-            HDT_SRV_ServiceTwentySix.insertCalloutLog('OK', body, '');
             HDT_WRP_Request request = (HDT_WRP_Request) JSON.deserialize(body, HDT_WS_IntermediateResults.HDT_WRP_Request.class);
             //launch async job
             HDT_QBL_IntermediateResultsJob job = new HDT_QBL_IntermediateResultsJob(request);
@@ -21,14 +21,51 @@ global with sharing class HDT_WS_IntermediateResults {
     public class HDT_QBL_IntermediateResultsJob implements Queueable{
         HDT_WRP_Request request;
 
+        private List<String> errorLog = new List<String>{'caseId\tnoticeId\terror'};
+
         HDT_QBL_IntermediateResultsJob(HDT_WRP_Request request){
             this.request=request;
         }
 
         public void execute(QueueableContext context) {
             //salva gli esiti intermedi
+            List<Case> cs = new List<Case>();
+            for(HDT_WRP_Reminder caseData : this.request.reminder){
+                Case c = this.populateCaseForUpdate(caseData);
+                if(c?.Id!=null) cs.add(c);
+            }
+            List<Database.SaveResult> saveResults = Database.update(cs, false);
+            this.insertLog(saveResults);
             return;
         }
+
+        private Case populateCaseForUpdate(HDT_WRP_Reminder caseData){
+            try{
+                Case c = new Case();
+                c.Id= caseData.caseId;
+                c.Phase__c = caseData.field[0].phase;
+                //c.exampleActivityCode = caseData.field[0].codActivity;
+                //Try Save all data
+                return c;
+            }catch(Exception e){
+                this.errorLog.add(caseData.caseId+'\t'+caseData.noticeId+'\t'+'Exception Thrown '+e.getMessage());
+            }
+            return null;
+        }
+
+        private void insertLog(List<Database.SaveResult> saveResults){
+            for(Database.SaveResult sr : saveResults){
+                if(sr.isSuccess()){         continue;       }
+
+                String errorMsg = 'SaveErrors: ';
+                for(Database.Error err : sr.getErrors()){
+                    errorMsg+=err.getMessage()+' for fields '+ err.getFields();
+                }
+                this.errorLog.add(sr.getId()+'\t'+'-'+'\t'+errorMsg);
+            }
+            HDT_SRV_ServiceTwentySix.insertCalloutLog(this.request.requestId, JSON.serialize(this.request), STRING.join(this.errorLog, '\n'));
+        }
+
     }
 
     global class HDT_WRP_Response{
