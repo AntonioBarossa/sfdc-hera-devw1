@@ -148,12 +148,6 @@ export default class HdtAdvancedSearch extends LightningElement {
         }
         this.maxRowSelected = (this.maxRowSelected ===false) ? 1 : this.originalData.length;        
 
-        if (this.maxRowSelected ===false){
-            this.maxRowSelected= 1
-        }else {
-            this.maxRowSelected = this.originalData.length
-        }
-
         getCustomMetadataTwo({processType:this.processtype,targetObject:this.targetObject}).then(data =>{
             console.log('targetObject XXX'+ JSON.stringify(this.targetobject));
             console.log('processType XXX'+ JSON.stringify(this.processtype));
