@@ -15,6 +15,11 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
         this.codiceCausale = codiceCausale;
     }
 
+    public HDT_QBL_VoltureChangeManager(List<Case> caseList)
+    {
+        this.caseList = caseList;
+    }
+
     public void execute(QueueableContext context) {
 
         if( !String.isBlank(codiceCausale) ){
