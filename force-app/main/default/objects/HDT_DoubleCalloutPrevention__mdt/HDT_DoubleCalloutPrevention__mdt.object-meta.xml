@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Funzionamento:
+1) isActive attiva/disattiva regola
+2) objectName indica l&apos;oggetto per cui la regola è attiva
+3) PhaseToCheck e ProcessType indica la fase e il processo per cui la regola viene considerata
+4) ApexClass e MethodToCheck indicano rispettivamente la classe ed il metodo del job che devono verificati
+5) Arguments, se popolato, indica l&apos;argomento del Job
+6) CheckOnPhaseStory, se popolato, la regola viene presa in considerazione solo se nel phaseStory è presente la fase indicata in questo campo</description>
+    <label>HDT DoubleCalloutPrevention</label>
+    <pluralLabel>HDT DoubleCalloutPreventions</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>
