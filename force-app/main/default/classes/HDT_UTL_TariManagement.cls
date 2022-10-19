@@ -5,7 +5,7 @@ public with sharing class HDT_UTL_TariManagement {
         
         System.debug(LoggingLevel.DEBUG, 'HDT_UTL_ManageTari - execute - inputs: ' + inputs);
         
-        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId)) return null;
+        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].caseId)) return null;
                 
         String method = inputs[0].method;
         switch on method{
@@ -24,12 +24,12 @@ public with sharing class HDT_UTL_TariManagement {
     // @InvocableMethod
     public static List<HDT_WRP_TariManagementResponse> checkTariProcess(List<HDT_WRP_TariManagementRequest> inputs) {
 
-        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId)) return null;
+        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].catalogId)) return null;
         
         HDT_WRP_TariManagementResponse response = new HDT_WRP_TariManagementResponse();
         List<HDT_WRP_TariManagementResponse> responseList = new List<HDT_WRP_TariManagementResponse>();
 
-        String queryString = 'SELECT Id,DocumentSelected__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].recordId+'\'';
+        String queryString = 'SELECT Id,DocumentSelected__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].catalogId+'\'';
         List<SObject> accountStmList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'AccountStatementFilter__c');
         
         if(accountStmList.isEmpty()) response.isTariProcess = false; //Empty list return false
@@ -95,7 +95,10 @@ public with sharing class HDT_UTL_TariManagement {
 
     public class HDT_WRP_TariManagementRequest{
         @InvocableVariable
-        public String recordId;
+        public String caseId;
+
+        @InvocableVariable
+        public String catalogId;
 
         @InvocableVariable
         public String method;
