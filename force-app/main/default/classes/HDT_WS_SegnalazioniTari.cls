@@ -131,7 +131,7 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
             system.debug('FINAL PRE UPDATE '+caseToUpdate.TecnicalPhase__c+ ' '+caseToUpdate.Phase__c);
 
             // HRAWRM-1671 (5 Modifiche Flusso di Invio e Annullamento)
-            if(currentCase.Type.equalsIgnoreCase('Gestione Rifiuti') /*&& caseToUpdate.StartAppointment__c==null*/ && currentCase.WithdrawalFee__c==false && currentCase.ServicePoint__c!=null){
+            if(currentCase.Type.equalsIgnoreCase('Gestione Rifiuti') && caseToUpdate.StartAppointment__c==null && currentCase.WithdrawalFee__c==false && currentCase.ServicePoint__c!=null){
                 Datetime createdDate = currentCase.CreatedDate;
                 Date dataUltimoRitiro = Date.newinstance(createdDate.year(), createdDate.month(), createdDate.day());
                 System.debug('HDT_WS_SegnalazioniTari check -> ');
