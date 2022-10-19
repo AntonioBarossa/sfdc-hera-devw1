@@ -285,4 +285,5 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
             return response;
         }
     }
+    
 }
