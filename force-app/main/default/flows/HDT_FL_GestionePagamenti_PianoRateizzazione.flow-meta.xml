@@ -40,7 +40,7 @@
     <actionCalls>
         <name>Check_If_Process_Is_TARI</name>
         <label>Check if Process is TARI</label>
-        <locationX>4575</locationX>
+        <locationX>4795</locationX>
         <locationY>158</locationY>
         <actionName>HDT_UTL_TariManagement</actionName>
         <actionType>apex</actionType>
@@ -923,6 +923,28 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Ci_sono_documenti_selezionati_InLavorazione</name>
+        <label>Ci sono documenti selezionati?</label>
+        <locationX>5440</locationX>
+        <locationY>638</locationY>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>No_InLavorazione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetSelectedDocuments_InLavorazione</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Nessun_Documento_Selezionato_InLavorazione</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Cliente_Assistito_Decision</name>
         <label>Cliente Assistito?</label>
         <locationX>4472</locationX>
@@ -1112,7 +1134,7 @@
     <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
-        <locationX>4575</locationX>
+        <locationX>4795</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1158,6 +1180,21 @@
                 <targetReference>Screen_Inserimento_Dati</targetReference>
             </connector>
             <label>Non Inviata a SAP/SAP KO/KO Rilavorato</label>
+        </rules>
+        <rules>
+            <name>In_Lavorazione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CaseInput.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Lavorazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Inserimento_Documenti_InLavorazione</targetReference>
+            </connector>
+            <label>In Lavorazione</label>
         </rules>
     </decisions>
     <decisions>
@@ -2105,6 +2142,29 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetSelectedDocuments_InLavorazione</name>
+        <label>GetSelectedDocuments</label>
+        <locationX>5440</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Ci_sono_documenti_selezionati_InLavorazione</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>DocumentSelected__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>ExpirationDate__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetSuspensioDays</name>
         <label>GetSuspensioDays</label>
         <locationX>1106</locationX>
@@ -2574,6 +2634,87 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Inserimento_Documenti_InLavorazione</name>
+        <label>Inserimento Documenti</label>
+        <locationX>5440</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>GetSelectedDocuments_InLavorazione</targetReference>
+        </connector>
+        <fields>
+            <name>Copy_1_of_DisplayHeader_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>DocumentSelector_inLavorazione</name>
+            <extensionName>c:hdtAccountStatementPickerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>codiceCliente</name>
+                <value>
+                    <elementReference>CaseInput.Account.CustomerCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>contractAccount</name>
+                <value>
+                    <elementReference>CaseInput.BillingProfile__r.ContractAccountCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>CaseInput.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>CaseInput.Account.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>billingProfileId</name>
+                <value>
+                    <elementReference>CaseInput.BillingProfile__r.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>caseId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
         <locationX>1634</locationX>
@@ -2648,6 +2789,22 @@
         </connector>
         <fields>
             <name>DisplayHeader_NoSelectedDocument</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;Non è stato selezionato alcun documento!&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Nessun_Documento_Selezionato_InLavorazione</name>
+        <label>Nessun Documento Selezionato</label>
+        <locationX>5308</locationX>
+        <locationY>758</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>DisplayHeader_NoSelectedDocument_InLavorazione</name>
             <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;Non è stato selezionato alcun documento!&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
@@ -3418,7 +3575,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>4449</locationX>
+        <locationX>4669</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_If_Process_Is_TARI</targetReference>
