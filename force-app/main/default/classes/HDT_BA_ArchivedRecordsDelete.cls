@@ -1,3 +1,13 @@
+/**
+ * Header of the class "HDT_BA_ArchivedRecordsDelete"
+ * @author Andrei Necsulescu, andrei.necsulescu@webresults.it
+ * @version 1.0
+ * @description: Deletes archived records and parents of this objects
+ * @history
+ * @Created 19/10/2022
+ * Modified By:
+ **/
+
 public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batchable<Sobject>, Database.Stateful {
 
         // List of objects to update
