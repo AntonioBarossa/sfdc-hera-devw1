@@ -53,7 +53,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Piano Rateizzazione</value>
+        <value xsi:type="xsd:string">Piano Rateizzazione VW</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
