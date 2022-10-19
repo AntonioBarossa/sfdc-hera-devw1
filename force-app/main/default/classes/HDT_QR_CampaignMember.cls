@@ -693,4 +693,5 @@ public inherited sharing class HDT_QR_CampaignMember {
         List<CampaignMember> campMembList = [SELECT Id, Status, Campaign.PositiveOutcomeDefaultStatus__c FROM CampaignMember WHERE RelatedActivity__c = :actId WITH SECURITY_ENFORCED];
         return campMembList;
     }
+    
 }
