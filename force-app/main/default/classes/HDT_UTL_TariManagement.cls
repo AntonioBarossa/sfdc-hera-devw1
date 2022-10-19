@@ -24,29 +24,38 @@ public with sharing class HDT_UTL_TariManagement {
     // @InvocableMethod
     public static List<HDT_WRP_TariManagementResponse> checkTariProcess(List<HDT_WRP_TariManagementRequest> inputs) {
 
-        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].catalogId)) return null;
-        
         HDT_WRP_TariManagementResponse response = new HDT_WRP_TariManagementResponse();
         List<HDT_WRP_TariManagementResponse> responseList = new List<HDT_WRP_TariManagementResponse>();
 
-        String queryString = 'SELECT Id,DocumentSelected__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].catalogId+'\'';
-        List<SObject> accountStmList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'AccountStatementFilter__c');
-        
-        if(accountStmList.isEmpty()) response.isTariProcess = false; //Empty list return false
-        
-        String documentSelectedString = (String) accountStmList[0].get('DocumentSelected__c');
-        List<Object> resultList = (List<Object>) JSON.deserializeUntyped(documentSelectedString);
-        
-        if(resultList.isEmpty()) response.isTariProcess = false; //Empty list return false
-        
-        Map<String, Object> resultMap = (Map<String, Object>) resultList[0];
-        List<Object> indentedList = (List<Object>) resultMap.get('secondoLivelloInformativo');
-        
-        for(Object secondLevelObj : indentedList){
-            Map<String, Object> secondLevelMap = (Map<String, Object>) secondLevelObj;
-            String resulString = (String) secondLevelMap.get('settoreMerceologico');
-            response.isTariProcess = 'Ambiente'.equalsIgnoreCase(resulString); // Potrebbe essere TARI e non Ambiente
-            if(!response.isTariProcess) break; // Devono essere tutti TARI ??? se si OK(Controllo !) Altrimenti Leva !!!
+        response.isTariProcess = false;
+
+        if(String.isBlank(inputs[0].catalogId)){
+            
+            String queryString = 'SELECT Id, Commodity__c FROM Case WHERE Id=\''+inputs[0].caseId+'\'';
+            List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'Case');
+
+            String commodityStr = (String) caseList[0].get('Commodity__c');
+            if('Ambiente'.equalsIgnoreCase(commodityStr)) response.isTariProcess = true;
+
+        }
+        else{ 
+
+            String queryString = 'SELECT Id,DocumentSelected__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].catalogId+'\'';
+            List<SObject> accountStmList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'AccountStatementFilter__c');
+            
+            String documentSelectedString = (String) accountStmList[0].get('DocumentSelected__c');
+            List<Object> resultList = (List<Object>) JSON.deserializeUntyped(documentSelectedString);
+            
+            Map<String, Object> resultMap = (Map<String, Object>) resultList[0];
+            List<Object> indentedList = (List<Object>) resultMap.get('secondoLivelloInformativo');
+            
+            for(Object secondLevelObj : indentedList){
+                Map<String, Object> secondLevelMap = (Map<String, Object>) secondLevelObj;
+                String resulString = (String) secondLevelMap.get('settoreMerceologico');
+                response.isTariProcess = 'Ambiente'.equalsIgnoreCase(resulString); // Potrebbe essere TARI e non Ambiente
+                if(!response.isTariProcess) break; // Devono essere tutti TARI ??? se si OK(Controllo !) Altrimenti Leva !!!
+            }
+
         }
 
         responseList.add(response);
