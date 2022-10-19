@@ -61,7 +61,7 @@ global with sharing class HDT_WS_IntermediateResults {
                 for(Database.Error err : sr.getErrors()){
                     errorMsg+=err.getMessage()+' for fields '+ err.getFields();
                 }
-                this.errorLog.add(sr.getId()+'\t'+'none'+'\t'+errorMsg);
+                this.errorLog.add(sr.getId()+'\t'+'-'+'\t'+errorMsg);
             }
             HDT_SRV_ServiceTwentySix.insertCalloutLog(this.request.requestId, JSON.serialize(this.request), STRING.join(this.errorLog, '\n'));
         }
