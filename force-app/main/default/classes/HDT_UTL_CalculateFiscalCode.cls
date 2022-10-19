@@ -64,7 +64,7 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
                 }
             }
             //Caso di Cognome con Due lettere bisogna aggiungere una X
-            if(consonantsLetters.size() <3 && vowelsLetters.size()<1){
+            if(String.isBlank(lastNameCode) && consonantsLetters.size() <3 && vowelsLetters.size()<1){
                 lastNameCode= consonantsLetters.get(0)+consonantsLetters.get(1) + 'X';
             }
         }

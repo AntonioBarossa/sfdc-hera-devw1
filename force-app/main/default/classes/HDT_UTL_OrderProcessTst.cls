@@ -80,7 +80,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
             spList[0].CommoditySector__c = 'Energia Elettrica';
             spList[0].SupplyType__c = 'Domestico';
-            spList[0].ImplantType__c = '13Z0-Grossisti';
+            spList[0].ImplantType__c = '13A0-Usi di Abitazione BT';
             spList[0].Account__c = accList[0].Id;
             insert spList;
 
