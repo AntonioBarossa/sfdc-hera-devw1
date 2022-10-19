@@ -7,7 +7,6 @@ global with sharing class HDT_WS_IntermediateResults {
     global static HDT_WRP_Response postIntermediateResults()  {
         try{
             String body = RestContext.request.requestBody.toString();
-            HDT_SRV_ServiceTwentySix.insertCalloutLog('OK', body, '');
             HDT_WRP_Request request = (HDT_WRP_Request) JSON.deserialize(body, HDT_WS_IntermediateResults.HDT_WRP_Request.class);
             //launch async job
             HDT_QBL_IntermediateResultsJob job = new HDT_QBL_IntermediateResultsJob(request);
