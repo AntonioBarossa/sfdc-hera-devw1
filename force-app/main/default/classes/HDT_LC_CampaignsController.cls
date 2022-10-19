@@ -549,4 +549,5 @@ public inherited sharing class HDT_LC_CampaignsController {
         }
         return false;
     }
+    
 }

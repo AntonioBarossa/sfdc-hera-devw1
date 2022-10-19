@@ -186,4 +186,5 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
         HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
         throw new HDT_UTL_CustomException (errorMessage); 
     }
+    
 }
