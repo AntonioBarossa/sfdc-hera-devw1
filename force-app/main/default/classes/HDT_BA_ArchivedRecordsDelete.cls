@@ -210,7 +210,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
         mail.setToAddresses(new List<String>{UserInfo.getUserEmail()});
         mail.setOrgWideEmailAddressId([SELECT Id FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address'].Id);
     
-        if (SrecordsDeletednk(this.exceptionErr)) {
+        if (String.isNotBlank(this.exceptionErr)) {
             mail.setPlainTextBody('Exedcution Timestamp: ' + this.executionTimeStamp + '\n\nQuery used: ' + this.queryUsed + '\n\nthe execution resulted in the following errors: ' + this.exceptionErr);
         } else {
             // mail.setPlainTextBody('Exedcution Timestamp: ' + this.executionTimeStamp + '\n\nQuery used: ' + this.queryUsed + '\n\nThe following records of type ' + this.currentObject + ' have been deleted:\n' + JSON.serializePretty(this.recordsDeleted));
