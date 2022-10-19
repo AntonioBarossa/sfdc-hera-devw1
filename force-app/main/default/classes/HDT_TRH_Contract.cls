@@ -67,7 +67,8 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                         tempContract.SapContractCode__c = mapOrder.get(tempContract.SBQQ__Order__c).SapContractCode__c ; //HRAWRM-638  17/09/2021
                         tempContract.Pricebook2Id = mapOrder.get(tempContract.SBQQ__Order__c).SBQQ__Quote__r.SBQQ__PriceBook__c;
                         tempContract.SBQQ__AmendmentPricebookId__c = mapOrder.get(tempContract.SBQQ__Order__c).SBQQ__Quote__r.SBQQ__PriceBook__c;
-                        tempContract.CommercialProduct__c = mapOrder.get(tempContract.SBQQ__Order__c).CommercialProduct__c ;  //08/09/2021 HRAWRM-251
+                        tempContract.CommercialProduct__c = mapOrder.get(tempContract.SBQQ__Order__c).CommercialProduct__c;  //08/09/2021 HRAWRM-251
+                        tempContract.ContractSalesCompany__c = mapOrder.get(tempContract.SBQQ__Order__c).SalesCompany__c;
                         /*@frpanico 14/02/2022
                         * Aggiunta scrittura della EndDate
                         * Nel caso di Temporanea - Nuova Attivazione

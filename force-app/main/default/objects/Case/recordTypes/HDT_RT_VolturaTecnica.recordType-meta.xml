@@ -8093,6 +8093,10 @@
             <fullName>In attesa Data Decorrenza</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Errore invio a DL%2FSII</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
@@ -8884,18 +8888,9 @@
             <fullName>13FM-Non domestici AT</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
-            <default>false</default>
-        </values>
+        
+        
+        
     </picklistValues>
     <picklistValues>
         <picklist>SignMode__c</picklist>

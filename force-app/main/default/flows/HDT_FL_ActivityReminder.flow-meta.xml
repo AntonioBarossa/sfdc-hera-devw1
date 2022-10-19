@@ -1,42 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>email_send</name>
-        <label>Invia Email</label>
-        <locationX>314</locationX>
-        <locationY>758</locationY>
-        <actionName>emailSimple</actionName>
-        <actionType>emailSimple</actionType>
-        <connector>
-            <targetReference>activity_update</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>emailBody</name>
-            <value>
-                <elementReference>email_body_template</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailAddresses</name>
-            <value>
-                <elementReference>queue_get.Email</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>sendRichBody</name>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailSubject</name>
-            <value>
-                <stringValue>Sollecito Attività</stringValue>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
         <name>notification_action</name>
         <label>Invia Notifica</label>
         <locationX>50</locationX>
@@ -112,7 +76,7 @@
     <assignments>
         <name>error_message_set</name>
         <label>Restituisci Messaggio d&apos;Errore</label>
-        <locationX>578</locationX>
+        <locationX>490</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>error_message</assignToReference>
@@ -141,7 +105,7 @@
     <decisions>
         <name>remindable_decision</name>
         <label>Sollecitabile?</label>
-        <locationX>380</locationX>
+        <locationX>336</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>error_message_set</targetReference>
@@ -176,7 +140,7 @@
         <locationX>182</locationX>
         <locationY>518</locationY>
         <defaultConnector>
-            <targetReference>queue_get</targetReference>
+            <targetReference>activity_update</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Coda</defaultConnectorLabel>
         <rules>
@@ -234,7 +198,7 @@
     <recordLookups>
         <name>activity_get</name>
         <label>Activity</label>
-        <locationX>380</locationX>
+        <locationX>336</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -280,29 +244,6 @@
         <queriedFields>Id</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>queue_get</name>
-        <label>Coda</label>
-        <locationX>314</locationX>
-        <locationY>638</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>email_send</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>activity_get.Owner:Group.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Group</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Email</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordUpdates>
         <name>activity_update</name>
         <label>Update Activity</label>
@@ -311,7 +252,7 @@
         <inputReference>activity_get</inputReference>
     </recordUpdates>
     <start>
-        <locationX>254</locationX>
+        <locationX>210</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>activity_get</targetReference>
