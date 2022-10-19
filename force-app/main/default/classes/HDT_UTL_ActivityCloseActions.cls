@@ -140,7 +140,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         }
         //START >>> marco.arci@webresults.it
         if(caseType == 'Modifica post accertamento' || caseType == 'Cessazione post accertamento') {
-            if('Aprire Cessazione'.equalsIgnoreCase(activityType) ||
+            if('Aprire Cesaazione'.equalsIgnoreCase(activityType) ||
                'Aprire Variazione'.equalsIgnoreCase(activityType))      return new HDT_WRP_Actions(null, 'Completata'); //con il null iniziale non interviene sulla fase dell'activity, con il secondo param aggiorna la fase del case padre
         }
         //END >>> marco.arci@webresults.it

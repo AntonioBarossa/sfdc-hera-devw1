@@ -1,7 +1,7 @@
 @RestResource(urlMapping='/IntermediateResults/*')
 global with sharing class HDT_WS_IntermediateResults {
 
-    
+    private static HDT_QR_Case caseQr = new HDT_QR_Case();
 
     @HttpPost
     global static HDT_WRP_Response postIntermediateResults()  {
@@ -29,27 +29,39 @@ global with sharing class HDT_WS_IntermediateResults {
 
         public void execute(QueueableContext context) {
             //salva gli esiti intermedi
-            List<Case> cs = new List<Case>();
+            List<Id> caseIds = new List<Id>();
             for(HDT_WRP_Reminder caseData : this.request.reminder){
-                Case c = this.populateCaseForUpdate(caseData);
-                if(c?.Id!=null) cs.add(c);
+                caseIds.add(caseData.caseId);
             }
-            List<Database.SaveResult> saveResults = Database.update(cs, false);
+            Map<Id, Case> mapCases = new Map<Id, Case>(caseQr.getRecordsById(caseIds, 'Id, Type, Order__c'));
+            List<Sobject> sobjs = new List<Sobject>();
+            for(HDT_WRP_Reminder caseData : this.request.reminder){
+                sobjs.addAll(this.populateSobjForUpdate(caseData, mapCases.get(caseData.caseId)));
+            }
+            List<Database.SaveResult> saveResults = Database.update(sobjs, false);
             this.insertLog(saveResults);
             return;
         }
 
-        private Case populateCaseForUpdate(HDT_WRP_Reminder caseData){
+        private List<Sobject> populateSobjForUpdate(HDT_WRP_Reminder caseData, Case originalCase){
+            List<Sobject> retList = new List<Sobject>();
             try{
                 Case c = new Case();
                 c.Id= caseData.caseId;
                 c.Phase__c = caseData.field[0].phase;
                 //c.exampleActivityCode = caseData.field[0].codActivity;
                 //Try Save all data
-                return c;
+                retList.add(c);
+                if('Avviso di Servizio'.equalsIgnoreCase(originalCase.Type) && 'Completata'.equalsIgnoreCase(c.Phase__c) && originalCase.Order__c!=null){
+                    retList.add(this.populateOrder(caseData, originalCase.Order__c));
+                } 
             }catch(Exception e){
                 this.errorLog.add(caseData.caseId+'\t'+caseData.noticeId+'\t'+'Exception Thrown '+e.getMessage());
             }
+            return retList;
+        }
+
+        private Order populateOrder(HDT_WRP_Reminder caseData, Id orderId){
             return null;
         }
 
