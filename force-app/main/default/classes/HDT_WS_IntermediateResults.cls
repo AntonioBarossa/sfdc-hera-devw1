@@ -52,10 +52,17 @@ global with sharing class HDT_WS_IntermediateResults {
                 //c.exampleActivityCode = caseData.field[0].codActivity;
                 //Try Save all data
                 retList.add(c);
+                if('Avviso di Servizio'.equalsIgnoreCase(originalCase.Type) && 'Completata'.equalsIgnoreCase(c.Phase__c) && originalCase.Order__c!=null){
+                    retList.add(this.populateOrder(caseData, originalCase.Order__c));
+                } 
             }catch(Exception e){
                 this.errorLog.add(caseData.caseId+'\t'+caseData.noticeId+'\t'+'Exception Thrown '+e.getMessage());
             }
             return retList;
+        }
+
+        private Order populateOrder(HDT_WRP_Reminder caseData, Id orderId){
+            return null;
         }
 
         private void insertLog(List<Database.SaveResult> saveResults){
