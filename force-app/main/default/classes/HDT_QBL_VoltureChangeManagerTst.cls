@@ -238,6 +238,21 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
         //System.assertEquals('Ordinaria', caseListUpdated[0].Subprocess__c,'Subprocess non correttamente aggiornato');
     }
 
+
+    @isTest
+    static void bloccoSbloccoVoltura()
+    {
+        List<Order> orderList = [SELECT Id,ServicePointCode__c,SapContractCode__c,HerokuPracticeCode__c FROM Order];
+        orderList[0].ServicePointCode__c = 'IT001E00000000';
+        orderList[0].SapContractCode__c = '30000000';
+        orderList[0].HerokuPracticeCode__c = 'A00000000';
+        Test.setMock(HttpCalloutMock.class, new HDT_UTL_TestMockVolturaTecnica());
+        Test.startTest();
+            Id jobId = System.enqueueJob(new HDT_QBL_VoltureChangeManager(orderList[0], 'B0'));
+        Test.stopTest();
+        System.assertEquals(true, jobId != null, 'Test Blocco/Sblocco Fallito');
+    }
+
     public class HDT_UTL_TestMockVolturaTecnica implements HTTPCalloutMock{
 
         public HTTPResponse respond(HTTPRequest request){
@@ -247,6 +262,7 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
             Integer statusCode;
 
             bodyResponse = '{"status": "success","correlationId": "2a0c1340-f6b5-11eb-bb88-068530f44c42","timestamp": "2021-08-06T14:52:33",'
+            +'"prestazione":{"tipoAttivita":"test", "note":"test"},'
             +'"data": {"testata": {"esito": "OK"},"posizioni": ['
             +'{"campo": "DATACESSAZIONE","valore": "99991231"},'
             +'{"campo": "ALIQUOTAIVA","valore": "01"},'

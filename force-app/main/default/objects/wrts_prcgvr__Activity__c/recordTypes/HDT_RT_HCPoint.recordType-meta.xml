@@ -2718,6 +2718,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sportello</fullName>
             <default>false</default>
         </values>

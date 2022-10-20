@@ -2725,6 +2725,10 @@
             <fullName>KO Precedente Cliente</fullName>
             <default>true</default>
         </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Validation__c</picklist>

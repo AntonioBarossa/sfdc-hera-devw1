@@ -3002,6 +3002,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Risposta Inviata - Attesa Rettifica</fullName>
             <default>false</default>
         </values>

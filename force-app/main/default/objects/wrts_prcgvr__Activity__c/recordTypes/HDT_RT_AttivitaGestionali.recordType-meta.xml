@@ -2770,6 +2770,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Validazione Documentale</fullName>
             <default>false</default>
         </values>

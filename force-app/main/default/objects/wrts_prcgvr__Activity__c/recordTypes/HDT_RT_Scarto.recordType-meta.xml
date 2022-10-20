@@ -2902,6 +2902,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Scarto transitorio</fullName>
             <default>false</default>
         </values>
