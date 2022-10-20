@@ -502,7 +502,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 if(implantStatus != null && implantStatus != recordCase.ServicePoint__r.Status__c ){
                     spAmb.Id = recordCase.ServicePoint__c;
                     spAmb.Status__c = implantStatus;
-                }
+                } 
                 */
                 if(contractCode != null && contractCode != recordCase.Contract__r.SAPContractCode__c ){
                     contractAmb.Id = recordCase.Contract__c;
