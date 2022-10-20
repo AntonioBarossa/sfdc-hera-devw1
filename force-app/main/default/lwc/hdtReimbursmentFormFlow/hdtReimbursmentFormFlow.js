@@ -45,6 +45,7 @@ export default class HdtReimbursmentFormFlow extends LightningElement {
     beneficiaryTypeRequired;
     beneficiaryAccountDisabled = false;
     newFiedValue = {};
+    showBeneficiaryInput = false;
 
 
     @wire(getRecord, { recordId: '$caseId', fields: FIELDS })
@@ -65,6 +66,9 @@ export default class HdtReimbursmentFormFlow extends LightningElement {
 
             console.log("### BENEFICIARY_ACCOUNT = " + getFieldValue(this.caseRecord, REFUND_METHOD));
             console.log("### BENEFICIARY_ACCOUNT = " + getFieldValue(this.caseRecord, ACCOUNTHOLDER_TYPEBENEFICIARY));
+            
+            let beneficiaryType = getFieldValue(this.caseRecord, ACCOUNTHOLDER_TYPEBENEFICIARY);
+            if(['Erede', 'Beneficiario Alternativo'].includes(beneficiaryType)) this.showBeneficiaryInput = true;
             
         }else if(error){
             console.error('ERROR => ', JSON.stringify(error));
@@ -198,6 +202,9 @@ export default class HdtReimbursmentFormFlow extends LightningElement {
                 //this.caseRecord.BeneficiaryAccount__c = null;
                 if(this.template.querySelector('[field-name="BeneficiaryAccount__c"]')) this.template.querySelector('[field-name="BeneficiaryAccount__c"]').value = null;
             }
+        }
+        else if(source == "AccountholderTypeBeneficiary__c"){
+            this.showBeneficiaryInput = ['Erede', 'Beneficiario Alternativo'].includes(event.target.value);
         }
     }
 

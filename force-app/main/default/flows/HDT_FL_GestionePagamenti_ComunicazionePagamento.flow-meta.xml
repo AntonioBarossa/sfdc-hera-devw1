@@ -2315,7 +2315,7 @@
             <inputParameters>
                 <name>nextLabel</name>
                 <value>
-                    <stringValue>Avanti</stringValue>
+                    <stringValue>Conferma</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>

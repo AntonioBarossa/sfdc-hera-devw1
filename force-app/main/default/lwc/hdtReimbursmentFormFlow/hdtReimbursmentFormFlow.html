@@ -20,17 +20,19 @@
                                         options={optionsForAccountholderTypeBeneficiary__c} 
                                         onchange={handleInputChange}></lightning-combobox>
                 </lightning-layout-item>
-                <lightning-layout-item size="12">
-                    <lightning-record-edit-form record-id={caseId}
-                                                object-api-name="Case">
-                        <lightning-input-field  field-name="BeneficiaryAccount__c" 
-                                                data-id="BeneficiaryAccount__c"
-                                                variant="label-stacked" 
-                                                disabled={beneficiaryAccountDisabled} 
-                                                value={BENEFICIARY_ACCOUNT}>
-                        </lightning-input-field>
-                    </lightning-record-edit-form>
-                </lightning-layout-item>
+                <template if:true={showBeneficiaryInput}>
+                    <lightning-layout-item size="12">
+                        <lightning-record-edit-form record-id={caseId}
+                                                    object-api-name="Case">
+                            <lightning-input-field  field-name="BeneficiaryAccount__c" 
+                                                    data-id="BeneficiaryAccount__c"
+                                                    variant="label-stacked" 
+                                                    disabled={beneficiaryAccountDisabled} 
+                                                    value={BENEFICIARY_ACCOUNT}>
+                            </lightning-input-field>
+                        </lightning-record-edit-form>
+                    </lightning-layout-item>
+                </template>
             </lightning-layout>
         </template>
     </div>
@@ -44,19 +46,13 @@
                 <lightning-output-field field-name="BillingProfile__r.Name"></lightning-output-field>
                 </lightning-layout-item>
                 <lightning-layout-item size="6">
-                <lightning-output-field field-name="PhoneNumber__c"></lightning-output-field>
-                </lightning-layout-item>
-                <lightning-layout-item size="6">
-                <lightning-output-field field-name="DocumentNumber__c"></lightning-output-field>
-                </lightning-layout-item>
-                <lightning-layout-item size="6">
-                <lightning-output-field field-name="DocumentAmount__c"></lightning-output-field>
-                </lightning-layout-item>
-                <lightning-layout-item size="6">
-                <lightning-output-field field-name="BeneficiaryPhoneNumber__c"></lightning-output-field>
+                <lightning-output-field field-name="ContactPhone"></lightning-output-field>
                 </lightning-layout-item>
                 <lightning-layout-item size="6">
                 <lightning-output-field field-name="Commodity__c"></lightning-output-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                <lightning-output-field field-name="ContactMobile"></lightning-output-field>
                 </lightning-layout-item>
             </lightning-layout>
         </div>
