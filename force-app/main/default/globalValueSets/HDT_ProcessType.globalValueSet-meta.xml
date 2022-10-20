@@ -394,7 +394,7 @@
         <fullName>Gestione rifiuti​ - AMB</fullName>
         <default>false</default>
         <label>Gestione rifiuti​ - AMB</label>
-    </customValue>    
+    </customValue>
     <customValue>
         <fullName>HVAC</fullName>
         <default>false</default>
@@ -754,7 +754,7 @@
         <fullName>Sconti e bonus - GAS</fullName>
         <default>false</default>
         <label>Sconti e bonus - GAS</label>
-    </customValue>    
+    </customValue>
     <customValue>
         <fullName>Segnalazioni varie/ambientali​ - AMB</fullName>
         <default>false</default>
@@ -1271,6 +1271,17 @@
         <label>Aggiunta Attacco con Attivazione - ACQ</label>
     </customValue>
     <customValue>
+        <fullName>Nuovo Impianto - GAS</fullName>
+        <default>false</default>
+        <label>Nuovo Impianto - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta domiciliazione - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Richiesta domiciliazione - EE</label>
+    </customValue>
+    <customValue>
         <fullName>Richiesta domiciliazione - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -1355,10 +1366,22 @@
         <label>Modifica Unità Immobiliari/Componenti - ACQ</label>
     </customValue>
     <customValue>
+        <fullName>Errore di Fatturazione - ACQ</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Errore di Fatturazione - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Lettura Acqua Avviso al Cliente</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Lettura Acqua Avviso al Cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Connessione con attivazione​  - ACQ</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Connessione con attivazione​  - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Sospensione Fornitura - ACQUA</fullName>
@@ -1607,12 +1630,6 @@
         <label>Errore di Fatturazione - GAS</label>
     </customValue>
     <customValue>
-        <fullName>Errore di Fatturazione - ACQ</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Errore di Fatturazione - ACQ</label>
-    </customValue>
-    <customValue>
         <fullName>Esercizio diritto privacy - EE</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -1737,12 +1754,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Revoca Domiciliazione - GAS</label>
-    </customValue>
-    <customValue>
-        <fullName>Richiesta domiciliazione - EE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Richiesta domiciliazione - EE</label>
     </customValue>
     <description>Tipologia del processo della Service Request.</description>
     <masterLabel>Tipologia Processo</masterLabel>
