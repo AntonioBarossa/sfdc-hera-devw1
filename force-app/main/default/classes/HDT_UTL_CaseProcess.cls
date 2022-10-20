@@ -410,11 +410,13 @@ public with sharing class HDT_UTL_CaseProcess {
     * @param1 List<Case> lista dei cases inseriti
     * @param1 Map<Id,SObject> Mappa della vecchia versione dei cases inseriti
     */
+    //Metodo non più necessario dato che la logica di chiusura avviene dalla activity verso il case gestita nella classe HDT_UTL_ActivityCloseActions
+    /*
     public static void closeRelatedActivity(List<Case> triggerNew, Map<Id,SObject> oldMap){
         list<Id> effectiveCase = new List<Id>();
         for(Case currCase : triggerNew){
             if('Confermato'.equalsIgnoreCase(currCase.Phase__c) && 
-               'HDT_RT_CessazioniTari'.equalsIgnoreCase(currCase.RecordType.DeveloperName) &&
+               'HDT_RT_DisattivazioniTari'.equalsIgnoreCase(currCase.RecordType.DeveloperName) &&
                'Cessazione post accertamento'.equalsIgnoreCase(currCase.Type) &&
                ((Case)oldMap.get(currCase.Id)).Phase__c != currCase.Phase__c){
                 effectiveCase.add(currCase.Id);
@@ -431,7 +433,7 @@ public with sharing class HDT_UTL_CaseProcess {
         }
         Database.update(toClose);
     }
-
+    */
     /**
     * @author Marco Arci (marco.arci@webresults.it)
     * @description metodo chiamato dal batch HDT_BA_PostSalesMasterBatch per generare activity se sono stati trovati contratti per i processi di post accertamento di variazioni tari e disattivazioni tari
