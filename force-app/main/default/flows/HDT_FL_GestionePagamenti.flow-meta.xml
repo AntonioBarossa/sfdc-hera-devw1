@@ -4725,6 +4725,12 @@
                 <elementReference>GetCasePreFlow_0_0_0_0</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>serviceCatalogId</name>
+            <value>
+                <elementReference>serviceCatalogId</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Processo_Variazione_Domiciliazione</name>
