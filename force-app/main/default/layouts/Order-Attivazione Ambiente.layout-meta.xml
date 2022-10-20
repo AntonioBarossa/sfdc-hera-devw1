@@ -69,10 +69,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>SingleAnnualTARIPayment__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>TaxpayerDeclarationInfos__c</field>
             </layoutItems>
             <layoutItems>
