@@ -1,0 +1,44 @@
+<template>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" data-id="close" onclick={buttonClick} >
+                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
+                </button>
+                <!--<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{modalHeader}</h2>-->
+                <div class="slds-text-heading_large">{modalHeader}</div>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="height: min-content;">
+                <!--<p><div class="slds-text-heading_medium">{modalBody}</div></p>-->
+
+                <div if:true={consumptionList2g} class="slds-grid slds-gutters slds-m-top_large slds-m-bottom_large">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input type="date" name="date" label="Seleziona una data" onchange={setFilterParam} ></lightning-input>
+                    </div>
+                </div>
+
+                <div if:true={enableActivityList2g} class="slds-grid slds-gutters slds-m-top_large slds-m-bottom_large">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input type="date" name="dateFrom" label="Seleziona una data" onchange={setFilterParam} ></lightning-input>
+                        <lightning-input type="date" name="dateTo" label="Seleziona una data" onchange={setFilterParam} ></lightning-input>
+                        <lightning-combobox
+                            name="idService"
+                            label="Tipo Attività"
+                            value={value}
+                            placeholder="Seleziona un valore"
+                            options={options}
+                            onchange={handleChange}
+                        ></lightning-combobox>
+                    </div>
+                </div>
+
+            </div>
+            <footer class="slds-modal__footer slds-modal__footer_directional">
+                <button class="slds-button slds-button_neutral" data-id="close" onclick={buttonClick} >Annulla</button>
+                <button class="slds-button slds-button_brand" data-id="conf" onclick={buttonClick} >Conferma</button>
+            </footer>
+        </div>
+    </section>
+
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>
