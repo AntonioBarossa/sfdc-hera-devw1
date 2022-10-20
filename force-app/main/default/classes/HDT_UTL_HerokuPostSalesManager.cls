@@ -491,7 +491,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 HDT_UTL_DatabaseService.updateSObject(ca);
             }
             //START>>>marco.arci@webresults.it Gestione Risposta per postSales Ambiente
-            if(recordCase.Commodity__c.equalsIgnoreCase('Ambiente')){
+            if('Ambiente'.equalsIgnoreCase(recordCase.Commodity__c)){
                 Contract contractAmb = new Contract();
                 ServicePoint__c spAmb = new ServicePoint__c();
                 if(implant != null && implant != recordCase.ServicePoint__r.SAPImplantCode__c){
@@ -518,7 +518,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 }
                 DateTime endDateTimeContractAmb = DateTime.valueOf(reqWrp.requestMap.get('DATA_EVENTO'));
                 Date endDateContractAmb = date.newinstance(endDateTimeContractAmb.year(), endDateTimeContractAmb.month(), endDateTimeContractAmb.day()); 
-                if( endDateContractAmb != null ){
+                if( endDateContractAmb != null && 'Cessazione'.equalsIgnoreCase(recordCase.Type) ){
                     contractAmb.Id = recordCase.Contract__c;
                     contractAmb.EndDate = endDateContractAmb; 
                 }
