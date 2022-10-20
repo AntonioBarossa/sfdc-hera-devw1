@@ -3643,7 +3643,7 @@
         <locationX>8718</locationX>
         <locationY>2246</locationY>
         <defaultConnector>
-            <targetReference>Gestione_Autoletture_Subflow</targetReference>
+            <targetReference>Copy_1_of_Arricchimento_Dati</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>NO</defaultConnectorLabel>
         <rules>
@@ -9465,7 +9465,7 @@
         <locationX>8586</locationX>
         <locationY>2486</locationY>
         <connector>
-            <targetReference>Gestione_Autoletture_Subflow</targetReference>
+            <targetReference>Copy_1_of_Arricchimento_Dati</targetReference>
         </connector>
         <inputReference>Get_Case_Padre_Autoletture</inputReference>
     </recordUpdates>
@@ -10244,6 +10244,35 @@
         </outputAssignments>
     </subflows>
     <subflows>
+        <description>Arricchimento Dati</description>
+        <name>Copy_1_of_Arricchimento_Dati</name>
+        <label>Arricchimento Dati</label>
+        <locationX>8718</locationX>
+        <locationY>2702</locationY>
+        <connector>
+            <targetReference>Gestione_Autoletture_Subflow</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Crea_Case_Autolettura</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Flow_Gestione_Consumo_Anomalo_Idrico</name>
         <label>Flow Gestione Consumo Anomalo Idrico</label>
         <locationX>14922</locationX>
@@ -10285,7 +10314,7 @@
         <name>Gestione_Autoletture_Subflow</name>
         <label>Gestione Autoletture Subflow</label>
         <locationX>8718</locationX>
-        <locationY>2702</locationY>
+        <locationY>2822</locationY>
         <connector>
             <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
