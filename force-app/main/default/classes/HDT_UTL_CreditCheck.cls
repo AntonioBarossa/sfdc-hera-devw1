@@ -84,7 +84,7 @@ public with sharing class HDT_UTL_CreditCheck {
             req.crmId = String.valueOf(o.Id).substring(0,15);
             req.userId = o.CreatedById;
             req.jobTitle = o.ChannelTransCode__c;
-            req.internalCustomerId = o.Account?.Id;
+            req.internalCustomerId = o.Account != null?String.valueOf(o.Account.Id).substring(7,15):'';
             req.companyName = String.isNotBlank(o.Account?.FirstName__c)? o.Account.FirstName__c+separator+o.Account.LastName__c : o.Account?.LastName__c;
             req.externalCustomerId = String.isNotBlank(o.Account?.FiscalCode__c)? o.Account.FiscalCode__c : o.Account?.VATNumber__c;
             req.secondaryCustomerId = o.Account?.VATNumber__c;
