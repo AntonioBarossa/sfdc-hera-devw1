@@ -4,8 +4,8 @@
     <assignments>
         <name>Assegna_Case_Contenuti</name>
         <label>Assegna Case Contenuti</label>
-        <locationX>138</locationX>
-        <locationY>1358</locationY>
+        <locationX>688</locationX>
+        <locationY>2030</locationY>
         <assignmentItems>
             <assignToReference>CaseContenutiRecord</assignToReference>
             <operator>Add</operator>
@@ -15,6 +15,84 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_Contenuti</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Diritto_Rettifica_e_Data_Emissione</name>
+        <label>Assegna Diritto Rettifica e Data Emissione</label>
+        <locationX>666</locationX>
+        <locationY>1718</locationY>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.CorrectionRight__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Contenitore.CorrectionRight__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.CorrectionDocumentEmissionDay__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Contenitore.CorrectionDocumentEmissionDay__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Case_Contenuti</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Diritto_Rettifica_e_Data_Emissione_0_0</name>
+        <label>Assegna Diritto Rettifica e Data Emissione</label>
+        <locationX>402</locationX>
+        <locationY>1718</locationY>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.CorrectionRight__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Contenitore.CorrectionRight__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Case_Contenuti</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Diritto_Rettifica_e_Data_Emissione_0_0_0</name>
+        <label>Assegna Diritto Rettifica e Data Emissione</label>
+        <locationX>138</locationX>
+        <locationY>1718</locationY>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.CorrectionRight__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Contenitore.CorrectionRight__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.CorrectionDocumentEmissionDay__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Contenitore.CorrectionDocumentEmissionDay__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Case_Contenuti</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Societa_Vendita</name>
+        <label>Assegna Societa Vendita</label>
+        <locationX>50</locationX>
+        <locationY>878</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case_Contenitore.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SalesCompany</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Case_Contenuti</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -69,7 +147,7 @@
         <name>AssegnaParentCaseToCollection</name>
         <label>AssegnaParentCaseToCollection</label>
         <locationX>50</locationX>
-        <locationY>1790</locationY>
+        <locationY>2462</locationY>
         <assignmentItems>
             <assignToReference>CaseContenutiRecord</assignToReference>
             <operator>Add</operator>
@@ -85,7 +163,7 @@
         <name>AssegnaStringCaseContenuti</name>
         <label>AssegnaStringCaseContenuti</label>
         <locationX>50</locationX>
-        <locationY>1670</locationY>
+        <locationY>2342</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Contenitore.Note__c</assignToReference>
             <operator>Assign</operator>
@@ -132,8 +210,8 @@
     <assignments>
         <name>Popola_risposta_template</name>
         <label>Popola risposta template</label>
-        <locationX>138</locationX>
-        <locationY>1238</locationY>
+        <locationX>688</locationX>
+        <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>Aggiorna_Case_Contenuti.ComplaintBodyResponse__c</assignToReference>
             <operator>Assign</operator>
@@ -169,24 +247,26 @@
                 <elementReference>Get_Case_Contenitore.MotivatedResponseSendMode__c</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Aggiorna_Case_Contenuti.CorrectionRight__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case_Contenitore.CorrectionRight__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Aggiorna_Case_Contenuti.CorrectionDocumentEmissionDay__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case_Contenitore.CorrectionDocumentEmissionDay__c</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
-            <targetReference>Assegna_Case_Contenuti</targetReference>
+            <targetReference>Tipo_Reclamo_Child</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>HeraCommMarche</name>
+        <choiceText>Hera Comm Marche</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Hera Comm Marche</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>HeraCommSpa</name>
+        <choiceText>Hera Comm S.p.A.</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Hera Comm S.p.A.</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Case_Contenitore_0</name>
         <label>Case Contenitore?</label>
@@ -210,6 +290,56 @@
                 <targetReference>Seleziona_Case_Contenuti_0</targetReference>
             </connector>
             <label>Contenitore</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Data_Emissione_Documento_Rettifica</name>
+        <label>Data Emissione Documento Rettifica</label>
+        <locationX>798</locationX>
+        <locationY>1598</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Case_Contenuti</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Popolata</defaultConnectorLabel>
+        <rules>
+            <name>Popolata</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Contenitore.CorrectionDocumentEmissionDay__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Diritto_Rettifica_e_Data_Emissione</targetReference>
+            </connector>
+            <label>Popolata</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Diritto_Rettifica</name>
+        <label>Diritto Rettifica</label>
+        <locationX>270</locationX>
+        <locationY>1598</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Diritto_Rettifica_e_Data_Emissione_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Contenitore.CorrectionRight__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Si</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Diritto_Rettifica_e_Data_Emissione_0_0_0</targetReference>
+            </connector>
+            <label>Si</label>
         </rules>
     </decisions>
     <decisions>
@@ -237,8 +367,8 @@
     <decisions>
         <name>Il_Case_Contenuto_stato_selezionato</name>
         <label>Il Case Contenuto è stato selezionato?</label>
-        <locationX>270</locationX>
-        <locationY>1118</locationY>
+        <locationX>985</locationX>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Case_Contenuti</targetReference>
         </defaultConnector>
@@ -282,6 +412,46 @@
                 <targetReference>AssignProcessType</targetReference>
             </connector>
             <label>Richieste Info</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Tipo_Reclamo_Child</name>
+        <label>Tipo Reclamo Child</label>
+        <locationX>688</locationX>
+        <locationY>1478</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Case_Contenuti</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Richiesta Info</defaultConnectorLabel>
+        <rules>
+            <name>Reclamo_Scritto</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Aggiorna_Case_Contenuti.FirstLevelComplaintClassification__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reclamo Scritto</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Diritto_Rettifica</targetReference>
+            </connector>
+            <label>Reclamo Scritto</label>
+        </rules>
+        <rules>
+            <name>Rettifica_Doppia_Fatturazione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Aggiorna_Case_Contenuti.FirstLevelComplaintClassification__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rettifica Doppia Fatturazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Data_Emissione_Documento_Rettifica</targetReference>
+            </connector>
+            <label>Rettifica Doppia Fatturazione</label>
         </rules>
     </decisions>
     <decisions>
@@ -388,7 +558,7 @@
         <name>Aggiorna_Case_Contenuti</name>
         <label>Aggiorna Case Contenuti</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <collectionReference>Get_Case_Contenuti</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -424,7 +594,7 @@
         <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Case_Contenuti</targetReference>
+            <targetReference>Assegna_Societa_Vendita</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -442,7 +612,7 @@
         <name>Get_Case_Contenuti</name>
         <label>Get Case Contenuti</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Aggiorna_Case_Contenuti</targetReference>
@@ -526,7 +696,7 @@
         <name>Aggiorna_Case_Contenuti_0</name>
         <label>Aggiorna Case Contenuti</label>
         <locationX>50</locationX>
-        <locationY>1910</locationY>
+        <locationY>2582</locationY>
         <inputReference>CaseContenutiRecord</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -746,6 +916,15 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
+            <name>SalesCompany</name>
+            <choiceReferences>HeraCommSpa</choiceReferences>
+            <choiceReferences>HeraCommMarche</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Societa di Vendita</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
             <name>hdtRecordEditForm_0</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -765,12 +944,6 @@
                 <name>draftButton</name>
                 <value>
                     <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelInputSection</name>
-                <value>
-                    <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
