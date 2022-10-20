@@ -3,7 +3,7 @@
     <fullName>HDT_RT_GenericheTari</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>HDT_RT_GenericheTari</label>
+    <label>Generiche Tari</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
@@ -10798,18 +10798,6 @@
         </values>
         <values>
             <fullName>13FM-Non domestici AT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
             <default>false</default>
         </values>
         <values>

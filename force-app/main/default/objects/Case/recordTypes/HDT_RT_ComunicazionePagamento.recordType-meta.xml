@@ -7842,6 +7842,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In compartecipazione o totalmente da istituzioni pubbliche</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Totalmente da Istituzioni Pubbliche</fullName>
             <default>false</default>
         </values>
@@ -8711,18 +8715,6 @@
         </values>
         <values>
             <fullName>13FM-Non domestici AT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
             <default>false</default>
         </values>
     </picklistValues>

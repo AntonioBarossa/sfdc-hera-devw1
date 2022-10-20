@@ -10,6 +10,7 @@ import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT
 import isInBlacklist from '@salesforce/apex/HDT_LC_AdvancedSearch.isInBlacklist';
 import permissionForFlagContract from '@salesforce/apex/HDT_LC_AdvancedSearch.permissionForFlagContract';
 import checkCompatibility from '@salesforce/apex/HDT_UTL_MatrixCompatibility.checkCompatibilitySales';
+import getCustomMetadataTwo from '@salesforce/apex/HDT_QR_HiddenSearchBarPostSales.getCustomMetadataTwo';
 
 
 export default class HdtAdvancedSearch extends LightningElement {
@@ -70,6 +71,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     postSales=false;
     isSerialNumber = false;
     openMeterSearchModal = false;
+    hiddenSearchBarMod=true;
 
     connectedCallback() {
         permissionForFlagContract().then(data =>{
@@ -126,7 +128,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                         if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && this.processtype !='Chiusura Contatore' && this.processtype != 'Esenzione Modifica Fognatura Depurazione') {
                             RateCategorySplit = data.RateCategory__c.split(",");
                             if(this.processtype !='Chiusura Contatore' && this.processtype != 'Esenzione Modifica Fognatura Depurazione'){
-                                singleFilter.push(" RateCategory__c IN('" + RateCategorySplit.join("','") + "' ");
+                                singleFilter.push(" RateCategory__c IN('" + RateCategorySplit.join("','") + "') ");
                             }else{
                                 singleFilter.push(" RateCategory__c NOT IN('" + RateCategorySplit.join("','") + "') ");                            
                             }
@@ -145,6 +147,16 @@ export default class HdtAdvancedSearch extends LightningElement {
             });
         }
         this.maxRowSelected = (this.maxRowSelected ===false) ? 1 : this.originalData.length;        
+
+        getCustomMetadataTwo({processType:this.processtype,targetObject:this.targetObject}).then(data =>{
+            console.log('targetObject XXX'+ JSON.stringify(this.targetobject));
+            console.log('processType XXX'+ JSON.stringify(this.processtype));
+            this.hiddenSearchBarMod=false;
+            if(data==='List is populated'){
+                this.hiddenSearchBarMod=true;
+            }
+        });
+        
     }
 
     @api
@@ -377,9 +389,9 @@ export default class HdtAdvancedSearch extends LightningElement {
      * Create Data-Table
      */
     createTable(data) {
-        let i, j, temporary, chunk = 5;
+        let i, temporary, chunk = 5;
         this.pages = [];
-        for (i = 0, j = data.length; i < j; i += chunk) {
+        for (i = 0; i < data.length; i += chunk) {
             temporary = data.slice(i, i + chunk);
             this.pages.push(temporary);
         }
@@ -389,9 +401,7 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     reLoadTable() {
         this.tableData = this.pages[this.currentPage];
-
         console.log('tableData********'+ JSON.stringify(this.tableData));
-
     }
 
     nextPage() {
@@ -652,7 +662,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                         }
                     }
                 }
-                console.log(this.originalData);
+                console.log('this.originalData >>> ' + this.originalData);
                 this.createTable(this.originalData); 
                 this.formatTableHeaderColumns(this.originalData);
                 var my_ids = [];

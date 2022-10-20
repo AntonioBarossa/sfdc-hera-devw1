@@ -223,6 +223,16 @@ public with sharing class HDT_UTL_CaseProcess {
                         HDT_UTL_DatabaseService.updateSObject(updateList);
                     }
                 }
+                /* Richiesta Parere
+                * Il case padre (reclamo scritto) viene riportato In Lavorazione
+                */
+                if(caseNew.Type.equalsIgnoreCase('Richiesta Parere') && newPhase.equalsIgnoreCase('Annullato') && caseNew.ParentId != null)
+                {
+                    Case complaintCase = new Case();
+                    complaintCase.Id = caseNew.ParentId;
+                    complaintCase.Phase__c = 'In Lavorazione';
+                    HDT_UTL_DatabaseService.updateSObject(complaintCase);
+                }
                 //Contratto Non Richiesto
                 if(newPhase.equalsIgnoreCase('Annullato')){
                     Case nonReqContr = new Case();
@@ -400,11 +410,13 @@ public with sharing class HDT_UTL_CaseProcess {
     * @param1 List<Case> lista dei cases inseriti
     * @param1 Map<Id,SObject> Mappa della vecchia versione dei cases inseriti
     */
+    //Metodo non più necessario dato che la logica di chiusura avviene dalla activity verso il case gestita nella classe HDT_UTL_ActivityCloseActions
+    /*
     public static void closeRelatedActivity(List<Case> triggerNew, Map<Id,SObject> oldMap){
         list<Id> effectiveCase = new List<Id>();
         for(Case currCase : triggerNew){
             if('Confermato'.equalsIgnoreCase(currCase.Phase__c) && 
-               'HDT_RT_CessazioniTari'.equalsIgnoreCase(currCase.RecordType.DeveloperName) &&
+               'HDT_RT_DisattivazioniTari'.equalsIgnoreCase(currCase.RecordType.DeveloperName) &&
                'Cessazione post accertamento'.equalsIgnoreCase(currCase.Type) &&
                ((Case)oldMap.get(currCase.Id)).Phase__c != currCase.Phase__c){
                 effectiveCase.add(currCase.Id);
@@ -421,7 +433,7 @@ public with sharing class HDT_UTL_CaseProcess {
         }
         Database.update(toClose);
     }
-
+    */
     /**
     * @author Marco Arci (marco.arci@webresults.it)
     * @description metodo chiamato dal batch HDT_BA_PostSalesMasterBatch per generare activity se sono stati trovati contratti per i processi di post accertamento di variazioni tari e disattivazioni tari
@@ -448,11 +460,11 @@ public with sharing class HDT_UTL_CaseProcess {
             //querare tabella 'dato tecnico comunale' con chiave i comuni del case e verificare se il flag di gestione è attivo
             // o se la data odierna rientra nel range tra 'data da' e 'data cutover',
             //con il risultato modificare la lista fieldsMap.get('SupplyCity__c') lasciando quelli trovati e togliendo quelli non trovati nella tabella
-            List<Contract> relatedContracts = [SELECT Id, AccountId, BillingCity, BillingStreet
+            List<Contract> relatedContracts = [SELECT Id, AccountId, ServicePoint__r.SupplyCity__c, ServicePoint__r.SupplyStreetName__c
                                             FROM Contract
                                             WHERE AccountId IN: fieldsMap.get('AccountId')
-                                            AND BillingCity IN: fieldsMap.get('SupplyCity__c')
-                                            AND BillingStreet IN: fieldsMap.get('SupplyStreetName__c')
+                                            AND ServicePoint__r.SupplyCity__c IN: fieldsMap.get('SupplyCity__c')
+                                            AND ServicePoint__r.SupplyStreetName__c IN: fieldsMap.get('SupplyStreetName__c')
                                             AND Status = 'Attivo'];
             system.debug('@@@@ related contract: '+relatedContracts);
             List<wrts_prcgvr__Activity__c> notInsertActivity = HDT_QR_Activity.getActivityFromTypeList(caseIds, new Set<String>{'Aprire variazione','Aprire Cessazione'});
@@ -469,8 +481,8 @@ public with sharing class HDT_UTL_CaseProcess {
                 for(Contract currContract : relatedContracts){
                     system.debug('@@@ serching contract: '+currContract.Id);
                     if( ((String)caseItem.AccountId)?.equalsIgnoreCase(currContract.AccountId) &&
-                        caseItem.SupplyCity__c?.equalsIgnoreCase(currContract.BillingCity) == true && 
-                        caseItem.SupplyStreetName__c?.equalsIgnoreCase(currContract.BillingStreet) &&
+                        caseItem.SupplyCity__c?.equalsIgnoreCase(currContract.ServicePoint__r.SupplyCity__c) == true && 
+                        caseItem.SupplyStreetName__c?.equalsIgnoreCase(currContract.ServicePoint__r.SupplyStreetName__c) &&
                         !excludedCases.contains(CaseItem.Id) ){
                             if('Modifica post accertamento'.equalsIgnoreCase(caseItem.Type)){
                                 findContract = true;
