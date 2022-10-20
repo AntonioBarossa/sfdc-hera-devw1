@@ -474,7 +474,8 @@ public with sharing class HDT_UTL_CaseProcess {
                 excludedCases.add(currAct.Case__c);
             }
             
-            List<wrts_prcgvr__Activity__c> newActivityToInsert = new List<wrts_prcgvr__Activity__c>();
+            List<wrts_prcgvr__Activity__c> newActivityToUpdate = new List<wrts_prcgvr__Activity__c>();
+            wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c();
             boolean findContract;
             for(Case caseItem : cases){
                 findContract = false;
@@ -486,21 +487,23 @@ public with sharing class HDT_UTL_CaseProcess {
                         !excludedCases.contains(CaseItem.Id) ){
                             if('Modifica post accertamento'.equalsIgnoreCase(caseItem.Type)){
                                 findContract = true;
-                                newActivityToInsert.add(new wrts_prcgvr__Activity__c(Account__c=caseItem.AccountId, 
-                                                                                     Case__c=caseItem.Id, 
-                                                                                     ServicePoint__c=caseItem.ServicePoint__c, 
-                                                                                     wrts_prcgvr__Status__c ='Aperta',
-                                                                                     DiscardCategory__c = 'Manuale',
-                                                                                     Type__c='Aprire Variazione'));
+                                tempAct = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName(caseItem.Id, 'CBS_VAR005__GESTIONE_MANUALE');
+                                tempAct.Account__c=caseItem.AccountId;
+                                tempAct.ServicePoint__c=caseItem.ServicePoint__c;
+                                tempAct.wrts_prcgvr__Status__c ='Aperta';
+                                tempAct.DiscardCategory__c = 'Manuale';
+                                tempAct.Type__c='Aprire Variazione';
+                                newActivityToUpdate.add(tempAct);
                                 break;
                             }else if('Cessazione post accertamento'.equalsIgnoreCase(caseItem.Type)){
                                 findContract = true;
-                                newActivityToInsert.add(new wrts_prcgvr__Activity__c(Account__c=caseItem.AccountId,
-                                                                                     Case__c=caseItem.Id, 
-                                                                                     ServicePoint__c=caseItem.ServicePoint__c,
-                                                                                     wrts_prcgvr__Status__c ='Aperta',
-                                                                                     DiscardCategory__c = 'Manuale',
-                                                                                     Type__c='Aprire Cessazione'));
+                                tempAct = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName(caseItem.Id, 'CBS_DIS002__GESTIONE_MANUALE');
+                                tempAct.Account__c=caseItem.AccountId;
+                                tempAct.ServicePoint__c=caseItem.ServicePoint__c;
+                                tempAct.wrts_prcgvr__Status__c ='Aperta';
+                                tempAct.DiscardCategory__c = 'Manuale';
+                                tempAct.Type__c='Aprire Cessazione';
+                                newActivityToUpdate.add(tempAct);
                                 break;
                             }
                     }
@@ -513,7 +516,7 @@ public with sharing class HDT_UTL_CaseProcess {
             }
             system.debug('@@@ before dml operation');
             update toAnnul;
-            insert newActivityToInsert;
+            update newActivityToUpdate;
         }catch(exception e){
             system.debug(e);
         }
