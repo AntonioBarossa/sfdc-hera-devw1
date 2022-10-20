@@ -22,9 +22,13 @@ public class HDT_UTL_GenericSolHandlerTst {
         servicePoints[0].SupplyPostalCode__c='00159';
         servicePoints[0].CommoditySector__c=recordMatrice.Service__c;
         insert servicePoints;
-        HDT_UTL_DataFactoryTst.createContact(1, true, residentialAccount[0].Id);
+        List<Contact> contactList=HDT_UTL_DataFactoryTst.createContact(1, true, residentialAccount[0].Id);
+        //contactList.addAll(HDT_UTL_DataFactoryTst.createContact(1, true, null));
         List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, true, residentialAccount[0].Id, 'Attiva');
-        List<Order> orderList=HDT_UTL_DataFactoryTst.createOrder(1, true, residentialAccount[0].Id, sales);
+        List<Order> orderList=HDT_UTL_DataFactoryTst.createOrder(1, false, residentialAccount[0].Id, sales);
+        orderList[0].Phase__c='Bozza';
+        orderList[0].Contact__c=contactList[0].Id;
+        insert orderList;
         List<Contract> contracts= HDT_UTL_DataFactoryTst.createContract(1, false, residentialAccount[0].Id);
         contracts[0].ServicePoint__c=servicePoints[0].Id;
         contracts[0].ContractSalesCompany__c=recordMatrice.SellerCompany__c;
@@ -39,8 +43,13 @@ public class HDT_UTL_GenericSolHandlerTst {
         List<SBQQ__Subscription__c> subscriptions= HDT_UTL_DataFactoryTst.createSubscription (1, false, residentialAccount[0].Id, contracts[0].Id, servicePoints[0].Id);
         subscriptions[0].SBQQ__Product__c=productList[0].Id;
         insert subscriptions;
-        
         HDT_UTL_DataFactoryTst.createProductOption(productList[0].Id, productList[0].Id, true);
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
+        String rtIdOrder = utlConstants.ORDER_RECORDTYPEID_VAS;
+        String rtOrderName = utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VAS;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Comunicazione verso Heroku', 'Bozza', rtIdOrder, rtOrderName,'A','','','');
+        HDT_UTL_DataFactoryTst.createBillingProfile(1,true, residentialAccount[0].Id);
+        //HDT_UTL_DataFactoryTst.createAccountContactRelation(true, residentialAccount[1].Id, contactList[1].Id);
     }
 
     @isTest
@@ -56,7 +65,7 @@ public class HDT_UTL_GenericSolHandlerTst {
     @isTest
     static void handleAnalisiConsumiOrderTst(){
         Order ord=[SELECT Id,OrderNumber FROM Order LIMIT 1];
-        Contact cont=[SELECT Id,AccountId FROM Contact LIMIT 1];
+        Contact cont=[SELECT Id,AccountId FROM Contact WHERE AccountId!=null LIMIT 1 ];
         Contract contr=[SELECT Id, SAPContractCode__c FROM Contract LIMIT 1];
         PricebookEntry pe=[SELECT Id,Product2Id,Pricebook2Id FROM PricebookEntry WHERE Pricebook2.IsStandard=False LIMIT 1];
         Map<String,Object> params=new Map<String,Object>{'serviceRequest'=>ord.OrderNumber,
@@ -68,12 +77,28 @@ public class HDT_UTL_GenericSolHandlerTst {
                                                             'numeroOccupanti'=>3,
                                                             'superficie'=>50,
                                                             'tipologiaAbitazione'=>'Casa Indipendente',
-                                                            'proprietario'=>'Marco'
+                                                            'proprietario'=>'Si'
 
         };
-        //vedere perchè scoppia l'interfaccia di pclick all'update del child order
         Test.startTest();
         HDT_UTL_GenericSolHandler.handleAnalisiConsumiOrder(params);
+        Test.stopTest();
+        ord=[SELECT Id,Phase__c FROM Order LIMIT 1];
+        System.assertEquals('Comunicazione verso Heroku',ord.phase__c,'ordine aggiornato in fase send to heroku');
+    }
+
+    @isTest
+    static void createBaseOrderTst(){
+        Sale__c saleRecord=[SELECT Id FROM Sale__c LIMIT 1];
+        List<BillingProfile__c> billingProfiles = [SELECT Id,ContractAccountCode__c,Account__c FROM BillingProfile__c LIMIT 1];
+        Map<String,Object> params = new Map<String,Object>{
+            'contractAccount'=>billingProfiles[0].ContractAccountCode__c,
+            'accountId'=>billingProfiles[0].Account__c,
+            'integrationId'=>''
+
+        };
+        Test.startTest();
+        HDT_UTL_GenericSolHandler.createBaseOrder(params,saleRecord.Id);
         Test.stopTest();
         System.assertEquals(true,true,'temp');
     }
