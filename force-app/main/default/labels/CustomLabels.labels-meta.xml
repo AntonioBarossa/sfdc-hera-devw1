@@ -987,4 +987,11 @@
         <shortDescription>HDT_DeleteServicePointDays</shortDescription>
         <value>10</value>
     </labels>
+    <labels>
+        <fullName>HDT_ActivityCompleteProcess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ActivityCompleteProcess</shortDescription>
+        <value>Comunicazioni con DL;Elaborazione Manuale;Esito OK da DL;Gestione M02;Gestione M03;Gestione manuale;Recupero contratto da Postel</value>
+    </labels>
 </CustomLabels>
