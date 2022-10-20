@@ -48,13 +48,19 @@ public class HDT_UTL_GenericSolHandlerTst {
         String rtIdOrder = utlConstants.ORDER_RECORDTYPEID_VAS;
         String rtOrderName = utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VAS;
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Comunicazione verso Heroku', 'Bozza', rtIdOrder, rtOrderName,'A','','','');
-        HDT_UTL_DataFactoryTst.createBillingProfile(1,true, residentialAccount[0].Id);
-        //HDT_UTL_DataFactoryTst.createAccountContactRelation(true, residentialAccount[1].Id, contactList[1].Id);
+        List<Account> accListBsn = HDT_UTL_DataFactoryTst.createAccountBusiness(2, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Contact> contactListBsn = HDT_UTL_DataFactoryTst.createContact(1, true, accListBsn[0].Id);
+        HDT_UTL_DataFactoryTst.createAccountContactRelation(true, accListBsn[1].Id,contactListBsn[0].Id);
+        HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accListBsn[1].Id);
+        AccountContactRelation accContRelation=HDT_UTL_DataFactoryTst.createAccountContactRelation(false, accListBsn[1].Id, contactList[0].Id);
+        accContRelation.isActive=true;
+        accContRelation.Roles='Titolare';
+        insert accContRelation;
     }
 
     @isTest
     static void createSaleTst(){
-        Contact cont=[SELECT Id,AccountId FROM Contact LIMIT 1];
+        Contact cont=[SELECT Id,AccountId FROM Contact WHERE Account.RecordTypeId=:utlConstants.ACCOUNT_RECORDTYPEID_RESINDEZIALE LIMIT 1];
         Test.startTest();
         HDT_UTL_GenericSolHandler.createSale(cont.AccountId, cont.Id);
         Test.stopTest();
@@ -65,7 +71,7 @@ public class HDT_UTL_GenericSolHandlerTst {
     @isTest
     static void handleAnalisiConsumiOrderTst(){
         Order ord=[SELECT Id,OrderNumber FROM Order LIMIT 1];
-        Contact cont=[SELECT Id,AccountId FROM Contact WHERE AccountId!=null LIMIT 1 ];
+        Contact cont=[SELECT Id,AccountId FROM Contact WHERE Account.RecordTypeId=:utlConstants.ACCOUNT_RECORDTYPEID_RESINDEZIALE LIMIT 1 ];
         Contract contr=[SELECT Id, SAPContractCode__c FROM Contract LIMIT 1];
         PricebookEntry pe=[SELECT Id,Product2Id,Pricebook2Id FROM PricebookEntry WHERE Pricebook2.IsStandard=False LIMIT 1];
         Map<String,Object> params=new Map<String,Object>{'serviceRequest'=>ord.OrderNumber,
@@ -89,11 +95,15 @@ public class HDT_UTL_GenericSolHandlerTst {
 
     @isTest
     static void createBaseOrderTst(){
+        //provare a generare un account bsn ed un contact di residenziale e creare accconrel
         Sale__c saleRecord=[SELECT Id FROM Sale__c LIMIT 1];
         List<BillingProfile__c> billingProfiles = [SELECT Id,ContractAccountCode__c,Account__c FROM BillingProfile__c LIMIT 1];
+        //ContactId != null AND
+        List<AccountContactRelation> cntAccContRelations = [SELECT Id,AccountId,ContactId,isActive,Roles FROM AccountContactRelation WHERE  Roles='Titolare' LIMIT 1];
+        System.debug('account contact rel: '+cntAccContRelations);
         Map<String,Object> params = new Map<String,Object>{
             'contractAccount'=>billingProfiles[0].ContractAccountCode__c,
-            'accountId'=>billingProfiles[0].Account__c,
+            'accountId'=>cntAccContRelations[0].AccountId,
             'integrationId'=>''
 
         };
@@ -101,5 +111,6 @@ public class HDT_UTL_GenericSolHandlerTst {
         HDT_UTL_GenericSolHandler.createBaseOrder(params,saleRecord.Id);
         Test.stopTest();
         System.assertEquals(true,true,'temp');
+        //TODO Fixare assert;
     }
 }
