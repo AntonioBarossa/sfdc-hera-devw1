@@ -1,13 +1,13 @@
 <template>
     <div class="slds-box">
-        <template if:true={caseRecord}>
+        <template if:true={showForm}>
             <lightning-layout multiple-rows>
                 <lightning-layout-item size="6">
                     <lightning-combobox name="RefundMethod__c" 
                                         data-id="RefundMethod__c"
                                         label="Tipo Rimborso" 
                                         required 
-                                        value={caseRecord.RefundMethod__c} 
+                                        value={refoundDefaultVal} 
                                         options={optionsForRefundMethod__c} 
                                         onchange={handleInputChange}></lightning-combobox>
                 </lightning-layout-item>
@@ -16,7 +16,7 @@
                                         data-id="AccountholderTypeBeneficiary__c"
                                         label="Tipo Beneficiario" 
                                         required={beneficiaryTypeRequired} 
-                                        value={caseRecord.AccountholderTypeBeneficiary__c} 
+                                        value={holderDefaultVal} 
                                         options={optionsForAccountholderTypeBeneficiary__c} 
                                         onchange={handleInputChange}></lightning-combobox>
                 </lightning-layout-item>
