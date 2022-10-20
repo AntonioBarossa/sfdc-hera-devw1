@@ -474,7 +474,7 @@ public with sharing class HDT_UTL_CaseProcess {
                 excludedCases.add(currAct.Case__c);
             }
             
-            List<wrts_prcgvr__Activity__c> newActivityToUpdate = new List<wrts_prcgvr__Activity__c>();
+            List<wrts_prcgvr__Activity__c> newActivityToInsert = new List<wrts_prcgvr__Activity__c>();
             wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c();
             boolean findContract;
             for(Case caseItem : cases){
@@ -493,7 +493,7 @@ public with sharing class HDT_UTL_CaseProcess {
                                 tempAct.wrts_prcgvr__Status__c ='Aperta';
                                 tempAct.DiscardCategory__c = 'Manuale';
                                 tempAct.Type__c='Aprire Variazione';
-                                newActivityToUpdate.add(tempAct);
+                                newActivityToInsert.add(tempAct);
                                 break;
                             }else if('Cessazione post accertamento'.equalsIgnoreCase(caseItem.Type)){
                                 findContract = true;
@@ -503,7 +503,7 @@ public with sharing class HDT_UTL_CaseProcess {
                                 tempAct.wrts_prcgvr__Status__c ='Aperta';
                                 tempAct.DiscardCategory__c = 'Manuale';
                                 tempAct.Type__c='Aprire Cessazione';
-                                newActivityToUpdate.add(tempAct);
+                                newActivityToInsert.add(tempAct);
                                 break;
                             }
                     }
@@ -516,7 +516,7 @@ public with sharing class HDT_UTL_CaseProcess {
             }
             system.debug('@@@ before dml operation');
             update toAnnul;
-            update newActivityToUpdate;
+            insert newActivityToInsert;
         }catch(exception e){
             system.debug(e);
         }
