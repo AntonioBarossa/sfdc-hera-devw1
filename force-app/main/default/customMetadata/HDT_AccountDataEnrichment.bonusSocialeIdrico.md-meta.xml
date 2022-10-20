@@ -18,7 +18,7 @@
     &quot;iconName&quot;: &quot;standard:endorsement&quot;,
     &quot;columns&quot;: [
       {
-        &quot;label&quot;: &quot;Codice richiesta s gate&quot;,
+        &quot;label&quot;: &quot;Codice Richiesta&quot;,
         &quot;fieldName&quot;: &quot;codiceRichiestaSgate&quot;
       },
       {
@@ -27,7 +27,7 @@
         &quot;sortable&quot;: true
       },
       {
-        &quot;label&quot;: &quot;Data fineValidità bonus&quot;,
+        &quot;label&quot;: &quot;Data fine validità bonus&quot;,
         &quot;fieldName&quot;: &quot;dataFineValiditaBonus&quot;,
         &quot;sortable&quot;: true
       },
@@ -37,7 +37,7 @@
         &quot;initialWidth&quot;: 160
       },
       {
-        &quot;label&quot;: &quot;tipoCliente&quot;,
+        &quot;label&quot;: &quot;Tipo Cliente&quot;,
         &quot;fieldName&quot;: &quot;tipoCliente&quot;,
         &quot;initialWidth&quot;: 140
       },
