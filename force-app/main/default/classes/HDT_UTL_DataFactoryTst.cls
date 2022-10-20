@@ -117,23 +117,23 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		for (Integer i=0; i<amount; i++){
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-			Decimal numCustomerCode = Decimal.valueOf('1003616210');
-			Decimal result = numCustomerCode + i;
-			String stringResult = String.valueOf(result);
+			//Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			//Decimal result = numCustomerCode + i;
+			String stringResult = '1'+generateRandomChars(9,true,false, false);  //String.valueOf(result);
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
 			Account acc=new Account();
 
 			acc.RecordTypeId=rt;
-			acc.Name='test account'+i;
+			acc.Name='test account bsn'+i;
 			acc.CompanyOwner__c=companyOwner;
 			acc.CustomerMarking__c=customerMarking;
 			acc.Category__C=category;
 			acc.BillingCityCode__c='Roma';
 			acc.BillingStreetName__c='via roma';
 			acc.BillingStreetNumber__c='55';
-			acc.LastName__c='test account'+i;
+			acc.LastName__c='test account bsn'+i;
 			acc.BillingIsAddressVerified__c=true;
 			
 			if(String.isNotBlank(customerMarking) && (customerMarking.containsIgnoreCase('Condominio') || customerMarking.containsIgnoreCase('Associazione'))) {
@@ -173,9 +173,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		for (Integer i=0; i<amount; i++){
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-			Decimal numCustomerCode = Decimal.valueOf('1003616210');
-			Decimal result = numCustomerCode + i;
-			String stringResult = String.valueOf(result);
+			//Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			//Decimal result = numCustomerCode + i;
+			String stringResult = '1'+generateRandomChars(9,true,false, false);//String.valueOf(result);
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
@@ -262,9 +262,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-			Decimal numCustomerCode = Decimal.valueOf('1003616210');
-			Decimal result = numCustomerCode + i;
-			String stringResult = String.valueOf(result);
+			//Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			//Decimal result = numCustomerCode + i;
+			String stringResult = '1'+generateRandomChars(9,true,false, false);//String.valueOf(result);
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
@@ -3511,5 +3511,61 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 		return cityTechnicalData;
 	}
+
+	public static String generateRandomChars(Integer len,Boolean isNumeric,Boolean isText, Boolean isAlphaNumeric) {
+        String numbers = '123456789';
+		String letters = 'ABCDEFGHILMOPQRSTUVZWXYabcdefghilmopqrstuvzwxy';
+		String alphaNumeric = numbers+letters;
+		String randStr='';
+		final String CHARS;
+		if(isNumeric){
+			CHARS=numbers;
+		}
+		if(isText){
+			CHARS=alphaNumeric;
+		}
+		if(isAlphaNumeric){
+			CHARS=alphaNumeric;
+		} 
+        while (randStr.length() < len) {
+            Integer idx = Math.mod(Math.abs(Crypto.getRandomInteger()), chars.length());
+            randStr += CHARS.substring(idx, idx+1);
+        }
+        return randStr;
+    }
+
 	
+
+	/**​
+    * @author Elvin Iluca
+    * @date 20/10/2022
+    * @description HDT_UTL_DataFactoryTst – Utility method to create/insert N EmailMessage instances/records
+	* @param1 - amount EmailMessage 
+	* @param2 - boolean to choose if insert records or not
+	* @return - the list of EmailMessage just created
+    */
+	public static List<EmailMessage> createEmailMessage(Integer amount, Boolean doInsert){
+	
+		List<EmailMessage> emailMessageList = new List<EmailMessage>();
+
+		for(Integer i = 0; i<amount; i++){
+			EmailMessage temp = new EmailMessage();
+			temp.status = '3';
+			temp.fromAddress = 'test' + i + '@test.com';
+			temp.fromName = 'test' + i;
+			temp.toAddress = 'toTest' + i + '@test.com';
+			temp.Subject = 'Hello ' + temp.ToAddress;
+			temp.HtmlBody = '<h1>How are you?</h1><br><br><h1>'+ temp.FromName +'</h1>';
+			
+			emailMessageList.add(temp);
+		}
+
+		if (doInsert){
+
+			insert emailMessageList;
+		}
+
+		return emailMessageList;
+
+	}
 }
