@@ -14,16 +14,18 @@ global inherited sharing class HDT_UTL_PhaseTransSobjectCreation implements wrts
     
         Map<String, Object> argsMap = (Map<String, Object>) args;
         system.debug(LoggingLevel.DEBUG,json.serialize(args));
-        List<Order> senders = (List<Order>) ((Map<String,Object>)argsMap.get('parameter')).get('records');
+        List<SObject> senders = (List<SObject>) ((Map<String,Object>)argsMap.get('parameter')).get('records');
         String method = (String) argsMap.get('method');
         
         switch on method {
             when 'FacilityApproval'{
-                RecordType recordType = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_IstruttoriaAgevolazione' WITH SECURITY_ENFORCED];
+                Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_IstruttoriaAgevolazione').getRecordTypeId();
 
-                for(Order o : senders){
-                    Case caso = new Case(RecordTypeId = recordType.Id, Type = 'Avviso di Servizio', Phase__c = 'Bozza', Order__c = o.Id);
-                    sObjectsToInsert.add(caso);
+                for(SObject s : senders){
+                    if(s instanceof Order){
+                        Case caso = new Case(RecordTypeId = recordTypeId, Type = 'Avviso di Servizio', Phase__c = 'Bozza', Order__c = (Id)s.get('Id'));
+                        sObjectsToInsert.add(caso);
+                    }
                 }
             }
         }
