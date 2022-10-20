@@ -85,7 +85,6 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                             currentCase.Phase__c = 'Completata';
                             myCurrentCaseList.add(currentCase);
                         }else if( currentCase.Type.equalsIgnoreCase('Piano Rateizzazione') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
-
                             currentCase.Phase__c = 'Da Inviare';
                             myCurrentCaseList.add(currentCase);
 

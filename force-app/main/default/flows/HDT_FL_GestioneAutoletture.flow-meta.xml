@@ -839,12 +839,6 @@ TODO: Formula da adeguare in Wave 2.</description>
                 <elementReference>Get_Case.ServicePoint__r.Distributor__r.Code__c</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <field>SalesCompanyCode__c</field>
-            <value>
-                <elementReference>CompanyCodeFormula</elementReference>
-            </value>
-        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
