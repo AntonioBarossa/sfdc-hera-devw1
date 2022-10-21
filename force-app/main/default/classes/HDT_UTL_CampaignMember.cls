@@ -490,7 +490,7 @@ public with sharing class HDT_UTL_CampaignMember {
     }
     @future(callout=true)
     public static void assignCallDateTime(List<Id> context){
-        List<CampaignMember> updList = [SELECT Id, PhoneNumber__c, Lead.ContactDate__c, Agency__r.Name, Campaign.MacroActivityEasyCIM__r.Name, Campaign.ReitekIntegrationTechnology__c FROM CampaignMember WHERE Id IN :context];
+        List<CampaignMember> updList = [SELECT Id, PhoneNumber__c, Lead.ContactDate__c, Agency__r.Name, Campaign.MacroActivityEasyCIM__r.Name, Campaign.ReitekIntegrationTechnology__c FROM CampaignMember WHERE Id IN :context AND Campaign.ReitekIntegrationTechnology__c = 'Web Service' WITH SECURITY_ENFORCED];
             
         for(CampaignMember curCm : updList){
             String macroactivity = curCm.Campaign.MacroActivityEasyCIM__r.Name;
