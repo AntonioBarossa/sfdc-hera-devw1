@@ -46,12 +46,12 @@ global with sharing class HDT_WS_IntermediateResults {
         private List<Sobject> populateSobjForUpdate(HDT_WRP_Reminder caseData, Case originalCase){
             List<Sobject> retList = new List<Sobject>();
             try{
-                Case c = new Case();
-                c.Id= caseData.caseId;
-                c.Phase__c = caseData.field[0].phase;
+                Case caseToUpdate = new Case();
+                caseToUpdate.Id= caseData.caseId;
+                caseToUpdate.Phase__c = caseData.field[0].phase;
                 //c.exampleActivityCode = caseData.field[0].codActivity;
                 //Try Save all data
-                retList.add(c);
+                retList.add(caseToUpdate);
                 if('Avviso di Servizio'.equalsIgnoreCase(originalCase.Type) && 'Completata'.equalsIgnoreCase(c.Phase__c) && originalCase.Order__c!=null){
                     retList.add(this.populateOrder(caseData, originalCase.Order__c));
                 } 
