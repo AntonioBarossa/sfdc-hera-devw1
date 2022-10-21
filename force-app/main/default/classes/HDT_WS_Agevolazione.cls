@@ -34,21 +34,23 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
 
         Map<String,String> mapObj = new Map<String,String>();
 
-            for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
-                for(wrts_prcgvr.MRR_1_0.Field f : w.fields){
-                    mapObj.put(f.name, f.value);
-                }
+        for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
+            for(wrts_prcgvr.MRR_1_0.Field f : w.fields){
+                mapObj.put(f.name, f.value);
             }
-            
-            HDT_UTL_GenerateMultilevelJson generate = new HDT_UTL_GenerateMultilevelJson(mapObj);
-            Map<String, Object> request = generate.generateMap();
+        }
+        
+        HDT_UTL_GenerateMultilevelJson generate = new HDT_UTL_GenerateMultilevelJson(mapObj);
+        Map<String, Object> request = generate.generateMap();
 
-            Order ord = (Order) obj;
-            Order ordToUpdate = new Order(Id=ord.Id);
+        Order ord = (Order) obj;
+        Order ordToUpdate = new Order(Id=ord.Id);
 
-            HDT_WS_AgevolazioneResponse res = (HDT_WS_AgevolazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH,'POST', request, HDT_WS_AgevolazioneResponse.class);
-            System.debug(LoggingLevel.DEBUG,'response -> ' + res); 
+        HDT_WS_AgevolazioneResponse res = (HDT_WS_AgevolazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH,'POST', request, HDT_WS_AgevolazioneResponse.class);
+        System.debug(LoggingLevel.DEBUG,'response -> ' + res);
 
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
+        
         try{
             if(res.status.equalsIgnoreCase('success')){
                 ordToUpdate.TecnicalPhase__c=PHASE;
@@ -65,8 +67,13 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
             System.debug(LoggingLevel.DEBUG,'exception --> ' + ex.getStackTraceString());
             System.debug(LoggingLevel.DEBUG,'atLine --> ' + ex.getLineNumber());
             System.debug(LoggingLevel.DEBUG,ex.getMessage());
+            response.success = false;
+            response.message = 'KO';
+            return response;
         }
         
-        return res;
+        response.success = true;
+        response.message = 'OK';
+        return response;
     }
 }

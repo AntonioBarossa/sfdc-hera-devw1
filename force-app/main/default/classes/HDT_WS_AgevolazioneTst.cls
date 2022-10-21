@@ -76,19 +76,19 @@ public with sharing class HDT_WS_AgevolazioneTst{
 	}
 
 
-    @isTest
-    public static void testExecuteObjectNull() {
+    @isTest 
+    public static void testExecuteObjectNull() {		
 
         HDT_WS_HTTPServiceCallMock mock = new HDT_WS_HTTPServiceCallMock();
-		HDT_WS_Agevolazione agevolazione = new HDT_WS_Agevolazione();
+        HDT_WS_Agevolazione agevolazione = new HDT_WS_Agevolazione();
         Test.setMock(HttpCalloutMock.class, mock);
-            
+    
         Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
         Case myCase = [Select id, DiscardDescription__c from case];
-        
+
         wrts_prcgvr__CalloutTemplate__c myTemplate = [Select id, name, wrts_prcgvr__Code__c, wrts_prcgvr__ConfigurationFile__c,
                                                         wrts_prcgvr__IncludeNullFields__c, wrts_prcgvr__ObjectType__c, wrts_prcgvr__Structure__c 
                                                         From wrts_prcgvr__CalloutTemplate__c];
@@ -114,16 +114,21 @@ public with sharing class HDT_WS_AgevolazioneTst{
         args.put('method', 'TemporaneaNuovaAttivazioneCreaRich');
         args.put('parameters', params);
         args.put('multirequest', myOrderItem);
+        
+        Test.startTest();
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse)agevolazione.execute(args);
 
-        Test.startTest(); 
-        HDT_WS_Agevolazione.HDT_WS_AgevolazioneResponse res = (HDT_WS_Agevolazione.HDT_WS_AgevolazioneResponse ) agevolazione.execute(args);
+        HDT_WS_Agevolazione.HDT_WS_AgevolazioneResponse res = new  HDT_WS_Agevolazione.HDT_WS_AgevolazioneResponse();
+        res.status='';
         res.correlationId='';
         res.timestamp='';
         res.data = new HDT_WS_Agevolazione.HDT_WRP_ResponseData();
-        System.assertEquals(null, res.status, 'The call was not successful');
-        System.assertNotEquals('success', res.status, 'The returned status was not correct');
-        Test.stopTest();
 
+        HDT_WS_Agevolazione.HDT_WRP_ResponseData resData = new HDT_WS_Agevolazione.HDT_WRP_ResponseData();
+        resData.esito='';
+
+        System.assertEquals('KO', responseReturn.message, 'The call was not successful');
+        Test.stopTest();
     }
 
 }
