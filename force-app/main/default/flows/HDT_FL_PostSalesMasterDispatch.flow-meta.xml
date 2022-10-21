@@ -436,7 +436,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Gestione_Autoletture_Subflow</targetReference>
+            <targetReference>Arricchimento_Autoletture</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -8372,6 +8372,34 @@
     </start>
     <status>Active</status>
     <subflows>
+        <name>Arricchimento_Autoletture</name>
+        <label>Arricchimento Autoletture</label>
+        <locationX>7354</locationX>
+        <locationY>2126</locationY>
+        <connector>
+            <targetReference>Gestione_Autoletture_Subflow</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Crea_Case_Autolettura</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati</name>
         <label>Arricchimento Dati</label>
@@ -8957,7 +8985,7 @@
         <name>Gestione_Autoletture_Subflow</name>
         <label>Gestione Autoletture Subflow</label>
         <locationX>7354</locationX>
-        <locationY>2126</locationY>
+        <locationY>2246</locationY>
         <connector>
             <targetReference>Campaign_Member_presente</targetReference>
         </connector>
