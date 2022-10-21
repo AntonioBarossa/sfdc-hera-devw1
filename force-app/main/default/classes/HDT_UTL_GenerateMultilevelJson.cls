@@ -25,6 +25,7 @@ public with sharing class HDT_UTL_GenerateMultilevelJson {
     private Map<String, String> namesValues;
 
 
+
     public HDT_UTL_GenerateMultilevelJson(){
         this.namesValues= new Map<String, String>();
         return;
@@ -35,44 +36,39 @@ public with sharing class HDT_UTL_GenerateMultilevelJson {
         return;
     }    
 
-    public String generateJson(){
-        try{
-            //namesValues = //Mappa chiave valori
-            //new Map<String, String>{'k'=>'v', 'k.0.k2'=>'v', 'k0.k1'=>'vv', 'k0.k2.k4.k5'=>'vv2'};
-            //new Map<String, String>{ 'k.0.k2.k11.1.k12'=>'dfd', 'k.0.k2.k11.0.k12'=>'v','k0.k1'=>'vv', 'k0.k2.k4.k5'=>'vv2'};
-            //new Map<String, String>{'k.0.k2'=>'v'};
-
-            Map<String, Object> root = new Map<String, Object>();//Mappa finale
-            for (String path : this.namesValues.keySet()) {
-                HDT_WRP_Row row = new HDT_WRP_Row(path, namesValues.get(path));
-                row.recursiveInsertKeyValuePairOnMap(root);
-            }
-            //ora rootMap è ok, rimane da scorrerla per trasformare tutte le mappe con chiave intera in array
-            checkMapForArrays(root);
-            String jsonString = JSON.serializePretty(root);
-            System.debug(jsonString);
-            return jsonString;
-        }catch(Exception e){
-            system.debug(e.getStackTraceString()+'\n\n********\n\n'+e.getMessage());
+    public Map<String, Object> generateMap(){
+        Map<String, Object> rootMap = new Map<String, Object>();//Mappa finale
+        for (String path : this.namesValues.keySet()) {
+            HDT_WRP_Row row = new HDT_WRP_Row(path, namesValues.get(path));
+            row.recursiveInsertKeyValuePairOnMap(rootMap);
         }
-        return null;
+        //ora rootMap è ok, rimane da scorrerla per trasformare tutte le mappe con chiave intera in array
+        checkMapForArrays(rootMap);
+        return rootMap;
+    }
+
+    public String generateJson(){
+        Map<String, Object> rootMap = this.generateMap();
+        String jsonString = JSON.serializePretty(rootMap);
+        System.debug(jsonString);
+        return jsonString;
     }
 
     
     /**
     * @description 
     * @author federico.defelice@webresults.it | 21-10-2022 
-    * @param root 
+    * @param mapToCheck
     * This method get a String->Object map, and check infinitely inside
     * when it's in the 2nd deepest level of each branch, recursion stops
     * and began to check for Arrays, calling a method that may (or may not)
     * replace the lower map with an array, calling *transformSublevelMap*
     **/
-    private void checkMapForArrays(Map<String, Object> root){
-        for(String key : root.keySet()){
-            if(root.get(key) instanceof Map<String, Object>){
-                checkMapForArrays((Map<String, Object>) root.get(key));
-                root.put(key, transformSublevelMap((Map<String, Object>) root.get(key)));
+    private void checkMapForArrays(Map<String, Object> mapToCheck){
+        for(String key : mapToCheck.keySet()){
+            if(mapToCheck.get(key) instanceof Map<String, Object>){
+                checkMapForArrays((Map<String, Object>) mapToCheck.get(key));
+                mapToCheck.put(key, transformSublevelMap((Map<String, Object>) mapToCheck.get(key)));
             }
         }
         return;
