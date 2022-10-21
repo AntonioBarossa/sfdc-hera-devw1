@@ -1,5 +1,5 @@
 /**
-* @author Cristiano Salvati
+* @author Cristiano Salvati (c.salvati@key2.it)
 * @date 19/10/2022
 * @description Test Class for HDT_UTL_GenericSolHandler
 * @history Cristiano Salvati – 19/10/2022 – Created class
@@ -60,7 +60,7 @@ public class HDT_UTL_GenericSolHandlerTst {
     }
 
     /**
-    * @author Cristiano Salvati
+    * @author Cristiano Salvati (c.salvati@key2.it)
     * @date 20/10/2022
     * @description HDT_UTL_GenericSolHandlerTst – Test method for createSale
     */
@@ -75,7 +75,7 @@ public class HDT_UTL_GenericSolHandlerTst {
     }
 
     /**
-    * @author Cristiano Salvati
+    * @author Cristiano Salvati (c.salvati@key2.it)
     * @date 20/10/2022
     * @description HDT_UTL_GenericSolHandlerTst – Test method for handleAnalisiConsumiOrder
     */
@@ -105,7 +105,7 @@ public class HDT_UTL_GenericSolHandlerTst {
     }
 
     /**
-    * @author Cristiano Salvati
+    * @author Cristiano Salvati (c.salvati@key2.it)
     * @date 20/10/2022
     * @description HDT_UTL_GenericSolHandlerTst – Test method for createBaseOrder
     */
