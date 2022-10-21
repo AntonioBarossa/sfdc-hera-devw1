@@ -368,7 +368,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     }
                 }
                 try{
-                    if(recordCase.Cluster__c == 'Preventivi'){
+                    if(recordCase.Cluster__c == 'Preventivi' && !'Acqua'.equalsIgnoreCase(recordCase.Commodity__c)){
                     	currentCase.QuotationValidityDate__c = dtMaxPrev;
                     } else if(nextPhase.equalsIgnoreCase('Esito OK Riduzione Potenza')){
                         currentCase.PowerReductionDate__c = dtMaxPrev;
