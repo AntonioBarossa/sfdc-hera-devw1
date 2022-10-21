@@ -8,7 +8,7 @@
 @SuppressWarnings('PMD.AvoidGlobalModifier, PMD.AvoidDebugStatements')
 global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
-    private static final String REQUEST_PATH = '/toBeDefined';
+    private static final String REQUEST_PATH = '/notice';
     private final static String PHASE = 'Documentazione Validata';
     HDT_WS_SalesApexCalloutAction calloutUtl = new HDT_WS_SalesApexCalloutAction();
 
@@ -32,20 +32,21 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
         SObject obj = (sObject) argsMap.get('sender');
         wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = calloutUtl.getMrrObj(argsMap);
 
-        Map<String, Map<String, String>> requestMap = new Map<String, Map<String, String>>();
+        Map<String,String> mapObj = new Map<String,String>();
 
             for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
-                Map<String,String> mapObj = new Map<String,String>();
                 for(wrts_prcgvr.MRR_1_0.Field f : w.fields){
                     mapObj.put(f.name, f.value);
                 }
-                requestMap.put(w.name, mapObj);
             }
             
+            HDT_UTL_GenerateMultilevelJson generate = new HDT_UTL_GenerateMultilevelJson(mapObj);
+            Map<String, Object> request = generate.generateMap();
+
             Order ord = (Order) obj;
             Order ordToUpdate = new Order(Id=ord.Id);
 
-            HDT_WS_AgevolazioneResponse res = (HDT_WS_AgevolazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH,'POST', requestMap, HDT_WS_AgevolazioneResponse.class);
+            HDT_WS_AgevolazioneResponse res = (HDT_WS_AgevolazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH,'POST', request, HDT_WS_AgevolazioneResponse.class);
             System.debug(LoggingLevel.DEBUG,'response -> ' + res); 
 
         try{
