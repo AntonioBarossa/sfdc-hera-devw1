@@ -18,7 +18,7 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
         @AuraEnabled public HDT_WRP_ResponseData data {get;set;}
     }
 
-    private class HDT_WRP_ResponseData{
+    public class HDT_WRP_ResponseData{
         @AuraEnabled public String esito {get;set;}
     }
 
@@ -42,6 +42,8 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
         HDT_WS_AnnullamentoSegnalazioneResponse res = (HDT_WS_AnnullamentoSegnalazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH,'POST', req, HDT_WS_AnnullamentoSegnalazioneResponse.class);
         System.debug(LoggingLevel.DEBUG,'response -> ' + res); 
 
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
+        
         try {
 
             if(res.status.equalsIgnoreCase('success')){
@@ -86,9 +88,14 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
             System.debug(LoggingLevel.DEBUG,'exception --> ' + ex.getStackTraceString());
             System.debug(LoggingLevel.DEBUG,'atLine --> ' + ex.getLineNumber());
             System.debug(LoggingLevel.DEBUG,ex.getMessage());
+            response.success = false;
+            response.message = 'KO';
+            return response;
         }
 
-        return res;
+        response.success = true;
+        response.message = 'OK';
+        return response;
     }
 
 }
