@@ -2,13 +2,13 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 19-10-2022
+ * @last modified on  : 21-10-2022
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.AvoidGlobalModifier, PMD.AvoidDebugStatements')
 global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction{
     
-    private static final String REQUEST_PATH = '/toBeDefined';
+    private static final String REQUEST_PATH = '/notice';
 
     public class HDT_WS_AnnullamentoSegnalazioneResponse extends HDT_WS_Response{
         @AuraEnabled public List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails> errorDetails {get;set;}
