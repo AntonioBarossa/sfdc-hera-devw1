@@ -88,7 +88,13 @@ public with sharing class HDT_UTL_CreditCheck {
             req.companyName = String.isNotBlank(o.Account?.FirstName__c)? o.Account.FirstName__c+separator+o.Account.LastName__c : o.Account?.LastName__c;
             req.externalCustomerId = String.isNotBlank(o.Account?.FiscalCode__c)? o.Account.FiscalCode__c : o.Account?.VATNumber__c;
             req.secondaryCustomerId = o.Account?.VATNumber__c;
-            req.bpClass =  bpClass;
+            /**
+             * FIX TK 914861C
+             * Description: Atos ha richiesto di inviare la marcatura per esteso. In precedenza veniva inviata la marcatura AS-IS Siebel.
+             * Azioni: Commentata riga 96 e aggiunta riga 97
+             * **/
+            //req.bpClass =  bpClass;
+            req.bpClass = o.Account?.CustomerMarking__c;
             req.bpCategory = o.Account?.Category__c;
             req.bpType = o.Account?.CustomerType__c;
             req.operation =  o.ProcessType__c;
