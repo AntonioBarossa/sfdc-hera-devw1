@@ -43,25 +43,25 @@ global with sharing class HDT_WS_IntermediateResults {
             return;
         }
 
-        private List<Sobject> populateSobjForUpdate(HDT_WRP_Reminder caseData, Case originalCase){
+        private List<Sobject> populateSobjForUpdate(HDT_WRP_Reminder calloutCaseDt, Case originalCase){
             List<Sobject> retList = new List<Sobject>();
             try{
                 Case caseToUpdate = new Case();
-                caseToUpdate.Id= caseData.caseId;
-                caseToUpdate.Phase__c = caseData.field[0].phase;
+                caseToUpdate.Id= calloutCaseDt.caseId;
+                caseToUpdate.Phase__c = calloutCaseDt.field[0].phase;
                 //c.exampleActivityCode = caseData.field[0].codActivity;
                 //Try Save all data
                 retList.add(caseToUpdate);
-                if('Avviso di Servizio'.equalsIgnoreCase(originalCase.Type) && 'Completata'.equalsIgnoreCase(c.Phase__c) && originalCase.Order__c!=null){
-                    retList.add(this.populateOrder(caseData, originalCase.Order__c));
+                if('Avviso di Servizio'.equalsIgnoreCase(originalCase.Type) && !'Presa In Carico'.equalsIgnoreCase(caseToUpdate.Phase__c) && originalCase.Order__c!=null){
+                    retList.add(this.populateOrder(caseToUpdate.Phase__c, originalCase.Order__c));
                 } 
             }catch(Exception e){
-                this.errorLog.add(caseData.caseId+'\t'+caseData.noticeId+'\t'+'Exception Thrown '+e.getMessage());
+                this.errorLog.add(calloutCaseDt.caseId+'\t'+calloutCaseDt.noticeId+'\t'+'Exception Thrown '+e.getMessage());
             }
             return retList;
         }
 
-        private Order populateOrder(HDT_WRP_Reminder caseData, Id orderId){
+        private Order populateOrder(String casePhase, Id orderId){
             return null;
         }
 
