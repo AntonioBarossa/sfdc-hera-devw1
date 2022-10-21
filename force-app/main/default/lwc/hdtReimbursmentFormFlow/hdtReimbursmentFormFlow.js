@@ -4,8 +4,6 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { updateRecord } from 'lightning/uiRecordApi';
 
-import { getSObjectValue } from '@salesforce/apex'; //??
-
 import ID from '@salesforce/schema/Case.Id';
 
 import SUPPLY_CITY from '@salesforce/schema/Case.SupplyCity__c';
@@ -42,188 +40,109 @@ export default class HdtReimbursmentFormFlow extends LightningElement {
     finalListReimbursement = [];
     finalListBeneficiary = [];
     optionsByCity;
-    beneficiaryTypeRequired;
+    beneficiaryTypeRequired = false;
     beneficiaryAccountDisabled = false;
-    newFiedValue = {};
+    showBeneficiaryInput = false;
+    optionsForRefundMethod__c = [];
+    optionsForAccountholderTypeBeneficiary__c=[];
+    showForm = false;
+    refoundDefaultVal;
+    holderDefaultVal;
 
 
     @wire(getRecord, { recordId: '$caseId', fields: FIELDS })
-    getCaseRecord({data,error}){
+    getCaseRecord(response) {
+        this._getRecordResponse = response;
+        let error = response && response.error;
+        let data = response && response.data;
         if(data){
-            console.log('***Count 3***');
             console.log('Record data --> '+JSON.stringify(data));
             this.caseRecord = data;
 
-            console.log('### caseId = ' + this.caseId);
-            console.log('### Object Name = ' + this.objectName);
-            
-            // console.log('### this.caseRecord.Id = ' + this.caseRecord.fields[Id].value);
-            console.log('### this.caseRecord.Id = ' + getFieldValue(this.caseRecord, ID));
-
-            // console.log('### caseRecord.BeneficiaryAccount__c = ' + this.caseRecord.BeneficiaryAccount__c);
             console.log("### BENEFICIARY_ACCOUNT = " + getFieldValue(this.caseRecord, BENEFICIARY_ACCOUNT));
-
             console.log("### BENEFICIARY_ACCOUNT = " + getFieldValue(this.caseRecord, REFUND_METHOD));
             console.log("### BENEFICIARY_ACCOUNT = " + getFieldValue(this.caseRecord, ACCOUNTHOLDER_TYPEBENEFICIARY));
+            
+            let beneficiaryType = getFieldValue(this.caseRecord, ACCOUNTHOLDER_TYPEBENEFICIARY);
+            if(['Erede', 'Beneficiario Alternativo'].includes(beneficiaryType)) this.showBeneficiaryInput = true;
+
+            this.getRimborsoOptions();
             
         }else if(error){
             console.error('ERROR => ', JSON.stringify(error));
         }
     }
-    // caseRecord;
 
-    // @wire(getRecord, { recordId: '5001x00000FfZkCAAV', fields: FIELDS })
-    
-    get optionsForRefundMethod__c(){
+    async getRimborsoOptions() {
+        this.optionsByCity = await getRimborsoOptionsByCity();
+
+        console.log("### getRimborsoOptions result", JSON.stringify( this.optionsByCity));
+
         if(this.optionsByCity){
-
-            console.log("###");
-            console.log("--> get optionsForRefundMethod__c()");
-            console.log("### optionsByCity = " + JSON.stringify(this.optionsByCity));
-            // console.log("### optionsByCity.beneficiaryTypes = " + JSON.stringify(this.optionsByCity.beneficiaryTypes));
-            // console.log("### optionsByCity.beneficiaryTypes = " + this.optionsByCity.beneficiaryTypes);
-            // console.log("### SupplyCity__c = " + this.caseRecord.SupplyCity__c);
-            // console.log("### SupplyCity__c = " + JSON.stringify(this.caseRecord.SupplyCity__c));
-            // console.log("### city = " + this.optionsByCity.city);
-            // console.log("### city = " + JSON.stringify(this.optionsByCity.city));
-            console.log("### caseRecord = " + JSON.stringify(this.caseRecord));
-            // console.log("### caseRecord = " + this.caseRecord);
-
+            let refoundOptFinalList = [];
+            let holderOptFinalList = [];
             this.optionsByCity.forEach(element => {
-                console.log("###");
-                console.log("### START ForEach Refund");
                 console.log("### element.city = " + element.city);
-                console.log("### SUPPLY_CITY = " + getFieldValue(this.caseRecord, SUPPLY_CITY));
-                console.log("### caseRecord = " + this.caseRecord);
-                // console.log("### SUPPLY_CITY 2 = " + JSON.stringify(SUPPLY_CITY));
-
-                // if(element.city === JSON.stringify(SUPPLY_CITY)){
-
                 if(element.city === getFieldValue(this.caseRecord, SUPPLY_CITY)){
-                    console.log("###");
-                    console.log("### START IF Refund");
-                    console.log("### element.reimbursementTypes 1 = " + element.reimbursementTypes);
-                    // console.log("### element.reimbursementTypes 2 = " + JSON.stringify(this.element.reimbursementTypes));
-
-                    element.reimbursementTypes.forEach(curValue => this.finalListReimbursement.push({ label: curValue, value: curValue }));
+                    console.log("### city found", element.reimbursementTypes, element.beneficiaryTypes);
+                    element.reimbursementTypes.forEach(curValue => refoundOptFinalList.push({ label: curValue, value: curValue }));
+                    element.beneficiaryTypes.forEach(curValue => holderOptFinalList.push({ label: curValue, value: curValue }));
                 }
-                // this.finalList = finalList;
             });
-            console.log("### finalListReimbursement = " + JSON.stringify(this.finalListReimbursement));
-            return this.finalListReimbursement;
+            this.optionsForRefundMethod__c = refoundOptFinalList;
+            this.optionsForAccountholderTypeBeneficiary__c = holderOptFinalList;
         }
-        else 
-            console.log("### START Else 1");
-            return [
+        else{
+            this.optionsForRefundMethod__c = [
                 { label: 'Bonifico', value: 'Bonifico' },
                 { label: 'Assegno', value: 'Assegno' },
                 { label: 'Compensazione', value: 'Compensazione'}
-            ];
-    }
-    get optionsForAccountholderTypeBeneficiary__c(){
-        if(this.optionsByCity){
-            console.log("###");
-            console.log("--> get optionsForAccountholderTypeBeneficiary__c()");
-            console.log("### optionsByCity = " + JSON.stringify(this.optionsByCity));
-            this.optionsByCity.forEach(element => {
-
-                console.log("###");
-                console.log("### START ForEach Beneficiary");
-                console.log("### element.city = " + element.city);
-                console.log("### SUPPLY_CITY = " + getFieldValue(this.caseRecord, SUPPLY_CITY));
-                console.log("### caseRecord = " + this.caseRecord);
-
-                // let finalList = [];
-                if(element.city === getFieldValue(this.caseRecord, SUPPLY_CITY)){
-                    console.log("###");
-                    console.log("### START IF Beneficiary");
-                // if(element.city === this.caseRecord.SupplyCity__c){ //Vecchio
-                    console.log("### element.beneficiaryTypes = " + element.beneficiaryTypes);
-
-                    // element.beneficiaryTypes.forEach(curValue => finalList.push({ label: curValue, value: curValue })); //Vecchio
-
-                    element.beneficiaryTypes.forEach(curValue => this.finalListBeneficiary.push({ label: curValue, value: curValue }));
-
-                }
-            });
-            console.log("### finalListBeneficiary = " + JSON.stringify(this.finalListBeneficiary));
-            return this.finalListBeneficiary;
-        }
-        else 
-            return [
+            ];            
+            this.optionsForAccountholderTypeBeneficiary__c = [
                 { label: 'Stesso Sottoscrittore', value: 'Stesso Sottoscrittore' },
                 { label: 'Erede', value: 'Erede' },
                 { label: 'Beneficiario Alternativo', value: 'Beneficiario Alternativo'}
             ];
-    }
+        }
+        console.log('optionsForRefundMethod__c', this.optionsForRefundMethod__c);
+        console.log('optionsForAccountholderTypeBeneficiary__c', this.optionsForAccountholderTypeBeneficiary__c);
 
-    async getRimborsoOption() {
-        this.optionsByCity = await getRimborsoOptionsByCity();
-        console.log("### result = " + JSON.stringify( this.optionsByCity));
-        // console.log("$caseId = " + $caseId);
+        this.refoundDefaultVal = getFieldValue(this.caseRecord, REFUND_METHOD);
+        this.holderDefaultVal = getFieldValue(this.caseRecord, ACCOUNTHOLDER_TYPEBENEFICIARY);
 
-        // (result => this.optionsByCity = result)
-        // (error => this.showErrorToast('Error getting reimbursment options!', error.body.message));
+        if(this.refoundDefaultVal == "Assegno") this.beneficiaryTypeRequired = true;
+        if(this.refoundDefaultVal == "Compensazione") this.beneficiaryAccountDisabled = true;
+        if(['Erede', 'Beneficiario Alternativo'].includes(this.holderDefaultVal)) this.showBeneficiaryInput = true;
 
-        // console.log("### optionsByCity = "+this.optionsByCity);
-        //console.log("### result = "+this.result);
-        
-        // console.log("### optionsByCity = " + JSON.stringify(this.optionsByCity));
-        // console.log("### result = " + JSON.stringify(this.result));
-    }
-
-    connectedCallback(){
-        console.log("###");
-        console.log("### START connectedCallback 1");
-        console.log("### caseId = " + this.caseId);
-        // console.log("### objectApiName = " + this.objectApiName); // Stampa??
-
-        this.getRimborsoOption();
-
-        console.log("### END connectedCallback");
+        this.showForm = true;
     }
 
     handleInputChange(event){
         const source = event.target.name;
-    
-        // this.caseRecord.fields[source].value = event.target.value;
-        // this.newFiedValue[source] = event.target.value;
         
         if(source == "RefundMethod__c") {
             this.beneficiaryTypeRequired = event.target.value == "Assegno";
-            //this.beneficiaryTypeRequired = "Assegno";
+            
             this.beneficiaryAccountDisabled = false;
             if(event.target.value == "Compensazione"){
                 this.beneficiaryAccountDisabled = true;
-                //this.caseRecord.BeneficiaryAccount__c = null;
+                
                 if(this.template.querySelector('[field-name="BeneficiaryAccount__c"]')) this.template.querySelector('[field-name="BeneficiaryAccount__c"]').value = null;
             }
         }
+        else if(source == "AccountholderTypeBeneficiary__c"){
+            this.showBeneficiaryInput = ['Erede', 'Beneficiario Alternativo'].includes(event.target.value);
+        }
     }
 
-    handleNextButton(){
-        const fields = {};        
-        // fields.Id = this.caseRecord.Id;
+    saveRecordAndGoNext(){
+        const fields = {};
         fields.Id = getFieldValue(this.caseRecord, ID);
-
-        // fields.RefundMethod__c = this.caseRecord.RefundMethod__c;
-        // fields.RefundMethod__c = getFieldValue(this.caseRecord, REFUND_METHOD);
-        // fields.RefundMethod__c = this.newFiedValue['RefundMethod__c'];
-
         if(this.template.querySelector('[data-id="RefundMethod__c"]')) fields.RefundMethod__c = this.template.querySelector('[data-id="RefundMethod__c"]').value;
-
-        // fields.AccountholderTypeBeneficiary__c = this.caseRecord.fields[AccountholderTypeBeneficiary__c].value;  
-        // fields.AccountholderTypeBeneficiary__c = getFieldValue(this.caseRecord, ACCOUNTHOLDER_TYPEBENEFICIARY);
-        // fields.AccountholderTypeBeneficiary__c = this.newFiedValue['AccountholderTypeBeneficiary__c'];
-
         if(this.template.querySelector('[data-id="AccountholderTypeBeneficiary__c"]')) fields.AccountholderTypeBeneficiary__c = this.template.querySelector('[data-id="AccountholderTypeBeneficiary__c"]').value;
-        
-        // if(this.template.querySelector('[field-name="BeneficiaryAccount__c"]')) fields.BeneficiaryAccount__c = this.template.querySelector('[field-name="BeneficiaryAccount__c"]').value;
         if(this.template.querySelector('[data-id="BeneficiaryAccount__c"]')) fields.BeneficiaryAccount__c = this.template.querySelector('[data-id="BeneficiaryAccount__c"]').value;
         const recordInput = { fields };
 
-        this.cancelCase = false;
-        this.saveInDraft = false;
 
         updateRecord(recordInput)
             .then(() => {
@@ -232,8 +151,16 @@ export default class HdtReimbursmentFormFlow extends LightningElement {
             .catch(error => this.showErrorToast('Error creating record', error.body.message));
     }
 
-    handleBackButton(){
-        this.goBack();
+    handleNextButton(){
+        this.cancelCase = false;
+        this.saveInDraft = false;
+        this.saveRecordAndGoNext();
+    }
+
+    handleDraftButton(){
+        this.cancelCase = false;
+        this.saveInDraft = true;
+        this.saveRecordAndGoNext();
     }
 
     handleCancelButton(){
@@ -242,10 +169,8 @@ export default class HdtReimbursmentFormFlow extends LightningElement {
         this.goNext();
     }
 
-    handleDraftButton(){
-        this.cancelCase = false;
-        this.saveInDraft = true;
-        this.goNext();
+    handleBackButton(){
+        this.goBack();
     }
 
     goNext(){
