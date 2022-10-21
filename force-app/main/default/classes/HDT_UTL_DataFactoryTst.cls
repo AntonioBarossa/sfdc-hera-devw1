@@ -3512,6 +3512,16 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return cityTechnicalData;
 	}
 
+	/**
+	* @author Cristiano Salvati (c.salvati@key2.it)
+	* @date 20/10/2022
+	* @description HDT_UTL_DataFactoryTst – the method generates a random string, which can be numeric/letters/alphanumeric
+	* @param1 len – length of the output string
+	* @param2 isNumeric – determines whether the string will be numeric
+	* @param3 isText – determines whether the string will be only letters
+	* @param4 isAlphaNumeric – determines whether the string will be alphanumeric
+	* @return returns the random string generated
+	*/
 	public static String generateRandomChars(Integer len,Boolean isNumeric,Boolean isText, Boolean isAlphaNumeric) {
         String numbers = '123456789';
 		String letters = 'ABCDEFGHILMOPQRSTUVZWXYabcdefghilmopqrstuvzwxy';
