@@ -98,7 +98,14 @@ public with sharing class HDT_UTL_GenerateMultilevelJson {
     }
 
     
-
+    /**
+    * @description 
+    * @author federico.defelice@webresults.it | 21-10-2022 
+    * @param completePath 
+    * @param value 
+    * @return String 
+    * this class represent a row in the JSON
+    **/
     class HDT_WRP_Row{
         String completePath;
         String value;
@@ -110,8 +117,13 @@ public with sharing class HDT_UTL_GenerateMultilevelJson {
             this.value=value;
         }
 
+        /**
+        * @description 
+        * @author federico.defelice@webresults.it | 21-10-2022 
+        * recive a map and decide if just add key value or key and an indented map
+        * recursevly check until he don't have to add new objects
+        **/
         private void recursiveInsertKeyValuePairOnMap(Map<String, Object> upperLevelMap){
-            //recive a map and decide if just add key value or key and an indented map
             String key = this.pathList[0];
             if (1 == this.pathList.size()){
                 if(upperLevelMap.get(key) instanceof Map<String, Object>){ throw new HDT_UTL_JsonGeneratorException('JSON ERROR, same key declared as both primitive and object: Key: '+key+'; path '+this.completePath); }
