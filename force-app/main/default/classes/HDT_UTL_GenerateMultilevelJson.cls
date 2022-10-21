@@ -11,11 +11,11 @@
  * { 
  *  orderEntryMiOrders:{
  *      [
- *          orderEntryMiLineItems:[
- *              action:[
- *                  hercodiceCentroLavoro : "1001001"
- *              ]
- *          ]
+*          {orderEntryMiLineItems:[
+*              {action:[
+*                  {hercodiceCentroLavoro : "1001001"}
+*              ]}
+*          ]}
  *      ]
  *  }
  * }
@@ -35,7 +35,7 @@ public with sharing class HDT_UTL_GenerateMultilevelJson {
         return;
     }    
 
-    public String start(){
+    public String generateJson(){
         try{
             //namesValues = //Mappa chiave valori
             //new Map<String, String>{'k'=>'v', 'k.0.k2'=>'v', 'k0.k1'=>'vv', 'k0.k2.k4.k5'=>'vv2'};
