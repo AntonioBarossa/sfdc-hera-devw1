@@ -143,12 +143,21 @@ export default class HdtReimbursmentFormFlow extends LightningElement {
         if(this.template.querySelector('[data-id="BeneficiaryAccount__c"]')) fields.BeneficiaryAccount__c = this.template.querySelector('[data-id="BeneficiaryAccount__c"]').value;
         const recordInput = { fields };
 
+        if( !fields.RefundMethod__c || fields.RefundMethod__c == ""){
+            this.showErrorToast('Attenzione!', 'Selezionare un Tipo Rimborso prima di proseguire.');
+            return;
+        }
+        if( fields.RefundMethod__c == "Assegno" && (!fields.AccountholderTypeBeneficiary__c || fields.AccountholderTypeBeneficiary__c == "")){
+            this.showErrorToast('Attenzione!', 'Selezionare un Tipo Beneficiario prima di proseguire.');
+            return;
+        }
+
 
         updateRecord(recordInput)
             .then(() => {
                 this.goNext();
             })
-            .catch(error => this.showErrorToast('Error creating record', error.body.message));
+            .catch(error => this.showErrorToast('Error updating record', error.body.message));
     }
 
     handleNextButton(){
