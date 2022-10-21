@@ -1,19 +1,26 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 
 export default class HdtConsActivityListModal extends LightningElement {
 
     @api modalHeader;
     @api modalBody;
     @api operation;
+    @api buttonName;
     @api requestObject;
     enableActivityList2g = false;
     consumptionList2g = false;
+    @track tempReqObj = {};
 
     connectedCallback(){
         console.log('>>> modalHeader: ' + this.modalHeader);
         console.log('>>> modalBody: ' + this.modalBody);
         console.log('>>> operation: ' + this.operation);
         console.log('>>> requestObject: ' + JSON.stringify(this.requestObject));
+
+        for(var i in this.requestObject){
+            console.log('>>> obj: ' + this.requestObject[i] + ' - ' + i);
+            this.tempReqObj[i] = this.requestObject[i];
+        }
 
         switch (this.operation) {
 
@@ -38,29 +45,24 @@ export default class HdtConsActivityListModal extends LightningElement {
     }
 
     handleChange(event) {
-        console.log('>>> value: ' + event.detail.value);
-        //var fieldName = event.currentTarget.name;
-        var reqObj = JSON.parse(this.requestObject);
-        reqObj.idService = event.target.value;
-        console.log('>>> requestObject: ' + reqObj);
+        console.log('>>> field: ' + event.currentTarget.name + ' - value: ' + event.detail.value);
+        this.tempReqObj[event.currentTarget.name] = event.target.value;
     }
 
     setFilterParam(event) {
         console.log('>>> field: ' + event.currentTarget.name + ' - value: ' + event.detail.value);
         var fieldName = event.currentTarget.name;
-
-        var reqObj = JSON.parse(this.requestObject);
-        console.log('>>> requestObject: ' + reqObj);
-
-        reqObj[fieldName] = event.target.value.toString();
-        console.log('>>> requestObject: ' + reqObj);
+        this.tempReqObj[fieldName] = event.target.value.toString();
     }
 
     buttonClick(event){
+        var decision = event.currentTarget.dataset.id;
         const confirmModal = new CustomEvent("confirm", {
             detail:  {
+                decision: decision,
                 operation: this.operation,
-                requestObject: this.requestObject
+                buttonName: this.buttonName,
+                requestObject: this.tempReqObj
             }
         });
         // Dispatches the event.

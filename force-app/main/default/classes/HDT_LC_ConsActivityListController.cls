@@ -8,8 +8,8 @@ public inherited sharing class HDT_LC_ConsActivityListController {
 
     // Action method
     @AuraEnabled(continuation=true cacheable=true)
-    public static Object startRequest(String recordId, String type, String requestObj) {
-        return HDT_UTL_ConsActivityListController.startRequestHelper(recordId, type, requestObj);
+    public static Object startRequest(String type, String requestObj) {
+        return HDT_UTL_ConsActivityListController.startRequestHelper(type, requestObj);
     }
     
     // Callback method

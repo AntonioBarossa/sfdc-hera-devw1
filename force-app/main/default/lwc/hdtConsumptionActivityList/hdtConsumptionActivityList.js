@@ -55,6 +55,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
     modalHeader;
     modalBody;
     parameter;
+    buttonName;
 
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
     wiredRecord({ error, data }) {
@@ -82,13 +83,23 @@ export default class HdtConsumptionActivityList extends LightningElement {
         }
     }
 
+    focusOnButton(thisButton){
+        this.template.querySelectorAll('slds-button').forEach((but) => {
+            but.classList.remove('slds-button_brand');
+            but.classList.add('slds-button_neutral');
+            if(but.name === thisButton){
+                but.classList.add('slds-button_brand');
+            }            
+        });
+    }
+
     setRequestObj() {
 
         switch (this.tabType) {
 
             case "consumptionList2g"://Elenco Consumi 2G
                 this.requestObj.contractCode = this.contractNumber;
-                this.requestObj.date = '2022-05-28, --TODAY - 2 GG';
+                this.requestObj.date = this.setMyDate(-2);//'2022-05-28, --TODAY - 2 GG';
                 this.requestObj.idAggregation = 'D';
                 this.buttonGroup.push({name: 'dayly', type: '', parameters: 'D', label: 'Giornaliero'});
                 this.buttonGroup.push({name: 'weekly', type: '', parameters: 'W', label: 'Settimanale'});
@@ -97,8 +108,8 @@ export default class HdtConsumptionActivityList extends LightningElement {
             break;
 
             case "activityList2g": //Elenco Attività 2G
-                this.requestObj.dateFrom = '2022-05-19, TODAY - 7';
-                this.requestObj.dateTo = '2022-05-07, TODAY';
+                this.requestObj.dateFrom = this.setMyDate(-7);//'2022-05-19, TODAY - 7';
+                this.requestObj.dateTo = this.setMyDate(0);//'2022-05-07, TODAY';
                 this.requestObj.idService = 'D';
                 this.requestObj.contractCode = this.contractNumber;
                 this.buttonGroup.push({name: 'filter', type: '', parameters: 'filter', label: 'Filtri'});
@@ -106,6 +117,22 @@ export default class HdtConsumptionActivityList extends LightningElement {
             break;
         }
 
+        //this.contractNumber = '3003109241';
+        //this.requestObj.date = '2022-10-06';
+    }
+
+    setMyDate(days){
+        var today = new Date();
+        var date = '';
+        today.setDate(today.getDate() + days);
+
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        
+        date = yyyy + '-' + mm + '-' + dd;
+        console.log('>>> date > ' + date);
+        return date;
     }
 
     configurationData(){
@@ -135,7 +162,8 @@ export default class HdtConsumptionActivityList extends LightningElement {
                     break;
                 }
 
-                this.backendCall();
+                //this.backendCall();
+                this.setMockData();
             } else {
                 console.log('>>>> ERROR > getContractRecords');
                 this.error = true;
@@ -150,36 +178,59 @@ export default class HdtConsumptionActivityList extends LightningElement {
     }
 
     backendCall(){
-        console.log('# Get data from SAP #');
-        this.contractDataToView.push(
-        {
-            idBrim: 'BDF',
-            contract: '3003108153',
-            consDateStart: '2022-05-28',
-            consDateEnd: '2022-05-28',
-            pod: 'IT230426051150',
-            scanningDate: '0000-00-00',
-            scanningType: 'SS',
-            bandDiscount: '00',
-            specialDay: 'null',
-            dailyCost: 'null',
-            dailyKwh: '4800',
-            dailyKwhNet: '0000',
-            dailyLossCost: 'null',
-            dailyLossKwh: 'null',
-            dailyDiscountKwh: '4800',
-            dailyLossDiscountKwh: '0490',
-            details: {
-				item: [ {
-                    hour: '01',
-                    hourlyCost: null,
-                    hourlyKwh: '0,200'
-                }]
+        console.log('# Get data from WS #');
+        console.log('>>> request: ' + JSON.stringify(this.requestObj));
+
+        getRecordsFromWs({type: this.tabType, requestObj: JSON.stringify(this.requestObj)})
+        .then(result => {
+            console.log('# WS result #');
+            var obj = JSON.parse(result);
+            console.log('# success: ' + obj);
+
+            if(obj.status==='failed'){
+                console.log('# SAP result failed #');
+                this.error = true;
+                console.log('>>> ' + obj.errorDetails[0].code + ' - ' + obj.errorDetails[0].message);
+                this.errorMessage = obj.errorDetails[0].message;
+                this.spinner = false;            
+            } else {
+
             }
+
+            this.spinner = false;
+            
+        }).catch(error => {
+            //var obj = JSON.parse(error.body.message);
+            this.error = true;
+            //var s = '';
+            //obj.errorDetails.forEach(element => {
+            //    s += element.code + ': ' + element.message;
+            //});
+            this.errorMessage = 'Errore nella chiamata WebService';//error.body.message;
+            this.spinner = false;
         });
+    
+    }
+
+    afterWsCall(){
+        if(this.tabType === 'consumptionList2g'){
+            if(this.contractDataToView[0].details.item.length > 0) {
+                this.detailsDataToView.push(this.contractDataToView[0].details.item[0]);
+                this.showDetailTable = true;
+            } else {
+                this.showDetailTable = false;
+            }
+        } else {
+            this.showDetailTable = false;
+        }
+
+        this.spinner = false;  
+    }
+
+    setMockData(){
         this.contractDataToView.push(
             {
-                idBrim: 'BDF2',
+                idBrim: 'BDF',
                 contract: '3003108153',
                 consDateStart: '2022-05-28',
                 consDateEnd: '2022-05-28',
@@ -197,7 +248,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
                 dailyLossDiscountKwh: '0490',
                 details: {
                     item: [ {
-                        hour: '02',
+                        hour: '01',
                         hourlyCost: null,
                         hourlyKwh: '0,200'
                     }]
@@ -205,7 +256,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
             });
             this.contractDataToView.push(
                 {
-                    idBrim: 'BDF3',
+                    idBrim: 'BDF2',
                     contract: '3003108153',
                     consDateStart: '2022-05-28',
                     consDateEnd: '2022-05-28',
@@ -222,57 +273,36 @@ export default class HdtConsumptionActivityList extends LightningElement {
                     dailyDiscountKwh: '4800',
                     dailyLossDiscountKwh: '0490',
                     details: {
-                        item: []
+                        item: [ {
+                            hour: '02',
+                            hourlyCost: null,
+                            hourlyKwh: '0,200'
+                        }]
                     }
                 });
-        
-        if(this.tabType === 'consumptionList2g'){
-            if(this.contractDataToView[0].details.item.length > 0) {
-                this.detailsDataToView.push(this.contractDataToView[0].details.item[0]);
-                this.showDetailTable = true;
-            } else {
-                this.showDetailTable = false;
-            }
-        } else {
-            this.showDetailTable = false;
-        }
-
-        this.spinner = false;     
-        /*getRecordsFromWs({type: this.type})
-        .then(result => {
-            console.log('# WS result #');
-            var obj = JSON.parse(result);
-            console.log('# success: ' + obj);
-
-            //if(obj.status==='failed'){
-            //    console.log('# SAP result failed #');
-            //    this.showError = true;
-            //    console.log('>>> ' + obj.errorDetails[0].code + ' - ' + obj.errorDetails[0].message);
-            //    this.showErrorMessage = obj.errorDetails[0].message;
-            //    this.showSpinner = false;            
-            //} else {
-            //    if(this.type != 'cmor'){
-            //        this.data = obj.data.posizioni;
-            //    } else {
-            //        this.showSecondTable = true;
-            //        this.data = obj.data.venditoreEntrante;
-            //        this.data2 = obj.data.venditoreUscente;
-            //    }
-            //}
-
-            this.showSpinner = false;
-            
-        }).catch(error => {
-            //var obj = JSON.parse(error.body.message);
-            this.showError = true;
-            //var s = '';
-            //obj.errorDetails.forEach(element => {
-            //    s += element.code + ': ' + element.message;
-            //});
-            this.showErrorMessage = error.body.message;
-            this.showSpinner = false;
-        });*/
-    
+                this.contractDataToView.push(
+                    {
+                        idBrim: 'BDF3',
+                        contract: '3003108153',
+                        consDateStart: '2022-05-28',
+                        consDateEnd: '2022-05-28',
+                        pod: 'IT230426051150',
+                        scanningDate: '0000-00-00',
+                        scanningType: 'SS',
+                        bandDiscount: '00',
+                        specialDay: 'null',
+                        dailyCost: 'null',
+                        dailyKwh: '4800',
+                        dailyKwhNet: '0000',
+                        dailyLossCost: 'null',
+                        dailyLossKwh: 'null',
+                        dailyDiscountKwh: '4800',
+                        dailyLossDiscountKwh: '0490',
+                        details: {
+                            item: []
+                        }
+                    });
+                    this.afterWsCall();
     }
 
     handleRowAction(event) {
@@ -292,19 +322,10 @@ export default class HdtConsumptionActivityList extends LightningElement {
         try {
             console.log('>>> BUTTON TYPE > ' + event.currentTarget.name);
             console.log('>>> BUTTON PARAMETERS > ' + event.currentTarget.dataset.parameters);
-            /*switch (event.currentTarget.dataset.name) {
-                case 'webservice':
-
-                    break;
-                case 'monthly':
-
-                    break;
-                case 'filter':
-
-            }*/
             this.modalHeader = event.currentTarget.dataset.label;
             this.modalBody = 'bodyNotRequired';
             this.parameter = event.currentTarget.dataset.parameters;
+            this.buttonName = event.currentTarget.name;
             this.openModal = true;
         } catch(e){
             console.error('>>> buttonHandler');
@@ -315,7 +336,13 @@ export default class HdtConsumptionActivityList extends LightningElement {
     }
 
     applyConfirm(event){
-        console.log('## applyConfirm ' + JSON.stringify(event.detail));
+        if(event.detail.decision === 'conf'){
+            console.log('## applyConfirm ' + JSON.stringify(event.detail));
+            this.requestObj = event.detail.requestObject;
+            //this.backendCall();
+            this.setMockData();
+            this.focusOnButton(event.detail.buttonName);
+        }
         this.openModal = false;
     }
 
