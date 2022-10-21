@@ -277,8 +277,7 @@
         <fields>wrts_prcgvr__Status__c</fields>
         <fields>Type__c</fields>
         <fields>EndDate__c</fields>
-        <fields>OWNER.FIRST_NAME</fields>
-        <fields>OWNER.LAST_NAME</fields>
+        <fields>Queue__c</fields>
         <relatedList>wrts_prcgvr__Activity__c.Account__c</relatedList>
         <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
