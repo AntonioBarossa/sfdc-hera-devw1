@@ -7,6 +7,7 @@
 @isTest
 public class HDT_UTL_GenericSolHandlerTst {
     private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
+
     @TestSetup
     static void makeData(){
         HDT_MatriceSocietaVendita__mdt recordMatrice=[SELECT Id,Service__c,SellerCompany__c FROM HDT_MatriceSocietaVendita__mdt WHERE Service__c='Energia Elettrica' LIMIT 1]; 
@@ -58,6 +59,11 @@ public class HDT_UTL_GenericSolHandlerTst {
         insert accContRelation;
     }
 
+    /**
+    * @author Cristiano Salvati
+    * @date 20/10/2022
+    * @description HDT_UTL_GenericSolHandlerTst – Test method for createSale
+    */
     @isTest
     static void createSaleTst(){
         Contact cont=[SELECT Id,AccountId FROM Contact WHERE Account.RecordTypeId=:utlConstants.ACCOUNT_RECORDTYPEID_RESINDEZIALE LIMIT 1];
@@ -65,9 +71,14 @@ public class HDT_UTL_GenericSolHandlerTst {
         HDT_UTL_GenericSolHandler.createSale(cont.AccountId, cont.Id);
         Test.stopTest();
         Sale__c generatedSale=[SELECT Id,Account__c FROM Sale__c WHERE Account__c=:cont.AccountId LIMIT 1];
-        System.assertEquals(cont.AccountId, generatedSale.Account__c, 'oggetto Sale__c generato con successo');
+        System.assertEquals(cont.AccountId, generatedSale.Account__c, 'Sale__c object created successfully');
     }
 
+    /**
+    * @author Cristiano Salvati
+    * @date 20/10/2022
+    * @description HDT_UTL_GenericSolHandlerTst – Test method for handleAnalisiConsumiOrder
+    */
     @isTest
     static void handleAnalisiConsumiOrderTst(){
         Order ord=[SELECT Id,OrderNumber FROM Order LIMIT 1];
@@ -90,27 +101,28 @@ public class HDT_UTL_GenericSolHandlerTst {
         HDT_UTL_GenericSolHandler.handleAnalisiConsumiOrder(params);
         Test.stopTest();
         ord=[SELECT Id,Phase__c FROM Order LIMIT 1];
-        System.assertEquals('Comunicazione verso Heroku',ord.phase__c,'ordine aggiornato in fase send to heroku');
+        System.assertEquals('Comunicazione verso Heroku',ord.phase__c,'Order updated with phase send to heroku');
     }
 
+    /**
+    * @author Cristiano Salvati
+    * @date 20/10/2022
+    * @description HDT_UTL_GenericSolHandlerTst – Test method for createBaseOrder
+    */
     @isTest
     static void createBaseOrderTst(){
-        //provare a generare un account bsn ed un contact di residenziale e creare accconrel
         Sale__c saleRecord=[SELECT Id FROM Sale__c LIMIT 1];
         List<BillingProfile__c> billingProfiles = [SELECT Id,ContractAccountCode__c,Account__c FROM BillingProfile__c LIMIT 1];
-        //ContactId != null AND
         List<AccountContactRelation> cntAccContRelations = [SELECT Id,AccountId,ContactId,isActive,Roles FROM AccountContactRelation WHERE  Roles='Titolare' LIMIT 1];
-        System.debug('account contact rel: '+cntAccContRelations);
         Map<String,Object> params = new Map<String,Object>{
             'contractAccount'=>billingProfiles[0].ContractAccountCode__c,
             'accountId'=>cntAccContRelations[0].AccountId,
             'integrationId'=>''
-
         };
         Test.startTest();
         HDT_UTL_GenericSolHandler.createBaseOrder(params,saleRecord.Id);
         Test.stopTest();
-        System.assertEquals(true,true,'temp');
-        //TODO Fixare assert;
+        Order ord=[SELECT Id,ProcessType__c FROM Order WHERE Sale__c=:saleRecord.Id AND BillingProfile__c=:billingProfiles[0].Id LIMIT 1];
+        System.assertEquals('VAS',ord.ProcessType__c,'order created successfully');
     }
 }
