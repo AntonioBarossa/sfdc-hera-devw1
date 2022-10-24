@@ -8305,6 +8305,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inviata a SAP</fullName>
             <default>false</default>
         </values>

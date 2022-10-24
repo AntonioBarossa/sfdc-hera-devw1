@@ -9148,6 +9148,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
         </values>
