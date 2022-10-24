@@ -390,6 +390,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.CommercialProduct__c = orderItemList[0].Product2.Name;
             orderToUpdate.VasServiceActivationDate__c = orderItemList[0].DelayEffectiveDate__c;
             orderToUpdate.CommercialProductLink__c = orderItemList[0].Product2Id;
+            orderToUpdate.ApprovalType__c           = orderItemList[0].Product2.ApprovalType__c;
+            orderToUpdate.IntegratedSAP__c          = orderItemList[0].Product2.IntegratedSAP__c;
+            orderToUpdate.Surface__c                = orderItemList[0].Surface__c;
+            orderToUpdate.EmploymentMonthsInYear__c = orderItemList[0].MonthsOccupYear__c;
         }
         
     }
@@ -524,12 +528,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                     }
                 }
             }
-        }
-        if(false){
-            orderToUpdate.ApprovalType__c           = mainItems[0].Product2.ApprovalType__c;
-            orderToUpdate.IntegratedSAP__c          = mainItems[0].Product2.IntegratedSAP__c;
-            orderToUpdate.Surface__c                = mainItems[0].Surface__c;
-            orderToUpdate.EmploymentMonthsInYear__c = mainItems[0].MonthsOccupYear__c;
         }
         if(orderToUpdate.ServicePoint__c != null)
         {

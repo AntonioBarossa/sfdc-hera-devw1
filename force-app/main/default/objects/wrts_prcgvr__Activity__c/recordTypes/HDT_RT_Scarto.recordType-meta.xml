@@ -2826,6 +2826,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO da DL%2FSII</fullName>
             <default>false</default>
         </values>

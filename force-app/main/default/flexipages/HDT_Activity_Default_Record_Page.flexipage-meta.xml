@@ -244,7 +244,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_EditScartiComplessi</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4 AND (5 OR ((6 OR 7 OR 8) AND 9))</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3 AND 4  AND 10 AND (5 OR ((6 OR 7 OR 8) AND 9))</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.DiscardCategory__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -289,6 +289,11 @@
                                     <leftValue>{!Record.Case__r.RecordType.DeveloperName}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>HDT_RT_Morosita</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Esito KO da DBO</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -805,12 +810,20 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Name</fieldItem>
                 <identifier>RecordNameField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.wrts_prcgvr__StatusIcon__c</fieldItem>
                 <identifier>Recordwrts_prcgvr__StatusIcon__cField</identifier>
             </fieldInstance>
@@ -891,12 +904,20 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.ActivityDurationFormula__c</fieldItem>
                 <identifier>RecordActivityDurationFormula__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.OwnerId</fieldItem>
                 <identifier>RecordOwnerIdField</identifier>
             </fieldInstance>
@@ -1129,6 +1150,10 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.ActivityDurationFormula__c</fieldItem>
                 <identifier>RecordActivityDurationFormula__cField2</identifier>
             </fieldInstance>
@@ -1280,6 +1305,10 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.HerokuPracticeCode__c</fieldItem>
                 <identifier>RecordHerokuPracticeCode__cField2</identifier>
                 <visibilityRule>
@@ -1333,6 +1362,10 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.AttemptCount__c</fieldItem>
                 <identifier>RecordAttemptCount__cField</identifier>
                 <visibilityRule>
@@ -1346,6 +1379,10 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.PraxidiaPostWorkAction__c</fieldItem>
                 <identifier>RecordPraxidiaPostWorkAction__cField</identifier>
                 <visibilityRule>
@@ -1359,6 +1396,10 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.PraxidiaPostWorkCause__c</fieldItem>
                 <identifier>RecordPraxidiaPostWorkCause__cField</identifier>
                 <visibilityRule>
@@ -1372,6 +1413,10 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.PraxidiaPostWorkOutcome__c</fieldItem>
                 <identifier>RecordPraxidiaPostWorkOutcome__cField</identifier>
                 <visibilityRule>
@@ -1717,6 +1762,10 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.FormalChannelInCharge__c</fieldItem>
                 <identifier>RecordFormalChannelInCharge__cField</identifier>
             </fieldInstance>
@@ -2020,6 +2069,10 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.AppointmentOutcome__c</fieldItem>
                 <identifier>RecordAppointmentOutcome__cField</identifier>
                 <visibilityRule>
@@ -2363,12 +2416,20 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.OwnerId</fieldItem>
                 <identifier>RecordOwnerIdField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.AssignedToQueueDate__c</fieldItem>
                 <identifier>RecordAssignedToQueueDate__cField</identifier>
             </fieldInstance>

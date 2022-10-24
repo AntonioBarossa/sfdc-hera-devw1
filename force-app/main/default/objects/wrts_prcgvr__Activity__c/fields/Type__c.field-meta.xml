@@ -316,6 +316,11 @@
                 <label>Esito Da Gestire</label>
             </value>
             <value>
+                <fullName>Esito KO da DBO</fullName>
+                <default>false</default>
+                <label>Esito KO da DBO</label>
+            </value>
+            <value>
                 <fullName>Esito KO da DL</fullName>
                 <default>false</default>
                 <label>Esito KO da DL</label>
