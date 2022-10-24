@@ -8043,6 +8043,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
         </values>

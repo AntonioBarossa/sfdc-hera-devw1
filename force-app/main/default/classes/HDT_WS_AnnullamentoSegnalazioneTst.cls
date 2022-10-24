@@ -6,7 +6,7 @@
  * @last modified by  : Giacinto Florio
 **/
 @isTest
-public with sharing class HDT_WS_AgevolazioneTst{
+public with sharing class HDT_WS_AnnullamentoSegnalazioneTst{
     
     private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
     
@@ -80,7 +80,7 @@ public with sharing class HDT_WS_AgevolazioneTst{
     public static void testExecuteObjectNull() {		
 
         HDT_WS_HTTPServiceCallMock mock = new HDT_WS_HTTPServiceCallMock();
-        HDT_WS_Agevolazione agevolazione = new HDT_WS_Agevolazione();
+        HDT_WS_AnnullamentoSegnalazione segnalazione = new HDT_WS_AnnullamentoSegnalazione();
         Test.setMock(HttpCalloutMock.class, mock);
     
         Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
@@ -107,7 +107,7 @@ public with sharing class HDT_WS_AgevolazioneTst{
         Map<String, Object> args=new Map<String, Object>();
         
         args.put('action', myCase);
-        args.put('sender', myOrder);
+        args.put('sender', myCase);
         args.put('wrts_prcgvr__CalloutTemplate__c', 'prova');
         args.put('transition', myTransition);
         args.put('templateMap', paramsCallOut);
@@ -116,15 +116,15 @@ public with sharing class HDT_WS_AgevolazioneTst{
         args.put('multirequest', myOrderItem);
         
         Test.startTest();
-        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse)agevolazione.execute(args);
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse)segnalazione.execute(args);
 
-        HDT_WS_Agevolazione.HDT_WS_AgevolazioneResponse res = new  HDT_WS_Agevolazione.HDT_WS_AgevolazioneResponse();
+        HDT_WS_AnnullamentoSegnalazione.HDT_WS_AnnullamentoSegnalazioneResponse res = new  HDT_WS_AnnullamentoSegnalazione.HDT_WS_AnnullamentoSegnalazioneResponse();
         res.status='';
         res.correlationId='';
         res.timestamp='';
-        res.data = new HDT_WS_Agevolazione.HDT_WRP_ResponseData();
+        res.data = new HDT_WS_AnnullamentoSegnalazione.HDT_WRP_ResponseData();
 
-        HDT_WS_Agevolazione.HDT_WRP_ResponseData resData = new HDT_WS_Agevolazione.HDT_WRP_ResponseData();
+        HDT_WS_AnnullamentoSegnalazione.HDT_WRP_ResponseData resData = new HDT_WS_AnnullamentoSegnalazione.HDT_WRP_ResponseData();
         resData.esito='';
 
         System.assertEquals('KO', responseReturn.message, 'The call was not successful');

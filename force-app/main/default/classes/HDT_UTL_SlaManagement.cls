@@ -21,22 +21,22 @@ public inherited sharing class HDT_UTL_SlaManagement {
             when 'Case' {
                 trackingFieldKey = 'Case__c';
                 recordTypeDevName = 'HDT_RT_PostSales';
-                //criteriaFields.add('SalesCompany__c');
-                //criteriaFields.add('FirstLevelComplaintClassification__c');
-                //criteriaFields.add('SecondLevelComplaintClassification__c');
-                //criteriaFields.add('AtoFormula__c');
-                //criteriaFields.add('CompanyOwner__c');
-                //criteriaFields.add('Commodity__c');
+                criteriaFields.add('SalesCompany__c');
+                criteriaFields.add('FirstLevelComplaintClassification__c');
+                criteriaFields.add('SecondLevelComplaintClassification__c');
+                criteriaFields.add('AtoFormula__c');
+                criteriaFields.add('CompanyOwner__c');
+                criteriaFields.add('Commodity__c');
             }	
             when 'Order' {
                 trackingFieldKey = 'Order__c';
                 recordTypeDevName = 'HDT_RT_Sales';
-                //criteriaFields.add('CustomerType__c');
-                //criteriaFields.add('SalesCompany__c');
-                //criteriaFields.add('ATO__c');
-                //criteriaFields.add('Process__c');
-                //criteriaFields.add('CompanyOwner__c');
-                //criteriaFields.add('Commodity__c');
+                criteriaFields.add('CustomerType__c');
+                criteriaFields.add('SalesCompany__c');
+                criteriaFields.add('ATO__c');
+                criteriaFields.add('Process__c');
+                criteriaFields.add('CompanyOwner__c');
+                criteriaFields.add('Commodity__c');
             }
         }
 
@@ -236,6 +236,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
                 Case eventCaseToCompare = (Case)sObjectCriteriaMap.get(recordId);
                 for(String field : objectCriteria.keySet()){
                     if(eventCaseToCompare.get(field) != objectCriteria.get(field)){
+                        System.debug(logginglevel.DEBUG, '>>> criteria error: ' + field);
                         return true;
                     }
                 }
@@ -245,6 +246,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
                 Order eventOrderToCompare = (Order)sObjectCriteriaMap.get(recordId);
                 for(String field : objectCriteria.keySet()){
                     if(eventOrderToCompare.get(field) != objectCriteria.get(field)){
+                        System.debug(logginglevel.DEBUG, '>>> criteria error: ' + field);
                         return true;
                     }
                 }
@@ -401,7 +403,9 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
         switch on slaAdmin.RecordType.DeveloperName {
             when 'HDT_RT_PostSales' {
-                slaMgmt.objectCriteria.put('Cluster__c', slaAdmin.Cluster__c);
+                if(String.isNotEmpty(slaAdmin.Cluster__c)){
+                    slaMgmt.objectCriteria.put('Cluster__c', slaAdmin.Cluster__c);
+                }
 
                 if(String.isNotEmpty(slaAdmin.FirstLevelComplaintClassification__c)){
                     slaMgmt.objectCriteria.put('FirstLevelComplaintClassification__c', slaAdmin.FirstLevelComplaintClassification__c);

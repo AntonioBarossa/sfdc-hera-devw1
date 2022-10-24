@@ -389,9 +389,9 @@ export default class HdtAdvancedSearch extends LightningElement {
      * Create Data-Table
      */
     createTable(data) {
-        let i, j, temporary, chunk = 5;
+        let i, temporary, chunk = 5;
         this.pages = [];
-        for (i = 0, j = data.length; i < j; i += chunk) {
+        for (i = 0; i < data.length; i += chunk) {
             temporary = data.slice(i, i + chunk);
             this.pages.push(temporary);
         }
@@ -401,9 +401,7 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     reLoadTable() {
         this.tableData = this.pages[this.currentPage];
-
         console.log('tableData********'+ JSON.stringify(this.tableData));
-
     }
 
     nextPage() {
@@ -664,7 +662,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                         }
                     }
                 }
-                console.log(this.originalData);
+                console.log('this.originalData >>> ' + this.originalData);
                 this.createTable(this.originalData); 
                 this.formatTableHeaderColumns(this.originalData);
                 var my_ids = [];
