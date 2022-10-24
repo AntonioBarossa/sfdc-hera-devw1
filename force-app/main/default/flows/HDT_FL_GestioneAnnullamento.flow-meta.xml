@@ -780,7 +780,7 @@
             <assignToReference>GetOrderAggiornato_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Bozza Annullata</stringValue>
+                <stringValue>Annullato</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -1316,6 +1316,21 @@
         </defaultConnector>
         <defaultConnectorLabel>Non inviata</defaultConnectorLabel>
         <rules>
+            <name>Ambiente_Case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCase.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Ambiente</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Close_Activity_Case</targetReference>
+            </connector>
+            <label>Ambiente</label>
+        </rules>
+        <rules>
             <name>Discard_Rework_Case</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
@@ -1397,6 +1412,21 @@
             <targetReference>Chiusura_activity_Order</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non inviata</defaultConnectorLabel>
+        <rules>
+            <name>Ambiente</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Chiusura_activity_Order</targetReference>
+            </connector>
+            <label>Ambiente</label>
+        </rules>
         <rules>
             <name>Discard_Rework_Order</name>
             <conditionLogic>and</conditionLogic>
