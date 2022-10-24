@@ -99,7 +99,6 @@ public with sharing class HDT_LC_MailSenderTst {
         String orgWideAddId = orgWideEmailAdress[0].Id;
         String toAddress = orgWideEmailAdress[0].Address;
         String caseId= cases[0].Id;
-        System.debug(caseId);
         
         String emailMessageJson = '{"caseId": "'+ caseId +'", "isReminder": false,"orgWideAddId": "'+ orgWideAddId +'", "bodyMail": "Note 2", "toAddress": "'+ toAddress +'"}';
 
