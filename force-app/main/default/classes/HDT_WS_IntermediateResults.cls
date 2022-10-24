@@ -48,7 +48,25 @@ global with sharing class HDT_WS_IntermediateResults {
             try{
                 Case caseToUpdate = new Case();
                 caseToUpdate.Id= calloutCaseDt.caseId;
-                caseToUpdate.Phase__c = calloutCaseDt.field[0].phase;
+                Map<String, String> codToPhase = new Map<String, String>{
+                    '0050'=>'Approvata',
+                    '0007'=>'Rifiutata',
+                    '0060'=>'Presa In Carico'
+                };
+
+                // popola phase con condizione
+                // if('Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)) 
+                //     caseToUpdate.Phase__c = codToPhase.get(calloutCaseDt.field[0].codNota);
+                // else caseToUpdate.Phase__c = calloutCaseDt.field[0].phase;
+
+                caseToUpdate.Phase__c='Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)? codToPhase.get(calloutCaseDt.field[0].codNota) : calloutCaseDt.field[0].phase;
+
+                // 4 info vanno mergiate all’interno del campo “Description”
+                caseToUpdate.Description = 'Codice Activity: '+calloutCaseDt.field[0].codActivity+'\n'+
+                                           'Codice Nota: *'+calloutCaseDt.field[0].codNota+'*'+'\n'+
+                                           'Descrizione Nota:'+calloutCaseDt.field[0].descNota+'\n'+
+                                           'Testo Nota: '+calloutCaseDt.field[0].textNota;
+
                 //c.exampleActivityCode = caseData.field[0].codActivity;
                 //Try Save all data
                 retList.add(caseToUpdate);
