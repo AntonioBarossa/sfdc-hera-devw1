@@ -50,7 +50,7 @@ private class ConnectorEntityController_Test {
 		String ret;
 
 		Test.startTest();
-
+		
 		ret = ConnectorEntityController.createActivity(JSON.serialize(message));
 		System.assertEquals('ERROR: Attempt to de-reference a null object', ret, 'FAIL - no exception thrown');
 		Test.stopTest();
@@ -66,9 +66,6 @@ private class ConnectorEntityController_Test {
     @isTest
     static void createActivityTst () {
 		String ret;
-
-		
-
 		message.put('attachdata',attachdata);
 
 		Test.startTest();
@@ -80,21 +77,6 @@ private class ConnectorEntityController_Test {
 		wrts_prcgvr__Activity__c parentActivity = activityList[0];
 		System.assert(parentActivity.CrmChange__c, 'FAIL - CRM CHANGE FLAG NON SETTATO');
 
-		
-
-
-/* 
-
-		message.put('CallType', 'Inbound');
-		ret = ConnectorEntityController.createActivity(JSON.serialize(message));
-		wrts_prcgvr__Activity__c childActivity = [SELECT Id, ParentActivity__c FROM wrts_prcgvr__Activity__c WHERE ParentActivity__c != null AND  wrts_prcgvr__Description__c != 'Test'];
-		System.assertEquals(parentActivity.Id, childActivity.ParentActivity__c, 'FAIL - ATTIVITà FIGLIA NON AGGANCIATA A ATTIVITà PARENT');
-
-		message.put('ErrorCode', 1);
-		ret = ConnectorEntityController.createActivity(JSON.serialize(message));
-		Test.stopTest();
-		System.assert(ret.startsWith('ERROR: errorCode is not 0. Message'), 'FAIL - ERRORE NON SCATENATO'); */
-		
 	}
 
 	/**
@@ -114,14 +96,12 @@ private class ConnectorEntityController_Test {
 		ret = ConnectorEntityController.createActivity(JSON.serialize(message));
 		Test.stopTest();
 
-		
-
-		List<wrts_prcgvr__Activity__c> activityList = [SELECT Id, CrmChange__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Description__c != 'Test'];
+		List<wrts_prcgvr__Activity__c> activityList = [SELECT Id, CrmChange__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Description__c = 'Test' AND ParentActivity__c = null];
 
 		wrts_prcgvr__Activity__c parentActivity = activityList[0];
 		
-		wrts_prcgvr__Activity__c childActivity = [SELECT Id, ParentActivity__c FROM wrts_prcgvr__Activity__c WHERE ParentActivity__c != null];
-		//System.assertEquals(parentActivity.Id, childActivity.ParentActivity__c, 'FAIL - ATTIVITà FIGLIA NON AGGANCIATA A ATTIVITà PARENT');
+		wrts_prcgvr__Activity__c childActivity = [SELECT Id, ParentActivity__c FROM wrts_prcgvr__Activity__c WHERE ParentActivity__c != null AND wrts_prcgvr__Description__c = 'Test'];
+		System.assertEquals(parentActivity.Id, childActivity.ParentActivity__c, 'FAIL - ATTIVITà FIGLIA NON AGGANCIATA A ATTIVITà PARENT');
 		
 	}
 
