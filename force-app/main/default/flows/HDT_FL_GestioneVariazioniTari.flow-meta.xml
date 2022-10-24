@@ -2123,9 +2123,8 @@
     <formulas>
         <name>errorMessageChangeCity</name>
         <dataType>String</dataType>
-        <expression>&apos;Il Comune ha subito una variazione!\n&apos;+
-&apos;Da: &apos;+{!getCase.ServicePoint__r.SupplyCity__c}+&apos; A: &apos;+{!newAddressLwc_0.theCase.InvoicingCity__c}+&apos;\n&apos;+
-&apos;Si proceda con l\&apos;annullamento del processo corrente e innescare il processo di Cambio Offerta&apos;</expression>
+        <expression>&apos;Il Comune ha subito una variazione! Da: &apos;+{!getCase.ServicePoint__r.SupplyCity__c}+&apos; A: &apos;+{!newAddressLwc_0.theCase.InvoicingCity__c}+
+&quot;Si proceda con l&apos;annullamento del processo corrente e innescare il processo di Cambio Offerta&quot;</expression>
     </formulas>
     <formulas>
         <name>notResidentMembers</name>
@@ -2495,7 +2494,7 @@
         <inputAssignments>
             <field>SupplyStreetNumber__c</field>
             <value>
-                <elementReference>newAddressLwc_0.theCase.SupplyStreetNumber__c</elementReference>
+                <elementReference>newAddressLwc_0.theCase.InvoicingStreetNumber__c</elementReference>
             </value>
         </inputAssignments>
         <object>ServicePoint__c</object>
@@ -3531,7 +3530,7 @@
             <inputParameters>
                 <name>message</name>
                 <value>
-                    <stringValue>Per il seguente cliente il processo risulta non avviabile a causa della sua tariffa: </stringValue>
+                    <stringValue>Per il seguente cliente il processo risulta non avviabile a causa della sua tariffa: TATUDRES01</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
