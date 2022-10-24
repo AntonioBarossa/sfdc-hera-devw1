@@ -16,12 +16,7 @@ public inherited sharing class HDT_UTL_ConsActivityListController {
             throw new AuraHandledException('No enrichment Metadata!');
         }
 
-        JSONGenerator gen = JSON.createGenerator(true);        
-        gen.writeStartObject();
-        gen.writeFieldName('request');
-        gen.writeObject(requestObj);
-        gen.writeEndObject();
-        httpBody = gen.getAsString();
+        httpBody += '{"request":' + requestObj + '}';
 
         System.debug(LoggingLevel.DEBUG, '>>> httpBody: ' + httpBody);
 
@@ -33,11 +28,19 @@ public inherited sharing class HDT_UTL_ConsActivityListController {
         con.state = type;
         // Create callout request
         HttpRequest req = new HttpRequest();
-        req.setMethod('GET');
+        req.setMethod('POST');
         req.setEndpoint(enrichmentbMetadataList[0].Credential__c);
+        req.setHeader('client_secret', '{!$Credential.UserName}');
+        req.setHeader('client_id', '{!$Credential.Password}');
+
+        //if(type.equalsIgnoreCase('consumptionList2g')){
+        //    req.setBody('{"request":{"contractCode":"3003109241","date":"2022-10-06","idAggregation":"D"}}');
+        //} else if(type.equalsIgnoreCase('activityList2g')){
+        //    req.setbody('{"request":{"dateFrom":"2022-05-10","dateTo":"2022-07-20","idService":null,"contractCode":"0093000211"}}');
+        //}
 
         req.setHeader('Content-Type', 'application/json');
-        req.setbody(httpBody);
+        //req.setbody(httpBody);
         req.setTimeout(120000);
 
         System.debug(LoggingLevel.DEBUG, '>>> ' + String.valueOf(req));

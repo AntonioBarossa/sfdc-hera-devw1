@@ -3,7 +3,7 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getRecordsFromWs from '@salesforce/apexContinuation/HDT_LC_ConsActivityListController.startRequest';
 import getConfigurationData from '@salesforce/apex/HDT_LC_ConsActivityListController.getTableConfig';
-import CONTRACT_NUMBER from '@salesforce/schema/Contract.ContractNumber';
+import CONTRACT_NUMBER from '@salesforce/schema/Contract.SAPContractCode__c';
 
 const firstColumn = [
     {
@@ -19,7 +19,7 @@ const firstColumn = [
     }
 ];
 
-const FIELDS = ['Contract.ContractNumber'];
+const FIELDS = ['Contract.SAPContractCode__c'];
 
 export default class HdtConsumptionActivityList extends LightningElement {
     
@@ -75,6 +75,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
             );
         } else if (data) {
             this.contractNumber = getFieldValue(data, CONTRACT_NUMBER);
+            console.log('>>> data ' + JSON.stringify(data));
             console.log('>>> ContractNumber > ' + this.contractNumber);
             console.log('>>> ContractId > ' + this.recordId);
             console.log('>>> tabType > ' + this.tabType);
@@ -117,8 +118,6 @@ export default class HdtConsumptionActivityList extends LightningElement {
             break;
         }
 
-        //this.contractNumber = '3003109241';
-        //this.requestObj.date = '2022-10-06';
     }
 
     setMyDate(days){
@@ -162,8 +161,8 @@ export default class HdtConsumptionActivityList extends LightningElement {
                     break;
                 }
 
-                //this.backendCall();
-                this.setMockData();
+                this.backendCall();
+
             } else {
                 console.log('>>>> ERROR > getContractRecords');
                 this.error = true;
@@ -180,33 +179,28 @@ export default class HdtConsumptionActivityList extends LightningElement {
     backendCall(){
         console.log('# Get data from WS #');
         console.log('>>> request: ' + JSON.stringify(this.requestObj));
+        
+        //this.setMockData();
 
         getRecordsFromWs({type: this.tabType, requestObj: JSON.stringify(this.requestObj)})
         .then(result => {
             console.log('# WS result #');
             var obj = JSON.parse(result);
-            console.log('# success: ' + obj);
+            console.log('# success: ' + result);
 
-            if(obj.status==='failed'){
-                console.log('# SAP result failed #');
+            if(obj.response.item === null || obj.response.item === undefined){
+                this.errorMessage = obj.response.outcomeSapDescr;
                 this.error = true;
-                console.log('>>> ' + obj.errorDetails[0].code + ' - ' + obj.errorDetails[0].message);
-                this.errorMessage = obj.errorDetails[0].message;
-                this.spinner = false;            
             } else {
-
+                this.contractDataToView = obj.response.item;
+                this.afterWsCall();
             }
 
             this.spinner = false;
             
         }).catch(error => {
-            //var obj = JSON.parse(error.body.message);
             this.error = true;
-            //var s = '';
-            //obj.errorDetails.forEach(element => {
-            //    s += element.code + ': ' + element.message;
-            //});
-            this.errorMessage = 'Errore nella chiamata WebService';//error.body.message;
+            this.errorMessage = 'Errore nella chiamata WebService';
             this.spinner = false;
         });
     
@@ -227,7 +221,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
         this.spinner = false;  
     }
 
-    setMockData(){
+    /*setMockData(){
         this.contractDataToView.push(
             {
                 idBrim: 'BDF',
@@ -303,7 +297,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
                         }
                     });
                     this.afterWsCall();
-    }
+    }*/
 
     handleRowAction(event) {
         console.log('# handleRowAction #');
@@ -339,8 +333,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
         if(event.detail.decision === 'conf'){
             console.log('## applyConfirm ' + JSON.stringify(event.detail));
             this.requestObj = event.detail.requestObject;
-            //this.backendCall();
-            this.setMockData();
+            this.backendCall();
             this.focusOnButton(event.detail.buttonName);
         }
         this.openModal = false;
