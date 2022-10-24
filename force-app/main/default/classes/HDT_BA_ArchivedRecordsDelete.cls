@@ -10,27 +10,29 @@
 
 public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batchable<Sobject>, Database.Stateful {
 
-        // List of objects to update
-        private List<String> objectsToProcess = new List<String>{'ContentDocument', 'Interaction__c', 'wrts_prcgvr__Activity__c', 'PushTracking__c', 'SMSTracking__c', 'SolTracking__c', 
-        'et4ae5__IndividualEmailResult__c', 'Reading__c', 'DocumentSelected__c', 'DocumentalActivity__c', 'DocumentSendTracking__c', 'CommunicationLog__c', 'Asset', 'Case', 'Contract', 
-        'OrderItem', 'Order', 'Opportunity', 'BillingProfile__c', 'ServicePoint__c', 'SiebelCommTracking__c', 'SurveyResponse__c', 'ContactPointPhone', 'ContactPointEmail', 'Contact', 'Individual', 
-        'Account'};
+    // List of objects to delete
+    private List<String> objectsToProcess = new List<String>{'ContentDocument', 'wrts_prcgvr__Activity__c', 'PushTracking__c', 'SMSTracking__c', 'SolTracking__c', 
+    'et4ae5__IndividualEmailResult__c', 'Reading__c', 'DocumentSelected__c', 'DocumentalActivity__c', 'DocumentSendTracking__c', 'CommunicationLog__c', 'Asset', 'Case', 'Contract', 
+    'OrderItem', 'Order', 'Opportunity', 'BillingProfile__c', 'ServicePoint__c', 'SiebelCommTracking__c', 'SurveyResponse__c', 'ContactPointPhone', 'ContactPointEmail', 'Contact', 'Individual', 
+    'Account', 'Interaction__c'};
 
-        private Set<String> objectsThatAreNotArchived = new Set<String>{'BillingProfile__c', 'CommunicationLog__c', 'Individual', 'Interaction__c', 'ServicePoint__c'};
+    private Set<String> objectsThatAreNotArchived = new Set<String>{'CommunicationLog__c', 'BillingProfile__c', 'ServicePoint__c', 'Individual', 'Interaction__c'};
 
-        private String currentObject = '';
-        private Integer currentObjectIndex = 0;
+    @TestVisible 
+    private String currentObject = '';
+    private Integer currentObjectIndex = 0;
 
-        // batch size to use in the finish for the batch to relaunch iself
-        private Integer batchScope = 200;
+    // Batch size to use in the finish for the batch to relaunch iself
+    private Integer batchScope = 200;
 
-        // Determines if the batch should procede with the next Object in the list or stop right away
-        private Boolean relaunchBatch = true;
+    // Determines if the batch should proceed with the next Object in the list or stop right away
+    @TestVisible
+    private Boolean relaunchBatch = true;
 
-        // private List<Sobject> recordsDeleted = new List<Sobject>();
-        private String queryUsed;
-        private String exceptionErr = '';
-        private Datetime executionTimeStamp; 
+    // private List<Sobject> recordsDeleted = new List<Sobject>();
+    private String queryUsed;
+    private String exceptionErr = '';
+    private Datetime executionTimeStamp;
     
     public HDT_BA_ArchivedRecordsDelete (Integer batchSize) {
 
@@ -61,7 +63,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
         String queryString = 'SELECT Id ';
 
-        // Add fields to query for objects that may need update before being deleted
+        // Add fields to query for objects that may need an update before being deleted
         switch on this.currentObject {
             when 'Order' {
                 queryString += ', SBQQ__Contracted__c, Status ';
@@ -161,9 +163,9 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
             // this.recordsDeleted.addAll(scope);
 
-            if (this.currentObject != 'OrderItem') { // Order Products can't be deleted direcrly, they will be deleted when the associated Order is Deleted
+            if (this.currentObject != 'OrderItem') { // Order Products can't be deleted directly, they will be deleted when the associated Order is Deleted
 
-                // Delete records in scope and return errore if there are problems.            
+                // Delete records in scope and return error if there are problems           
                 if (needsDeletionWithSet) {
                     deleteResults = Database.delete(filteredRecordsToDelete, false);
                 } else {
@@ -185,11 +187,11 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
         } catch (Exception e) {
 
-            // Stop launch of next batch if there are errors in the delete
+            // Stop launch of next batch if there are errors in execute
             this.relaunchBatch = false;
-            
+
             this.exceptionErr += e.getMessage() + '\n\n' + e.getStackTraceString();
-            
+
         }        
         
     }
@@ -236,12 +238,12 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
             }
             when 'OrderItem' {
-                
+
                 for (SObject ord : scope) {
 
                     ord.put('SBQQ__Activated__c', false);
                     ord.put('SBQQ__Contracted__c', false);
-        
+
                 }
 
             }

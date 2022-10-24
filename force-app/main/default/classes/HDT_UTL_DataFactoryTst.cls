@@ -135,6 +135,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.BillingStreetNumber__c='55';
 			acc.LastName__c='test account'+i;
 			acc.BillingIsAddressVerified__c=true;
+			acc.IsArchived__c = true;
 			
 			if(String.isNotBlank(customerMarking) && (customerMarking.containsIgnoreCase('Condominio') || customerMarking.containsIgnoreCase('Associazione'))) {
 				acc.FiscalCode__c='SXSRLA45H28H5' + String.valueOf(500 + i);
@@ -357,6 +358,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			ord.SignedDate__c=Date.today();
 			ord.SignatureMethod__c='Vocal Order';
 			ord.DocSendingMethod__c='E-mail';
+			ord.IsArchived__c = true;
 
 			orderList.add(ord);
 		}
@@ -649,6 +651,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			testContact.Company__c='HC+HCM+EENE';
 			testContact.CompanyOwner__c='HERA COMM';
 			testContact.AccountId=accId;
+			testContact.IsArchived__c=true;
 
 			contactList.add(testContact);
 		}
@@ -684,6 +687,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			testContract.AccountId=accId;
 			//@frpanico 06/08 Added contract code
 			testContract.SAPContractCode__c='301191347'+i;
+			testContract.IsArchived__c = true;
 
 			contractList.add(testContract);
 		}
@@ -727,6 +731,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			testCase.Cluster__c='Pagamenti';
 			testCase.RecordTypeId=rtId;
 			testCase.CompanyOwner__c='HERA COMM';
+			testCase.IsArchived__c = true;
 
 			caseList.add(testCase);
 		}
@@ -969,6 +974,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			orderItem.PricebookEntryId=pricebookEntryId;
 			orderItem.UnitPrice=0;
 			orderItem.Quantity=1;
+			orderItem.IsArchived__c = true;
 
 			orderItemsList.add(orderItem);
 		}
@@ -1935,6 +1941,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			wrts_prcgvr__Activity__c actCustom=new wrts_prcgvr__Activity__c();
 
 			actCustom.Account__c=accId;
+			actCustom.IsArchived__c=true;
 
 			activityCustomList.add(actCustom);
 		}
@@ -2182,7 +2189,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			ContactPointPhone cpp = new ContactPointPhone(
             ParentId = individualId,
-            TelephoneNumber = '982591380'
+            TelephoneNumber = '982591380',
+			IsArchived__c = true
         );
 
 			cppList.add(cpp);
@@ -2204,7 +2212,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			ContactPointEmail cpe = new ContactPointEmail(
             ParentId = individualId,
-            EmailAddress = 'sales@force.com'
+            EmailAddress = 'sales@force.com',
+			IsArchived__c = true
         );
 
 			cpeList.add(cpe);
@@ -2744,7 +2753,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 				MessageID__c='12321421',
 				Mobile__c='234234234',
 				MobileMessageTrackingID__c='12343143',
-				ModifiedDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0)
+				ModifiedDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0),
+				IsArchived__c = true
 			);
 			
 			smsTrackList.add(smsTrack);
@@ -2767,7 +2777,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			et4ae5__IndividualEmailResult__c ier = new et4ae5__IndividualEmailResult__c(
 				Name = 'tester',
 				EmailAddress__c = 'my@email.com',
-				et4ae5__TriggeredSendDefinition__c = triggeredSendId
+				et4ae5__TriggeredSendDefinition__c = triggeredSendId,
+				IsArchived__c = true
 			);
 
 			indEmailRes.add(ier);
@@ -3510,6 +3521,44 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			insert cityTechnicalData;
 		}
 		return cityTechnicalData;
+	}
+
+	// Create a list of Interaction__c
+	public static List<Interaction__c> createInteraction (List<Contact> contacts, Boolean doInsert) {
+
+		List<Interaction__c> interactions = new List<Interaction__c>();
+
+		for (Contact con : contacts) {
+			interactions.add( new Interaction__c (
+				Account__c = con.AccountId, 
+				Contact__c = con.Id)
+			);
+		}
+
+		if (doInsert) {
+			insert interactions;
+		}
+
+		return interactions;
+	}
+
+	// Create a list of PushTracking__c
+	public static List<PushTracking__c> createPushTracking(Integer amount, Boolean doInsert, Id contactId) {
+
+		List<PushTracking__c> pushTrackings = new List<PushTracking__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+			pushTrackings.add(new PushTracking__c (
+				IsArchived__c = true,
+				ContactID__c = contactId)
+			);
+		}
+
+		if (doInsert) {
+			insert pushTrackings;
+		}
+
+		return pushTrackings;
 	}
 	
 }
