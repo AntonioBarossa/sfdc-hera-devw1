@@ -33,7 +33,7 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
 
         for (Order newOrder : (List<Order>)newMap.values()) {
             Order oldOrder = (Order) oldMap.get(newOrder.Id);
-            if (!excludedRecTypes.contains(newOrder.RecordTypeId) && (newOrder.Status==STATUS_CANCELLED && oldOrder.Status!=STATUS_CANCELLED)) {
+            if (!excludedRecTypes.contains(newOrder.RecordTypeId) && ((newOrder.Status==STATUS_CANCELLED && oldOrder.Status!=STATUS_CANCELLED) || ('Voltura Rifiutata'.equalsIgnoreCase(newOrder.Phase__c) && !newOrder.Phase__c.equalsIgnoreCase(oldOrder.Phase__c)) )) {
                 canceledOrderIds.add( newOrder.Id );
                 if (newOrder.SBQQ__Quote__c != null){
                     canceledOrderQuotesIds.add(newOrder.SBQQ__Quote__c);
@@ -67,6 +67,7 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
         if(ordersToWork.isEmpty()){
             return;
         }
+        List<Order> vasOrdersToCancel = new List<Order>();
         List<Order> ordersToCancel = new List<Order>();
         //Map<Id,Order> commodityOrderMap = new Map<Id,Order>();
         Map<Id,Id> mapQuoteContactId = new Map<Id,Id>();
