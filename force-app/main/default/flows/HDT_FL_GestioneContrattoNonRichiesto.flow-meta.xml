@@ -924,6 +924,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Processo_Compatibile</name>
+        <label>Processo Compatibile?</label>
+        <locationX>1492</locationX>
+        <locationY>1688</locationY>
+        <defaultConnector>
+            <targetReference>Case_Order_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Compatibile</defaultConnectorLabel>
+        <rules>
+            <name>Non_Compatibile</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsCompatibile</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>IsCompatibile</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <label>Non Compatibile</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>ResumeFromDraft_0</name>
         <label>ResumeFromDraft?</label>
         <locationX>1448</locationX>
@@ -1169,11 +1198,11 @@
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>1238</locationX>
-        <locationY>1689</locationY>
+        <locationX>1246</locationX>
+        <locationY>1603</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Case_Order_0</targetReference>
+            <targetReference>Compatibilita</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1871,6 +1900,26 @@
             </value>
         </inputAssignments>
     </subflows>
+    <subflows>
+        <name>Compatibilita</name>
+        <label>Compatibilita</label>
+        <locationX>1392</locationX>
+        <locationY>1602</locationY>
+        <connector>
+            <targetReference>Processo_Compatibile</targetReference>
+        </connector>
+        <flowName>HDT_FL_SubFlowCompatibility</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>GetCaseAggiornato.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>IsCompatibile</assignToReference>
+            <name>IsCompatible</name>
+        </outputAssignments>
+    </subflows>
     <variables>
         <name>CaseCollection</name>
         <dataType>SObject</dataType>
@@ -1885,6 +1934,16 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>IsCompatibile</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
     <variables>
         <name>OrderContractId</name>
