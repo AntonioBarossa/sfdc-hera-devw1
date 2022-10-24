@@ -157,6 +157,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
             FROM Case
             WHERE 
             RecordTypeId = :processTypeId
+            AND Type = 'Gestione Rifiuti'
             AND (
                 ( Phase__c = :this.bozzaCase AND CreatedDate < :d) OR
                 ( Phase__c ='Inviata a SAP' AND StartAppointment__c!=null AND StartAppointment__c < TODAY)
