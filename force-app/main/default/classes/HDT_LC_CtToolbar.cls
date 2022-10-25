@@ -79,7 +79,7 @@ public with sharing class HDT_LC_CtToolbar {
         }
         
         activitySrv.createRecord(activity);
-        logs.addLog('HDT_LC_CtToolbar', 'createActivityInbound', JSON.serialize(activity), null, null, activity.Id, null, null);
+        logs.insertSingleLog('HDT_LC_CtToolbar', 'createActivityInbound', JSON.serialize(activity), null, null, activity.Id, null, null);
         if(ord != null) {
             return ord.id;
         } else {
@@ -117,7 +117,7 @@ public with sharing class HDT_LC_CtToolbar {
             updateCampaignMember(ecid, campaignMemberId, agent);
             System.debug('*******:TRYMETHOD5');
             wrts_prcgvr__Activity__c act =  activitySrv.createRecord(activity);
-            logs.addLog('HDT_LC_CtToolbar', 'createActivity', JSON.serialize(act), null, null, act.Id, null, null);
+            logs.insertSingleLog('HDT_LC_CtToolbar', 'createActivity', JSON.serialize(act), null, null, act.Id, null, null);
             return act;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
@@ -141,7 +141,7 @@ public with sharing class HDT_LC_CtToolbar {
             try {
                 System.debug('###### activity #### ' +activity);
                 activitySrv.updateRecord(activity);
-                logs.addLog('HDT_LC_CtToolbar', 'updateActivity', JSON.serialize(activity), null, null, activity.Id, null, null);
+                logs.insertSingleLog('HDT_LC_CtToolbar', 'updateActivity', JSON.serialize(activity), null, null, activity.Id, null, null);
                 return true;
             } catch (Exception e) {
                 throw new AuraHandledException(e.getMessage());
