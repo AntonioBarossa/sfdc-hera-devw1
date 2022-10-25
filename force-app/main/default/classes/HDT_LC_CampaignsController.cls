@@ -56,6 +56,16 @@ public inherited sharing class HDT_LC_CampaignsController {
             }
             else if(objectName.equalsIgnoreCase('Lead')) {
                 return  campaignMemberQr.getCampaignsByLeadPartner(id, currentUser);
+            }else if(objectName.equalsIgnoreCase('Account')) {
+                //return all active campaigns related to all contacts related to this Account
+                List<String> contacts = contactQr.getContactsIdByAccountId(id);
+                if (String.isNotBlank(category)) {
+                    if (String.isNotBlank(channel)) {
+                        return campaignMemberQr.filterCampaignsByCategoryAndChannelWithStatus(contacts, category, channel);
+                    }
+                    return campaignMemberQr.filterCampaignsByCategoryWithStatus(contacts, category);
+                }
+                return campaignMemberQr.getCampaignsFilteredByContactsWithStatus(contacts);
             }
             else {
                 return null;
@@ -549,4 +559,5 @@ public inherited sharing class HDT_LC_CampaignsController {
         }
         return false;
     }
+    
 }

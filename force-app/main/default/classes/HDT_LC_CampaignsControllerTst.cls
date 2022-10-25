@@ -1064,5 +1064,5 @@ CampaignMember member = new CampaignMember(
         System.assertEquals(false, isFront, 'is Front User');
         Test.stopTest();
     }
-
+    
 }

@@ -7078,7 +7078,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8580,6 +8580,14 @@
         </values>
         <values>
             <fullName>Verifiche portali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post Vendita</fullName>
             <default>false</default>
         </values>
     </picklistValues>
