@@ -48,23 +48,22 @@ global with sharing class HDT_WS_IntermediateResults {
             try{
                 Case caseToUpdate = new Case();
                 caseToUpdate.Id= calloutCaseDt.caseId;
+
+                // popola phase con condizione
                 Map<String, String> codToPhase = new Map<String, String>{
                     '0050'=>'Approvata',
                     '0007'=>'Rifiutata',
                     '0060'=>'Presa In Carico'
                 };
-
-                // popola phase con condizione
                 // if('Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)) 
                 //     caseToUpdate.Phase__c = codToPhase.get(calloutCaseDt.field[0].codNota);
                 // else caseToUpdate.Phase__c = calloutCaseDt.field[0].phase;
+                caseToUpdate.Phase__c = 'Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)? codToPhase.get(calloutCaseDt.field[0].codNota) : calloutCaseDt.field[0].phase;
 
-                caseToUpdate.Phase__c='Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)? codToPhase.get(calloutCaseDt.field[0].codNota) : calloutCaseDt.field[0].phase;
-
-                // 4 info vanno mergiate all’interno del campo “Description”
+                // mergiate le 4 info all’interno del campo “Description”
                 caseToUpdate.Description = 'Codice Activity: '+calloutCaseDt.field[0].codActivity+'\n'+
                                            'Codice Nota: *'+calloutCaseDt.field[0].codNota+'*'+'\n'+
-                                           'Descrizione Nota:'+calloutCaseDt.field[0].descNota+'\n'+
+                                           'Descrizione Nota: '+calloutCaseDt.field[0].descNota+'\n'+
                                            'Testo Nota: '+calloutCaseDt.field[0].textNota;
 
                 //c.exampleActivityCode = caseData.field[0].codActivity;
@@ -80,7 +79,16 @@ global with sharing class HDT_WS_IntermediateResults {
         }
 
         private Order populateOrder(String casePhase, Id orderId){
-            return null;
+            Order orderToUpdate = new Order();
+            orderToUpdate.Id = orderId;
+            /* controllo Phase */
+            if(casePhase=='Approvata'){
+                orderToUpdate.Phase__c = 'Comunicazione Verso Heroku';
+            } else if(casePhase=='Rifiutata'){
+                orderToUpdate.Phase__c = 'Annullata';
+                orderToUpdate.CancellationReason__c = 'Mancanza del presupposto';
+            }
+            return orderToUpdate;
         }
 
         private void insertLog(List<Database.SaveResult> saveResults){
