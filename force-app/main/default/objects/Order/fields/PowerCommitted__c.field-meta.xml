@@ -4,9 +4,9 @@
     <description>Indica la potenza impegnata dell&apos;impianto</description>
     <externalId>false</externalId>
     <label>Potenza Impegnata</label>
-    <precision>17</precision>
+    <precision>18</precision>
     <required>false</required>
-    <scale>1</scale>
+    <scale>2</scale>
     <trackHistory>false</trackHistory>
     <type>Number</type>
     <unique>false</unique>

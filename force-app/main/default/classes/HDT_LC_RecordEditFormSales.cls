@@ -72,6 +72,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
     public static String savePractice(String caseId, String accountId, Map<String,Object> caseob){
         try {
             Case cs= new Case(Id=caseId,status='Closed', Phase__c='Completata');
+            String note = '';
             if(caseob.containsKey('OperationSubType__c')){
                 cs.put('OperationSubType__c',String.valueOf(caseob.get('OperationSubType__c')));
             }
@@ -86,6 +87,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
             }
             if(caseob.containsKey('Note__c')){
                 cs.put('Note__c',String.valueOf(caseob.get('Note__c')));
+                note = String.valueOf(caseob.get('Note__c'));
             }
            // caseSRV.updateRecord(cs); 
             List<wrts_prcgvr__Activity__c> activities= HDT_QR_ActivityCustom.getRecordByCaseId(caseId);
@@ -117,6 +119,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
                     recTypeId= rc.Id;
                 }
                 wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Approvazione Bonus Commerciale');
+                activity.OpeningNote__c = note;
                 activitySrv.createRecord(activity);
                 return 'success2';
             }

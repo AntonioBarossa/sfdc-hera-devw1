@@ -729,8 +729,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             containerCaseNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
             herokuCode = reqWrp.requestMap.get('COD_PRAT_UTENTE');
             priorita = String.valueOf(reqWrp.requestMap.get('PRIORITA'));
-            codFisDistr = String.valueOf(reqWrp.requestMap.get('PARTITA_IVA'));
-            pivaDistr = String.valueOf(reqWrp.requestMap.get('CODICE_FISCALE'));
+            pivaDistr = String.valueOf(reqWrp.requestMap.get('PARTITA_IVA'));
+            codFisDistr = String.valueOf(reqWrp.requestMap.get('CODICE_FISCALE'));
             if(String.isNotBlank(tipoProcesso)){
                 processType = tipoProcesso;
             }

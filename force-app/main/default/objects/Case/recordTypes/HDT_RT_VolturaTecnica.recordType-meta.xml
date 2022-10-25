@@ -7270,7 +7270,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8161,6 +8161,10 @@
         </values>
         <values>
             <fullName>In attesa Data Decorrenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore invio a DL%2FSII</fullName>
             <default>false</default>
         </values>
     </picklistValues>
