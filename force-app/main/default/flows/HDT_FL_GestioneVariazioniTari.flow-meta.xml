@@ -2165,13 +2165,23 @@
         <name>errorMessageChangeCity</name>
         <dataType>String</dataType>
         <expression>&apos;Il Comune ha subito una variazione! Da: &apos;+{!getCase.ServicePoint__r.SupplyCity__c}+&apos; A: &apos;+{!newAddressLwc_0.theCase.InvoicingCity__c}+
-&quot;Si proceda con l&apos;annullamento del processo corrente e innescare il processo di Cambio Offerta&quot;</expression>
+&quot; Si proceda con l&apos;annullamento del processo corrente e innescare il processo di Cambio Offerta&quot;</expression>
     </formulas>
     <formulas>
         <name>notResidentMembers</name>
         <dataType>Number</dataType>
         <expression>{!getAfterSecondForm.NumberMembers__c} - {!getAfterSecondForm.NotResidentMembers__c}</expression>
         <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>transCityCode</name>
+        <dataType>String</dataType>
+        <expression>TEXT(VALUE({!newAddressLwc_0.theCase.InvoicingCityCode__c}))</expression>
+    </formulas>
+    <formulas>
+        <name>transStreetCode</name>
+        <dataType>String</dataType>
+        <expression>TEXT(VALUE({!newAddressLwc_0.theCase.InvoicingStreetCode__c}))</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestioneVariazioniTari {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GestioneVariazioniTari</label>
@@ -2479,6 +2489,12 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>SupplyCityCode__c</field>
+            <value>
+                <elementReference>newAddressLwc_0.theCase.InvoicingCityCode__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>SupplyCity__c</field>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingCity__c</elementReference>
@@ -2511,11 +2527,17 @@
         <inputAssignments>
             <field>SupplySAPCityCode__c</field>
             <value>
-                <elementReference>newAddressLwc_0.theCase.SupplyCityCode__c</elementReference>
+                <elementReference>transCityCode</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>SupplySAPStreetCode__c</field>
+            <value>
+                <elementReference>transStreetCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SupplyStreetCode__c</field>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingStreetCode__c</elementReference>
             </value>
@@ -4245,13 +4267,13 @@
             <inputParameters>
                 <name>supplyCity</name>
                 <value>
-                    <elementReference>getAfterAddress.ServicePoint__r.SupplyCity__c</elementReference>
+                    <elementReference>getAfterAddress.ServicePoint__r.SupplyCityCode__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>customerMarking</name>
                 <value>
-                    <elementReference>getAfterAddress.Account.CustomerMarking__c</elementReference>
+                    <elementReference>getAfterAddress.Account.CustomerType__c</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
