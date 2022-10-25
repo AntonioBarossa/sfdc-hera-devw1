@@ -517,7 +517,7 @@
         <name>assignProcessTypeToSubFlow</name>
         <label>assignProcessTypeToSubFlow</label>
         <locationX>686</locationX>
-        <locationY>11426</locationY>
+        <locationY>11762</locationY>
         <assignmentItems>
             <assignToReference>processToCancellation</assignToReference>
             <operator>Assign</operator>
@@ -533,7 +533,7 @@
         <name>assignProcessTypeToSubFlow_0</name>
         <label>assignProcessTypeToSubFlow</label>
         <locationX>950</locationX>
-        <locationY>11426</locationY>
+        <locationY>11762</locationY>
         <assignmentItems>
             <assignToReference>processToCancellation</assignToReference>
             <operator>Assign</operator>
@@ -549,7 +549,7 @@
         <name>assignProcessTypeToSubFlow_0_0</name>
         <label>assignProcessTypeToSubFlow</label>
         <locationX>1214</locationX>
-        <locationY>11426</locationY>
+        <locationY>11762</locationY>
         <assignmentItems>
             <assignToReference>processToCancellation</assignToReference>
             <operator>Assign</operator>
@@ -648,7 +648,7 @@
         <name>ChangePhase</name>
         <label>ChangePhase</label>
         <locationX>3798</locationX>
-        <locationY>9530</locationY>
+        <locationY>9866</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -664,7 +664,7 @@
         <name>ChangePhaseDocumentale</name>
         <label>ChangePhaseDocumentale</label>
         <locationX>4326</locationX>
-        <locationY>9890</locationY>
+        <locationY>10226</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -680,7 +680,7 @@
         <name>ChangePhaseDocumentale_0</name>
         <label>ChangePhaseDocumentale</label>
         <locationX>4062</locationX>
-        <locationY>9890</locationY>
+        <locationY>10226</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -728,7 +728,7 @@
         <name>ChangePhaseIntegrati_0</name>
         <label>ChangePhaseIntegrati</label>
         <locationX>4854</locationX>
-        <locationY>9770</locationY>
+        <locationY>10106</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -744,7 +744,7 @@
         <name>ChangePhaseNonIntegrati_0_0</name>
         <label>ChangePhaseNonIntegrati</label>
         <locationX>4590</locationX>
-        <locationY>9770</locationY>
+        <locationY>10106</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -774,6 +774,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>SuperficieDichiarata</name>
+        <label>SuperficieDichiarata</label>
+        <locationX>3996</locationX>
+        <locationY>9530</locationY>
+        <assignmentItems>
+            <assignToReference>getAfterSecondForm.DeclaredArea__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterSecondForm.Surface__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IstruttoriBackOffice</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>SurfaceFromNullToZero</name>
         <label>SurfaceFromNullToZero</label>
         <locationX>3996</locationX>
@@ -786,7 +802,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>IstruttoriBackOffice</targetReference>
+            <targetReference>assignSuperficieDichiarata</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -1300,6 +1316,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>assignSuperficieDichiarata</name>
+        <label>assignSuperficieDichiarata</label>
+        <locationX>4128</locationX>
+        <locationY>9410</locationY>
+        <defaultConnector>
+            <targetReference>IstruttoriBackOffice</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_SuperficieDichiarata</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getAfterSecondForm.DeclaredArea__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SuperficieDichiarata</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>caseType</name>
         <label>caseType</label>
         <locationX>1082</locationX>
@@ -1392,7 +1433,7 @@
         <name>checkModuleFromContributor_0</name>
         <label>checkModuleFromContributor</label>
         <locationX>4458</locationX>
-        <locationY>9530</locationY>
+        <locationY>9866</locationY>
         <defaultConnector>
             <targetReference>ChoiceIntegration_0</targetReference>
         </defaultConnector>
@@ -1456,7 +1497,7 @@
         <name>checkOutputDocumentale</name>
         <label>checkOutputDocumentale</label>
         <locationX>4194</locationX>
-        <locationY>9770</locationY>
+        <locationY>10106</locationY>
         <defaultConnector>
             <targetReference>ChangePhaseDocumentale</targetReference>
         </defaultConnector>
@@ -1531,7 +1572,7 @@
         <name>ChoiceIntegration_0</name>
         <label>ChoiceIntegration</label>
         <locationX>4722</locationX>
-        <locationY>9650</locationY>
+        <locationY>9986</locationY>
         <defaultConnector>
             <targetReference>ChangePhaseIntegrati_0</targetReference>
         </defaultConnector>
@@ -1757,7 +1798,7 @@
         <locationX>4128</locationX>
         <locationY>9074</locationY>
         <defaultConnector>
-            <targetReference>IstruttoriBackOffice</targetReference>
+            <targetReference>assignSuperficieDichiarata</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Popolato</defaultConnectorLabel>
         <rules>
@@ -1805,7 +1846,7 @@
         <name>IstruttoriBackOffice</name>
         <label>IstruttoriBackOffice?</label>
         <locationX>4128</locationX>
-        <locationY>9410</locationY>
+        <locationY>9746</locationY>
         <defaultConnector>
             <targetReference>checkModuleFromContributor_0</targetReference>
         </defaultConnector>
@@ -1851,7 +1892,7 @@
         <name>processTypeAnnullamento</name>
         <label>processTypeAnnullamento</label>
         <locationX>1082</locationX>
-        <locationY>11306</locationY>
+        <locationY>11642</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Modifica_dati_contrattuali_choice</name>
@@ -2503,7 +2544,7 @@
         <name>updateafterSecondForm</name>
         <label>updateafterSecondForm</label>
         <locationX>4128</locationX>
-        <locationY>10298</locationY>
+        <locationY>10634</locationY>
         <inputReference>getAfterSecondForm</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -3170,7 +3211,7 @@
         <name>screenDocumentale</name>
         <label>screenDocumentale</label>
         <locationX>4194</locationX>
-        <locationY>9650</locationY>
+        <locationY>9986</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4276,7 +4317,7 @@
         <name>flowAnnullamento</name>
         <label>flowAnnullamento</label>
         <locationX>1082</locationX>
-        <locationY>11642</locationY>
+        <locationY>11978</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
