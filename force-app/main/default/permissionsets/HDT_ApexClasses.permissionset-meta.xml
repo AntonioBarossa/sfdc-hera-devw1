@@ -2933,6 +2933,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_LogService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_MassiveLoaderRequest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -4154,6 +4158,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_LeadTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_LogUtility</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
