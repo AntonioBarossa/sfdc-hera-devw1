@@ -63,7 +63,7 @@ public with sharing class HDT_LC_CtToolbar {
 
     @AuraEnabled
     public static String createActivityInbound(String reiteklink, String username, String password){
-        
+        HDT_SRV_LogService logs = new HDT_SRV_LogService('HDT_LC_CtToolbar');
         Order ord = HDT_LC_CanaleContattoIVRLogin.checkLogin(username,password);
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
         Datetime sdt = Datetime.now();
@@ -79,7 +79,7 @@ public with sharing class HDT_LC_CtToolbar {
         }
         
         activitySrv.createRecord(activity);
-
+        logs.addLog('HDT_LC_CtToolbar', 'createActivityInbound', JSON.serialize(activity), null, null, activity.Id, null, null);
         if(ord != null) {
             return ord.id;
         } else {
@@ -89,6 +89,7 @@ public with sharing class HDT_LC_CtToolbar {
     @AuraEnabled
     public static wrts_prcgvr__Activity__c createActivity(/*String startCall, */String clientNumber, String registrationLink, String ecid, String campaignMemberId, String agent){
         HDT_QR_CampaignMember cmQr = new HDT_QR_CampaignMember();
+        HDT_SRV_LogService logs = new HDT_SRV_LogService('HDT_LC_CtToolbar');
         System.debug('*******:TRYMETHOD');
         CampaignMember cm = cmQr.getRecordById(campaignMemberId);
         System.debug('*******:TRYMETHOD2');
@@ -115,7 +116,9 @@ public with sharing class HDT_LC_CtToolbar {
             // boolean cmRes = updateCampaignMember(ecid, campaignMemberId, agent);
             updateCampaignMember(ecid, campaignMemberId, agent);
             System.debug('*******:TRYMETHOD5');
-            return activitySrv.createRecord(activity);
+            wrts_prcgvr__Activity__c act =  activitySrv.createRecord(activity);
+            logs.addLog('HDT_LC_CtToolbar', 'createActivity', JSON.serialize(act), null, null, act.Id, null, null);
+            return act;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
@@ -123,6 +126,7 @@ public with sharing class HDT_LC_CtToolbar {
 
     @AuraEnabled
     public static Boolean updateActivity(String ecid, String endCall, Decimal callDuration, Decimal waitingTime){
+        HDT_SRV_LogService logs = new HDT_SRV_LogService('HDT_LC_CtToolbar');
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
         List<wrts_prcgvr__Activity__c> actList = HDT_QR_ActivityCustom.getActivityTelesellingOutbound(ecid);
         if(actList != null && !actList.isEmpty()){
@@ -137,6 +141,7 @@ public with sharing class HDT_LC_CtToolbar {
             try {
                 System.debug('###### activity #### ' +activity);
                 activitySrv.updateRecord(activity);
+                logs.addLog('HDT_LC_CtToolbar', 'updateActivity', JSON.serialize(activity), null, null, activity.Id, null, null);
                 return true;
             } catch (Exception e) {
                 throw new AuraHandledException(e.getMessage());
