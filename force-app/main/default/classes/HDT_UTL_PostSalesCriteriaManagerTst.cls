@@ -170,6 +170,12 @@ public with sharing class HDT_UTL_PostSalesCriteriaManagerTst {
         System.assertEquals(false, result,'Activity list is not empty');
     }
 
+    /**
+    * @author Cristiano Salvati (c.salvaty@key2.it)
+    * @date 25/10/2022
+    * @description HDT_UTL_PostSalesCriteriaManagerTst – activityLetturaNonInseritaInSapPresente test method
+    */
+
     @isTest
     static void activityLetturaNonInseritaInSapPresenteTst(){
         List<Case> cases=[SELECT Id,TotalResidue__c FROM Case WHERE TotalResidue__c >0.00 WITH SECURITY_ENFORCED LIMIT 1];
@@ -180,6 +186,12 @@ public with sharing class HDT_UTL_PostSalesCriteriaManagerTst {
         System.assertEquals(true, result,'Activity list is not empty');
     }
 
+    /**
+    * @author Cristiano Salvati (c.salvaty@key2.it)
+    * @date 25/10/2022
+    * @description HDT_UTL_PostSalesCriteriaManagerTst – activityLetturaNonInseritaInSapAssenti test method
+    */
+
     @isTest
     static void activityLetturaNonInseritaInSapAssentiTst(){
         List<Case> cases=[SELECT Id,TotalResidue__c FROM Case WHERE TotalResidue__c >0.00 WITH SECURITY_ENFORCED LIMIT 1];
@@ -189,6 +201,12 @@ public with sharing class HDT_UTL_PostSalesCriteriaManagerTst {
         Test.stopTest();
         System.assertEquals(false, result,'Activity list is not empty');
     }
+
+    /**
+    * @author Cristiano Salvati (c.salvaty@key2.it)
+    * @date 25/10/2022
+    * @description HDT_UTL_PostSalesCriteriaManagerTst – isRapidoToAnalitico test method
+    */
 
     @isTest
     static void isRapidoToAnaliticoTst(){
