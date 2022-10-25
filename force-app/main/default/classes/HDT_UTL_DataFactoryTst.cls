@@ -3543,39 +3543,4 @@ public with sharing class HDT_UTL_DataFactoryTst{
         }
         return randStr;
     }
-
-	
-
-	/**​
-    * @author Elvin Iluca
-    * @date 20/10/2022
-    * @description HDT_UTL_DataFactoryTst – Utility method to create/insert N EmailMessage instances/records
-	* @param1 - amount EmailMessage 
-	* @param2 - boolean to choose if insert records or not
-	* @return - the list of EmailMessage just created
-    */
-	public static List<EmailMessage> createEmailMessage(Integer amount, Boolean doInsert){
-	
-		List<EmailMessage> emailMessageList = new List<EmailMessage>();
-
-		for(Integer i = 0; i<amount; i++){
-			EmailMessage temp = new EmailMessage();
-			temp.status = '3';
-			temp.fromAddress = 'test' + i + '@test.com';
-			temp.fromName = 'test' + i;
-			temp.toAddress = 'toTest' + i + '@test.com';
-			temp.Subject = 'Hello ' + temp.ToAddress;
-			temp.HtmlBody = '<h1>How are you?</h1><br><br><h1>'+ temp.FromName +'</h1>';
-			
-			emailMessageList.add(temp);
-		}
-
-		if (doInsert){
-
-			insert emailMessageList;
-		}
-
-		return emailMessageList;
-
-	}
 }
