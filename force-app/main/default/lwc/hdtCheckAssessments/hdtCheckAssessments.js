@@ -86,7 +86,8 @@ export default class HdtCheckAssessments extends LightningElement {
             if (!result){
                 console.log('result ->' + this.result);
             }else{
-                let data = JSON.parse(result);
+                //let data = JSON.parse(result);
+                let data = result;
                 let slots = [];
                 try{
                     slots = data.data;
