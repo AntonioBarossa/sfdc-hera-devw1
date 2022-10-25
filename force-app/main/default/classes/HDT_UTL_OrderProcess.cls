@@ -362,6 +362,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
                     String newPhase = (myOrder.ProcessType__c == 'Voltura') && isNotVoltureAcceptanceWorked && !myOrder.Commodity__c.containsIgnoreCase('Acqua')? 'Accettazione Voltura': HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione';
                     newPhase = myOrder.ProcessType__c == 'Voltura - Subentro Scarico produttivo'? 'In attesa esito SAP' : newPhase;
+                    if('Documentazione Validata'== newPhase && STRING.isNotBlank(myOrder.ApprovalType__c) && !'3 - Nessuna'.equalsIgnoreCase(myOrder.ApprovalType__c)){
+                        newPhase = 'In Attesa Approvazione';//Approvazione Agevolazione
+                    }
 
                     childOrdersDocValid.add(new Order(
                         Id = myOrder.Id,
