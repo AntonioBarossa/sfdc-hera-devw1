@@ -2670,10 +2670,6 @@
             <fullName>Supporto Anomalia processo%2Fsistema</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Supporto TL Front</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Validation__c</picklist>

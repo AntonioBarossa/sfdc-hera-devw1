@@ -3093,10 +3093,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Segnalazioni Contact Center</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Segnalazioni Migrazione dati</fullName>
             <default>false</default>
         </values>
