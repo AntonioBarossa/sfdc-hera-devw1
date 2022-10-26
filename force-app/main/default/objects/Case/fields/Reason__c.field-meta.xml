@@ -725,12 +725,10 @@
             <valueName>Opposizione</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Verifica Generica GDM</controllingFieldValue>
             <controllingFieldValue>Verifica Integrita Sigilli</controllingFieldValue>
             <valueName>Ripristino Sigilli / Piombi Rotti</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Verifica Generica GDM</controllingFieldValue>
             <controllingFieldValue>Verifica Integrita Sigilli</controllingFieldValue>
             <valueName>Ripiombatura Post Collaudo Antincendio</valueName>
         </valueSettings>
