@@ -117,23 +117,23 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		for (Integer i=0; i<amount; i++){
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-			Decimal numCustomerCode = Decimal.valueOf('1003616210');
-			Decimal result = numCustomerCode + i;
-			String stringResult = String.valueOf(result);
+			//Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			//Decimal result = numCustomerCode + i;
+			String stringResult = '1'+generateRandomChars(9,true,false, false);  //String.valueOf(result);
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
 			Account acc=new Account();
 
 			acc.RecordTypeId=rt;
-			acc.Name='test account'+i;
+			acc.Name='test account bsn'+i;
 			acc.CompanyOwner__c=companyOwner;
 			acc.CustomerMarking__c=customerMarking;
 			acc.Category__C=category;
 			acc.BillingCityCode__c='Roma';
 			acc.BillingStreetName__c='via roma';
 			acc.BillingStreetNumber__c='55';
-			acc.LastName__c='test account'+i;
+			acc.LastName__c='test account bsn'+i;
 			acc.BillingIsAddressVerified__c=true;
 			acc.IsArchived__c = true;
 			
@@ -174,9 +174,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		for (Integer i=0; i<amount; i++){
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-			Decimal numCustomerCode = Decimal.valueOf('1003616210');
-			Decimal result = numCustomerCode + i;
-			String stringResult = String.valueOf(result);
+			//Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			//Decimal result = numCustomerCode + i;
+			String stringResult = '1'+generateRandomChars(9,true,false, false);//String.valueOf(result);
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
@@ -263,9 +263,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-			Decimal numCustomerCode = Decimal.valueOf('1003616210');
-			Decimal result = numCustomerCode + i;
-			String stringResult = String.valueOf(result);
+			//Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			//Decimal result = numCustomerCode + i;
+			String stringResult = '1'+generateRandomChars(9,true,false, false);//String.valueOf(result);
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
@@ -3522,6 +3522,39 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 		return cityTechnicalData;
 	}
+
+
+	/**
+	* @author Cristiano Salvati (c.salvati@key2.it)
+	* @date 20/10/2022
+	* @description HDT_UTL_DataFactoryTst – the method generates a random string, which can be numeric/letters/alphanumeric
+	* @param1 len – length of the output string
+	* @param2 isNumeric – determines whether the string will be numeric
+	* @param3 isText – determines whether the string will be only letters
+	* @param4 isAlphaNumeric – determines whether the string will be alphanumeric
+	* @return returns the random string generated
+	*/
+	public static String generateRandomChars(Integer len,Boolean isNumeric,Boolean isText, Boolean isAlphaNumeric) {
+        String numbers = '123456789';
+		String letters = 'ABCDEFGHILMOPQRSTUVZWXYabcdefghilmopqrstuvzwxy';
+		String alphaNumeric = numbers+letters;
+		String randStr='';
+		final String CHARS;
+		if(isNumeric){
+			CHARS=numbers;
+		}
+		if(isText){
+			CHARS=alphaNumeric;
+		}
+		if(isAlphaNumeric){
+			CHARS=alphaNumeric;
+		} 
+        while (randStr.length() < len) {
+            Integer idx = Math.mod(Math.abs(Crypto.getRandomInteger()), chars.length());
+            randStr += CHARS.substring(idx, idx+1);
+        }
+        return randStr;
+    }
 
 	// Create a list of Interaction__c
 	public static List<Interaction__c> createInteraction (List<Contact> contacts, Boolean doInsert) {
