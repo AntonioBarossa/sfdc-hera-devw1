@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Cessazione</label>
+    <label>Chiusura Contatore</label>
     <protected>false</protected>
     <values>
         <field>ContrattiCliente__c</field>
@@ -16,22 +16,22 @@
     </values>
     <values>
         <field>RateCategory__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">ACDOMRESP0,ACDOMNR000,ACPROMISC0,ACAGRICO00,ACZOOTECN0,ACARTCOMM0,ACINDSTR00,ACAUGRUNI0,ACPUBDIS00,ACPUBNDIS0,ACANTINC00,ACAUNOPOT0,ACAUGENER0,TATND00001</value>
     </values>
     <values>
         <field>StatoContratto__c</field>
-        <value xsi:type="xsd:string">Attivo,Bozza</value>
-    </values>
-    <values>
-        <field>StatoFornitura__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>
+        <field>StatoFornitura__c</field>
+        <value xsi:type="xsd:string">Attivo,Bozza</value>
+    </values>
+    <values>
         <field>TipoProcesso__c</field>
-        <value xsi:type="xsd:string">Cessazione</value>
+        <value xsi:type="xsd:string">Chiusura Contatore</value>
     </values>
     <values>
         <field>TipoServizio__c</field>
-        <value xsi:type="xsd:string">Ambiente</value>
+        <value xsi:type="xsd:string">Acqua</value>
     </values>
 </CustomMetadata>

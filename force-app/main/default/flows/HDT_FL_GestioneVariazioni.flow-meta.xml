@@ -3115,7 +3115,7 @@
             <name>Domestico_Residente_ModUnitImm_1</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetCaseAggiornatoModificaUnitaImmobiliari_0_0.RateCategory__c</leftValueReference>
+                <leftValueReference>GetInputCase.RateCategory__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>ACDOMRESP0</stringValue>
