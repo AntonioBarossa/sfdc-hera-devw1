@@ -17,11 +17,32 @@ const columns = [ { label: 'Nr. Atto', fieldName: 'NrAtto',  sortable: "true"}, 
                   { label: 'Superficie Accertata', fieldName: 'SuperficieAccertata'},
                   { label: 'Categoria Accertata', fieldName: 'CategoriaAccertata'}];
 
+
+function equalsIgnoreCase(str1, str2){
+    return typeof str1 === 'string' && typeof str2 === 'string'? 
+                str1.localeCompare(str2, undefined, { sensitivity: 'accent' }) === 0
+                : str1 === str2;
+}
+
 export default class HdtCheckAssessments extends LightningElement {
     @api fiscalCode;
-    @api supplyCity;
-    @api customerMarking;
+    @api 
+    get supplyCity(){
+        return this._supplyCityCode?.slice(-5);
+    }
+    set supplyCity(value){
+        this._supplyCityCode=value;
+    }
+    @api 
+    get customerMarking(){
+        return equalsIgnoreCase(this._customerMarking, "Persona Fisica")? "F" : "G";
+    }
+    set customerMarking(value){
+        this._customerMarking=value;
+    }
     @track data;
+    _supplyCityCode;
+    _customerMarking;
     columns = columns;
     defaultSortDirection = 'asc';
     sortDirection = 'asc';
@@ -65,7 +86,8 @@ export default class HdtCheckAssessments extends LightningElement {
             if (!result){
                 console.log('result ->' + this.result);
             }else{
-                let data = JSON.parse(result);
+                //let data = JSON.parse(result);
+                let data = result;
                 let slots = [];
                 try{
                     slots = data.data;

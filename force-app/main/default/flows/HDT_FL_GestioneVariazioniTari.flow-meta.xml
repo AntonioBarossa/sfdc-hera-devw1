@@ -5,7 +5,7 @@
         <name>Assegna_punto_fornitura_0</name>
         <label>Assegna punto fornitura</label>
         <locationX>50</locationX>
-        <locationY>1118</locationY>
+        <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>getAfterForm_0.SupplyType__c</assignToReference>
             <operator>Assign</operator>
@@ -242,58 +242,58 @@
         <name>AssignNewAddress_0_0</name>
         <label>AssignNewAddress</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
-            <assignToReference>getCase.SupplyCity__c</assignToReference>
+            <assignToReference>getPreUpdateAddress.SupplyCity__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingCity__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.SupplyPostalCode__c</assignToReference>
+            <assignToReference>getPreUpdateAddress.SupplyPostalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingPostalCode__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.SupplyCountry__c</assignToReference>
+            <assignToReference>getPreUpdateAddress.SupplyCountry__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingCountry__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.SupplyProvince__c</assignToReference>
+            <assignToReference>getPreUpdateAddress.SupplyProvince__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingProvince__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.SupplyStreetName__c</assignToReference>
+            <assignToReference>getPreUpdateAddress.SupplyStreetName__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingStreetName__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.SupplyStreetNumber__c</assignToReference>
+            <assignToReference>getPreUpdateAddress.SupplyStreetNumber__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingStreetNumber__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.SupplyStreetNumberExtension__c</assignToReference>
+            <assignToReference>getPreUpdateAddress.SupplyStreetNumberExtension__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingStreetNumberExtension__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.SupplyPlace__c</assignToReference>
+            <assignToReference>getPreUpdateAddress.SupplyPlace__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingPlace__c</elementReference>
@@ -464,7 +464,7 @@
         <name>assignParams_0</name>
         <label>assignParams</label>
         <locationX>657</locationX>
-        <locationY>1478</locationY>
+        <locationY>1598</locationY>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.city</assignToReference>
             <operator>Assign</operator>
@@ -501,7 +501,7 @@
         <name>assignPhase</name>
         <label>assignPhase</label>
         <locationX>1108</locationX>
-        <locationY>2198</locationY>
+        <locationY>2318</locationY>
         <assignmentItems>
             <assignToReference>getAfterForm_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -517,7 +517,7 @@
         <name>assignProcessTypeToSubFlow</name>
         <label>assignProcessTypeToSubFlow</label>
         <locationX>686</locationX>
-        <locationY>11426</locationY>
+        <locationY>11762</locationY>
         <assignmentItems>
             <assignToReference>processToCancellation</assignToReference>
             <operator>Assign</operator>
@@ -533,7 +533,7 @@
         <name>assignProcessTypeToSubFlow_0</name>
         <label>assignProcessTypeToSubFlow</label>
         <locationX>950</locationX>
-        <locationY>11426</locationY>
+        <locationY>11762</locationY>
         <assignmentItems>
             <assignToReference>processToCancellation</assignToReference>
             <operator>Assign</operator>
@@ -549,7 +549,7 @@
         <name>assignProcessTypeToSubFlow_0_0</name>
         <label>assignProcessTypeToSubFlow</label>
         <locationX>1214</locationX>
-        <locationY>11426</locationY>
+        <locationY>11762</locationY>
         <assignmentItems>
             <assignToReference>processToCancellation</assignToReference>
             <operator>Assign</operator>
@@ -616,7 +616,7 @@
         <name>assignStatus</name>
         <label>assignStatus</label>
         <locationX>910</locationX>
-        <locationY>1958</locationY>
+        <locationY>2078</locationY>
         <assignmentItems>
             <assignToReference>getAfterForm_0.Status</assignToReference>
             <operator>Assign</operator>
@@ -648,7 +648,7 @@
         <name>ChangePhase</name>
         <label>ChangePhase</label>
         <locationX>3798</locationX>
-        <locationY>9530</locationY>
+        <locationY>9866</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -664,7 +664,7 @@
         <name>ChangePhaseDocumentale</name>
         <label>ChangePhaseDocumentale</label>
         <locationX>4326</locationX>
-        <locationY>9890</locationY>
+        <locationY>10226</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -680,7 +680,7 @@
         <name>ChangePhaseDocumentale_0</name>
         <label>ChangePhaseDocumentale</label>
         <locationX>4062</locationX>
-        <locationY>9890</locationY>
+        <locationY>10226</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -696,7 +696,7 @@
         <name>ChangePhaseDocumentale_1</name>
         <label>ChangePhaseDocumentale</label>
         <locationX>580</locationX>
-        <locationY>2438</locationY>
+        <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>getAfterForm_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -712,7 +712,7 @@
         <name>ChangePhaseDocumentale_2</name>
         <label>ChangePhaseDocumentale</label>
         <locationX>844</locationX>
-        <locationY>2438</locationY>
+        <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>getAfterForm_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -728,7 +728,7 @@
         <name>ChangePhaseIntegrati_0</name>
         <label>ChangePhaseIntegrati</label>
         <locationX>4854</locationX>
-        <locationY>9770</locationY>
+        <locationY>10106</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -744,7 +744,7 @@
         <name>ChangePhaseNonIntegrati_0_0</name>
         <label>ChangePhaseNonIntegrati</label>
         <locationX>4590</locationX>
-        <locationY>9770</locationY>
+        <locationY>10106</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -774,6 +774,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>SuperficieDichiarata</name>
+        <label>SuperficieDichiarata</label>
+        <locationX>3996</locationX>
+        <locationY>9530</locationY>
+        <assignmentItems>
+            <assignToReference>getAfterSecondForm.DeclaredArea__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterSecondForm.Surface__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IstruttoriBackOffice</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>SurfaceFromNullToZero</name>
         <label>SurfaceFromNullToZero</label>
         <locationX>3996</locationX>
@@ -786,7 +802,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>IstruttoriBackOffice</targetReference>
+            <targetReference>assignSuperficieDichiarata</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -1156,7 +1172,7 @@
         <name>AnnullamentoSreenIndirizzo</name>
         <label>Annullamento</label>
         <locationX>50</locationX>
-        <locationY>1238</locationY>
+        <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>changeCity_0</targetReference>
         </defaultConnector>
@@ -1165,7 +1181,7 @@
             <name>AnnullamentoFromIndirizzo</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtflownavButtons.cancelCase</leftValueReference>
+                <leftValueReference>fieldsFormVarIndirizzo.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -1180,7 +1196,7 @@
             <name>Salva_In_Bozza_VarIndForn</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtflownavButtons.saveDraft</leftValueReference>
+                <leftValueReference>fieldsFormVarIndirizzo.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -1240,7 +1256,7 @@
         <name>AnnullamentoSreenIndirizzo_0_0</name>
         <label>Annullamento</label>
         <locationX>657</locationX>
-        <locationY>1838</locationY>
+        <locationY>1958</locationY>
         <defaultConnector>
             <targetReference>assignStatus</targetReference>
         </defaultConnector>
@@ -1300,6 +1316,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>assignSuperficieDichiarata</name>
+        <label>assignSuperficieDichiarata</label>
+        <locationX>4128</locationX>
+        <locationY>9410</locationY>
+        <defaultConnector>
+            <targetReference>IstruttoriBackOffice</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_SuperficieDichiarata</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getAfterSecondForm.DeclaredArea__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SuperficieDichiarata</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>caseType</name>
         <label>caseType</label>
         <locationX>1082</locationX>
@@ -1328,7 +1369,7 @@
         <name>changeCity_0</name>
         <label>cambio comune</label>
         <locationX>399</locationX>
-        <locationY>1358</locationY>
+        <locationY>1478</locationY>
         <defaultConnector>
             <targetReference>assignParams_0</targetReference>
         </defaultConnector>
@@ -1392,7 +1433,7 @@
         <name>checkModuleFromContributor_0</name>
         <label>checkModuleFromContributor</label>
         <locationX>4458</locationX>
-        <locationY>9530</locationY>
+        <locationY>9866</locationY>
         <defaultConnector>
             <targetReference>ChoiceIntegration_0</targetReference>
         </defaultConnector>
@@ -1424,7 +1465,7 @@
         <name>checkModuleFromContributor_0_0</name>
         <label>checkModuleFromContributor</label>
         <locationX>910</locationX>
-        <locationY>2078</locationY>
+        <locationY>2198</locationY>
         <defaultConnector>
             <targetReference>assignPhase</targetReference>
         </defaultConnector>
@@ -1456,7 +1497,7 @@
         <name>checkOutputDocumentale</name>
         <label>checkOutputDocumentale</label>
         <locationX>4194</locationX>
-        <locationY>9770</locationY>
+        <locationY>10106</locationY>
         <defaultConnector>
             <targetReference>ChangePhaseDocumentale</targetReference>
         </defaultConnector>
@@ -1481,7 +1522,7 @@
         <name>checkOutputDocumentale_0</name>
         <label>checkOutputDocumentale</label>
         <locationX>712</locationX>
-        <locationY>2318</locationY>
+        <locationY>2438</locationY>
         <defaultConnector>
             <targetReference>ChangePhaseDocumentale_2</targetReference>
         </defaultConnector>
@@ -1531,7 +1572,7 @@
         <name>ChoiceIntegration_0</name>
         <label>ChoiceIntegration</label>
         <locationX>4722</locationX>
-        <locationY>9650</locationY>
+        <locationY>9986</locationY>
         <defaultConnector>
             <targetReference>ChangePhaseIntegrati_0</targetReference>
         </defaultConnector>
@@ -1757,7 +1798,7 @@
         <locationX>4128</locationX>
         <locationY>9074</locationY>
         <defaultConnector>
-            <targetReference>IstruttoriBackOffice</targetReference>
+            <targetReference>assignSuperficieDichiarata</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Popolato</defaultConnectorLabel>
         <rules>
@@ -1805,7 +1846,7 @@
         <name>IstruttoriBackOffice</name>
         <label>IstruttoriBackOffice?</label>
         <locationX>4128</locationX>
-        <locationY>9410</locationY>
+        <locationY>9746</locationY>
         <defaultConnector>
             <targetReference>checkModuleFromContributor_0</targetReference>
         </defaultConnector>
@@ -1851,7 +1892,7 @@
         <name>processTypeAnnullamento</name>
         <label>processTypeAnnullamento</label>
         <locationX>1082</locationX>
-        <locationY>11306</locationY>
+        <locationY>11642</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Modifica_dati_contrattuali_choice</name>
@@ -2124,13 +2165,23 @@
         <name>errorMessageChangeCity</name>
         <dataType>String</dataType>
         <expression>&apos;Il Comune ha subito una variazione! Da: &apos;+{!getCase.ServicePoint__r.SupplyCity__c}+&apos; A: &apos;+{!newAddressLwc_0.theCase.InvoicingCity__c}+
-&quot;Si proceda con l&apos;annullamento del processo corrente e innescare il processo di Cambio Offerta&quot;</expression>
+&quot; Si proceda con l&apos;annullamento del processo corrente e innescare il processo di Cambio Offerta&quot;</expression>
     </formulas>
     <formulas>
         <name>notResidentMembers</name>
         <dataType>Number</dataType>
         <expression>{!getAfterSecondForm.NumberMembers__c} - {!getAfterSecondForm.NotResidentMembers__c}</expression>
         <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>transCityCode</name>
+        <dataType>String</dataType>
+        <expression>TEXT(VALUE({!newAddressLwc_0.theCase.InvoicingCityCode__c}))</expression>
+    </formulas>
+    <formulas>
+        <name>transStreetCode</name>
+        <dataType>String</dataType>
+        <expression>TEXT(VALUE({!newAddressLwc_0.theCase.InvoicingStreetCode__c}))</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestioneVariazioniTari {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GestioneVariazioniTari</label>
@@ -2199,7 +2250,7 @@
         <name>getAfterForm_0</name>
         <label>getAfterForm</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_punto_fornitura_0</targetReference>
@@ -2329,6 +2380,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>getPreUpdateAddress</name>
+        <label>getPreUpdateAddress</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssignNewAddress_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getSubscription</name>
         <label>getSubscription</label>
         <locationX>3143</locationX>
@@ -2398,7 +2470,7 @@
         <name>finalUpdate</name>
         <label>finalUpdate</label>
         <locationX>910</locationX>
-        <locationY>2750</locationY>
+        <locationY>2870</locationY>
         <connector>
             <targetReference>updateAddressServicePoint</targetReference>
         </connector>
@@ -2418,17 +2490,17 @@
         <name>updateAddress_0_0</name>
         <label>updateAddress</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <connector>
             <targetReference>getAfterForm_0</targetReference>
         </connector>
-        <inputReference>getCase</inputReference>
+        <inputReference>getPreUpdateAddress</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>updateAddressServicePoint</name>
         <label>updateAddressServicePoint</label>
         <locationX>910</locationX>
-        <locationY>2870</locationY>
+        <locationY>2990</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -2437,6 +2509,12 @@
                 <elementReference>getCase.ServicePoint__c</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>SupplyCityCode__c</field>
+            <value>
+                <elementReference>newAddressLwc_0.theCase.InvoicingCityCode__c</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>SupplyCity__c</field>
             <value>
@@ -2470,11 +2548,17 @@
         <inputAssignments>
             <field>SupplySAPCityCode__c</field>
             <value>
-                <elementReference>newAddressLwc_0.theCase.SupplyCityCode__c</elementReference>
+                <elementReference>transCityCode</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>SupplySAPStreetCode__c</field>
+            <value>
+                <elementReference>transStreetCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SupplyStreetCode__c</field>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingStreetCode__c</elementReference>
             </value>
@@ -2503,7 +2587,7 @@
         <name>updateafterSecondForm</name>
         <label>updateafterSecondForm</label>
         <locationX>4128</locationX>
-        <locationY>10298</locationY>
+        <locationY>10634</locationY>
         <inputReference>getAfterSecondForm</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -2520,7 +2604,7 @@
         <name>updateAttachments_0</name>
         <label>updateAttachments</label>
         <locationX>657</locationX>
-        <locationY>1718</locationY>
+        <locationY>1838</locationY>
         <connector>
             <targetReference>AnnullamentoSreenIndirizzo_0_0</targetReference>
         </connector>
@@ -2594,7 +2678,7 @@
         <name>alertChangeCity_0</name>
         <label>alertChangeCity</label>
         <locationX>140</locationX>
-        <locationY>1478</locationY>
+        <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2973,7 +3057,7 @@
         <name>gestioneAllegatiVIF</name>
         <label>gestioneAllegatiVIF</label>
         <locationX>657</locationX>
-        <locationY>1598</locationY>
+        <locationY>1718</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3170,7 +3254,7 @@
         <name>screenDocumentale</name>
         <label>screenDocumentale</label>
         <locationX>4194</locationX>
-        <locationY>9650</locationY>
+        <locationY>9986</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3239,7 +3323,7 @@
         <name>screenDocumentale_0</name>
         <label>screenDocumentale</label>
         <locationX>712</locationX>
-        <locationY>2198</locationY>
+        <locationY>2318</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3666,7 +3750,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>AssignNewAddress_0_0</targetReference>
+            <targetReference>getPreUpdateAddress</targetReference>
         </connector>
         <fields>
             <name>attualeIndirizzo</name>
@@ -3693,6 +3777,12 @@
                 <name>cancelCase</name>
                 <value>
                     <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -3775,60 +3865,10 @@
                     <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>hdtflownavButtons</name>
-            <extensionName>c:hdtFlowNavigationButton</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>isCancel</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>isDraft</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>isPrevious</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>nextLabel</name>
-                <value>
-                    <stringValue>Avanti</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>nextVariant</name>
-                <value>
-                    <stringValue>brand</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>InputCase</elementReference>
-                </value>
-            </inputParameters>
             <inputParameters>
                 <name>sessionid</name>
                 <value>
                     <elementReference>$Flow.InterviewGuid</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>standAlone</name>
-                <value>
-                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -4204,13 +4244,13 @@
             <inputParameters>
                 <name>supplyCity</name>
                 <value>
-                    <elementReference>getAfterAddress.ServicePoint__r.SupplyCity__c</elementReference>
+                    <elementReference>getAfterAddress.ServicePoint__r.SupplyCityCode__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>customerMarking</name>
                 <value>
-                    <elementReference>getAfterAddress.Account.CustomerMarking__c</elementReference>
+                    <elementReference>getAfterAddress.Account.CustomerType__c</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -4276,7 +4316,7 @@
         <name>flowAnnullamento</name>
         <label>flowAnnullamento</label>
         <locationX>1082</locationX>
-        <locationY>11642</locationY>
+        <locationY>11978</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

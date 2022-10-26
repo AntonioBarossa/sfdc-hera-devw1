@@ -5,7 +5,7 @@
     <formula>IF(
 	OR( 
 	IsActivationDeferred__c = true,
- ISPICKVAL(WaiverRightAfterthought__c,&apos;Sì&apos;) 
+ ISPICKVAL(WaiverRightAfterthought__c,&apos;Si&apos;) 
 	),
 	true,
 	false

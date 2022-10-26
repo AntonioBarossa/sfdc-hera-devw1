@@ -7118,7 +7118,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8375,6 +8375,14 @@
         </values>
         <values>
             <fullName>TEL - CLT NON TROVATO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Costituzione in mora (REMSI)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autorità idrico 655</fullName>
             <default>false</default>
         </values>
     </picklistValues>

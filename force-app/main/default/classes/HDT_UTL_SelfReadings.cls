@@ -155,8 +155,8 @@ public inherited sharing class HDT_UTL_SelfReadings {
         c.MeterCode__c = request.serialNumber;
         c.ReadingDate__c = request.readingDate != null ? request.readingDate : System.today();
         c.Commodity__c = inputContract.ServicePoint__r.CommoditySector__c;
-        String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest('', request.contractCode);
-        HDT_UTL_DataEnrichmentPostSales.handleResponse(serializedResponse, c);
+        
+        
         // c.DistributorCode__c = inputContract.ServicePoint__r.Distributor__r.Code__c;
         //c.SalesCompanyCode__c = isGas ? '10V0000160' : '13V0000000'; // TODO WAVE 2: adeguare con le altre company in ambito.
         /**
@@ -172,6 +172,10 @@ public inherited sharing class HDT_UTL_SelfReadings {
         }else {
             c.SalesCompanyCode__c = '13V0000000';
         }*/
+        //c.DistributorCode__c = inputContract.ServicePoint__r.Distributor__r.Code__c;
+        //c.SalesCompanyCode__c = isGas ? '10V0000160' : '13V0000000'; // TODO WAVE 2: adeguare con le altre company in ambito.
+        String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest('', request.contractCode);
+        HDT_UTL_DataEnrichmentPostSales.handleResponse(serializedResponse, c);
 
         HDT_QR_CausalCodeCalculation causalCodeHandler = new HDT_QR_CausalCodeCalculation();
         HDT_CausalCodeCalculation__mdt causalCodeMdt = causalCodeHandler.calculateCausalCode(c.Cluster__c, c.Type, '', inputContract.ServicePoint__r.CommoditySector__c);

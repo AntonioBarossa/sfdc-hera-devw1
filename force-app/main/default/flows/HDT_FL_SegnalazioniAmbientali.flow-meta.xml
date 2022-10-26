@@ -416,7 +416,7 @@
         <locationY>1118</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Selezione_Indirizzi</targetReference>
+            <targetReference>Selezione_Indirizzi_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Compatibile</defaultConnectorLabel>
         <rules>
