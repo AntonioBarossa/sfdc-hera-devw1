@@ -6996,7 +6996,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- <picklistValues>
         <picklist>InformativeCluster__c</picklist>
         <values>
             <fullName>Ambiente</fullName>
@@ -7086,8 +7086,8 @@
             <fullName>Voltura</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
-    <picklistValues>
+    </picklistValues> -->
+    <!-- <picklistValues>
         <picklist>InformativeType__c</picklist>
         <values>
             <fullName>Modifica Contratti Preattivazione</fullName>
@@ -7621,7 +7621,7 @@
             <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues> -->
     <picklistValues>
         <picklist>IsSameReasonComplaint__c</picklist>
         <values>
