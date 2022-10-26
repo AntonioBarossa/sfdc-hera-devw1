@@ -2613,19 +2613,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Segnalazioni Contact Center</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Segnalazioni Migrazione dati</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Supporto Anomalia processo%2Fsistema</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supporto Contact Center</fullName>
             <default>false</default>
         </values>
         <values>
