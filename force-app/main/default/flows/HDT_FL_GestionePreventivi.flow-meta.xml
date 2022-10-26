@@ -309,7 +309,7 @@
             <assignToReference>Get_Input_Case_0.SalesCompanyCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>SalesCompanyCodeFormula</elementReference>
+                <elementReference>Opzione.salesCompanyCode</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
