@@ -42,6 +42,9 @@
                         <valueListItems>
                             <value>Account.AssignAccountToMe</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Account.HDT_CheckAssessment</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -100,6 +103,9 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Account.AssignAccountToMe</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Account.HDT_CheckAssessment</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
