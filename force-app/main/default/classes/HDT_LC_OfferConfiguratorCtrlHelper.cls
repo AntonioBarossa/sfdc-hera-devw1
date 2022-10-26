@@ -91,8 +91,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         if(isUpdate){
             tecOff.Id = technicalofferid;
+            //if((String.isEmpty(tecOff.Status__c) || tecOff.Status__c.equalsIgnoreCase('Draft')) && tecOff.OfferToBeModified__c){
+            //    tecOff.OfferToBeModified__c =  false;
+            //}
         } else {
             tecOff.Status__c = 'Draft';
+            tecOff.OfferToBeModified__c = false;
         }
 
         try{
@@ -345,6 +349,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         newTechOff.Product__c = productId;
         newTechOff.SapCode__c = null;
         newTechOff.OfferCode__c = recIdToClone;
+        newTechOff.Status__c = 'Draft';
+        newTechOff.OfferToBeModified__c = false;
 
         System.debug(LoggingLevel.DEBUG, '# clone this -> ' + newTechOff);
 
