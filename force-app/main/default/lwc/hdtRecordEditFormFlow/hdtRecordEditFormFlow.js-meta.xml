@@ -103,8 +103,6 @@
             
             
             <property name="documentRecordId" type="String" label="Document Record Id" description="Id of the record to upload documents" role="inputOnly"/>
-           
-            <property name="sessionid" type="String" label="sessionid" description="sessionid Id" role="inputOnly"/>
             
         </targetConfig>
         

@@ -6,8 +6,6 @@ import validateRecord from '@salesforce/apex/HDT_LC_RecordEditFormFlowController
 import getContentDocs from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.getContentDocs';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { getRecord } from 'lightning/uiRecordApi';
-import { MessageContext, publish } from "lightning/messageService";
-import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
 
 import ASSISTED from '@salesforce/schema/Case.CutomerAssisted__c';
 import TYPE from '@salesforce/schema/Case.Type';
@@ -40,7 +38,6 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @api variantSaveButton;
     @api outputId;
     @api documentRecordId;
-    @api sessionid;
 
     @track errorMessage;
     @track error;
@@ -68,9 +65,6 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         let clist = this.template.querySelector('lightning-input-field.slds-form-element')?.classList?.value;
         return clist? clist : "slds-form-element slds-form-element_horizontal";
     }
-
-    @wire(MessageContext)
-	messageContext;
 
     @track assisted;
     @track type;
@@ -284,12 +278,6 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
 
     handleDraft(event){
-
-        if(this.sessionid){
-            const payload = { message: event.target.name,  sessionid : this.sessionid};
-            publish(this.messageContext, BUTTONMC, payload);
-        }
-
         console.log('draft handle');
         if(event.target.name === 'draft'){
 
@@ -318,12 +306,6 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
 
     handleSubmit(event){
-
-        if(this.sessionid){
-            const payload = { message: event.target.name,  sessionid : this.sessionid};
-            publish(this.messageContext, BUTTONMC, payload);
-        }
-
         if(this.recordId != null 
             || this.processType.localeCompare('Richiesta Parere') === 0
             || this.processType.localeCompare('Richiesta Parere Esercizio Diritti Privacy') === 0){
@@ -378,13 +360,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
 
     }
     
-    handlePrevious(event){
-
-        if(this.sessionid){
-            const payload = { message: event.target.name,  sessionid : this.sessionid};
-            publish(this.messageContext, BUTTONMC, payload);
-        }
-
+    handlePrevious(){
         const navigateBackEvent = new FlowNavigationBackEvent();
         this.dispatchEvent(navigateBackEvent);
     }

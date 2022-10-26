@@ -10,7 +10,6 @@
             <property name="theCase" type="@salesforce/schema/Case"/>
             <property name="cancelCase" type="Boolean"/>
             <property name="hideNavigationButtons" type="Boolean" role="inputOnly" />
-            <property name="interviewId" type="String" label="interviewId" description="interviewId" role="inputOnly"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
