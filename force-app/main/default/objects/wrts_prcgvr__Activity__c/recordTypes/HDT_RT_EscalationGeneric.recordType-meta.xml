@@ -2565,6 +2565,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Social</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Storno non dovuto</fullName>
             <default>false</default>
         </values>
@@ -2664,10 +2668,6 @@
         </values>
         <values>
             <fullName>Supporto Anomalia processo%2Fsistema</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supporto Contact Center</fullName>
             <default>false</default>
         </values>
         <values>
