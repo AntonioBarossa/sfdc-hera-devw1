@@ -274,6 +274,9 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             if(typeOfCommodity == 'Gas'){
                 typeOfCommodity = 'GAS';
             }
+            if(typeOfCommodity == 'Acqua'){
+                typeOfCommodity = 'ACQUA';
+            }
             
             HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail iwd = new HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail();
             if(act.Order__r.ServicePoint__c != null && act.Order__r.ServicePoint__r.AnnualConsumption__c != null){

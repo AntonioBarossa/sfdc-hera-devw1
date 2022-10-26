@@ -641,6 +641,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             if(this.order.ServicePoint__r.CommoditySector__c == 'Gas'){
                 typeOfCommodity = 'GAS';
             }
+            if(this.order.ServicePoint__r.CommoditySector__c == 'Acqua'){
+                typeOfCommodity = 'ACQUA';
+            }
         }
         if(this.order.SalesCompany__c !== undefined){
             companyGroup = this.order.SalesCompany__c;
