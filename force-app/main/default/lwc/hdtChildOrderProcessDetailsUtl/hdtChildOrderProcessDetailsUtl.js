@@ -159,7 +159,7 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                     new fieldData('Data dichiarazione','DeclarationDate__c', !["HDT_RT_AgevolazioniAmbiente"].includes(this.order.RecordType.DeveloperName), true, false,'', getFormattedDate(new Date())),
                     new fieldData('Data decorrenza','EffectiveDate__c', !["HDT_RT_AgevolazioniAmbiente"].includes(this.order.RecordType.DeveloperName), true, false,'',''),
                     new fieldData('Integrazione alla Dichiarazione (da Gestore)','OperatorDeclarationInfos__c', this.typeVisibility('both'), false, false,'',''),
-                    new fieldData('integrazione Riduzione Agevolazione Esclusione','IntegrationExclusion__c', ["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), false, true,'',''),
+                    new fieldData('integrazione Riduzione Agevolazione Esclusione','IntegrationExclusion__c', true, false, !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName),'',''),
                     new fieldData('Allegati obbligatori','MandatoryAttachments__c', this.typeVisibility('both'), false, true,'',''),
                     new fieldData('Allegati aggiuntivi','AdditionalAttachments__c', this.typeVisibility('both'), false, false,'','', function(){console.log("dynamic on change")}),
                     new fieldData('Blocca al calcolo','BlockOnComputation__c', this.order.Account.CompanyOwner__c!=="MMS", false, false,'',''),
