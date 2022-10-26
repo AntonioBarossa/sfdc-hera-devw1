@@ -369,12 +369,12 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.IsRemoteManaged__c = 'X'.equalsIgnoreCase(mapRes.get('FLAGTELEGESTIBILE'));
         }
         if(mapRes.get('POTENZACONTRATTUALE')!=null && !String.isBlank(mapRes.get('POTENZACONTRATTUALE'))){
-            Decimal d = decimal.valueOf(mapRes.get('POTENZATECNICA'));
-            spNew.PowerContractual__c = d.setScale(0);
+            Decimal d = decimal.valueOf(mapRes.get('POTENZACONTRATTUALE'));
+            spNew.PowerContractual__c = d;
         }
         if(mapRes.get('POTENZATECNICA')!=null && !String.isBlank(mapRes.get('POTENZATECNICA'))){            
             Decimal d = decimal.valueOf(mapRes.get('POTENZATECNICA'));
-            spNew.PowerAvailable__c  =d.setScale(1);            
+            spNew.PowerAvailable__c  =d;            
         }
         if(mapRes.get('TENSIONE')!=null && !String.isBlank(mapRes.get('TENSIONE'))){            
             spNew.VoltageLevel__c = mapRes.get('TENSIONE');

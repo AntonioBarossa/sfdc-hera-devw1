@@ -440,7 +440,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             }
         }
         
-        if((originalOrder.ServicePoint__c != null && !sconti.contains(mainItems[0].Product2.Family)) || mainItems.isEmpty()){
+        if((originalOrder.ServicePoint__c != null && !sconti.contains(mainItems[0].Product2.Family) && !'Opzioni TARI'.equalsIgnoreCase(mainItems[0].Product2.Family)) || mainItems.isEmpty()){
             return;
         }
         if(!sconti.contains(mainItems[0].Product2.Family)){
@@ -468,6 +468,11 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 Sobject reference = originalOrder.OrderReference__c!=null? (Sobject) originalOrder.OrderReference__r : (Sobject) originalOrder.ContractReference__r;
                 orderToUpdate.ServicePointCode__c=(String) reference.getSObject('ServicePoint__r')?.get('ServicePointCode__c');
                 orderToUpdate.ServicePoint__c = (String) reference.get('ServicePoint__c');
+            }else if('Opzioni TARI'.equalsIgnoreCase(mainItems[0].Product2.Family) && mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c!=null){
+                List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c);
+                if(!orderItemsPod.isEmpty()){
+                    orderToUpdate.OrderReference__c=orderItemsPod[0].OrderId;
+                }
             }
         }
         

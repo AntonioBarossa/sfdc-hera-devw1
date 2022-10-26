@@ -129,7 +129,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 if (!notCancelNonBillable.contains(ord.Phase__c) && !notCancelBillable.contains(ord.Phase__c) && canDeleteOrder 
                     && ((isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c) || hasCancellableProduct)) {
                     ordToUpd.Phase__c = 'Annullato';
-                    ordToUpd.Status = 'Activated';         
+                    ordToUpd.Status = 'Annullato';         
                 }else if ((isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c) || hasCancellableProduct){
                     needsActivity = true;
                 }

@@ -42,6 +42,44 @@ public inherited sharing class HDT_QR_ServiceRequest {
             WHERE Status__c = 'Annullato' 
             AND ServicePoint__c =: servicePointId
             WITH SECURITY_ENFORCED
-        ];      
+        ];
+        
+    }
+
+    public static List<ServiceRequest__c> getTransitoryServiceRequest(Set<Id> orderIds,Set<Id> orderReferenceIds, Set<Id> quoteIds){
+
+        return quoteIds.isEmpty()?
+        [
+            SELECT Id, 
+                Order__c,
+                Order__r.SBQQ__Quote__c,
+                Order__r.OrderReference__c,
+                Order__r.Process__c,
+                Order__r.RecordTypeId,
+                Order__r.isBillableVas__c,
+                NextPhase__c
+            FROM ServiceRequest__c 
+            WHERE Order__c IN :orderIds
+            AND Order__r.IsTransition__c = true WITH SECURITY_ENFORCED
+        ]
+        :
+        [
+            SELECT Id, 
+                Order__c,
+                Order__r.SBQQ__Quote__c,
+                Order__r.OrderReference__c,
+                Order__r.Process__c,
+                Order__r.RecordTypeId,
+                Order__r.isBillableVas__c,
+                NextPhase__c
+            FROM ServiceRequest__c 
+            WHERE (
+            Order__c IN :orderIds
+            OR Order__r.OrderReference__c IN :orderReferenceIds 
+            OR Order__r.SBQQ__Quote__c IN :quoteIds
+            ) 
+            AND Order__r.IsTransition__c = true WITH SECURITY_ENFORCED
+        ];
+    
     }
 }

@@ -3,8 +3,7 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
     private HDT_QR_RecordType qrRecordType = new HDT_QR_RecordType();
     private String codiceCausale='';
     private static String emptyEmailDefault = 'mailnondisponibile@acquirenteunico.it';
-    private List<Case> caseList = new List<Case>(); 
-
+    private List<Case> caseList = new List<Case>();
     class HDT_UTL_CustomException extends Exception{}
 
     public HDT_QBL_VoltureChangeManager(Order ord) {
@@ -23,7 +22,11 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
 
     public void execute(QueueableContext context) {
 
-        if( !String.isBlank(codiceCausale) ){
+        if(!this.caseList.isEmpty())
+        {
+            HDT_UTL_CaseApprovalProcess.submitForApproval(this.caseList);
+        }
+        else if( !String.isBlank(codiceCausale) ){
             List<Order> orderList = [SELECT ParentOrder__r.OrderNumber, OrderNumber, DocumentalProcessType__c, description FROM Order WHERE Id =: this.order.Id];
             orderList[0].ServicePointCode__c = this.order.ServicePointCode__c;
             orderList[0].SapContractCode__c = this.order.SapContractCode__c;
@@ -186,4 +189,5 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
         HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
         throw new HDT_UTL_CustomException (errorMessage); 
     }
+    
 }

@@ -2,7 +2,7 @@
  * @description       : Processing Orders for VAS process
  * @author            : gabriele.rota@webresults.it
  * @group             : WR
- * @last modified on  : 09-12-2022
+ * @last modified on  : 10-24-2022
  * @last modified by  : gabriele.rota@webresults.it
  * Modifications Log 
  * Ver   Date         Author                        Modification
@@ -33,7 +33,7 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
 
         for (Order newOrder : (List<Order>)newMap.values()) {
             Order oldOrder = (Order) oldMap.get(newOrder.Id);
-            if (!excludedRecTypes.contains(newOrder.RecordTypeId) && (newOrder.Status==STATUS_CANCELLED && oldOrder.Status!=STATUS_CANCELLED)) {
+            if (!excludedRecTypes.contains(newOrder.RecordTypeId) && ((newOrder.Status==STATUS_CANCELLED && oldOrder.Status!=STATUS_CANCELLED) || ('Voltura Rifiutata'.equalsIgnoreCase(newOrder.Phase__c) && !newOrder.Phase__c.equalsIgnoreCase(oldOrder.Phase__c)) )) {
                 canceledOrderIds.add( newOrder.Id );
                 if (newOrder.SBQQ__Quote__c != null){
                     canceledOrderQuotesIds.add(newOrder.SBQQ__Quote__c);
@@ -67,10 +67,12 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
         if(ordersToWork.isEmpty()){
             return;
         }
+        List<Order> vasOrdersToCancel = new List<Order>();
         List<Order> ordersToCancel = new List<Order>();
         //Map<Id,Order> commodityOrderMap = new Map<Id,Order>();
         Map<Id,Id> mapQuoteContactId = new Map<Id,Id>();
         Map<Id,Id> mapOrderContactId = new Map<Id,Id>();
+        Map<Id,Order> orderToCheckVas = new Map<Id,Order>();
         for (Order orderToWork:ordersToWork) {
             if (canceledOrderIds.contains(orderToWork.Id) && orderToWork.Contact__c != null){
                 mapQuoteContactId.put(orderToWork.SBQQ__Quote__c,orderToWork.Contact__c);
@@ -82,45 +84,71 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
                     ordersToCancel.add(orderToWork);
                 }
                 when 'HDT_RT_Default'{
-                    verifyDraftVas(orderToWork,ordersToCancel);
+                    //verifyDraftVas(orderToWork,vasOrdersToCancel);
+                    orderToCheckVas.put(orderToWork.Id, orderToWork);
                 }
-                /* when else {
-                    setCommodityOrderMap(orderToWork, commodityOrderMap,canceledOrderIds);
-                } */
             }
         }
-        for (Order vasOrder:ordersToCancel) {
+        if (verifyDraftVas(orderToCheckVas)){
+            vasOrdersToCancel.addAll(orderToCheckVas.values());
+        }   
+        for (Order vasOrder:vasOrdersToCancel) {
             vasOrder.Phase__c = PHASE_CANCELLED;
             vasOrder.Status = STATUS_CANCELLED;
             if (vasOrder.Contact__c == null && (mapQuoteContactId.containsKey(vasOrder.SBQQ__Quote__c) || (vasOrder.OrderReference__c != null && mapOrderContactId.containsKey(vasOrder.OrderReference__c)))){
                 vasOrder.Contact__c = mapQuoteContactId.containsKey(vasOrder.SBQQ__Quote__c)? mapQuoteContactId.get(vasOrder.SBQQ__Quote__c) : mapOrderContactId.get(vasOrder.OrderReference__c);
             }
-            /* String cancellationReason;
-            if (vasOrder.OrderReference__c != null && commodityOrderMap.containsKey(vasOrder.OrderReference__c)){
-                cancellationReason = commodityOrderMap.get(vasOrder.OrderReference__c).CancellationReason__c;
-
-            }else if (commodityOrderMap.containsKey(vasOrder.SBQQ__Quote__c)){
-                cancellationReason = commodityOrderMap.get(vasOrder.SBQQ__Quote__c).CancellationReason__c;
-            }
-            vasOrder.CancellationReason__c = cancellationReason; */
             vasOrder.CancellationReason__c = 'Annullamento Ordine di Riferimento';
         }
 
         orderSrv.updateRecords(ordersToCancel);
     }
 
+    /* 
     private static void verifyDraftVas(Order orderToWork,List<Order> vasOrdersToCancel){
         if (orderToWork.isBillableVas__c){
             vasOrdersToCancel.add(orderToWork);
         }
+    } 
+    */
+
+    private static Boolean verifyDraftVas(Map<Id,Order> orderToCheckVas){
+        if (orderToCheckVas.isEmpty()){
+            return false;
+        }
+        for (Order o : [
+            SELECT id,isVas__c,VasSubType__c,CommodityFormula__c,PowerRequested__c,PowerCommitted__c, ServicePoint__r.Account__c,AccountId,SBQQ__Quote__r.AmendmentAllowed__c,ServicePoint__r.PlugPresence__c,ServicePoint__r.SAPContractStatus__c,ServicePoint__r.isReseller__c,IsWinback__c
+            FROM Order 
+            WHERE Id IN :orderToCheckVas.keySet() 
+            //condizione per toglere i vas dalla query
+            WITH SECURITY_ENFORCED]
+        ){
+
+            Boolean plugPresence = o.ServicePoint__r.PlugPresence__c == null ? true : o.ServicePoint__r.PlugPresence__c.containsIgnoreCase('Si');
+            Boolean isPowerChange = 'Energia Elettrica'.equalsIgnoreCase(o.CommodityFormula__c) && o.PowerRequested__c != null && o.PowerRequested__c!= o.PowerCommitted__c;
+
+            
+            if (
+                //Condizione per vas
+                (o.isVas__c) 
+                || ('Analisi Consumi'.equalsIgnoreCase(o.VasSubType__c))
+                //Condizione per Sconti e bonus
+                || ('Attivo'.equalsIgnoreCase(o.ServicePoint__r.SAPContractStatus__c) 
+                && plugPresence 
+                && o.ServicePoint__r.Account__c == o.AccountId 
+                && !o.ServicePoint__r.isReseller__c
+                && !o.IsWinback__c
+                && !isPowerChange
+                && o.SBQQ__Quote__r.AmendmentAllowed__c)
+            ){
+                continue;
+            }
+            orderToCheckVas.remove(o.Id);
+        }
+        if (orderToCheckVas.isEmpty()){
+            return false;
+        }
+        return true;
     }
 
-    /* private static void setCommodityOrderMap(Order ord, Map<Id,Order> commodityOrderMap, Set<Id> canceledOrderIds){
-        if (canceledOrderIds.contains(ord.Id)){
-            commodityOrderMap.put(ord.Id,ord);
-            if (ord.SBQQ__Quote__c != null){
-                commodityOrderMap.put(ord.SBQQ__Quote__c,ord);
-            }
-        }
-    } */
 }

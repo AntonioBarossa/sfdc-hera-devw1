@@ -113,7 +113,8 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         Order order = [SELECT 
                         (SELECT Product2.Family, Product2.Name, Product2.ConstraintDiscountPercentage__c, Product2.ConstraintDiscountEurGiorno__c, Product2.ConstraintExemption__c, Description, Product2.Description FROM OrderItems), 
                         CommodityFormula__c, OrderNumber, ServicePointCode__c, ActivationMode__c,
-                        HerokuPracticeCode__c, SupplyType__c, SupplyTypeTechnical__c
+                        HerokuPracticeCode__c, SupplyType__c, SupplyTypeTechnical__c,
+                        SBQQ__Quote__c, SBQQ__Quote__r.SBQQ__Type__c
                         FROM Order WHERE Id=:orderId WITH SECURITY_ENFORCED];
 
         HDT_WRP_DtoServiceTwentySix dto = new HDT_WRP_DtoServiceTwentySix(order);
@@ -150,7 +151,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         //They may have more occurrence than we need
         if(!configs.isEmpty()){
             //system.debug('4');
-            dto.elements=getPositions(configs, familyToOccurrencies);
+            dto.elements=getPositions(configs, familyToOccurrencies, order);
         }
         return dto;
     }
@@ -158,7 +159,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
 
 
     @SuppressWarnings('PMD.CyclomaticComplexity')
-    private List<HDT_WRP_Position> getPositions(List<Service26Config__c> configs, Map<String, List<OrderItem>> familyToOccurrencies){
+    private List<HDT_WRP_Position> getPositions(List<Service26Config__c> configs, Map<String, List<OrderItem>> familyToOccurrencies, Order ord){
         prodFields = ((SObject)Type.forName('Schema','Product2').newInstance())
                                     .getSObjectType().getDescribe().fields.getMap().keySet();//Set of all order api name fields
         List<String> fieldsToQuery = new List<String>();
@@ -209,17 +210,30 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         //Map family -> Operando, Operando has child relationship with "positions", 
         //this map contains only the key needed
 
+         //Gestione Posizioni esistenti
+         Map<String,List<Integer>> freePositionForFamily = new Map<String,List<Integer>>();
+         if (ord.SBQQ__Quote__c != null && 'Amendment'.equalsIgnoreCase(ord.SBQQ__Quote__r.SBQQ__Type__c)){
+            freePositionForFamily = this.getFreePositions(familyToOperando,ord.SBQQ__Quote__c);
+         }
+
         //this for loop builds the list of Object for the callout
         for(String family : familyToOperando.keySet()){
             List<OrderItem> discountItems = familyToOccurrencies.get(family);
             for(Integer index = 0; index<discountItems.size();index++){
                 Product2 relatedProduct = prods.get(discountItems[index].Product2Id);//product to get values
-                
-                if(familyToOperando.get(family).size()<=index){
+                /* se non entro nell'if successivo operatingIndex resta index e operatingNumber resta quello che è attualmente e funziona come prima */
+                Integer operatingIndex = index;
+                Integer operatingNumber = familyToOperando.get(family).size();
+                /**Questo if ci entro se sono nella casistica degli Amendment e non tutti gli slot sono disponibili */
+                if (freePositionForFamily.get(family) != null && freePositionForFamily.get(family).size() < operatingNumber){
+                    operatingNumber = freePositionForFamily.get(family).size();
+                    operatingIndex = freePositionForFamily.get(family).size() > index ? freePositionForFamily.get(family)[index] -1 : 0;
+                }
+                if(operatingNumber<=index){
                     //there are more discounts than occurrencies
                     break;
                 } 
-                Service26Config__c operando = familyToOperando.get(family)[index];//operando
+                Service26Config__c operando = familyToOperando.get(family)[operatingIndex];//operando
                 /**@frpanico 2022-05-05
                  * The GF_BON_* operando
                  * Need the value of the field Product2.Percentage__c
@@ -284,4 +298,63 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         return '';
 
     }
+
+    @TestVisible
+    private Map<String,List<Integer>> getFreePositions(Map<String, List<Service26Config__c>> familyToOperando, Id quoteId){
+        Map<String,List<Integer>> freePositionForFamily = new Map<String,List<Integer>>();
+        if (familyToOperando.isEmpty()){
+            return freePositionForFamily;
+        }
+        for(SBQQ__QuoteLine__c qLine : [
+            SELECT SBQQ__Product__r.Name, SBQQ__Product__r.Family, SBQQ__Product__r.Old__c,SBQQ__Existing__c
+            FROM SBQQ__QuoteLine__c 
+            WHERE SBQQ__Quote__c = :quoteId  
+            AND SBQQ__Existing__c = true
+            AND SBQQ__Product__r.Family IN :familyToOperando.keySet()
+            WITH SECURITY_ENFORCED
+            ORDER BY SBQQ__Product__r.OLD__c DESC
+        ]){
+            if (!freePositionForFamily.keySet().contains(qLine.SBQQ__Product__r.Family)){
+                freePositionForFamily.put(qLine.SBQQ__Product__r.Family, this.getAllPositions(familyToOperando.get(qLine.SBQQ__Product__r.Family).size()));
+            }
+            if (freePositionForFamily.keySet().contains(qLine.SBQQ__Product__r.Family)){
+                removePosition(freePositionForFamily.get(qLine.SBQQ__Product__r.Family),qLine);
+            }
+        }
+
+        System.debug(LoggingLevel.DEBUG, '@@@@freePositionForFamily ' + JSON.serialize(freePositionForFamily));
+        
+        return freePositionForFamily;
+    }
+
+    private List<Integer> getAllPositions(Integer size){
+        List<Integer> getPositions = new List<Integer>();
+        for (Integer i = 0; i < size; i++){
+            getPositions.add(i+1);
+        }
+        return getPositions;
+    }
+
+    private void removePosition(List<Integer> actualPositions, SBQQ__QuoteLine__c qLine){
+        try{
+            Integer position = null;
+            if ('Y'.equalsIgnoreCase(qLine.SBQQ__Product__r.Old__c)){
+                //rimuovo prima tutti i prodotti vecchi (garantito dall'order By della query) che sono stati mandati su occorrenze non necessariamente casuali
+                List<String> splittedName = qLine.SBQQ__Product__r.Name.split(' ');
+                if (splittedName[splittedName.size()-1].isNumeric()){
+                    position = actualPositions.indexOf(Integer.valueOf(splittedName[splittedName.size()-1]));
+                }
+            }
+            if ('N'.equalsIgnoreCase(qLine.SBQQ__Product__r.Old__c)){
+                //Rimuovo la prima occorrenza libera, perchè quelli di SFDC li abbiamo inviati in modo sequenziale
+                position = 0;
+            }
+            if (position != null){
+                actualPositions.remove(position);
+            }
+        }catch(Exception e){
+            System.debug(LoggingLevel.ERROR, e.getMessage());
+        }
+    }
+
 }

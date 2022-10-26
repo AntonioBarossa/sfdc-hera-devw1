@@ -27,7 +27,7 @@ public with sharing class HDT_UTL_OrderTriggerVasTst {
         orders[0].OrderReference__c = firstOrder[0].Id;
         orders[1].RecordTypeId= rtDefault;
         orders[1].Contact__c = conList[0].Id;
-        orders[1].isBillableVas__c = true;
+        orders[1].isVas__c = true;
         orders[1].OrderReference__c = firstOrder[0].Id;
         insert orders;
 	}
