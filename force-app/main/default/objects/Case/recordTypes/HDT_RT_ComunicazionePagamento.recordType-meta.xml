@@ -7097,7 +7097,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7839,6 +7839,10 @@
         <picklist>PaymentType__c</picklist>
         <values>
             <fullName>In Compartecipazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In compartecipazione o totalmente da istituzioni pubbliche</fullName>
             <default>false</default>
         </values>
         <values>

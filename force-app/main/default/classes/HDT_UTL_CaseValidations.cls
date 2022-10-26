@@ -547,6 +547,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             electronicInvoicing.officeCode = codiceUfficio;
             electronicInvoicing.xmlType = tipoXml;
             electronicInvoicing.accountRecordTypeName = currentCase.Account.RecordType.DeveloperName;
+            //TK 908382C introdotto attributo marcatura cliente per skippare i controlli della fatturazione elettronica
+            electronicInvoicing.customerMarking = currentCase.Account.CustomerMarking__c;
 
             String electronicInvoicingError = HDT_UTL_ElectronicInvoicing.validate(electronicInvoicing);
             if (!String.isEmpty(electronicInvoicingError)) {

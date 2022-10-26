@@ -7113,7 +7113,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8040,6 +8040,10 @@
         </values>
         <values>
             <fullName>In Attesa Allineamento Anagrafica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione</fullName>
             <default>false</default>
         </values>
         <values>

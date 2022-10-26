@@ -84,7 +84,7 @@
         <name>Quote_Management</name>
         <label>Quote Management</label>
         <locationX>776</locationX>
-        <locationY>1574</locationY>
+        <locationY>1694</locationY>
         <actionName>HDT_UTL_QuoteManagement</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -138,7 +138,7 @@
         <name>Assegna_Fase_Preventivo</name>
         <label>Assegna Fase Preventivo e Importo</label>
         <locationX>314</locationX>
-        <locationY>3062</locationY>
+        <locationY>3182</locationY>
         <assignmentItems>
             <assignToReference>FasePreventivo</assignToReference>
             <operator>Assign</operator>
@@ -178,7 +178,7 @@
         <name>Assegna_Operation_Code</name>
         <label>Assegna Operation Code</label>
         <locationX>622</locationX>
-        <locationY>2726</locationY>
+        <locationY>2846</locationY>
         <assignmentItems>
             <assignToReference>OperationCode</assignToReference>
             <operator>Assign</operator>
@@ -200,6 +200,22 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Case.Type</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Quotation_Validity_Date</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Quotation_Validity_Date</name>
+        <label>Assegna Quotation Validity Date</label>
+        <locationX>1161</locationX>
+        <locationY>1118</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.QuotationValidityDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calcola_Quotation_Validity_Date_Acqua</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -313,7 +329,7 @@
         <name>Annullamento</name>
         <label>Annullamento?</label>
         <locationX>688</locationX>
-        <locationY>2054</locationY>
+        <locationY>2174</locationY>
         <defaultConnector>
             <targetReference>OperationCode_Valorizzato</targetReference>
         </defaultConnector>
@@ -453,7 +469,7 @@
         <name>OperationCode_Valorizzato</name>
         <label>OperationCode Valorizzato?</label>
         <locationX>534</locationX>
-        <locationY>2606</locationY>
+        <locationY>2726</locationY>
         <defaultConnector>
             <targetReference>Assegna_Operation_Code</targetReference>
         </defaultConnector>
@@ -478,7 +494,7 @@
         <name>Quote_trovata</name>
         <label>Quote trovata?</label>
         <locationX>776</locationX>
-        <locationY>1694</locationY>
+        <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>Regola_non_trovata</targetReference>
         </defaultConnector>
@@ -503,7 +519,7 @@
         <name>Rapido_o_Predeterminabile</name>
         <label>Rapido o Predeterminabile?</label>
         <locationX>534</locationX>
-        <locationY>2942</locationY>
+        <locationY>3062</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Assegna_Fase_Preventivo</targetReference>
@@ -558,7 +574,7 @@
         <name>SalvaInBozza_o_Conferma</name>
         <label>SalvaInBozza o Conferma?</label>
         <locationX>1161</locationX>
-        <locationY>1334</locationY>
+        <locationY>1454</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -609,7 +625,7 @@
         <name>Skip_Documentale</name>
         <label>Skip Documentale?</label>
         <locationX>534</locationX>
-        <locationY>1814</locationY>
+        <locationY>1934</locationY>
         <defaultConnector>
             <targetReference>Screen_Documentale</targetReference>
         </defaultConnector>
@@ -702,6 +718,12 @@
         </rules>
     </decisions>
     <description>Adeguamenti per Gestione Scarti</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Calcola_Quotation_Validity_Date_Acqua</name>
+        <dataType>Date</dataType>
+        <expression>DATE(YEAR(TODAY()) + 1,MONTH(TODAY()),DAY(TODAY()))</expression>
+    </formulas>
     <formulas>
         <name>processTypeFormula</name>
         <dataType>String</dataType>
@@ -759,7 +781,7 @@
         <name>GetRecordAfterUpdate</name>
         <label>GetRecordAfterUpdate</label>
         <locationX>776</locationX>
-        <locationY>1454</locationY>
+        <locationY>1574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Quote_Management</targetReference>
@@ -820,7 +842,7 @@
         <name>Aggiorna_Conferma_Case</name>
         <label>Aggiorna Fase in Inviare Preventivo</label>
         <locationX>534</locationX>
-        <locationY>3278</locationY>
+        <locationY>3398</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -857,6 +879,12 @@
             <field>QuotationType__c</field>
             <value>
                 <elementReference>Quote_Management.QuoteType__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>QuotationValidityDate__c</field>
+            <value>
+                <elementReference>Get_Case.QuotationValidityDate__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -902,7 +930,7 @@
         <name>LWC_hdtRecordEditForm</name>
         <label>LWC hdtRecordEditForm</label>
         <locationX>1161</locationX>
-        <locationY>1214</locationY>
+        <locationY>1334</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1001,7 +1029,7 @@
         <name>Regola_non_trovata</name>
         <label>Regola non trovata</label>
         <locationX>1018</locationX>
-        <locationY>1814</locationY>
+        <locationY>1934</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1021,7 +1049,7 @@
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
         <locationX>688</locationX>
-        <locationY>1934</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1173,7 +1201,7 @@
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>1282</locationX>
-        <locationY>1454</locationY>
+        <locationY>1574</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1198,7 +1226,7 @@
         <name>Gestione_Annullamento_Subflow_0</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>556</locationX>
-        <locationY>2174</locationY>
+        <locationY>2294</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

@@ -8034,7 +8034,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9145,6 +9145,10 @@
         </values>
         <values>
             <fullName>Flusso bloccato in assenza del precedente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione</fullName>
             <default>false</default>
         </values>
         <values>

@@ -126,6 +126,12 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
         if(this.theCase["InvoicingPlace__c"] != undefined){
             wrapperAddress['Localita'] = this.theCase["InvoicingPlace__c"];
         }
+        if(this.theCase["InvoicingStreetCode__c"] != undefined){
+            wrapperAddress['Codice Via Stradario SAP'] = this.theCase["InvoicingStreetCode__c"];
+        }
+        if(this.theCase["InvoicingCityCode__c"] != undefined){
+            wrapperAddress['Codice Comune SAP'] = this.theCase["InvoicingCityCode__c"];
+        }
         //wrapperAddress["AbilitaVerifica"]=false;//abilita il tasto verifica
         wrapperAddress["Flag Verificato"]=true;//questi due abilitano la check "verificata"
         wrapperAddress["FlagVerificato"]=true;//questi due abilitano la check "verificata"
@@ -170,6 +176,8 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
         this.theCase["InvoicingStreetNumberExtension__c"] =  address['Estens.Civico']? address['Estens.Civico'] : null;
         this.theCase["InvoicingStreetNumber__c"] = address['Civico'];
         this.theCase["InvoicingPlace__c"] = address['Localita']? address['Localita'] : null;
+        this.theCase["InvoicingStreetCode__c"] = address['Codice Via Stradario SAP']? address['Codice Via Stradario SAP'] : null;
+        this.theCase["InvoicingCityCode__c"] = address['Codice Comune SAP']? address['Codice Comune SAP'] : null;
     }
 
     handleNext(event){

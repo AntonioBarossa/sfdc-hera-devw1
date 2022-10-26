@@ -10,6 +10,7 @@ import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT
 import isInBlacklist from '@salesforce/apex/HDT_LC_AdvancedSearch.isInBlacklist';
 import permissionForFlagContract from '@salesforce/apex/HDT_LC_AdvancedSearch.permissionForFlagContract';
 import checkCompatibility from '@salesforce/apex/HDT_UTL_MatrixCompatibility.checkCompatibilitySales';
+import getCustomMetadataTwo from '@salesforce/apex/HDT_QR_HiddenSearchBarPostSales.getCustomMetadataTwo';
 
 
 export default class HdtAdvancedSearch extends LightningElement {
@@ -70,6 +71,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     postSales=false;
     isSerialNumber = false;
     openMeterSearchModal = false;
+    hiddenSearchBarMod=true;
 
     connectedCallback() {
         permissionForFlagContract().then(data =>{
@@ -145,6 +147,16 @@ export default class HdtAdvancedSearch extends LightningElement {
             });
         }
         this.maxRowSelected = (this.maxRowSelected ===false) ? 1 : this.originalData.length;        
+
+        getCustomMetadataTwo({processType:this.processtype,targetObject:this.targetObject}).then(data =>{
+            console.log('targetObject XXX'+ JSON.stringify(this.targetobject));
+            console.log('processType XXX'+ JSON.stringify(this.processtype));
+            this.hiddenSearchBarMod=false;
+            if(data==='List is populated'){
+                this.hiddenSearchBarMod=true;
+            }
+        });
+        
     }
 
     @api

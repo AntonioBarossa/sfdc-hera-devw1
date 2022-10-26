@@ -111,4 +111,42 @@ public class HDT_QR_ServiceRequestTst{
 			System.assertNotEquals(false, servReqByOrderCaseId[0].Id!=null, 'Value of parameter is not matching');
 		}
 	}
+
+	@isTest
+	public static void getTransitoryServiceRequest(){
+		List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'HERA COMM','Azienda','Aziende SME');
+		List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(2, false, accs[0].id, 'Bozza');
+		orders[0].isTransition__c = true;
+		insert orders[0];
+		orders[1].isTransition__c = true;
+		orders[1].OrderReference__c = orders[0].Id;
+		insert orders[1];
+
+		List<ServiceRequest__c> tServReq=[SELECT Id, ProcessType__c, Status__c, ServicePointCode__c
+			                                  FROM ServiceRequest__c];
+	
+		tServReq[0].type__c = 'Order';
+		tServReq[0].Order__c = orders[0].Id;
+		tServReq[1].type__c = 'Order';
+		tServReq[1].Order__c = orders[1].Id;
+		update tServReq;
+		User tUser=[SELECT Id
+		            FROM User
+		            WHERE Alias='crmuser'
+		            LIMIT 1];
+
+		System.runAs(tUser){
+
+			test.startTest();
+
+			List<ServiceRequest__c> transitoryServReq=HDT_QR_ServiceRequest.getTransitoryServiceRequest(new Set<Id> {orders[0].Id}, new Set<Id>(), new Set<Id>());
+			System.assertEquals(1, transitoryServReq.size(), 'Service Request not found');
+			transitoryServReq=HDT_QR_ServiceRequest.getTransitoryServiceRequest(new Set<Id> {orders[0].Id}, new Set<Id> {orders[0].Id}, new Set<Id> {orders[0].Id});
+
+
+			test.stopTest();
+
+			System.assertEquals(2, transitoryServReq.size(), 'Service Request not found');
+		}
+	}
 }

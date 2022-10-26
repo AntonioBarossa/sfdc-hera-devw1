@@ -839,12 +839,6 @@ TODO: Formula da adeguare in Wave 2.</description>
                 <elementReference>Get_Case.ServicePoint__r.Distributor__r.Code__c</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <field>SalesCompanyCode__c</field>
-            <value>
-                <elementReference>CompanyCodeFormula</elementReference>
-            </value>
-        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
@@ -1316,7 +1310,7 @@ TODO: Formula da adeguare in Wave 2.</description>
             <inputParameters>
                 <name>recordType</name>
                 <value>
-                    <stringValue>0121X000001j2h6QAA</stringValue>
+                    <elementReference>Get_Case.RecordTypeId</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

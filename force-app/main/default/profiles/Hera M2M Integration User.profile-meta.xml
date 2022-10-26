@@ -96,6 +96,10 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_DoubleCalloutPrevention__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_ExciseTranscode__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -129,6 +133,10 @@
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_HeraCompany__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_HiddenSearchBarPostSales__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
@@ -361,6 +369,21 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DocumentSelected__c.CommoditySector__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AllineamentoGAA__c.Comune__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AllineamentoGAA__c.Frequenza__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AllineamentoGAA__c.Rate_Category__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12071,6 +12094,31 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_DoubleCalloutPrevention__mdt.Arguments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_DoubleCalloutPrevention__mdt.CheckOnPhaseStory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_DoubleCalloutPrevention__mdt.IsActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_DoubleCalloutPrevention__mdt.ObjectName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_DoubleCalloutPrevention__mdt.PhaseToCheck__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>HDT_ExciseTranscode__mdt.Active__c</field>
         <readable>true</readable>
@@ -12253,6 +12301,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>HDT_HeraCompany__mdt.SalesCompany__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_HiddenSearchBarPostSales__mdt.TargetObject__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_HiddenSearchBarPostSales__mdt.ProcessType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16518,6 +16576,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.SiebelCatalog__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.SiebelWithdrawal__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -32719,6 +32782,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.NoteRicontattoCliente__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -34336,7 +34404,57 @@
         <editable>true</editable>
         <field>Order.WasteCommodityType__c</field>
         <readable>true</readable>
-    </fieldPermissions>  
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.Activity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.EndDateTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.Order__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.SlaAdministration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.SlaName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.SlaValue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.StartDateTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <layoutAssignments>
         <layout>Case-HDT_ConsumoAnomaloIdrico</layout>
         <recordType>Case.HDT_RT_ConsumoAnomaloIdrico</recordType>
@@ -34463,6 +34581,10 @@
         <recordType>Case.HDT_RT_Subentro_GAS</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-HDT_VariazioniTari</layout>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-HDT_VerificaDatiAlDl</layout>
         <recordType>Case.HDT_RT_VerificaDatiAlDl</recordType>
     </layoutAssignments>
@@ -34501,6 +34623,10 @@
     <layoutAssignments>
         <layout>Case-HDT_Disattivazioni</layout>
         <recordType>Case.HDT_RT_Disattivazioni</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_DisattivazioniTari</layout>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_Domiciliazione</layout>
@@ -34543,12 +34669,24 @@
         <recordType>Case.HDT_RT_PianoRateizzazione</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-HDT_PosizionamentoContenitore</layout>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-HDT_PreventiviEle</layout>
         <recordType>Case.HDT_RT_PreventiviEle</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_PreventiviGas</layout>
         <recordType>Case.HDT_RT_PreventiviGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_ReclamiScrittiTARI</layout>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_ReclamoDaCittadino</layout>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_Rimborso</layout>
@@ -34750,6 +34888,26 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazione Ambiente</layout>
+        <recordType>Order.HDT_RT_SubentroAmbiente</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazione Ambiente</layout>
+        <recordType>Order.HDT_RT_ModificaTariffaRimozione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazione Ambiente</layout>
+        <recordType>Order.HDT_RT_CambioTariffa</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazione Ambiente</layout>
+        <recordType>Order.HDT_RT_AttivazioneAmbiente</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazione Ambiente</layout>
+        <recordType>Order.HDT_RT_AgevolazioniAmbiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-Dossier</layout>
@@ -35056,6 +35214,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>VolumetricEstimate__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>AllineamentoGAA__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -36949,18 +37116,18 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>SlaAdministration__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>SlaTracking__c</object>
