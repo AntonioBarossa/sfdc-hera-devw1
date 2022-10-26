@@ -3528,6 +3528,12 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
             </value>
         </inputAssignments>
         <inputAssignments>
+            <name>companyOwner</name>
+            <value>
+                <elementReference>getTariCase_0.ServicePoint__r.Company__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>declarationDate</name>
             <value>
                 <elementReference>getTariCase_0.DeclarationDate__c</elementReference>

@@ -11,6 +11,9 @@ import ASSISTED from '@salesforce/schema/Case.CutomerAssisted__c';
 import TYPE from '@salesforce/schema/Case.Type';
 import ACCOUNTID from '@salesforce/schema/Case.AccountId';
 
+import { MessageContext, subscribe, unsubscribe, APPLICATION_SCOPE} from "lightning/messageService";
+import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
+
 export default class HdtRecordEditFormFlow extends LightningElement {
 
     @api processType;
@@ -38,6 +41,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @api variantSaveButton;
     @api outputId;
     @api documentRecordId;
+    @api sessionid;
 
     @track errorMessage;
     @track error;
@@ -59,6 +63,11 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     //@track delay = 3000;
     @track show = false;
     showCustomLabels= false;
+
+    get submitButtonClass(){
+        let styleHideShow = this.saveButton? "slds-show" : "slds-hide";
+        return `slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right ${styleHideShow}`;
+    }
 
     get customLabelClass(){
         if(this.density)    return "slds-form-element "+(this.density=="comfy"? "slds-form-element_stacked" : "slds-form-element_horizontal");
@@ -140,6 +149,11 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         updateRecordView(recordId) {
             updateRecord({fields: { Id: recordId }});
         }
+
+    //subscribe
+    @wire(MessageContext)
+	messageContext;
+    //subscribe
 
         @api
         get variantButton() {
@@ -399,10 +413,15 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         this.variationsLogic();     //MODIFICA 21/07/22 marco.arci@webresults.it Logica form compilazione Variazioni
     }
 
+    disconnectedCallback(){
+        if(this.subscription) unsubscribe(this.subscription);
+        this.subscription = null;
+    }
+
     variationsLogic(){
         //Sottoprocessi di varaiazioni
-        if(['AGEVOLAZIONE','COMPONENTI RESIDENTI','COMPONENTI NON RESIDENTI','COABITAZIONI','DATI CATASTALI',
-            'ISTAT/RONCHI','SUPERFICIE','DOMICILIATO IN NUCLEO RESIDENTE','RID. AGEV. DOPO ACCERTAMENTO'].includes(this.processType.toUpperCase())){
+        if(['AGEVOLAZIONE','DOM_COMPONENTI RESIDENTI','DOM_COMPONENTI NON RESIDENTI','DOM_COABITAZIONI','DATI CATASTALI',
+            'NON DOM_ISTAT/RONCHI','SUPERFICIE','DOMICILIATO IN NUCLEO RESIDENTE','RID. AGEV. DOPO ACCERTAMENTO'].includes(this.processType.toUpperCase())){
             let RequestSource = this.selector('RequestSource__c');
             let SubscriberType = this.selector('SubscriberType__c');
             if(RequestSource.value.toUpperCase() != 'DA CONTRIBUENTE'){
@@ -646,5 +665,35 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                 }
             }
         }
+    }
+
+    subscribeMC() {
+		// recordId is populated on Record Pages, and this component
+		// should not update when this component is on a record page.
+        this.subscription = subscribe(
+            this.messageContext,
+            BUTTONMC,
+            (mc) => {
+                if(this.interviewId==mc.sessionid){
+                    switch (mc.message){
+                        case "draft":
+                        case "cancel":
+                            this.handleDraft({target:{name:mc.message}});
+                            break;
+                        case "save":
+                            this.template.querySelector("[data-id='submitButton']")?.click();
+                        break;
+                    }                    
+                }
+            
+            },
+            //{ scope: APPLICATION_SCOPE }
+        );
+		// Subscribe to the message channel
+	}
+
+    unsubscribeToMessageChannel() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
     }
 }

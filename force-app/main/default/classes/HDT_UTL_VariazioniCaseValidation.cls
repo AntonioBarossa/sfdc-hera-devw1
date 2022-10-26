@@ -24,7 +24,7 @@ public with sharing class HDT_UTL_VariazioniCaseValidation implements HDT_UTL_Ca
             List<AmministrazioneSottotipologiaUso__c> categoriesList = [SELECT Id FROM AmministrazioneSottotipologiaUso__c WHERE Attivo__c = true AND TipologiaUso__c = 'Uso domestico' AND CodiceCategoriaTariffa__c =: newCurrentCase.RateCategory__c];
             if (categoriesList.size() > 0 && newCurrentCase.Unita_Abitative__c > 0 && newCurrentCase.ResidentMembers__c <= 0){
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
-                        'Attenzione! Il numero dei Componenti Domestici Residenti deve essere diverso maggiore di 0.'));
+                        'Attenzione! Il numero dei Componenti Domestici Residenti deve essere maggiore di 0.'));
             }else{
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
             }

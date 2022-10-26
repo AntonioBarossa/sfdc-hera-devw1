@@ -22,7 +22,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         scope.addAll(postsalesQr.getExpiredArticle());
         scope.addAll(postsalesQr.getPostAccertamentoCase());
         scope.addAll(postsalesQr.getSegnalazioniBozzaCase());
-        scope.addAll(postsalesQr.getRifiutiBozzaCase());
+        //scope.addAll(postsalesQr.getRifiutiBozzaCase());
         scope.addAll(postsalesQr.getActivitiesRicConsumi());
         return scope;
 
@@ -96,6 +96,9 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                         }else if( (currentCase.Cluster__c.equalsIgnoreCase('Preventivi') || currentCase.Cluster__c.equalsIgnoreCase('Verifiche')) && currentCase.Phase__c.equalsIgnoreCase('Attesa conferma preventivo cliente') ){
 
                             currentCase.Phase__c = 'Preventivo scaduto';
+                            if(String.isNotBlank(currentCase.QuotationType__c) && 'Analitico'.equalsIgnoreCase(currentCase.QuotationType__c)){
+                                currentCase.Status = 'Closed';
+                            }
                             myCurrentCaseList.add(currentCase);
 
                         }else if(currentCase.Type.equalsIgnoreCase('Contratto Non Richiesto') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
