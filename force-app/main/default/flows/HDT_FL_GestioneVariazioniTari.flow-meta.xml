@@ -1181,7 +1181,7 @@
             <name>AnnullamentoFromIndirizzo</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtflownavButtons.cancelCase</leftValueReference>
+                <leftValueReference>fieldsFormVarIndirizzo.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -1196,7 +1196,7 @@
             <name>Salva_In_Bozza_VarIndForn</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtflownavButtons.saveDraft</leftValueReference>
+                <leftValueReference>fieldsFormVarIndirizzo.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -3779,6 +3779,12 @@
                     <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -3859,60 +3865,10 @@
                     <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>hdtflownavButtons</name>
-            <extensionName>c:hdtFlowNavigationButton</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>isCancel</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>isDraft</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>isPrevious</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>nextLabel</name>
-                <value>
-                    <stringValue>Avanti</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>nextVariant</name>
-                <value>
-                    <stringValue>brand</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>InputCase</elementReference>
-                </value>
-            </inputParameters>
             <inputParameters>
                 <name>sessionid</name>
                 <value>
                     <elementReference>$Flow.InterviewGuid</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>standAlone</name>
-                <value>
-                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
