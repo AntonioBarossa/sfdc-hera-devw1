@@ -101,6 +101,13 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                     OutgoingCreditCheckResult__c=mapChildOrders.get(childOrd?.OrderReference__c)?.OutgoingCreditCheckResult__c                        
                 );
                 ordersToUpdate.add(o);//get CCheck Result from offer
+            /*}else if( 'HDT_RT_AgevolazioniAmbiente'== childOrd.RecordType.DeveloperName || 'HDT_RT_ModificaTariffaRimozione'==childOrd.RecordType.DeveloperName){
+                if('3 - Nessuna'.equalsIgnoreCase(childOrd.ApprovalType__c))    continue;
+                Order o = new Order(
+                    Id=childOrd.Id,
+                    Phase__c = 'In attesa Approvazione'
+                );
+                ordersToUpdate.add( o );*/
             }else if(childOrd.RecordType.DeveloperName != 'HDT_RT_ScontiBonus'){
                 if(quoteIdsMap.containsKey(childOrd.SBQQ__Quote__c)){
                     ordersToUpdate.add(new Order( Id = childOrd.Id, isMultipleQuoteOffer__c=true));

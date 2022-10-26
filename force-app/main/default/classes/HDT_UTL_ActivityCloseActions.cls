@@ -9,19 +9,38 @@
 public with sharing class HDT_UTL_ActivityCloseActions {
 
     @TestVisible
-    private inherited sharing class HDT_WRP_Actions extends HDT_UTL_ActivityTemplate.HDT_WRP_Infos {
+    private inherited sharing virtual class HDT_WRP_Actions extends HDT_UTL_ActivityTemplate.HDT_WRP_Infos {
 
         @TestVisible
         private String phase;
         private String parentSObjectPhase;
-        HDT_WRP_Actions(String phase, String activityType, Boolean isMandatory, String actualPhase){
-            super(activityType, isMandatory, actualPhase);
-            this.phase = phase;  
+        private Sobject sobjToUpdate; 
+
+        HDT_WRP_Actions(){
+            return;
         }
-        HDT_WRP_Actions(String phase){
+        
+        HDT_WRP_Actions(String activityType, Boolean isMandatory, String actualPhase){
+            super(activityType, isMandatory, actualPhase);
+        }
+    }
+
+    private inherited sharing class HDT_WRP_CreateActivity extends HDT_WRP_Actions{
+        HDT_WRP_CreateActivity(String phase, String activityType, Boolean isMandatory, String actualPhase){
+            super(activityType, isMandatory, actualPhase);
             this.phase = phase;
         }
-        HDT_WRP_Actions(String phase, String parentSObjectPhase){
+        HDT_WRP_CreateActivity(String activityType, Boolean isMandatory, String actualPhase){
+            super(activityType, isMandatory, actualPhase);
+        }
+    }
+
+    private inherited sharing class HDT_WRP_UpdateSobj extends HDT_WRP_Actions{
+        HDT_WRP_UpdateSobj(String phase){
+            this.phase=phase;
+        }
+
+        HDT_WRP_UpdateSobj(String phase, String parentSObjectPhase){
             this(phase);
             this.parentSObjectPhase = parentSObjectPhase;
         }
@@ -129,30 +148,29 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         String caseType = selectedCase.Type;
         activityType=STRING.isNotBlank(activityType)? activityType : ''; 
 
-        if(caseType == 'Formulari Richiesta Sconto')       return new HDT_WRP_Actions('Completata');
-        if(caseType == 'Sconti Collettivi Pap')            return new HDT_WRP_Actions('Completata');
-        if(caseType == 'Conferimento Centri di Raccolta')  return new HDT_WRP_Actions('Completata');
+        if(caseType == 'Formulari Richiesta Sconto')       return new HDT_WRP_UpdateSobj('Completata');
+        if(caseType == 'Sconti Collettivi Pap')            return new HDT_WRP_UpdateSobj('Completata');
+        if(caseType == 'Conferimento Centri di Raccolta')  return new HDT_WRP_UpdateSobj('Completata');
         
         if(caseType == 'Riduzione Superficie rifiuti spec promiscui') {
-            if('Gestione Manuale SAP'.equalsIgnoreCase(activityType))   return new HDT_WRP_Actions('Completata');
-            if(approved.equalsIgnoreCase('si')) return new HDT_WRP_Actions(null, 'Gestione Manuale SAP', true, selectedCase.Phase__c);//Se gestione SAP non va in completata subito
-            if(approved.equalsIgnoreCase('no')) return new HDT_WRP_Actions('Annullato');   
+            if('Gestione Manuale SAP'.equalsIgnoreCase(activityType))   return new HDT_WRP_UpdateSobj('Completata');
+            if(approved.equalsIgnoreCase('si')) return new HDT_WRP_CreateActivity('Gestione Manuale SAP', true, selectedCase.Phase__c);//Se gestione SAP non va in completata subito
+            if(approved.equalsIgnoreCase('no')) return new HDT_WRP_UpdateSobj('Annullato');   
         }
         //START >>> marco.arci@webresults.it
-        if(caseType == 'Modifica post accertamento' || caseType == 'Cessazione post accertamento') {
-            if('Aprire Cesaazione'.equalsIgnoreCase(activityType) ||
-               'Aprire Variazione'.equalsIgnoreCase(activityType))      return new HDT_WRP_Actions(null, 'Completata'); //con il null iniziale non interviene sulla fase dell'activity, con il secondo param aggiorna la fase del case padre
+        if( 'Modifica post accertamento'.equalsIgnoreCase(caseType) || 'Cessazione post accertamento'.equalsIgnoreCase(caseType)) {
+            return new HDT_WRP_UpdateSobj('Completata'); //aggiorna la fase del case
         }
         //END >>> marco.arci@webresults.it
         if(caseType == 'Gestione Rifiuti' && 'Risposta Ricevuta'.equalsIgnoreCase(activityType)){
-            if(approved.equalsIgnoreCase('si')) return new HDT_WRP_Actions('Annullato');
+            if(approved.equalsIgnoreCase('si')) return new HDT_WRP_UpdateSobj('Annullato');
 
             Matcher match = Pattern.compile('\\|\\|([a-zA-Z\\xa0\\s]+)@@Richiesto Annullamento').matcher(selectedCase.PhaseStory__c);
-            if(approved.equalsIgnoreCase('no') && match.find())     return new HDT_WRP_Actions(match.group(1));
+            if(approved.equalsIgnoreCase('no') && match.find())     return new HDT_WRP_UpdateSobj(match.group(1));
         }
         if(caseType == 'Ambiente annullo richiesta senza appuntamento' && 'Risposta Ricevuta'.equalsIgnoreCase(activityType)){
-            if(approved.equalsIgnoreCase('si'))     return new HDT_WRP_Actions('Completata', 'Annullato');
-            if(approved.equalsIgnoreCase('no'))     return new HDT_WRP_Actions('Annullato');
+            if(approved.equalsIgnoreCase('si'))     return new HDT_WRP_UpdateSobj('Completata', 'Annullato');
+            if(approved.equalsIgnoreCase('no'))     return new HDT_WRP_UpdateSobj('Annullato');
         }
         return null;
     }
@@ -168,8 +186,8 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             'Approvazione Agevolazione'.containsIgnoreCase(activityName)
             && new set<String>{'Modifica Tariffa', 'Modifica Tariffa - Rimozione Agevolazione'}.contains(orderType)
         ){
-            if(approved.equalsIgnoreCase('no')) return new HDT_WRP_Actions(null, 'Contattare Cliente', false, orderActualPhase);
-            if ('In attesa Approvazione'.equalsIgnoreCase(orderActualPhase))   return new HDT_WRP_Actions('Documentazione Validata');
+            if(approved.equalsIgnoreCase('no')) return new HDT_WRP_CreateActivity('Contattare Cliente', false, orderActualPhase);
+            if ('In attesa Approvazione'.equalsIgnoreCase(orderActualPhase))   return new HDT_WRP_UpdateSobj('Documentazione Validata');
         }
         return null;
     }

@@ -82,7 +82,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         //**FINE SVILUPPO */
 
         //***INIZIO SVILUPPO Marco Arci 17/05/2022 Cluster Disattivazioni Tari, chiusura activity correlate*/
-        HDT_UTL_CaseProcess.closeRelatedActivity(Trigger.new, Trigger.oldMap);
+        //HDT_UTL_CaseProcess.closeRelatedActivity(Trigger.new, Trigger.oldMap); //non più necessario, motivazione nel metodo
         //**FINE SVILUPPO */
         
         HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();

@@ -11,8 +11,8 @@ public with sharing class HDT_LC_CheckAssessments {
 
 	public virtual class HDT_WRP_AssessmentsReq extends HDT_WS_Request{
 		String codiceFiscalePartitaIva;
-		String comuneFornitura;
-		String tipoPersona;
+		String comuneFornitura;//Codice comune fornitura, char5
+		String tipoPersona;//F || G
 
 		public HDT_WRP_AssessmentsReq(String cfPiva, String comuneFornitura, String tipoPersona) {
 			this.codiceFiscalePartitaIva = cfPiva;

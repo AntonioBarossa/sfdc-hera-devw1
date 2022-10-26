@@ -1,7 +1,7 @@
 public without sharing class HDT_LC_CanaleIVRNoShare {
     public List<Order>  getOrderByUsernamePassword(String username, String password) {
         List<Order> listOrder = [
-            SELECT Username__c, Password__c,UniqueAutentication__c,MethodSignedAccepted__c,(Select Username__c, RecordType.DeveloperName, VasSubtype__c FROM Orders__r) FROM Order WHERE Username__c = :username AND Password__c = :password WITH SECURITY_ENFORCED
+            SELECT Username__c, Password__c,UniqueAutentication__c,MethodSignedAccepted__c,(Select Username__c, RecordType.DeveloperName, VasSubtype__c, isTransition__c, Phase__c FROM Orders__r) FROM Order WHERE Username__c = :username AND Password__c = :password WITH SECURITY_ENFORCED
         ];
 
         return listOrder;
