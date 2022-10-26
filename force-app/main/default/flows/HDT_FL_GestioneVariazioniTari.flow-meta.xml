@@ -3779,6 +3779,12 @@
                     <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -3857,6 +3863,12 @@
                 <name>previousButton</name>
                 <value>
                     <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
