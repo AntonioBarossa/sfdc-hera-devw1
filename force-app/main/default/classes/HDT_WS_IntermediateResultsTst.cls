@@ -7,9 +7,6 @@
 **/
 @isTest
 private class HDT_WS_IntermediateResultsTst {
-    
-    private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
-    private static HDT_QR_Case caseQr = new HDT_QR_Case();
 
     @TestSetup
     static void setup() {
@@ -26,25 +23,24 @@ private class HDT_WS_IntermediateResultsTst {
         //CASE PHASE MANAGEMENT ENABLE
         HDT_UTL_DataFactoryTst.pClickInstance();
         HDT_UTL_DataFactoryTst.pClickCasePhase();
-        
         HDT_UTL_DataFactoryTst.newPhaseTransition('Approvata', 'Inviata a SAP', processTypeId, 'HDT_RT_Segnalazioni');
-            
-        //CASE - INSERT - PAGAMENTI - PIANO RATEIZZAZIONE
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza', 'Bozza', processTypeId, 'HDT_RT_Segnalazioni');
+
+        //CASE - INSERT
         Case myCase = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id)[0];
-        myCase.salesCompany__c='Hera Comm Marche';
+        myCase.salesCompany__c = 'Hera Comm Marche';
         myCase.RecordTypeId = processTypeId;
         myCase.Phase__c = 'Inviata a SAP';
         myCase.Type = 'Avviso di Servizio';
+        myCase.Order__c = ordList[0].Id;
         insert myCase;
     }
 
     @isTest
     public static void testIntermediateResultsJob() {
 
-        // HDT_WS_HTTPServiceCallMock mock = new HDT_WS_HTTPServiceCallMock();
-		// HDT_WS_IntermediateResults intermediario = new HDT_WS_IntermediateResults();
-        // Test.setMock(HttpCalloutMock.class, mock);
-
+        Order myOrder = [SELECT Id FROM Order];
+        
         Case myCase = [SELECT Id FROM Case];
         System.debug('myCase => '+myCase);
 
@@ -90,8 +86,58 @@ private class HDT_WS_IntermediateResultsTst {
          HDT_WS_IntermediateResults.postIntermediateResults();
          res = RestContext.response;
          Test.StopTest();
-        
+    }
 
+    @isTest
+    public static void testIntermediateResultsJob2() {
+
+        Order myOrder = [SELECT Id FROM Order];
+        
+        Case myCase = [SELECT Id FROM Case];
+        System.debug('myCase => '+myCase);
+
+        HDT_WS_IntermediateResults.HDT_WRP_Field fieldObj = new HDT_WS_IntermediateResults.HDT_WRP_Field();
+        fieldObj.codActivity = '';
+        fieldObj.codNota = '0007';
+        fieldObj.descNota = '';
+        fieldObj.textNota = '';
+        fieldObj.phase = 'Rifiutata';
+
+        List<HDT_WS_IntermediateResults.HDT_WRP_Field> fieldList = new List<HDT_WS_IntermediateResults.HDT_WRP_Field>();
+        fieldList.add(fieldObj);
+
+        HDT_WS_IntermediateResults.HDT_WRP_Reminder reminderObj = new HDT_WS_IntermediateResults.HDT_WRP_Reminder();
+        reminderObj.caseId = myCase.Id;
+        reminderObj.noticeId = '';
+        reminderObj.field = fieldList;
+
+        List<HDT_WS_IntermediateResults.HDT_WRP_Reminder> reminderList = new List<HDT_WS_IntermediateResults.HDT_WRP_Reminder>();
+        reminderList.add(reminderObj);
+
+        HDT_WS_IntermediateResults.HDT_WRP_Request request = new HDT_WS_IntermediateResults.HDT_WRP_Request();
+        request.requestId = '';
+        request.dataRequest = '';
+        request.reminder = reminderList;
+
+         //test
+         Test.startTest();
+
+         //setup for test
+         RestRequest req = new RestRequest(); 
+         RestResponse res = new RestResponse();
+ 
+         String reqString = JSON.serialize(request);
+         req.requestURI = 'services/apexrest/IntermediateResults';
+         req.httpMethod = 'POST';
+         req.requestBody = Blob.valueOf(reqString);  
+ 
+         RestContext.request = req;
+         RestContext.response = res;
+
+         //call webservice method
+         HDT_WS_IntermediateResults.postIntermediateResults();
+         res = RestContext.response;
+         Test.StopTest();
     }
 
     public class HDT_WS_IntermediateResultsTstHTTPMock implements HttpCalloutMock {
