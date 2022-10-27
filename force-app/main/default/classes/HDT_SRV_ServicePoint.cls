@@ -84,6 +84,7 @@ public inherited sharing class HDT_SRV_ServicePoint {
 
             HDT_UTL_DatabaseService.insertSObject(servicePoint);
             return servicePoint;
+        }
     }
 
     /**
