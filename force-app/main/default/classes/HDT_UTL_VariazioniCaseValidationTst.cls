@@ -16,7 +16,7 @@ public with sharing class HDT_UTL_VariazioniCaseValidationTst {
         Case myCaseModUnitImm = new Case();
         myCaseModUnitImm.Type = 'Modifica Unita Immobiliari Componenti';
         myCaseModUnitImm.Cluster__c = 'Variazioni';
-        myCaseModUnitImm.Subprocess__c = 'Promiscuo';
+        myCaseModUnitImm.RateCategory__c = 'ACPROMIBI0';
         myCaseModUnitImm.Unita_Abitative__c = 3;
         myCaseModUnitImm.ResidentMembers__c = 0;
         insert myCaseModUnitImm;
