@@ -196,6 +196,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
     
     connectedCallback(){
+        this.subscribeMC();
         if(this.addContentDocument){
             this.selectContentDocument();
         }
@@ -674,7 +675,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             this.messageContext,
             BUTTONMC,
             (mc) => {
-                if(this.interviewId==mc.sessionid){
+                if(this.sessionid==mc.sessionid){
                     switch (mc.message){
                         case "draft":
                         case "cancel":
@@ -682,6 +683,8 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                             break;
                         case "save":
                             this.template.querySelector("[data-id='submitButton']")?.click();
+                        break;
+                        default:
                         break;
                     }                    
                 }
