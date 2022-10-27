@@ -299,9 +299,17 @@ public with sharing class HDT_UTL_CampaignMember {
         }
         Map<String, Order> ordToCheckMap = new Map<String, Order>(orderQr.getOrdersList(ordIdList));
 
+        Map<Id,String> mapContactResult = new Map<Id,String>();
+        for(wrts_prcgvr__Activity__c act : HDT_QR_Activity.getActivityFromIdList(actToOrdersToCancelMap.keySet())){
+            if ('Quality Call'.equalsIgnoreCase(act.Type__c) || 'Comfort Call'.equalsIgnoreCase(act.Type__c)){
+                mapContactResult.put(act.Id,'Quality Call'.equalsIgnoreCase(act.Type__c)? 'Annullato Quality Call' : 'Annullato Comfort Call');
+            }
+        }
+
         for (String actId : actToOrdersToCancelMap.keySet()) {
 
-            wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = actId, ContactResult__c = 'Annullato', wrts_prcgvr__Status__c = 'Non Esitata');
+            String outcome = mapContactResult.containsKey(actId)? mapContactResult.get(actId) : 'Annullato';
+            wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = actId, ContactResult__c = outcome, wrts_prcgvr__Status__c = 'Non Esitata');
             actToCloseList.add(act);
 
             for(String ordId : actToOrdersToCancelMap.get(actId)){
