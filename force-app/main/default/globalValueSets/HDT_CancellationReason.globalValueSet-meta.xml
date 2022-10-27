@@ -205,6 +205,21 @@
         <default>false</default>
         <label>Annullamento Ordine di Riferimento</label>
     </customValue>
+    <customValue>
+        <fullName>Ammissibilità KO</fullName>
+        <default>false</default>
+        <label>Ammissibilità KO</label>
+    </customValue>
+	<customValue>
+        <fullName>Credit Check KO</fullName>
+        <default>false</default>
+        <label>Credit Check KO</label>
+    </customValue>
+	<customValue>
+        <fullName>Esito KO da SII</fullName>
+        <default>false</default>
+        <label>Esito KO da SII</label>
+    </customValue>
     <masterLabel>Motivazione Annullamento</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
