@@ -8161,6 +8161,10 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Sospeso parere interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
         </values>
