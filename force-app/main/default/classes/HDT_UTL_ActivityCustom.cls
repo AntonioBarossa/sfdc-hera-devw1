@@ -4,6 +4,7 @@
 * @description Class that holds util functions for wrts_prcgvr__Activity__c
 * @history Keltin Mesonjesi – 18/06/2021 – Created class
 */
+
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ActivityCustom {
 
@@ -346,11 +347,12 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             if (String.isNotBlank(activity.wrts_prcgvr__Status__c) && stateToConvert.contains(activity.wrts_prcgvr__Status__c.toLowerCase())){
                 activity.wrts_prcgvr__Status__c = 'Chiusa';
             }
-            if (activity.EndDate__c == null && String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase())){
-                activity.EndDate__c = Date.today();
-            }
-            if (activity.ActivityEndTime__c == null && String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase())){
+            if (String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase()) && (activity.ActivityEndTime__c == null || activity.ActivityEndTime__c < activity.ActivityStartTime__c)  ){
                 activity.ActivityEndTime__c = DateTime.now();
+            }
+            if (String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase())
+            && activity.ActivityEndTime__c != null){
+                activity.EndDate__c = activity.ActivityEndTime__c.date();
             }
         }
     }

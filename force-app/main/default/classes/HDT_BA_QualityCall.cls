@@ -5,6 +5,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
     private HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
     private final String HANDLE_ACTIVITY = 'Attività gestita';
     private final String HANDLE_DEADLINE = 'Scadenza gestita';
+    private final String LOG_SERVICE = String.valueOf(this).substring(0,String.valueOf(this).indexOf(':'));
 
     //public List<Order> ordersToUpdate = new List<Order>();
     public Map<String, List<String>> parentToChildOrderMap = new Map<String, List<String>>();
@@ -40,6 +41,8 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         Map<Id,CampaignMember> campaignMembersUpdate = new Map<Id,CampaignMember>();
         Map<String,Order> orderMap = new Map<String,Order>();
         Map<String,wrts_prcgvr__Activity__c> orderActivityMap = new Map<String,wrts_prcgvr__Activity__c>();
+        HDT_SRV_LogService logs = new HDT_SRV_LogService(LOG_SERVICE);
+
 
         Date dueDate = Date.today();
 
@@ -129,7 +132,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 if (!notCancelNonBillable.contains(ord.Phase__c) && !notCancelBillable.contains(ord.Phase__c) && canDeleteOrder 
                     && ((isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c) || hasCancellableProduct)) {
                     ordToUpd.Phase__c = 'Annullato';
-                    ordToUpd.Status = 'Activated';         
+                    ordToUpd.Status = 'Annullato';         
                 }else if ((isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c) || hasCancellableProduct){
                     needsActivity = true;
                 }
@@ -222,13 +225,16 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         callActivities.addAll(mapActivitiesParent.values());
 
         if (!ordersToUpdate.isEmpty()) {
-            Database.update(ordersToUpdate, false);
+            List<Database.SaveResult> srList = Database.update(ordersToUpdate, false);
+            this.setLogRecord(srList, ordersToUpdate, logs, 'update Order');
         }
         if (!callActivities.isEmpty()) {
-            Database.insert(callActivities, false);
+            List<Database.SaveResult> srList = Database.insert(callActivities, false);
+            this.setLogRecord(srList, callActivities, logs, 'insert activities');
         }
         if(activitiesToClose.size() > 0){
-            Database.update(activitiesToClose, false);
+            List<Database.SaveResult> srList = Database.update(activitiesToClose, false);
+            this.setLogRecord(srList, activitiesToClose, logs, 'update activities');
         }
 
         List<String> contactList = new List<String>();
@@ -299,14 +305,18 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         List<CampaignMember> campNotDuplicateList = notDuplicatedCampToIns.values();
 
         if(!campNotDuplicateList.isEmpty()) {
-            Database.insert(notDuplicatedCampToIns.values(), false);
+            List<Database.SaveResult> srList = Database.insert(notDuplicatedCampToIns.values(), false);
+            this.setLogRecord(srList, notDuplicatedCampToIns.values(), logs, 'insert Campaign Member');
         }
         if(!campaignMembersUpdate.isEmpty()){
-            Database.update(campaignMembersUpdate.values(), false);
+            List<Database.SaveResult> srList = Database.update(campaignMembersUpdate.values(), false);
+            this.setLogRecord(srList, campaignMembersUpdate.values(), logs, 'update Campaign Member');
         }
         if (!activityVas.isEmpty()) {
-            Database.insert(activityVas, false);
+            List<Database.SaveResult> srList = Database.insert(activityVas, false);
+            this.setLogRecord(srList, activityVas, logs, 'insert activities VAS');
         }
+        logs.saveMassiveRecords();
     }
 
     private Boolean skipActivityCreation(Id orderId, Id parentOrderId, Set<Id> siebelOrderWithActivity, Set<Id> sfdcOrderWithActivity){
@@ -324,5 +334,26 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
     @SuppressWarnings('PMD.AvoidDebugStatements')
     public void finish(Database.BatchableContext bc){
         System.debug(LoggingLevel.DEBUG, 'HDT_BA_QualityCall - END');
+    }
+
+    private void setLogRecord(List<Database.SaveResult> srList, List<SObject> recordToWork, HDT_SRV_LogService logs, String method){
+        Integer index = 0;
+        for(Database.SaveResult sr :srList){
+            try{
+                if (!sr.isSuccess() || Test.isRunningTest()){
+                    SObject obj = recordToWork.get(index);
+                    String errorMessage = '';
+                    String request = JSON.serialize(obj);
+                    Id recordId = obj.get('Id') != null ? (Id)obj.get('Id') : null;
+                    for (Database.Error error :  sr.getErrors()){
+                        errorMessage += error.getMessage() +  '\n';
+                    }
+                    logs.addLog(LOG_SERVICE, method, request, null, errorMessage, recordId, null, null);
+                }  
+            }catch(Exception ex){
+                System.debug(LoggingLevel.DEBUG, 'HDT_BA_QualityCall - crea Log ' +ex.getMessage());
+            }
+            
+        }
     }
 }

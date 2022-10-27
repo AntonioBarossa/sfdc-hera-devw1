@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_EscalationOrder</fullName>
     <active>true</active>
@@ -2857,10 +2857,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Segnalazioni Contact Center</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Segnalazioni Migrazione dati</fullName>
             <default>false</default>
         </values>
@@ -2870,10 +2866,6 @@
         </values>
         <values>
             <fullName>Supporto Anomalia processo%2Fsistema</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supporto Contact Center</fullName>
             <default>false</default>
         </values>
         <values>
