@@ -104,6 +104,11 @@
                 <label>Dati catastali</label>
             </value>
             <value>
+                <fullName>DGRER569/19 non allacciato/uso irriguo</fullName>
+                <default>false</default>
+                <label>DGRER569/19 non allacciato/uso irriguo</label>
+            </value>
+            <value>
                 <fullName>DOM_Coabitazioni</fullName>
                 <default>false</default>
                 <label>DOM_Coabitazioni</label>
@@ -197,6 +202,11 @@
                 <fullName>Modifica Dati Fiscali</fullName>
                 <default>false</default>
                 <label>Modifica Dati Fiscali</label>
+            </value>
+            <value>
+                <fullName>Modifica Fognatura e Depurazione</fullName>
+                <default>false</default>
+                <label>Modifica Fognatura e Depurazione</label>
             </value>
             <value>
                 <fullName>Mortis Causa</fullName>
@@ -502,6 +512,14 @@
         <valueSettings>
             <controllingFieldValue>Istruttoria</controllingFieldValue>
             <valueName>Parere Preventivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>DGRER569/19 non allacciato/uso irriguo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Modifica Fognatura e Depurazione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Interventi con Verifica</controllingFieldValue>
