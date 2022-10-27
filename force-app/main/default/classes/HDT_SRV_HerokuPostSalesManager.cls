@@ -88,7 +88,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                 mrrList = changeMeterCode(mrrList,meterCode);
             }
             arg.put('endpoint', endpoint);
-            arg.put('timeout', 12000);
+            arg.put('timeout', 20000);
             arg.put('payload',mrrList);
             arg.put('clientType','REST');
             arg.put('contentType','application/json');
