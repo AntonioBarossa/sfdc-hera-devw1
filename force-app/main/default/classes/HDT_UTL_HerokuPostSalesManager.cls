@@ -820,6 +820,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             }
                             if(String.isNotBlank(processType)){
                                 currentCase.Type = morUtl.transcodeProcess(processType);
+                                //W2 per la risoluzione contrattuale H2O da eseguire non prima del è Oggi + 6 gg lavorativi
+                                if(String.isNotBlank(currentCase.Type) && 'Risoluzione Contrattuale'.equalsIgnoreCase(currentCase.Type)){
+                                    currentCase.NotPerformedBefore__c = HDT_UTL_Case.addBusinessDay(System.today(),6);
+                                }
                             }
                             if(currentCase.PhoneNumber__c != null && String.isNotBlank(currentCase.PhoneNumber__c) && String.isNotBlank(recapito)){
                                 currentCase.PhoneNumber__c = recapito;
