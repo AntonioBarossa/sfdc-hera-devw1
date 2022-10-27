@@ -48,7 +48,6 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
     * @description HDT_UTL_MailSenderHelperTst – Test Class for HDT_UTL_MailSenderHelper.cls
     */
 
-    // Boolean checkForReminderMail(Id recordId)
     @isTest
     static void checkForReminderMailTst(){
         
@@ -68,7 +67,6 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
     * @description HDT_UTL_MailSenderHelperTst – Test Class for HDT_UTL_MailSenderHelper.cls
     */
 
-    // HDT_WRP_MailSender.HDT_WRP_Result getReminderMetadataHelper(Id recordId)
     @isTest   //no EmailTemplate
     static void getReminderMetadataHelperNoEmailTemplateTst(){
 
@@ -79,8 +77,7 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
         Test.startTest();
         mailSenderResultActual = HDT_UTL_MailSenderHelper.getReminderMetadataHelper(emailMessageList[0].RelatedToId);
         Test.stopTest();
-        System.debug(mailSenderResultActual);
-
+       
         System.assertEquals('Non ci sono template', mailSenderResultActual.message, 'Error message of mail sender result');
     }
 
@@ -90,7 +87,6 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
     * @description HDT_UTL_MailSenderHelperTst – Test Class for HDT_UTL_MailSenderHelper.cls
     */
 
-    // HDT_WRP_MailSender.HDT_WRP_Result getReminderMetadataHelper(Id recordId)
     @isTest   //no EmailTemplate
     static void getReminderMetadataHelperTst(){
 
@@ -116,7 +112,6 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
     * @description HDT_UTL_MailSenderHelperTst – Test Class for HDT_UTL_MailSenderHelper.cls
     */
 
-    // HDT_WRP_MailSender.HDT_WRP_Result getMetadataHelper(Id recordId)
     @isTest
     static void getMetadataHelperTst(){
 
@@ -138,7 +133,6 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
     * @description HDT_UTL_MailSenderHelperTst – Test Class for HDT_UTL_MailSenderHelper.cls
     */
 
-    // HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult updateReminderCase(Id caseId)
     @isTest
     static void updateReminderCaseTst(){
         
@@ -159,8 +153,7 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
     * @date 27/10/2022
     * @description HDT_UTL_MailSenderHelperTst – Test Class for HDT_UTL_MailSenderHelper.cls
     */
-
-    // HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult generateNewCase(Id caseId)    
+ 
     @isTest
     static void generateNewCaseTst(){
         List<Case> caseList = [SELECT Id FROM Case LIMIT 1];
@@ -181,7 +174,6 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
     * @description HDT_UTL_MailSenderHelperTst – Test Class for HDT_UTL_MailSenderHelper.cls
     */
 
-    // HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult generateNewCase(Id caseId)    
     @isTest
     static void generateNewCaseErrorTst(){
 
@@ -202,7 +194,6 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
     * @description HDT_UTL_MailSenderHelperTst – Test Class for HDT_UTL_MailSenderHelper.cls
     */
 
-    // HDT_WRP_MailSender.HDT_WRP_BodyMail getBodyMailMerged(Id templateId, Id recordId)
     @isTest
     static void getBodyMailMergedTst(){
        
@@ -225,7 +216,6 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
     * @description HDT_UTL_MailSenderHelperTst – Test Class for HDT_UTL_MailSenderHelper.cls
     */
 
-    // HDT_WRP_MailSender.HDT_WRP_SendMailResult sendMailHelper(String mailStructureJson)
     @isTest
     static void sendMailHelperTst(){
 
