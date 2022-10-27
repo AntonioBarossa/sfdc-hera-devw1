@@ -134,16 +134,16 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     private String cessazioneValidate(Case currCase, String fields){
         //system.debug('init validate');
-        String result = '';
+        //String result = '';
         HDT_UTL_CityDataTariValidation cityDataTariValidation = new HDT_UTL_CityDataTariValidation();
         if( getFieldValue(fields, 'EffectiveDate__c') > getFieldValue(fields, 'DeclarationDate__c') || getFieldValue(fields, 'EffectiveDate__c') > String.valueOf(Date.today())) {
             //system.debug('Attenzione! La data di decorrenza non può essere maggiore della data dichiarazione e non può essere maggiore della data odierna');
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Attenzione! La data di decorrenza non può essere maggiore della data dichiarazione e non può essere maggiore della data odierna'));
         }
         //system.debug('preClass');
-        result = cityDataTariValidation.validate(fields, currCase.Id);
+        //result = cityDataTariValidation.validate(fields, currCase.Id);
         //system.debug('end validate');
-        return result == null ? JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success')) : result;
+        return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
     }
     
     /*
