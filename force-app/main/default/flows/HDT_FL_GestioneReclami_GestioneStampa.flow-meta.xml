@@ -224,6 +224,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaCaseToLoop</name>
+        <label>AssegnaCaseToLoop</label>
+        <locationX>923</locationX>
+        <locationY>1941</locationY>
+        <assignmentItems>
+            <assignToReference>CaseCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>CaseToLoop</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ToLoop_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaFase</name>
         <label>AssegnaFase</label>
         <locationX>454</locationX>
@@ -433,17 +449,24 @@
     <decisions>
         <name>ActivityTrovata</name>
         <label>ActivityTrovata</label>
-        <locationX>675</locationX>
-        <locationY>1911</locationY>
+        <locationX>678</locationX>
+        <locationY>1901</locationY>
         <defaultConnector>
-            <targetReference>ToLoop_0</targetReference>
+            <targetReference>AssegnaCaseToLoop</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not Found</defaultConnectorLabel>
         <rules>
             <name>ActivityFound</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetActivityPraticaGestita.Id</leftValueReference>
+                <leftValueReference>GetActivityPraticaGestita</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetActivityPraticaGestita</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
