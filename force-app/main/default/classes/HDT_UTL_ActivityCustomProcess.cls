@@ -304,11 +304,17 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             iw.activationUser = 'AccountCommercialePRM';
             iw.account = 'AccountCommercialePRM';
             iw.jobTitle = act.Order__r.ChannelTransCode__c;
-            iw.internalCustomerId = act.Order__r.Account?.CustomerCode__c;
+            iw.internalCustomerId = act.Order__r.Account != null? String.valueOf(act.Order__r.Account.Id).substring(7,15):'';
             iw.companyName = String.isNotBlank(act.Order__r.Account?.FirstName__c)? act.Order__r.Account.FirstName__c+separator+act.Order__r.Account.LastName__c : act.Order__r.Account?.LastName__c;
             iw.externalCustomerId = String.isNotBlank(act.Order__r.Account?.FiscalCode__c)? act.Order__r.Account.FiscalCode__c : act.Order__r.Account?.VATNumber__c;
             iw.secondaryCustomerId = act.Order__r.Account.VATNumber__c;
-            iw.bpClass =  bpClass;
+            /**
+             * FIX TK 914861C
+             * Description: Atos ha richiesto di inviare la marcatura per esteso. In precedenza veniva inviata la marcatura AS-IS Siebel.
+             * Azioni: Commentata riga 316 e aggiunta riga 317
+             * **/
+            //iw.bpClass =  bpClass;
+            iw.bpClass =  act.Order__r.Account?.CustomerMarking__c;
             iw.bpCategory = act.Order__r.Account.Category__c; 
             iw.bpType = act.Order__r.Account.CustomerType__c;
             iw.customerType = 'CT0';
