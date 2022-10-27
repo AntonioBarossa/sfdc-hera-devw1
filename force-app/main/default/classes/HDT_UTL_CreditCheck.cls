@@ -219,7 +219,10 @@ public with sharing class HDT_UTL_CreditCheck {
         String rtDeveloperName = Schema.SObjectType.Order.getRecordTypeInfosById().get(newOrder.RecordTypeId).getDeveloperName();
         Boolean changePhase = String.isNotBlank(newOrder.Phase__c) ? !newOrder.Phase__c.equalsIgnoreCase(oldPhase) : String.isNotBlank(oldPhase);
         DateTime nowDateTime = DateTime.now();
-        if ( changePhase && warningStatusList.contains(newOrder.Phase__c?.toUpperCase())
+        String note = newOrder.isTransition__c && String.isNotBlank(newOrder.Note__c)? newOrder.Note__c : '';
+        if ( changePhase && warningStatusList.contains(newOrder.Phase__c?.toUpperCase()) 
+            //modifica per il transitorio Voltura Rifiutata altrimenti bloccherebbe l'invio verso siebel.
+            && !note.containsIgnoreCase('Voltura Rifiutata')
             && HDT_UTL_OrderProcess.checkRecordTypeForCreditCheck(rtDeveloperName, newOrder)
             && (newOrder.CreditCheckInProgress__c || 'KO'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c) || 'KO'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c))){
                 String newPhase = newOrder.CreditCheckInProgress__c? 'Attesa Credit Check' : 'Credit Check KO';
