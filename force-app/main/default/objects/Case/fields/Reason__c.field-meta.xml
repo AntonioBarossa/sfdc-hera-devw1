@@ -430,6 +430,21 @@
                 <label>Costituzione in mora (REMSI)</label>
             </value>
             <value>
+                <fullName>Non allacciato</fullName>
+                <default>false</default>
+                <label>Non allacciato</label>
+            </value>
+            <value>
+                <fullName>Uso irriguo</fullName>
+                <default>false</default>
+                <label>Uso irriguo</label>
+            </value>
+            <value>
+                <fullName>Non allacciato/uso irriguo</fullName>
+                <default>false</default>
+                <label>Non allacciato/uso irriguo</label>
+            </value>
+            <value>
                 <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -699,6 +714,18 @@
         <valueSettings>
             <controllingFieldValue>Lettura Acqua Avviso al Cliente</controllingFieldValue>
             <valueName>Delibera 2018</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Non allacciato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Uso irriguo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Non allacciato/uso irriguo</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>

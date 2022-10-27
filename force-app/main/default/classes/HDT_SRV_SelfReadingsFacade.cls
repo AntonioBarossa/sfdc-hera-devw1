@@ -30,11 +30,7 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
                     System.debug(LoggingLevel.DEBUG, 'CheckAutolettura OK, next step: InvioLetture');
                     HDT_WRP_GenericSapIntegration sapIntegrationInvioLetture = new HDT_WRP_GenericSapIntegration();
                     sapIntegrationInvioLetture = submitRequest(recordId, 'InvioLetture');
-                    /*
-                        @Author: Davide Viola - 20/10/2021
-                        Description: PMD -> Commentata variabile non utilizzata.
-                    */
-                    /*HDT_SRV_SelfReadings.HDT_WRP_SelfReadingResponse responseInvioLetture = */HDT_SRV_SelfReadings.handleResponse(sapIntegrationInvioLetture, responseCheckAutoletture.checkAutoletturaDescription);
+                    HDT_SRV_SelfReadings.handleResponse(sapIntegrationInvioLetture, responseCheckAutoletture.checkAutoletturaDescription);
                 } else {
                     System.debug(LoggingLevel.DEBUG, 'CheckAutolettura KO');
                 }
