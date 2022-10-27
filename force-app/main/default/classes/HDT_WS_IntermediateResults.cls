@@ -121,24 +121,27 @@ global with sharing class HDT_WS_IntermediateResults {
         }
     }
 
+    @TestVisible
     private class HDT_WRP_Request{
-        String requestId {get;set;}
-        String dataRequest {get;set;}
-        List<HDT_WRP_Reminder> reminder {get;set;}
+        @TestVisible String requestId {get;set;}
+        @TestVisible String dataRequest {get;set;}
+        @TestVisible List<HDT_WRP_Reminder> reminder {get;set;}
     }
 
+    @TestVisible
     private class HDT_WRP_Reminder {
-		String caseId {get;set;}
-		String noticeId {get;set;}
-		List<HDT_WRP_Field> field {get;set;}
+		@TestVisible String caseId {get;set;}
+		@TestVisible String noticeId {get;set;}
+		@TestVisible List<HDT_WRP_Field> field {get;set;}
 	}
 
+    @TestVisible
     private class HDT_WRP_Field {
-		String codActivity {get;set;}
-		String codNota {get;set;}
-		String descNota {get;set;}
-		String textNota {get;set;}
-		String phase {get;set;}
+		@TestVisible String codActivity {get;set;}
+		@TestVisible String codNota {get;set;}
+		@TestVisible String descNota {get;set;}
+		@TestVisible String textNota {get;set;}
+		@TestVisible String phase {get;set;}
 	}
 
 }
