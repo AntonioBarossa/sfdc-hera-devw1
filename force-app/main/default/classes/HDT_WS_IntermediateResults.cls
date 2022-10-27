@@ -60,11 +60,15 @@ global with sharing class HDT_WS_IntermediateResults {
                 // else caseToUpdate.Phase__c = calloutCaseDt.field[0].phase;
                 caseToUpdate.Phase__c = 'Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)? codToPhase.get(calloutCaseDt.field[0].codNota) : calloutCaseDt.field[0].phase;
 
-                // mergiate le 4 info all’interno del campo “Description”
-                caseToUpdate.Description = 'Codice Activity: '+calloutCaseDt.field[0].codActivity+'\n'+
-                                           'Codice Nota: *'+calloutCaseDt.field[0].codNota+'*'+'\n'+
+                // mergiate "descNota" e "textNota" all’interno del campo “Description”
+                caseToUpdate.Description = //'Codice Activity: '+calloutCaseDt.field[0].codActivity+'\n'+
+                                           //'Codice Nota: *'+calloutCaseDt.field[0].codNota+'*'+'\n'+
                                            'Descrizione Nota: '+calloutCaseDt.field[0].descNota+'\n'+
                                            'Testo Nota: '+calloutCaseDt.field[0].textNota;
+
+                // passati "codActivity" e "codNota" nei rispettivi campi su Case
+                caseToUpdate.ActivityCode__c = calloutCaseDt.field[0].codActivity;
+                caseToUpdate.NoteCode__c = calloutCaseDt.field[0].codNota;
 
                 //c.exampleActivityCode = caseData.field[0].codActivity;
                 //Try Save all data
@@ -143,5 +147,4 @@ global with sharing class HDT_WS_IntermediateResults {
 		@TestVisible String textNota {get;set;}
 		@TestVisible String phase {get;set;}
 	}
-
 }
