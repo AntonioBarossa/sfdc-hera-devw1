@@ -1074,8 +1074,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
             System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> Discard Message: ' +  requestDiscardManagemnt.get('DISCARD_MESSAGE'));
             System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> templateName: ' +  templateName);
-            System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> checkDiscardAnnullmentRule: ' +  checkDiscardAnnullmentRule(recordId, fase,requestDiscardManagemnt.get('DISCARD_MESSAGE')));
-            if (String.isNotEmpty(templateName) && !checkDiscardAnnullmentRule(recordId, fase,requestDiscardManagemnt.get('DISCARD_MESSAGE'))){
+            Boolean discardActivity = checkDiscardAnnullmentRule(recordId, fase,requestDiscardManagemnt.get('DISCARD_MESSAGE'));
+            System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> checkDiscardAnnullmentRule: ' + discardActivity); 
+            if (String.isNotEmpty(templateName) && !discardActivity){
                 wrts_prcgvr__Activity__c act = createActivityByObjectIdAndTemplateName(recordId, templateName,objectType);
                 act.DiscardDescription__c = requestDiscardManagemnt.get('DISCARD_MESSAGE');
                 act.wrts_prcgvr__Description__c  = requestDiscardManagemnt.get('DISCARD_MESSAGE');

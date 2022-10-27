@@ -63,8 +63,8 @@ public class HDT_WS_CreditCheck {
                 }
             }else if (String.isNotBlank(res?.exceptionMessage)){
                 orderData.orderId = req.crmId;
-                orderData.outcomeDescription =  'KO Tecnico - ' + res.exceptionMessage;
-                orderData.outcome = 'KO';
+                orderData.outcomeDescription =  'KO Tecnico - Errore Generico - ' + res.exceptionMessage;
+                orderData.outcome = 'OK';
                 HDT_UTL_CreditCheck.insertCalloutLog(JSON.serialize(req), JSON.serialize(res));
             }else{
                 //Gestione Credit Check In Progress 
