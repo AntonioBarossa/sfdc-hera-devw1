@@ -593,29 +593,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0</name>
-        <label>Aggiorna Fase in Elaborazione Manuale</label>
-        <locationX>13338</locationX>
-        <locationY>2054</locationY>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornatoEsenzioneModificaFognature.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Elaborazione Manuale</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornatoEsenzioneModificaFognature.Status</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0_0</name>
         <label>Aggiorna Fase in Elaborazione Manuale</label>
         <locationX>4538</locationX>
@@ -624,7 +601,7 @@
             <assignToReference>GetCaseAggiornato_0_0_0_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Elaborazione Manuale</stringValue>
+                <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -636,6 +613,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Aggiorna_Fase_in_Lavorazione</name>
+        <label>Aggiorna Fase in Lavorazione</label>
+        <locationX>13338</locationX>
+        <locationY>2054</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoEsenzioneModificaFognature.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoEsenzioneModificaFognature.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -3255,7 +3255,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema_0_0</targetReference>
+                <targetReference>Aggiorna_Fase_in_Lavorazione</targetReference>
             </connector>
             <label>DGRER569/19 non Allacciato / Uso Irriguo</label>
         </rules>
@@ -3397,6 +3397,7 @@
         <picklistField>Subprocess__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <name>ActivityTemplateName</name>
         <dataType>String</dataType>
