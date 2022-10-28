@@ -27598,6 +27598,16 @@
         <field>TechnicalOffer__c.Version__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.DailyContribution__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.WeeklyContribution__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
         <!--SFDC-OIG/OIM 17/09/2021-->
         <fieldPermissions>
             <editable>true</editable>
