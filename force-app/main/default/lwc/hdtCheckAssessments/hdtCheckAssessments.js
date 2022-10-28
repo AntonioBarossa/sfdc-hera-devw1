@@ -89,7 +89,7 @@ export default class HdtCheckAssessments extends LightningElement {
             tipoPersona : null
         }).then(result =>{
             if (!result){
-                console.log('result ->' + this.result);
+                this.handleKo();
             }else{
                 //let data = JSON.parse(result);
                 let data = result;
@@ -97,12 +97,10 @@ export default class HdtCheckAssessments extends LightningElement {
                 try{
                     slots = data.data;
                     this.data = [];
-                    if(slots.length == 0){
-                        const navigateNextElement = new FlowNavigationNextEvent();
-                        this.dispatchEvent(navigateNextElement);
-                    }
                     if(slots.length == 1 && slots[0].messaggio != null){
                         this.message = slots[0].messaggio;
+                        const navigateNextElement = new FlowNavigationNextEvent();
+                        this.dispatchEvent(navigateNextElement);
                     }
                     else{
                         slots.forEach(element => {
@@ -127,18 +125,24 @@ export default class HdtCheckAssessments extends LightningElement {
                                 this.isVisible = true;
                             }
                         });
-                        this.data.sort(this.sortBy('NrAtto', -1));
+                        if(!(this.isVisible || this.message))   this.message="In corso di accertamenti non sono state riscontrate infedeli dichiarazioni";
+                        else this.data.sort(this.sortBy('NrAtto', -1));
                     }
                 }catch(e){
                     console.error(e);
-                    this.showAlert('Attenzione','Servizio di verifica accertamenti temporaneamente non disponibile','error');
-                    this.message = 'Servizio di verifica accertamenti temporaneamente non disponibile';
+                    this.handleKo();
                 }
             } 
         }).catch(error =>{
-            this.showAlert('Attenzione',error.body.message,'error');
+            this.handleKo();
         });
     }
+
+    handleKo(){
+        this.showAlert('Attenzione','Servizio di verifica accertamenti temporaneamente non disponibile','error');
+        this.message = 'Servizio di verifica accertamenti temporaneamente non disponibile';
+    }
+
 
     addRecord(element){
         this.data = [...this.data,element];
