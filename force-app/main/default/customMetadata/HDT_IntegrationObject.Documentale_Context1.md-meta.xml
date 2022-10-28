@@ -5,39 +5,44 @@
     <values>
         <field>JSON__c</field>
         <value xsi:type="xsd:string">{
-&quot;objectName&quot;: &quot;Order&quot;,
-&quot;controllingField&quot;:&quot;ParentOrder__c&quot;,
-&quot;fields&quot;: &quot;DocumentalProcessType__c,ConventionAssociation__c,SupplyStreetNumberExtension__c,BillSendMode__c,CommercialAction__c,ServicePoint__c,SignatureMethod__c,ShippingAddressFormula__c,ShippingProvince__c,DocSendingMethod__c,ShippingStreetName__c,ResidentialStreetName__c,ContractId,Cluster__c, Subprocess__c,ProcessType__c, CommodityFormula__c, Channel__c, Market__c, SupplyType__c, SupplyCity__c, DistributorFormula__c, Status, Phase__c, Username__c, PaymentMode__c, Id, ImplantType__c, BillingStreetName__c,QuotationType__c,BillingStreetNumber__c, BillingPlace__c, BillingCity__c, BillingPostalCode__c, BillingProvince__c, SupplyStreetName__c, SupplyStreetNumber__c, SupplyPostalCode__c, SupplyState__c, CreatedDate, ContractAccountCode__c, ShippingMail__c, DeliveryAddress__c, InvoiceEmailAddress__c, BankAccountSignatoryFirstName__c, BankAccountSignatoryLastName__c, BankAccountSignatoryFiscalCode__c, EffectiveDate__c, ServicePointCodeFormula__c, SupplyAddressFormula__c, SupplyCountry__c, IbanCountry__c, IbanCIN_IBAN__c, IbanCIN__c, IbanABI__c, IbanCAB__c, IbanCodeNumber__c, PowerCommitted__c, AnnualConsumption__c, WithdrawalClass__c, MeterSN__c, PreviousTrader__c, SAPImplantCode__c, SurfaceServed__c, SapContractCode__c, VAT__c, SupplyCityCode__c, MarketOrigin__c, RequestOption__c, VoltageLevel__c, Pressure__c, Caliber__c, Resident__c, ShippingStreetNumberExtension__c, PowerAvailable__c, RequestPhase__c, TemporaryConnectionStartDate__c, TemporaryConnectionEndDate__c, UseTypeEnergy__c, Email__c, PhoneNumber__c, TotalAmount, RemiCode__c, SignedDate__c, CustomerLastName__c, CustomerName__c, CustomerFiscalCode__c, CustomerVATNumber__c, InvoiceCertifiedEmailAddress__c,SalesCompany__c,OrderNumber,CommercialId__c,IsWinback__c,BrandLogo__c,MarketingPrivacy__c,ProfilingPrivacy__c, EstimateAmount__c,AdministrativeBurden__c,VariableAmount__c,DocumentalVat__c, PowerQuote__c,ResidentialCity__c,RateCategory__c,RonchiDescription__c,Surface__c,FamilyNumber__c,BirthPlace__c,MissingDue__c,BirthDate__c,SubscriberType__c,CustomerName__c,CustomerLastName__c,MissingDueAmount__c,IntegrationExclusion__c,PowerRequested__c&quot;,
-&quot;condition&quot;:&quot;Phase__c != &apos;Annullato&apos; AND ((SBQQ__Quote__r.SBQQ__Type__c = &apos;Amendment&apos; and ProcessType__c like &apos;%VAS%&apos;) or (SBQQ__Quote__r.SBQQ__Type__c != &apos;Amendment&apos; and VASSubtype__c != &apos;Analisi Consumi&apos; and (NOT ProcessType__c like &apos;Aggiunta Sconti%&apos; )))&quot;,
-&quot;relatedObject&quot;: [
-{
-&quot;objectName&quot;: &quot;OrderItem&quot;,
-&quot;fields&quot;: &quot;Id, ProductName__c,ProductFamily__c,ProductCode__c,ProductVersion__c,ProductDescriptionSAP__c,Quantity,IVA__c,PriceNet__c,PriceNetDiscounted__c,UnitPrice,ListPrice,VatPercentageFormula__c,NumberRateMonthly__c&quot;,
-&quot;relation&quot;: &quot;OrderItems&quot;
-}
-],
-&quot;lookupObject&quot;: [
-{
-&quot;objectName&quot;: &quot;Account&quot;,
-&quot;fields&quot;: &quot;Name,Segment__c, CustomerCode__c, CustomerType__c , IsVATGroupJoined__c, VATGroupEndDate__c, FiscalCode__c, VATNumber__c, FirstName__c, LastName__c, BillingAddressFormula__c, BillingStreetNumber__c, BillingCity,BillingState,BillingPostalCode, ShippingState, OtherPhone__c, MobilePhone__c, FAX__c, CustomerMarking__c, VirtualSAPIban__c, PrimaryEmail__c, BillingStreetNumberExtension__c, BuildingStairCase__c, BuildingFloor__c, BillingPlace__c, BillingCountry, Category__c, VATGroup__c, VATGroupStartDate__c,BillingStreetName__c&quot;,
-&quot;relation&quot;: &quot;Account&quot;
-},
-{
-&quot;objectName&quot;: &quot;Contact&quot;,
-&quot;fields&quot;: &quot;Name, LastName, FirstName, MobilePhone, Email, Fax, FiscalCode__c, CertifiedEmail__c&quot;,
-&quot;relation&quot;: &quot;Contact__r&quot;
-},
-{
-&quot;objectName&quot;: &quot;User&quot;,
-&quot;fields&quot;: &quot;Name, LastName, FirstName, MobilePhone, Email, Fax&quot;,
-&quot;relation&quot;: &quot;SaleBy__r&quot;
-},
-{
-&quot;objectName&quot;: &quot;Order&quot;,
-&quot;fields&quot;: &quot;Cluster__c,PhoneNumber__c,ShippingMail__c,Subprocess__c,OrderNumber,DocSendingMethod__c,SignatureMethod__c,Username__c,ShippingAddressFormula__c,ShippingStreetName__c,ShippingStreetNumber__c,ShippingStreetNumberExtension__c,ShippingCity__c,ShippingProvince__c,ShippingPostalCode__c,ShippingPlace__c&quot;,
-&quot;relation&quot;: &quot;ParentOrder__r&quot;
-}
-]
+	&quot;objectName&quot;: &quot;Order&quot;,
+	&quot;controllingField&quot;: &quot;ParentOrder__c&quot;,
+	&quot;fields&quot;: &quot;DocumentalProcessType__c,BillingCountry__c,ConventionAssociation__c,SupplyStreetNumberExtension__c,BillSendMode__c,CommercialAction__c,ServicePoint__c,SignatureMethod__c,ShippingAddressFormula__c,ShippingProvince__c,DocSendingMethod__c,ShippingStreetName__c,ResidentialStreetName__c,ContractId,Cluster__c, Subprocess__c,ProcessType__c, CommodityFormula__c, Channel__c, Market__c, SupplyType__c, SupplyCity__c, DistributorFormula__c, Status, Phase__c, Username__c, PaymentMode__c, Id, ImplantType__c, BillingStreetName__c,QuotationType__c,BillingStreetNumber__c, BillingPlace__c, BillingCity__c, BillingPostalCode__c, BillingProvince__c, SupplyStreetName__c, SupplyStreetNumber__c, SupplyPostalCode__c, SupplyState__c, CreatedDate, ContractAccountCode__c, ShippingMail__c, DeliveryAddress__c, InvoiceEmailAddress__c, BankAccountSignatoryFirstName__c, BankAccountSignatoryLastName__c, BankAccountSignatoryFiscalCode__c, EffectiveDate__c, ServicePointCodeFormula__c, SupplyAddressFormula__c, SupplyCountry__c, IbanCountry__c, IbanCIN_IBAN__c, IbanCIN__c, IbanABI__c, IbanCAB__c, IbanCodeNumber__c, PowerCommitted__c, AnnualConsumption__c, WithdrawalClass__c, MeterSN__c, PreviousTrader__c, SAPImplantCode__c, SurfaceServed__c, SapContractCode__c, VAT__c, SupplyCityCode__c, MarketOrigin__c, RequestOption__c, VoltageLevel__c, Pressure__c, Caliber__c, Resident__c, ShippingStreetNumberExtension__c, PowerAvailable__c, RequestPhase__c, TemporaryConnectionStartDate__c, TemporaryConnectionEndDate__c, UseTypeEnergy__c, Email__c, PhoneNumber__c, TotalAmount, RemiCode__c, SignedDate__c, CustomerFiscalCode__c, CustomerVATNumber__c, InvoiceCertifiedEmailAddress__c,SalesCompany__c,OrderNumber,CommercialId__c,IsWinback__c,BrandLogo__c,MarketingPrivacy__c,ProfilingPrivacy__c, EstimateAmount__c,AdministrativeBurden__c,VariableAmount__c,DocumentalVat__c, PowerQuote__c,ResidentialCity__c,RateCategory__c,RonchiDescription__c,Surface__c,FamilyNumber__c,BirthPlace__c,MissingDue__c,BirthDate__c,SubscriberType__c,CustomerName__c,CustomerLastName__c,MissingDueAmount__c,IntegrationExclusion__c,MandatoryAttachments__c,AdditionalAttachments__c,PowerRequested__c&quot;,
+	&quot;condition&quot;: &quot;Phase__c != &apos;Annullato&apos; AND ((SBQQ__Quote__r.SBQQ__Type__c = &apos;Amendment&apos; and ProcessType__c like &apos;%VAS%&apos;) or (SBQQ__Quote__r.SBQQ__Type__c != &apos;Amendment&apos; and VASSubtype__c != &apos;Analisi Consumi&apos; and (NOT ProcessType__c like &apos;Aggiunta Sconti%&apos;) and ProcessType__c != &apos;Modifica Tariffa&apos; ))&quot;,
+	&quot;relatedObject&quot;: [
+		{
+			&quot;objectName&quot;: &quot;OrderItem&quot;,
+			&quot;fields&quot;: &quot;Id, ProductName__c,ProductFamily__c,ProductCode__c,ProductVersion__c,ProductDescriptionSAP__c,Quantity,IVA__c,PriceNet__c,PriceNetDiscounted__c,UnitPrice,ListPrice,VatPercentageFormula__c,NumberRateMonthly__c&quot;,
+			&quot;relation&quot;: &quot;OrderItems&quot;
+		},
+		{
+			&quot;objectName&quot;: &quot;LandRegistry__c&quot;,
+			&quot;fields&quot;: &quot;Id, toLabel(UnitType__c), EndDate__c, LegalCity__c, OfferCode__c, Order__c, ParticleSheet__c, ParticleTable__c, ParticleType__c, Province__c, RegistryCategory__c, RegistryCityCode__c, RegistryCity__c, RegistrySurface__c, SAPImplantCodeFormula__c, SapProgressive__c, ServicePoint__c, Sheet__c, StartDate__c, Subaltern__c, Case__c, toLabel(CodeMissingRegistryData__c), UrbanSection__c, toLabel(DestinationUsage__c), Status__c, toLabel(Title__c)&quot;,
+			&quot;relation&quot;: &quot;Dati_Catastali__r&quot;
+		}
+	],
+	&quot;lookupObject&quot;: [
+		{
+			&quot;objectName&quot;: &quot;Account&quot;,
+			&quot;fields&quot;: &quot;Name,Segment__c, CustomerCode__c, CustomerType__c , IsVATGroupJoined__c, VATGroupEndDate__c, FiscalCode__c, VATNumber__c, FirstName__c, LastName__c, BillingAddressFormula__c, BillingStreetNumber__c, BillingCity,BillingState,BillingPostalCode, ShippingState, OtherPhone__c, MobilePhone__c, FAX__c, CustomerMarking__c, VirtualSAPIban__c, PrimaryEmail__c, BillingStreetNumberExtension__c, BuildingStairCase__c, BuildingFloor__c, BillingPlace__c, BillingCountry, Category__c, VATGroup__c, VATGroupStartDate__c,BillingStreetName__c&quot;,
+			&quot;relation&quot;: &quot;Account&quot;
+		},
+		{
+			&quot;objectName&quot;: &quot;Contact&quot;,
+			&quot;fields&quot;: &quot;Name, LastName, FirstName, MobilePhone, Email, Fax, FiscalCode__c, CertifiedEmail__c&quot;,
+			&quot;relation&quot;: &quot;Contact__r&quot;
+		},
+		{
+			&quot;objectName&quot;: &quot;User&quot;,
+			&quot;fields&quot;: &quot;Name, LastName, FirstName, MobilePhone, Email, Fax&quot;,
+			&quot;relation&quot;: &quot;SaleBy__r&quot;
+		},
+		{
+			&quot;objectName&quot;: &quot;Order&quot;,
+			&quot;fields&quot;: &quot;Cluster__c,PhoneNumber__c,ShippingMail__c,Subprocess__c,OrderNumber,DocSendingMethod__c,SignatureMethod__c,Username__c,ShippingAddressFormula__c,ShippingStreetName__c,ShippingStreetNumber__c,ShippingStreetNumberExtension__c,ShippingCity__c,ShippingProvince__c,ShippingPostalCode__c,ShippingPlace__c&quot;,
+			&quot;relation&quot;: &quot;ParentOrder__r&quot;
+		}
+	]
 }</value>
     </values>
 </CustomMetadata>
