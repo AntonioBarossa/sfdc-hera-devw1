@@ -2726,6 +2726,12 @@
                 <stringValue>Ambiente</stringValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Market__c</field>
+            <value>
+                <stringValue>Regolamentato</stringValue>
+            </value>
+        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
