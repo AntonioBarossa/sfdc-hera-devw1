@@ -179,7 +179,7 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
         if (address['Stato']=='Italy' || address['Stato']=='Italia'){
             address['Stato']='ITALIA';
         }
-        address['Flag Verificato']=true;
+        //address['Flag Verificato']=true;
         console.log('### Get Address >>> ' + JSON.stringify(address));
         return address;
     }

@@ -3229,6 +3229,13 @@
                     <stringValue>HDT_RT_AltriProcessiPagamenti</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_PagamentoUnicoAnnualeTARI</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Get_RT_Pagamenti</targetReference>
             </connector>

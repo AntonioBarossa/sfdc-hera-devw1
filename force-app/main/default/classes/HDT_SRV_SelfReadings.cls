@@ -136,8 +136,13 @@ public with sharing class HDT_SRV_SelfReadings {
         if (cases.isEmpty()) {
             return null;
         }
-
+    
         Case readingCase = cases[0];
+        if(String.isNotBlank(readingCase.CommodityFormula__c) && ('Acqua'.equalsIgnoreCase(readingCase.CommodityFormula__c) || 'Teleriscaldamento'.equalsIgnoreCase(readingCase.CommodityFormula__c))){
+            inputParams.responseCode = 200;
+            return inputParams;
+        }
+
         System.debug(LoggingLevel.DEBUG, 'readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
 
         String readingFields = 'Id';

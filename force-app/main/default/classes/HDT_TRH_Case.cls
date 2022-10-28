@@ -71,7 +71,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
             /*sostituito dal metodo sotto che esclude eventuali chiamate doppie eseguite negli ultimi 30 secondi 
             ((wrts_prcgvr.Interfaces_1_0.ICalloutUtils) wrts_prcgvr.VersionManager.newClassInstance('CalloutUtils'))
                     .bulkSend(new Map<String,Object>{'newObjects'=>Trigger.new, 'oldObjects' => Trigger.old}); */
-            HDT_UTL_DoubleCalloutPrevention.checkAndCallout(Trigger.new, Trigger.oldMap, 'Order');
+            HDT_UTL_DoubleCalloutPrevention.checkAndCallout(Trigger.new, Trigger.oldMap, 'Case');
         }
         HDT_UTL_CaseProcess.checkSatisfationIndex(trigger.newMap, trigger.oldMap);
 
