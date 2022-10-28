@@ -8,7 +8,19 @@ public with sharing class HDT_UTL_SlaManagementTst {
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].id);
-        HDT_UTL_DataFactoryTst.createCase(1, true, accounts[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, orders[0].id);
+        List<Case> caseList=HDT_UTL_DataFactoryTst.createCase(1, true, accounts[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, orders[0].id);
+        Map<String,Object> slaAdminFields=new Map<String,Object>{
+            'Ato__c'=>'ATO Orientale Triestino','IsActive__c'=>true,
+            'CaseField__c'=>'CustomerRequestDate__c','OrderField__c'=>'SendCertifiedEmailConsentDate__c',
+            'FirstLevelComplaintClassification__c'=>'Reclamo Scritto','SecondLevelComplaintClassification__c'=>'Mercato','Cluster__c'=>'Attivazioni',
+            'Description__c'=>'test','StartCasePhase__c'=>'Bozza','EndCasePhase__c'=>'Comunicazione verso Heroku OK',
+            'StartOrderPhase__c'=>'Bozza','EndOrderPhase__c'=>'Comunicazione verso Heroku OK','Range__c'=>15,
+            'Process__c'=>'Documentale/Copia Contratto','RecordTypeId'=>Schema.SObjectType.SlaAdministration__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_PostSales').getRecordTypeId(),
+            'Commodity__c'=>'Acqua','SalesCompany__c'=>'Hera Comm S.p.A.','ActivityType__c'=>'Back Office - Fatturazione',
+            'CustomerType__c'=>'Account','RangeType__c'=>'Giorni Solari','Type__c'=>'01'
+        };
+        List<SlaAdministration__c> slaAdminRules=HDT_UTL_DataFactoryTst.createSlaAdministration(1,true,slaAdminFields);
+        HDT_UTL_DataFactoryTst.createSlaTracking(1,true,null, slaAdminRules[0].Id, caseList[0].Id, orders[0].Id, 100, 'Aperto');
     }
 
     @isTest
@@ -37,7 +49,15 @@ public with sharing class HDT_UTL_SlaManagementTst {
 
     @isTest
     static void executeTst(){
+        Case myCase=[SELECT Id,AccountId,ContactId FROM Case WITH SECURITY_ENFORCED LIMIT 1];
+        HDT_WRP_SlaManagement.HDT_WRP_Event slaWrp=new HDT_WRP_SlaManagement.HDT_WRP_Event();
+        slaWrp.recordId=myCase.Id;
+        slaWrp.sObjType='Case';
+        Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpEventObjMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event>{myCase.Id=>slaWrp};
+        HDT_UTL_SlaManagement slaUtils=new HDT_UTL_SlaManagement('Case');
         Test.startTest();
+        slaUtils.setChangedObjList(wrpEventObjMap);
+        slaUtils.execute();
         Test.stopTest();
         System.assertEquals(true, true, 'temp');
     }
