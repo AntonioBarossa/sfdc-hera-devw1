@@ -5,6 +5,14 @@ import getFields from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.getF
 import validateRecord from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.validateRecord';
 import getContentDocs from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.getContentDocs';
 import { updateRecord } from 'lightning/uiRecordApi';
+import { getRecord } from 'lightning/uiRecordApi';
+
+import ASSISTED from '@salesforce/schema/Case.CutomerAssisted__c';
+import TYPE from '@salesforce/schema/Case.Type';
+import ACCOUNTID from '@salesforce/schema/Case.AccountId';
+
+import { MessageContext, subscribe, unsubscribe, APPLICATION_SCOPE} from "lightning/messageService";
+import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
 
 export default class HdtRecordEditFormFlow extends LightningElement {
 
@@ -33,6 +41,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @api variantSaveButton;
     @api outputId;
     @api documentRecordId;
+    @api sessionid;
 
     @track errorMessage;
     @track error;
@@ -55,11 +64,29 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @track show = false;
     showCustomLabels= false;
 
+    get submitButtonClass(){
+        let styleHideShow = this.saveButton? "slds-show" : "slds-hide";
+        return `slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right ${styleHideShow}`;
+    }
+
     get customLabelClass(){
         if(this.density)    return "slds-form-element "+(this.density=="comfy"? "slds-form-element_stacked" : "slds-form-element_horizontal");
         let clist = this.template.querySelector('lightning-input-field.slds-form-element')?.classList?.value;
         return clist? clist : "slds-form-element slds-form-element_horizontal";
     }
+
+    @track assisted;
+    @track type;
+    @track caseAccId;
+    @wire(getRecord, { recordId: '$recordId', fields: [ASSISTED,TYPE,ACCOUNTID] })
+    wiredRecord({ error, data }) {
+        if (data) {
+            this.assisted = data.fields.CutomerAssisted__c.value;
+            this.type = data.fields.Type.value;
+            this.caseAccId = data.fields.AccountId.value;
+        }
+    }
+
 
     @wire(getFields, { processType: '$processType' }) 
         wiredFieldsJSON ({ error, data }) {
@@ -123,6 +150,11 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             updateRecord({fields: { Id: recordId }});
         }
 
+    //subscribe
+    @wire(MessageContext)
+	messageContext;
+    //subscribe
+
         @api
         get variantButton() {
             if(this.variantSaveButton != null && this.variantSaveButton != "" && this.variantSaveButton != "undefined" )
@@ -164,6 +196,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
     
     connectedCallback(){
+        this.subscribeMC();
         if(this.addContentDocument){
             this.selectContentDocument();
         }
@@ -361,16 +394,18 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         : this.secondColumn.filter(element => element['FieldName'] === fieldName);
     }
 
-    virtualValidate(event){
+    virtualChange(event){
         return;
     }
 
     handleChange(event){
-        this.virtualValidate(event);
+        this.virtualChange(event);
         //Reclami customizations
         this.complaintsLogic();
         //PianoRata customizations
         this.installmentsLogic();
+        //Comunicazione pagamenti customizations
+        this.paymentLogic();
         //RimborsoCustomization
         this.reimbursmentLogic();
         //DisconnectableLogic
@@ -379,10 +414,15 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         this.variationsLogic();     //MODIFICA 21/07/22 marco.arci@webresults.it Logica form compilazione Variazioni
     }
 
+    disconnectedCallback(){
+        if(this.subscription) unsubscribe(this.subscription);
+        this.subscription = null;
+    }
+
     variationsLogic(){
         //Sottoprocessi di varaiazioni
-        if(['AGEVOLAZIONE','COMPONENTI RESIDENTI','COMPONENTI NON RESIDENTI','COABITAZIONI','DATI CATASTALI',
-            'ISTAT/RONCHI','SUPERFICIE','DOMICILIATO IN NUCLEO RESIDENTE','RID. AGEV. DOPO ACCERTAMENTO'].includes(this.processType.toUpperCase())){
+        if(['AGEVOLAZIONE','DOM_COMPONENTI RESIDENTI','DOM_COMPONENTI NON RESIDENTI','DOM_COABITAZIONI','DATI CATASTALI',
+            'NON DOM_ISTAT/RONCHI','SUPERFICIE','DOMICILIATO IN NUCLEO RESIDENTE','RID. AGEV. DOPO ACCERTAMENTO'].includes(this.processType.toUpperCase())){
             let RequestSource = this.selector('RequestSource__c');
             let SubscriberType = this.selector('SubscriberType__c');
             if(RequestSource.value.toUpperCase() != 'DA CONTRIBUENTE'){
@@ -393,6 +433,36 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                 SubscriberType.required = true;
                 SubscriberType.disabled = false;
             }
+        }
+    }
+
+    paymentLogic(){ 
+        /*if(this.type == 'Comunicazione Pagamento'){
+            let accountholderTypeBeneficiary = this.selector('AccountholderTypeBeneficiary__c');
+            console.log('#accountholderTypeBeneficiary : ' + accountholderTypeBeneficiary.value);
+            if(accountholderTypeBeneficiary != null){
+                let beneficiaryAccount = this.selector('BeneficiaryAccount__c');
+                if(accountholderTypeBeneficiary.value !== '' && accountholderTypeBeneficiary.value !== undefined && accountholderTypeBeneficiary !== null && accountholderTypeBeneficiary.value == 'Stesso Sottoscrittore'){
+                    beneficiaryAccount.disabled = true;
+                    console.log('#accountId : ' + this.caseAccId);
+                    beneficiaryAccount.value = this.caseAccId;
+                }else{
+                    beneficiaryAccount.disabled = false;
+                }
+            }
+            
+        }*/
+        if(this.type == 'Comunicazione Pagamento'){
+            let canalePagamento = this.selector('ChannelOfPayment__c');
+            if(canalePagamento && canalePagamento.value === 'Banca BONIFICO'){
+                this.labelSaveButton  = 'Avanti';
+            }else{
+                this.labelSaveButton  = 'Conferma Pratica';
+            }
+        }else if(this.type == 'Promessa di Pagamento Ente'){
+            let canalePagamento2 = this.selector('ChannelOfPayment__c');
+            canalePagamento2.disabled = true;
+            canalePagamento2.value = 'Banca BONIFICO';
         }
     }
 
@@ -407,12 +477,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             if(fifthLevel != null){
                 let soldBy = this.selector('SoldBy__c');
                 if(soldBy != null){
-                    if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
-                        soldBy.disabled = false;
-                    }else{
-                        soldBy.disabled = true;
-                    }
+                if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
+                    soldBy.disabled = false;
+                }else{
+                    soldBy.disabled = true;
                 }
+            }
             }
         } else if(!(Object.keys(channel).length === 0)){
             let entryChannel = this.selector('ComplaintEntryChannel__c');
@@ -427,6 +497,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
 
     installmentsLogic(){
+        console.log('Rec ' + this.type);
         let reasonObj =  this.objSelector('Reason__c');
         console.log('#Reason --> ' + JSON.stringify(reasonObj));
         let paymentType = this.objSelector('PaymentType__c');
@@ -442,8 +513,21 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         let workStatus = this.selector('WorkStatus__c');
                         let refundableEscape = this.selector('RefundableEscape__c');
                         console.log('#Valore payType -> ' + payType.value);
-                        if(reason.value.localeCompare('Assistenza Sociale') === 0 && payType != null){
-                            payType.disabled = false;
+                        if(reason.value.localeCompare('Assistenza sociale (cliente)') === 0 && payType != null){
+                            if(this.assisted){
+                                payType.disabled = true;
+                                payType.value = 'Totalmente dal Cliente';
+                            }
+                            else payType.disabled = false;
+                            workStatus.disabled = true;
+                            workStatus.required = false;
+                            workStatus.value = '';
+                        }else if(reason.value.localeCompare('Assistenza sociale (ente)') === 0 && payType != null){
+                            if(this.assisted){
+                                payType.disabled = true;
+                                payType.value = 'In compartecipazione o totalmente da istituzioni pubbliche';
+                            }
+                            else payType.disabled = false;
                             workStatus.disabled = true;
                             workStatus.required = false;
                             workStatus.value = '';
@@ -489,7 +573,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                     depositamount.disabled = false;
                     depositDate.disabled = false;
                 }
-                if(depositPaymentMode.value === 'Paperless' && !depositPaymentMode.disabled){
+                if((depositPaymentMode.value === 'Paperless' || depositPaymentMode.value === 'Bonifico Paperless') && !depositPaymentMode.disabled){
                     sendPaperlessCode.disabled = false;
                 }
             }
@@ -501,7 +585,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             console.log('#DepositPaymentMode -> ' + depositPaymentMode.value)
             if(depositPaymentMode.value !== null && depositPaymentMode.value !== undefined){
                 let paperlessCode = this.selector('SendPaperlessCodeMode__c');
-                if(depositPaymentMode.value === 'Paperless'){
+                if(depositPaymentMode.value === 'Paperless' || depositPaymentMode.value === 'Bonifico Paperless'){
                     paperlessCode.disabled = false;
                 } else {
                     paperlessCode.disabled = true;
@@ -582,5 +666,37 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                 }
             }
         }
+    }
+
+    subscribeMC() {
+		// recordId is populated on Record Pages, and this component
+		// should not update when this component is on a record page.
+        this.subscription = subscribe(
+            this.messageContext,
+            BUTTONMC,
+            (mc) => {
+                if(this.sessionid==mc.sessionid){
+                    switch (mc.message){
+                        case "draft":
+                        case "cancel":
+                            this.handleDraft({target:{name:mc.message}});
+                            break;
+                        case "save":
+                            this.template.querySelector("[data-id='submitButton']")?.click();
+                        break;
+                        default:
+                        break;
+                    }                    
+                }
+            
+            },
+            //{ scope: APPLICATION_SCOPE }
+        );
+		// Subscribe to the message channel
+	}
+
+    unsubscribeToMessageChannel() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
     }
 }

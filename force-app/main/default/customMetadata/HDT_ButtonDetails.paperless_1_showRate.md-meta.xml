@@ -16,11 +16,15 @@
     </values>
     <values>
         <field>ButtonOrder__c</field>
-        <value xsi:type="xsd:double">7.0</value>
+        <value xsi:type="xsd:double">8.0</value>
     </values>
     <values>
         <field>ButtonType__c</field>
         <value xsi:type="xsd:string">lwcmethod</value>
+    </values>
+    <values>
+        <field>HideForExtObj__c</field>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>IsVisible__c</field>

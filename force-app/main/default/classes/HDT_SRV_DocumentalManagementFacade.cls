@@ -27,6 +27,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             resultMap.put('result',result);
             resultMap.put('message',message);
             resultMap.put('status',status);
+            HDT_SRV_DocumentalManagement.traceRequest(resultMap, body,recordId);
             /*
             system.debug(LoggingLevel.DEBUG,'body --> '+body);
             system.debug(LoggingLevel.DEBUG,'documentalResponse --> '+documentalResponse);

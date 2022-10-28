@@ -7,7 +7,7 @@ import LNDRGS_OBJ from '@salesforce/schema/LandRegistry__c';
 import getCadastralCategories from '@salesforce/apex/HDT_UTL_LandRegistry.getCadastralCategories';
 import getCities from '@salesforce/apex/HDT_UTL_LandRegistry.getCities';
 
-const RT_NAME = 'Dati Catastali TARI';
+const RT_NAME = 'HDT_RT_DatiCatastali_PraticaTARI';
 const FORM_LOAD_TO_DO = 'TO_DO';
 const FORM_LOAD_ALMOST_DONE = 'ALMOST_DONE';
 const FORM_LOAD_DONE = 'DONE';
@@ -26,6 +26,8 @@ export default class HdtLandRegistryEdit extends LightningElement {
             this._recordId = newValue;
         }
     }
+    @api orderId;
+    @api caseId;
     @api servicePointId;
     @api required;
     @api readonly;
@@ -147,7 +149,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
             //controllo se abilitare o meno il salva in base ai campi required
             this.disableSalva = false;
             if(this._required){
-                let inputList = this.template.querySelectorAll('lightning-input-field');
+                let inputList = this.template.querySelectorAll('lightning-input-field:not(.slds-hide)');
                 inputList.forEach(input => {
                     if(input.fieldName != "CodeMissingRegistryData__c" && ( input.value == null || input.value == "")) this.disableSalva = true;
                 });
@@ -237,6 +239,8 @@ export default class HdtLandRegistryEdit extends LightningElement {
         event.detail.fields.LegalCity__c = this.legalCityValue;
         event.detail.fields.RegistryCategory__c = this.cadastralCategoryValue;
         event.detail.fields.Status__c = "Bozza";
+        event.detail.fields.Case__c = this.caseId;
+        event.detail.fields.Order__c = this.orderId;
         this.template.querySelector('lightning-record-edit-form').submit(event.detail.fields);
         this.disableSalva=true;
         this.showSpinner = true;
@@ -252,8 +256,8 @@ export default class HdtLandRegistryEdit extends LightningElement {
     }
 
     handleFormError(event){
-        console.error("### handleFormError", event);
-        const evt = new ShowToastEvent({ variant: 'error', title: 'Operazione non eseguita!', message: 'Errore ' + this._recordId });
+        console.error("### handleFormError", event.detail.detail);
+        const evt = new ShowToastEvent({ variant: 'error', title: 'Operazione non eseguita!', message: 'Errore ' + event.detail.detail });
         this.dispatchEvent(evt);
         this.showSpinner = false;
     }

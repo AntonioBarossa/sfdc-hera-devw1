@@ -101,18 +101,18 @@ export default class HdtAttachmentManager extends LightningElement {
         let objectToReturn = { 
             isValid: true
         };
+        /*
         if(this.objectName?.toUpperCase() == 'CASE'){
             switch(this.currObject.Type.toUpperCase()) {
                 case 'MODIFICA DATI CONTRATTUALI':
                     if( this.currObject.RequestSource__c.toUpperCase() != 'DA CONTRIBUENTE' ){
                         objectToReturn = { 
                             isValid: false, 
-                            errorMessage: 'E\' obbligatorio inserire almeno un allegato' 
+                            errorMessage: 'È obbligatorio inserire almeno un allegato' 
                         };  
                     }
-                /*
+                
                 case 'MODIFICA POST ACCERTAMENTO':
-                    /*
                     if( 'SUPERFICIE' == this.currObject.Subprocess__c?.toUpperCase() && 
                         'NON DOMESTICO' == this.currObject.ServicePoint__r?.SupplyType__c.toUpperCase() && 
                         this.currObject.DeclaredArea__c < this.currObject.Surface__c){
@@ -130,12 +130,20 @@ export default class HdtAttachmentManager extends LightningElement {
                             isValid: true
                         } 
                     }
-                */
+                         
                     break;
+                case 'PIANO RATEIZZAZIONE':
+                    objectToReturn = { 
+                        isValid: false, 
+                        errorMessage: 'È obbligatorio inserire almeno un allegato' 
+                    };
+                    break;
+                
                 default:
                     break;
             }
         }
+        */
         return objectToReturn;
     }
 

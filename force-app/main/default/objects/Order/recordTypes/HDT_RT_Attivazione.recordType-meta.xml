@@ -70,6 +70,47 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>SeasonUse__c</picklist>
+        <values>
+            <fullName>Nessuna stagionalita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso stagionale estate Giu/Ago</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso stagionale estate Apr/Set</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PayPurification__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PaySewer__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>BillSendMode__c</picklist>
         <values>
             <fullName>Bolletta per e-mail</fullName>
@@ -2282,6 +2323,10 @@
             <fullName>Comunicazione verso Heroku OK</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Creazione BP-CA</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Credit Check KO</fullName>
             <default>false</default>
@@ -2537,6 +2582,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>QualityCallStatus__c</picklist>
+        <values>
+            <fullName>Attività Gestita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scadenza Gestita</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>QuickQuote__c</picklist>
         <values>
             <fullName>Non Validato</fullName>
@@ -2728,6 +2784,14 @@
         </values>
         <values>
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi S.p.A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi TARI</fullName>
             <default>false</default>
         </values>
     </picklistValues>

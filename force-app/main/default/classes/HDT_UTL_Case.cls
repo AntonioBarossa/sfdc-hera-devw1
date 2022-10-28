@@ -91,7 +91,7 @@ public inherited sharing class HDT_UTL_Case {
             } 
             catch (Exception e) 
             {   
-                output.isCompatible = '';
+                output.isCompatible = e.getMessage();
                 System.debug(LoggingLevel.DEBUG,'Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());    
             }
             
@@ -105,7 +105,7 @@ public inherited sharing class HDT_UTL_Case {
             Datetime nowDate = Datetime.now();
             String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
             output.cancellationNote = nowDateFormat + ': ' + cancellationNote;
-            
+            output.cancellationNote = output.cancellationNote.length() > 255 ? output.cancellationNote.substring(0, 255) : output.cancellationNote; 
         }
         else if(process.equalsIgnoreCase('CreaBpCa')){
             System.enqueueJob(new HDT_QBL_BpCaRequest( accountContactRelationQr.getCreateBpCa( currentCase.AccountId ), currentCase.SupplyProvince__c, true ) );
@@ -156,9 +156,40 @@ public inherited sharing class HDT_UTL_Case {
                 System.debug(LoggingLevel.DEBUG,'Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());  
             }
 
-        }/*else if (process.equalsIgnoreCase('Modifica Unita Immobiliari Componenti')){
+        }else if (process.equalsIgnoreCase('Modifica Unita Immobiliari Componenti')){
 
-        }*/
+            Case newCurrentCase = [SELECT SupplyCity__c, RateCategory__c FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED];
+            List<AllineamentoGAA__c> listAllineamentoGaa = [SELECT Frequenza__c FROM AllineamentoGAA__c WHERE Comune__c =: newCurrentCase.SupplyCity__c AND Rate_Category__c =: newCurrentCase.RateCategory__c WITH SECURITY_ENFORCED];
+
+            if(listAllineamentoGaa.size() > 0){
+                output.allineamentoGaa = 'Y';
+                System.debug(LoggingLevel.DEBUG, 'Frequenza__c: ' + listAllineamentoGaa.get(0).Frequenza__c);
+                output.frequenzaAllineamentoGaa = listAllineamentoGaa.get(0).Frequenza__c;
+            }else{
+                output.allineamentoGaa = 'N';
+            }
+        }
+        else if(cluster.equalsIgnoreCase('Reclami') && process.equalsIgnoreCase('calculateExpirationDate'))
+        {
+            HDT_UTL_Reclami utlReclami = new HDT_UTL_Reclami();
+            Map<String,String> datesNamount = utlReclami.setExpirationDate(currentCase, salesCompany);
+            //output.effectiveDate
+            if( datesNamount.containsKey('EndDate__c') ){
+                output.endDate = date.valueOf(datesNamount.get('EndDate__c'));
+            }
+            if( datesNamount.containsKey('CompletedDocumentationDate__c') ){
+                output.completedDocumentationDate = date.valueOf(datesNamount.get('CompletedDocumentationDate__c'));
+            }
+            if( datesNamount.containsKey('DepositExpirationDate__c') ){
+                output.depositExpirationDate = date.valueOf(datesNamount.get('DepositExpirationDate__c'));
+            }
+            if( datesNamount.containsKey('AmountToPayInInstallments__c') ){
+                output.amountToPayInInstallments = decimal.valueOf(datesNamount.get('AmountToPayInInstallments__c'));
+            }
+            if( datesNamount.containsKey('DepositAmount__c') ){
+                output.depositAmount = decimal.valueOf(datesNamount.get('DepositAmount__c'));
+            }
+        }
 
         outputs.add(output);
 
@@ -197,6 +228,16 @@ public inherited sharing class HDT_UTL_Case {
     public class HDT_UTL_FlowOutputs{
 
         @InvocableVariable
+        public Date endDate;
+        @InvocableVariable
+        public Date completedDocumentationDate;
+        @InvocableVariable
+        public Date depositExpirationDate;
+        @InvocableVariable
+        public Decimal amountToPayInInstallments;
+        @InvocableVariable
+        public Decimal depositAmount;
+        @InvocableVariable
         public Date effectiveDate;
         @InvocableVariable
         public String option;
@@ -220,6 +261,12 @@ public inherited sharing class HDT_UTL_Case {
         public Integer count;
         @InvocableVariable
         public Date dataInizioVariazione;
+        @InvocableVariable
+        public String allineamentoGaa;
+        @InvocableVariable
+        public String frequenzaAllineamentoGaa;
+        @InvocableVariable
+        public String isDomestico;
 
     }
 

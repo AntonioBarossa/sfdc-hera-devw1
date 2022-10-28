@@ -196,6 +196,10 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_DoubleCalloutPrevention__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_ExciseTranscode__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -229,6 +233,10 @@
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_HeraCompany__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_HiddenSearchBarPostSales__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
@@ -462,7 +470,47 @@
     <customSettingAccesses>
         <enabled>true</enabled>
         <name>HDT_FulfillmentDateMatrix__c</name>
-    </customSettingAccesses>    
+    </customSettingAccesses>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.WasteCommodityType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AllineamentoGAA__c.Comune__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AllineamentoGAA__c.Frequenza__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AllineamentoGAA__c.Rate_Category__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.DataUltimoAllineamentoGAA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentSelected__c.DocumentalSystem__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentSelected__c.EnvelopeId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentSelected__c.IssuingCompanyCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>DocumentSelected__c.CommoditySector__c</field>
@@ -490,12 +538,62 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>TechnicalHolidaysCalendar__c.Year__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalHolidaysCalendar__c.HolidayDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>TownATOTable__c.ATO__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>TownATOTable__c.Town__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TownATOTable__c.CompanyOwner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.ExistActivityDatiDiscordantiNew__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.ExistActivitySwitchRipristinatorioNew__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.IsChangeUseNew__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.IsResellerNew__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.IsSTGNew__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.OngoingSwitchOutNew__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.isOwnAccountNew__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -608,6 +706,21 @@
         <field>VocalOrderPublicConfirm__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>VolumetricEstimate__c.CubicMeters__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>VolumetricEstimate__c.Description__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>VolumetricEstimate__c.Typology__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>RateCategory__c.Fornitura__c</field>
@@ -651,6 +764,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>MatriceRemiCode__c.RemiCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.IsAddressChanged__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -852,6 +970,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.IstatCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.RonchiCategoryCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.RonchiSubCategoryCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CampaignMemberLeadAssigmentItem__c.Agency__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -972,6 +1105,61 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.DomesticResidentNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ForfaitSewer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.HydrantMouthsNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.NotDisconnectabilityCustomer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.NotDomesticHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.NotResidentDomesticHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.NumerousComunity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.PayPurification__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.PaySewer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ResidentDomesticHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SeasonUse__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.ContractExpenses__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -998,6 +1186,21 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.DocumentalVat__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.DocumentDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.DocumentNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.DocumentType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2280,6 +2483,126 @@
         <field>Account.Website</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Account.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>AccountContactRelation.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Asset.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Case.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Contact.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ContactPointEmail.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ContactPointPhone.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ContentVersion.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Contract.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>DocumentSelected__c.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>DocumentSendTracking__c.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>DocumentalActivity__c.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>LandRegistry__c.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>OrderItem.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>PushTracking__c.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Reading__c.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>SBQQ__Subscription__c.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>SMSTracking__c.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>SiebelCommTracking__c.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>SolTracking__c.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>SurveyResponse__c.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>et4ae5__IndividualEmailResult__c.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>wrts_prcgvr__Activity__c.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>AccountBalance__c.Context__c</field>
@@ -2738,6 +3061,46 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AlertConfiguration__c.IsSolChannelActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.Attivo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.CategoriaTariffa__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.CodiceCategoriaTariffa__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.DataFineValidita__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.DataInizioValidita__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.Societa__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.SottotipologiaUso__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmministrazioneSottotipologiaUso__c.TipologiaUso__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4600,7 +4963,7 @@
         <field>Product2.Cloned__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>true</editable>
         <field>Product2.DefaulStartTime__c</field>
         <readable>true</readable>
@@ -5405,6 +5768,11 @@
 		<field>Case.ClientType__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.ClientTypology__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Case.CohabitantsNumber__c</field>
@@ -5928,11 +6296,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.CarType__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.CaseSource__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8197,11 +8560,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.CaseSource__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.CommunicationType__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8240,6 +8598,16 @@
         <field>Case.SewerPay__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.WithdrawalFee__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Case.WithdrawalPrivateArea__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>City__c.BelfioreCode__c</field>
@@ -8378,11 +8746,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>CityTechnicalData__c.CityNotManagedAlert__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>CityTechnicalData__c.CityMMS__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8848,6 +9211,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.MailingStreetNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.MktCloudTstSyncAllowed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9465,6 +9833,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.GlobalMigrationKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.Iniziativa__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10767,6 +11140,131 @@
         <field>Event.WhoId</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ExpRavv__c.Case__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ExpRavv__c.CheckArea__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ExpRavv__c.CityCode__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ExpRavv__c.ExtractionFlag__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ExpRavv__c.OnerousReviewableDaysDiff__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ExpRavv__c.OperandName__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ExpRavv__c.OperandValue__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ExpRavv__c.Order__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ExpRavv__c.SapTariCode__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ExpRavv__c.Subtype__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ExpRavv__c.SuspensionEndDate__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ExpRavv__c.SuspensionStartDate__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>ExpRavv__c.Type__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdraw__c.Canceled__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdraw__c.LastFreeWithdrawDate__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.FreeWithdrawCalculation__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.Municipality__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.PayIfIsPrivateAreaDom__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.PayIfIsPrivateAreaNotDom__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.ToPayIfVolumeEqualOrHigherDom__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.ToPayIfVolumeEqualOrHigherNotDom__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.PicklistRestriction__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.ToBePaidWithinMonthsDomestic__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.ToBePaidWithinMonthsNotDomestic__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.TypeOperation__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>FulfillmentDateMatrix__c.ActivationDate__c</field>
@@ -11040,6 +11538,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>HDT_ButtonDetails__mdt.Tab__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_ButtonDetails__mdt.HideForExtObj__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11374,6 +11877,31 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>HDT_DoubleCalloutPrevention__mdt.Arguments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_DoubleCalloutPrevention__mdt.CheckOnPhaseStory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_DoubleCalloutPrevention__mdt.IsActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_DoubleCalloutPrevention__mdt.ObjectName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_DoubleCalloutPrevention__mdt.PhaseToCheck__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>HDT_ExciseTranscode__mdt.Active__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11555,6 +12083,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>HDT_HeraCompany__mdt.SalesCompany__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_HiddenSearchBarPostSales__mdt.TargetObject__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_HiddenSearchBarPostSales__mdt.ProcessType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12674,6 +13212,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>LandRegistry__c.Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>LandRegistry__c.CodeMissingRegistryData__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12697,6 +13240,16 @@
         <field>LandRegistry__c.EndDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>LandRegistry__c.GlobalMigrationKey__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>LandRegistry__c.IsMigrated__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>LandRegistry__c.LegalCity__c</field>
@@ -13060,6 +13613,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Lead.LeadValidityEndDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.MktCloudTstSyncAllowed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13799,6 +14357,16 @@
     </fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
+		<field>Order.FlagSending__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.SubscriberPlace__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
 		<field>Order.RonchiCode__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
@@ -13895,6 +14463,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.IsChangeSalesCompany__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.IsMyAgency__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15354,6 +15927,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.QualityCallStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.QuickQuote__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -15395,6 +15973,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.ReasonDL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.RealEstateUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15675,6 +16258,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.SiebelCatalog__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.SiebelWithdrawal__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16177,6 +16765,21 @@
         <field>Order.ProfilingPrivacy__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.BillingCategory__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.MissingDue__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.RonchiDescription__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.Activity__c</field>
@@ -16440,6 +17043,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.NewClient__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.NumberRateMonthly__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -19512,6 +20120,41 @@
         <field>RentProcessRule__c.WorkStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>RentProcessRule__c.City__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>RentProcessRule__c.MandatoryAttachments__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>RentProcessRule__c.MinAmountForSingleInstalment__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>RentProcessRule__c.MinInstallmentAmount__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>RentProcessRule__c.ProductCode__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>RentProcessRule__c.ProductDescription__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>RentProcessRule__c.RateCategory__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>ResponseTemplate__c.ComplaintBodyResponse__c</field>
@@ -21852,7 +22495,7 @@
         <field>SBQQ__QuoteLine__c.DelayDay__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.DefaulStartTime__c</field>
         <readable>true</readable>
@@ -22320,6 +22963,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.AllowChangeUse__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.allowNegativeQuantity__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -26498,6 +27146,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Sale__c.DocumentDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Sale__c.DocumentNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Sale__c.DocumentType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Sale__c.FriendCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -26683,6 +27346,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.MaxFreeWithdrawDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.CountFreeWithdraw__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.SapContractStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -26745,7 +27418,12 @@
         <editable>true</editable>
         <field>ServicePoint__c.AnnualVolumeReplacement__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>   
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.AuthorizedNotToConfer__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
 	<fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.Collection__c</field>
@@ -27109,6 +27787,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.ServicePointCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.SingleInstallmentOperating__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.SingleInstallmentValidityDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -28436,7 +29124,7 @@
         <field>TechnicalOffer__c.EndDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>true</editable>
         <field>TechnicalOffer__c.Discount__c</field>
         <readable>true</readable>
@@ -28649,6 +29337,31 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>TermTable__c.Subtype__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.BillingCategory__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.Cluster__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.PopupTypeY__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.PopupTypeZ__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.Type__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
     <!--SFDC-OIG/OIM 17/09/2021-->
@@ -31440,6 +32153,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.NoteRicontattoCliente__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32723,407 +33441,437 @@
         <field>AccountContactRelation.GlobalMigrationKeyFormula__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>AccountContactRelation.IsManagerSOL__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Asset.SuperUser__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Asset.Typology__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Asset.VasDuration__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Campaign.CompanyOwner__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>CampaignMember.NumberingValidityStartDate__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>CampaignMember.StatusCode__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>CampaignMemberLeadAssigmentItem__c.CampaignMemberLeadAssigment__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Case.SurveySource__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Case.BillingCategory__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Case.MissingDueAmount__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Case.MissingDue__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Contact.Activity__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Contact.SAPIntegrationID__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ContentVersion.FileNameMigration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ContentVersion.JobNameMigration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>ContentVersion.URL__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Contract.Contact__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Contract.InvoicingPeriodDescription__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Contract.InvoicingPeriod__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>DistributorPointCode__c.City__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>DocumentSendTracking__c.CompanyOwner__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>DocumentalActivity__c.CompanyOwner__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>EligibilityCriteria__c.CampaignName__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>EligibilityCriteria__c.CategoryTypeClientOperator__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>EligibilityCriteria__c.ChannelOperator__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>EligibilityCriteria__c.ClientMarkerOperator__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>EligibilityCriteria__c.CompanyOwnerOperator__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>EligibilityCriteria__c.OriginMarketOperator__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Individual.CompanyOwner__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Integration_Log__c.Error__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Integration_Log__c.Method__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Integration_Log__c.Process_Number__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Integration_Log__c.RecordId__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Integration_Log__c.Request__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Integration_Log__c.WebService__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Interaction__c.Account__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Interaction__c.BodyEmail__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Interaction__c.Comment__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Interaction__c.Contact__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Interaction__c.Lead__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Interaction__c.ProtocolDate__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Interaction__c.Reason__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Interaction__c.ReceptionDate__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Interaction__c.SubjectEmail__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Interaction__c.Type__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Lead.Lead_Id__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Lead.Profession__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Lead.PurchaseDate__c</field>
         <readable>false</readable>
 </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
     <editable>true</editable>
     <field>Order.AnnualTARIPayment__c</field>
     <readable>true</readable>
 </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Order.IsMassive__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.CampaignName__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.MeterType__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.Percentage__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.Profile__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.Role__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.SuperUser__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Product2.ConsumptionRangeEE__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Product2.NoSellable__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Product2.OfferteVocalOrder__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Product2.PriceGreenOption__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Product2.ProductDescFormula__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Product2.SupplyType__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Product2.VASGift__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>PushTracking__c.CompanyOwner__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Queue__c.Group__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>RateCategory__c.ExternalId__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>RateTemplate__c.ExternalId__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Reading__c.ReadingDate1__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Reading__c.ReadingDate2__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Reading__c.ReadingDate3__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Reading__c.ReadingDate4__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Reading__c.ReadingDate5__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Reading__c.ReadingDate6__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Reading__c.ReadingDate7__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Reading__c.ReadingDate8__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Reading__c.ReadingDate9__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Reading__c.ReadingDateCorrector__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>Reading__c.ReadingDateMeter__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>SMSTracking__c.CompanyOwner__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.BrandLogo__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.SupplySubtype__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.BuildingCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.Company__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.ImplantType__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.Status__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>SiebelCustomer__x.ADDR_NUM__c</field>
         <readable>true</readable>
@@ -33508,152 +34256,152 @@
         <field>SiebelCustomer__x.ZIPCODE__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>SolTracking__c.CompanyOwner__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>User.Job__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>et4ae5__IndividualEmailResult__c.CompanyOwner__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.ActivityDurationFormula__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.Agency__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.AssigneeType__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.CampaignExecChannel__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.Cluster__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.CompanyOwner__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.CreatedByUsername__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.Documentation__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.DueDate__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.EnvelopeId__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.GlobalMigrationKey__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.IBMUnicaCampaignCreationDate__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.IdSiebelActivity__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.InteractionReason__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.Interaction__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.IsMigrated__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.LastAssignmentDate__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.OwnedByUser__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.PetitionerAssigneeStructure__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.PraxidiaPostWorkAction__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.PraxidiaPostWorkCause__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.PraxidiaPostWorkOutcome__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.Process__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.ReminderLastDate__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.RowIdSiebel__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.Solicited__c</field>
         <readable>false</readable>
     </fieldPermissions>
-<fieldPermissions>
+	<fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.StartDate__c</field>
         <readable>false</readable>
@@ -33680,17 +34428,87 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>MandatoryAttachments__c.ServiceProduct__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>MandatoryAttachments__c.Channel__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>MandatoryAttachments__c.Cluster__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>MandatoryAttachments__c.MacroTopic__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>MandatoryAttachments__c.ProductCode__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>MandatoryAttachments__c.ProductDescription__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>MandatoryAttachments__c.SubProcessType__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>MandatoryAttachments__c.SubscriberType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.Activity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.EndDateTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.Order__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.SlaAdministration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.SlaName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.SlaValue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.StartDateTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
  <layoutAssignments>
@@ -33882,6 +34700,10 @@
         <recordType>Case.HDT_RT_Subentro_GAS</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-HDT_VariazioniTari</layout>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-HDT_VerificaDatiAlDl</layout>
         <recordType>Case.HDT_RT_VerificaDatiAlDl</recordType>
     </layoutAssignments>
@@ -33920,6 +34742,10 @@
     <layoutAssignments>
         <layout>Case-HDT_Disattivazioni</layout>
         <recordType>Case.HDT_RT_Disattivazioni</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_DisattivazioniTari</layout>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_Domiciliazione</layout>
@@ -33962,12 +34788,24 @@
         <recordType>Case.HDT_RT_PianoRateizzazione</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-HDT_PosizionamentoContenitore</layout>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-HDT_PreventiviEle</layout>
         <recordType>Case.HDT_RT_PreventiviEle</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_PreventiviGas</layout>
         <recordType>Case.HDT_RT_PreventiviGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_ReclamiScrittiTARI</layout>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_ReclamoDaCittadino</layout>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_Rimborso</layout>
@@ -34020,6 +34858,10 @@
     <layoutAssignments>
         <layout>Case-HDT_PraticaInVolo</layout>
         <recordType>Case.HDT_RT_FlyingRequest</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Segnalazioni</layout>
+        <recordType>Case.HDT_RT_Segnalazioni</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-Close Case Layout</layout>
@@ -34337,6 +35179,26 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazione Ambiente</layout>
+        <recordType>Order.HDT_RT_SubentroAmbiente</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazione Ambiente</layout>
+        <recordType>Order.HDT_RT_ModificaTariffaRimozione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazione Ambiente</layout>
+        <recordType>Order.HDT_RT_CambioTariffa</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazione Ambiente</layout>
+        <recordType>Order.HDT_RT_AttivazioneAmbiente</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazione Ambiente</layout>
+        <recordType>Order.HDT_RT_AgevolazioniAmbiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-Dossier</layout>
@@ -34680,12 +35542,84 @@
         <useLightningRuntime>true</useLightningRuntime>
     </loginFlows>
     <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>VolumetricEstimate__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>StaticStringForDocuments__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>AllineamentoGAA__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>CaseVolumetricaJunction__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>FreeWithdraw__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>FreeWithdrawConfig__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>TechnicalHolidaysCalendar__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>AmministrazioneFrodi__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>AmministrazioneSottotipologiaUso__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -36687,6 +37621,24 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>SlaAdministration__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>SlaTracking__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
@@ -37010,6 +37962,66 @@
         <object>MandatoryAttachments__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_GenericheTari</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_PagamentoUnicoAnnuale_TARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_Segnalazioni</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_StornoRateizzazione_TARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+	<recordTypeVisibilities>
+        <default>false</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Reading__c.HDT_RT_LetturaAcqua</recordType>
@@ -37411,6 +38423,16 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>true</default>
         <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
         <visible>true</visible>
@@ -37799,6 +38821,16 @@
     <recordTypeVisibilities>
         <default>true</default>
         <recordType>wrts_prcgvr__ServiceCriteriaItem__c.wrts_prcgvr__Render</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SlaAdministration__c.HDT_RT_PostSales</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>SlaAdministration__c.HDT_RT_Sales</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>

@@ -30,7 +30,9 @@ public inherited sharing class HDT_QR_CaseValidations {
         TemporaryConnectionEndDate__c,
         Description,
         SupplyCity__c,
-        InvoicingCity__c
+        InvoicingCity__c,
+        ContractAccountCode__c,
+        RateCategory__c
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED

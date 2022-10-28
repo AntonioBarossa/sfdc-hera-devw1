@@ -40,6 +40,19 @@ global inherited sharing class HDT_SRV_PostSalesCriteriaManager implements wrts_
             {
                 result = criteriaUtl.totalResidueNull(sender);
             }
+            when 'areActivityOpen'
+            {
+                result = criteriaUtl.areActivityOpen((String)sender.get('Id'));
+            }
+            when 'activityLetturaNonInseritaInSapPresente'
+            {
+                result = criteriaUtl.activityLetturaNonInseritaInSapPresente((String)sender.get('Id'));
+            }
+            when 'activityLetturaNonInseritaInSapAssenti'
+            {
+                result = criteriaUtl.activityLetturaNonInseritaInSapAssenti((String)sender.get('Id'));
+            }
+            
         }
 
         return result;

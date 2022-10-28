@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_ComfortQualityCall</fullName>
     <active>true</active>
@@ -630,6 +630,26 @@
         </values>
         <values>
             <fullName>Ok contattato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comfort Call OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiusa Per Fine Intervallo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato Quality Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato Comfort Call</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2746,6 +2766,14 @@
         </values>
         <values>
             <fullName>Preavviso Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Scaduta</fullName>
             <default>false</default>
         </values>
     </picklistValues>

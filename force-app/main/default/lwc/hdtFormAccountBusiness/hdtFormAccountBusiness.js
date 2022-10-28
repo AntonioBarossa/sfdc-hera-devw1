@@ -548,17 +548,17 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         if(fiscalCode.value != null && fiscalCode.value != undefined && fiscalCode.value != '')
             fiscalCodeToUC = fiscalCode.value.toUpperCase();
         if(firstName.value != null && firstName.value != undefined && firstName.value != '')
-            firstNameToUC = firstName.value.toUpperCase();
+            firstNameToUC = firstName.value.toUpperCase().trim();
         if(lastName.value != null && lastName.value != undefined && lastName.value != '')
-            lastNameToUC = lastName.value.toUpperCase();
+            lastNameToUC = lastName.value.toUpperCase().trim();
         if(this.personFiscalCode.value != null && this.personFiscalCode.value != undefined && this.personFiscalCode.value != '')
             personFiscalCodeToUC = this.personFiscalCode.value.toUpperCase();
         if(this.birthPlace != null && this.birthPlace != undefined && this.birthPlace != '')
             birthPlaceToUC = this.birthPlace.toUpperCase();
         if(firstIndividualName.value != null && firstIndividualName.value != undefined && firstIndividualName.value != '')
-            firstIndividualNameToUC = firstIndividualName.value.toUpperCase();
+            firstIndividualNameToUC = firstIndividualName.value.toUpperCase().trim();
         if(lastIndividualName.value != null && lastIndividualName.value != undefined && lastIndividualName.value != '')
-            lastIndividualNameToUC = lastIndividualName.value.toUpperCase();
+            lastIndividualNameToUC = lastIndividualName.value.toUpperCase().trim();
         console.log('businessNameToUC --> '+businessNameToUC);
         console.log('fiscalCodeToUC --> '+fiscalCodeToUC);
         console.log('firstNameToUC --> '+firstNameToUC);

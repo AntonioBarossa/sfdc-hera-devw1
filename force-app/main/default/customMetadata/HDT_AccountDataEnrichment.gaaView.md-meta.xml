@@ -73,7 +73,7 @@
     </values>
     <values>
         <field>Credential__c</field>
-        <value xsi:type="xsd:string">Callout:MulesoftBasePath/transfers/lock-unlock-calculations</value>
+        <value xsi:type="xsd:string">Callout:MulesoftBasePath/data-enrichment/household</value>
     </values>
     <values>
         <field>UseMock__c</field>

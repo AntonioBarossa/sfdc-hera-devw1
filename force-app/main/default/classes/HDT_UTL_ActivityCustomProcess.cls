@@ -274,6 +274,9 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             if(typeOfCommodity == 'Gas'){
                 typeOfCommodity = 'GAS';
             }
+            if(typeOfCommodity == 'Acqua'){
+                typeOfCommodity = 'ACQUA';
+            }
             
             HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail iwd = new HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail();
             if(act.Order__r.ServicePoint__c != null && act.Order__r.ServicePoint__r.AnnualConsumption__c != null){
@@ -432,24 +435,33 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
 
     public static void sendCloseNotification(List<wrts_prcgvr__Activity__c> newTriggerList , Map<Id,SObject> oldTriggerMap){
         List<wrts_prcgvr__Activity__c> activityToSendNotify = new List<wrts_prcgvr__Activity__c>();
+        Set<Id> userIdSet = new Set<Id>();
         for (wrts_prcgvr__Activity__c activity : newTriggerList){
             wrts_prcgvr__Activity__c oldActivity = (wrts_prcgvr__Activity__c)oldTriggerMap.get(activity.Id);
             if ('Manuale'.equalsIgnoreCase(activity.DiscardCategory__c) && 'Chiusa'.equalsIgnoreCase(activity.wrts_prcgvr__Status__c) && !activity.wrts_prcgvr__Status__c.equalsIgnoreCase(oldActivity.wrts_prcgvr__Status__c)){
                 activityToSendNotify.add(activity);
+                userIdSet.add(activity.CreatedById);
             }
         }
 
         if (!activityToSendNotify.isEmpty()){
+            List<User> userList = HDT_QR_UserQueries.getUsersStatus(userIdSet);
+            Map<Id, User> idUserMap = new Map<Id, User>(userList);
             HDT_QR_Knowledge qrKb = new HDT_QR_Knowledge();
             CustomNotificationType notificationType = qrKb.getCustomNotificationType();
             for (wrts_prcgvr__Activity__c activity : activityToSendNotify){
                 try{
-                    Messaging.CustomNotification notification = new Messaging.CustomNotification();
-                    notification.setTitle('Chiusura Attività');
-                    notification.setBody('L\'attività manuale ' + activity.Name + ' è stata chiusa');
-                    notification.setNotificationTypeId(notificationType.Id);
-                    notification.setTargetId(activity.Id);
-                    notification.send(new Set<String>{activity.CreatedById});
+                    if(idUserMap.get(activity.CreatedById).IsActive){
+                        Messaging.CustomNotification notification = new Messaging.CustomNotification();
+                        notification.setTitle('Chiusura Attività');
+                        notification.setBody('L\'attività manuale ' + activity.Name + ' è stata chiusa');
+                        notification.setNotificationTypeId(notificationType.Id);
+                        notification.setTargetId(activity.Id);
+                        notification.send(new Set<String>{activity.CreatedById});
+                    }else {
+                        continue;
+                    }
+                   
                 } catch(Exception e){
                     System.debug(LoggingLevel.DEBUG, 'Impossibile inviare notifica: ' + e.getMessage() + '. Error at line: ' + e.getLineNumber());
                 }

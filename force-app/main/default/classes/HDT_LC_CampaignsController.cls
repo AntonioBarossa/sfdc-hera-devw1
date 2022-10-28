@@ -56,6 +56,16 @@ public inherited sharing class HDT_LC_CampaignsController {
             }
             else if(objectName.equalsIgnoreCase('Lead')) {
                 return  campaignMemberQr.getCampaignsByLeadPartner(id, currentUser);
+            }else if(objectName.equalsIgnoreCase('Account')) {
+                //return all active campaigns related to all contacts related to this Account
+                List<String> contacts = contactQr.getContactsIdByAccountId(id);
+                if (String.isNotBlank(category)) {
+                    if (String.isNotBlank(channel)) {
+                        return campaignMemberQr.filterCampaignsByCategoryAndChannelWithStatus(contacts, category, channel);
+                    }
+                    return campaignMemberQr.filterCampaignsByCategoryWithStatus(contacts, category);
+                }
+                return campaignMemberQr.getCampaignsFilteredByContactsWithStatus(contacts);
             }
             else {
                 return null;
@@ -72,15 +82,22 @@ public inherited sharing class HDT_LC_CampaignsController {
     }
     @AuraEnabled
     public static CampaignMember updateCampaignMemberStatus(String campaignMemberId, String statusValue){
+        system.debug('PUNTO 1 : campaignMemberId --> '+campaignMemberId);
+        system.debug('PUNTO 2 : statusValue --> '+statusValue);
         try {
+            system.debug('PUNTO 3');
             CampaignMember cm = new CampaignMember(
             Id = campaignMemberId,
             Status = statusValue
             );
+            system.debug('PUNTO 4');
             campaignMemberSrv.updateRecord(cm);
+            system.debug('PUNTO 5');
+
             return cm;
         }
         catch (Exception e) {
+            system.debug('PUNTO 6');
             return null;
         }
     }
@@ -473,4 +490,74 @@ public inherited sharing class HDT_LC_CampaignsController {
         }
         return null;
     }
+
+    @AuraEnabled
+    public static Map<String, String> getOutcomeValues(String campaignMemberId, String outcomeType){
+
+        Map<String, String> partialOutcomeValues = new Map<String, String>();
+        Set<String> campaignIds = new Set<String>();
+        List<Campaign> campaignList = new List<Campaign>();
+        List<CampaignMember> campaignMemberList = new List<CampaignMember>();
+
+        List<HDT_CampaignMemberStatus__mdt> campaignStatusMdt = HDT_QR_CampaignMemberStatusMetadata.getRecords();
+
+        system.debug('campaignStatusMdt --> '+campaignStatusMdt);
+
+        campaignMemberList = [SELECT Id, CampaignId FROM CampaignMember WHERE Id =: campaignMemberId];
+
+        system.debug('campaignMemberList --> '+campaignMemberList);
+
+
+        for(CampaignMember cm : campaignMemberList){
+            campaignIds.add(cm.CampaignId);
+        }
+
+        system.debug('campaignIds --> '+campaignIds);
+
+        campaignList = [SELECT Id, Category__c, Channel__c FROM Campaign WHERE Id IN: campaignIds];
+
+        system.debug('campaignList --> '+campaignList);
+
+        system.debug('PUNTO 0');
+        for(HDT_CampaignMemberStatus__mdt cmdt : campaignStatusMdt){
+            system.debug('PUNTO 1');
+            if (
+                ((cmdt.Category__c == 'Entrambi' && cmdt.Channel__c == 'Tutti' && campaignList[0].Channel__c!='Door to Door') ||
+                (campaignList[0].Category__c == 'Campagna CRM' && (cmdt.Category__c == 'Inbound' || cmdt.Category__c == 'Entrambi') && cmdt.Channel__c == 'Tutti') || (
+                    (campaignList[0].Category__c == 'Campagna Outbound' && cmdt.Category__c == 'Outbound') && (
+                        (campaignList[0].Channel__c == 'Telefonico Outbound' && cmdt.Channel__c == 'Telefonico Outbound') ||
+                        (campaignList[0].Channel__c == 'Cartaceo' && cmdt.Channel__c == 'Cartaceo')
+                    )
+                ) ||
+                (campaignList[0].Category__c == 'Campagna Marketing Cloud' && cmdt.Category__c == 'Marketing Cloud') || 
+                (cmdt.Category__c == 'Outbound' && cmdt.Channel__c == 'Door to Door' && campaignList[0].Channel__c=='Door to Door')) && (cmdt.OutcomeCategory__c == outcomeType)
+            )  {
+                system.debug('PUNTO 2');
+                partialOutcomeValues.put(cmdt.StatusName__c, cmdt.StatusName__c);
+            }
+            system.debug('PUNTO 3');
+        }
+
+        system.debug('PUNTO 4');
+
+        system.debug('partialOutcomeValues --> '+partialOutcomeValues);
+
+        return partialOutcomeValues;
+        
+    }
+
+    @AuraEnabled
+    public static Boolean getCurrUserRole(){
+
+        String roleId=UserInfo.getUserRoleId();
+        List <UserRole> currUserRole=new List <UserRole>();
+        if(String.isNotBlank(roleId)){
+            currUserRole=[SELECT Id, Name FROM UserRole WHERE Id=:roleId LIMIT 1];
+            if (currUserRole[0].Name.containsIgnoreCase('Front')) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }

@@ -25,6 +25,47 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>SeasonUse__c</picklist>
+        <values>
+            <fullName>Nessuna stagionalita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso stagionale estate Giu/Ago</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso stagionale estate Apr/Set</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PayPurification__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PaySewer__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ActivationType__c</picklist>
         <values>
             <fullName>Primo soggetto passivo</fullName>
@@ -2123,6 +2164,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>RequestSource__c</picklist>
+        <values>
+            <fullName>Da contribuente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D'ufficio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>QuickQuote__c</picklist>
         <values>
             <fullName>Non Validato</fullName>
@@ -2314,6 +2366,14 @@
         </values>
         <values>
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi S.p.A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi TARI</fullName>
             <default>false</default>
         </values>
     </picklistValues>

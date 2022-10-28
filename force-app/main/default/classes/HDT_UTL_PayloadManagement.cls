@@ -213,6 +213,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         
         if (processType == 'Paperless' || (processType == 'Piano Rateizzazione' && depositPaymentMode == 'Paperless')){
             isPaperless = 'Y';
+            if(depositPaymentMode == 'Bonifico Paperless'){
+                isPaperless = 'B';
+            }
         }
         return isPaperless;
     }
@@ -278,7 +281,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 }
 
                 // Su Engage1 i plichi dei preventivi sono configurati solo per la 1070.
-                if (companyDesc != 'Hera Comm S.p.A.' && (cluster == 'Verifiche' || cluster == 'Preventivi')) {
+                if (companyDesc != 'Marche Multiservizi S.p.A' && companyDesc != 'Hera Comm S.p.A.' && (cluster == 'Verifiche' || cluster == 'Preventivi')) {
                     companyDesc = 'Hera Comm S.p.A.';
                 }
             }
@@ -458,24 +461,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         
         System.debug(LoggingLevel.DEBUG, 'Amount: ' + amount);
         if(String.isNotBlank(amount)){
-            amountDouble = Double.valueOf(amount);
-            if(String.isNotBlank(iva)){
-                if(iva.indexOf('10') > -1){
-                    ivaInteger = 10;
-                }else if(iva.indexOf('22') > -1){
-                    ivaInteger = 22;
-                }
-                if(ivaInteger > 0){
-                    ivaAmount = ((amountDouble/100)*ivaInteger);
-                }
-            }
-            totalAmount = amountDouble + ivaAmount;
-
             if(String.isBlank(variableAmount) && String.isBlank(fixedAmount) 
                 && (context.equalsIgnoreCase('Case') || context.equalsIgnoreCase('Order')) 
                 && (cluster.equalsIgnoreCase('Preventivi') 
                 || caseType.equalsIgnoreCase('Temporanea - Nuova Attivazione')
                 || caseType.equalsIgnoreCase('Prima Attivazione con modifica')
+                || caseType.equalsIgnoreCase('Aggiunta Attacco con Attivazione')
                 || caseType.equalsIgnoreCase('Connessione con Attivazione'))){
                 //variableAmount è l'importo prestazione calcolato come amount - fixedAmount
                 //fixed amount è solo quotaVend se Variazione potenza dom sennò è quotaDistr + quotaVend| Se l'offerta è Placet togliere la quota Vend
@@ -484,7 +475,30 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 }else {
                     fixedAmount = '48.81';
                 }
-                variableAmount = String.valueOf(Double.valueOf(amount) - Double.valueOf(fixedAmount));
+                /* Nel caso in cui l'importo sia pari a 0 vi e' solo la quota fissa
+                * l'importo totale in questo caso e' pari alla sola quota fissa
+                * su quello va calcolata l'iva.
+                */
+                if(Double.valueOf(amount) != null && Double.valueOf(amount) > 0)
+                {
+                    variableAmount = String.valueOf(Double.valueOf(amount) - Double.valueOf(fixedAmount));
+                }
+                else
+                {
+                    amount = fixedAmount;
+                }
+                amountDouble = Double.valueOf(amount);
+                if(String.isNotBlank(iva)){
+                    if(iva.indexOf('10') > -1){
+                        ivaInteger = 10;
+                    }else if(iva.indexOf('22') > -1){
+                        ivaInteger = 22;
+                    }
+                    if(ivaInteger > 0){
+                        ivaAmount = ((amountDouble/100)*ivaInteger);
+                    }
+                }
+                totalAmount = amountDouble + ivaAmount;
             }
             result = variableAmount + '|' + fixedAmount + '|' + amount + '|' + ivaInteger + '|' + ivaAmount + '|' + totalAmount;    
             
@@ -846,6 +860,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String endLine = '\n';
         String div = '|';
         String payloadSection = '';
+        Boolean containerDocumentalHandler = false;
 
         String context = (String) formParams.get('Contesto');
         if (context != 'Case') {
@@ -870,11 +885,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             String cleanResponseLine = HDT_UTL_DocumentalManagement.removeSpecialChar(splittedResponse[i]);
             List<String> splittedLine = new List<String>();  // array in caso la riga sia troppo lunga e debba essere splittata.
             // Split righe più di lunghe di 150 caratteri, altrimenti Engage1 non riesce a calcolare lo spazio necessario nel PDF.
-            if (cleanResponseLine.length() > 150) {
+            // TK 910361C -- Lunghezza stringa ridotta a 130 caratteri
+            if (cleanResponseLine.length() > 130) {
                 System.debug(LoggingLevel.DEBUG, 'Riga troppo lunga per Engage1: ' + cleanResponseLine);
                 // https://stackoverflow.com/a/10735971/16766541
                 // regex per splittare in base al word boundary (\b) se la riga supera 150 caratteri
-                Pattern splitPattern = Pattern.compile('.{1,150}\\b'); 
+                Pattern splitPattern = Pattern.compile('.{1,130}\\b'); 
                 Matcher splitMatcher = splitPattern.matcher(cleanResponseLine);
                 while (splitMatcher.find()) {
                     splittedLine.add(splitMatcher.group(0).trim());
@@ -928,7 +944,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         System.debug(LoggingLevel.DEBUG, 'caseIds: ' + caseIds);
 
         HDT_QR_Case queryCase = new HDT_QR_Case();
-        String queryFieldsCase = 'Id,CaseNumber,Contract__c,Market__c,SendDate__c,CommodityFormula__c,AddressFormula__c,PODPDRFormula__c'; // WIP. per aggiungere l'offerta bisogna querare anche i contratti del cliente... :(
+        String queryFieldsCase = 'Id,CaseNumber,FirstLevelComplaintClassification__c,IndemnityConfirmed__c,IndemnityMotivation__c,IndemnityDueSendResponse__c,IndemnityDueBilllingCorrection__c,CorrectionRight__c,CorrectionDocumentEmissionDay__c,Contract__c,Market__c,SendDate__c,CommodityFormula__c,AddressFormula__c,PODPDRFormula__c'; // WIP. per aggiungere l'offerta bisogna querare anche i contratti del cliente... :(
         List<Case> responseCases = queryCase.getRecordsById(caseIds, queryFieldsCase);
         System.debug(LoggingLevel.DEBUG, 'responseCases: ' + responseCases);
 
@@ -1026,7 +1042,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             payloadSection += String.join(record, div);
 
             for (Integer i = 0; i < docList.size(); i++) {
-                ContentDocumentLink doc = docList[0];
+                ContentDocumentLink doc = docList[i];
                 if (doc.ContentDocument != null) {
                     record = new List<String>();
                     record.add('00310');
@@ -1044,10 +1060,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         for (Integer i = 0; i < responseCases.size(); i++) {
             Case c = responseCases[i];
+            String preposition = c.FirstLevelComplaintClassification__c.equalsIgnoreCase('Reclamo Scritto') ? 'al' : 'alla';
+            String received = c.FirstLevelComplaintClassification__c.equalsIgnoreCase('Reclamo Scritto') ? 'ricevuto' : 'ricevuta';
             String[] record = new List<String>();
             record.add('00310');
             record.add('120');
-            record.add('Risposta al Reclamo ricevuto in data ' + getFormattedDate(c.SendDate__c) + ' ns Prot ' + c.CaseNumber);
+            record.add('Risposta ' + preposition + ' ' + c.FirstLevelComplaintClassification__c + ' ' + received + ' in data ' + getFormattedDate(c.SendDate__c) + ' ns Prot ' + c.CaseNumber);
             // Aggiungiamo lo \n finale sempre tranne che all'ultimo giro.
             if (i < responseCases.size() - 1) {
                 record.add(endLine);
@@ -1056,47 +1074,190 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
 
         // Record 310|130 per box indennizzi, previsto solo per i reclami scritti (non per le richieste di info).
-        String complaintClassification = HDT_UTL_DocumentalManagement.getValue('Case', 'FirstLevelComplaintClassification__c', 0, inputs, formParams);
-        if (String.isNotBlank(complaintClassification) && complaintClassification != 'Richiesta di informazioni') {
-            Boolean indemnityConfirmed = Boolean.valueOf(HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityConfirmed__c', 0, inputs, formParams));
-            String indemnityMotivation = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityMotivation__c', 0, inputs, formParams);
-            String indemnityDueSendResponse = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueSendResponse__c', 0, inputs, formParams);
-            Decimal indemnityDueSendResponseDecimal = String.isNotBlank(indemnityDueSendResponse) ? Decimal.valueOf(indemnityDueSendResponse) : 0;
-            String indemnityDueBillingCorrection = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueBilllingCorrection__c', 0, inputs, formParams);
-            Decimal indemnityDueBillingCorrectionDecimal = String.isNotBlank(indemnityDueBillingCorrection) ? Decimal.valueOf(indemnityDueBillingCorrection) : 0;
-            String correctionRight = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionRight__c', 0, inputs, formParams);
-            String correctionDocumentEmissionDate = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionDocumentEmissionDay__c', 0, inputs, formParams);
-            Boolean expiredCorrection = indemnityDueBillingCorrection != null && indemnityDueBillingCorrectionDecimal > 0;
-
-            String[] record = new List<String>();
-            record.add('00310');
-            record.add('130');
-            // Calcolo tipologia di indennizzo attesa da Engage1.
-            String boxType = calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponseDecimal);
-            if (String.isNotBlank(boxType)) {
-                record.add(boxType);
-                // Importo indennizzo, se necessario.
-                if ((boxType == '1' || boxType == '5') && indemnityDueSendResponseDecimal > 0) {
-                    record.add(indemnityDueSendResponse);
-                } else if ((boxType == '2' || boxType == '8') && indemnityDueBillingCorrectionDecimal > 0) {
-                    record.add(''); // campo vuoto per l'indemnityDueSendResponse, l'indemnityDueBillingCorrection deve stare in seconda posizione.
-                    record.add(indemnityDueBillingCorrection);
-                } else if (boxType == '4' && indemnityDueSendResponse != null && indemnityDueSendResponseDecimal > 0 && indemnityDueBillingCorrectionDecimal > 0) {
-                    record.add(indemnityDueSendResponse);
-                    record.add(indemnityDueBillingCorrection);
+        containerDocumentalHandler = true;
+        if(containerDocumentalHandler)
+        {   
+            List<Case> caseToBox = new List<Case>();
+            /* Populate Case to Box */
+            for(Integer i = 0; i < responseCases.size(); ++i)
+            {
+                Case c = responseCases[i];
+                String complaintClassification = c.get('FirstLevelComplaintClassification__c')!= null ? String.valueOf(c.get('FirstLevelComplaintClassification__c')) : '';
+                if( String.isNotBlank(complaintClassification) && !(complaintClassification.equalsIgnoreCase('Richiesta di informazioni') && !c.CommodityFormula__c.equalsIgnoreCase('Acqua') ) )
+                {
+                    caseToBox.add(c);
                 }
             }
-
-            // Aggiungiamo anche | e l'endLine poichè il record indennizzi è opzionale e il 310|120 non può aggiungere a prenscindere un endline finale.
-            payloadSection += '|' + endLine + String.join(record, div);
+            if(!caseToBox.isEmpty())
+            {
+                payloadSection+= '|' + endLine;
+            }
+            for(Integer i = 0; i < caseToBox.size(); ++i)
+            {
+                Case c = caseToBox[i];
+                String[] record = new List<String>();
+                
+                record.add('00310');
+                record.add('130');
+                Map<String,String> boxMap = generateSectionReclamiFocusIndennizzi(c);
+                if(String.isNotBlank(boxMap.get('box')))
+                {
+                    record.add(boxMap.get('box'));
+                    record.add(boxMap.get('response'));
+                    record.add(boxMap.get('correction'));
+                    record.add(c.CaseNumber);
+                }
+                if(i < caseToBox.size() - 1)
+                {
+                    record.add(endLine);
+                }
+                payloadSection+= String.join(record, div);
+            }
         }
+        /*else
+        {
+            String complaintClassification = HDT_UTL_DocumentalManagement.getValue('Case', 'FirstLevelComplaintClassification__c', 0, inputs, formParams);
+            if (String.isNotBlank(complaintClassification) && complaintClassification != 'Richiesta di informazioni') {
+                Boolean indemnityConfirmed = Boolean.valueOf(HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityConfirmed__c', 0, inputs, formParams));
+                String indemnityMotivation = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityMotivation__c', 0, inputs, formParams);
+                String indemnityDueSendResponse = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueSendResponse__c', 0, inputs, formParams);
+                Decimal indemnityDueSendResponseDecimal = String.isNotBlank(indemnityDueSendResponse) ? Decimal.valueOf(indemnityDueSendResponse) : 0;
+                String indemnityDueBillingCorrection = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueBilllingCorrection__c', 0, inputs, formParams);
+                Decimal indemnityDueBillingCorrectionDecimal = String.isNotBlank(indemnityDueBillingCorrection) ? Decimal.valueOf(indemnityDueBillingCorrection) : 0;
+                String correctionRight = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionRight__c', 0, inputs, formParams);
+                String correctionDocumentEmissionDate = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionDocumentEmissionDay__c', 0, inputs, formParams);
+                Boolean expiredCorrection = indemnityDueBillingCorrection != null && indemnityDueBillingCorrectionDecimal > 0;
+                String[] record = new List<String>();
+                record.add('00310');
+                record.add('130');
+                // Calcolo tipologia di indennizzo attesa da Engage1.
+                String boxType = calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponseDecimal);
+                if (String.isNotBlank(boxType)) {
+                    record.add(boxType);
+                    // Importo indennizzo, se necessario.
+                    if ((boxType == '1' || boxType == '5') && indemnityDueSendResponseDecimal > 0) {
+                        record.add(indemnityDueSendResponse);
+                    } else if (boxType == '2' && indemnityDueBillingCorrectionDecimal > 0) {
+                        record.add(''); // campo vuoto per l'indemnityDueSendResponse, l'indemnityDueBillingCorrection deve stare in seconda posizione.
+                        record.add(indemnityDueBillingCorrection);
+                    } else if (boxType == '8' && indemnityDueBillingCorrectionDecimal > 0){
+                        record.add(indemnityDueBillingCorrection);
+                    } else if (boxType == '4' && indemnityDueSendResponse != null && indemnityDueSendResponseDecimal > 0 && indemnityDueBillingCorrectionDecimal > 0) {
+                        record.add(indemnityDueSendResponse);
+                        record.add(indemnityDueBillingCorrection);
+                    }
+                }
+                // Aggiungiamo anche | e l'endLine poichè il record indennizzi è opzionale e il 310|120 non può aggiungere a prenscindere un endline finale.
+                payloadSection += '|' + endLine + String.join(record, div);
+            }
+        }*/
 
         return payloadSection;
     }
 
+    private static Map<String,String> generateSectionReclamiFocusIndennizzi(Case c)
+    {
+        Map<String, String> resultMap = new Map<String, String>();
+
+        String complaintClassification = c.get('FirstLevelComplaintClassification__c')!= null ? String.valueOf(c.get('FirstLevelComplaintClassification__c')) : '';
+        Boolean indemnityConfirmed = Boolean.valueOf(c.get('IndemnityConfirmed__c'));
+        String indemnityMotivation = c.get('IndemnityMotivation__c') != null ? String.valueOf(c.get('IndemnityMotivation__c')) : '';
+        String indemnityDueSendResponse = c.get('IndemnityDueSendResponse__c') != null ? String.valueOf(c.get('IndemnityDueSendResponse__c')) : '';
+        Decimal indemnityDueSendResponseDecimal = String.isNotBlank(indemnityDueSendResponse) ? Decimal.valueOf(indemnityDueSendResponse) : 0;
+        String indemnityDueBillingCorrection = c.get('IndemnityDueBilllingCorrection__c') != null ? String.valueOf(c.get('IndemnityDueBilllingCorrection__c') ) : '';
+        Decimal indemnityDueBillingCorrectionDecimal = String.isNotBlank(indemnityDueBillingCorrection) ? Decimal.valueOf(indemnityDueBillingCorrection) : 0;
+        String correctionRight = c.get('CorrectionRight__c') != null ? String.valueOf(c.get('CorrectionRight__c')) : '';
+        String correctionDocumentEmissionDate = c.get('CorrectionDocumentEmissionDay__c') != null ? String.valueOf(c.get('CorrectionDocumentEmissionDay__c')) : '';
+        Boolean expiredCorrection = indemnityDueBillingCorrection != null && indemnityDueBillingCorrectionDecimal > 0;
+
+        String box = calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponseDecimal);
+        String responseBoxPosition = indemnityDueSendResponseDecimal > 0 ? indemnityDueSendResponse : '';
+        String correctionBoxPosition = indemnityDueBillingCorrectionDecimal > 0 ? indemnityDueBillingCorrection : '';
+        resultMap.put('box', box);
+        resultMap.put('response',responseBoxPosition);
+        resultMap.put('correction',correctionBoxPosition);
+        
+        return resultMap;
+    }
+
+    /** Focus Indennizzi
+     * 1 - Ritardo Risposta (complaintClassification = Reclamo Scirtto, indemnityConfirmed= true, correctionRight = NO,  indemnityDueSendResponse > 0)
+     * 2 - Ritardo Rettifica (complaintClassification = Reclamo Scirtto, indemnityConfirmed= true, correctionRight = Si,  indemnityDueSendResponse = 0, expiredCorrection = true)
+     * 3 - Eventuale Rettifica (indemnityConfirmed= true, correctionRight = Si,  indemnityDueSendResponse = 0, expiredCorrection = false, correctionDocumentDate = vuota)
+     * 4 - Ritardo Risposta + rettifica (complaintClassification = Reclamo Scirtto, correctionRight = Si,  indemnityDueSendResponse > 0, expiredCorrection = true)
+     * 5 - Ritardo Risposta + Eventuale retitfica (complaintClassification = Reclamo Scirtto, correctionRight = Si,  indemnityDueSendResponse > 0, expiredCorrection = false, correctionDocumentDate = vuota)
+     * 6 - Altro indennizzo risposta (complaintClassification = Reclamo Scirtto, indemnityConfirmed = false, indemnityDueSendResponse > 0)
+     * 7 - Box Vuoto
+     * 8 - Ritardo doppia fatturazione (complaintClassification = Rettifica doppia, expiredCorrection = true)
+     * 9 - Altro indennizzo rettifica (indemnityConfirmed = false, indeminityDueSendResponse = 0, expiredCorrection = true)
+     * 10 - Altro indennizzo risposta + rettifica (indemnityConfirmed = false, indemnityDueSendResponse > 0, expiredCorrection = true)
+     * 11 - Ritardo Risposta Richiesta info (complaintClassification = 'Richiesta di Informazioni', indemnityConfirmed = true, indemnityDueSendResponse > 0)
+     */
     public static String calculateIndemnityBox(String complaintClassification, Boolean indemnityConfirmed, String indemnityMotivation, String correctionRight, Boolean expiredCorrection, String correctionDocumentEmissionDate, Decimal indemnityDueSendResponse) {
         String boxType = '';
+        Boolean isReclamoScritto = complaintClassification.equalsIgnoreCase('Reclamo Scritto');
+        Boolean isRettificaDoppia = complaintClassification.equalsIgnoreCase('Rettifica Doppia Fatturazione');
+        Boolean isRichiestaInformazioni = complaintClassification.equalsIgnoreCase('Richiesta di Informazioni');
+        Boolean isIndemnityResponseGtZero = indemnityDueSendResponse > 0;
+        Boolean isCorrectionRight = correctionRight.equalsIgnoreCase('Si');
+        Boolean isDateBlank = String.isBlank(correctionDocumentEmissionDate);
 
+        /* Box 1 */
+        if(isReclamoScritto && indemnityConfirmed && !isCorrectionRight && isIndemnityResponseGtZero)
+        {
+            boxType = '1';
+        }
+        /* Box 2 */
+        if(isReclamoScritto && indemnityConfirmed && isCorrectionRight && !isIndemnityResponseGtZero && expiredCorrection)
+        {
+            boxType = '2';
+        }
+        /* Box 3 */
+        if(indemnityConfirmed && isCorrectionRight && !isIndemnityResponseGtZero && !expiredCorrection && isDateBlank)
+        {
+            boxType = '3';
+        }
+        /* Box 4 */
+        if(isReclamoScritto && indemnityConfirmed && isCorrectionRight && isIndemnityResponseGtZero && expiredCorrection)
+        {
+            boxType = '4';
+        }
+        /* Box 5 */
+        if(isReclamoScritto && indemnityConfirmed && isCorrectionRight && isIndemnityResponseGtZero && isDateBlank)
+        {
+            boxType = '5';
+        }
+        /* Box 6 */
+        if(isReclamoScritto && !indemnityConfirmed && isIndemnityResponseGtZero && !expiredCorrection)
+        {
+            boxType = '6';
+        }
+        /* Box 7 viene messo blank per non far apparire l'header della sezione indennizzi nel PDF */
+        if(!isIndemnityResponseGtZero && !expiredCorrection && String.isBlank(boxType))
+        {
+            boxType = '';
+        }
+        /* Box 8 */
+        if(isRettificaDoppia && indemnityConfirmed && expiredCorrection)
+        {
+            boxType = '8';
+        }
+        /* Box 9 */
+        if(!indemnityConfirmed && !isIndemnityResponseGtZero && expiredCorrection)
+        {
+            boxType = '9';
+        }
+        /* Box 10 */
+        if(isReclamoScritto && !indemnityConfirmed && isIndemnityResponseGtZero && expiredCorrection)
+        {
+            boxType = '10';
+        }
+        /* Box 11 */
+        if( isRichiestaInformazioni && indemnityConfirmed && isIndemnityResponseGtZero)
+        {
+            boxType = '11';
+        }
+        /*
         // Emissione rettifica non prevista, indennizzo per solo ritardo nella risposta
         if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight != 'Si') {
             boxType = '1';
@@ -1138,17 +1299,15 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         else if (complaintClassification == 'Rettifica Doppia Fatturazione' && correctionRight == 'Si' && String.isNotBlank(correctionDocumentEmissionDate) && !expiredCorrection) {
             boxType = '';
         }
-
         // Check finale se indennizzo già inviato in stesso anno
         if (!indemnityConfirmed && indemnityMotivation == 'Altro indennizzo stesso anno solare') {
             boxType = '6';
         }
-
         if(indemnityDueSendResponse == 0 && !expiredCorrection)
         {
             boxType = '';
         }
-
+        */
         System.debug(LoggingLevel.DEBUG, 'calculateIndemnityBox inputs: ' + complaintClassification + ', ' + indemnityConfirmed + ', ' + indemnityMotivation + ', ' + correctionRight + ', ' + expiredCorrection + ', ' + correctionDocumentEmissionDate + ', ' + indemnityDueSendResponse);
         System.debug(LoggingLevel.DEBUG, 'calculateIndemnityBox boxType output: ' + boxType);
         return boxType;

@@ -115,6 +115,26 @@
                 <default>false</default>
                 <label>Piano Straordinario</label>
             </value>
+            <value>
+                <fullName>Assistenza sociale (cliente)</fullName>
+                <default>false</default>
+                <label>Assistenza sociale (cliente)</label>
+            </value>
+            <value>
+                <fullName>Assistenza sociale (ente)</fullName>
+                <default>false</default>
+                <label>Assistenza sociale (ente)</label>
+            </value>
+            <value>
+                <fullName>Autorità idrico 655</fullName>
+                <default>false</default>
+                <label>Autorità idrico 655</label>
+            </value>
+            <value>
+                <fullName>Costituzione in mora (REMSI)</fullName>
+                <default>false</default>
+                <label>Costituzione in mora (REMSI)</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -45,6 +45,8 @@ public inherited sharing class HDT_UTL_Morosita {
         containerCase.Phase__c = 'Bozza';
         containerCase.Status = 'New';
         containerCase.Priority = currentCase.Priority != null && currentCase.Priority != '' ? currentCase.Priority : '3';
+        containerCase.Origin = currentCase.Origin;
+        containerCase.PartialOutcome__c = currentCase.PartialOutcome__c;
         containerId = JSON.serialize(containerCase);
         
         return containerId;

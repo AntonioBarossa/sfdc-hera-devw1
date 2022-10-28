@@ -3,7 +3,7 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Amministrazione_SLA</content>
+        <content>SlaAdministratorSales</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
@@ -12,7 +12,7 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Amministrazione_SLA</content>
+        <content>SlaAdministratorSales</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
@@ -28,6 +28,42 @@
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>Amministrazione SLA</label>
     <navType>Standard</navType>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SlaAdministratorSales</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>SlaAdministration__c</pageOrSobjectType>
+        <recordType>SlaAdministration__c.HDT_RT_Sales</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SlaAdministratorSales</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>SlaAdministration__c</pageOrSobjectType>
+        <recordType>SlaAdministration__c.HDT_RT_Sales</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SlaAdministratorPostSales</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>SlaAdministration__c</pageOrSobjectType>
+        <recordType>SlaAdministration__c.HDT_RT_PostSales</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SlaAdministratorPostSales</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>SlaAdministration__c</pageOrSobjectType>
+        <recordType>SlaAdministration__c.HDT_RT_PostSales</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
     <tabs>SlaAdministration__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Amministrazione_SLA_UtilityBar</utilityBar>

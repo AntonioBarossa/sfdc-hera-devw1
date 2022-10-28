@@ -1,8 +1,15 @@
+/**
+ * @description       : 
+ * @author            : Giacinto Florio
+ * @group             : 
+ * @last modified on  : 12-10-2022
+ * @last modified by  : Giacinto Florio
+**/
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
-    private final static String PHASE_OK = 'Completata';
-    private final static String PHASE_KO = 'Da Inviare';
+    private final static String PHASE_OK = 'Inviata a SAP'; 
+    private final static String PHASE_KO = 'Inviata a SAP';
     private static HDT_QR_HerokuPostSalesManager hpsmQr = new HDT_QR_HerokuPostSalesManager();
     private static HDT_UTL_HerokuPostSalesManager hpsmUtl = new HDT_UTL_HerokuPostSalesManager();
 
@@ -118,23 +125,34 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
                 }else if(String.isNotBlank(responseMrr.responses[0].header.requestId)){
                     caseToUpdate.HerokuPracticeCode__c = responseMrr.responses[0].header.requestId;
                 }
-                caseToUpdate.TecnicalPhase__c = 'OK'.equalsIgnoreCase(fieldValueResponse.get('result'))? PHASE_OK : PHASE_KO;
+                caseToUpdate.TecnicalPhase__c = 'OK'.equalsIgnoreCase(fieldValueResponse.get('result'))? PHASE_OK : PHASE_KO; // ??? MODIFICARE O TOGLIERE
             }
 
             system.debug('FINAL PRE UPDATE '+caseToUpdate.TecnicalPhase__c+ ' '+caseToUpdate.Phase__c);
 
-            //OK PREDEFINITO DA SMOCKARE
-            if(caseToUpdate.StartAppointment__c==null){
-                caseToUpdate.TecnicalPhase__c= PHASE_OK;
-            }else if(currentCase.Type.equalsIgnoreCase('Gestione rifiuti')){
-                caseToUpdate.TecnicalPhase__c= 'Inviata a SAP';
+            // HRAWRM-1671 (5 Modifiche Flusso di Invio e Annullamento)
+            if(currentCase.Type.equalsIgnoreCase('Gestione Rifiuti') && caseToUpdate.StartAppointment__c==null && currentCase.WithdrawalFee__c==false && currentCase.ServicePoint__c!=null){
+                Datetime createdDate = currentCase.CreatedDate;
+                Date dataUltimoRitiro = Date.newinstance(createdDate.year(), createdDate.month(), createdDate.day());
+                System.debug('HDT_WS_SegnalazioniTari check -> ');
+                FreeWithdraw__c ritiro = new FreeWithdraw__c(
+                    LastFreeWithdrawDate__c = dataUltimoRitiro,
+                    ServicePoint__c = currentCase.ServicePoint__c
+                );
+
+                System.debug('HDT_WS_SegnalazioniTari ritiro -> ' + ritiro);
+                HDT_UTL_DatabaseService.insertSObject(ritiro);
             }
+                
+
 
             if(!Test.isRunningTest()){
                 HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
             }
         } catch (Exception ex) {
             //Error Handling
+            System.debug('exception --> ' + ex.getStackTraceString());
+            System.debug('atLine --> ' + ex.getLineNumber());
             System.debug(ex.getMessage());
             response.success = false;
             response.message = 'KO';

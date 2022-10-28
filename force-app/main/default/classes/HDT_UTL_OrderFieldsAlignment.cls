@@ -196,9 +196,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.AnnualConsumption__c = servicePoint.AnnualConsumption__c;
         orderToUpdate.isWinback__c = servicePoint.SwitchInWinback__c;
         orderToUpdate.SwitchOutDate__c = servicePoint.SwitchOutDate__c;
-        orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
-        //orderToUpdate.Market__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
-        orderToUpdate.Market__c =  'Libero';
+        orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c;
+        orderToUpdate.MarketOrigin__c = (String.isBlank(servicePoint.MarketOrigin__c) && servicePoint.RecordType.DeveloperName == 'HDT_RT_Acqua') ? 'Regolamentato' : servicePoint.MarketOrigin__c;
+        orderToUpdate.MarketOrigin__c = (String.isBlank(servicePoint.MarketOrigin__c) && servicePoint.RecordType.DeveloperName == 'HDT_RT_Ambiente') ? 'Regolamentato' : servicePoint.MarketOrigin__c;
+        orderToUpdate.Market__c =   servicePoint.RecordType.DeveloperName == 'HDT_RT_Acqua' || servicePoint.RecordType.DeveloperName == 'HDT_RT_Ambiente'?'Regolamentato':'Libero';
         orderToUpdate.PowerAvailable__c = servicePoint.PowerAvailable__c;
         orderToUpdate.VoltageLevel__c = servicePoint.VoltageLevel__c;
         orderToUpdate.DisconnectibilityPhone__c = servicePoint.DisconnectibilityPhone__c;
@@ -229,8 +230,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.ConnectionMandate__c = 'SI';
         orderToUpdate.SelfCertificationConnection__c = '02';
         orderToUpdate.RequestOption__c = calculateRequestedOption(servicePoint.ImplantTypeTemp__c, servicePoint.PowerContractual__c);
-        orderToUpdate.MeterClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.MeterClass__c : null;
-        orderToUpdate.Caliber__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.MeterClass__c : null;
+        orderToUpdate.MeterClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' || servicePoint.RecordType.DeveloperName == 'HDT_RT_Acqua' ? servicePoint.MeterClass__c : null;
+        orderToUpdate.Caliber__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas'? servicePoint.MeterClass__c : null;
         orderToUpdate.WithdrawalClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? (servicePoint.WithdrawalClass__c != null ? servicePoint.WithdrawalClass__c : '001 - 7 giorni') : null;
         orderToUpdate.SupplyType__c = servicePoint.SupplyTypeTemp__c != null ? servicePoint.SupplyTypeTemp__c : servicePoint.SupplyType__c;
         //orderToUpdate.EffectiveDate__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_SwitchIn' ? Date.newInstance(2021, 06, 01) : Date.today(); //to do: with switch in calculation logic
@@ -321,7 +322,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static void alignSaleFields(Order orderToUpdate, String saleId){
 
         saleSrv.checkReadAccess('Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.IndividualId,SalesContact__r.Individual.MarketingPrivacy__c,SalesContact__r.Individual.ProfilingPrivacy__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,AreaManager__c');
-        Sale__c sale = saleQr.getRecordById(saleId, 'Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,Campaign__r.Name,CommissioningCampaign__c,CommissioningCampaign__r.Name,SalesContact__c,SalesContact__r.IndividualId,SalesContact__r.Individual.MarketingPrivacy__c,SalesContact__r.Individual.ProfilingPrivacy__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c,AreaManager__c');
+        Sale__c sale = saleQr.getRecordById(saleId, 'Agency__c,DocumentDate__c,DocumentNumber__c,DocumentType__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,Campaign__r.Name,CommissioningCampaign__c,CommissioningCampaign__r.Name,SalesContact__c,SalesContact__r.IndividualId,SalesContact__r.Individual.MarketingPrivacy__c,SalesContact__r.Individual.ProfilingPrivacy__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c,AreaManager__c');
 
         orderToUpdate.SaleBy__c = sale.SaleBy__c;
         orderToUpdate.CommissioningCampaign__c = sale.CommissioningCampaign__c;
@@ -345,6 +346,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.AgencyCode__c = sale.AgencyCode__c;
         orderToUpdate.Agency__c = sale.Agency__c;
         orderToUpdate.AreaManager__c = sale.AreaManager__c;
+        orderToUpdate.DocumentDate__c = sale.DocumentDate__c;
+        orderToUpdate.DocumentNumber__c = sale.DocumentNumber__c;
+        orderToUpdate.DocumentType__c = sale.DocumentType__c;
 
         orderToUpdate.LoginChannel__c=sale.CreatedBy.LoginChannel__c;
         orderToUpdate.LoginWorkstation__c= sale.CreatedBy.Station__c;
@@ -387,6 +391,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.CommercialProduct__c = orderItemList[0].Product2.Name;
             orderToUpdate.VasServiceActivationDate__c = orderItemList[0].DelayEffectiveDate__c;
             orderToUpdate.CommercialProductLink__c = orderItemList[0].Product2Id;
+            orderToUpdate.ApprovalType__c           = orderItemList[0].Product2.ApprovalType__c;
+            orderToUpdate.IntegratedSAP__c          = orderItemList[0].Product2.IntegratedSAP__c;
+            orderToUpdate.Surface__c                = orderItemList[0].Surface__c;
+            orderToUpdate.EmploymentMonthsInYear__c = orderItemList[0].MonthsOccupYear__c;
         }
         
     }
@@ -433,7 +441,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             }
         }
         
-        if((originalOrder.ServicePoint__c != null && !sconti.contains(mainItems[0].Product2.Family)) || mainItems.isEmpty()){
+        if((originalOrder.ServicePoint__c != null && !sconti.contains(mainItems[0].Product2.Family) && !'Opzioni TARI'.equalsIgnoreCase(mainItems[0].Product2.Family)) || mainItems.isEmpty()){
             return;
         }
         if(!sconti.contains(mainItems[0].Product2.Family)){
@@ -461,6 +469,11 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 Sobject reference = originalOrder.OrderReference__c!=null? (Sobject) originalOrder.OrderReference__r : (Sobject) originalOrder.ContractReference__r;
                 orderToUpdate.ServicePointCode__c=(String) reference.getSObject('ServicePoint__r')?.get('ServicePointCode__c');
                 orderToUpdate.ServicePoint__c = (String) reference.get('ServicePoint__c');
+            }else if('Opzioni TARI'.equalsIgnoreCase(mainItems[0].Product2.Family) && mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c!=null){
+                List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c);
+                if(!orderItemsPod.isEmpty()){
+                    orderToUpdate.OrderReference__c=orderItemsPod[0].OrderId;
+                }
             }
         }
         
@@ -521,12 +534,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                     }
                 }
             }
-        }
-        if(false){
-            orderToUpdate.ApprovalType__c           = mainItems[0].Product2.ApprovalType__c;
-            orderToUpdate.IntegratedSAP__c          = mainItems[0].Product2.IntegratedSAP__c;
-            orderToUpdate.Surface__c                = mainItems[0].Surface__c;
-            orderToUpdate.EmploymentMonthsInYear__c = mainItems[0].MonthsOccupYear__c;
         }
         if(orderToUpdate.ServicePoint__c != null)
         {

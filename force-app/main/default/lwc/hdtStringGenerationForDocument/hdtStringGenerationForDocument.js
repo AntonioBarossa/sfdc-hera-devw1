@@ -21,6 +21,7 @@ export default class HdtStringGenerationForDocument extends LightningElement {
     @api numComponenti;
     @api resultString;
     @api interviewId;
+    @api isRequired;
 
     @api errorMessage;
 
@@ -72,8 +73,10 @@ export default class HdtStringGenerationForDocument extends LightningElement {
             if([...this.mapInput].every(el=> (!el.required || el.value))){
                 isValid = true;
                 for( let i=0; i<this.currNumber*3; i+=3){
-                    this.resultString = this.resultString+' '+this.mapInput[i].value+' '+this.mapInput[i+1].value+' '+this.mapInput[i+2].value+'; ';
-                    console.log(this.resultString);
+                    if(this.mapInput[i].value){
+                        this.resultString = this.resultString+' '+this.mapInput[i].value+' '+this.mapInput[i+1].value+' '+this.mapInput[i+2].value+'; ';
+                        console.log(this.resultString);
+                    }
                 }
                 this.showNumber = false;
                 this.showForm = false;
@@ -82,7 +85,7 @@ export default class HdtStringGenerationForDocument extends LightningElement {
             }
             if(!isValid){
                 window.sessionStorage.setItem(this.interviewId, JSON.stringify(this.outputObject()));
-                message = message? message : 'Verificare il ravvedimento operoso prima di procedere';
+                message = message? message : 'Contattare un\' amministratore';
             }else{
                 window.sessionStorage.removeItem(this.interviewId);
             }

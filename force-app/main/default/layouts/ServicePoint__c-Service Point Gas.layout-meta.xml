@@ -224,6 +224,11 @@
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>HDT_InfoTracking</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <relatedLists>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>

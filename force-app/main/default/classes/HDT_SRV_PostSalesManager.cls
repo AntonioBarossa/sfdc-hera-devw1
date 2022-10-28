@@ -85,11 +85,18 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
             {
                 psmUtl.advanceInstallmentPlan(sender);
             }
+            when 'handleSelfReadings'
+            {
+                psmUtl.handleSelfReadings(sender);
+            }
+            when 'submitForApproval'
+            {
+                psmUtl.submitForApproval(sender);
+            }
         }
 
         return null;
 
     }
-
 
 }

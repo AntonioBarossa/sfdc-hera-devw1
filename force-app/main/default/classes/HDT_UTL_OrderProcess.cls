@@ -275,14 +275,27 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         if(!orderParentIds.isEmpty()){
             List<Order> childOrders = orderQr.getChildOrdersForDateCalculation(orderParentIds);
+            List<Order> childOrdersToWork = new List<Order>();
+            List<Order> onlySignedDateUpdate = new List<Order>();
             for(Order singleOrder : childOrders){
+                Boolean changeDate = false;
                 if(singleOrder.SignedDate__c == null){
+                    changeDate=true;
                     singleOrder.SignedDate__c = Date.today();
                 }
+                if (changeDate && ('VAS'.equalsIgnoreCase(singleOrder.ProcessType__c) || String.isBlank(singleOrder.ProcessType__c))){
+                    onlySignedDateUpdate.add(singleOrder);
+                    continue;
+                }
+                childOrdersToWork.add(singleOrder);
             }
-            HDT_UTL_ProcessDateManager.calculateOrderProcessDate(childOrders);
-            if (!childOrders.isEmpty()) {
-                HDT_UTL_DatabaseService.updateSObject(childOrders);
+            childOrders = null;
+            HDT_UTL_ProcessDateManager.calculateOrderProcessDate(childOrdersToWork);
+            if(!onlySignedDateUpdate.isEmpty()){
+                childOrdersToWork.addAll(onlySignedDateUpdate);
+            }
+            if (!childOrdersToWork.isEmpty()) {
+                HDT_UTL_DatabaseService.updateSObject(childOrdersToWork);
             }
         }
     }
@@ -347,8 +360,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                                             || myOrder.PhaseStory__c.containsIgnoreCase('Credit Check KO'))
                                                             && myOrder.PhaseStory__c.containsIgnoreCase('Accettazione Voltura') ? false : true; 
 
-                    String newPhase = (myOrder.ProcessType__c == 'Voltura') && isNotVoltureAcceptanceWorked ? 'Accettazione Voltura': HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione';
+                    String newPhase = (myOrder.ProcessType__c == 'Voltura') && isNotVoltureAcceptanceWorked && !myOrder.Commodity__c.containsIgnoreCase('Acqua')? 'Accettazione Voltura': HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione';
                     newPhase = myOrder.ProcessType__c == 'Voltura - Subentro Scarico produttivo'? 'In attesa esito SAP' : newPhase;
+                    if('Documentazione Validata'== newPhase && STRING.isNotBlank(myOrder.ApprovalType__c) && !'3 - Nessuna'.equalsIgnoreCase(myOrder.ApprovalType__c)){
+                        newPhase = 'In Attesa Approvazione';//Approvazione Agevolazione
+                    }
 
                     childOrdersDocValid.add(new Order(
                         Id = myOrder.Id,
@@ -405,11 +421,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         {
             List<Order> ordersHeroku = new List<Order>();
             List<Order> ordersSiebel = new List<Order>();
-
+            List<Order> ordersNonEnergy = new List<Order>();
             for(Order o:filtered){
                 if(o.sale__r.isTransition__c==true){
                     ordersSiebel.add(o);
-                }else{
+                }
+                /* Gli ordini Ambiente ed Acqua hanno la necessita' di avere il BP e il CA prima di poter essere inviati verso Heroku
+                * e' stata percio' introdotta una fase intermedia "Creazione BP-CA" per permettere la chiamata verso SAP per la registrazione
+                * delle due entita' e aggiornarle con i relativi codici
+                * Update 2022-10-10 logica non risulta essere necessaria per la commodity ambiente
+                */
+                else if(o.Commodity__c.equalsIgnoreCase('Acqua') /*|| o.Commodity__c.equalsIgnoreCase('Ambiente')*/)
+                {
+                    ordersNonEnergy.add(o);
+                }
+                else{
                     ordersHeroku.add(o);
                 }
             }
@@ -417,6 +443,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Esportazione VS Siebel ','Documentazione Validata','Esportazione VS Siebel ');
             vasOrdersToUpdate.putAll(
                 updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS')
+            );
+            vasOrdersToUpdate.putAll(
+                updateChildOrdersPhase(ordersNonEnergy, 'Documentazione Validata', 'Creazione BP-CA','Documentazione Validata','Comunicazione Motore VAS')
             );
             if(!vasOrdersToUpdate.isEmpty()){
                 system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(vasOrdersToUpdate));
@@ -517,7 +546,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                             }else{
                                 newOrder.DateSentToSII__c = Date.today();
                                 String category = newOrder.CustomerCategory__c;
-                                if(category.equalsIgnoreCase('Famiglie')){
+                                if('Famiglie'.equalsIgnoreCase(category) || newOrder.RecessNotice__c == 0){
                                     newOrdersListRecalc.add(newOrder);
                                 }
                             }
@@ -672,6 +701,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agentCodeIsMonitoringList();
         Order notManagedOrder = new Order();
         Boolean isNotManaged = false;
+        /* Temporanea Nuova Attivazione */
         for(Order childOrder : parentOrderIds)
         {
             if(childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt')
@@ -685,6 +715,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             isNotManaged = isNotManaged(notManagedOrder);
         }
         for (Order childOrder : parentOrderIds) {
+            /* Gestione VAS */
             if(childOrder.recordType.Developername == 'HDT_RT_VAS' && childOrder.Phase__c == currentPhase){
                 String phase = HDT_UTL_VasManagement.updateVasPhase( newVasPhase, childOrder );
                 Order orderToUpdate = new Order(
@@ -704,6 +735,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         }
             }
             else{
+                /* Gestione Transitorio */
                 if('Esportazione VS Siebel ' == newPhase){
                     if (childOrder.Phase__c == currentPhase) {
                         Order orderToUpdate = new Order(
@@ -717,7 +749,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 else{
                     if (childOrder.Phase__c == currentPhase
                         //@frpanico 06/09/2021 added voltura condition
-                        && childOrder.ProcessType__c != 'Voltura'
+                        /* Solo la voltura Energy deve rimanere nella fase Documentazione Validata, per il non energy deve procedere verso Creazione BP-CA */
+                        && (childOrder.ProcessType__c != 'Voltura')
                         && childOrder.ImplantType__c != '1107-Colonnetta' ) {
                         Order orderToUpdate = new Order(
                             Id = childOrder.Id,
@@ -728,7 +761,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
         }
-        //orderSrv.updateRecords(childOrdersToUpdate);
+        orderSrv.updateRecords(childOrdersToUpdate);
         return vasOrdersToUpdate;
     }
 
@@ -807,12 +840,16 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     || newOrder.Phase__c=='Preventivo Accettato' 
                     || newOrder.Phase__c=='Comunicazione Motore VAS' 
                     || newOrder.Phase__c=='Documentazione da firmare'
-                    || newOrder.Phase__c=='Ammissibilità OK')){
+                    || newOrder.Phase__c=='Ammissibilità OK'
+                    || newOrder.Phase__c=='Creazione BP-CA')){
                     newOrder.Phase__c = newOrder.TecnicalPhase__c;
                     newOrder.TecnicalPhase__c = null;
                 }
                 if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& newOrder.Status.equalsIgnoreCase('Activated') && !newOrder.SBQQ__Contracted__c && !old.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) { //Fabiana 15/09/2021 //Sandy 05/10 Flusso Bonus e Sconti richiede chiusura e contracted in due transazioni distinte
-                    newOrder.SBQQ__Contracted__c=true; 
+                    if(!newOrder.isTransition__c)
+                    {
+                        newOrder.SBQQ__Contracted__c=true; 
+                    }
                 }
             }           
         }
@@ -836,8 +873,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 if ( String.isNotBlank(String.valueOf(temp.ServicePoint__c))) {
                     ServicePoint__c sp=new ServicePoint__c(id=temp.ServicePoint__c);
                     sp.supplytype__c = temp.ServicePoint__r.supplytypeTemp__c;
-                    sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;    
-                    sp.SAPImplantCode__c=temp.SapImplantCode__c; 
+                    sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;  
+                    if (String.isNotBlank(temp.SAPImplantCode__c)) {
+                        sp.SAPImplantCode__c= temp.SapImplantCode__c; 
+                    }  
                     sp.account__c = temp.AccountId;
                     mapObjToUpdate.put(sp.Id, sp);
                 }
@@ -1095,7 +1134,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     for(wrts_prcgvr__Activity__c activity : activities)
                     {
                         if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)){
-                            activity.wrts_prcgvr__Status__c = 'Chiusa';
+                            activity.wrts_prcgvr__Status__c = 'Annullata';
                             activitiesToUpdate.add(activity);
                         }
                     }
@@ -1322,7 +1361,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              * Pratica Gestita
              * per pratiche a transitorio
              */
-            Set<String> finalStatuses = new Set<String>{'Annullato','KO definitivo','Pratica gestita','KO gestito','Eliminato','KO','Pratica Rifiutata'};
+            Set<String> finalStatuses = new Set<String>{'Annullato','KO definitivo','Pratica gestita','KO gestito','Eliminato','KO','Pratica rifiutata','Chiuso'};
             if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))&&(finalStatuses.contains((String)newOrder.get('SiebelStatus__c'))))
             {
                 response = true;
@@ -1341,13 +1380,20 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     public static void transitoryPhaseManagement(List<SObject> newOrderList, Map<Id,SObject> oldOrderMap)
     {
         Id bonusScontiRtId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId();
+        Id vasRtId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
+        Id defaultRtId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Default').getRecordTypeId();
         List<ServiceRequest__c> serviceRequestToDelete = new List<ServiceRequest__c>();
         Set<Id> orderIds = new Set<Id>();
-        Set<Id> parentOrderIds = new Set<Id>();
+        //fix 915259C
+        //Set<Id> parentOrderIds = new Set<Id>();
+        Set<Id> quoteOrderIds = new Set<Id>();
+        Set<Id> orderReferenceIds = new Set<Id>();
+        Map<Id,Id> orderQuoteMap = new Map<Id,Id>();
+        //fine fix 915259C
         Map<Id,String> mapVasPhase = new Map<Id,String>();
         Map<Id,String> mapVasStatus = new Map<Id,String>();
-        Set<String> negativeOutcomes = new Set<String>{'Annullato','KO definitivo','Eliminato','KO','Pratica Rifiutata'};
-        Set<String> positiveOutcomes = new Set<String>{'Pratica gestita','KO gestito'};
+        Set<String> negativeOutcomes = new Set<String>{'Annullato','KO definitivo','Eliminato','KO','Pratica rifiutata','KO gestito'};
+        Set<String> positiveOutcomes = new Set<String>{'Pratica gestita','Chiuso'};
         for(Order newOrder : (List<Order>) newOrderList)
         {
             String oldPhase = newOrder.Phase__c;
@@ -1376,8 +1422,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 : negativeOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                     ? 'Annullato' 
                     : '';
-                mapVasPhase.put(newOrder.ParentOrder__c, vasPhase);
-                mapVasStatus.put(newOrder.ParentOrder__c, vasStatus);
+                //fix 915259C
+                /* mapVasPhase.put(newOrder.ParentOrder__c, vasPhase);
+                mapVasStatus.put(newOrder.ParentOrder__c, vasStatus); */
+                mapVasPhase.put(newOrder.SBQQ__Quote__c, vasPhase);
+                mapVasStatus.put(newOrder.SBQQ__Quote__c, vasStatus);
+                orderQuoteMap.put(newOrder.Id, newOrder.SBQQ__Quote__c);
+                //fine fix 915259C
                 /* Update Fase e Status */
                 if(!String.isEmpty(newPhase))
                 {
@@ -1387,14 +1438,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+newOrder.PhaseStory__c
                     : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
                     /* Contracted */
-                    if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& newOrder.Status.equalsIgnoreCase('Activated') && !newOrder.SBQQ__Contracted__c && !oldOrder.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) 
+                    /* if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& newOrder.Status.equalsIgnoreCase('Activated') && !newOrder.SBQQ__Contracted__c && !oldOrder.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) 
                     { 
                         newOrder.SBQQ__Contracted__c=true; 
-                    }      
+                    } */      
                     if(!orderIds.contains(newOrder.Id))
                     {
                         orderIds.add(newOrder.Id);
-                        parentOrderIds.add(newOrder.ParentOrder__c);
+                        //fix 915259C
+                        //parentOrderIds.add(newOrder.ParentOrder__c);
+                    }
+                    if (newOrder.RecordTypeId != bonusScontiRtId && newOrder.RecordTypeId != vasRtId){
+                        quoteOrderIds.add(newOrder.SBQQ__Quote__c);
+                        orderReferenceIds.add(newOrder.Id);
                     }
                 }
             }
@@ -1404,14 +1460,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
             if(!mapVasPhase.isEmpty())
             {
-                List<ServiceRequest__c> serviceRequests = [SELECT Id, 
-                    Order__c,
-                    Order__r.ParentOrder__c,
-                    Order__r.Process__c,
-                    NextPhase__c
-                    FROM ServiceRequest__c 
-                    WHERE Order__r.ParentOrder__c IN :parentOrderIds
-                    AND Order__r.IsTransition__c = true WITH SECURITY_ENFORCED];
+                List<ServiceRequest__c> serviceRequests = HDT_QR_ServiceRequest.getTransitoryServiceRequest(orderIds,orderReferenceIds,quoteOrderIds);
                 List<Order> vasScontiOrders = new List<Order>();
                 for(ServiceRequest__c sr : serviceRequests)
                 {
@@ -1428,12 +1477,18 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     {
                         continue;
                     }
+                    //fix 915259C
+                    if ((sr.Order__r.RecordTypeId != vasRtId && sr.Order__r.RecordTypeId != bonusScontiRtId && (sr.Order__r.RecordTypeId != defaultRtId || !sr.Order__r.isBillableVas__c))
+                        ||(sr.Order__r.OrderReference__c != null && !orderQuoteMap.containsKey(sr.Order__r.OrderReference__c))){
+                        continue;
+                    }
+                    Id keyId = sr.Order__r.OrderReference__c != null ? orderQuoteMap.get(sr.Order__r.OrderReference__c) : sr.Order__r.SBQQ__Quote__c;
                     Order orderVas = new Order();
                     orderVas.Id = sr.Order__c;
-                    if(mapVasPhase.get(sr.Order__r.ParentOrder__c).equalsIgnoreCase('Annullato'))
+                    if(mapVasPhase.get(keyId).equalsIgnoreCase('Annullato'))
                     {
-                        orderVas.Phase__c = mapVasPhase.get(sr.Order__r.ParentOrder__c);
-                        orderVas.Status = mapVasStatus.get(sr.Order__r.ParentOrder__c);
+                        orderVas.Phase__c = mapVasPhase.get(keyId);
+                        orderVas.Status = mapVasStatus.get(keyId);
                         vasScontiOrders.add(orderVas);
                         serviceRequestToDelete.add(sr);
                     }
@@ -1447,7 +1502,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     else
                     {
                         orderVas.Phase__c = sr.NextPhase__c;
-                        orderVas.Status = mapVasStatus.get(sr.Order__r.ParentOrder__c);
+                        orderVas.Status = mapVasStatus.get(keyId);
                         vasScontiOrders.add(orderVas);
                     }
                 }

@@ -311,8 +311,8 @@ public with sharing class HDT_LC_AdvancedSearch {
 	 * Retrieve data from ServicePoint Object By ServiceCode
 	 */
 	@AuraEnabled(cacheable = true)
-	public static List<Map<String, Object>> getServicePoints(String parameter,
-															 String queryType,String additionalFilter,Boolean isSuperUser) {
+	public static List<Map<String, Object>> getServicePoints(String parameter,String queryType,String additionalFilter,
+	                                                                          Boolean isSuperUser, String datiCatastali) {
 		Set<ServicePoint__c> servicePoints = new Set<ServicePoint__c>();
 		HDT_QR_Contract contractQr= new HDT_QR_Contract();
 		system.debug('queryType' + queryType);
@@ -320,7 +320,6 @@ public with sharing class HDT_LC_AdvancedSearch {
 		Boolean isSerachFromContract = false;												
 		switch on queryType {
 			when 'serialnumber' {
-	 
 				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
 				if(additionalFilter=='' || additionalFilter== null){
 					servicePoints.addAll(servicePointQr.getServicePointsByMeterSerialNumber(parameter, customSetting.OutputServicePoint__c));
@@ -328,7 +327,6 @@ public with sharing class HDT_LC_AdvancedSearch {
 					servicePoints.addAll(servicePointQr.getServicePointsByMeterSerialNumberWithFilter(parameter, customSetting.OutputServicePoint__c,additionalFilter));
 					//else chiami getRecordFromCodeWithFilter(accountId,additionalFilter) 
 				}
-
 			}
 			when 'pod' {
 				if (parameter.length() < 10 || parameter.length() > 15) {
@@ -353,14 +351,9 @@ public with sharing class HDT_LC_AdvancedSearch {
 					servicePoints.addAll(servicePointQr.getRecordFromCode(parameter, customSetting.OutputServicePoint__c));
 				}else {
 					servicePoints.addAll(servicePointQr.getRecordFromCodeWithFilter(parameter, customSetting.OutputServicePoint__c,additionalFilter));
-
-					
-
-
 				}
 				isSerachFromContract=true;
 			}
-
 			when 'podH2o' {
 				if (parameter.length() < 5 || parameter.length() > 20) {
 					throw new AuraHandledException('Il Codice Punto Presa deve essere di compreso tra 5 e 20 caratteri');
@@ -368,11 +361,12 @@ public with sharing class HDT_LC_AdvancedSearch {
 				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
 				servicePoints.addAll(servicePointQr.getServicePointsByCodeWater(parameter, customSetting.OutputServicePoint__c));
 			}
-
 			when 'address' {
 				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
 				servicePoints.addAll(servicePointQr.getServicePointsByAddress(parameter, customSetting.OutputServicePoint__c));
-
+			}
+			when 'datiCatastali' {
+				return servicePointQr.getServicePointsByDatiCatastali(datiCatastali, customSetting.OutputServicePoint__c);
 			}
 
 		}
@@ -381,6 +375,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 		List<Map<String, Object>> output = new List<Map<String, Object>>();
 		Map<String, Object> record = new Map<String, Object>();
 		for (ServicePoint__c servicePointObject : servicePoints) {
+			record.put('ServicePointId', servicePointObject.get('Id'));
 			for (String customSettingField : customSettingFields) {
 				if (!customSettingField.contains('.')) {
 					if (servicePointObject.get(customSettingField) == null) {
@@ -405,31 +400,33 @@ public with sharing class HDT_LC_AdvancedSearch {
 			}
 
 			Contract c = contractQr.getSapContractCode(servicePointObject.ServicePointCode__c,isSuperUser);
-			
 
-				if(c.SAPContractCode__c!=null){
-					String value = '';
-					String label = '';
-					label='Codice Contratto';
-					value=(String) c.SAPContractCode__c;
-					record.put(label,value);
-
-				}else{
-					String value = '';
-					String label = '';
-					label='Codice Contratto';
-					value=' ';
-					record.put(label,value);
-				}
-			
+			if(c.SAPContractCode__c!=null){
+				String value = '';
+				String label = '';
+				label='Codice Contratto';
+				value=(String) c.SAPContractCode__c;
+				record.put(label,value);
+			}else{
+				String value = '';
+				String label = '';
+				label='Codice Contratto';
+				value=' ';
+				record.put(label,value);
+			}
 
 			system.debug('record***********'+record);
 			output.add(new Map<String, Object>(record));
 			record.clear();
 		}
 
-
 		return output;
+	}
+
+	@AuraEnabled(cacheable = true)
+	public static List<Map<String, Object>> getServicePoints(String parameter,String queryType,
+																			  String additionalFilter,Boolean isSuperUser) {
+		return getServicePoints(parameter,queryType,additionalFilter,isSuperUser, '');
 	}
 
 	@AuraEnabled(cacheable = true)

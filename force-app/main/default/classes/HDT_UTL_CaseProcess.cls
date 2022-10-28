@@ -28,33 +28,46 @@ public with sharing class HDT_UTL_CaseProcess {
         String servicePointOld = '';
         String commodity = '';
         Boolean enableSearch = false;
-
+        Map<Id,String> spCommodityMap = new Map<Id,String>();
+        List<Id> spIds = new List<Id>();
+        Map<Id,Boolean> needUpdate = new Map<Id,Boolean>();
         //First check if is from Insert or Update
         //1. Is From insert
         if(caseList != null && !caseList.isEmpty() && caseOldMap == null){
             //Commodity Management
-            servicePoint = caseList[0].ServicePoint__c;
-            commodity = caseList[0].Commodity__c;
-            if (servicePoint != null && String.isNotBlank(servicePoint) && String.isBlank(commodity)) {
-                enableSearch = true;
+            for(Case singleNewCase : caseList){
+                servicePoint = singleNewCase.ServicePoint__c;
+                commodity = singleNewCase.Commodity__c;
+                if (servicePoint != null && String.isNotBlank(servicePoint) && String.isBlank(commodity)) {
+                    spIds.add(servicePoint);
+                    needUpdate.put(servicePoint, true);
+                }
             }
         }
         //2. Is From Updated
         else if(caseList != null && !caseList.isEmpty() && caseOldMap != null) {
             //Commodity Management
-            Case caseNew = caseList[0];
-		    Case caseOld = (Case) caseOldMap.get(caseNew.Id);
-            servicePoint = caseNew.ServicePoint__c;
-            servicePointOld = caseOld.ServicePoint__c;
-            if((String.isBlank(commodity) && String.isBlank(servicePointOld) && String.isNotBlank(servicePoint)) || (String.isNotBlank(servicePointOld) && String.isNotBlank(servicePoint) && servicePoint != servicePointOld)){
-                enableSearch = true;
+            for(Case singleCase : caseList){
+                Case caseNew = singleCase;
+		        Case caseOld = (Case) caseOldMap.get(caseNew.Id);
+                servicePoint = caseNew.ServicePoint__c;
+                servicePointOld = caseOld.ServicePoint__c;
+                if((String.isBlank(commodity) && String.isBlank(servicePointOld) && String.isNotBlank(servicePoint)) || (String.isNotBlank(servicePointOld) && String.isNotBlank(servicePoint) && servicePoint != servicePointOld)){
+                    spIds.add(servicePoint);
+                    needUpdate.put(servicePoint, true);
+                }
             }
         }
-        if(enableSearch && String.isNotBlank(servicePoint)){
+        if(spIds!=null && !spIds.isEmpty()){
             HDT_QR_ServicePoint spQrClass = new HDT_QR_ServicePoint();
-            List<ServicePoint__c> spList = spQrClass.getRecordById(servicePoint,'Id,CommoditySector__c');
+            List<ServicePoint__c> spList = spQrClass.getRecordByIdList(spIds,'Id,CommoditySector__c');
             if(!spList.isEmpty()){
-                caseList[0].Commodity__c = spList[0].CommoditySector__c;
+                Map<Id, ServicePoint__c> spMap = new Map<Id, ServicePoint__c>(spList);
+                for(Case singleCaseToUpdate : caseList){
+                    if(needUpdate.get(singleCaseToUpdate.ServicePoint__c) != null && needUpdate.get(singleCaseToUpdate.ServicePoint__c)){
+                        singleCaseToUpdate.Commodity__c = spMap.get(singleCaseToUpdate.ServicePoint__c).CommoditySector__c;
+                    }
+                }
             }
         }
     }
@@ -184,7 +197,7 @@ public with sharing class HDT_UTL_CaseProcess {
                                                 activityId = activity.OwnerId;
                                             }
                                             activitiesOwnerId.add(activityId);
-                                            activity.wrts_prcgvr__Status__c = 'Chiusa';
+                                            activity.wrts_prcgvr__Status__c = 'Annullata';
                                             //Notification Fire to activity's owner
                                             try{
                                                 if(customNotif != null && activitiesOwnerId.size() > 0){
@@ -209,6 +222,16 @@ public with sharing class HDT_UTL_CaseProcess {
                         updateList.addAll(childCases);
                         HDT_UTL_DatabaseService.updateSObject(updateList);
                     }
+                }
+                /* Richiesta Parere
+                * Il case padre (reclamo scritto) viene riportato In Lavorazione
+                */
+                if(caseNew.Type.equalsIgnoreCase('Richiesta Parere') && newPhase.equalsIgnoreCase('Annullato') && caseNew.ParentId != null)
+                {
+                    Case complaintCase = new Case();
+                    complaintCase.Id = caseNew.ParentId;
+                    complaintCase.Phase__c = 'In Lavorazione';
+                    HDT_UTL_DatabaseService.updateSObject(complaintCase);
                 }
                 //Contratto Non Richiesto
                 if(newPhase.equalsIgnoreCase('Annullato')){
@@ -387,11 +410,13 @@ public with sharing class HDT_UTL_CaseProcess {
     * @param1 List<Case> lista dei cases inseriti
     * @param1 Map<Id,SObject> Mappa della vecchia versione dei cases inseriti
     */
+    //Metodo non più necessario dato che la logica di chiusura avviene dalla activity verso il case gestita nella classe HDT_UTL_ActivityCloseActions
+    /*
     public static void closeRelatedActivity(List<Case> triggerNew, Map<Id,SObject> oldMap){
         list<Id> effectiveCase = new List<Id>();
         for(Case currCase : triggerNew){
             if('Confermato'.equalsIgnoreCase(currCase.Phase__c) && 
-               'HDT_RT_CessazioniTari'.equalsIgnoreCase(currCase.RecordType.DeveloperName) &&
+               'HDT_RT_DisattivazioniTari'.equalsIgnoreCase(currCase.RecordType.DeveloperName) &&
                'Cessazione post accertamento'.equalsIgnoreCase(currCase.Type) &&
                ((Case)oldMap.get(currCase.Id)).Phase__c != currCase.Phase__c){
                 effectiveCase.add(currCase.Id);
@@ -408,7 +433,7 @@ public with sharing class HDT_UTL_CaseProcess {
         }
         Database.update(toClose);
     }
-
+    */
     /**
     * @author Marco Arci (marco.arci@webresults.it)
     * @description metodo chiamato dal batch HDT_BA_PostSalesMasterBatch per generare activity se sono stati trovati contratti per i processi di post accertamento di variazioni tari e disattivazioni tari
@@ -431,14 +456,16 @@ public with sharing class HDT_UTL_CaseProcess {
                 system.debug('@@@ Case SupplyCity__c:'+fieldsMap.get('SupplyCity__c'));
                 system.debug('@@@ Case SupplyStreetName__c:'+fieldsMap.get('SupplyStreetName__c'));
             }
+            //verificare che selezione fornitura effettui questo controllo in fase di UAT
             //querare tabella 'dato tecnico comunale' con chiave i comuni del case e verificare se il flag di gestione è attivo
             // o se la data odierna rientra nel range tra 'data da' e 'data cutover',
             //con il risultato modificare la lista fieldsMap.get('SupplyCity__c') lasciando quelli trovati e togliendo quelli non trovati nella tabella
-            List<Contract> relatedContracts = [SELECT Id, AccountId, BillingCity, BillingStreet
+            List<Contract> relatedContracts = [SELECT Id, AccountId, ServicePoint__r.SupplyCity__c, ServicePoint__r.SupplyStreetName__c
                                             FROM Contract
                                             WHERE AccountId IN: fieldsMap.get('AccountId')
-                                            AND BillingCity IN: fieldsMap.get('SupplyCity__c')
-                                            AND BillingStreet IN: fieldsMap.get('SupplyStreetName__c')];
+                                            AND ServicePoint__r.SupplyCity__c IN: fieldsMap.get('SupplyCity__c')
+                                            AND ServicePoint__r.SupplyStreetName__c IN: fieldsMap.get('SupplyStreetName__c')
+                                            AND Status = 'Attivo'];
             system.debug('@@@@ related contract: '+relatedContracts);
             List<wrts_prcgvr__Activity__c> notInsertActivity = HDT_QR_Activity.getActivityFromTypeList(caseIds, new Set<String>{'Aprire variazione','Aprire Cessazione'});
             
@@ -448,32 +475,35 @@ public with sharing class HDT_UTL_CaseProcess {
             }
             
             List<wrts_prcgvr__Activity__c> newActivityToInsert = new List<wrts_prcgvr__Activity__c>();
+            wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c();
             boolean findContract;
             for(Case caseItem : cases){
                 findContract = false;
                 for(Contract currContract : relatedContracts){
                     system.debug('@@@ serching contract: '+currContract.Id);
                     if( ((String)caseItem.AccountId)?.equalsIgnoreCase(currContract.AccountId) &&
-                        caseItem.SupplyCity__c?.equalsIgnoreCase(currContract.BillingCity) == true && 
-                        caseItem.SupplyStreetName__c?.equalsIgnoreCase(currContract.BillingStreet) &&
+                        caseItem.SupplyCity__c?.equalsIgnoreCase(currContract.ServicePoint__r.SupplyCity__c) == true && 
+                        caseItem.SupplyStreetName__c?.equalsIgnoreCase(currContract.ServicePoint__r.SupplyStreetName__c) &&
                         !excludedCases.contains(CaseItem.Id) ){
                             if('Modifica post accertamento'.equalsIgnoreCase(caseItem.Type)){
                                 findContract = true;
-                                newActivityToInsert.add(new wrts_prcgvr__Activity__c(Account__c=caseItem.AccountId, 
-                                                                                     Case__c=caseItem.Id, 
-                                                                                     ServicePoint__c=caseItem.ServicePoint__c, 
-                                                                                     wrts_prcgvr__Status__c ='Aperta',
-                                                                                     DiscardCategory__c = 'Manuale',
-                                                                                     Type__c='Aprire Variazione'));
+                                tempAct = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName(caseItem.Id, 'CBS_VAR005__GESTIONE_MANUALE');
+                                tempAct.Account__c=caseItem.AccountId;
+                                tempAct.ServicePoint__c=caseItem.ServicePoint__c;
+                                tempAct.wrts_prcgvr__Status__c ='Aperta';
+                                tempAct.DiscardCategory__c = 'Manuale';
+                                tempAct.Type__c='Aprire Variazione';
+                                newActivityToInsert.add(tempAct);
                                 break;
                             }else if('Cessazione post accertamento'.equalsIgnoreCase(caseItem.Type)){
                                 findContract = true;
-                                newActivityToInsert.add(new wrts_prcgvr__Activity__c(Account__c=caseItem.AccountId,
-                                                                                     Case__c=caseItem.Id, 
-                                                                                     ServicePoint__c=caseItem.ServicePoint__c,
-                                                                                     wrts_prcgvr__Status__c ='Aperta',
-                                                                                     DiscardCategory__c = 'Manuale',
-                                                                                     Type__c='Aprire Cessazione'));
+                                tempAct = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName(caseItem.Id, 'CBS_DIS002__GESTIONE_MANUALE');
+                                tempAct.Account__c=caseItem.AccountId;
+                                tempAct.ServicePoint__c=caseItem.ServicePoint__c;
+                                tempAct.wrts_prcgvr__Status__c ='Aperta';
+                                tempAct.DiscardCategory__c = 'Manuale';
+                                tempAct.Type__c='Aprire Cessazione';
+                                newActivityToInsert.add(tempAct);
                                 break;
                             }
                     }

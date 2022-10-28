@@ -6,6 +6,7 @@ export default class HdtRecordCommodityViewForm extends LightningElement {
     // @api processType;
     @api recordId;
     @api objectApiName;
+    @api userInputFlowName;
 
     // @api density;
     // @api showReadOnly;
@@ -30,8 +31,7 @@ export default class HdtRecordCommodityViewForm extends LightningElement {
         {
             console.log('### START connected 2');
             console.log('refresh 4');
-
-            getFields({ recordId: this.recordId })
+            getFields({ recordId: this.recordId, userInputFlowName: this.userInputFlowName })
             .then(result => {
                 console.log('result:'+ result);
                 if (result) {

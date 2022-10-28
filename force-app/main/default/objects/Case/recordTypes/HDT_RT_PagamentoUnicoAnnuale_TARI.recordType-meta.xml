@@ -3,7 +3,7 @@
     <fullName>HDT_RT_PagamentoUnicoAnnuale_TARI</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>HDT_RT_PagamentoUnicoAnnuale_TARI</label>
+    <label>HDT_RT_PagamentoUnicoAnnualeTARI</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
@@ -1242,17 +1242,6 @@
         </values>
         <values>
             <fullName>Volontà estorta</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>CaseSource__c</picklist>
-        <values>
-            <fullName>Gestore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Utente</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8235,7 +8224,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10970,12 +10959,12 @@
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
-            <fullName>D%E2%80%99ufficio</fullName>
+            <fullName>D'ufficio</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Da contribuente</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>
@@ -11449,18 +11438,6 @@
         </values>
         <values>
             <fullName>13FM-Non domestici AT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13198,6 +13175,10 @@
 			<fullName>Riduzione Agevolazione dopo Accertamento</fullName>
 			<default>false</default>
 		</values>
+        <values>
+            <fullName>Rimozione Agevolazione</fullName>
+            <default>false</default>
+        </values>
 		<values>
 			<fullName>Sconti Collettivi Pap</fullName>
 			<default>false</default>

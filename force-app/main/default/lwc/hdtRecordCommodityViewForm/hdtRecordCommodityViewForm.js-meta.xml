@@ -3,8 +3,13 @@
     <apiVersion>54.0</apiVersion>
     <isExposed>true</isExposed>
     <targets>
-        <target>lightning__AppPage</target>
-        <target>lightning__RecordPage</target>
-        <target>lightning__HomePage</target>
-      </targets>
-</LightningComponentBundle>
+      <target>lightning__AppPage</target>
+      <target>lightning__RecordPage</target>
+      <target>lightning__HomePage</target>
+    </targets>
+    <targetConfigs>
+      <targetConfig targets="lightning__RecordPage">
+          <property name="userInputFlowName" type="String" label="User Input Flow Name" description="" default="" />
+      </targetConfig>
+  </targetConfigs>
+</LightningComponentBundle> 

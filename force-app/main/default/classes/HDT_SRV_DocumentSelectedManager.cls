@@ -25,6 +25,9 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     when 'InstallmentsView', 'EC7' {
                         return manageDocumentsCreditViews(inputs);
                     }
+                    when 'Paperless' {
+                        return manageDocumentsPaperless(inputs);
+                    }
                     when else {
                         return null;
                     }
@@ -161,6 +164,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     documentList.add(singleDocument);
                 }
                 if(documentList.size()>0){
+                    documentList = calculateSalesCompanyCode(documentList);
                     HDT_UTL_DatabaseService.insertSObject(documentList);
                 }
             }
@@ -333,6 +337,8 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     singleDocument.ContractualAccount__c = (String) primolivello.get('contoContrattuale');
                     singleDocument.TotalCommunicationPayment__c = Double.valueOf(primolivello.get('residuo'));
                     singleDocument.Case__c = inputs[0].caseId;
+                    singleDocument.PaymentMode__c = 'BOLLETTINO POSTALE';
+                    singleDocument.Amount__c = Double.valueOf(primolivello.get('residuo'));
                     
                     if(String.isNotBlank(numeroFattura)) {
                         singleDocument.Name = numeroFattura;
@@ -475,6 +481,29 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
         }
     }
     
+    @TestVisible
+    private static List<DocumentSelected__c> calculateSalesCompanyCode(List<DocumentSelected__c> documents)
+    {
+        List<String> salesCompany = new List<String>();
+        for(DocumentSelected__c singleDocument : documents)
+        {
+            salesCompany.add(singleDocument.IssuingCompany__c);
+        }
+        List<HDT_HeraCompany__mdt> companiesTranscode = [SELECT Id, CompanyCode__c,SalesCompany__c FROM HDT_HeraCompany__mdt WHERE SalesCompany__c IN :salesCompany WITH SECURITY_ENFORCED];
+        Map<String, String> companyCodeMap = new Map<String,String>();
+        for(HDT_HeraCompany__mdt singleTranscode : companiesTranscode)
+        {
+            companyCodeMap.put(singleTranscode.SalesCompany__c, singleTranscode.CompanyCode__c);
+        }
+        for(DocumentSelected__c singleDocument : documents)
+        {
+            if(singleDocument.IssuingCompany__c != null && String.isNotBlank(singleDocument.IssuingCompany__c))
+            {
+                singleDocument.IssuingCompanyCode__c = companyCodeMap.get(singleDocument.IssuingCompany__c);
+            }
+        }
+        return documents;
+    }
     
     public static List<SObject> getDocumentsSelected(Id caseId){
         String queryString = 'SELECT Id,RaiFeeAmount__c,TotalCommunicationPayment__c,DocumentNumber__c, TvFeeResidual__c, DocumentResidue__c, Bill__c, Type__c, IssueDate__c,ExpirationDate__c,Amount__c,Residue__c,PaymentMode__c,IssuingCompany__c,ContractualAccount__c FROM DocumentSelected__c WHERE Case__c = \''+caseId+'\'';

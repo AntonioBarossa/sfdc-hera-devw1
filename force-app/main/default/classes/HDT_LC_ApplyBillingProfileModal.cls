@@ -151,10 +151,10 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         List<HDT_WRP_QuoteLineWrp> quoteLineToApply = new List<HDT_WRP_QuoteLineWrp>();
         /* La query recupera tutte le quotline "child" associate alle quote create */
         List<SBQQ__QuoteLine__c> quoteLines = [SELECT Id, Name,SBQQ__Product__r.Name, SBQQ__RequiredBy__c,SBQQ__RequiredBy__r.Name,
-        SBQQ__RequiredBy__r.SBQQ__Product__c, SBQQ__RequiredBy__r.SBQQ__Product__r.Name, 
+        SBQQ__RequiredBy__r.SBQQ__Product__c, SBQQ__RequiredBy__r.SBQQ__Product__r.Name,  SBQQ__ProductFamily__c,
         SBQQ__RequiredBy__r.BillingProfile__c, SBQQ__RequiredBy__r.BillingProfile__r.Name,
         ServicePoint__c,ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c, ServicePoint__r.ATO__c,
-        SBQQ__Quote__r.ContractReference__c, SBQQ__Quote__r.AllowChangeUse__c, SBQQ__Quote__r.AmendmentAllowed__c,SBQQ__Quote__r.ContractReference__r.BillingProfile__c
+        SBQQ__Quote__r.ContractReference__c, SBQQ__Quote__r.AllowChangeUse__c, SBQQ__Quote__r.AmendmentAllowed__c,SBQQ__Quote__r.ContractReference__r.BillingProfile__c,SBQQ__Quote__r.ContractReference__r.BillingProfile__r.Name
         FROM SBQQ__QuoteLine__c
         WHERE SBQQ__Quote__r.Sale__c = :saleId
         AND 
@@ -237,11 +237,13 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
     {
         public HDT_WRP_QuoteLineWrp(SBQQ__QuoteLine__c quoteLine)
         {
-            this.id = quoteLine.SBQQ__RequiredBy__c != null ? quoteLine.SBQQ__RequiredBy__c : quoteLine.Id;
-            this.name = quoteLine.SBQQ__RequiredBy__c != null ? quoteLine.SBQQ__RequiredBy__r.Name : quoteLine.Name;
+            Boolean isVas = quoteLine.SBQQ__ProductFamily__c.containsIgnoreCase('Vas') || quoteLine.SBQQ__ProductFamily__c.equalsIgnoreCase('Analisi Consumi');
+
+            this.id = isVas ? quoteLine.Id : quoteLine.SBQQ__RequiredBy__c != null ? quoteLine.SBQQ__RequiredBy__c : quoteLine.Id;
+            this.name = isVas ? quoteLine.Name : quoteLine.SBQQ__RequiredBy__c != null ? quoteLine.SBQQ__RequiredBy__r.Name : quoteLine.Name;
             this.billingProfileName = quoteLine.SBQQ__RequiredBy__c != null && quoteLine.SBQQ__RequiredBy__r.BillingProfile__c != null ? quoteLine.SBQQ__RequiredBy__r.BillingProfile__r.Name : '';
             this.pod = quoteLine.ServicePoint__c != null && quoteLine.ServicePoint__r.ServicePointCode__c != null ? quoteLine.ServicePoint__r.ServicePointCode__c : '';
-            this.productName = quoteLine.SBQQ__RequiredBy__c != null && quoteLine.SBQQ__RequiredBy__r.SBQQ__Product__c != null ? quoteLine.SBQQ__RequiredBy__r.SBQQ__Product__r.Name : '';
+            this.productName = isVas ? quoteLine.SBQQ__Product__r.Name : quoteLine.SBQQ__RequiredBy__c != null && quoteLine.SBQQ__RequiredBy__r.SBQQ__Product__c != null ? quoteLine.SBQQ__RequiredBy__r.SBQQ__Product__r.Name : '';
             this.isDueThirtyDays = '';
             this.isCambioOfferta = quoteLine.SBQQ__Quote__r.ContractReference__c != null && (quoteLine.SBQQ__Quote__r.AllowChangeUse__c == null || !quoteLine.SBQQ__Quote__r.AllowChangeUse__c) && (quoteLine.SBQQ__Quote__r.AmendmentAllowed__c == null || !quoteLine.SBQQ__Quote__r.AmendmentAllowed__c);
             this.previousBillingProfile = quoteLine.SBQQ__Quote__r.ContractReference__c != null && quoteLine.SBQQ__Quote__r.ContractReference__r.BillingProfile__c != null ? quoteLine.SBQQ__Quote__r.ContractReference__r.BillingProfile__r.Name : ''; 

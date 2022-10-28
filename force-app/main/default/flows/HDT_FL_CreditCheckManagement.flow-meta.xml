@@ -101,6 +101,13 @@
                 <stringValue></stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivity.InteractionReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Causale</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Azione_0</targetReference>
         </connector>
@@ -138,15 +145,8 @@
                 <elementReference>$User.UserCompany__c</elementReference>
             </value>
         </assignmentItems>
-        <!--assignmentItems>
-            <assignToReference>getActivity.Place__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Station__c</elementReference>
-            </value>
-        </assignmentItems-->
         <assignmentItems>
-            <assignToReference>getActivity.WorkGroup__c</assignToReference>
+            <assignToReference>getActivity.ClosingCreatorGroup__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>$User.CreatorGroup__c</elementReference>
@@ -164,11 +164,43 @@
         </connector>
     </assignments>
     <choices>
+        <name>Altroattoregistrato</name>
+        <choiceText>Altro atto registrato</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Altro atto registrato</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Cessioneramodaziendaregistrato</name>
+        <choiceText>Cessione ramo d’azienda registrato</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Cessione ramo d’azienda registrato</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Contratto_affitto_registrato</name>
+        <choiceText>Contratto affitto registrato</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Contratto affitto registrato</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>Dimostrata_Estraneit</name>
         <choiceText>Dimostrata Estraneità</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>Dimostrata Estraneità	</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Rogitoregistrato</name>
+        <choiceText>Rogito registrato</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Rogito registrato</stringValue>
         </value>
     </choices>
     <choices>
@@ -501,6 +533,34 @@
             <fieldText>Motivo</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Causale</name>
+            <choiceReferences>Contratto_affitto_registrato</choiceReferences>
+            <choiceReferences>Rogitoregistrato</choiceReferences>
+            <choiceReferences>Cessioneramodaziendaregistrato</choiceReferences>
+            <choiceReferences>Altroattoregistrato</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Causale</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Motivo</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Dimostrata_Estraneit</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>getActivity.RecordType.DeveloperName</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>HDT_RT_KoPrecedeteCliente</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <fieldType>ObjectProvided</fieldType>

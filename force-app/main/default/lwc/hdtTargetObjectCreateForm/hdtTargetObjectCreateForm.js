@@ -102,6 +102,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @track spCodeChanged = false;
 
     @track recordTypeId;
+    @track existsServicePoint = false;
+    callWinBack = false;
     
     /**
      * Handle save button availability
@@ -229,7 +231,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     )
                 }
                 else if (element == 'Resident__c') {
-                    let resValue = this.recordTypeAccount === 'Residenziale' ? true : false;
+                    let resValue =  this.allSubmitedFields[element] !== null && this.allSubmitedFields[element] !== undefined ? this.allSubmitedFields[element] : 
+                                    this.servicePointRetrievedData[element] ? this.servicePointRetrievedData[element] 
+                                    : false;
+                    //let resValue = this.recordTypeAccount === 'Residenziale' ? true : false;
                     fieldsDataObject.push(
                         {
                             fieldname: element,
@@ -372,9 +377,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     fieldsDataObject.push(
                         {
                             fieldname: element,
-                            required: false,
-                            value: 'No',
-                            disabled: true
+                            required: true,
+                            value: this.servicePointRetrievedData[element],
+                            disabled: false
                         }
                     )
                 }
@@ -534,7 +539,17 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     )
                 }
                 else if (element === 'Resident__c') {
-                    if(this.recordTypeAccount == 'Residenziale'){
+                    let residentValue = this.allSubmitedFields[element] ? this.allSubmitedFields[element] : false; 
+                    
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: false,
+                            value: residentValue,
+                            disabled: false
+                        }
+                    )
+                    /* if(this.recordTypeAccount == 'Residenziale'){
                         this.allSubmitedFields.Resident__c = true;
                         fieldsDataObject.push(
                             {
@@ -555,7 +570,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                 disabled: false
                             }
                         )
-                    }
+                    } */
                 }
                 else if (this.recordtype.label === 'Punto Idrico' && element === 'ImplantType__c') {
                     fieldsDataObject.push(
@@ -683,9 +698,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     fieldsDataObject.push(
                         {
                             fieldname: element,
-                            required: false,
-                            value: 'No',
-                            disabled: true
+                            required: true,
+                            value: '',
+                            disabled: false
                         }
                     )
                 }
@@ -744,6 +759,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         let implantCode = selectedservicepoint['Impianto SAP'] !== null && selectedservicepoint['Impianto SAP'] !== undefined ? selectedservicepoint['Impianto SAP'].length === 10 && selectedservicepoint['Impianto SAP'].startsWith("4") ? selectedservicepoint['Impianto SAP']:'' : '';
         callService({ contratto: '', pod: input, impianto: implantCode }).then(data => {
             if (data.statusCode == '200') {
+                this.callWinBack = true;
                 this.responseArriccData = data;
                 if (this.servicePointRetrievedData == undefined) {
                     extractDataFromArriccDataServiceWithExistingSp({ sp: sp, response: data }).then(datas => {
@@ -878,6 +894,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 /** Casistica service point esistente su SAP */
                 if(Array.isArray(this.selectedservicepoint))
                 {
+                    this.callWinBack = true;
                     this.servicePointRetrievedData = this.selectedservicepoint[0];
                     this.recordTypeId = this.servicePointRetrievedData['RecordTypeId'];
                     let recordtype = {};
@@ -934,6 +951,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     getServicePoint({ code: codeToSearch, fields: queryFields.join() }).then(data => {
 
                         this.handleCallServiceSap(this.selectedservicepoint);
+                        this.existsServicePoint = true;
                         this.servicePointRetrievedData = data[0];
                         this.recordTypeId = this.servicePointRetrievedData['RecordTypeId'];
                         let recordtype = {};
@@ -1145,42 +1163,55 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         if (this.servicePointRetrievedData != undefined) {
 
             if (this.servicePointRetrievedData['SupplyStreet__c'] != this.theRecord['Via']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyStreet__c'] = this.theRecord['Via'];
             }
             if (this.servicePointRetrievedData['SupplyCity__c'] != this.theRecord['Comune']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyCity__c'] = this.theRecord['Comune'];
             }
             if (this.servicePointRetrievedData['SupplyPostalCode__c'] != this.theRecord['CAP']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyPostalCode__c'] = this.theRecord['CAP'];
             }
             if (this.servicePointRetrievedData['SupplyCountry__c'] != this.theRecord['Stato']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyCountry__c'] = this.theRecord['Stato'];
             }
             if(!this.servicePointRetrievedData['SupplyCountry__c']){
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyCountry__c'] = 'ITALIA';
             }
             if (this.servicePointRetrievedData['SupplyProvince__c'] != this.theRecord['Provincia']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyProvince__c'] = this.theRecord['Provincia'];
             }
             if (this.servicePointRetrievedData['SupplySAPCityCode__c'] != this.theRecord['Codice Comune SAP']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplySAPCityCode__c'] = this.theRecord['Codice Comune SAP'];
             }
             if (this.servicePointRetrievedData['SupplySAPStreetCode__c'] != this.theRecord['Codice Via Stradario SAP']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplySAPStreetCode__c'] = this.theRecord['Codice Via Stradario SAP'];
             }
             if (this.servicePointRetrievedData['SupplyStreetNumberExtension__c'] != this.theRecord['Estens.Civico']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyStreetNumberExtension__c'] = this.theRecord['Estens.Civico'];
             }
             if (this.servicePointRetrievedData['SupplyStreetNumber__c'] != this.theRecord['Civico']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyStreetNumber__c'] = this.theRecord['Civico'];
             }
             if (this.servicePointRetrievedData['SupplyIsAddressVerified__c'] != this.theRecord['Flag Verificato']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyIsAddressVerified__c'] = this.theRecord['Flag Verificato'];
             }
             if (this.servicePointRetrievedData['SupplyPlaceCode__c'] != this.theRecord['Codice Localita']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyPlaceCode__c'] = this.theRecord['Codice Localita'];
             }
             if (this.servicePointRetrievedData['SupplyPlace__c'] != this.theRecord['Localita']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyPlace__c'] = this.theRecord['Localita'];
             }
         }
@@ -1295,6 +1326,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.allSubmitedFields['Disconnectable__c'] === 'No' && (this.allSubmitedFields['DisconnectibilityType__c'] === undefined || this.allSubmitedFields['DisconnectibilityType__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
             }
+            if ((this.allSubmitedFields['PlugPresence__c'] === undefined || this.allSubmitedFields['PlugPresence__c'] === '')) {
+                concatPointErrorFields = concatPointErrorFields.concat('Presenza Allaccio, ');
+            }
         }
         else if (this.allSubmitedFields['CommoditySector__c'] == 'Gas') {
 
@@ -1393,7 +1427,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
         }
         else if (this.allSubmitedFields['CommoditySector__c'] == 'Acqua') {            
-            
+            if (this.allSubmitedFields['PlugPresence__c'] === undefined || this.allSubmitedFields['PlugPresence__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Presenza Allaccio, ');
+            }
             if (this.allSubmitedFields['SupplyType__c'] === undefined || this.allSubmitedFields['SupplyType__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Tipo Fornitura, ');
             }
@@ -1606,6 +1642,14 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
                 resolve();
             }*/
+
+            if ( this.sale ) {
+                checkFieldMap['CompanyOwner__c'] = this.sale['Account__r']['CompanyOwner__c'];
+            }
+            if ( !checkFieldMap['SupplyCity__c'] ) 
+            {
+                checkFieldMap['SupplyCity__c'] = this.theRecord['Comune'];
+            }
             
             /**Check coerenza tipo fornitura - mercato di provenienza */
             checkCoerenceServicePoint({servicePoint: this.allSubmitedFields, inputFieldMap: checkFieldMap})
@@ -1823,7 +1867,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     create() {
 
-        createServicePoinString({ servicePoint: JSON.stringify(this.allSubmitedFields), sale: this.sale }).then(data => {
+        createServicePoinString({ servicePoint: JSON.stringify(this.allSubmitedFields), sale: this.sale, callWinBack: this.callWinBack }).then(data => {
 
             this.loading = false;
             this.closeCreateTargetObjectModal();
@@ -1856,9 +1900,15 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     confirm() {
 
+
+        if(this.existsServicePoint)
+        {
+            this.isSap = false;
+        }
         if (this.allSubmitedFields['Id'] != undefined && this.isSap == true) {
             delete this.allSubmitedFields['Id'];
         }
+        console.log('##171020222_TargetObjectCreateForm## isSap >>> ' + this.isSap);
         confirmServicePoint({ servicePoint: this.allSubmitedFields, sap: this.isSap, sale: this.sale }).then(data => {
             this.loading = false;
             this.closeCreateTargetObjectModal();

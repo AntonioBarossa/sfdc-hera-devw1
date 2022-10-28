@@ -11,6 +11,7 @@
             <property name="objectApiName" type="String" label="Object Name" description="object ApiName" role="inputOnly"/>             
             <property name="city" type="String" label="Comune" role="inputOnly"/>             
             <property name="sottotipo" type="String" label="Sottotipo Tabella" role="inputOnly"/>          
+            <property name="companyOwner" type="String" label="Company Owner" role="inputOnly"/>         
             <property name="outputWrp" type="apex://HDT_LC_ActiveRepentant" label="Wrapper Output" role="outputOnly"/>   
             <property name="sessionid" type="String" label="Session Flow Id" role="inputOnly"/>   
         </targetConfig>       

@@ -157,10 +157,11 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
             FROM Case
             WHERE 
             RecordTypeId = :processTypeId
+            AND Type = 'Gestione Rifiuti'
             AND (
-                ( Phase__c = :this.bozzaCase AND CreatedDate < :d) 
-                OR ( Phase__c ='Inviata a SAP' AND StartAppointment__c!=null AND StartAppointment__c < TODAY)
-            )
+                ( Phase__c = :this.bozzaCase AND CreatedDate < :d) OR
+                ( Phase__c ='Inviata a SAP' AND StartAppointment__c!=null AND StartAppointment__c < TODAY)
+            )//W2_CR010_RF002 Non impatta appuntamenti presi
             WITH SECURITY_ENFORCED
         ];
     }
@@ -283,4 +284,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         ];
     }
 
+    public List<wrts_prcgvr__Activity__c> getActivitiesRicConsumi(){
+        return [SELECT ActivityStartTime__c, Case__c FROM wrts_prcgvr__Activity__c WHERE Type__c = 'In attesa risposta cliente' AND wrts_prcgvr__Status__c = 'Aperta' AND Case__r.Type = 'Ricostruzione Consumi' AND Case__r.Reason__c = 'Ricalcolo consumi'];
+    }
 }

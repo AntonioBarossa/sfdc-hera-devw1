@@ -4,8 +4,8 @@
     <assignments>
         <name>Aggiornamento_Fase_Case_In_Lavorazione</name>
         <label>Aggiornamento Fase Case &quot;In Lavorazione&quot;</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>182</locationX>
+        <locationY>734</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -45,6 +45,60 @@
             <targetReference>Update_Case</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assegna_Quotation_Validity_Date</name>
+        <label>Assegna Quotation Validity Date</label>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.QuotationValidityDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calcola_Quotation_Validity_Date</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiornamento_Fase_Case_In_Lavorazione</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Commodity</name>
+        <label>Commodity?</label>
+        <locationX>182</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Aggiornamento_Fase_Case_In_Lavorazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altre Commodity</defaultConnectorLabel>
+        <rules>
+            <name>Acqua</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Quotation_Validity_Date</targetReference>
+            </connector>
+            <label>Acqua</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>Calcola_Quotation_Validity_Date</name>
+        <dataType>Date</dataType>
+        <expression>DATE(YEAR(TODAY()) + 1,MONTH(TODAY()),DAY(TODAY()))</expression>
+    </formulas>
     <interviewLabel>Gestione Verifica Fuga Idrica {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Verifica Fuga Idrica</label>
     <processMetadataValues>
@@ -69,7 +123,7 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -90,20 +144,20 @@
     <recordUpdates>
         <name>Update_Case</name>
         <label>Update Case</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationX>182</locationX>
+        <locationY>854</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <screens>
         <name>Processo_di_Verifica_Fuga_Idrica</name>
         <label>Processo di Verifica Fuga Idrica</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Aggiornamento_Fase_Case_In_Lavorazione</targetReference>
+            <targetReference>Commodity</targetReference>
         </connector>
         <fields>
             <name>Campi_Label</name>
@@ -130,7 +184,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>

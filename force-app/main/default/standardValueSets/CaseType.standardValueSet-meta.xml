@@ -537,6 +537,11 @@
         <label>Rimborso</label>
     </standardValue>
     <standardValue>
+        <fullName>Rimozione Agevolazione</fullName>
+        <default>false</default>
+        <label>Rimozione Agevolazione</label>
+    </standardValue>
+    <standardValue>
         <fullName>Rimozione Impianto</fullName>
         <default>false</default>
         <label>Rimozione Impianto</label>
@@ -550,6 +555,11 @@
         <fullName>Ripristino Fornitura Interrotta</fullName>
         <default>false</default>
         <label>Ripristino Fornitura Interrotta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Risoluzione Contrattuale</fullName>
+        <default>false</default>
+        <label>Risoluzione Contrattuale</label>
     </standardValue>
     <standardValue>
         <fullName>Risoluzione No Disalimentabile</fullName>
@@ -662,9 +672,9 @@
         <label>Testo Contratto in Bolletta</label>
     </standardValue>
     <standardValue>
-        <fullName>Verifica Generica GDM</fullName>
+        <fullName>Verifica Integrita Sigilli</fullName>
         <default>false</default>
-        <label>Verifica Generica GDM</label>
+        <label>Verifica Integrita Sigilli</label>
     </standardValue>
     <standardValue>
         <fullName>Verifica Rottura Impianto Cliente</fullName>
@@ -810,5 +820,10 @@
         <fullName>Adesione Rinuncia Fondo Fughe</fullName>
         <default>false</default>
         <label>Adesione Rinuncia Fondo Fughe</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Promessa di Pagamento Ente</fullName>
+        <default>false</default>
+        <label>Promessa di Pagamento Ente</label>
     </standardValue>
 </StandardValueSet>

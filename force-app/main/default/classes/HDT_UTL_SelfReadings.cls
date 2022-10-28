@@ -121,7 +121,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
         Reading__c r = new Reading__c();
         Boolean isGas = request.commodity.equals('Gas') || request.commodity.equals('G');
         Boolean isAcqua = request.commodity.equals('Acqua') || request.commodity.equals('A');
-
+        Boolean enableTurbobilling = String.isNotBlank(System.Label.TRB_Enable) && 'Y'.equalsIgnoreCase(System.Label.TRB_Enable)?true:false;
         if (String.isNotBlank(request.id)) {
             c.Id = request.id;
         }
@@ -154,31 +154,48 @@ public inherited sharing class HDT_UTL_SelfReadings {
         c.IntegrationId__c = request.integrationId;
         c.MeterCode__c = request.serialNumber;
         c.ReadingDate__c = request.readingDate != null ? request.readingDate : System.today();
-        c.DistributorCode__c = inputContract.ServicePoint__r.Distributor__r.Code__c;
+        c.Commodity__c = inputContract.ServicePoint__r.CommoditySector__c;
+        
+        
+        // c.DistributorCode__c = inputContract.ServicePoint__r.Distributor__r.Code__c;
         //c.SalesCompanyCode__c = isGas ? '10V0000160' : '13V0000000'; // TODO WAVE 2: adeguare con le altre company in ambito.
         /**
          * Autor: AF
          * Note: Commentata riga precedente e inserita gestione Acqua.
          * Codice da modificare in W3 per gestione di tutte le società di vendita
-         * **/
+         *
         if(isGas){
             c.SalesCompanyCode__c = '10V0000160';
         }else if(isAcqua){
             c.SalesCompanyCode__c = '11-HERASPA';
+            c.DistributorCode__c = '11-HERASPA';
         }else {
             c.SalesCompanyCode__c = '13V0000000';
-        }
+        }*/
+        //c.DistributorCode__c = inputContract.ServicePoint__r.Distributor__r.Code__c;
+        //c.SalesCompanyCode__c = isGas ? '10V0000160' : '13V0000000'; // TODO WAVE 2: adeguare con le altre company in ambito.
+        String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest('', request.contractCode);
+        HDT_UTL_DataEnrichmentPostSales.handleResponse(serializedResponse, c);
 
         HDT_QR_CausalCodeCalculation causalCodeHandler = new HDT_QR_CausalCodeCalculation();
-        HDT_CausalCodeCalculation__mdt causalCodeMdt = causalCodeHandler.calculateCausalCode(c.Cluster__c, c.Type, '', request.commodity);
+        HDT_CausalCodeCalculation__mdt causalCodeMdt = causalCodeHandler.calculateCausalCode(c.Cluster__c, c.Type, '', inputContract.ServicePoint__r.CommoditySector__c);
         c.CausalCode__c = causalCodeMdt.CausalCode__c;
 
         switch on request.outcome {
             when 'OK' {
-                c.Phase__c = 'Check preliminari OK';
+                if(enableTurbobilling && !isAcqua){
+                    c.Phase__c = 'Esito OK da SAP';
+                }else{
+                    c.Phase__c = 'Check preliminari OK';
+                }
             }
             when 'KO' {
-                c.Phase__c = 'Check preliminari KO';
+                if(enableTurbobilling && !isAcqua){
+                    c.Phase__c = 'Esisto KO da SAP';
+                }else {
+                    c.Phase__c = 'Check preliminari KO';
+                }
+                
                 HDT_UTL_DatabaseService.upsertSObject(c); // necessario per doppia transizione di fase.
                 String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
                 c.Description = nowDateFormat + ': '  + request.outcomeDescription;
@@ -222,7 +239,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
             r.ReadingUnitMeter__c = request.readings.unit1;
             r.ReadingUnitCorrector__c = request.readings.unit2;
         } else if (isAcqua) {
-            r.CaseGas__c = c.Id;
+            r.CaseAcqua__c = c.Id;
             r.RecordTypeId = rtQueryHandler.getRecordTypeIdByName('HDT_RT_LetturaAcqua');
             r.ReadingDigitNumberMeter__c = request.readings.digits1;
             r.ReadingDigitNumberCorrector__c = request.readings.digits2;
@@ -320,8 +337,14 @@ public inherited sharing class HDT_UTL_SelfReadings {
         HDT_UTL_DatabaseService.upsertSObject(r);
         response.readingId = r.Id;
         if('Bozza'.equalsIgnoreCase(c.Phase__c)){
-            c.Phase__c = 'Attesa check preliminari';
-            HDT_UTL_DatabaseService.upsertSObject(c);
+            if(enableTurbobilling && !isAcqua){
+                c.Phase__c = 'Inviata a SAP';
+                HDT_UTL_DatabaseService.upsertSObject(c);
+            }else{
+                c.Phase__c = 'Attesa check preliminari';
+                HDT_UTL_DatabaseService.upsertSObject(c);
+            }
+            
         } 
     }
 

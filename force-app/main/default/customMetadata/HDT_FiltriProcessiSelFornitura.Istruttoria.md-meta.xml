@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>ContrattiCliente__c</field>
-        <value xsi:type="xsd:string">NO</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Disalimentabile__c</field>
@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>FornitureCliente__c</field>
-        <value xsi:type="xsd:string">SI</value>
+        <value xsi:type="xsd:string">NO</value>
     </values>
     <values>
         <field>RateCategory__c</field>
@@ -20,11 +20,11 @@
     </values>
     <values>
         <field>StatoContratto__c</field>
-        <value xsi:type="xsd:string">Attivo</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>StatoFornitura__c</field>
-        <value xsi:type="xsd:string">Attivo,Bozza</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>TipoProcesso__c</field>

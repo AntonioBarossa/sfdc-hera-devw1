@@ -39,6 +39,8 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         String salesCompanyCode;
         String salesCompany;
         String method;
+        String sottoTipologiaDuso;
+
         /*
 			@Author: Davide Viola - 20/10/2021
 			Description: PMD -> Commentata variabile non utilizzata.
@@ -53,7 +55,7 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
 
         for(HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni position : positions){
             for(HDT_DataEnrichmentTransocode__mdt transcodeConfig : transcodeConfigList){
-                if(position.campo == transcodeConfig.SapField__c){
+               if(position.campo == transcodeConfig.SapField__c){
                     if(transcodeConfig.IsNumber__c){
                         if(transcodeConfig.Precision__c == 0){
                             try{
@@ -108,20 +110,33 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                             }
                             when 'getOpzione'{
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
-                                    depsSrv.getOpzione(position.valore));
+                                depsSrv.getOpzione(position.valore));
                             }
                             when 'getDateFromString'{
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
-                                    depsSrv.getDateFromString(position.valore));
+                                depsSrv.getDateFromString(position.valore));
                             }
                             when 'variationsBlock'{
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
-                                    depsSrv.variationsBlock(position.valore));
+                                depsSrv.variationsBlock(position.valore));
                             }
                             when 'writeBlockCode' {
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
                                 depsSrv.writeBlockCode(position.valore, currentCase));
                             }
+                            when 'transCodeDoubleOppositeToDecimal' {
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                depsSrv.transCodeDoubleOppositeToDecimal(position.valore));
+                            }
+                            when 'transCodeDoubleToString' {
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                depsSrv.transCodeDoubleToString(position.valore));
+                            }
+                            when 'alignGaaDate' {
+                                Date dataGaa = depsSrv.alignGaaDate(String.valueOf(transcodeMap.get('DataUltimoAllineamentoGAA__c')), position.valore);
+                                transcodeMap.put(transcodeConfig.SfdcField__c, dataGaa);
+                            }
+                            
                         }
                     } else {
                         transcodeMap.put(transcodeConfig.SfdcField__c, position.valore);
@@ -129,6 +144,11 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                 }
             }
         }
+
+        if(String.isBlank(String.valueOf(transcodeMap.get('Market__c'))) && ('Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c) || 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c))){
+            transcodeMap.put('Market__c', 'Regolamentato');
+        }
+
         //BILLING PROFILE 
         try{
             BillingProfile__c billingRecord = depsQr.getBillingProfileIdBySapCode(billingProfileCode);
@@ -208,13 +228,22 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
             transcodeMap.put('RegionalAdditional__c', regionalAdditional);
         }
 
-        //SALESCOMPANY
+        //SALESCOMPANY && SALESCOMPANYCODE
         salesCompanyCode = (String) transcodeMap.get('SalesCompanyCode__c');
+        salesCompanyCode = String.isBlank(salesCompanyCode) && 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c) ? '11-HERASPA' : salesCompanyCode;
+        salesCompanyCode = String.isBlank(salesCompanyCode) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c) ? '11-HERASPA' : salesCompanyCode;
+        salesCompanyCode = String.isBlank(salesCompanyCode) && 'Ambiente'.equalsIgnoreCase(currentCase.CommodityFormula__c) ? '1200000000' : salesCompanyCode;
+        salesCompanyCode = String.isBlank(salesCompanyCode) && 'Ambiente'.equalsIgnoreCase(currentCase.Commodity__c) ? '1200000000' : salesCompanyCode;
         salesCompany = depsSrv.calculateSalesCompany(salesCompanyCode);
+        
         transcodeMap.put('SalesCompany__c', salesCompany);
+        transcodeMap.put('SalesCompanyCode__c', salesCompanyCode);
 
+        //SOTTOTIPOLOGIA D'USO
+        sottoTipologiaDuso = HDT_SRV_DataEnrichmentPostSales.handleSubType(salesCompany, (String) transcodeMap.get('RateCategory__c'));
+        transcodeMap.put('UseSubCategory__c',sottoTipologiaDuso);
+       
         dataEnrichmentFields.addAll(transcodeMap.keySet());
-
         return depsSrv.populateCase(transcodeMap, currentCase);
     }
 
@@ -228,7 +257,6 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         caseList.add(handleResponse(serializedResponse, currentCase));
         return caseList;
     }
-
 
     public class HDT_UTL_FlowInput{
 

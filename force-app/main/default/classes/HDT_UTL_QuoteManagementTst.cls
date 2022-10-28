@@ -19,6 +19,7 @@ public with sharing class HDT_UTL_QuoteManagementTst {
         QuoteManagement__c qm = new QuoteManagement__c();
         qm.Commodity__c = 'Energia Elettrica';
         qm.Operation_type__c = 'Verifica GdM';
+        qm.Subprocess__c='Verifica elettrica';
         insert qm;
 
     }
@@ -144,7 +145,7 @@ public with sharing class HDT_UTL_QuoteManagementTst {
         //TESTING
         Test.startTest();
 
-        QuoteManagement__c qm = HDT_QR_QuoteManagement.queryAddInformation('Energia Elettrica', 'Verifica GdM');
+        QuoteManagement__c qm = HDT_QR_QuoteManagement.queryAddInformation('Energia Elettrica', 'Verifica GdM','Verifica elettrica');
 
         //ASSERTS
         System.assertNotEquals(null, qm, 'QuoteManagement__c = null');
@@ -155,6 +156,3 @@ public with sharing class HDT_UTL_QuoteManagementTst {
 
 
 }
-
-
-

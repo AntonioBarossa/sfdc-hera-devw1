@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Disalimentabile__c</field>
-        <value xsi:type="xsd:string">SI</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>FornitureCliente__c</field>
@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>StatoContratto__c</field>
-        <value xsi:type="xsd:string">Attivo</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>StatoFornitura__c</field>

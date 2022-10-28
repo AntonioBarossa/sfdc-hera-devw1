@@ -44,7 +44,12 @@ public inherited sharing class HDT_QR_Case {
             Commodity__c,
             SalesCompanyCode__c,
             CausalCode__c,
-            RecordType.DeveloperName
+            RecordType.DeveloperName,
+            MaxInstallmentsNumber__c,
+            MinInstallmentAmount__c,
+            MandatoryAttachments__c,
+            Note__c,
+            SupplyCity__c
             FROM Case
             where Id = :Id
             WITH SECURITY_ENFORCED
@@ -144,6 +149,10 @@ public inherited sharing class HDT_QR_Case {
 
     public List<Case> getRecordCreatedLastWeekEqualsBy(String cluster){
         return [Select Case.MotivatedResponseSendMode__c, Case.ParentId,Case.CorrectionRight__c,ServicePoint__r.SupplyCity__c,Case.ServicePoint__c,Case.IndemnityConfirmed__c,Case.CustomerRequestNumberDay__c,Case.Subprocess__c,Case.IsReiteration__c,Case.Status,Account.CustomerCode__c,Case.SupplyType__c,Case.ClosedDate,Case.CustomerRequestDate__c,Case.CompanyOwner__c,id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c, SupplyCityCode__c, ServicePoint__r.SupplyProvince__c from Case where cluster__c = : cluster AND CreatedDate = LAST_N_DAYS:7 WITH SECURITY_ENFORCED]; // aggiunti campi alla query
+    }
+
+    public List<Case> getRecordCreatedLastDayEqualsBy(String cluster){
+        return [Select Case.MotivatedResponseSendMode__c, Case.ParentId,Case.CorrectionRight__c,ServicePoint__r.SupplyCity__c,Case.ServicePoint__c,Case.IndemnityConfirmed__c,Case.CustomerRequestNumberDay__c,Case.Subprocess__c,Case.IsReiteration__c,Case.Status,Account.CustomerCode__c,Case.SupplyType__c,Case.ClosedDate,Case.CustomerRequestDate__c,Case.CompanyOwner__c,id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c, SupplyCityCode__c, ServicePoint__r.SupplyProvince__c from Case where cluster__c = : cluster AND CreatedDate = Yesterday WITH SECURITY_ENFORCED]; // aggiunti campi alla query
     }
 
     public List<Case> getRecordCreatedInRequestedDate(String cluster, Datetime startDt, Datetime endDt){
@@ -276,7 +285,7 @@ public inherited sharing class HDT_QR_Case {
         List<Case> childCases = new List<Case>();
         try
         {
-            childCases = [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE ParentId = :recordId AND Id IN :childIds WITH SECURITY_ENFORCED];
+            childCases = [SELECT Id, CorrectionRight__c, ServicePoint__c,FirstLevelComplaintClassification__c,SecondLevelComplaintClassification__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Commodity__c, Status FROM Case WHERE ParentId = :recordId AND Id IN :childIds WITH SECURITY_ENFORCED];
         }
         catch(Exception e)
         {
@@ -291,6 +300,19 @@ public inherited sharing class HDT_QR_Case {
     public List<Case> getCaseByAccountid(String accountid, Set<String> types)
     {
         return [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE AccountId = :accountid AND type IN :types AND isClosed = false WITH SECURITY_ENFORCED];
+    }
+
+    public List<Case> getRecordsByAccountIdInPhases(String accountId, List<String> phases ){
+        return [
+            SELECT
+            Id,
+            Phase__c
+            FROM
+            Case
+            WHERE AccountId = :accountId
+            AND Phase__c IN :phases
+            WITH SECURITY_ENFORCED
+        ];
     }
 
 }

@@ -30,8 +30,8 @@ export default class HdtTariAppointmentHandler extends LightningElement{
     
     @track tempList = [
         {label: 'Prendi Appuntamento ', name: 'newDate', iconName: 'utility:retail_execution', desc: 'Prendi un nuovo appuntamento con il DL', enable : false, visible : true},
-        {label: 'Visualizza Appuntamento', name: 'viewDate', iconName: 'utility:record_lookup', desc: 'Visualizza il tuo appuntamento', enable : false, visible : true},
-        {label: 'Annulla Appuntamento', name: 'cancelDate', iconName: 'utility:record_delete', desc: 'Cancella il tuo appuntamento', enable : false, visible : true}
+        {label: 'Visualizza Appuntamento', name: 'viewDate', iconName: 'utility:record_lookup', desc: 'Visualizza il tuo appuntamento', enable : false, visible : true}
+        // {label: 'Annulla Appuntamento', name: 'cancelDate', iconName: 'utility:record_delete', desc: 'Cancella il tuo appuntamento', enable : false, visible : true}
     ];
     
     get stmtValue(){
@@ -63,14 +63,14 @@ export default class HdtTariAppointmentHandler extends LightningElement{
                                     item.enable = true;
                                 }
                             break;
-                            case 'cancelDate':
-                                if(
-                                    this.case.Phase__c == 'Da Inviare' 
-                                    && this.case?.PhaseStory__c?.split(/\|\||@@/)?.some(str=>str?.toLowerCase()?.startsWith("in attesa appuntamento"))
-                                ){
-                                    item.enable = true;
-                                }
-                            break;
+                            // case 'cancelDate':
+                            //     if(
+                            //         this.case.Phase__c == 'Da Inviare' 
+                            //         && this.case?.PhaseStory__c?.split(/\|\||@@/)?.some(str=>str?.toLowerCase()?.startsWith("in attesa appuntamento"))
+                            //     ){
+                            //         item.enable = true;
+                            //     }
+                            // break;
                         }
                 });
             }

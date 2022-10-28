@@ -78,6 +78,11 @@
                 <label>Annullamento - Da inviare</label>
             </value>
             <value>
+                <fullName>Annullamento - Esito KO da DBO</fullName>
+                <default>false</default>
+                <label>Annullamento - Esito KO da DBO</label>
+            </value>
+            <value>
                 <fullName>Annullamento - Esito KO da DL</fullName>
                 <default>false</default>
                 <label>Annullamento - Esito KO da DL</label>
@@ -86,6 +91,11 @@
                 <fullName>Annullamento - Esito KO da DL/SII</fullName>
                 <default>false</default>
                 <label>Annullamento - Esito KO da DL/SII</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Esito OK da DBO</fullName>
+                <default>false</default>
+                <label>Annullamento - Esito OK da DBO</label>
             </value>
             <value>
                 <fullName>Annullamento - Esito OK da DL</fullName>
@@ -390,7 +400,6 @@
             <value>
                 <fullName>Esito KO da DBO</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Esito KO da DBO</label>
             </value>
             <value>
@@ -432,6 +441,11 @@
                 <fullName>Esito OK</fullName>
                 <default>false</default>
                 <label>Esito OK</label>
+            </value>
+            <value>
+                <fullName>Esito OK da DBO</fullName>
+                <default>false</default>
+                <label>Esito OK da DBO</label>
             </value>
             <value>
                 <fullName>Esito OK da DL</fullName>
@@ -581,6 +595,11 @@
                 <label>In sequenzializzazione</label>
             </value>
             <value>
+                <fullName>Intermedia</fullName>
+                <default>false</default>
+                <label>Intermedia</label>
+            </value>
+            <value>
                 <fullName>Inviare preventivo</fullName>
                 <default>false</default>
                 <label>Inviare preventivo</label>
@@ -674,6 +693,11 @@
                 <fullName>Lettura non inserita in SAP</fullName>
                 <default>false</default>
                 <label>Lettura non inserita in SAP</label>
+            </value>
+            <value>
+                <fullName>Mancata risposta</fullName>
+                <default>false</default>
+                <label>Mancata risposta</label>
             </value>
             <value>
                 <fullName>Motore VAS KO</fullName>

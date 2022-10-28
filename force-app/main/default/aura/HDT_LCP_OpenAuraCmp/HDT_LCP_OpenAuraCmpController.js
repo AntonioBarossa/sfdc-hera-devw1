@@ -43,6 +43,11 @@
 
         // id dell'interaction
         var interactionId = myPageRef.state.c__interactionId;
+        // activityId
+        var activityId = myPageRef.state.c__activityId;
+        var documentPaymentMethod = myPageRef.state.c__documentPaymentMethod;
+        /* Innesco Comunicazione Documentale */
+        var documentSendTracking = myPageRef.state.c__documentSendTracking;
 
         //Gestione Risottomissione Annullamento
         let discardRework = undefined;
@@ -78,6 +83,9 @@
         console.log('# compatibile -> '             + compatibile);
         console.log('# orderId -> '                 + orderId);
         console.log('# InteractionId -> '           + interactionId);
+        console.log('# activityId -> '              + activityId);
+        console.log('# documentPaymentMethod -> '   + documentPaymentMethod);
+        console.log('# documentSendTracking -> '   + documentSendTracking);
 
                 
         var workspaceAPI = component.find("workspace");
@@ -109,6 +117,10 @@
                         parentId = element.tabId;
                     } else if(element.pageReference.attributes.recordId === parentRecordId){
                         caseTabId=element.tabId;
+                    }
+                    else if(element.pageReference.attributes.recordId === documentSendTracking)
+                    {
+                        parentId = element.tabId;
                     }
                 }
             });
@@ -148,7 +160,13 @@
                         c__discardRework: discardRework,
                         c__campaignMemberId: campaignMemberId,
                         //Gestione Owner Activity
-                        c__IsUserActivity:isUserActivity
+                        c__IsUserActivity:isUserActivity,
+                        //activityId per annullamento Attività
+                        c__activityId:activityId,
+                        //introdotto per Paperless
+                        c__documentPaymentMethod:documentPaymentMethod,
+                        /* Innesco da document sendTracking */
+                        c__documentSendTracking: documentSendTracking
                     }
                 },
                 focus: true

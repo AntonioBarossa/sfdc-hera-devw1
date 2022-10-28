@@ -574,7 +574,7 @@ public class HDT_UTL_ScartiTst {
     
     @isTest static void checkForEsitiIntermedi(){
         
-        List<wrts_prcgvr__Activity__c> activities = [Select id,DiscardCategory__c,Case__c,Order__c, wrts_prcgvr__ObjectId__c From wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        List<wrts_prcgvr__Activity__c> activities = [Select id,DiscardCategory__c,Case__c,Order__c, wrts_prcgvr__ObjectId__c,Type__c From wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
             
         HDT_UTL_Scarti.checkForEsitiIntermedi(activities);
         

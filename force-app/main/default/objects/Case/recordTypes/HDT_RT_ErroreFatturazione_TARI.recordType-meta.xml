@@ -205,6 +205,18 @@
     </picklistValues>
     <picklistValues>
         <picklist>BillingErrorArgument__c</picklist>
+		<values>
+			<fullName>Agevolazione non corretta</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Argomento non censito</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Categoria Tariffaria non corretta</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>CMOR</fullName>
             <default>false</default>
@@ -213,6 +225,10 @@
             <fullName>Commissioni</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Componenti non corretti</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Deposito cauzionale</fullName>
             <default>false</default>
@@ -221,6 +237,10 @@
             <fullName>Diritti fissi contratto</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Diversi parametri non corretti</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Eventi eccezionali</fullName>
             <default>false</default>
@@ -229,6 +249,10 @@
             <fullName>Interessi</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Periodo calcolato non di competenza</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Potenza%2FCalibro</fullName>
             <default>false</default>
@@ -249,6 +273,10 @@
             <fullName>Storno per dati fiscali errati</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Superficie non corretta</fullName>
+			<default>false</default>
+		</values>
     </picklistValues>
     <picklistValues>
         <picklist>BillingFrequency__c</picklist>
@@ -1242,17 +1270,6 @@
         </values>
         <values>
             <fullName>Volontà estorta</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>CaseSource__c</picklist>
-        <values>
-            <fullName>Gestore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Utente</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8235,7 +8252,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10970,12 +10987,12 @@
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
-            <fullName>D%E2%80%99ufficio</fullName>
+            <fullName>D'ufficio</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Da contribuente</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>
@@ -11449,18 +11466,6 @@
         </values>
         <values>
             <fullName>13FM-Non domestici AT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13198,6 +13203,10 @@
 			<fullName>Riduzione Agevolazione dopo Accertamento</fullName>
 			<default>false</default>
 		</values>
+        <values>
+            <fullName>Rimozione Agevolazione</fullName>
+            <default>false</default>
+        </values>
 		<values>
 			<fullName>Sconti Collettivi Pap</fullName>
 			<default>false</default>

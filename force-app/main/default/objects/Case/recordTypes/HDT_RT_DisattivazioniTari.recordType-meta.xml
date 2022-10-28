@@ -1077,18 +1077,21 @@
     <picklistValues>
         <picklist>CancellationReason__c</picklist>
         <values>
-            <fullName>Annullamento per Parere Negativo</fullName>
+            <fullName>Pratica errata</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>CaseSource__c</picklist>
+        <picklist>CancellationReason__c</picklist>
         <values>
-            <fullName>Gestore</fullName>
+            <fullName>Annullamento da cliente</fullName>
             <default>false</default>
         </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CancellationReason__c</picklist>
         <values>
-            <fullName>Utente</fullName>
+            <fullName>Gestione Scarto</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8047,7 +8050,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9590,54 +9593,66 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
-		<values>
-			<fullName>Annullato</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Bozza</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Completata</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Comunicazione verso Heroku KO</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Comunicazione verso Heroku OK</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>DA INVIARE</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Documenti non validati</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Esito KO da SAP</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Gestione documentale</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>In attesa perfezionamento documentazione</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>In attesa validazione</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Inviata a SAP</fullName>
-			<default>false</default>
-		</values>
+        <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documenti non validati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione documentale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa perfezionamento documentazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviata a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Definitivo</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
@@ -10194,12 +10209,12 @@
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
-            <fullName>D%E2%80%99ufficio</fullName>
+            <fullName>D'ufficio</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Da contribuente</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>
@@ -10673,18 +10688,6 @@
         </values>
         <values>
             <fullName>13FM-Non domestici AT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12430,6 +12433,10 @@
 			<fullName>Riduzione Agevolazione dopo Accertamento</fullName>
 			<default>false</default>
 		</values>
+        <values>
+            <fullName>Rimozione Agevolazione</fullName>
+            <default>false</default>
+        </values>
 		<values>
 			<fullName>Sconti Collettivi Pap</fullName>
 			<default>false</default>
