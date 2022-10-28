@@ -183,7 +183,7 @@
             <assignToReference>SaveLabel</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Conferma</stringValue>
+                <stringValue>Conferma Pratica</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -1044,7 +1044,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Avanti</stringValue>
+                    <elementReference>SaveLabel</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
