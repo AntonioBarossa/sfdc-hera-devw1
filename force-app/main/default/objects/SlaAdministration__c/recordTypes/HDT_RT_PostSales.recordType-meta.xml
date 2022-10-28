@@ -596,15 +596,15 @@
     <picklistValues>
         <picklist>CaseField__c</picklist>
         <values>
-            <fullName>CustomerRequestDate__c</fullName>
+            <fullName>CustomerRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>PaymentDate__c</fullName>
+            <fullName>PaymentDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>WrittenReceiptRequestDate__c</fullName>
+            <fullName>WrittenReceiptRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -668,6 +668,10 @@
         </values>
         <values>
             <fullName>Reclami</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1928,19 +1932,19 @@
     <picklistValues>
         <picklist>OrderField__c</picklist>
         <values>
-            <fullName>EffectiveDate__c</fullName>
+            <fullName>EffectiveDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SendCertifiedEmailConsentDate__c</fullName>
+            <fullName>SendCertifiedEmailConsentDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SendRequestDate__c</fullName>
+            <fullName>SendRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SubjectCodeStartDate__c</fullName>
+            <fullName>SubjectCodeStartDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2027,6 +2031,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Consumo Anomalo Idrico</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Contenzioso In Corso</fullName>
             <default>false</default>
         </values>
@@ -2096,6 +2104,10 @@
         </values>
         <values>
             <fullName>Gestione Disalimentabilità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Rifiuti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2311,6 +2323,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Segnalazioni Varie %2F Ambientali</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sollecito Emissione Bolletta</fullName>
             <default>false</default>
         </values>
@@ -2478,6 +2494,14 @@
         </values>
         <values>
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi S%2Ep%2EA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi TARI</fullName>
             <default>false</default>
         </values>
     </picklistValues>
