@@ -923,7 +923,7 @@
             <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>In Lavorazione</stringValue>
+                <stringValue>Elaborazione Manuale</stringValue>
             </value>
         </assignmentItems>
         <connector>
