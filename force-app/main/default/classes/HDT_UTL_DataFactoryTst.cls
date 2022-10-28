@@ -3668,6 +3668,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			for(String field:fieldsValue.keySet()){
 				slaRule.put(field,fieldsValue.get(field));
 			}
+			slaRule.put('StartDate__c',Date.today());
+			slaRule.put('EndDate__c',Date.today().addDays(3));
 			slaAdminRules.add((SlaAdministration__c)slaRule);
 		}
 		if (doInsert){
