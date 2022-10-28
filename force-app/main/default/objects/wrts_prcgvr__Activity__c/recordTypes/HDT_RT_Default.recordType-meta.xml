@@ -2792,7 +2792,11 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Type__c</picklist>
+        <picklist>Type__c</picklist>        
+        <values>
+            <fullName>Modifica Indirizzo Fornitura</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Accettazione Voltura</fullName>
             <default>false</default>

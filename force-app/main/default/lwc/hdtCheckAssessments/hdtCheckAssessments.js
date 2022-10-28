@@ -1,6 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 import { FlowNavigationNextEvent } from 'lightning/flowSupport';
 import handleSearch from '@salesforce/apex/HDT_LC_CheckAssessments.handleSearch';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 const columns = [ { label: 'Nr. Atto', fieldName: 'NrAtto',  sortable: "true", initialWidth: 100}, //OK
                   { label: 'Data Atto', fieldName: 'DataAtto', sortable: "true", initialWidth: 100},
@@ -41,6 +42,8 @@ export default class HdtCheckAssessments extends LightningElement {
         this._customerMarking=value;
     }
     @track data;
+    @track isVisible = false;
+    @track message;
     _supplyCityCode;
     _customerMarking;
     columns = columns;
@@ -86,7 +89,7 @@ export default class HdtCheckAssessments extends LightningElement {
             tipoPersona : null
         }).then(result =>{
             if (!result){
-                console.log('result ->' + this.result);
+                this.handleKo();
             }else{
                 //let data = JSON.parse(result);
                 let data = result;
@@ -94,7 +97,8 @@ export default class HdtCheckAssessments extends LightningElement {
                 try{
                     slots = data.data;
                     this.data = [];
-                    if(slots.length == 0){
+                    if(slots.length == 1 && slots[0].messaggio != null){
+                        this.message = slots[0].messaggio;
                         const navigateNextElement = new FlowNavigationNextEvent();
                         this.dispatchEvent(navigateNextElement);
                     }
@@ -116,18 +120,29 @@ export default class HdtCheckAssessments extends LightningElement {
                                 SuperficieAccertata : element.SuperficieAccertata,//OP
                                 CategoriaAccertata : element.CategoriaAccertata//OP
                             });
+                            if(element.tipoAccertamento == 'Infedele Dich.'){
+                                this.showAlert('Attenzione','Una infedele dichiarazione è stata riscontrata in corso di accertamenti','error');
+                                this.isVisible = true;
+                            }
                         });
-                        this.data.sort(this.sortBy('NrAtto', -1));
+                        if(!(this.isVisible || this.message))   this.message="In corso di accertamenti non sono state riscontrate infedeli dichiarazioni";
+                        else this.data.sort(this.sortBy('NrAtto', -1));
                     }
                 }catch(e){
                     console.error(e);
-                    this.showAlert('Attenzione','Errore nella chiamata al server. Non è stato ricevuto un appuntamento valido.','error');
+                    this.handleKo();
                 }
             } 
         }).catch(error =>{
-            this.showAlert('Attenzione',error.body.message,'error');
+            this.handleKo();
         });
     }
+
+    handleKo(){
+        this.showAlert('Attenzione','Servizio di verifica accertamenti temporaneamente non disponibile','error');
+        this.message = 'Servizio di verifica accertamenti temporaneamente non disponibile';
+    }
+
 
     addRecord(element){
         this.data = [...this.data,element];

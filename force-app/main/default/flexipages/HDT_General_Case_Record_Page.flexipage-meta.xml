@@ -1099,6 +1099,24 @@
                 </componentInstanceProperties>
                 <componentName>wrts_prcgvr:ProcessActionListLtgCmp_1_0</componentName>
                 <identifier>wrts_prcgvr_ProcessActionListLtgCmp_1_0</identifier>
+                <visibilityRule>
+                    <booleanFilter>(1 AND 2) OR 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Commodity__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Ambiente</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Status}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>New</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Commodity__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Ambiente</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
