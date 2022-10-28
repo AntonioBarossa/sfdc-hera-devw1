@@ -378,9 +378,9 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
         String outPut= null;
 
-        if (sapOp=='0') {
+        if (sapOp=='0' || sapOp=='0.0000000') {
             outPut = 'No';
-        }else if (sapOp=='1') {
+        }else if (sapOp=='1' || sapOp=='1.0000000') {
             outPut = 'Si';
         }else if (sapOp=='2') {
             outPut = 'Si - Ridotta';
