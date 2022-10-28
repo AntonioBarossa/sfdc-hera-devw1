@@ -1655,19 +1655,19 @@
         <inputAssignments>
             <field>Type__c</field>
             <value>
-                <elementReference>Get_Template.Name</elementReference>
+                <elementReference>Copy_1_of_Get_Template.Name</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>wrts_prcgvr__ActivityTemplate__c</field>
             <value>
-                <elementReference>Get_Template.Id</elementReference>
+                <elementReference>Copy_1_of_Get_Template.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>wrts_prcgvr__Description__c</field>
             <value>
-                <elementReference>Get_Template.wrts_prcgvr__Subject__c</elementReference>
+                <elementReference>Copy_1_of_Get_Template.wrts_prcgvr__Subject__c</elementReference>
             </value>
         </inputAssignments>
         <object>wrts_prcgvr__Activity__c</object>
