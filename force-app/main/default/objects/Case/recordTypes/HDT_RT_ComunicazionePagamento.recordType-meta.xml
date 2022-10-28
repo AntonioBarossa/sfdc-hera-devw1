@@ -8383,6 +8383,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>RequestSource__c</picklist>
+        <values>
+            <fullName>D’ufficio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da contribuente</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Resolution__c</picklist>
         <values>
             <fullName>Contratto non richiesto</fullName>

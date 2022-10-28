@@ -121,6 +121,11 @@
         <label>Installazione Fallita</label>
     </customValue>
     <customValue>
+        <fullName>Mancanza del presupposto</fullName>
+        <default>false</default>
+        <label>Mancanza del presupposto</label>
+    </customValue>
+    <customValue>
         <fullName>Mancanza titolarità</fullName>
         <default>false</default>
         <label>Mancanza titolarità</label>
