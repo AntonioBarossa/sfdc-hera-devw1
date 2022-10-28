@@ -76,7 +76,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         } else if(caseType == 'Chiusura Contatore'){
 
-            result = validateDisattivazioni(fields);
+            result = validateDisattivazioni(fields,currentCase);
 
         } else if(caseType == 'Contratto Non Richiesto'){
 
@@ -1047,13 +1047,19 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-    public String validateDisattivazioni(String fields){
+    public String validateDisattivazioni(String fields,Case currentCase){
 
         String result;
 
         Date notBeforeDate = Date.valueOf(getFieldValue(fields, 'NotPerformedBefore__c'));
         Date requestDate = Date.valueOf(getFieldValue(fields, 'WrittenReceiptRequestDate__c'));
-
+        Boolean requiredAttachment = false;
+        Boolean isAcqua = false;
+        if(String.isNotBlank(currentCase.Commodity__c) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
+            isAcqua = true;
+            List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+            requiredAttachment = attachedDocument != null && attachedDocument.size() > 0?true:false;
+        }
         if(notBeforeDate < System.today()){
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data non può essere nel passato'));
@@ -1062,6 +1068,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data non può essere nel futuro'));
 
+        }else if(isAcqua && !requiredAttachment){
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Inserire un allegato'));
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));

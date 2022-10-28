@@ -461,6 +461,11 @@
                 <label>Giro contatore da gestire</label>
             </value>
             <value>
+                <fullName>Modifica Indirizzo Fornitura</fullName>
+                <default>false</default>
+                <label>Modifica Indirizzo Fornitura</label>
+            </value>
+            <value>
                 <fullName>In attesa risposta cliente</fullName>
                 <default>false</default>
                 <label>In attesa risposta cliente</label>
