@@ -9650,6 +9650,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In attesa validazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione validata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>KO Definitivo</fullName>
             <default>false</default>
         </values>
