@@ -493,7 +493,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     }else if(iva.indexOf('22') > -1){
                         ivaInteger = 22;
                     }
-                    else if(iva.indexOf('20') > 1)
+                    else if(iva.indexOf('20') > -1)
                     {
                         ivaInteger = 22;
                     }
@@ -510,7 +510,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 }else if(iva.indexOf('22') > -1){
                     ivaInteger = 22;
                 }
-                else if(iva.indexOf('20') > 1)
+                else if(iva.indexOf('20') > -1)
                 {
                     ivaInteger = 22;
                 }
