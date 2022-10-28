@@ -3594,4 +3594,98 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return pushTrackings;
 	}
 	
+	/**​
+    * @author Elvin Iluca
+    * @date 20/10/2022
+    * @description HDT_UTL_DataFactoryTst – Utility method to create/insert N EmailMessage instances/records
+	* @param1 - amount EmailMessage 
+	* @param2 - boolean to choose if insert records or not
+	* @return - the list of EmailMessage just created
+    */
+	public static List<EmailMessage> createEmailMessage(Integer amount, Boolean doInsert){
+	
+		List<EmailMessage> emailMessageList = new List<EmailMessage>();
+
+		for(Integer i = 0; i<amount; i++){
+			EmailMessage temp = new EmailMessage();
+			temp.status = '3';
+			temp.fromAddress = 'test' + i + '@test.com';
+			temp.fromName = 'test' + i;
+			temp.toAddress = 'toTest' + i + '@test.com';
+			temp.Subject = 'Hello ' + temp.ToAddress;
+			temp.HtmlBody = '<h1>How are you?</h1><br><br><h1>'+ temp.FromName +'</h1>';
+			
+			emailMessageList.add(temp);
+		}
+
+		if (doInsert){
+
+			insert emailMessageList;
+		}
+
+		return emailMessageList;
+
+	}
+
+	/**​
+    * @author Elvin Iluca
+    * @date 20/10/2022
+    * @description HDT_UTL_DataFactoryTst – Utility method to create/insert N EmailTemplate instances/records
+	* @param1 - amount EmailTemplate 
+	* @param2 - boolean to choose if insert records or not
+	* @return - the list of EmailTemplate just created
+    */
+
+	public static List<EmailTemplate> createEmailTemplate(Integer amount, Boolean doInsert){
+		List<EmailTemplate> emailTemplateList = new List<EmailTemplate>();
+		System.runAs (new User(Id = UserInfo.getUserId()) ){
+
+			for(Integer i = 0; i<amount; i++){
+				EmailTemplate temp = new EmailTemplate();
+				temp.isActive = true;
+				temp.Name = 'name'+ i;
+				temp.DeveloperName = 'unique_name_addSomethingSpecialHere' + i;
+				temp.TemplateType = 'text';
+				temp.FolderId = UserInfo.getUserId();
+				
+				emailTemplateList.add(temp);
+			}
+
+			if (doInsert){
+
+				insert emailTemplateList;
+			}
+		}
+
+		return emailTemplateList;
+
+	}
+
+	public static List<SlaAdministration__c> createSlaAdministration(Integer amount, Boolean doInsert, Map<String,Object> fieldsValue){
+		List<SlaAdministration__c> slaAdminRules= new List<SlaAdministration__c>();
+		for(Integer i = 0; i<amount; i++){
+			SObject slaRule=new SlaAdministration__c();
+			for(String field:fieldsValue.keySet()){
+				slaRule.put(field,fieldsValue.get(field));
+			}
+			slaAdminRules.add((SlaAdministration__c)slaRule);
+		}
+		if (doInsert){
+			insert slaAdminRules;
+		}
+		return slaAdminRules;
+
+	}
+
+	public static List<SlaTracking__c> createSlaTracking(Integer amount,Boolean doInsert,Id pClickActivity, Id slaAdmin, Id caseId, Id orderId, Integer slaValue, String status){
+		List<SlaTracking__c> slaList=new List<SlaTracking__c>();
+		for(Integer i = 0; i<amount; i++){
+			slaList.add(new SlaTracking__c(Activity__c=pClickActivity,SlaAdministration__c=slaAdmin,Case__c=caseId,Order__c=orderId,SlaValue__c=slaValue,Status__c=status));
+		}
+		if(doInsert){
+			insert slaList;
+		}
+		return slaList;
+
+	}
 }
