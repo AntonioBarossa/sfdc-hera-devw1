@@ -493,12 +493,32 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     }else if(iva.indexOf('22') > -1){
                         ivaInteger = 22;
                     }
+                    else if(iva.indexOf('20') > -1)
+                    {
+                        ivaInteger = 22;
+                    }
                     if(ivaInteger > 0){
                         ivaAmount = ((amountDouble/100)*ivaInteger);
                     }
                 }
                 totalAmount = amountDouble + ivaAmount;
             }
+            amountDouble = Double.valueOf(amount);
+            if(String.isNotBlank(iva)){
+                if(iva.indexOf('10') > -1){
+                    ivaInteger = 10;
+                }else if(iva.indexOf('22') > -1){
+                    ivaInteger = 22;
+                }
+                else if(iva.indexOf('20') > -1)
+                {
+                    ivaInteger = 22;
+                }
+                if(ivaInteger > 0){
+                    ivaAmount = ((amountDouble/100)*ivaInteger);
+                }
+            }
+            totalAmount = amountDouble + ivaAmount;
             result = variableAmount + '|' + fixedAmount + '|' + amount + '|' + ivaInteger + '|' + ivaAmount + '|' + totalAmount;    
             
         }else {

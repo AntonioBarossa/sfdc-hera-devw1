@@ -459,7 +459,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
            }
         }
         if(commList != null && !commList.isEmpty()){
-            commSRV.createRecords(commList);
+            try
+            {
+                commSRV.createRecords(commList);
+            }
+            catch(Exception e)
+            {
+                System.debug(Logginglevel.Debug, e.getMessage());
+            }
         }
     }
 
