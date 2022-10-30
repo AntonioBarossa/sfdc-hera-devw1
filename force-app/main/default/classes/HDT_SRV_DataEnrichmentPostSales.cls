@@ -374,31 +374,22 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
     
     }
 
-    public String transCodeSiNo (String  sapOp) {
-
-        String outPut= null;
-
-        if (sapOp=='0' || sapOp=='0.0000000') {
-            outPut = 'No';
-        }else if (sapOp=='1' || sapOp=='1.0000000') {
-            outPut = 'Si';
-        }else if (sapOp=='2') {
-            outPut = 'Si - Ridotta';
-        }
-
-        System.debug(LoggingLevel.DEBUG, 'La conversione Si / Si - Ridotta / No è: ' + outPut);
-        return outPut;
-    
+    public String transCodeSiNo (String  valueIn) {
+        String valueOut = null;
+        valueOut = (valueIn == '0' || valueIn == '0.0000000') ? 'No' : valueOut;
+        valueOut = (valueIn == '1' || valueIn == '1.0000000') ? 'Si' : valueOut;
+        valueOut = (valueIn == '2' || valueIn == '2.0000000') ? 'Si - Ridotta' : valueOut;      
+        return valueOut;   
     }
 
-    public  String transCodeDoubleOppositeToDecimal(String doubleInput){
+   /* public  String transCodeDoubleOppositeToDecimal(String doubleInput){
 
         String doubleOutput = doubleInput == '0.0000000' ? '1' : '0';
         doubleOutput = transCodeSiNo(doubleOutput);
 
         System.debug(LoggingLevel.DEBUG, 'La transcodifica di AFPAG_FFUG risulta: ' + doubleOutput);
         return doubleOutput;
-       }
+       }*/
 
     public  String transCodeDoubleToString(String doubleInputStr){
         String doubleOutStr = null;

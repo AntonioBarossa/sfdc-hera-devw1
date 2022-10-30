@@ -137,24 +137,19 @@ public inherited sharing class HDT_UTL_Case {
             result&=items.isEmpty();
             output.isCompatible = result? '' : 'NO';
         }else if (process.equalsIgnoreCase('Adesione Rinuncia Fondo Fughe')){
-
-            try {
-                
-                Case curCase = [SELECT Contract__r.StartDate FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
-
-                Date startDate = curCase.Contract__r.StartDate;
-                if (startDate != null){
-
-                    if('Y'.equals(joinBottomAdhesion) || ('N'.equals(joinBottomAdhesion) && startDate.addDays(365) > Date.today())){
-                        output.dataInizioVariazione = Date.today();
-                    }else if ('N'.equals(joinBottomAdhesion) && startDate.addDays(365) < Date.today()){
-                            output.dataInizioVariazione = startDate;
-                    }
+            // W2 Processo di adesione/rinuncia fondo fughe               
+            List<Case> caseRetrived = [SELECT Contract__r.StartDate FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
+            Date contractStartDate = (caseRetrived.size() > 0) ? caseRetrived[0]?.Contract__r?.StartDate : null;
+            if (contractStartDate != null){
+                if('Si'.equals(joinBottomAdhesion) || ('No'.equals(joinBottomAdhesion) && contractStartDate.addDays(365) > Date.today())){
+                    output.dataInizioVariazione = Date.today();
+                }else if ('No'.equals(joinBottomAdhesion) && contractStartDate.addDays(365) < Date.today()){
+                    output.dataInizioVariazione = contractStartDate;
                 }
-
-            } catch (Exception e) {
-                System.debug(LoggingLevel.DEBUG,'Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());  
             }
+            currentCase.JointBottomAdhesion__c = ('Si'.equals(joinBottomAdhesion)) ? 'No' : 'Si';
+            currentCase.ResidenceChangeDate__c = output.dataInizioVariazione;
+            output.currentCase = currentCase;
 
         }else if (process.equalsIgnoreCase('Modifica Unita Immobiliari Componenti')){
 
@@ -267,7 +262,8 @@ public inherited sharing class HDT_UTL_Case {
         public String frequenzaAllineamentoGaa;
         @InvocableVariable
         public String isDomestico;
-
+        @InvocableVariable
+        public Case currentCase;
     }
 
     public static Date addBusinessDay(Date startDate, Integer businessDayToAdd){
