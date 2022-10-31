@@ -124,9 +124,13 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
                                 depsSrv.writeBlockCode(position.valore, currentCase));
                             }
-                            when 'transCodeDoubleOppositeToDecimal' {
+                            /*when 'transCodeDoubleOppositeToDecimal' {
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
                                 depsSrv.transCodeDoubleOppositeToDecimal(position.valore));
+                            }*/
+                            when 'transCodeSiNo' {
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                depsSrv.transCodeSiNo(position.valore));
                             }
                             when 'transCodeDoubleToString' {
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
