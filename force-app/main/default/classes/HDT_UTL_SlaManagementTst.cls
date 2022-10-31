@@ -20,7 +20,9 @@ public with sharing class HDT_UTL_SlaManagementTst {
             'CustomerType__c'=>'Account','RangeType__c'=>'Giorni Solari','Type__c'=>'01'
         };
         List<SlaAdministration__c> slaAdminRules=HDT_UTL_DataFactoryTst.createSlaAdministration(1,true,slaAdminFields);
-        HDT_UTL_DataFactoryTst.createSlaTracking(1,true,null, slaAdminRules[0].Id, caseList[0].Id, orders[0].Id, 100, 'Aperto');
+        HDT_UTL_DataFactoryTst.createSlaTracking(1,true,null, slaAdminRules[0].Id, caseList[0].Id, null, 100, 'Aperto');
+        HDT_UTL_DataFactoryTst.createSlaTracking(1,true,null, slaAdminRules[0].Id, null, orders[0].Id, 100, 'Aperto');
+        
     }
 
     @isTest
@@ -48,13 +50,28 @@ public with sharing class HDT_UTL_SlaManagementTst {
     }
 
     @isTest
-    static void executeTst(){
+    static void executeCaseTst(){
         Case myCase=[SELECT Id,AccountId,ContactId FROM Case WITH SECURITY_ENFORCED LIMIT 1];
         HDT_WRP_SlaManagement.HDT_WRP_Event slaWrp=new HDT_WRP_SlaManagement.HDT_WRP_Event();
         slaWrp.recordId=myCase.Id;
         slaWrp.sObjType='Case';
         Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpEventObjMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event>{myCase.Id=>slaWrp};
         HDT_UTL_SlaManagement slaUtils=new HDT_UTL_SlaManagement('Case');
+        Test.startTest();
+        slaUtils.setChangedObjList(wrpEventObjMap);
+        slaUtils.execute();
+        Test.stopTest();
+        System.assertEquals(true, true, 'temp');
+    }
+
+    @isTest
+    static void executeOrderTst(){
+        Case myOrder=[SELECT Id FROM Case WITH SECURITY_ENFORCED LIMIT 1];
+        HDT_WRP_SlaManagement.HDT_WRP_Event slaWrp=new HDT_WRP_SlaManagement.HDT_WRP_Event();
+        slaWrp.recordId=myOrder.Id;
+        slaWrp.sObjType='Order';
+        Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpEventObjMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event>{myOrder.Id=>slaWrp};
+        HDT_UTL_SlaManagement slaUtils=new HDT_UTL_SlaManagement('Order');
         Test.startTest();
         slaUtils.setChangedObjList(wrpEventObjMap);
         slaUtils.execute();
