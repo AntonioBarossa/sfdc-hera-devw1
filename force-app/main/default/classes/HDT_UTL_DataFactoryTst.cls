@@ -3682,7 +3682,14 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	public static List<SlaTracking__c> createSlaTracking(Integer amount,Boolean doInsert,Id pClickActivity, Id slaAdmin, Id caseId, Id orderId, Integer slaValue, String status){
 		List<SlaTracking__c> slaList=new List<SlaTracking__c>();
 		for(Integer i = 0; i<amount; i++){
-			slaList.add(new SlaTracking__c(Activity__c=pClickActivity,SlaAdministration__c=slaAdmin,Case__c=caseId,Order__c=orderId,SlaValue__c=slaValue,Status__c=status));
+			SlaTracking__c slaTrack =new SlaTracking__c(Activity__c=pClickActivity,SlaAdministration__c=slaAdmin,SlaValue__c=slaValue,Status__c=status);
+			if(String.isNotBlank(caseId)){
+				slaTrack.Case__c=caseId;
+			}
+			if(String.isNotBlank(orderId)){
+				slaTrack.Order__c=orderId;
+			}
+			slaList.add(slaTrack);
 		}
 		if(doInsert){
 			insert slaList;
