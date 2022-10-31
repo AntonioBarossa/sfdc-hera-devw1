@@ -813,6 +813,13 @@
                 <stringValue>In gestione</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>wrts_prcgvr__IsClosed__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>wrts_prcgvr__Activity__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
