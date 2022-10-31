@@ -4,7 +4,7 @@
         <name>Check_Criterio_Eleggibilita</name>
         <label>Check Criterio Eleggibilita</label>
         <locationX>2063</locationX>
-        <locationY>1910</locationY>
+        <locationY>2150</locationY>
         <actionName>HDT_UTL_ElegibilityCriteriaCheck</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -136,11 +136,27 @@
             <targetReference>InputFieldsModAnag</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>UpperCaseFiscalCode</name>
+        <label>UpperCaseFiscalCode</label>
+        <locationX>2217</locationX>
+        <locationY>1790</locationY>
+        <assignmentItems>
+            <assignToReference>Refresh_Case.FiscalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>UpperCaseFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>UpdateFiscalCodeUpperCase</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Check_Criterio_Eleggibilita_0</name>
         <label>Check Criterio Eleggibilita</label>
         <locationX>2063</locationX>
-        <locationY>2030</locationY>
+        <locationY>2270</locationY>
         <defaultConnector>
             <targetReference>Refresh_Ruolo_Contatto</targetReference>
         </defaultConnector>
@@ -375,7 +391,7 @@
         <name>Check_Processo_2</name>
         <label>Check Processo 2</label>
         <locationX>2217</locationX>
-        <locationY>2822</locationY>
+        <locationY>3062</locationY>
         <defaultConnector>
             <targetReference>Codice_Cliente_Valorizzato</targetReference>
         </defaultConnector>
@@ -499,7 +515,7 @@
         <name>CheckCriteriEleggibilita</name>
         <label>Check Criteri Eleggibilita</label>
         <locationX>2217</locationX>
-        <locationY>1790</locationY>
+        <locationY>2030</locationY>
         <defaultConnector>
             <targetReference>Refresh_Ruolo_Contatto</targetReference>
         </defaultConnector>
@@ -524,7 +540,7 @@
         <name>Codice_Cliente_Valorizzato</name>
         <label>Codice Cliente Valorizzato</label>
         <locationX>2679</locationX>
-        <locationY>2942</locationY>
+        <locationY>3182</locationY>
         <defaultConnector>
             <targetReference>Set_Phase_Completata_per_CustomerCode_null</targetReference>
         </defaultConnector>
@@ -588,6 +604,11 @@
         <name>ShowBackButton</name>
         <dataType>Boolean</dataType>
         <expression>NOT({!ResumeFromDraft})</expression>
+    </formulas>
+    <formulas>
+        <name>UpperCaseFormula</name>
+        <dataType>String</dataType>
+        <expression>UPPER({!Refresh_Case.FiscalCode__c})</expression>
     </formulas>
     <interviewLabel>Gestione Modifiche Anagrafiche {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Modifiche Anagrafiche</label>
@@ -708,7 +729,7 @@
         <locationY>1670</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>CheckCriteriEleggibilita</targetReference>
+            <targetReference>UpperCaseFiscalCode</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -726,7 +747,7 @@
         <name>Refresh_Ruolo_Contatto</name>
         <label>Refresh Ruolo Contatto</label>
         <locationX>2217</locationX>
-        <locationY>2702</locationY>
+        <locationY>2942</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Processo_2</targetReference>
@@ -1270,7 +1291,7 @@
         <name>Set_Phase_Completata</name>
         <label>Set Phase Completata</label>
         <locationX>2283</locationX>
-        <locationY>2942</locationY>
+        <locationY>3182</locationY>
         <connector>
             <targetReference>Update_Contatto_non_titolare</targetReference>
         </connector>
@@ -1294,7 +1315,7 @@
         <name>Set_Phase_Completata_per_CustomerCode_null</name>
         <label>Set Phase Completata per CustomerCode null</label>
         <locationX>2811</locationX>
-        <locationY>3062</locationY>
+        <locationY>3302</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -1318,7 +1339,7 @@
         <name>Set_Phase_Da_Inviare</name>
         <label>Set Phase Da Inviare</label>
         <locationX>2547</locationX>
-        <locationY>3062</locationY>
+        <locationY>3302</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -1342,7 +1363,7 @@
         <name>Set_Phase_In_Lavorazione</name>
         <label>Set Phase In Lavorazione</label>
         <locationX>1755</locationX>
-        <locationY>2942</locationY>
+        <locationY>3182</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1363,7 +1384,7 @@
         <name>Update_Contatto_non_titolare</name>
         <label>Update Contatto non titolare</label>
         <locationX>2283</locationX>
-        <locationY>3062</locationY>
+        <locationY>3302</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1408,7 +1429,7 @@
         <name>Update_Esercizio_Diritti_Privacy</name>
         <label>Update Esercizio Diritti Privacy</label>
         <locationX>2019</locationX>
-        <locationY>2942</locationY>
+        <locationY>3182</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1430,6 +1451,16 @@
             </value>
         </inputAssignments>
         <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>UpdateFiscalCodeUpperCase</name>
+        <label>UpdateFiscalCodeUpperCase</label>
+        <locationX>2217</locationX>
+        <locationY>1910</locationY>
+        <connector>
+            <targetReference>CheckCriteriEleggibilita</targetReference>
+        </connector>
+        <inputReference>Refresh_Case</inputReference>
     </recordUpdates>
     <screens>
         <description>Insert a resource...
@@ -1733,7 +1764,7 @@ Inserisci manualmente i seguenti campi:</description>
         <name>Screen_Eleggibilita_Warning</name>
         <label>Screen Eleggibilita Warning</label>
         <locationX>1931</locationX>
-        <locationY>2150</locationY>
+        <locationY>2390</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1932,7 +1963,7 @@ Inserisci manualmente i seguenti campi:</description>
         <name>Spinner</name>
         <label>Spinner</label>
         <locationX>2679</locationX>
-        <locationY>3278</locationY>
+        <locationY>3518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2002,7 +2033,7 @@ Inserisci manualmente i seguenti campi:</description>
         <name>Gestione_Annullamento_0</name>
         <label>Gestione Annullamento</label>
         <locationX>1931</locationX>
-        <locationY>2270</locationY>
+        <locationY>2510</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
