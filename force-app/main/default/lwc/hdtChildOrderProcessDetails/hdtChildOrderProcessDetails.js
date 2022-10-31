@@ -811,6 +811,19 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.dispatchEvent(toastErrorMessage);
                     return;
                 }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='DomesticResidentNumber__c']") !== null 
+                    && (this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === ''
+                        || this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Classe Profilo Prelievo',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
                 if(this.template.querySelector("[data-id='ConnectionType__c']") !== null 
                     && (this.template.querySelector("[data-id='ConnectionType__c']").value === ''
                         || this.template.querySelector("[data-id='ConnectionType__c']").value === null)) {
