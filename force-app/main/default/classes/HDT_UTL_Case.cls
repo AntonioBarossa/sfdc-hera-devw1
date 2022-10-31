@@ -28,8 +28,6 @@ public inherited sharing class HDT_UTL_Case {
         String inputString = inputs[0].genericInputString;
         String joinBottomAdhesion = inputs[0].joinBottomAdhesion;
         
-        
-
         if(process == 'Voltura Tecnica'){
             effectiveDate = addBusinessDay(System.today(), 3);
             output.effectiveDate = effectiveDate;
@@ -38,7 +36,8 @@ public inherited sharing class HDT_UTL_Case {
             output.option = calculateOption(implantType, powerRequested);
             if(currentCase.Type.equalsIgnoreCase('Nuovo Impianto') || currentCase.Type.equalsIgnoreCase('Aggiunta Attacco'))
             {
-                HDT_UTL_CalculateTransition calculateTransition = new HDT_UTL_CalculateTransition(currentCase.SupplyCity__c, currentCase.Commodity__c, currentCase.Distributor__r.Code__c);
+                Case currCase=caseQr.getRecordById(currentCase.Id);
+                HDT_UTL_CalculateTransition calculateTransition = new HDT_UTL_CalculateTransition(currentCase.SupplyCity__c, currentCase.Commodity__c, currCase.Distributor__r.Code__c);
                 Map<String,Object> companyInfosMap = new Map<String,Object>();
                 companyInfosMap = calculateTransition.calculateCompanyInfos();
                 City__c city = (City__c)companyInfosMap.get('cityObj');
@@ -74,7 +73,8 @@ public inherited sharing class HDT_UTL_Case {
                         }
                         when else {
                             output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
-                            output.salesCompany = city.SDV__c;
+                            //output.salesCompany = city.SDV__c;
+                            output.salesCompany=(String)companyInfosMap.get('SalesCompany');
                         }
                     }
                 }

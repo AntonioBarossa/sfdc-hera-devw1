@@ -86,28 +86,17 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         TechnicalOffer__c tecOff;
         Id tecOffId;
         Boolean isUpdate = !String.isEmpty(technicalofferid);
-
-        // if(!isUpdate){ //
-
-        //     tecOff = generateTechnicalOfferRecord(tecOff, productId, rate, techOffObj, idToClone);
-        //     tecOff.Status__c = 'Draft';
-        //     
-        //     try{ //
-
-        //     } catch{
-        //         
-        //     }
-        //     
-        // } else {
-        //     tecOffId = technicalofferid;
-        // }
-
-
         tecOff = generateTechnicalOfferRecord(tecOff, productId, rate, techOffObj, idToClone);
-        tecOff.Status__c = 'Draft';
+        //tecOff.Status__c = 'Draft';
 
         if(isUpdate){
             tecOff.Id = technicalofferid;
+            //if((String.isEmpty(tecOff.Status__c) || tecOff.Status__c.equalsIgnoreCase('Draft')) && tecOff.OfferToBeModified__c){
+            //    tecOff.OfferToBeModified__c =  false;
+            //}
+        } else {
+            tecOff.Status__c = 'Draft';
+            tecOff.OfferToBeModified__c = false;
         }
 
         try{
@@ -360,6 +349,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         newTechOff.Product__c = productId;
         newTechOff.SapCode__c = null;
         newTechOff.OfferCode__c = recIdToClone;
+        newTechOff.Status__c = 'Draft';
+        newTechOff.OfferToBeModified__c = false;
 
         System.debug(LoggingLevel.DEBUG, '# clone this -> ' + newTechOff);
 
@@ -636,6 +627,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             obj.header.parametroI0 = formatCurrency(String.valueOf(techOff.I0__c));
             obj.header.parametroL = String.valueOf(techOff.Lambda__c);
             obj.header.identificativoProdotto = String.valueOf(techOff.ProductIdentifier__c);
+            // CONT_GG
+            // CONT_SETT
 
             //obj.header.parametroP0 = (obj.header.parametroP0==null) ? null : obj.header.parametroP0.replace('.', ',');
             //obj.header.parametroK = (obj.header.parametroK==null) ? null : obj.header.parametroK.replace('.', ',');
