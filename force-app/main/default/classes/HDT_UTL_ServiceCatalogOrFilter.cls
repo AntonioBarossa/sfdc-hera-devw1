@@ -12,12 +12,12 @@ global inherited sharing class HDT_UTL_ServiceCatalogOrFilter implements wrts_pr
         //SObject action = (SObject) argsMap.get('action'); //phase transition detail
         String method = (String) argsMap.get('method');
         boolean res = true;
-        if ('ServicePoint__c'.equalsIgnoreCase(objectType)){
-            res = HDT_UTL_ServiceCatalogOrFilterProcess.servicePointFilter(sb, method);
-        }else if(objectType == 'Case'){
+        if(objectType == 'Case'){
             res = HDT_UTL_ServiceCatalogOrFilterProcess.caseFilter(sb, method);
         } else if (objectType == 'AccountStatementFilter__c'){
             res = HDT_UTL_ServiceCatalogOrFilterProcess.accountStatementFilter(sb, method);
+        }else if ('ServicePoint__c'.equalsIgnoreCase(objectType)){
+            res = HDT_UTL_ServiceCatalogOrFilterProcess.servicePointFilter(sb, method);
         }
         return res;
     }
