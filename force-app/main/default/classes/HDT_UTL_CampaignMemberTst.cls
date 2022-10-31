@@ -50,15 +50,24 @@ public with sharing class HDT_UTL_CampaignMemberTst {
 
             //Copertura metodo Check Esito
             HDT_UTL_DataFactoryTst.pClickInstance();
-            List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(2, false, acc[0].Id, 'Bozza');
+            HDT_UTL_DataFactoryTst.pClickOrderPhase();
+            List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1,true,acc[0].Id,'Bozza');
+            Id pricebookId = Test.getStandardPricebookId();
+            List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, false, acc[0].Id, 'Bozza');
+            orderList.addAll(HDT_UTL_DataFactoryTst.createOrderWithPricebook(1,false,acc[0].Id,sales,pricebookId));
             orderList[0].RecordTypeId = constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
             orderList[0].QualityCall__c = true;
             insert orderList[0];
             orderList[1].ParentOrder__c = orderList[0].Id;
             orderList[1].QualityCall__c = true;
+            orderList[1].Contact__c = ctt[0].Id;
             insert orderList[1];
+            List<Product2> products = HDT_UTL_DataFactoryTst.createProduct2(1,true);
+            List<PricebookEntry> entries = HDT_UTL_DataFactoryTst.createPricebookEntry(products,true,Test.getStandardPricebookId());
+            HDT_UTL_DataFactoryTst.createOrderItem(1,true,orderList[1].Id,null,products[0].Id,entries[0].Id);
             List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(1,false, acc[0].Id);
             activities[0].Order__c = orderList[1].Id;
+            activities[0].Type__c = 'Quality Call';
             insert activities;
         }
 
@@ -330,7 +339,9 @@ public with sharing class HDT_UTL_CampaignMemberTst {
     public static void cancelContractTest(){
 
         Map<String, List<String>> strMap = new Map<String, List<String>>();
-
+        for (wrts_prcgvr__Activity__c act :[SELECT Id,Order__c FROM wrts_prcgvr__Activity__c WHERE Order__c != null]){
+            strMap.put(act.Id, new List<String>{act.Order__c});
+        }
         Test.startTest();
 
             HDT_UTL_CampaignMember.cancelContract(strMap);
