@@ -27,11 +27,13 @@ public with sharing class HDT_BA_ExpiredCasesTst {
         for(Case c : caseList){
             c.DocusignExpirationDate__c = Date.today().addDays(5);
             c.RecordTypeId = recTypeId;
+            c.Phase__c = 'Attesa Modulo Firmato';
             //c.Contact__c = conList[0].Id;
         }
         
         Case mySingleCase = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id)[0];
         mySingleCase.RecordTypeId = recTypeId;
+        mySingleCase.Phase__c = 'Attesa Modulo Firmato';
         
         caseList.add(mySingleCase);
         insert caseList;

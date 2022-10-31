@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_Default</fullName>
     <active>true</active>
@@ -83,6 +83,10 @@
         </values>
         <values>
             <fullName>HCM_CRE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_CC_OUT_CV</fullName>
             <default>false</default>
         </values>
         <values>
@@ -658,6 +662,10 @@
         </values>
         <values>
             <fullName>HCM_CRE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_CC_OUT_CV</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2790,6 +2798,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Acconto scaduto non pagato da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Approvazione Offerte</fullName>
             <default>false</default>
         </values>
@@ -2870,6 +2882,11 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore Comunicazione e-BDM</fullName>
+            <default>false</default>
+        </values>
+        
+        <values>
             <fullName>Esito Da Gestire</fullName>
             <default>false</default>
         </values>
@@ -2885,6 +2902,14 @@
             <fullName>Esito Lavori</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK Riduzione Potenza</fullName>
+            <default>false</default>
+        </values>   
         <values>
             <fullName>Gestione Iva e Accise</fullName>
             <default>false</default>
@@ -2918,6 +2943,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione richiesta social</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inviare Comunicazione Disconoscimento</fullName>
             <default>false</default>
         </values>
@@ -2934,11 +2963,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>KO gestito</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Lavorazione Reclamo Post Survey</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Modifica Contratti PreAttivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica gestita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2954,9 +2991,22 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Risposta Inviata - Attesa Rettifica</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Risposta Motivata Con Allegato</fullName>
+            <default>false</default>
+        </values>
+
+
+
+
+        
         <values>
             <fullName>Segnalazioni Commissioni Agenzie</fullName>
             <default>false</default>

@@ -87,6 +87,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
 
     public override void afterInsert(){
         HDT_UTL_Scarti.checkForEsitiIntermedi(trigger.new);
-    }   
+        HDT_UTL_ActivityCustom.setCompanyName(trigger.new);
+    }
 
 }

@@ -198,21 +198,21 @@
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_ApproveRejectCase}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                                <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Approvazione Offerte</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_ApprovazioneOfferta}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_OffertaNonApprovata</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+                                <booleanFilter>(1 AND 3) OR (2 AND 4)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.HDT_CP_ApproveRejectCase}</leftValue>
                                     <operator>EQUAL</operator>
@@ -227,6 +227,11 @@
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Approvazione Bonus Commerciale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_ApprovazioneOfferta}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -330,7 +335,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_Suspend_Activity</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -345,11 +350,6 @@
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>HDT_RT_DistributorAppointment</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Tracciatura</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

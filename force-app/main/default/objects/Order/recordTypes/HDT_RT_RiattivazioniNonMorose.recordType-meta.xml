@@ -42,15 +42,38 @@
             <fullName>web assistito</fullName>
             <default>false</default>
         </values>
+    </picklistValues>    
+    <picklistValues>
+        <picklist>FuiAccess__c</picklist>
+        <values>
+            <fullName>N</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>S</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CancellationReason__c</picklist>
+        <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Annullato per no conferma cliente</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Annullato per possibile frode</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Check KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
             <default>false</default>
         </values>
     </picklistValues>

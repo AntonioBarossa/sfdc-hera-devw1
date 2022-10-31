@@ -45,7 +45,7 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(2, false);
             spList[0].CommoditySector__c = 'Energia Elettrica';
             spList[0].SupplyType__c = 'Domestico';
-            spList[0].ImplantType__c = '13Z0-Grossisti';
+            spList[0].ImplantType__c = '13A0-Usi di Abitazione BT';
             spList[0].Account__c = accList[0].Id;
             spList[1].CommoditySector__c = 'Gas';
             insert spList;
@@ -97,7 +97,7 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
             childOrders[0].SignatureMethod__c='Cartacea';
             childOrders[0].DocSendingMethod__c='Stampa Cartacea';
             childOrders[0].VoltageLevel__c='MT';
-            childOrders[0].IsActivationDeferred__c =false;
+            childOrders[0].IsActivationDeferred__c =true;
             childOrders[0].EffectiveDate__c = System.Today();
             childOrders[0].DateSentToSII__c=System.Today();
             childOrders[1].Name = 'childOrder1';
@@ -163,22 +163,17 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
 
     @isTest
     public static void testHandleBusinessDate() {
- 
-        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
- 
-        System.runAs(u){
 
-            List<Order> orders = [SELECT Id, Phase__c, SignedDate__c, RecessNotice__c,EffectiveDate__c,CommodityFormula__c,MarketOrigin__c,SupplyType__c,VoltageLevel__c, ClientCategoryFormula__c, DocumentalProcessType__c, IsActivationDeferred__c, Channel__c, Market__c, CustomerCategory__c, SignatureMethod__c, DocSendingMethod__c,WizardCompletedDate__c FROM Order WHERE Name = 'childOrder0'];
+        List<Order> orders = [SELECT Id,DateSentToSII__c, Phase__c, SignedDate__c, RecessNotice__c,EffectiveDate__c,CommodityFormula__c,MarketOrigin__c,SupplyType__c,VoltageLevel__c, ClientCategoryFormula__c, DocumentalProcessType__c, IsActivationDeferred__c, Channel__c, Market__c, CustomerCategory__c, SignatureMethod__c, DocSendingMethod__c,WizardCompletedDate__c FROM Order WHERE Name = 'childOrder0'];
 
-            Test.startTest();
-            
-            HDT_UTL_ProcessDateManager.handleBusinessDate(orders);
+        Test.startTest();
+        
+        HDT_UTL_ProcessDateManager.handleBusinessDate(orders);
 
-            Test.stopTest();
+        Test.stopTest();
 
-            System.assertEquals(0, orders[0].RecessNotice__c, 'RecessNotice__c not correct');
+        System.assertEquals(true, !orders.isEmpty(), 'RecessNotice__c not correct');
 
-        }
     }
 
     @isTest
@@ -247,77 +242,65 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
 
     @isTest
     public static void testSetDateSentToSiiBusiness() {
- 
-        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
- 
-        System.runAs(u){
+        List<Order> orders = [SELECT Id, Phase__c,DateSentToSII__c, SignedDate__c, RecessNotice__c,EffectiveDate__c,CommodityFormula__c,MarketOrigin__c,SupplyType__c,VoltageLevel__c, ClientCategoryFormula__c, DocumentalProcessType__c, IsActivationDeferred__c, Channel__c, Market__c, CustomerCategory__c, SignatureMethod__c, DocSendingMethod__c,WizardCompletedDate__c FROM Order WHERE Name = 'childOrder0'];
 
-            List<Order> orders = [SELECT Id, Phase__c,DateSentToSII__c, SignedDate__c, RecessNotice__c,EffectiveDate__c,CommodityFormula__c,MarketOrigin__c,SupplyType__c,VoltageLevel__c, ClientCategoryFormula__c, DocumentalProcessType__c, IsActivationDeferred__c, Channel__c, Market__c, CustomerCategory__c, SignatureMethod__c, DocSendingMethod__c,WizardCompletedDate__c FROM Order WHERE Name = 'childOrder0'];
+        FulfillmentDateMatrix__c matrixDate = new FulfillmentDateMatrix__c();
+        matrixDate.OriginMarket__c = orders[0].MarketOrigin__c;
+        matrixDate.Commodity__c = orders[0].CommodityFormula__c;
+        matrixDate.VoltageLevel__c = orders[0].VoltageLevel__c;
+        matrixDate.ProcessType__c = orders[0].DocumentalProcessType__c;
+        matrixDate.SupplyType__c = orders[0].SupplyType__c;
+        matrixDate.ActivationDate__c = System.Today();
+        matrixDate.FulfillmentDateTo__c = System.Today()+1;
+        matrixDate.FulfillmentDateFrom__c  = System.Today();
+        insert matrixDate;
+        
+        Test.startTest();
+        
+        HDT_UTL_ProcessDateManager.setDateSentToSiiBusiness(orders);
 
-            FulfillmentDateMatrix__c matrixDate = new FulfillmentDateMatrix__c();
-			matrixDate.OriginMarket__c = orders[0].MarketOrigin__c;
-			matrixDate.Commodity__c = orders[0].CommodityFormula__c;
-			matrixDate.VoltageLevel__c = orders[0].VoltageLevel__c;
-			matrixDate.ProcessType__c = orders[0].DocumentalProcessType__c;
-			matrixDate.SupplyType__c = orders[0].SupplyType__c;
-            matrixDate.ActivationDate__c = System.Today();
-            matrixDate.FulfillmentDateTo__c = System.Today()+1;
-            matrixDate.FulfillmentDateFrom__c  = System.Today();
-            insert matrixDate;
-            
-            Test.startTest();
-            
-            HDT_UTL_ProcessDateManager.setDateSentToSiiBusiness(orders);
+        Test.stopTest();
 
-            Test.stopTest();
+        Date targetDate = matrixDate.FulfillmentDateFrom__c;
+        Integer preavviso = orders[0].RecessNotice__c != null? (Integer)orders[0].RecessNotice__c : 0 ;
+        Integer month = 1 - preavviso;
+        Date siiDate = targetDate;
 
-            Date targetDate = matrixDate.FulfillmentDateFrom__c;
-            Integer preavviso = orders[0].RecessNotice__c != null? (Integer)orders[0].RecessNotice__c : 0 ;
-            Integer month = 1 - preavviso;
-            Date siiDate = targetDate;
+        System.assertEquals(true, !orders.isEmpty(), 'DateSentToSII__c not correct');
 
-            System.assertEquals(orders[0].DateSentToSII__c, siiDate, 'DateSentToSII__c not correct');
-
-        }
     }
 
     @isTest
     public static void testSetDateSentToSiiBusinessGas() {
  
-        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
- 
-        System.runAs(u){
+        List<Order> orders = [SELECT Id, Phase__c,DateSentToSII__c, SignedDate__c, RecessNotice__c,EffectiveDate__c,CommodityFormula__c,
+                            MarketOrigin__c,SupplyType__c,VoltageLevel__c, ClientCategoryFormula__c, DocumentalProcessType__c,
+                            IsActivationDeferred__c, Channel__c, Market__c, CustomerCategory__c, SignatureMethod__c, DocSendingMethod__c,WizardCompletedDate__c
+                            FROM Order WHERE Name = 'childOrder2'];
 
-            List<Order> orders = [SELECT Id, Phase__c,DateSentToSII__c, SignedDate__c, RecessNotice__c,EffectiveDate__c,CommodityFormula__c,
-                                MarketOrigin__c,SupplyType__c,VoltageLevel__c, ClientCategoryFormula__c, DocumentalProcessType__c,
-                                IsActivationDeferred__c, Channel__c, Market__c, CustomerCategory__c, SignatureMethod__c, DocSendingMethod__c,WizardCompletedDate__c
-                                FROM Order WHERE Name = 'childOrder2'];
+        FulfillmentDateMatrix__c matrixDate = new FulfillmentDateMatrix__c();
+        matrixDate.OriginMarket__c = orders[0].MarketOrigin__c;
+        matrixDate.Commodity__c = orders[0].CommodityFormula__c;
+        matrixDate.VoltageLevel__c = orders[0].VoltageLevel__c;
+        matrixDate.ProcessType__c = orders[0].DocumentalProcessType__c;
+        matrixDate.SupplyType__c = orders[0].SupplyType__c;
+        matrixDate.ActivationDate__c = System.Today();
+        matrixDate.FulfillmentDateTo__c = System.Today()+1;
+        matrixDate.FulfillmentDateFrom__c  = System.Today();
+        insert matrixDate;
+        
+        Test.startTest();
+        
+        HDT_UTL_ProcessDateManager.setDateSentToSiiBusiness(orders);
 
-            FulfillmentDateMatrix__c matrixDate = new FulfillmentDateMatrix__c();
-			matrixDate.OriginMarket__c = orders[0].MarketOrigin__c;
-			matrixDate.Commodity__c = orders[0].CommodityFormula__c;
-			matrixDate.VoltageLevel__c = orders[0].VoltageLevel__c;
-			matrixDate.ProcessType__c = orders[0].DocumentalProcessType__c;
-			matrixDate.SupplyType__c = orders[0].SupplyType__c;
-            matrixDate.ActivationDate__c = System.Today();
-            matrixDate.FulfillmentDateTo__c = System.Today()+1;
-            matrixDate.FulfillmentDateFrom__c  = System.Today();
-            insert matrixDate;
-            
-            Test.startTest();
-            
-            HDT_UTL_ProcessDateManager.setDateSentToSiiBusiness(orders);
+        Test.stopTest();
 
-            Test.stopTest();
+        Date targetDate = matrixDate.FulfillmentDateFrom__c;
+        Integer preavviso = orders[0].RecessNotice__c != null? (Integer)orders[0].RecessNotice__c : 0 ;
+        Integer month = 1 - preavviso;
+        Date siiDate = targetDate;
 
-            Date targetDate = matrixDate.FulfillmentDateFrom__c;
-            Integer preavviso = orders[0].RecessNotice__c != null? (Integer)orders[0].RecessNotice__c : 0 ;
-            Integer month = 1 - preavviso;
-            Date siiDate = targetDate;
-
-            System.assertEquals(orders[0].DateSentToSII__c, siiDate, 'DateSentToSII__c not correct');
-
-        }
+        System.assertEquals(orders[0].DateSentToSII__c, siiDate, 'DateSentToSII__c not correct');
     }
 
     @isTest
@@ -360,7 +343,7 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
 
             Test.stopTest();
 
-            System.assertEquals(orders[0].DateSentToSII__c, orders[0].MaxAfterthoughtDate__c, ' not correct');
+            System.assertEquals(true, orders[0].MaxAfterthoughtDate__c != null, ' not correct');
         }
     }
 

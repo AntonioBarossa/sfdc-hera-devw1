@@ -16,14 +16,14 @@
         <duplicateRuleFilterItems>
             <field>LeadSource</field>
             <operation>equals</operation>
-            <value>Other, Creazione manuale, DBU</value>
+            <value>Creazione manuale, DBU</value>
             <sortOrder>2</sortOrder>
             <table>Lead</table>
         </duplicateRuleFilterItems>
     </duplicateRuleFilter>
     <duplicateRuleMatchRules>
         <matchRuleSObjectType>Lead</matchRuleSObjectType>
-        <matchingRule>Lead_Matching_2</matchingRule>
+        <matchingRule>Lead_Matching_3</matchingRule>
         <objectMapping xsi:nil="true"/>
     </duplicateRuleMatchRules>
     <duplicateRuleMatchRules>

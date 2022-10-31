@@ -277,7 +277,7 @@
         <fields>wrts_prcgvr__Status__c</fields>
         <fields>Type__c</fields>
         <fields>EndDate__c</fields>
-        <fields>OwnedByUser__c</fields>
+        <fields>Queue__c</fields>
         <relatedList>wrts_prcgvr__Activity__c.Account__c</relatedList>
         <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
@@ -286,6 +286,7 @@
         <fields>CAMPAIGN.NAME</fields>
         <fields>CAMPAIGN.CAMPAIGN_TYPE</fields>
         <fields>CAMPAIGN.START_DATE</fields>
+        <fields>CAMPAIGN.END_DATE</fields>
         <fields>CAMPAIGN.BUDGETED_COST</fields>
         <fields>CAMPAIGN.STATUS</fields>
         <relatedList>RelatedAccountCampaignList</relatedList>

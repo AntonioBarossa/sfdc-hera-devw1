@@ -47,6 +47,8 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
 
         if(idList != null) {
             query += ' WHERE Id IN :idList';
+        }else{
+            query+= ' WHERE IsDigitalMarking__c = true';
         }
 
         return Database.getQueryLocator(query);

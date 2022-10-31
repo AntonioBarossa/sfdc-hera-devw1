@@ -22,9 +22,8 @@
 
         //variabile per innesco da campagne
         var campaignId = myPageRef.state.c__campaignId;
-
         var campaignMemberId = myPageRef.state.c__campaignMemberId;
-        console.log('campaignMemberId --> '+campaignMemberId);
+        
 
 
         // id del lead oggetto del process.
@@ -44,6 +43,9 @@
 
         // id dell'interaction
         var interactionId = myPageRef.state.c__interactionId;
+        // activityId
+        var activityId = myPageRef.state.c__activityId;
+        var documentPaymentMethod = myPageRef.state.c__documentPaymentMethod;
 
         //Gestione Risottomissione Annullamento
         let discardRework = undefined;
@@ -70,7 +72,8 @@
         console.log('# recordToCancell -> '         + recordToCancell);
         console.log('# sObjectRecordToCancell -> '  + sObjectRecordToCancell);
         console.log('# parentRecordId --> '         + parentRecordId);
-        console.log('# campaignId -> '              + campaignId)
+        console.log('# campaignId -> '              + campaignId);
+        console.log('# campaignMemberId --> '       +campaignMemberId);
         console.log('# leadId -> '                  + leadId);
         console.log('# servicePointId -> '          + servicePointId);
         console.log('# billingProfileId -> '        + billingProfileId);
@@ -78,6 +81,8 @@
         console.log('# compatibile -> '             + compatibile);
         console.log('# orderId -> '                 + orderId);
         console.log('# InteractionId -> '           + interactionId);
+        console.log('# activityId -> '              + activityId);
+        console.log('# documentPaymentMethod -> '   + documentPaymentMethod);
 
                 
         var workspaceAPI = component.find("workspace");
@@ -144,7 +149,11 @@
                         c__discardRework: discardRework,
                         c__campaignMemberId: campaignMemberId,
                         //Gestione Owner Activity
-                        c__IsUserActivity:isUserActivity
+                        c__IsUserActivity:isUserActivity,
+                        //activityId per annullamento Attività
+                        c__activityId:activityId,
+                        //introdotto per Paperless
+                        c__documentPaymentMethod:documentPaymentMethod
                     }
                 },
                 focus: true

@@ -29,4 +29,52 @@ public class HDT_SRV_FieldCoerenceServicePoint {
         retVal = fieldCoerenceList.size() > 0 ? true : false;
         return retVal;
     }
+
+    public static Map<String, Object> checkCoerenceServicePoint(Map<String, Object> servicePoint, Map<String, Object> inputFieldMap)
+    {
+        String supplyType = (String) servicePoint.get('SupplyType__c');
+        String market = (String) servicePoint.get('MarketOrigin__c');
+        String commodity = (String) servicePoint.get('CommoditySector__c');
+        Map<String, Object> resultMap = new Map<String, Object>
+        {
+            'valid' => true,
+            'message' => ''
+        };
+        if(String.isNotBlank(supplyType) && (supplyType.equalsIgnoreCase('Domestico') || supplyType.equalsIgnoreCase('A-Domestico')) && String.isNotBlank(market) && market.equalsIgnoreCase('Salvaguardia'))
+        {
+          resultMap.put('valid', false);
+          resultMap.put('message', 'Impossibile selezionare Mercato: \"' + market +'\" per Tipo Fornitura: \"'+ supplyType + '\"');  
+        }
+        if(String.isNotBlank(commodity) && commodity.equalsIgnoreCase('Gas') && !inputFieldMap.isEmpty() && !(checkCoerence(inputFieldMap)))
+        {
+            resultMap.put('valid', false);
+            String category = (String)inputFieldMap.get('CategoriaCliente');
+            String errorMessage = 'Deve esserci coerenza nella compilazione dei seguenti campi: Tipologia Fornitura Cliente, Categoria Cliente, Tipo Impianto';
+            errorMessage += category.equalsIgnoreCase('Famiglie') || category.containsIgnoreCase('Condomini') ? 'Classe Profilo Prelievo, Categoria uso.' : '.';
+            resultMap.put('message', errorMessage);
+        }
+        if(String.isNotBlank(commodity) && commodity.equalsIgnoreCase('Energia Elettrica'))
+        {
+            String powerRequested = (String) servicePoint.get('PowerRequested__c');
+            String requestedPhase = (String) servicePoint.get('RequestPhase__c');
+            String implantType = (String) servicePoint.get('ImplantType__c');
+            String voltageLevel = (String) servicePoint.get('VoltageLevel__c');
+            if(String.isNotBlank(powerRequested) && Decimal.valueOf(powerRequested) > 10 && (String.isBlank(requestedPhase) || (String.isNotBlank(requestedPhase) && !requestedPhase.equalsIgnoreCase('Trifase'))))
+            {
+                resultMap.put('valid', false);
+                resultMap.put('message', 'Se la Potenza Richiesta è maggiore di 10, la Fase Richiesta deve essere Trifase');
+            }
+            if(String.isNotBlank(supplyType) && ((supplyType.equalsIgnoreCase('Domestico') && !implantType.equalsIgnoreCase('13A0-Usi di Abitazione BT')) || (!supplyType.equalsIgnoreCase('Domestico') && implantType.equalsIgnoreCase('13A0-Usi di Abitazione BT'))))
+            {
+                resultMap.put('valid', false);
+                resultMap.put('message','Deve esserci coerenza nella compilazione dei seguenti campi: Tipologia Fornitura Cliente, Tipo Impianto.');
+            }
+            if(String.isNotBlank(supplyType) && String.isNotBlank(voltageLevel) && supplyType.equalsIgnoreCase('Domestico') && !voltageLevel.equalsIgnoreCase('BT'))
+            {
+                resultMap.put('valid', false);
+                resultMap.put('message','Per Tipo Fornitura: \"' + supplyType + '\" impossibile selezionare Tensione di consegna: \"' + voltageLevel + '\"');
+            }
+        }
+        return resultMap;
+    }
 }

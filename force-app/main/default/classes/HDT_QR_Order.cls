@@ -40,7 +40,7 @@ public inherited sharing class HDT_QR_Order {
     public Map<Id, Order>  getOrdersRecord(list <Id> orderId){
         Map<Id, Order> mapIdOrder=new  Map<Id, Order>([
             SELECT
-            Name, AccountId,SAPImplantCode__c,SapContractCode__c,EffectiveDate__c,ContractAccountCode__c,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
+            Name, AccountId,SAPImplantCode__c,SalesCompany__c,SapContractCode__c,EffectiveDate__c,ContractAccountCode__c,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
             Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c,Market__c,VAT__c, SBQQ__Quote__r.SBQQ__PriceBook__c,  
             CommercialProduct__c, TemporaryConnectionEndDate__c, ProcessType__c
             FROM Order 
@@ -351,7 +351,8 @@ public inherited sharing class HDT_QR_Order {
             isSTG__c,
             Contact__r.Phone,
             Contact__r.MobilePhone,
-            Subprocess__c
+            Subprocess__c,
+            VASType__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -615,7 +616,8 @@ public inherited sharing class HDT_QR_Order {
             Order
             WHERE ParentOrder__c IN :parentOrderIds
             AND Phase__c NOT IN ('Annullato')
-            AND ProcessType__c != ''
+            /* AND ProcessType__c != ''
+            AND ProcessType__c != 'VAS' */
             WITH SECURITY_ENFORCED
         ];
     }
@@ -631,6 +633,7 @@ public inherited sharing class HDT_QR_Order {
         return [
             SELECT
             Phase__c,
+            PhaseStory__c,
             isTransition__c ,
             recordtype.developername,
             AutorizationVolturaThirdTrader__c,
@@ -1330,7 +1333,8 @@ public inherited sharing class HDT_QR_Order {
         return [
             Select 
             id,
-            AgencyCode__c
+            Phase__c,
+            AgencyCode__c, SignedDate__c
             from Order 
             Where id = :id
             WITH SECURITY_ENFORCED
@@ -1343,8 +1347,13 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getOrderForComfort(String id){
-        return [SELECT Id, Phase__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, RecordType.DeveloperName FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
+        return [SELECT Id, Phase__c, SignedDate__c, isTransition__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, ParentOrder__c, RecordType.DeveloperName, DateComfortCall__c FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
     }
+
+    public List<Order> getAllOrdersForComfort(String id){
+        return [SELECT Id, Phase__c, ConfirmCustomerContract__c, CancellationReason__c, ParentOrder__c, QualityCall__c FROM Order WHERE QualityCall__c =true AND ParentOrder__c = :id WITH SECURITY_ENFORCED];
+    }
+
 
     public List<Order> getOrdersList(List<String> ordIdList){
         return [SELECT Id, Phase__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, RecordType.DeveloperName FROM Order WHERE Id = :ordIdList WITH SECURITY_ENFORCED];

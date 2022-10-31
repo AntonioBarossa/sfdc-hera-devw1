@@ -230,13 +230,13 @@ public with sharing class HDT_QR_ActivityCustomTst{
 
 			Id rt=constants.ACTIVITYCUSTOM_RECORDTYPEID_KOPRECEDETECLIENTE;
 
-			List<wrts_prcgvr__Activity__c> tActCust=[SELECT Id, Type__c
+			List<wrts_prcgvr__Activity__c> tActCust=[SELECT Id, Type__c,wrts_prcgvr__IsClosed__c 
 			                                         FROM wrts_prcgvr__Activity__c
 			                                         WHERE Type__c='Approvazione Quote' AND wrts_prcgvr__Status__c='Aperta'
 			                                         LIMIT 1];
 			
 			tActCust[0].RecordTypeId=rt;
-
+			tActCust[0].wrts_prcgvr__IsClosed__c=false;
 			update tActCust;
 
 			List<wrts_prcgvr__Activity__c> tActivity=HDT_QR_ActivityCustom.getActivityListCrediCheck(orderIds);
@@ -380,6 +380,102 @@ public with sharing class HDT_QR_ActivityCustomTst{
 
 		System.assertEquals( isClose, true, 'isActivityNotClosed work correctly' );
 
+		Test.stopTest();
+	}
+
+	@isTest
+	static void getActivityCreatedByQualityBatchTest(){
+		Test.startTest();
+
+
+		List<Id> orderId = new List<Id>();
+		for (wrts_prcgvr__Activity__c act:[ SELECT Order__c FROM wrts_prcgvr__Activity__c WHERE Order__r.Id != null]){
+			orderId.add(act.Order__c);
+		}
+
+		System.assertEquals(0, HDT_QR_ActivityCustom.getActivityCreatedByQualityBatch(orderId).size(), 'getActivityCreatedByQualityBatch doesn\'t work correctly' );
+
+		Test.stopTest();
+	}
+
+	@isTest
+	static void getRecordByMethodTest(){
+		Test.startTest();
+
+
+		List<wrts_prcgvr__Activity__c> activities = [ SELECT Id, Order__c,Order__r.ServicePoint__c, Account__c
+														FROM wrts_prcgvr__Activity__c 
+														WHERE Order__r.Id != null 
+														LIMIT 1 ];
+
+		System.assertEquals(0, HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePointNotStatus('TEST', 'Chiusa', activities[0].Account__c, activities[0].Order__r.ServicePoint__c).size(), 'getRecordByTypeAndStatusAndAccountAndServicePointNotStatus doesn\'t work correctly' );
+		System.assertEquals(activities[0].Id, HDT_QR_ActivityCustom.getRecordByIdAccise(activities[0].Id).Id, 'getRecordByIdAccise doesn\'t work correctly' );
+		System.assertEquals(activities[0].Id, HDT_QR_ActivityCustom.getRecordByIdValidation(activities[0].Id).Id, 'getRecordByIdValidation doesn\'t work correctly' );
+		System.assertEquals(0, HDT_QR_ActivityCustom.getRecordByOrderIdAndType(activities[0].Order__c,'TEST').size(), 'getRecordByOrderIdAndType doesn\'t work correctly' );
+		System.assertEquals(0, HDT_QR_ActivityCustom.getRecordByOrderAndQuality(activities[0].Order__c).size(), 'getRecordByOrderAndQuality doesn\'t work correctly' );
+		System.assertEquals(0, HDT_QR_ActivityCustom.getRecordByOrderListAndQuality(new List<Id>{activities[0].Order__c}).size(), 'getRecordByOrderListAndQuality doesn\'t work correctly' );
+		System.assertEquals(0, HDT_QR_ActivityCustom.getRecordByOrderListAndQuality(new Set<String>{activities[0].Order__c}).size(), 'getRecordByOrderListAndQuality doesn\'t work correctly' );
+		System.assertEquals(0, HDT_QR_ActivityCustom.getRecordByEcid('TEST').size(), 'getRecordByEcid doesn\'t work correctly' );
+
+		Test.stopTest();
+	}
+
+	@isTest
+	static void datiDiscordantiMethodTest(){
+		Test.startTest();
+
+
+		List<wrts_prcgvr__Activity__c> activities = [ SELECT Id, Order__c,Order__r.ServicePoint__c, Account__c
+														FROM wrts_prcgvr__Activity__c 
+														WHERE Order__r.Id != null 
+														LIMIT 1 ];
+
+		System.assertEquals(0, HDT_QR_ActivityCustom.getRecordScartoDiscordante(activities[0].Order__r.ServicePoint__c,activities[0].Account__c).size(), 'getRecordScartoDiscordante doesn\'t work correctly' );
+		System.assertEquals(0, HDT_QR_ActivityCustom.getRecordScartoDiscordante(activities[0].Order__c).size(), 'getRecordScartoDiscordante doesn\'t work correctly' );
+		System.assertEquals(0, new HDT_QR_ActivityCustom().getEsitoActivityDiscordante(activities[0].Order__c).size(), 'getEsitoActivityDiscordante doesn\'t work correctly' );
+		
+		Test.stopTest();
+	}
+
+	@isTest
+	static void telesellingMethodTest(){
+		Test.startTest();
+
+
+		
+		System.assertEquals(0, HDT_QR_ActivityCustom.getActivityTelesellingOutbound('TEST').size(), 'getActivityTelesellingOutbound doesn\'t work correctly' );
+		System.assertEquals(0, HDT_QR_ActivityCustom.getActivityTelesellingOutboundByUser().size(), 'getActivityTelesellingOutboundByUser doesn\'t work correctly' );
+		
+		Test.stopTest();
+	}
+
+	@isTest
+	static void creditCheckMethodTest(){
+		Test.startTest();
+
+
+		List<wrts_prcgvr__Activity__c> activities = [ SELECT Id, Order__c,Order__r.ServicePoint__c, Account__c
+														FROM wrts_prcgvr__Activity__c 
+														WHERE Order__r.Id != null 
+														LIMIT 1 ];
+
+		System.assertEquals(1, HDT_QR_ActivityCustom.getActivityKoPrecedenteClienteByIds(new List<Id>{activities[0].Id}).size(), 'getActivityKoPrecedenteClienteByIds doesn\'t work correctly' );
+		
+		Test.stopTest();
+	}
+
+	@isTest
+	static void qualityCallMethodTest(){
+		Test.startTest();
+
+
+		List<wrts_prcgvr__Activity__c> activities = [ SELECT Order__c
+														FROM wrts_prcgvr__Activity__c 
+														WHERE Order__r.Id != null 
+														LIMIT 1 ];
+
+		System.assertEquals(true, HDT_QR_ActivityCustom.getQualCallByParentOrder(new Set<String>{activities[0].Order__c}).isEmpty(), 'getQualCallByParentOrder doesn\'t work correctly' );
+		
 		Test.stopTest();
 	}
 }

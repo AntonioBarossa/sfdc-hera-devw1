@@ -50,8 +50,30 @@ public inherited sharing class HDT_UTL_Case {
 
                 
                 // output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
-                output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
-                output.salesCompany = city.SDV__c;
+                switch on city.SDV__c {
+                    when 'HCM' {
+                        output.salesCompanyCode = '10V0000160';
+                        output.salesCompany = 'Hera Comm Marche';
+                    }
+                    when 'HC' {
+                        output.salesCompanyCode = '13V0000000';
+                        output.salesCompany = 'Hera Comm S.p.A.';
+                    }
+                    when 'EENE'{
+                        if(currentCase.Commodity__c!= null && currentCase.Commodity__c.equalsIgnoreCase('Energia Elettrica')){
+                            output.salesCompanyCode = '13V0000170';
+                        }else {
+                            output.salesCompanyCode = '10V0000263';
+                        }
+                        output.salesCompany = 'ESTENERGY SPA';
+                    }
+                    when else {
+                        output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
+                        output.salesCompany = city.SDV__c;
+                    }
+                }
+                //output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
+                //output.salesCompany = city.SDV__c;
             }
         } 
         else if(process.equalsIgnoreCase('Compatibilita'))
@@ -62,7 +84,7 @@ public inherited sharing class HDT_UTL_Case {
             } 
             catch (Exception e) 
             {   
-                output.isCompatible = '';
+                output.isCompatible = e.getMessage();
                 System.debug(LoggingLevel.DEBUG,'Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());    
             }
             
@@ -76,7 +98,7 @@ public inherited sharing class HDT_UTL_Case {
             Datetime nowDate = Datetime.now();
             String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
             output.cancellationNote = nowDateFormat + ': ' + cancellationNote;
-            
+            output.cancellationNote = output.cancellationNote.length() > 255 ? output.cancellationNote.substring(0, 255) : output.cancellationNote; 
         }
         else if(process.equalsIgnoreCase('CreaBpCa')){
             System.enqueueJob(new HDT_QBL_BpCaRequest( accountContactRelationQr.getCreateBpCa( currentCase.AccountId ), currentCase.SupplyProvince__c, true ) );

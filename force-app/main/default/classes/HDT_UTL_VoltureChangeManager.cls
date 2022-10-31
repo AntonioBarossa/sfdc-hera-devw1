@@ -118,7 +118,9 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             /**@frpanico 26/10/2021
              * Cambio Voltura - RN008 "Voltura con Switch"
             */
-            voltureChangeSrv.handleAmmissibilityCheck(fieldsMap, currentOrder);
+            if ('Amm. Precheck OK SII'.equalsIgnoreCase(orderToUpdate.TecnicalPhase__c)){
+                voltureChangeSrv.handleAmmissibilityCheck(fieldsMap, currentOrder);
+            }
 
             /*
             if(! string.isBlank((String)fieldsMap.get('VIA')) ){
@@ -143,7 +145,10 @@ public with sharing class HDT_UTL_VoltureChangeManager {
                 orderToUpdate.SupplyCountry__c = (String)fieldsMap.get('NAZIONE');
             }
             */
-            orderToUpdate.DiscardReason__c = HDT_UTL_Accents.removeDiacritics((String)fieldsMap.get('DES_ERR_AEEG'));
+            String discardReason = fieldsMap.containsKey('DES_ERR_AEEG') && String.isNotBlank((String)fieldsMap.get('DES_ERR_AEEG')) ?
+                (String)fieldsMap.get('DES_ERR_AEEG') :
+                (String)fieldsMap.get('TESTO_ERR');  
+            orderToUpdate.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(discardReason);
             orderToUpdate.HerokuPracticeCode__c = (String)fieldsMap.get('COD_PRAT_UTENTE');
             orderToUpdate.DistributorPracticeCode__c = (String)fieldsMap.get('COD_PRAT_DISTR');
             /* Date Fields */

@@ -149,7 +149,7 @@ public with sharing class HDT_UTL_CaseProcess {
                                                 activityId = activity.OwnerId;
                                             }
                                             activitiesOwnerId.add(activityId);
-                                            activity.wrts_prcgvr__Status__c = 'Chiusa';
+                                            activity.wrts_prcgvr__Status__c = 'Annullata';
                                             //Notification Fire to activity's owner
                                             try{
                                                 if(customNotif != null && activitiesOwnerId.size() > 0){
@@ -174,6 +174,16 @@ public with sharing class HDT_UTL_CaseProcess {
                         updateList.addAll(childCases);
                         HDT_UTL_DatabaseService.updateSObject(updateList);
                     }
+                }
+                /* Richiesta Parere
+                * Il case padre (reclamo scritto) viene riportato In Lavorazione
+                */
+                if(caseNew.Type.equalsIgnoreCase('Richiesta Parere') && newPhase.equalsIgnoreCase('Annullato') && caseNew.ParentId != null)
+                {
+                    Case complaintCase = new Case();
+                    complaintCase.Id = caseNew.ParentId;
+                    complaintCase.Phase__c = 'In Lavorazione';
+                    HDT_UTL_DatabaseService.updateSObject(complaintCase);
                 }
                 //Contratto Non Richiesto
                 if(newPhase.equalsIgnoreCase('Annullato')){

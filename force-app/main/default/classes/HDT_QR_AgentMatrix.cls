@@ -20,6 +20,7 @@ public inherited sharing class HDT_QR_AgentMatrix {
             AgencyCode__c
             FROM AgentMatrix__c
             WHERE Channel__c = :channel
+            AND (CollaborationEndDate__c > TODAY OR CollaborationEndDate__c = NULL)
             WITH SECURITY_ENFORCED
         ];
 
@@ -37,6 +38,7 @@ public inherited sharing class HDT_QR_AgentMatrix {
             AgencyName__c,
             AgencyCode__c
             FROM AgentMatrix__c
+            WHERE (CollaborationEndDate__c > TODAY OR CollaborationEndDate__c = NULL)
             WITH SECURITY_ENFORCED
         ];
 
@@ -138,7 +140,9 @@ public inherited sharing class HDT_QR_AgentMatrix {
             IsMonitoring__c,
             AreaManager__c
             FROM AgentMatrix__c
-            WHERE Channel__c=:channel AND UserIdentification__c=:userName
+            WHERE Channel__c=:channel 
+            AND UserIdentification__c=:userName
+            AND (CollaborationEndDate__c > TODAY OR CollaborationEndDate__c = NULL)
             WITH SECURITY_ENFORCED
         ];
 
@@ -156,7 +160,8 @@ public inherited sharing class HDT_QR_AgentMatrix {
             AgencyCode__c,
             UpperChannelAgency__c,
             LowerChannelAgency__c,
-            IsMonitoring__c	
+            IsMonitoring__c,
+            AgentCode__c
             FROM AgentMatrix__c
             WHERE IsMonitoring__c = true
             WITH SECURITY_ENFORCED

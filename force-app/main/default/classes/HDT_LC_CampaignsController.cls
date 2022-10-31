@@ -56,6 +56,16 @@ public inherited sharing class HDT_LC_CampaignsController {
             }
             else if(objectName.equalsIgnoreCase('Lead')) {
                 return  campaignMemberQr.getCampaignsByLeadPartner(id, currentUser);
+            }else if(objectName.equalsIgnoreCase('Account')) {
+                //return all active campaigns related to all contacts related to this Account
+                List<String> contacts = contactQr.getContactsIdByAccountId(id);
+                if (String.isNotBlank(category)) {
+                    if (String.isNotBlank(channel)) {
+                        return campaignMemberQr.filterCampaignsByCategoryAndChannelWithStatus(contacts, category, channel);
+                    }
+                    return campaignMemberQr.filterCampaignsByCategoryWithStatus(contacts, category);
+                }
+                return campaignMemberQr.getCampaignsFilteredByContactsWithStatus(contacts);
             }
             else {
                 return null;
@@ -473,4 +483,19 @@ public inherited sharing class HDT_LC_CampaignsController {
         }
         return null;
     }
+
+    @AuraEnabled
+    public static  Boolean getCurrUserRole(){
+
+        String roleId=UserInfo.getUserRoleId();
+        List <UserRole> currUserRole=new List <UserRole>();
+        if(String.isNotBlank(roleId)){
+            currUserRole=[SELECT Id, Name FROM UserRole WHERE Id=:roleId LIMIT 1];
+            if (currUserRole[0].Name.containsIgnoreCase('Front')) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }

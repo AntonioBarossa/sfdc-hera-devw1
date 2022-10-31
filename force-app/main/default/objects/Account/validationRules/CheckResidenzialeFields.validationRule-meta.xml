@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CheckResidenzialeFields</fullName>
     <active>true</active>
-    <errorConditionFormula>IF(AND(CONTAINS( $User.Username , $CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Account.SkipUsernames__c ), DATETIMEVALUE(NOW()) &lt; DATETIMEVALUE($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Account.SkipDueDateTime__c)),false,
+    <errorConditionFormula>IF(AND(CONTAINS( $CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Account.SkipUsernames__c,$User.Username), DATETIMEVALUE(NOW()) &lt; DATETIMEVALUE($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Account.SkipDueDateTime__c)),false,
 IF(OR(AND(IsMigrated__c = True,RecordType.DeveloperName = &quot;HDT_RT_Residenziale&quot;,ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;)),
 RecordType.DeveloperName = &quot;HDT_RT_Partner&quot;,
 AND(ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;), IsSOL__c = true)), false,

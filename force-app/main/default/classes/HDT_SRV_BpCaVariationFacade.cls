@@ -96,7 +96,8 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             Map<String,Object> data = (Map<String,Object>) body.get('data');
             if((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (data != null && data.get('commenti') != null)){
                 if (data != null) {
-                    HDT_UTL_Case.createActivity(inputs[0].recordId,(String)data.get('commenti'),'Esito KO da SAP','Esito KO da SAP');
+                    //HDT_UTL_Case.createActivity(inputs[0].recordId,(String)data.get('commenti'),'Esito KO da SAP','Esito KO da SAP');
+                    output.commenti = (String) data.get('commenti') != null ? (String) data.get('commenti') : '';
                 }
                 output.outcome = false;
             } else {
@@ -123,6 +124,8 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
     public class HDT_WRP_OutputBpCaFlow{
         @InvocableVariable
         public Boolean outcome;
+        @InvocableVariable
+        public String commenti;
     }
 
 }

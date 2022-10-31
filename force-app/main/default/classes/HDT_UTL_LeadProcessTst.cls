@@ -75,7 +75,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
             
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
             field.name = 'CELLULARE';
-            field.value = '981516381';
+            field.value = '01981516381';
             fieldList.add(field);
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
@@ -177,7 +177,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
             field.name = 'CELLULARE';
-            field.value = '981516381';
+            field.value = '01981516381';
             fieldList.add(field);
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
@@ -366,7 +366,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
             field.name = 'CELLULARE';
-            field.value = '981516381';
+            field.value = '01981516381';
             fieldList.add(field);
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
@@ -468,7 +468,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
             field.name = 'CELLULARE';
-            field.value = '981516381';
+            field.value = '01981516381';
             fieldList.add(field);
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
@@ -657,7 +657,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
             field.name = 'CELLULARE';
-            field.value = '981516381';
+            field.value = '01981516381';
             fieldList.add(field);
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
@@ -764,7 +764,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
             field.name = 'CELLULARE';
-            field.value = '981516381';
+            field.value = '01981516381';
             fieldList.add(field);
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
@@ -953,7 +953,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
             field.name = 'CELLULARE';
-            field.value = '981516381';
+            field.value = '01981516381';
             fieldList.add(field);
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
@@ -1085,7 +1085,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
             field.name = 'CELLULARE';
-            field.value = '981516381';
+            field.value = '01981516381';
             fieldList.add(field);
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
@@ -1274,7 +1274,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
             field.name = 'CELLULARE';
-            field.value = '981516381';
+            field.value = '01981516381';
             fieldList.add(field);
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
@@ -1411,7 +1411,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
             field.name = 'CELLULARE';
-            field.value = '981516381';
+            field.value = '39381516381';
             fieldList.add(field);
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();

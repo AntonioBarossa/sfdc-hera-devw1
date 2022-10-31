@@ -45,7 +45,7 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
             Decimal daysDueHalf = ord.ComfortCallDaysDue__c/2;
             Decimal daysDueHalfRound = daysDueHalf.round(System.RoundingMode.DOWN);
 
-            if (ord.ComfortCallDaysDue__c == startDate.daysBetween(dueDate)) {
+            if (ord.ComfortCallDaysDue__c <= startDate.daysBetween(dueDate)) {
 
                 if (!ordersAlreadyAssigned.contains(ord.Id) && (ord.ParentOrder__c != null && !ordersAlreadyAssigned.contains(ord.ParentOrder__c))){
 

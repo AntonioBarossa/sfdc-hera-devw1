@@ -4,7 +4,7 @@
         <name>Check_Criterio_Eleggibilita</name>
         <label>Check Criterio Eleggibilita</label>
         <locationX>2063</locationX>
-        <locationY>1790</locationY>
+        <locationY>1910</locationY>
         <actionName>HDT_UTL_ElegibilityCriteriaCheck</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -59,7 +59,7 @@
     <assignments>
         <name>Assign_Billing_Profile_Id</name>
         <label>Assign Billing Profile Id</label>
-        <locationX>50</locationX>
+        <locationX>182</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>BillignProfileId_resume</assignToReference>
@@ -75,8 +75,8 @@
     <assignments>
         <name>Assign_Billing_Profile_Id_resume</name>
         <label>Assign Billing Profile Id_resume</label>
-        <locationX>1370</locationX>
-        <locationY>758</locationY>
+        <locationX>50</locationX>
+        <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>BillignProfileId_resume</assignToReference>
             <operator>Assign</operator>
@@ -91,8 +91,8 @@
     <assignments>
         <name>Set_Sottoprocesso_as_Tipo_Processo</name>
         <label>Set Tipo Processo = Sottoprocesso</label>
-        <locationX>1502</locationX>
-        <locationY>518</locationY>
+        <locationX>182</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>CustomMetadataProcessType</assignToReference>
             <operator>Assign</operator>
@@ -107,7 +107,7 @@
     <assignments>
         <name>Set_Sottoprocesso_as_Tipo_Processo_0</name>
         <label>Set Tipo Processo = Modifica Contatti Non Titolari</label>
-        <locationX>578</locationX>
+        <locationX>754</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>CustomMetadataProcessType</assignToReference>
@@ -123,7 +123,7 @@
     <assignments>
         <name>Set_Tipo_Processo</name>
         <label>Set Tipo Processo</label>
-        <locationX>3394</locationX>
+        <locationX>2338</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>CustomMetadataProcessType</assignToReference>
@@ -140,7 +140,7 @@
         <name>Check_Criterio_Eleggibilita_0</name>
         <label>Check Criterio Eleggibilita</label>
         <locationX>2063</locationX>
-        <locationY>1910</locationY>
+        <locationY>2030</locationY>
         <defaultConnector>
             <targetReference>Refresh_Ruolo_Contatto</targetReference>
         </defaultConnector>
@@ -172,7 +172,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Riprendi_Var_Anag_Cliente_da_Bozza</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND 2 AND ((3 OR 4) AND (5 OR 6))</conditionLogic>
             <conditions>
                 <leftValueReference>ResumeFromDraft</leftValueReference>
                 <operator>EqualTo</operator>
@@ -185,6 +185,34 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Variazione Anagrafica Cliente</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.Subprocess__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica Dati di Recapito</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.BillingProfile__r.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.Subprocess__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica Dati di Contatto</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.Contact.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -347,7 +375,7 @@
         <name>Check_Processo_2</name>
         <label>Check Processo 2</label>
         <locationX>2217</locationX>
-        <locationY>2702</locationY>
+        <locationY>2822</locationY>
         <defaultConnector>
             <targetReference>Codice_Cliente_Valorizzato</targetReference>
         </defaultConnector>
@@ -409,7 +437,7 @@
         <name>Check_Pulsante_Premuto</name>
         <label>Pulsante Premuto?</label>
         <locationX>1722</locationX>
-        <locationY>1430</locationY>
+        <locationY>1550</locationY>
         <defaultConnector>
             <targetReference>Refresh_Case</targetReference>
         </defaultConnector>
@@ -445,7 +473,7 @@
     <decisions>
         <name>Check_Ruolo_non_Titolare</name>
         <label>Ruolo non Titolare?</label>
-        <locationX>446</locationX>
+        <locationX>622</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo_0</targetReference>
@@ -471,7 +499,7 @@
         <name>CheckCriteriEleggibilita</name>
         <label>Check Criteri Eleggibilita</label>
         <locationX>2217</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <defaultConnector>
             <targetReference>Refresh_Ruolo_Contatto</targetReference>
         </defaultConnector>
@@ -496,7 +524,7 @@
         <name>Codice_Cliente_Valorizzato</name>
         <label>Codice Cliente Valorizzato</label>
         <locationX>2679</locationX>
-        <locationY>2822</locationY>
+        <locationY>2942</locationY>
         <defaultConnector>
             <targetReference>Set_Phase_Completata_per_CustomerCode_null</targetReference>
         </defaultConnector>
@@ -520,8 +548,8 @@
     <decisions>
         <name>Resume_Modifica_dati_di_Recapito</name>
         <label>Resume Modifica dati di Recapito</label>
-        <locationX>1502</locationX>
-        <locationY>638</locationY>
+        <locationX>182</locationX>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>InputFieldsModAnag</targetReference>
         </defaultConnector>
@@ -585,7 +613,7 @@
     <recordLookups>
         <name>Get_Billing_Profile</name>
         <label>Get Billing Profile</label>
-        <locationX>50</locationX>
+        <locationX>182</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -606,7 +634,7 @@
     <recordLookups>
         <name>Get_Ruolo_Contatto</name>
         <label>Get Ruolo Contatto</label>
-        <locationX>446</locationX>
+        <locationX>622</locationX>
         <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -634,7 +662,7 @@
     <recordLookups>
         <name>Get_Target_Contact</name>
         <label>Get Target Contact</label>
-        <locationX>446</locationX>
+        <locationX>622</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -677,7 +705,7 @@
         <name>Refresh_Case</name>
         <label>Refresh Case</label>
         <locationX>2217</locationX>
-        <locationY>1550</locationY>
+        <locationY>1670</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CheckCriteriEleggibilita</targetReference>
@@ -698,7 +726,7 @@
         <name>Refresh_Ruolo_Contatto</name>
         <label>Refresh Ruolo Contatto</label>
         <locationX>2217</locationX>
-        <locationY>2582</locationY>
+        <locationY>2702</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Processo_2</targetReference>
@@ -749,7 +777,7 @@
     <recordUpdates>
         <name>Predefault_Dati_di_Contatto</name>
         <label>Predefault Dati di Contatto</label>
-        <locationX>446</locationX>
+        <locationX>622</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Get_Ruolo_Contatto</targetReference>
@@ -815,7 +843,7 @@
     <recordUpdates>
         <name>Predefault_Dati_di_Recapito</name>
         <label>Predefault Dati di Recapito</label>
-        <locationX>50</locationX>
+        <locationX>182</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
@@ -971,7 +999,7 @@
     <recordUpdates>
         <name>Predefault_Dati_Fiscali</name>
         <label>Predefault Dati Fiscali</label>
-        <locationX>842</locationX>
+        <locationX>1018</locationX>
         <locationY>398</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
@@ -1009,6 +1037,12 @@
             <field>BillingCountry__c</field>
             <value>
                 <elementReference>Query_Case.Account.BillingCountry</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingIsAddressVerified__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingIsAddressVerified__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1070,7 +1104,7 @@
     <recordUpdates>
         <name>Predefault_Dati_Fiscali_No_Validation</name>
         <label>Predefault Dati Fiscali No Validation</label>
-        <locationX>1106</locationX>
+        <locationX>1282</locationX>
         <locationY>518</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
@@ -1154,7 +1188,7 @@
     <recordUpdates>
         <name>Predefault_Gruppo_IVA</name>
         <label>Predefault Gruppo IVA</label>
-        <locationX>1502</locationX>
+        <locationX>1546</locationX>
         <locationY>398</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
@@ -1236,7 +1270,7 @@
         <name>Set_Phase_Completata</name>
         <label>Set Phase Completata</label>
         <locationX>2283</locationX>
-        <locationY>2822</locationY>
+        <locationY>2942</locationY>
         <connector>
             <targetReference>Update_Contatto_non_titolare</targetReference>
         </connector>
@@ -1260,7 +1294,7 @@
         <name>Set_Phase_Completata_per_CustomerCode_null</name>
         <label>Set Phase Completata per CustomerCode null</label>
         <locationX>2811</locationX>
-        <locationY>2942</locationY>
+        <locationY>3062</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -1284,7 +1318,7 @@
         <name>Set_Phase_Da_Inviare</name>
         <label>Set Phase Da Inviare</label>
         <locationX>2547</locationX>
-        <locationY>2942</locationY>
+        <locationY>3062</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -1308,7 +1342,7 @@
         <name>Set_Phase_In_Lavorazione</name>
         <label>Set Phase In Lavorazione</label>
         <locationX>1755</locationX>
-        <locationY>2822</locationY>
+        <locationY>2942</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1329,7 +1363,7 @@
         <name>Update_Contatto_non_titolare</name>
         <label>Update Contatto non titolare</label>
         <locationX>2283</locationX>
-        <locationY>2942</locationY>
+        <locationY>3062</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1374,7 +1408,7 @@
         <name>Update_Esercizio_Diritti_Privacy</name>
         <label>Update Esercizio Diritti Privacy</label>
         <locationX>2019</locationX>
-        <locationY>2822</locationY>
+        <locationY>2942</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1407,7 +1441,7 @@ Inserisci manualmente i seguenti campi:</description>
         <name>InputFieldsModAnag</name>
         <label>Input Campi</label>
         <locationX>1722</locationX>
-        <locationY>1310</locationY>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1699,7 +1733,7 @@ Inserisci manualmente i seguenti campi:</description>
         <name>Screen_Eleggibilita_Warning</name>
         <label>Screen Eleggibilita Warning</label>
         <locationX>1931</locationX>
-        <locationY>2030</locationY>
+        <locationY>2150</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1767,7 +1801,7 @@ Inserisci manualmente i seguenti campi:</description>
     <screens>
         <name>SelectBillingProfileScreen</name>
         <label>Selezione Billing Profile</label>
-        <locationX>50</locationX>
+        <locationX>182</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1827,7 +1861,7 @@ Inserisci manualmente i seguenti campi:</description>
     <screens>
         <name>Selezione_Contatto</name>
         <label>Selezione Contatto</label>
-        <locationX>446</locationX>
+        <locationX>622</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1898,7 +1932,7 @@ Inserisci manualmente i seguenti campi:</description>
         <name>Spinner</name>
         <label>Spinner</label>
         <locationX>2679</locationX>
-        <locationY>3158</locationY>
+        <locationY>3278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1937,7 +1971,7 @@ Inserisci manualmente i seguenti campi:</description>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
         <locationX>1227</locationX>
-        <locationY>1550</locationY>
+        <locationY>1670</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1968,7 +2002,7 @@ Inserisci manualmente i seguenti campi:</description>
         <name>Gestione_Annullamento_0</name>
         <label>Gestione Annullamento</label>
         <locationX>1931</locationX>
-        <locationY>2150</locationY>
+        <locationY>2270</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

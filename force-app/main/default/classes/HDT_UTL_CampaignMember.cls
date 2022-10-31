@@ -299,9 +299,17 @@ public with sharing class HDT_UTL_CampaignMember {
         }
         Map<String, Order> ordToCheckMap = new Map<String, Order>(orderQr.getOrdersList(ordIdList));
 
+        Map<Id,String> mapContactResult = new Map<Id,String>();
+        for(wrts_prcgvr__Activity__c act : HDT_QR_Activity.getActivityFromIdList(actToOrdersToCancelMap.keySet())){
+            if ('Quality Call'.equalsIgnoreCase(act.Type__c) || 'Comfort Call'.equalsIgnoreCase(act.Type__c)){
+                mapContactResult.put(act.Id,'Quality Call'.equalsIgnoreCase(act.Type__c)? 'Annullato Quality Call' : 'Annullato Comfort Call');
+            }
+        }
+
         for (String actId : actToOrdersToCancelMap.keySet()) {
 
-            wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = actId, ContactResult__c = 'Annullato', wrts_prcgvr__Status__c = 'Non Esitata');
+            String outcome = mapContactResult.containsKey(actId)? mapContactResult.get(actId) : 'Annullato';
+            wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = actId, ContactResult__c = outcome, wrts_prcgvr__Status__c = 'Non Esitata');
             actToCloseList.add(act);
 
             for(String ordId : actToOrdersToCancelMap.get(actId)){
@@ -487,5 +495,33 @@ public with sharing class HDT_UTL_CampaignMember {
                 }
             }
         }
+    }
+    @future(callout=true)
+    public static void assignCallDateTime(List<Id> context){
+        List<CampaignMember> updList = [SELECT Id, PhoneNumber__c, Lead.ContactDate__c, Agency__r.Name, Campaign.MacroActivityEasyCIM__r.Name, Campaign.ReitekIntegrationTechnology__c FROM CampaignMember WHERE Id IN :context AND Campaign.ReitekIntegrationTechnology__c = 'Web Service' WITH SECURITY_ENFORCED];
+            
+        for(CampaignMember curCm : updList){
+            String macroactivity = curCm.Campaign.MacroActivityEasyCIM__r.Name;
+            String phonenumber = curCm.PhoneNumber__c;
+            Datetime callDateTime = curCm.Lead.ContactDate__c;
+            String agency=curCm.Agency__r.Name;
+            HDT_WS_Response response = HDT_WS_InvioNumerazioni.callService(macroactivity, phonenumber, callDateTime, curCm.Id, agency);
+            System.debug('@@ futureAssignCallDateTime reitek resp: '+curCm.Id+' '+response);
+        }
+        
+
+    }
+    public static void assignCallDateTimeHandle(List<CampaignMember> context){
+        List<Id> camMemList = new List<Id>();
+        for(CampaignMember curCm : context){
+            camMemList.add(curCm.Id);
+            
+        }
+        List<CampaignMember> updList = [SELECT Id, ReitekSendDate__c FROM CampaignMember WHERE Id IN :camMemList];
+
+        for(CampaignMember curCm : updList) curCm.ReitekSendDate__c = Date.today();
+        HDT_UTL_DatabaseService.updateSObject(updList);
+        assignCallDateTime(camMemList);
+
     }
 }

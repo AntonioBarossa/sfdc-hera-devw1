@@ -8,10 +8,8 @@ public with sharing class HDT_BA_ExpiredCases implements Database.Batchable<sObj
     //BATCH START
     public Database.QueryLocator start(Database.BatchableContext bc){
         Date todayDate = Date.today();
-        String query = 'SELECT Id, Status, DocusignExpirationDate__c, Phase__c, CancellationReason__c '
-                    + 'FROM Case '
-                    + 'WHERE DocusignExpirationDate__c < ' + String.valueOf(todayDate) + ' AND DocusignExpirationDate__c != null'
-                    + ' WITH SECURITY_ENFORCED';
+        List<String> listPhase = new List<String>{'Attesa Modulo Firmato'};
+        String query = 'SELECT Id, Status, DocusignExpirationDate__c, Phase__c, CancellationReason__c FROM Case WHERE Phase__c IN:listPhase AND DocusignExpirationDate__c <: todayDate AND DocusignExpirationDate__c != null WITH SECURITY_ENFORCED';
 
         return Database.getQueryLocator(query);
     }

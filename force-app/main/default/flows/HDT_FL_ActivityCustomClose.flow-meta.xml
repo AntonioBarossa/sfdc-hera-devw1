@@ -4,8 +4,8 @@
     <assignments>
         <name>Add_Activity_To_List</name>
         <label>Add Activity To List</label>
-        <locationX>138</locationX>
-        <locationY>638</locationY>
+        <locationX>270</locationX>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>Activities</assignToReference>
             <operator>Add</operator>
@@ -18,15 +18,47 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Activity_Value</name>
-        <label>Set Activity Value</label>
-        <locationX>138</locationX>
+        <name>Get_Current_Id</name>
+        <label>Get Current Id</label>
+        <locationX>270</locationX>
         <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>currentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Activities_To_Close_Loop.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Activity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Cancel_Activity_Value</name>
+        <label>Set Cancel Activity Value</label>
+        <locationX>402</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Activities_To_Close_Loop.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Chiusa</stringValue>
+                <stringValue>Annullata</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_Activity_To_List</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Close_Activity_Value</name>
+        <label>Set Close Activity Value</label>
+        <locationX>138</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>Activities_To_Close_Loop.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>activityStatusFormula</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -64,13 +96,6 @@
                 <elementReference>$User.LoginChannel__c</elementReference>
             </value>
         </assignmentItems>
-        <!--assignmentItems>
-            <assignToReference>Activities_To_Close_Loop.Place__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Station__c</elementReference>
-            </value>
-        </assignmentItems-->
         <assignmentItems>
             <assignToReference>Activities_To_Close_Loop.ActivityEndTime__c</assignToReference>
             <operator>Assign</operator>
@@ -82,6 +107,31 @@
             <targetReference>Add_Activity_To_List</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Check_Activity</name>
+        <label>Check Activity</label>
+        <locationX>270</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>Set_Cancel_Activity_Value</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Annullata</defaultConnectorLabel>
+        <rules>
+            <name>Chiusa</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>activityStatusFormula</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Chiusa</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Close_Activity_Value</targetReference>
+            </connector>
+            <label>Chiusa</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_Record_Id</name>
         <label>Check Record Id</label>
@@ -111,6 +161,11 @@
             <label>Record Id Ok</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>activityStatusFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!activityId}), {!newActivityStatus}, IF(OR(({!currentId}=={!activityId}),CONTAINS({!currentId}, {!activityId})), &apos;Chiusa&apos;,  {!newActivityStatus}))</expression>
+    </formulas>
     <interviewLabel>Gestione Chiusura Activity Custom {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Chiusura Activity Custom</label>
     <loops>
@@ -121,7 +176,7 @@
         <collectionReference>Get_Activities_To_Close</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Set_Activity_Value</targetReference>
+            <targetReference>Get_Current_Id</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Update_Activity</targetReference>
@@ -192,7 +247,7 @@
         <name>Update_Activity</name>
         <label>Update Activity</label>
         <locationX>50</locationX>
-        <locationY>854</locationY>
+        <locationY>1190</locationY>
         <inputReference>Activities</inputReference>
     </recordUpdates>
     <start>
@@ -210,6 +265,36 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>wrts_prcgvr__Activity__c</objectType>
+    </variables>
+    <variables>
+        <name>activityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>currentId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>newActivityStatus</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Chiusa</stringValue>
+        </value>
     </variables>
     <variables>
         <name>recordId</name>

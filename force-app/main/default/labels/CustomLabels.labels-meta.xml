@@ -959,4 +959,11 @@
         <shortDescription>CarMass_SalesForVasOrderItemStructureError</shortDescription>
         <value>Controllare struttura order item</value>
     </labels>
+    <labels>
+        <fullName>CompanyNameLabel</fullName>
+        <language>en_IE</language>
+        <protected>false</protected>
+        <shortDescription>CompanyNameLabel</shortDescription>
+        <value>HERA COMM</value>
+    </labels>
 </CustomLabels>

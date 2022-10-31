@@ -70,12 +70,14 @@ public with sharing class HDT_UTL_CreditCheckTst {
         Order o = [SELECT Id,RecordType.DeveloperName,ServicePoint__r.Account__c FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_Subentro'];
         data.orderId = String.valueOf(o.Id).substring(0,15);
         data.outcome = 'KO';
-        data.outcomeDescription = 'TEST';
+        data.outcomeDescription = 'Update failed. First exception on row 0 with id ; first error: STRING_TOO_LONG, Descrizione Esito Credit Check: data value too large: KO Tecnico - Expected Map&lt;String,String&gt; but found &quot;First exception on row 0 with id ; first error: STRING_TOO_LONG, Descrizione Esito Credit Check: data value too large: KO Tecnico - Expected Map&lt;String,String&gt; but found &quot;';
         data.outcoming = null;
         Test.startTest();
             HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{data});
+            update new Order(Id = o.Id, Phase__c = 'Comunicazione Verso Heroku');
         Test.stopTest();
-        o = [SELECT Id, Phase__c FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_Subentro'];
+        o = [SELECT Id, IncomingCreditCheckResult__c,Phase__c FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_Subentro'];
+        System.assertEquals('KO', o.IncomingCreditCheckResult__c, 'testUpdateOrderIncoming - Esito non Aggiornato');
         System.assertEquals('Credit Check KO', o.Phase__c, 'testUpdateOrderIncoming - Fase non Aggiornata');
         
     }
@@ -90,9 +92,11 @@ public with sharing class HDT_UTL_CreditCheckTst {
         data.outcoming = true;
         Test.startTest();
             HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{data});
+            update new Order(Id = o.Id, Phase__c = 'Comunicazione Verso Heroku');
         Test.stopTest();
-        o = [SELECT Id, Phase__c FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_Subentro'];
-        System.assertEquals('Credit Check KO', o.Phase__c, 'testUpdateOrderOutcoming - Fase non Aggiornata');
+        o = [SELECT Id, OutgoingCreditCheckResult__c,Phase__c FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_Subentro'];
+        System.assertEquals('KO', o.OutgoingCreditCheckResult__c, 'testUpdateOrderOutcoming - Fase non Aggiornata');
+        System.assertEquals('Credit Check KO', o.Phase__c, 'testUpdateOrderIncoming - Fase non Aggiornata');
     }
 
     @IsTest
@@ -102,6 +106,14 @@ public with sharing class HDT_UTL_CreditCheckTst {
             isManaged = HDT_UTL_CreditCheck.managedErrorCode('NO_CODE');
         Test.stopTest();
         System.assertEquals(false, isManaged, 'La risposta non è quella attesa');
+    }
+
+    @IsTest
+    public static void testInsertCalloutLog(){
+        Test.startTest();
+            HDT_UTL_CreditCheck.insertCalloutLog('request', 'response');
+        Test.stopTest();
+        System.assertEquals(1, [SELECT id FROM wrts_prcgvr__Log__c].size(), 'La risposta non è quella attesa');
     }
 
 }

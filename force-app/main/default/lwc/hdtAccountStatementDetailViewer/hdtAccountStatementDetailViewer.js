@@ -12,7 +12,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     @api filterString = '';
     @api tabCode;
     @api accountId;
-    @track columns;// = columns;
+    @api columns;// = columns;
     @track selectedMenuItem;
     @track filterApplied = false;
     @track buttonList;

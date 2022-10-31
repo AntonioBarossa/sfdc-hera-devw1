@@ -475,7 +475,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         insert servPoints;
         Account accDummy = new Account();
         Double resp = HDT_LC_EditScartiComplessi.setStepForVoltureWithSwitch(servPoints[0], accDummy.Id);
-        System.assertEquals(null, resp , 'Step errato');
+        System.assertEquals(4, resp , 'Step errato');
 
     }
 

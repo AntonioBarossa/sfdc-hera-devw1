@@ -780,7 +780,7 @@
             <assignToReference>GetOrderAggiornato_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Bozza Annullata</stringValue>
+                <stringValue>Annullato</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -1334,6 +1334,13 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Dati discordanti</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Amm. Precheck KO SII</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2756,6 +2763,18 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         </connector>
         <flowName>HDT_FL_ActivityCustomClose</flowName>
         <inputAssignments>
+            <name>activityId</name>
+            <value>
+                <elementReference>activityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>newActivityStatus</name>
+            <value>
+                <stringValue>Annullata</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>recordId</name>
             <value>
                 <elementReference>GetRecord.Id</elementReference>
@@ -2771,6 +2790,18 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
             <targetReference>Annullamento_Da_inviare</targetReference>
         </connector>
         <flowName>HDT_FL_ActivityCustomClose</flowName>
+        <inputAssignments>
+            <name>activityId</name>
+            <value>
+                <elementReference>activityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>newActivityStatus</name>
+            <value>
+                <stringValue>Annullata</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>recordId</name>
             <value>
@@ -2788,6 +2819,18 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         </connector>
         <flowName>HDT_FL_ActivityCustomClose</flowName>
         <inputAssignments>
+            <name>activityId</name>
+            <value>
+                <elementReference>activityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>newActivityStatus</name>
+            <value>
+                <stringValue>Annullata</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>recordId</name>
             <value>
                 <elementReference>GetOrderAggiornato_0.Id</elementReference>
@@ -2803,6 +2846,18 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
             <targetReference>Fase_0</targetReference>
         </connector>
         <flowName>HDT_FL_ActivityCustomClose</flowName>
+        <inputAssignments>
+            <name>activityId</name>
+            <value>
+                <elementReference>activityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>newActivityStatus</name>
+            <value>
+                <stringValue>Annullata</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>recordId</name>
             <value>
@@ -2820,6 +2875,18 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         </connector>
         <flowName>HDT_FL_ActivityCustomClose</flowName>
         <inputAssignments>
+            <name>activityId</name>
+            <value>
+                <elementReference>activityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>newActivityStatus</name>
+            <value>
+                <stringValue>Annullata</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>recordId</name>
             <value>
                 <elementReference>GetOrder.Id</elementReference>
@@ -2836,6 +2903,18 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         </connector>
         <flowName>HDT_FL_ActivityCustomClose</flowName>
         <inputAssignments>
+            <name>activityId</name>
+            <value>
+                <elementReference>activityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>newActivityStatus</name>
+            <value>
+                <stringValue>Annullata</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>recordId</name>
             <value>
                 <elementReference>InputCase</elementReference>
@@ -2849,6 +2928,17 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>wrts_prcgvr__Activity__c</objectType>
+    </variables>
+    <variables>
+        <description>Variabile utilizzata solo nella gestione da activity</description>
+        <name>activityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
     <variables>
         <name>cluster</name>

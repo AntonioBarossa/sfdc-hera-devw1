@@ -66,7 +66,7 @@ public with sharing class HDT_LC_FormAccountResidenziale {
     @AuraEnabled
     public static Account valorizeAddressAccount( Account account, Map<String,String> accountAddress, Map<String,String> accountAddressRes ){
         for(String s: accountAddress.keySet()){
-            if('BillingIsAddressVerified__c' == s){
+            if('BillingIsAddressVerified__c' == s || 'ShippingAddressIsForeign__c' == s || 'BillingAddressIsForeign__c' == s){
                 account.put(s, accountAddress.get(s) == 'true' ? true : false);
             }
             else{ 

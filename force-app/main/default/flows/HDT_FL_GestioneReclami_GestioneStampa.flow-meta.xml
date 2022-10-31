@@ -3,12 +3,12 @@
     <actionCalls>
         <name>Conferma_Indennizzo</name>
         <label>Conferma Indennizzo</label>
-        <locationX>776</locationX>
-        <locationY>326</locationY>
+        <locationX>1213</locationX>
+        <locationY>253</locationY>
         <actionName>HDT_SRV_IndemnityConfirmation</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Indennizzo_Confermato</targetReference>
+            <targetReference>Contenitore</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -21,6 +21,18 @@
             <name>firstLevel</name>
             <value>
                 <elementReference>GetInputCase.FirstLevelComplaintClassification__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>isContainer</name>
+            <value>
+                <elementReference>GetInputCase.IsContainer__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>note</name>
+            <value>
+                <elementReference>GetInputCase.Note__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -162,8 +174,8 @@
     <assignments>
         <name>AssegnaActivityToLoop</name>
         <label>AssegnaActivityToLoop</label>
-        <locationX>713</locationX>
-        <locationY>1898</locationY>
+        <locationX>560</locationX>
+        <locationY>1959</locationY>
         <assignmentItems>
             <assignToReference>ActivityToLoop</assignToReference>
             <operator>Assign</operator>
@@ -203,8 +215,28 @@
                 <elementReference>AggiornamentoChildCases</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
         <connector>
             <targetReference>GestioneIndennizzi</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaCaseToLoop</name>
+        <label>AssegnaCaseToLoop</label>
+        <locationX>923</locationX>
+        <locationY>1941</locationY>
+        <assignmentItems>
+            <assignToReference>CaseCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>CaseToLoop</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ToLoop_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -256,8 +288,8 @@
     <assignments>
         <name>AssegnaFase_0_0</name>
         <label>AssegnaFase</label>
-        <locationX>1040</locationX>
-        <locationY>1742</locationY>
+        <locationX>981</locationX>
+        <locationY>1838</locationY>
         <assignmentItems>
             <assignToReference>CaseToLoop.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -266,7 +298,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Assegna_a_Collection</targetReference>
+            <targetReference>GetActivityPraticaGestita</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -304,8 +336,8 @@
     <assignments>
         <name>AssegnaStatoActivity</name>
         <label>AssegnaStatoActivity</label>
-        <locationX>621</locationX>
-        <locationY>2006</locationY>
+        <locationX>485</locationX>
+        <locationY>2055</locationY>
         <assignmentItems>
             <assignToReference>ActivityToLoop.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -362,13 +394,6 @@
                 <elementReference>$User.LoginChannel__c</elementReference>
             </value>
         </assignmentItems>
-        <!--assignmentItems>
-            <assignToReference>ActivityToLoop.Place__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Station__c</elementReference>
-            </value>
-        </assignmentItems-->
         <connector>
             <targetReference>Assegna_a_Collection</targetReference>
         </connector>
@@ -402,7 +427,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Contenitore</targetReference>
+            <targetReference>Conferma_Indennizzo</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -422,12 +447,44 @@
         </connector>
     </assignments>
     <decisions>
+        <name>ActivityTrovata</name>
+        <label>ActivityTrovata</label>
+        <locationX>678</locationX>
+        <locationY>1901</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaCaseToLoop</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Found</defaultConnectorLabel>
+        <rules>
+            <name>ActivityFound</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetActivityPraticaGestita</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetActivityPraticaGestita</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaActivityToLoop</targetReference>
+            </connector>
+            <label>ActivityFound</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Contenitore</name>
         <label>Contenitore?</label>
-        <locationX>1068</locationX>
-        <locationY>267</locationY>
+        <locationX>1060</locationX>
+        <locationY>347</locationY>
         <defaultConnector>
-            <targetReference>Conferma_Indennizzo</targetReference>
+            <targetReference>Indennizzo_Confermato</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>StandAlone</defaultConnectorLabel>
         <rules>
@@ -721,7 +778,7 @@
         <locationY>1822</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AssegnaActivityToLoop</targetReference>
+            <targetReference>ActivityTrovata</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -736,6 +793,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Aperta</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>In gestione</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

@@ -3,6 +3,7 @@
 * Risoluzione "Debug Should Use Logging Level"
 * Risoluzione "Avoid debug statements since they impact on performance"
 */
+
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_PostSalesManager{
 
@@ -478,6 +479,21 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         {
             currentCase.ContractAccountCode__c = billingProfiles[0].ContractAccountCode__c;
         }
+    }
+
+    public void advanceInstallmentPlan(SObject inputCase)
+    {
+        Case currentCase = (Case) inputCase;
+        if(currentCase.TypeInstallmentPlan__c.equalsIgnoreCase('Personalizzato') && (currentCase.InstallmentNumberRequired__c > 3 || currentCase.AmountToPayInInstallments__c > 2000 || currentCase.Reason__c.containsIgnoreCase('Disoccupato/Cassintegrato')))
+        {
+            currentCase.Phase__c = 'Attesa Modulo Firmato';
+        }
+    }
+
+    public void submitForApproval(SObject inputCase)
+    {
+        Case currentCase = (Case) inputCase;
+        System.enqueueJob(new HDT_QBL_VoltureChangeManager(new List<Case>{currentCase}));
     }
 
     @Future

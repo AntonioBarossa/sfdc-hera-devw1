@@ -213,4 +213,58 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 			Test.stopTest();
 		}
 	}
+	@IsTest
+	static void testInsertAccountWithExistingContact()
+	{
+		List<Account> accRes = HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'Persona fisica', 'Famiglie');
+		List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, false, accRes[0].Id);
+		// AccountAddress Map
+		Id rtIdBusiness=constants.ACCOUNT_RECORDTYPEID_BUSINESS;
+
+		// AccountAddress Map
+		tAccountAddress.put('billingCountry', 'IT');
+		tAccountAddress.put('BillingIsAddressVerified__c', 'true');
+
+		//ContactAddress Map
+		tContactAddress.put('MailingIsAddressVerified__c','true');
+
+		//AAcoountData Map
+		tDataAccount.put('companyOwner', 'HERA COMM');
+		tDataAccount.put('customerMarking', 'Azienda');
+		tDataAccount.put('category', 'Aziende SME');
+		tDataAccount.put('customerTypeValue', 'Gruppo');
+		tDataAccount.put('recordTypeId', rtIdBusiness);
+		tDataAccount.put('email', 'test@test.com');
+		tDataAccount.put('vatNumber', '05724831002');
+		tDataAccount.put('fiscalCode', 'TSTTTC05B47H501Y');
+		tDataAccount.put('legalForm', 'Consorzi di Impresa');
+		tDataAccount.put('businessName', 'LastNameTst');
+		tDataAccount.put('firstIndividualName', 'FirstNameTst');
+		tDataAccount.put('lastIndividualName', 'LastNameTst');
+		tDataAccount.put('customerTypeValue', 'Organizzazione');
+		tDataAccount.put('businessName', 'LastNameTst');
+		tDataAccount.put('birthPlace', 'Roma');
+		tDataAccount.put('birthplace', 'Roma');
+		tDataAccount.put('firstName', 'TestAcc1');
+		tDataAccount.put('lastName', 'testcontactform');
+		tDataAccount.put('mobilePhone', '21312312312');
+		tDataAccount.put('role', 'Titolare');
+		tDataAccount.put('mobilephoneNumber', '21312312312');
+		tDataAccount.put('phoneNumber', '21312312312');
+		tDataAccount.put('gender', 'Femmina');
+		tDataAccount.put('birthDate', String.valueOf(Date.today().addMonths(-200)));
+
+		String fiscalCode=HDT_UTL_CalculateFiscalCode.calculateFiscalCode(tDataAccount);
+		tDataAccount.put('personFiscalCode', fiscalCode);
+		contactList[0].FiscalCode__c = fiscalCode;
+		insert contactList;
+
+		Test.setMock(HttpCalloutMock.class, mock);
+		Test.startTest();
+		Account tReturn=HDT_LC_FormAccountBusiness.insertAccount(tDataAccount, tAccountAddress, tContactAddress);
+		Test.stopTest();
+		
+		System.assertEquals(false, tReturn.Id==null, 'Account not created');
+		System.assertNotEquals(true, tReturn.Id==null, 'Account not created');
+	}
 }

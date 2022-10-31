@@ -56,7 +56,7 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
     public static DocumentalActivity__c getDocumentalActivityById(String recordId){
 
         List<DocumentalActivity__c> activities = [
-            SELECT Id, AttachmentCode__c, EnvelopeId__c, PostelTimestamp__c
+            SELECT Id, AttachmentCode__c, EnvelopeId__c, PostelTimestamp__c,DocumentalSystem__c
             FROM DocumentalActivity__c
             WHERE Id = :recordId
             WITH SECURITY_ENFORCED

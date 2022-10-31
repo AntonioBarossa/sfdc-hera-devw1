@@ -80,4 +80,51 @@ public class HDT_SRV_FieldCoerenceServicePointTst {
 
         Test.stopTest();
     }
+
+    @isTest
+    public static void checkCoerenceServicePointTst()
+    {
+        Map<String, Object> servicePoint = new Map<String, Object>
+        {
+            'SupplyType__c' => 'Domestico',
+            'MarketOrigin__c' => 'Salvaguardia',
+            'CommoditySector__c' => 'Gas',
+            'PowerRequested__c' => '13',
+            'RequestPhase__c' => 'Monofase'
+        };
+        Map<String, Object> inputFieldMap = new Map<String, Object>
+        {
+            'CategoriaCliente' => 'Famiglie',
+            'TipoFornitura' => 'A-Domestico',
+            'TipoImpianto' => 'Tipo Impianto errato',
+            'Servizio' => 'Gas',
+            'ProfiloPrelievo' => '001 - 7 giorni',
+            'CategoriaUso' => '001-Uso cottura cibi',
+            'Imposta' => 'G_ICD'
+        };
+
+        List<FieldCoerenceServicePoint__c> fieldCspList = [SELECT Id, Name, Commodity__c FROM FieldCoerenceServicePoint__c];
+        fieldCspList[0].AccountCategory__c = 'Famiglie';
+        fieldCspList[0].SupplyType__c = 'A-Domestico';
+        fieldCspList[0].ImplantType__c = '1001-Cottura cibi';
+        fieldCspList[0].Taxes__c = 'G_ICD';
+        fieldCspList[0].UseCategory__c = '001-Uso cottura cibi';
+        fieldCspList[0].WithdrawalClass__c = '001 - 7 giorni';
+        update fieldCspList;
+
+        Map<String, Object> result = new Map<String, Object>();
+
+        Test.startTest();
+            result = HDT_SRV_FieldCoerenceServicePoint.checkCoerenceServicePoint(servicePoint, inputFieldMap);
+            servicePoint.put('CommoditySector__c', 'Energia Elettrica');
+            servicePoint.put('ImplantType__c','Tipo Impianto Errato');
+            result = HDT_SRV_FieldCoerenceServicePoint.checkCoerenceServicePoint(servicePoint, inputFieldMap);
+            servicePoint.put('SupplyType__c', 'Domestico');
+            servicePoint.put('ImplantType__c','13A0-Usi di Abitazione BT');
+            servicePoint.put('PowerRequested__c','7');
+            servicePoint.put('VoltageLevel__c','MT');
+            result = HDT_SRV_FieldCoerenceServicePoint.checkCoerenceServicePoint(servicePoint, inputFieldMap);
+        Test.stopTest();
+        System.assertEquals(true, !result.isEmpty(), 'Coerenza non controllata');
+    }   
 }

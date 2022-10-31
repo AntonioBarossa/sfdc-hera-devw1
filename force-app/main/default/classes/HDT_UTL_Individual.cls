@@ -141,7 +141,25 @@
         Map<String,Individual> mapCheck = new Map<String,individual>();
 
         for(Lead l: leadIds){
+
+
+            
             Individual individual =new Individual(LastName = l.LastName,FirstName = l.firstName,companyOwner__c = l.companyOwner__c);
+            
+
+            DateTime timeNow = Datetime.now();
+            Date myDate = date.newinstance(timeNow.year(), timeNow.month(), timeNow.day());
+            if(l.Consenso_IBM_Unica__c){
+                
+                individual.MarketingPrivacy__c = 'SI';
+                individual.MarketingCompanyConsent__c = 'HC+HCM+EENE';
+                individual.PrivacyMarketingChoiceSource__c = 'Ripresa Dati';
+                individual.PrivacyMarketingChoiceDate__c = myDate;
+            }
+            else{
+                individual.MarketingPrivacy__c = 'Non espresso';
+            }
+                    
             inds.add(individual);
             mapCheck.put(l.id,individual);
         }
@@ -238,3 +256,24 @@
      }
 
 }
+/*    public static void updatePrivacyConsentIBMUnica(Id recordId, Boolean IBMunica){
+        DateTime dT = Datetime.now();
+        Date myDate = date.newinstance(dT.year(), dT.month(), dT.day());
+        Individual ind =new Individual(Id = recordId);
+        if(IBMunica){
+            
+            ind.MarketingPrivacy__c = 'SI';
+            ind.MarketingCompanyConsent__c = 'HC+HCM+EENE';
+            ind.PrivacyMarketingChoiceSource__c = 'Ripresa Dati';
+            ind.PrivacyMarketingChoiceDate__c = myDate;
+        }
+        else{
+
+                ind.MarketingPrivacy__c = 'Non espresso';
+        }
+                
+        HDT_SRV_Individual.checkCreateAccess(ind);
+        Individual indvid= HDT_SRV_Individual.updateRecord(ind);
+
+    }
+    */

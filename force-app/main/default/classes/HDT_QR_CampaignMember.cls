@@ -24,7 +24,7 @@ public inherited sharing class HDT_QR_CampaignMember {
         String channel = currentUser.Profile.Name.equalsIgnoreCase('Hera Teleseller Partner User') ? 'Telefonico Outbound' : 'Door to Door';
 
         return [SELECT Id, CampaignId, Campaign.Name, Campaign.Status, Campaign.Channel__c, Campaign.EndDate, Status FROM CampaignMember 
-                WHERE ContactId = :contactId AND Campaign.isActive = true AND Campaign.Status = 'In Corso' AND HasResponded = false AND Campaign.StartDate <= :tday AND Campaign.Channel__c includes (:channel) WITH SECURITY_ENFORCED];
+                WHERE ContactId = :contactId AND Campaign.isActive = true AND (Campaign.Status = 'In Corso' OR Campaign.Status = 'Pianificata') AND HasResponded = false AND Campaign.StartDate <= :tday AND Campaign.Channel__c includes (:channel) WITH SECURITY_ENFORCED];
     }
 
     /**
@@ -43,7 +43,7 @@ public inherited sharing class HDT_QR_CampaignMember {
         String channel = currentUser.Profile.Name.equalsIgnoreCase('Hera Teleseller Partner User') ? 'Telefonico Outbound' : 'Door to Door';
 
         return [SELECT CampaignId, Campaign.Name, Campaign.Status, Campaign.Channel__c, Campaign.EndDate, Status FROM CampaignMember 
-                WHERE LeadId = :leadId AND Campaign.isActive = true AND Campaign.Status = 'In Corso' AND HasResponded = false AND Campaign.StartDate <= :tday AND Campaign.Channel__c includes (:channel) WITH SECURITY_ENFORCED];
+                WHERE LeadId = :leadId AND Campaign.isActive = true AND (Campaign.Status = 'In Corso' OR Campaign.Status = 'Pianificata') AND HasResponded = false AND Campaign.StartDate <= :tday AND Campaign.Channel__c includes (:channel) WITH SECURITY_ENFORCED];
     }
 
     /**
@@ -100,6 +100,41 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
+ /**
+    * @description getCampaignsFilteredByContactsWithStatus
+    * @param contacts
+    * @return List<CampaignMember>
+    */
+    public List<CampaignMember> getCampaignsFilteredByContactsWithStatus(List<String> contacts){
+        Date d = Date.today();
+        return [
+            SELECT
+            Id,
+            CampaignId,
+            Campaign.Name,
+            Status,
+            Campaign.Category__c,
+            Campaign.Channel__c,
+            Campaign.EndDate,
+            Contact.Name,
+            Campaign.Required__c,
+            Campaign.ProcessType__c,
+            Campaign.CaseCategory__c,
+            Campaign.CaseSubCategory__c,
+            Campaign.FlowType__c
+            FROM
+            CampaignMember
+            WHERE ContactId IN :contacts
+            AND Campaign.isActive = true
+            AND Campaign.StartDate <= :d
+            AND (Campaign.EndDate >= :d OR Campaign.EndDate = NULL)
+            AND HasResponded = false
+            AND (Campaign.Status = 'In Corso' OR Campaign.Status = 'Pianificata') 
+            WITH SECURITY_ENFORCED
+            ORDER BY Campaign.Required__c DESC, Campaign.Priority__c ASC
+        ];
+    }
+
     /**
     * @description filterCampaignsByCategory
     * @param contacts
@@ -136,6 +171,46 @@ public inherited sharing class HDT_QR_CampaignMember {
             ORDER BY Campaign.Required__c DESC, Campaign.Priority__c ASC
         ];
     }
+
+/**
+    * @description filterCampaignsByCategoryWithStatus
+    * @param contacts
+    * @param category
+    * @return List<CampaignMember>
+    */
+    public List<CampaignMember> filterCampaignsByCategoryWithStatus(List<String> contacts, String category){
+        Date d = Date.today();
+        return [
+        SELECT
+            Id,
+            CampaignId,
+            Campaign.Name,
+            Status,
+            Campaign.Status,
+            Campaign.Category__c,
+            Campaign.Channel__c,
+            Campaign.EndDate,
+            Contact.Name,
+            Campaign.Required__c,
+            Campaign.ProcessType__c,
+            Campaign.CaseCategory__c,
+            Campaign.CaseSubCategory__c,
+            Campaign.FlowType__c
+            FROM
+            CampaignMember
+            WHERE ContactId IN :contacts
+            AND Campaign.isActive = true
+            AND Campaign.StartDate <= :d
+            AND (Campaign.EndDate >= :d OR Campaign.EndDate = NULL)
+            AND HasResponded = false
+            AND Campaign.Category__c = :category
+            AND (Campaign.Status = 'In Corso' OR Campaign.Status = 'Pianificata') 
+            WITH SECURITY_ENFORCED
+            ORDER BY Campaign.Required__c DESC, Campaign.Priority__c ASC
+
+        ];
+    }
+
 
     /**
     * @description filterCampaignsByCategoryAndChannel
@@ -175,6 +250,48 @@ public inherited sharing class HDT_QR_CampaignMember {
             ORDER BY Campaign.Required__c DESC, Campaign.Priority__c ASC
         ];
     }
+
+/**
+    * @description filterCampaignsByCategoryAndChannelWithStatus
+    * @param contacts
+    * @param category
+    * @param channel
+    * @return List<CampaignMember>
+    */
+    public List<CampaignMember> filterCampaignsByCategoryAndChannelWithStatus(List<String> contacts, String category, String channel){
+        Date d = Date.today();
+
+        return [
+        SELECT
+            Id,
+            CampaignId,
+            Campaign.Name,
+            Status,
+            Campaign.Category__c,
+            Campaign.Channel__c,
+            Campaign.EndDate,
+            Contact.Name,
+            Campaign.Required__c,
+            Campaign.ProcessType__c,
+            Campaign.CaseCategory__c,
+            Campaign.CaseSubCategory__c,
+            Campaign.FlowType__c
+            FROM
+            CampaignMember
+            WHERE ContactId IN :contacts
+            AND Campaign.isActive = true
+            AND Campaign.StartDate <= :d
+            AND (Campaign.EndDate >= :d OR Campaign.EndDate = NULL)
+            AND HasResponded = false
+            AND Campaign.Category__c = :category
+            AND Campaign.Channel__c INCLUDES (:channel)
+            AND (Campaign.Status = 'In Corso' OR Campaign.Status = 'Pianificata') 
+            
+            WITH SECURITY_ENFORCED
+            ORDER BY Campaign.Required__c DESC, Campaign.Priority__c ASC
+        ];
+    }
+
 
     /**
     * @description getUnassignedCampaignMembers
@@ -525,7 +642,7 @@ public inherited sharing class HDT_QR_CampaignMember {
     * @return List<CampaignMember>
     */
     public static List<CampaignMember> getSiblingMembersByAccountId(List<String> accountIds, String campaignChannel) {
-        List<CampaignMember> allMembers = [
+        /* List<CampaignMember> allMembers = [
             SELECT CampaignId 
             FROM CampaignMember 
             WHERE Campaign.Required__c = true
@@ -546,7 +663,17 @@ public inherited sharing class HDT_QR_CampaignMember {
             AND HasResponded = false
             AND Status != 'Non Proposto Auto'
             WITH SECURITY_ENFORCED
-        ];
+        ]; */
+        Date d = Date.today();
+        return [SELECT Id FROM CampaignMember WHERE Contact.AccountId IN :accountIds
+                    AND Campaign.Channel__c = :campaignChannel
+                    AND Campaign.Required__c = true
+                    AND Campaign.Category__c = 'Campagna CRM'
+                    AND Campaign.isActive = true
+                    AND Campaign.StartDate <= :d
+                    AND (Campaign.EndDate >= :d OR Campaign.EndDate = NULL)
+                    AND Status != 'Non Proposto Auto'
+                    AND HasResponded = false WITH SECURITY_ENFORCED];
     }
 
     public CampaignMember getRecordById(String campaignMemberId) {
@@ -566,4 +693,5 @@ public inherited sharing class HDT_QR_CampaignMember {
         List<CampaignMember> campMembList = [SELECT Id, Status, Campaign.PositiveOutcomeDefaultStatus__c FROM CampaignMember WHERE RelatedActivity__c = :actId WITH SECURITY_ENFORCED];
         return campMembList;
     }
+    
 }

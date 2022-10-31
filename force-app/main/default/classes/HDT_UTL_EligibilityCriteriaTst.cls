@@ -165,4 +165,14 @@ public with sharing class HDT_UTL_EligibilityCriteriaTst
         System.assertEquals(testResult, '20201');
         Test.stopTest();
     }
+
+    @isTest
+    static void findEligibleMunicipalityTst(){
+        Test.startTest();
+        List<EligibleMunicipality__c> eligibleMunicipality = HDT_QR_SearchPlug.findEligibleMunicipality(new Set<Id>(), new List<String>(), new List<String>(), 'supplyCity');
+        System.assertEquals(eligibleMunicipality.size(), 0);
+        Test.stopTest();
+    }
+    
+
 }

@@ -16,9 +16,9 @@
                 <label>CALL BACK SOL</label>
             </value>
             <value>
-                <fullName>CALL BACK WEB NEOEN</fullName>
+                <fullName>CALL BACK WEB</fullName>
                 <default>false</default>
-                <label>CALL BACK WEB NEOEN</label>
+                <label>CALL BACK WEB</label>
             </value>
             <value>
                 <fullName>campagna SALVAGUARDIA</fullName>

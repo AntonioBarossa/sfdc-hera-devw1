@@ -213,6 +213,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         
         if (processType == 'Paperless' || (processType == 'Piano Rateizzazione' && depositPaymentMode == 'Paperless')){
             isPaperless = 'Y';
+            if(depositPaymentMode == 'Bonifico Paperless'){
+                isPaperless = 'B';
+            }
         }
         return isPaperless;
     }
@@ -458,19 +461,6 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         
         System.debug(LoggingLevel.DEBUG, 'Amount: ' + amount);
         if(String.isNotBlank(amount)){
-            amountDouble = Double.valueOf(amount);
-            if(String.isNotBlank(iva)){
-                if(iva.indexOf('10') > -1){
-                    ivaInteger = 10;
-                }else if(iva.indexOf('22') > -1){
-                    ivaInteger = 22;
-                }
-                if(ivaInteger > 0){
-                    ivaAmount = ((amountDouble/100)*ivaInteger);
-                }
-            }
-            totalAmount = amountDouble + ivaAmount;
-
             if(String.isBlank(variableAmount) && String.isBlank(fixedAmount) 
                 && (context.equalsIgnoreCase('Case') || context.equalsIgnoreCase('Order')) 
                 && (cluster.equalsIgnoreCase('Preventivi') 
@@ -484,8 +474,51 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 }else {
                     fixedAmount = '48.81';
                 }
-                variableAmount = String.valueOf(Double.valueOf(amount) - Double.valueOf(fixedAmount));
+                /* Nel caso in cui l'importo sia pari a 0 vi e' solo la quota fissa
+                * l'importo totale in questo caso e' pari alla sola quota fissa
+                * su quello va calcolata l'iva.
+                */
+                if(Double.valueOf(amount) != null && Double.valueOf(amount) > 0)
+                {
+                    variableAmount = String.valueOf(Double.valueOf(amount) - Double.valueOf(fixedAmount));
+                }
+                else
+                {
+                    amount = fixedAmount;
+                }
+                amountDouble = Double.valueOf(amount);
+                if(String.isNotBlank(iva)){
+                    if(iva.indexOf('10') > -1){
+                        ivaInteger = 10;
+                    }else if(iva.indexOf('22') > -1){
+                        ivaInteger = 22;
+                    }
+                    else if(iva.indexOf('20') > -1)
+                    {
+                        ivaInteger = 22;
+                    }
+                    if(ivaInteger > 0){
+                        ivaAmount = ((amountDouble/100)*ivaInteger);
+                    }
+                }
+                totalAmount = amountDouble + ivaAmount;
             }
+            amountDouble = Double.valueOf(amount);
+            if(String.isNotBlank(iva)){
+                if(iva.indexOf('10') > -1){
+                    ivaInteger = 10;
+                }else if(iva.indexOf('22') > -1){
+                    ivaInteger = 22;
+                }
+                else if(iva.indexOf('20') > -1)
+                {
+                    ivaInteger = 22;
+                }
+                if(ivaInteger > 0){
+                    ivaAmount = ((amountDouble/100)*ivaInteger);
+                }
+            }
+            totalAmount = amountDouble + ivaAmount;
             result = variableAmount + '|' + fixedAmount + '|' + amount + '|' + ivaInteger + '|' + ivaAmount + '|' + totalAmount;    
             
         }else {
@@ -1026,7 +1059,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             payloadSection += String.join(record, div);
 
             for (Integer i = 0; i < docList.size(); i++) {
-                ContentDocumentLink doc = docList[0];
+                ContentDocumentLink doc = docList[i];
                 if (doc.ContentDocument != null) {
                     record = new List<String>();
                     record.add('00310');
@@ -1243,7 +1276,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
     // Restituisce la data nel formato richiesto da Engage1
     private static String getFormattedDate(Date dateToFormat) {
-        Datetime dt = dateToFormat;
+        Datetime dt;
+        if(dateToFormat != null){
+            dt = dateToFormat;
+        }else{
+            dt = date.Today();
+        }
         String formattedDate = dt.format('dd/MM/y');
         return formattedDate;
     }
