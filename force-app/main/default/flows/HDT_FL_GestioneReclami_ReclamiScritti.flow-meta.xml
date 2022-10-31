@@ -151,7 +151,28 @@
             <assignToReference>Get_Input_Case_Aggiornato.EndDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date.effectiveDate</elementReference>
+                <elementReference>Calculate_Expiration_Date.endDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.CompletedDocumentationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.completedDocumentationDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.DepositExpirationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.depositExpirationDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.DepositAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.depositAmount</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -161,8 +182,8 @@
     <assignments>
         <name>assignProcessType</name>
         <label>assignProcessType</label>
-        <locationX>688</locationX>
-        <locationY>278</locationY>
+        <locationX>886</locationX>
+        <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>processTypeMetadato</assignToReference>
             <operator>Assign</operator>
@@ -177,7 +198,7 @@
     <assignments>
         <name>assignProcessType_0</name>
         <label>assignProcessType</label>
-        <locationX>336</locationX>
+        <locationX>270</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>processTypeMetadato</assignToReference>
@@ -190,10 +211,26 @@
             <targetReference>checkTariManaged</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Copy_1_of_assignProcessType</name>
+        <label>Copy 1 of assignProcessType</label>
+        <locationX>622</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>processTypeMetadato</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reclamo Scritto Prima Classificazione Acqua</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Prima_Classificazione</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Gestito</name>
         <label>Gestito?</label>
-        <locationX>336</locationX>
+        <locationX>270</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -281,14 +318,39 @@
         </rules>
     </decisions>
     <decisions>
+        <name>ReclamoAcqua</name>
+        <label>ReclamoAcqua?</label>
+        <locationX>754</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>assignProcessType</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>W1</defaultConnectorLabel>
+        <rules>
+            <name>Acqua</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>InputCase.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_assignProcessType</targetReference>
+            </connector>
+            <label>Acqua</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>recordType_Check</name>
         <label>recordType Check</label>
         <locationX>512</locationX>
         <locationY>158</locationY>
         <defaultConnector>
-            <targetReference>assignProcessType</targetReference>
+            <targetReference>ReclamoAcqua</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Reclami W1</defaultConnectorLabel>
+        <defaultConnectorLabel>Reclami</defaultConnectorLabel>
         <rules>
             <name>ReclamiScrittiTariDecision</name>
             <conditionLogic>and</conditionLogic>
@@ -382,7 +444,6 @@
         </rules>
     </decisions>
     <description>Flow per la prima classificazione del processo di Reclami Scritti/Richieste Info</description>
-    <environments>Default</environments>
     <formulas>
         <name>CaseVecchioScaduto</name>
         <dataType>Boolean</dataType>
@@ -663,7 +724,7 @@
     <subflows>
         <name>checkTariManaged</name>
         <label>checkTariManaged</label>
-        <locationX>336</locationX>
+        <locationX>270</locationX>
         <locationY>398</locationY>
         <connector>
             <targetReference>Gestito</targetReference>
