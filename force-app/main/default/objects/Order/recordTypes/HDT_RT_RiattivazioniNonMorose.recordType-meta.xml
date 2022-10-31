@@ -23,6 +23,10 @@
     <picklistValues>
         <picklist>CancellationReason__c</picklist>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato per no conferma cliente</fullName>
             <default>false</default>
         </values>
@@ -65,10 +69,6 @@
         <picklist>Status</picklist>
         <values>
             <fullName>Activated</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ammissibilità KO</fullName>
             <default>false</default>
         </values>
         <values>
