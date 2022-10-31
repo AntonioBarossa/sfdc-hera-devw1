@@ -26,15 +26,12 @@ public inherited sharing class HDT_UTL_Case {
         Case currentCase = inputs[0].currentCase;
         String cancellationNote = inputs[0].cancellationNote;
         String inputString = inputs[0].genericInputString;
-        String joinBottomAdhesion = inputs[0].joinBottomAdhesion;
-        
-        
 
-        if(process == 'Voltura Tecnica'){
+        if('Voltura Tecnica'.equalsIgnoreCase(process)){
             effectiveDate = addBusinessDay(System.today(), 3);
             output.effectiveDate = effectiveDate;
         
-        } else if(cluster == 'Preventivi'){
+        } else if('Preventivi'.equalsIgnoreCase(cluster)){
             output.option = calculateOption(implantType, powerRequested);
             if(currentCase.Type.equalsIgnoreCase('Nuovo Impianto') || currentCase.Type.equalsIgnoreCase('Aggiunta Attacco'))
             {
@@ -78,12 +75,9 @@ public inherited sharing class HDT_UTL_Case {
                         }
                     }
                 }
-                
-                //output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
-                //output.salesCompany = city.SDV__c;
             }
         } 
-        else if(process.equalsIgnoreCase('Compatibilita'))
+        else if('Compatibilita'.equalsIgnoreCase(process))
         {
             try 
             {
@@ -96,33 +90,28 @@ public inherited sharing class HDT_UTL_Case {
             }
             
         }
-        else if(process.equalsIgnoreCase('Contenitore'))
-        {
+        else if('Contenitore'.equalsIgnoreCase(process)){
             output.childCases = caseQr.getChildCasesReclamo(currentCase.Note__c, currentCase.Id);
         }
-        else if(process.equalsIgnoreCase('Annullamento'))
-        {
+        else if('Annullamento'.equalsIgnoreCase(process)){
             Datetime nowDate = Datetime.now();
             String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
             output.cancellationNote = nowDateFormat + ': ' + cancellationNote;
             output.cancellationNote = output.cancellationNote.length() > 255 ? output.cancellationNote.substring(0, 255) : output.cancellationNote; 
         }
-        else if(process.equalsIgnoreCase('CreaBpCa')){
+        else if('CreaBpCa'.equalsIgnoreCase(process)){
             System.enqueueJob(new HDT_QBL_BpCaRequest( accountContactRelationQr.getCreateBpCa( currentCase.AccountId ), currentCase.SupplyProvince__c, true ) );
         }
-        else if(process.equalsIgnoreCase('CheckIsCommunity')){
+        else if('CheckIsCommunity'.equalsIgnoreCase(process)){
             output.isCommunity = HDT_LC_SellingWizardController.checkCommunityLogin();
         }
-        else if(process.equalsIgnoreCase('getServicePointFromContract'))
-        {
+        else if('getServicePointFromContract'.equalsIgnoreCase(process)){
             List<String> contractCodes = inputString.split(';');
             System.debug(loggingLevel.DEBUG, contractCodes);
             List<Contract> contractList = [SELECT ServicePoint__c FROM Contract WHERE SAPContractCode__c IN :contractCodes WITH SECURITY_ENFORCED];
             output.servicePointId = new List<String>();
-            for(Contract contr : contractList)
-            {
-                if(!output.servicePointId.contains(contr.ServicePoint__c))
-                {
+            for(Contract contr : contractList){
+                if(!output.servicePointId.contains(contr.ServicePoint__c)){
                     output.servicePointId.add(contr.ServicePoint__c);
                 }
             }
@@ -136,22 +125,17 @@ public inherited sharing class HDT_UTL_Case {
             }
             result&=items.isEmpty();
             output.isCompatible = result? '' : 'NO';
-        }else if (process.equalsIgnoreCase('Adesione Rinuncia Fondo Fughe')){
-            // W2 Processo di adesione/rinuncia fondo fughe               
-            List<Case> caseRetrived = [SELECT Contract__r.StartDate FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
-            Date contractStartDate = (caseRetrived.size() > 0) ? caseRetrived[0]?.Contract__r?.StartDate : null;
-            if (contractStartDate != null){
-                if('Si'.equals(joinBottomAdhesion) || ('No'.equals(joinBottomAdhesion) && contractStartDate.addDays(365) > Date.today())){
-                    output.dataInizioVariazione = Date.today();
-                }else if ('No'.equals(joinBottomAdhesion) && contractStartDate.addDays(365) < Date.today()){
-                    output.dataInizioVariazione = contractStartDate;
-                }
-            }
-            currentCase.JointBottomAdhesion__c = ('Si'.equals(joinBottomAdhesion)) ? 'No' : 'Si';
-            currentCase.ResidenceChangeDate__c = output.dataInizioVariazione;
-            output.currentCase = currentCase;
+        }else if ('Adesione Rinuncia Fondo Fughe'.equalsIgnoreCase(currentCase.Type)){     
+            // Logica valorizzazione della data inizio variazione BBP w2 v4.0 pag 607
+            List<Case> caseRetrieved = [SELECT Contract__r.StartDate FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
+            Date contractStartDate = (caseRetrieved.size() > 0) ? caseRetrieved[0]?.Contract__r?.StartDate : null;
 
-        }else if (process.equalsIgnoreCase('Modifica Unita Immobiliari Componenti')){
+            currentCase.ResidenceChangeDate__c = (contractStartDate != null && 
+                                                'Rinuncia Fondo Fughe'.equals(currentCase.Subprocess__c) && 
+                                                contractStartDate.addDays(365) < Date.today()) ? 
+                                                contractStartDate : Date.today();
+            output.currentCase = currentCase;
+        }else if ('Modifica Unita Immobiliari Componenti'.equalsIgnoreCase(process)){
 
             Case newCurrentCase = [SELECT SupplyCity__c, RateCategory__c FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED];
             List<AllineamentoGAA__c> listAllineamentoGaa = [SELECT Frequenza__c FROM AllineamentoGAA__c WHERE Comune__c =: newCurrentCase.SupplyCity__c AND Rate_Category__c =: newCurrentCase.RateCategory__c WITH SECURITY_ENFORCED];
@@ -164,8 +148,7 @@ public inherited sharing class HDT_UTL_Case {
                 output.allineamentoGaa = 'N';
             }
         }
-        else if(cluster.equalsIgnoreCase('Reclami') && process.equalsIgnoreCase('calculateExpirationDate'))
-        {
+        else if('Reclami'.equalsIgnoreCase(cluster) && 'calculateExpirationDate'.equalsIgnoreCase(process)){
             HDT_UTL_Reclami utlReclami = new HDT_UTL_Reclami();
             Map<String,String> datesNamount = utlReclami.setExpirationDate(currentCase, salesCompany);
             //output.effectiveDate
@@ -185,12 +168,8 @@ public inherited sharing class HDT_UTL_Case {
                 output.depositAmount = decimal.valueOf(datesNamount.get('DepositAmount__c'));
             }
         }
-
         outputs.add(output);
-
         return outputs;
-
-
     }
 
     public class HDT_UTL_FlowInputs{
@@ -215,13 +194,9 @@ public inherited sharing class HDT_UTL_Case {
         public String genericInputString;
         @InvocableVariable
         public String quoteId;
-        @InvocableVariable
-        public String joinBottomAdhesion;
-
     }
 
     public class HDT_UTL_FlowOutputs{
-
         @InvocableVariable
         public Date endDate;
         @InvocableVariable
