@@ -10,6 +10,7 @@ public class HDT_QR_HerokuPostSalesManagerTst {
 
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, false, 'HERA COMM', 'Azienda', 'Aziende SME');
         accList[1].Name = 'testName2';
+        accList[1].CustomerCode__c = '1003616211';
         insert accList;
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
         servPointList[0].Account__c = accList[0].Id;
