@@ -78,7 +78,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Riduzione Superficie rifiuti spec promiscui</value>
+        <value xsi:type="xsd:string">Riduz. Superficie rifiuti spec promiscui</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
