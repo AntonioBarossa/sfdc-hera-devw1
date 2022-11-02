@@ -8161,6 +8161,10 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Sospeso parere interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
         </values>
@@ -8424,21 +8428,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>PurificationPay__c</picklist>
-        <values>
-            <fullName>Esente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Intera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ridotta</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>RateReversalReason__c</picklist>
         <values>
             <fullName>Piano Rate errato</fullName>
@@ -8515,6 +8504,18 @@
     </picklistValues>
     <picklistValues>
         <picklist>Reason__c</picklist>
+        <values>
+            <fullName>Non allacciato/uso irriguo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso irriguo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non allacciato</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Accesso dei dati</fullName>
             <default>false</default>
@@ -9351,17 +9352,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>SewerPay__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>SignMode__c</picklist>
         <values>
             <fullName>Cartacea</fullName>
@@ -9405,6 +9395,22 @@
     </picklistValues>
     <picklistValues>
         <picklist>SignalOutcome__c</picklist>
+        <values>
+            <fullName>Richiesta accolta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accolta fognatura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accolta depurazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Accolta</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Eseguita riparazione</fullName>
             <default>false</default>
@@ -10444,6 +10450,14 @@
         </values>
         <values>
             <fullName>Variazione Gruppo IVA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Adesione Fondo Fughe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rinuncia Fondo Fughe</fullName>
             <default>false</default>
         </values>
     </picklistValues>

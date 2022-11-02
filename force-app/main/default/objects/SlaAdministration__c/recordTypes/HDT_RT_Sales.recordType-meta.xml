@@ -596,15 +596,15 @@
     <picklistValues>
         <picklist>CaseField__c</picklist>
         <values>
-            <fullName>CustomerRequestDate__c</fullName>
+            <fullName>CustomerRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>PaymentDate__c</fullName>
+            <fullName>PaymentDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>WrittenReceiptRequestDate__c</fullName>
+            <fullName>WrittenReceiptRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1860,67 +1860,67 @@
     <picklistValues>
         <picklist>OrderField__c</picklist>
         <values>
-            <fullName>CancellationRequestDate__c</fullName>
+            <fullName>CancellationRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>ChangePhaseDate__c</fullName>
+            <fullName>ChangePhaseDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>CustomerRequestDate__c</fullName>
+            <fullName>CustomerRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>DocumentReceiptDate__c</fullName>
+            <fullName>DocumentReceiptDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>EffectiveDate__c</fullName>
+            <fullName>EffectiveDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>RetroactiveDate__c</fullName>
+            <fullName>RetroactiveDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SapContractActivationDate__c</fullName>
+            <fullName>SapContractActivationDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SendCertifiedEmailConsentDate__c</fullName>
+            <fullName>SendCertifiedEmailConsentDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SendRequestDate__c</fullName>
+            <fullName>SendRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SendToDistributorDate__c</fullName>
+            <fullName>SendToDistributorDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SignedDate__c</fullName>
+            <fullName>SignedDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SubjectCodeEndDate__c</fullName>
+            <fullName>SubjectCodeEndDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SubjectCodeStartDate__c</fullName>
+            <fullName>SubjectCodeStartDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>TerminationDate__c</fullName>
+            <fullName>TerminationDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>ValidityDateEstimate__c</fullName>
+            <fullName>ValidityDateEstimate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>WizardCompletedDate__c</fullName>
+            <fullName>WizardCompletedDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2062,6 +2062,14 @@
         </values>
         <values>
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi S%2Ep%2EA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi TARI</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -421,6 +421,9 @@
         <label>Check Type</label>
         <locationX>1986</locationX>
         <locationY>2198</locationY>
+        <defaultConnector>
+            <targetReference>UpdateCaseAmmKO</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
         <rules>
             <name>Check_Preliminari_KO</name>
@@ -996,6 +999,27 @@ TODO: Formula da adeguare in Wave 2.</description>
         <inputReference>Get_Case_Avviso_Cliente</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>UpdateCaseAmmKO</name>
+        <label>UpdateCaseAmmKO</label>
+        <locationX>2250</locationX>
+        <locationY>2318</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetDiscardActivity.Case__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>UpdateCaseForVoltura</name>
         <label>UpdateCaseForVoltura</label>
         <locationX>3482</locationX>
@@ -1324,7 +1348,7 @@ TODO: Formula da adeguare in Wave 2.</description>
         <name>Spinner</name>
         <label>Spinner</label>
         <locationX>2602</locationX>
-        <locationY>2630</locationY>
+        <locationY>2750</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1363,7 +1387,7 @@ TODO: Formula da adeguare in Wave 2.</description>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
         <locationX>2272</locationX>
-        <locationY>3254</locationY>
+        <locationY>3374</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

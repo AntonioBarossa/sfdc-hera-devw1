@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>OperationCode__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">08</value>
     </values>
     <values>
         <field>Process__c</field>
@@ -24,6 +24,6 @@
     </values>
     <values>
         <field>Subprocess__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Rinuncia Fondo Fughe</value>
     </values>
 </CustomMetadata>

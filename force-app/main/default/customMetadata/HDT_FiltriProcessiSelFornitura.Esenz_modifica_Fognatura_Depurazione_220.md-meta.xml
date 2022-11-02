@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>RateCategory__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">ACDOMRESP0,ACDOMNR000,ACPROMISC0,ACAGRICO00,ACZOOTECN0,ACARTCOMM0,ACINDSTR00,ACAUGRUNI0,ACPUBDIS00,ACPUBNDIS0,ACANTINC00,ACAUNOPOT0,ACAUGENER0,TATND00001</value>
     </values>
     <values>
         <field>StatoContratto__c</field>

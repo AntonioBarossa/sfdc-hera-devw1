@@ -409,6 +409,10 @@
     <picklistValues>
         <picklist>CancellationReason__c</picklist>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato per no conferma cliente</fullName>
             <default>false</default>
         </values>
@@ -430,6 +434,10 @@
         </values>
         <values>
             <fullName>Annullamento dal SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Check KO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -466,6 +474,10 @@
         </values>
         <values>
             <fullName>Domiciliazione già presente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
             <default>false</default>
         </values>
         <values>
