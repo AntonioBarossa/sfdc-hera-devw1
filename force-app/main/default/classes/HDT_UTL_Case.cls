@@ -171,12 +171,15 @@ public inherited sharing class HDT_UTL_Case {
         }else if ('Esenzione Modifica Fognatura Depurazione'.equalsIgnoreCase(process) && 'Modifica Fognatura e Depurazione'.equals(currentCase.Subprocess__c)){
             List<Case> caseRetrieved = [SELECT Contract__r.StartDate, CustomerRequestDate__c FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
             Date contractStartDate = (caseRetrieved.size() > 0) ? caseRetrieved[0]?.Contract__r?.StartDate : null;
+            Date dataDecorrenza = null;
 
             if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) > 5){
-                contractStartDate = date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year(), caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day());
+                dataDecorrenza = date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year() - 5, caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day());
+            }else if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) < 5){
+                dataDecorrenza = contractStartDate;
             }
-            
-            currentCase.EffectiveDate__c = contractStartDate;
+
+            currentCase.EffectiveDate__c = dataDecorrenza;
             output.currentCase = currentCase;
         }
         outputs.add(output);
