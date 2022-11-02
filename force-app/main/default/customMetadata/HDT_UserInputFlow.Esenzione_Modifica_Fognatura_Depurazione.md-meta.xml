@@ -56,11 +56,11 @@
 &quot;Column&quot;: 2
 },
 {
-&quot;FieldName&quot;: &quot;SewerPay__c&quot;,
+&quot;FieldName&quot;: &quot;PaySewer__c&quot;,
 &quot;Column&quot;: 2
 },
 {
-&quot;FieldName&quot;: &quot;PurificationPay__c&quot;,
+&quot;FieldName&quot;: &quot;PayPurification__c&quot;,
 &quot;Column&quot;: 2
 }
 ]</value>
