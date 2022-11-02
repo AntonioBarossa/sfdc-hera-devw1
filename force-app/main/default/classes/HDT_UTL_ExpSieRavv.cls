@@ -31,6 +31,9 @@ public with sharing class HDT_UTL_ExpSieRavv {
         @AuraEnabled public String period {get;set;}
         @AuraEnabled public String subtype {get;set;}
         @AuraEnabled public String cityCode {get;set;}
+        @AuraEnabled public Date declarationDate {get;set;}
+        @AuraEnabled public Date effectiveDate {get;set;}
+        @AuraEnabled public Date limitDateX {get;set;}
         @AuraEnabled public Sobject record {get;set;}
     }
 
@@ -47,12 +50,19 @@ public with sharing class HDT_UTL_ExpSieRavv {
         }
 
         @SuppressWarnings('PMD.ExcessiveParameterList')
-        ExpRavv__c createExpRavv(String operandName, String operandValue, Date initSuspension, Date endSuspension){
+        ExpRavv__c createExpRavv(String operandName, String operandValue){
             ExpRavv__c exportRecord = new ExpRavv__c();
             exportRecord.OperandName__c = operandName;
             exportRecord.OperandValue__c = operandValue;
-            exportRecord.SuspensionStartDate__c = initSuspension;
-            exportRecord.SuspensionEndDate__c = endSuspension;
+
+            String billingCategory = (String) this.wrapper.record.get('BillingCategory__c');
+            exportRecord.SuspensionEndDate__c = this.wrapper.declarationDate.addDays(-1);
+            if(!'y'.equalsIgnoreCase(wrapper.period) || 'C'.equalsIgnoreCase(billingCategory) ){    
+                exportRecord.SuspensionStartDate__c = this.wrapper.effectiveDate;  
+            }else if('B'.equalsIgnoreCase(billingCategory)){
+                exportRecord.SuspensionStartDate__c = this.wrapper.limitDateX;
+            }
+
             exportRecord.CityCode__c = this.wrapper.cityCode;
             exportRecord.Type__c='Contratti';
             if('Subentro'.equalsIgnoreCase(this.wrapper.subtype)){   exportRecord.Subtype__c = 'Subentro';}
