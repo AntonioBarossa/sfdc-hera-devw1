@@ -5984,6 +5984,10 @@
     <picklistValues>
         <picklist>FourthLevelComplaintClassification__c</picklist>
         <values>
+            <fullName>Rinnovo condizioni economiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Evoluzioni automatiche</fullName>
             <default>false</default>
         </values>
@@ -8692,9 +8696,6 @@
             <fullName>13FM-Non domestici AT</fullName>
             <default>false</default>
         </values>
-        
-        
-        
     </picklistValues>
     <picklistValues>
         <picklist>SignMode__c</picklist>
