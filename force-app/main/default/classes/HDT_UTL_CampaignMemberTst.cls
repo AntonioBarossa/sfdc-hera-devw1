@@ -34,7 +34,11 @@ public with sharing class HDT_UTL_CampaignMemberTst {
             cp[0].CampaignMemberAssigment__c = cma.Id;
             update cp;
 
-            List<Lead> lead = HDT_UTL_DataFactoryTst.createLead(2, true);
+            List<Lead> lead = HDT_UTL_DataFactoryTst.createLead(2, false);
+            List<Individual> ind =HDT_UTL_DataFactoryTst.createIndividual(2, true);
+            lead.get(0).IndividualId=ind.get(0).id;
+            lead.get(1).IndividualId=ind.get(1).id;
+            insert lead;
             List<Account> acc = HDT_UTL_DataFactoryTst.createAccountPartner(1, true, 'Mario Verdi');
             List<Contact> ctt = HDT_UTL_DataFactoryTst.createContact(2, true, acc[0].Id);
             HDT_UTL_DataFactoryTst.createCampaignMemberAssigmentItem(1, true, acc.get(0).Id, cma.Id, 'Preview', 50.0);
@@ -210,14 +214,21 @@ public with sharing class HDT_UTL_CampaignMemberTst {
             Account acc = [SELECT Id FROM Account LIMIT 1];
             
             List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(5, true, acc.Id);
-            List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(5, false);
+            List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(2, false);
+            List<Individual> ind =HDT_UTL_DataFactoryTst.createIndividual(2, true);
+            leads.get(0).IndividualId=ind.get(0).id;
+            leads.get(1).IndividualId=ind.get(1).id;
+           /* leads.get(2).IndividualId=ind.get(0).id;
+            leads.get(3).IndividualId=ind.get(1).id;
+            leads.get(4).IndividualId=ind.get(0).id;*/
             leads.get(0).LastName = 'ln';
             leads.get(0).FirstName = 'fn';
             leads.get(0).Email = 'em@lead.com';
             leads.get(1).LastName = 'ln2';
             leads.get(1).FirstName = 'fn2';
             leads.get(1).Email = 'em2@lead.com';
-
+            
+            Test.startTest();
             insert leads;
 
 
@@ -227,7 +238,7 @@ public with sharing class HDT_UTL_CampaignMemberTst {
             //     cmb.Agency__c = acc.Id;
             // }
 
-            Test.startTest();
+
                 
                 HDT_UTL_CampaignMember.createCampaignMember(testMembers);
 
