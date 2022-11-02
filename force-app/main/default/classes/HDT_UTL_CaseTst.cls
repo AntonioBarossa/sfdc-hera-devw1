@@ -56,7 +56,7 @@ public with sharing class HDT_UTL_CaseTst {
     @isTest
     private static void caseFlowPredefaultsTest(){
 
-        List<Case> caseList = [SELECT Id, Note__c, Type,Distributor__r.Code__c FROM Case];
+        List<Case> caseList = [SELECT Id, Note__c, Type,Distributor__r.Code__c, ParentId, PODPDRFormula__c FROM Case];
 
         Case myCase = caseList[0];
         myCase.Note__c = 'Note';
@@ -78,12 +78,17 @@ public with sharing class HDT_UTL_CaseTst {
         myInput.powerRequested = 5.5;
         myInput.salesCompany = 'mySalesCompany';
         myInput.currentCase = myCase;
+        myInput.genericInputString = '';
+
         inputs.add(myInput);
         
         //TESTING
         Test.startTest();
         Try{
-            
+
+            HDT_UTL_Case.caseFlowPredefaults(inputs);
+
+            myInput.powerRequested = 0;
             HDT_UTL_Case.caseFlowPredefaults(inputs);
             myInput.powerRequested = 0.9;
             HDT_UTL_Case.caseFlowPredefaults(inputs);
@@ -97,6 +102,8 @@ public with sharing class HDT_UTL_CaseTst {
             HDT_UTL_Case.caseFlowPredefaults(inputs);
 
             myInput.implantType = '13EM-Non domestici MT';
+            HDT_UTL_Case.caseFlowPredefaults(inputs);
+            myInput.powerRequested = 0;
             HDT_UTL_Case.caseFlowPredefaults(inputs);
             myInput.powerRequested = 108.5;
             HDT_UTL_Case.caseFlowPredefaults(inputs);
@@ -126,12 +133,27 @@ public with sharing class HDT_UTL_CaseTst {
             myInput.process = 'Contenitore';
             HDT_UTL_Case.caseFlowPredefaults(inputs);
 
+          /*   myInput.process = 'CreaBpCa';
+            HDT_UTL_Case.caseFlowPredefaults(inputs); */
+
+            myInput.process = 'CheckIsCommunity';
+            HDT_UTL_Case.caseFlowPredefaults(inputs);
+
             myInput.process = 'Annullamento';
             HDT_UTL_Case.caseFlowPredefaults(inputs);
 
+            myInput.process = 'getServicePointFromContract';
+            HDT_UTL_Case.caseFlowPredefaults(inputs);
+
+
+            /* myInput.process = 'calculateExpirationDate';
+            myInput.cluster = 'Reclami';
+            HDT_UTL_Case.caseFlowPredefaults(inputs); */
+            
+
             myInput.process = 'Adesione Rinuncia Fondo Fughe';
             myInput.cluster = 'Variazioni';
-            myInput.joinBottomAdhesion = 'Y';
+            //myInput.joinBottomAdhesion = 'Y';
             HDT_UTL_Case.caseFlowPredefaults(inputs);
 
             myInput.process = 'Modifica Unita Immobiliari Componenti';
@@ -258,4 +280,36 @@ public with sharing class HDT_UTL_CaseTst {
         System.assertEquals(true, !result.isEmpty(), 'Test Fallito');
     }
 
+    /**​
+    * @author Elvin Iluca
+    * @date 02/11/2022
+    * @description HDT_UTL_CaseTst – Test Class for HDT_UTL_Case.cls
+    */
+
+    @isTest
+    static void calculateSalesCompanyCodeHcTst(){
+        String ret;
+        Test.startTest();
+        ret = HDT_UTL_Case.calculateSalesCompanyCode('HC');
+        Test.stopTest();
+        System.assertEquals('13V0000000', ret, 'Error calculate sales company');
+    }
+
+    @isTest
+    static void calculateSalesCompanyCodeHcmTst(){
+        String ret;
+        Test.startTest();
+        ret = HDT_UTL_Case.calculateSalesCompanyCode('HCM');
+        Test.stopTest();
+        System.assertEquals('10V0000160', ret, 'Error calculate sales company');
+    }
+
+    @isTest
+    static void calculateSalesCompanyCodeElseTst(){
+        String ret;
+        Test.startTest();
+        ret = HDT_UTL_Case.calculateSalesCompanyCode('Else');
+        Test.stopTest();
+        System.assertEquals('13V0000000', ret, 'Error calculate sales company');
+    }
 }
