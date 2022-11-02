@@ -20,13 +20,24 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         'Back office Teleselling'
     };
 
+    @AuraEnabled
+    public static List<String> getPickListValuesIntoList(){
+        List<String> pickListValuesList= new List<String>();
+         Schema.DescribeFieldResult fieldResult = Queue__c.Agency2__c.getDescribe();
+         List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+         for( Schema.PicklistEntry pickListVal : ple){
+             pickListValuesList.add(pickListVal.getLabel());
+         }     
+         return pickListValuesList;
+     }
+
 
     @AuraEnabled
-    public static List<Map<String,String>> getWorkGroups(String queryString) {
+    public static List<Map<String,String>> getWorkGroups(String queryString, String agency) {
         queryString = '%' + queryString + '%';
         List<Map<String,String>> results = new List<Map<String,String>>();
 
-        for(AggregateResult result : [SELECT WorkGroup__c, Agency2__c FROM Queue__c WHERE WorkGroup__c LIKE :queryString WITH SECURITY_ENFORCED GROUP BY WorkGroup__c, Agency2__c]) {
+        for(AggregateResult result : [SELECT WorkGroup__c, Agency2__c FROM Queue__c WHERE WorkGroup__c LIKE :queryString AND Agency2__c =: agency WITH SECURITY_ENFORCED GROUP BY WorkGroup__c, Agency2__c]) {
             results.add(new Map<String,String>{
                 'name' => (String) result.get('WorkGroup__c'),
                 'agency' => (String) result.get('Agency2__c'),
