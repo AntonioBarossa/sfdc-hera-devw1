@@ -40648,7 +40648,7 @@
 	<recordTypeVisibilities>
         <default>false</default>
         <personAccountDefault>true</personAccountDefault>
-        <recordType>Case.HDT_RT_PagamentoUnicoAnnuale_TARI</recordType>
+        <recordType>Case.HDT_RT_PagamentoUnicoAnnualeTARI</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
 	<recordTypeVisibilities>
