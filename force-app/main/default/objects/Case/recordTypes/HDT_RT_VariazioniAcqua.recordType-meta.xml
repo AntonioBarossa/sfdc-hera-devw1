@@ -10478,6 +10478,14 @@
             <fullName>Variazione Gruppo IVA</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Adesione Fondo Fughe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rinuncia Fondo Fughe</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SubscriberType__c</picklist>

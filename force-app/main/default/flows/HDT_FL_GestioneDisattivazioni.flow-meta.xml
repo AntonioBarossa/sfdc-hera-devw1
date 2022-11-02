@@ -854,7 +854,7 @@
             <assignToReference>getTariCase_1.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Gestione documentale</stringValue>
+                <stringValue>In attesa validazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
