@@ -152,7 +152,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         if(caseType == 'Sconti Collettivi Pap')            return new HDT_WRP_UpdateSobj('Completata');
         if(caseType == 'Conferimento Centri di Raccolta')  return new HDT_WRP_UpdateSobj('Completata');
         
-        if(caseType == 'Riduzione Superficie rifiuti spec promiscui') {
+        if(caseType == 'Riduz. Superficie rifiuti spec promiscui') {
             if('Gestione Manuale SAP'.equalsIgnoreCase(activityType))   return new HDT_WRP_UpdateSobj('Completata');
             if(approved.equalsIgnoreCase('si')) return new HDT_WRP_CreateActivity('Gestione Manuale SAP', true, selectedCase.Phase__c);//Se gestione SAP non va in completata subito
             if(approved.equalsIgnoreCase('no')) return new HDT_WRP_UpdateSobj('Annullato');   
