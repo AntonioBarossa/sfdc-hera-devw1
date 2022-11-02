@@ -154,8 +154,8 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         
         if(caseType == 'Riduz. Superficie rifiuti spec promiscui') {
             if('Gestione Manuale SAP'.equalsIgnoreCase(activityType))   return new HDT_WRP_UpdateSobj('Completata');
-            if(approved.equalsIgnoreCase('si')) return new HDT_WRP_CreateActivity('Gestione Manuale SAP', true, selectedCase.Phase__c);//Se gestione SAP non va in completata subito
-            if(approved.equalsIgnoreCase('no')) return new HDT_WRP_UpdateSobj('Annullato');   
+            if('si'.equalsIgnoreCase(approved)) return new HDT_WRP_CreateActivity('Gestione Manuale SAP', true, selectedCase.Phase__c);//Se gestione SAP non va in completata subito
+            if('no'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Annullato');   
         }
         //START >>> marco.arci@webresults.it
         if( 'Modifica post accertamento'.equalsIgnoreCase(caseType) || 'Cessazione post accertamento'.equalsIgnoreCase(caseType)) {
@@ -163,14 +163,14 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         }
         //END >>> marco.arci@webresults.it
         if(caseType == 'Gestione Rifiuti' && 'Risposta Ricevuta'.equalsIgnoreCase(activityType)){
-            if(approved.equalsIgnoreCase('si')) return new HDT_WRP_UpdateSobj('Annullato');
+            if('si'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Annullato');
 
             Matcher match = Pattern.compile('\\|\\|([a-zA-Z\\xa0\\s]+)@@Richiesto Annullamento').matcher(selectedCase.PhaseStory__c);
-            if(approved.equalsIgnoreCase('no') && match.find())     return new HDT_WRP_UpdateSobj(match.group(1));
+            if('no'.equalsIgnoreCase(approved) && match.find())     return new HDT_WRP_UpdateSobj(match.group(1));
         }
         if(caseType == 'Ambiente annullo richiesta senza appuntamento' && 'Risposta Ricevuta'.equalsIgnoreCase(activityType)){
-            if(approved.equalsIgnoreCase('si'))     return new HDT_WRP_UpdateSobj('Completata', 'Annullato');
-            if(approved.equalsIgnoreCase('no'))     return new HDT_WRP_UpdateSobj('Annullato');
+            if('si'.equalsIgnoreCase(approved))     return new HDT_WRP_UpdateSobj('Completata', 'Annullato');
+            if('no'.equalsIgnoreCase(approved))     return new HDT_WRP_UpdateSobj('Annullato');
         }
         return null;
     }
