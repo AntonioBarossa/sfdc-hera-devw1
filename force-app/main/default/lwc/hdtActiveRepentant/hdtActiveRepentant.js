@@ -22,7 +22,7 @@ export default class HdtActiveRepentant extends LightningElement {
     @track missedDueDate;
     @track limitDateX;
     @track limitDateY;
-    @track period;
+    @track periodTable;
     @track termsAdministration;
     @track cityData;//Comuni non affidatari
     skipCheck = false;
@@ -205,7 +205,7 @@ export default class HdtActiveRepentant extends LightningElement {
         if (data?.length) {
             console.log("data " + data[0].Id);
             this.termsAdministration= terms;
-            this.period = data[0];
+            this.periodTable = data[0];
         }else{
             console.log("#getTablesConfig -> Data not found! ");
             this.skipCheck=true;
@@ -223,9 +223,9 @@ export default class HdtActiveRepentant extends LightningElement {
             //let {termsTable : data, termsAdministration: terms, cityData} = wrp;
             //this.cityData=cityData?.[0];
             //if(this.checkComuniNonAffidatari(new Date(this.dateDecorrenza))) return;
-            if (this.period) {
+            if (this.periodTable) {
                 this.skipCheck=false;
-                this.checkData(this.period, this.termsAdministration);
+                this.checkData(this.periodTable, this.termsAdministration);
             }
         }catch(error) {
             console.log("#ErrorGetPeriods -> " + JSON.stringify(error));
@@ -298,13 +298,13 @@ export default class HdtActiveRepentant extends LightningElement {
         if (declarationDate.getTime() >= this.limitDateY.getTime()) {
             console.log("Periodo non ravv Z");
             this.periodType ="Z";
-            if(!this.isCompanyMms)   this.showMessage("Attenzione!", this.period.PopupZ__c, " error", "sticky");
+            if(!this.isCompanyMms)   this.showMessage("Attenzione!", this.periodTable.PopupZ__c, " error", "sticky");
             return;
         } else {
             console.log("Periodo Ravvedibile Y");
             this.periodType ="Y";
             this.calculateMissedDue(terms, declarationDate);
-            if(!this.isCompanyMms)   this.showMessage("Attenzione!", this.period.PopupY__c, " error", "sticky");
+            if(!this.isCompanyMms)   this.showMessage("Attenzione!", this.periodTable.PopupY__c, " error", "sticky");
         }
     }
 
