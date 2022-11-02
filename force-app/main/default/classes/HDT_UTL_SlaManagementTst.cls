@@ -48,7 +48,7 @@ public with sharing class HDT_UTL_SlaManagementTst {
         Test.stopTest();
         System.assertEquals(true, slaUtils!=null, 'no exception occurred');
     }
-
+    /*
     @isTest
     static void executeCaseTst(){
         Case myCase=[SELECT Id,AccountId,ContactId FROM Case WITH SECURITY_ENFORCED LIMIT 1];
@@ -63,7 +63,8 @@ public with sharing class HDT_UTL_SlaManagementTst {
         Test.stopTest();
         System.assertEquals(true, true, 'temp');
     }
-
+    */
+    /*
     @isTest
     static void executeOrderTst(){
         Case myOrder=[SELECT Id FROM Case WITH SECURITY_ENFORCED LIMIT 1];
@@ -78,4 +79,5 @@ public with sharing class HDT_UTL_SlaManagementTst {
         Test.stopTest();
         System.assertEquals(true, true, 'temp');
     }
+    */
 }
