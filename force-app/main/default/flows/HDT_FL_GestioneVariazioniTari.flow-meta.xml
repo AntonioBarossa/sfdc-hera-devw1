@@ -1158,7 +1158,7 @@
                 <leftValueReference>componentDocumentale_0.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>True</elementReference>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
