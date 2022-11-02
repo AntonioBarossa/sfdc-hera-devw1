@@ -79,10 +79,10 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             };
         if('Order'.equalsIgnoreCase(context)){
             process = HDT_UTL_DocumentalManagement.getValue('Order', 'ProcessType__c', 0, inputs, formParams);
-        }else{
+        }else if('Case'.equalsIgnoreCase(context)){
             process = HDT_UTL_DocumentalManagement.getValue('Case', 'Type', 0, inputs, formParams);
             if(!'Cessazione'.equalsIgnoreCase(process)){
-                process = HDT_UTL_DocumentalManagement.getValue('Order', 'Subprocess__c', 0, inputs, formParams);
+                process = HDT_UTL_DocumentalManagement.getValue('Case', 'Subprocess__c', 0, inputs, formParams);
             }
         }
         if(String.isBlank(process))return '';

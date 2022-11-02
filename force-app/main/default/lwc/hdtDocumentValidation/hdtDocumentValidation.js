@@ -107,7 +107,7 @@ export default class HdtDocumentValidation extends LightningElement {
     }
 
     handleFinalUpdate(){
-        var nextPhase = notIntegratedProcess.includes(this.subprocess) || notIntegratedProcess.includes(this.type)?'In Lavorazione':'Da Inviare';
+        var nextPhase = this.notIntegratedProcess.includes(this.subprocess) || this.notIntegratedProcess.includes(this.type)?'In Lavorazione':'Da Inviare';
         const fields = {};
         fields[ID_FIELD.fieldApiName] = this.recordId;
         fields[FASE.fieldApiName] = nextPhase;
@@ -129,8 +129,9 @@ export default class HdtDocumentValidation extends LightningElement {
             if(finalUpdate){
                 this.handleFinalUpdate();
             }else{
-                const validated = { isValidated: true, subprocess: null };
-                this.dispatchEvent(new CustomEvent('complete', { detail: { validated } }));
+                //const validated = { isValidated: true, subprocess: null };
+                //this.dispatchEvent(new CustomEvent('complete', { detail: { validated } }));
+                this.dispatchEvent(new CustomEvent('closeaction'));
             }
         })
         .catch(error => {
@@ -148,19 +149,16 @@ export default class HdtDocumentValidation extends LightningElement {
         const fields = {};
         fields[ID_FIELD.fieldApiName] = this.recordId;
         fields[OUTCOME.fieldApiName] = this.valueWaste;
-        fields[NOTE.fieldApiName] = this.template.querySelector("lightning-input[data-id=noteWaste]").value;
+        fields[NOTE.fieldApiName] = this.template.querySelector("lightning-textarea[data-id=noteWaste]").value;
         if(this.valueWaste === 'Documentazione completa'){
             fields[FASE.fieldApiName] = 'Documentazione validata';
             const recordInput = { fields };
             this.handleConfirmClick(recordInput);
         }else{
+            const recordInput = { fields };
             this.updateRecordCase(recordInput,true,false);
-            const validated = { isValidated: true, subprocess: null };
-            this.dispatchEvent(new CustomEvent('complete', { detail: { validated } }));
         }
-        const recordInput = { fields };
-        
-        
+        const recordInput = { fields };        
     }
 
     handleClick(event) {
