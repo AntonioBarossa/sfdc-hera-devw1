@@ -140,6 +140,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
+        <description>Calcola la data inizio Variazione per il processo di adesione/Rinuncia Fondo Fughe</description>
         <name>HDT_UTL_Case</name>
         <label>HDT_UTL_Case</label>
         <locationX>12238</locationX>
@@ -147,7 +148,7 @@
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Assegna_Valori_Fondo_Fughe</targetReference>
+            <targetReference>Aggiorna_Case_Fondo_Fughe</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -156,19 +157,10 @@
                 <elementReference>GetInputCase</elementReference>
             </value>
         </inputParameters>
-        <inputParameters>
-            <name>joinBottomAdhesion</name>
-            <value>
-                <elementReference>GetInputCase.JointBottomAdhesion__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>process</name>
-            <value>
-                <stringValue>Adesione Rinuncia Fondo Fughe</stringValue>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputParameters>
+            <assignToReference>GetInputCase</assignToReference>
+            <name>currentCase</name>
+        </outputParameters>
     </actionCalls>
     <actionCalls>
         <name>HDT_UTL_Case_ModUnitImm</name>
@@ -496,8 +488,8 @@
     <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare_0_0_0_0_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
-        <locationX>11842</locationX>
-        <locationY>1958</locationY>
+        <locationX>12106</locationX>
+        <locationY>1838</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoFondoFughe.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -510,13 +502,6 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornatoFondoFughe.CausalCode__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>MA1</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -827,8 +812,8 @@
     <assignments>
         <name>Assegna_Codice_Causale_0_0_0_0_0</name>
         <label>Assegna Codice Causale</label>
-        <locationX>11842</locationX>
-        <locationY>1838</locationY>
+        <locationX>12106</locationX>
+        <locationY>1718</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoFondoFughe.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -1281,29 +1266,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Valori_Fondo_Fughe</name>
-        <label>Assegna Valori</label>
-        <locationX>12238</locationX>
-        <locationY>638</locationY>
-        <assignmentItems>
-            <assignToReference>GetInputCase.SupplyType__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>GetInputCase.ServicePoint__r.SupplyType__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetInputCase.ResidenceChangeDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>HDT_UTL_Case.dataInizioVariazione</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Aggiorna_Case_Fondo_Fughe</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assegna_Valori_ModificaUnitaImmobiliari</name>
         <label>Assegna Valori</label>
         <locationX>16682</locationX>
@@ -1378,7 +1340,6 @@
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>ScreenInputFiscale_0_0_0_0</targetReference>
         </connector>
     </assignments>
@@ -1410,9 +1371,8 @@
         <name>Adesione_Fondo_Fughe</name>
         <label>Adesione Fondo Fughe</label>
         <locationX>12370</locationX>
-        <locationY>1238</locationY>
+        <locationY>1118</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>GetCaseAggiornatoFondoFughe</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
@@ -1438,7 +1398,6 @@
         <locationX>16902</locationX>
         <locationY>2870</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Aggiorna_Fase_in_Da_Inviare_0_0_0_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>NO</defaultConnectorLabel>
@@ -1730,8 +1689,23 @@
         <name>Avanzamento_Lettura_FondoFughe</name>
         <label>Avanzamento Lettura</label>
         <locationX>12106</locationX>
-        <locationY>1478</locationY>
+        <locationY>1358</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
+        <rules>
+            <name>Annullamento_Reading_FondoFughe</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtSelfReadingFondoFughe.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annulla_Prestazione_FondoFughe</targetReference>
+            </connector>
+            <label>Annullamento</label>
+        </rules>
         <rules>
             <name>Conferma_Reading_FondoFughe</name>
             <conditionLogic>and</conditionLogic>
@@ -1753,21 +1727,6 @@
                 <targetReference>GetCaseAggiornatoFondoFughe</targetReference>
             </connector>
             <label>Conferma</label>
-        </rules>
-        <rules>
-            <name>Annullamento_Reading_FondoFughe</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>hdtSelfReadingFondoFughe.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Annulla_Prestazione_FondoFughe</targetReference>
-            </connector>
-            <label>Annullamento</label>
         </rules>
     </decisions>
     <decisions>
@@ -1820,7 +1779,6 @@
         <locationX>10236</locationX>
         <locationY>878</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>ScreenInputFiscale_0_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Selezionato</defaultConnectorLabel>
@@ -2023,7 +1981,6 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>GetActivityTemplate_0</targetReference>
             </connector>
             <label>Minore</label>
@@ -2046,7 +2003,6 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>GetActivityTemplate_0</targetReference>
             </connector>
             <label>Data Minore</label>
@@ -2098,7 +2054,6 @@
         <locationX>10104</locationX>
         <locationY>518</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>ScreenInputFiscale_0_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Altri processi</defaultConnectorLabel>
@@ -2741,7 +2696,7 @@
         <name>OutcomeFormFondoFughe</name>
         <label>OutcomeFormFondoFughe</label>
         <locationX>12238</locationX>
-        <locationY>998</locationY>
+        <locationY>878</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
             <name>AnnullataFondoFughe</name>
@@ -2761,7 +2716,6 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>Annulla_Prestazione_FondoFughe</targetReference>
             </connector>
             <label>Annullata</label>
@@ -3397,7 +3351,6 @@
         <picklistField>Subprocess__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
-    <environments>Default</environments>
     <formulas>
         <name>ActivityTemplateName</name>
         <dataType>String</dataType>
@@ -3777,8 +3730,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>Calcolo_Codice_Causale_FondoFughe</name>
         <label>Calcolo Codice Causale</label>
-        <locationX>11842</locationX>
-        <locationY>1718</locationY>
+        <locationX>12106</locationX>
+        <locationY>1598</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Codice_Causale_0_0_0_0_0</targetReference>
@@ -4155,8 +4108,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>GetCaseAggiornatoFondoFughe</name>
         <label>GetCaseAggiornatoFondoFughe</label>
-        <locationX>11842</locationX>
-        <locationY>1598</locationY>
+        <locationX>12106</locationX>
+        <locationY>1478</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Calcolo_Codice_Causale_FondoFughe</targetReference>
@@ -4177,7 +4130,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>GetCaseAggiornatoFondoFughe_0</name>
         <label>GetCaseAggiornatoFondoFughe</label>
         <locationX>12370</locationX>
-        <locationY>1118</locationY>
+        <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Adesione_Fondo_Fughe</targetReference>
@@ -4534,8 +4487,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>11842</locationX>
-        <locationY>2078</locationY>
+        <locationX>12106</locationX>
+        <locationY>1958</locationY>
         <inputReference>GetCaseAggiornatoFondoFughe</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -4617,7 +4570,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Aggiorna_Case_Fondo_Fughe</name>
         <label>Aggiorna Case</label>
         <locationX>12238</locationX>
-        <locationY>758</locationY>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Screen_Input_Fiscale_Fondo_Fughe</targetReference>
         </connector>
@@ -4807,7 +4760,6 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
                 </conditions>
             </visibilityRule>
         </fields>
-        <nextOrFinishButtonLabel>Avanti</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -5306,7 +5258,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Screen_Autolettura_FondoFughe</name>
         <label>Screen Autolettura</label>
         <locationX>12106</locationX>
-        <locationY>1358</locationY>
+        <locationY>1238</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5630,7 +5582,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Screen_Input_Fiscale_Fondo_Fughe</name>
         <label>Screen Input Fiscale Fondo Fughe</label>
         <locationX>12238</locationX>
-        <locationY>878</locationY>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5868,7 +5820,6 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
-        <backButtonLabel>Indietro</backButtonLabel>
         <connector>
             <targetReference>Assegna_Anagrafica_Componenti</targetReference>
         </connector>
@@ -5915,7 +5866,6 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <nextOrFinishButtonLabel>Avanti</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -7786,8 +7736,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <subflows>
         <name>Annulla_Prestazione_FondoFughe</name>
         <label>Annulla Prestazione</label>
-        <locationX>12106</locationX>
-        <locationY>1598</locationY>
+        <locationX>11842</locationX>
+        <locationY>1478</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

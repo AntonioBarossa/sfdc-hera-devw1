@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Method__c</field>
-        <value xsi:type="xsd:string">transCodeSiNo</value>
+        <value xsi:type="xsd:string">transCodeSiNoConDescr</value>
     </values>
     <values>
         <field>Precision__c</field>
@@ -24,6 +24,6 @@
     </values>
     <values>
         <field>SfdcField__c</field>
-        <value xsi:type="xsd:string">SewerPay__c</value>
+        <value xsi:type="xsd:string">PaySewer__c</value>
     </values>
 </CustomMetadata>
