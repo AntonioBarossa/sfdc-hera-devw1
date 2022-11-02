@@ -2739,6 +2739,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelRdo__x.END_DT__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelRdo__x.EXTD_QTY__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2789,12 +2794,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelRdo__x.OPER_STATUS_CD__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelRdo__x.ORDER_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.ORDER_ITM_CURCY_CD__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.OU_NUM__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2859,6 +2874,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelRdo__x.SERIAL_NUM__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelRdo__x.SERVIZIO_CURVE__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2885,6 +2905,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.SP_NUM__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.START_DT__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2960,6 +2985,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.X_ACQUISTO_CREDITO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.X_ACR__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3344,6 +3374,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelRdo__x.X_CAUSA_BLOCCO_DESC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.X_CAUSA_BLOCCO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelRdo__x.X_CCR__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3575,6 +3615,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.X_COMPONENTE_PCV__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.X_COMP_ADDR__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3964,6 +4009,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelRdo__x.X_DISTRIB_CD__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelRdo__x.X_DISTRIB_COD_NEW__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3990,6 +4040,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.X_DT_ESEC_INTERVENTO_PREV__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.X_DT_IDENTIF_CLIENTI_DA_SOSP__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4279,6 +4334,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelRdo__x.X_FLG_AUTOCERT_BONUS__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelRdo__x.X_FLG_CC_INVIATO__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4330,6 +4390,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.X_FLG_SEND_26__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.X_FLG_STESSO_NUCLEO_FORZ__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.X_FLG_STESSO_NUCLEO__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4875,6 +4945,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.X_MOD_ARCHIVIATO_TARI__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.X_MOD_EROG_BONUS__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
