@@ -41,6 +41,7 @@ export default class HdtActiveRepentant extends LightningElement {
     @api outputWrp={};
     @api sessionid;
     @api companyOwner;
+    @api record;
 
     @wire(MessageContext)
 	messageContext;
