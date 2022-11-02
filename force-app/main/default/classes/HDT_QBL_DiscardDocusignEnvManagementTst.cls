@@ -76,8 +76,4 @@ public with sharing class HDT_QBL_DiscardDocusignEnvManagementTst {
         System.assertEquals(null,orderList[0].DocusignURL__c,'Error DocusignURL__c it\'s not empty');
     }
 
-    @isTest
-    static void executeTst() {
-        System.assertEquals(1,1,'ko');
-    }
 }

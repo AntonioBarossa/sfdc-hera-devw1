@@ -14,16 +14,7 @@ public with sharing class HDT_QR_GenericRecordSelectionTst {
     * @date 28/10/2022
     * @description HDT_QR_GenericRecordSelectionTst – Test Class for HDT_QR_GenericRecordSelection.cls
     */
-    /* @TestSetup
-	static void setup(){
-
-    }
- */
-    /**​
-    * @author Elvin Iluca
-    * @date 28/10/2022
-    * @description HDT_QR_GenericRecordSelectionTst – Test Class for HDT_QR_GenericRecordSelection.cls
-    */
+   
     @isTest
     static void getConfigurationByNameTst () {
         List<HDT_Generic_Record_Selection__mdt> recordSelectionExpected = [SELECT Id, DeveloperName FROM HDT_Generic_Record_Selection__mdt LIMIT 1];
