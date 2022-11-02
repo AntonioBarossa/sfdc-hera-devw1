@@ -394,19 +394,20 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
     public  String transCodeDoubleToString(String doubleInputStr){
         String doubleOutStr = null;
 
-        if(doubleInputStr =='0.0000000'){
-            doubleOutStr = 'Esente';                
-        }
+        doubleOutStr = (doubleInputStr =='0.0000000') ? 'Esente' : doubleOutStr;
+        doubleOutStr = (doubleInputStr =='1.0000000') ? 'Intera' : doubleOutStr;
+        doubleOutStr = (doubleInputStr =='2.0000000') ? 'Ridotta' : doubleOutStr;
 
-        if(doubleInputStr =='1.0000000'){
-            doubleOutStr = 'Intera';                
-        }
+        return doubleOutStr;
+    }
 
-        if(doubleInputStr =='2.0000000'){
-            doubleOutStr = 'Ridotta';
-        }
+    public  String transCodeSiNoConDescr(String doubleInputStr){
+        String doubleOutStr = null;
 
-        System.debug(LoggingLevel.DEBUG, 'transCodeDoubleToStringOutput: ' + doubleOutStr);
+        doubleOutStr = (doubleInputStr =='0.0000000') ? 'No - Esente' : doubleOutStr;
+        doubleOutStr = (doubleInputStr =='1.0000000') ? 'Si - Paga' : doubleOutStr;
+        doubleOutStr = (doubleInputStr =='2.0000000') ? 'Si - Ridotta' : doubleOutStr;
+
         return doubleOutStr;
     }
 
