@@ -16,7 +16,13 @@ public with sharing class HDT_UTL_ExpSieRavv {
         List<ExpRavv__c> listToInsert = new List<ExpRavv__c>();
         if('x'.equalsIgnoreCase(wrapper.period)){//SE Periodo != "X"
             if('order'.equalsIgnoreCase(createSobjUtl.getSobjectType())){//SE  SOTTOTIPO è  'Nuovo contratto' ,'Subentro' ,'Subentro Cambio Cat.Tariffa' ,'Cambio Cat.Tariffa Stesso Cli.'
-                // listToInsert.add(createSobjUtl.createExpRavv());
+                Order ord = (Order) wrapper.record;
+                if( !'A'.equalsIgnoreCase(ord.BillingCategory__c)){
+                    // listToInsert.add(createSobjUtl.createExpRavv());
+                }
+            
+            }else if('case'.equalsIgnoreCase(createSobjUtl.getSobjectType())){//SE  SOTTOTIPO è  'Modifica dati contr.stesso Cli'
+                Case caso = (Case) wrapper.record;
             }
         }
     }
