@@ -293,7 +293,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                             PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
                             RelatedActivity__c = orderActivityMap.get(ordId).Id,
                             NumberingValidityStartDate__c = System.today(),
-                            NumberingValidityEndDate__c = System.today().addDays(30),
+                            NumberingValidityEndDate__c = System.today().addDays(50),
                             ExcludeFub__c = 'Si',
                             GenericField1__c = orderMap.get(ordId).AccountId
                         ));
