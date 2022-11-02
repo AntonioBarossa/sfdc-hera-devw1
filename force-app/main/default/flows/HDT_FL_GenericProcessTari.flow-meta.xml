@@ -582,7 +582,7 @@
                 <leftValueReference>theCase.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Riduzione Superficie rifiuti spec promiscui</stringValue>
+                    <stringValue>Riduz. Superficie rifiuti spec promiscui</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -654,7 +654,7 @@
                 <leftValueReference>theCase.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Riduzione Superficie rifiuti spec promiscui</stringValue>
+                    <stringValue>Riduz. Superficie rifiuti spec promiscui</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -676,7 +676,7 @@
     <formulas>
         <name>mostraAllegatiFormula</name>
         <dataType>Boolean</dataType>
-        <expression>OR(ISPICKVAL({!theCase.Type}, &quot;Formulari Richiesta Sconto&quot;), ISPICKVAL({!theCase.Type}, &quot;Riduzione Superficie rifiuti spec promiscui&quot;))</expression>
+        <expression>OR(ISPICKVAL({!theCase.Type}, &quot;Formulari Richiesta Sconto&quot;), ISPICKVAL({!theCase.Type}, &quot;Riduz. Superficie rifiuti spec promiscui&quot;))</expression>
     </formulas>
     <formulas>
         <name>OrderIdServizio</name>
