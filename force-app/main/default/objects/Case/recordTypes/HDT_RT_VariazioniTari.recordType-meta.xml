@@ -3,7 +3,7 @@
     <fullName>HDT_RT_VariazioniTari</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>HDT_RT_VariazioniTari</label>
+    <label>Variazioni Ambiente</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
