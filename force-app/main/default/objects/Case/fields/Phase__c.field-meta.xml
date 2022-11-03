@@ -752,7 +752,6 @@
             <value>
                 <fullName>Presa in Carico</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Presa in Carico</label>
             </value>
             <value>
