@@ -16,6 +16,9 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         //Check Quotation Type && set technical phase
         try{
             for(Case caseNew : (List<Case>) Trigger.new){
+                if (String.isNotBlank(caseNew.CancellationNote__c) && caseNew.CancellationNote__c.length() > 255){
+                    caseNew.CancellationNote__c = caseNew.CancellationNote__c.substring(0,255);
+                }
                 HDT_UTL_CaseProcess.setCloseStatus(caseNew);
                 Case caseOld = (Case) Trigger.oldMap.get(caseNew.Id);
                 if(caseOld.Amount__c != null && caseNew.Amount__c != caseOld.Amount__c && caseOld.QuotationType__c == 'Rapido'){
