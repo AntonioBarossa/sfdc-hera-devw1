@@ -69,7 +69,7 @@ public inherited sharing class HDT_UTL_ProcessReworkingScraps extends HDT_UTL_Pr
         if(orderNumberSet.size()>0){
 
             orderList = [
-                SELECT Id, OrderNumber, Description
+                SELECT Id, OrderNumber
                 FROM Order
                 WHERE Ordernumber IN :orderNumberSet
                 WITH SECURITY_ENFORCED
@@ -85,7 +85,7 @@ public inherited sharing class HDT_UTL_ProcessReworkingScraps extends HDT_UTL_Pr
         
         if(caseNumberSet.size()>0){
             caseList = [
-                SELECT Id, CaseNumber, Description
+                SELECT Id, CaseNumber
                 FROM Case
                 WHERE CaseNumber IN :caseNumberSet
                 WITH SECURITY_ENFORCED
@@ -136,13 +136,13 @@ public inherited sharing class HDT_UTL_ProcessReworkingScraps extends HDT_UTL_Pr
 
             if(processObj.autoNumber.startsWith('O-')) {
                 // set fields for update here
-                processObj.currOrder.Description = 'example update';
+
                 System.debug('>>> ORDER -> ' + String.valueOf(processObj.currOrder));
                 requestItemForOrder.add(processObj.requestItem);
                 orderToUpdate.add(processObj.currOrder);
             } else if(processObj.autoNumber.startsWith('C-')) {
                 // set fields for update here
-                processObj.currCase.Description = 'example update';
+
                 System.debug('>>> CASE -> ' + String.valueOf(processObj.currCase));
                 requestItemForCase.add(processObj.requestItem);
                 caseToUpdate.add(processObj.currCase);
@@ -154,16 +154,16 @@ public inherited sharing class HDT_UTL_ProcessReworkingScraps extends HDT_UTL_Pr
         saveCaseResponse = databaseUpsert(caseToUpdate, requestItemForCase, 'Case');
 
         if(saveCaseResponse.reponseItemList.size() > 0){
-            System.debug('>>> CASE UPDATE -> ' + String.valueOf(saveCaseResponse.reponseItemList));
             itemsToSave.addAll(saveCaseResponse.reponseItemList);
+            System.debug('>>> CASE itemsToSave -> ' + String.valueOf(itemsToSave));
         }
 
         HDT_WRP_SaveResponse saveOrderResponse;
         saveOrderResponse = databaseUpsert(orderToUpdate, requestItemForOrder, 'Order');
 
         if(saveOrderResponse.reponseItemList.size() > 0){
-            System.debug('>>> ORDER UPDATE -> ' + String.valueOf(saveOrderResponse.reponseItemList));
             itemsToSave.addAll(saveOrderResponse.reponseItemList);
+            System.debug('>>> ORDER itemsToSave -> ' + String.valueOf(itemsToSave));
         }
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
@@ -184,10 +184,10 @@ public inherited sharing class HDT_UTL_ProcessReworkingScraps extends HDT_UTL_Pr
         }
     }
 
-    private void mapFieldsObject(){
-        //mapWrapperFields = new Map<String, String>();
-        //mapWrapperFields.put(temp.labelField__c, temp.nameField__c);
-    }
+    //private void mapFieldsObject(){
+    //    mapWrapperFields = new Map<String, String>();
+    //    mapWrapperFields.put(temp.labelField__c, temp.nameField__c);
+    //}
 
     private class HDT_WRP_ProcessObjects {
         private String autoNumber;
