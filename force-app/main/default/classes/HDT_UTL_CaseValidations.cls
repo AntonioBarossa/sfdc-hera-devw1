@@ -1048,37 +1048,30 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     }
 
     public String validateDisattivazioni(String fields,Case currentCase){
-
-        String result;
-
-        Date notBeforeDate = Date.valueOf(getFieldValue(fields, 'NotPerformedBefore__c'));
-        Date requestDate = Date.valueOf(getFieldValue(fields, 'WrittenReceiptRequestDate__c'));
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+        Date notBeforeDate = (String.isNotBlank(getFieldValue(fields, 'NotPerformedBefore__c'))) ? Date.valueOf(getFieldValue(fields, 'NotPerformedBefore__c')) : null;
+        Date requestDate   = (String.isNotBlank(getFieldValue(fields, 'WrittenReceiptRequestDate__c'))) ? Date.valueOf(getFieldValue(fields, 'WrittenReceiptRequestDate__c')) : null;
         Boolean requiredAttachment = false;
         Boolean isAcqua = false;
+
         if(String.isNotBlank(currentCase.Commodity__c) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
             isAcqua = true;
             List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
             requiredAttachment = attachedDocument != null && attachedDocument.size() > 0?true:false;
         }
         if(notBeforeDate < System.today()){
-
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data non può essere nel passato'));
-
         } else if(requestDate > System.today()){
-
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data non può essere nel futuro'));
-
-        }else if(isAcqua && !requiredAttachment){
+        } else if(isAcqua && notBeforeDate != null && requestDate != null){
+            Date lowBoundary = requestDate.addDays(5);
+            Date upBoundary = requestDate.addDays(60);
+            Boolean isInBoundary = (notBeforeDate >= lowBoundary && notBeforeDate <= upBoundary);
+            result = (!isInBoundary) ? JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data deve essere compresa fra '+lowBoundary+' e '+upBoundary)) : result;
+        } else if(isAcqua && !requiredAttachment){
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Inserire un allegato'));
-        } else {
-
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
-
         }
-
-
         return result;
-
     }
 
     public String validateAnnullamento(String fields){
