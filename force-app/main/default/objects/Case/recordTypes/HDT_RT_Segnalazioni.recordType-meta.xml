@@ -9783,6 +9783,10 @@
 			<fullName>Inviata a Sap</fullName>
 			<default>false</default>
 		</values>
+        <values>
+			<fullName>Presa In Carico</fullName>
+			<default>false</default>
+		</values>
 		<values>
 			<fullName>Richiesto Annullamento</fullName>
 			<default>false</default>
