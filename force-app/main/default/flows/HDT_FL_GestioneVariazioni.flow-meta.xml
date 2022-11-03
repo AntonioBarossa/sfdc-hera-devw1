@@ -5211,6 +5211,11 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
+            <name>Richiedi_Parere_0</name>
+            <fieldText>&lt;p&gt;Attenzione! Per poter richiedere un parere occorre salvare la pratica in Bozza utilizzando l&apos;apposito tasto.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
             <name>hdtSelfReadingEsenzioneModificaFognature</name>
             <extensionName>c:hdtSelfReading</extensionName>
             <fieldType>ComponentInstance</fieldType>

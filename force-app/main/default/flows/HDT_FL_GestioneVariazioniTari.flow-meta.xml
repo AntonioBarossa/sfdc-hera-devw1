@@ -393,7 +393,7 @@
             <assignToReference>numeroPersoneConcatenazione</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getAfterSecondForm.ResidentMembers__c</elementReference>
+                <elementReference>residentMembers</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -2244,7 +2244,13 @@
     <formulas>
         <name>notResidentMembers</name>
         <dataType>Number</dataType>
-        <expression>{!getAfterSecondForm.NumberMembers__c} - {!getAfterSecondForm.NotResidentMembers__c}</expression>
+        <expression>ABS({!getAfterSecondForm.NumberMembers__c} - {!getAfterSecondForm.NotResidentMembers__c})</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>residentMembers</name>
+        <dataType>Number</dataType>
+        <expression>ABS({!getAfterSecondForm.NumberMembers__c} - {!getAfterSecondForm.ResidentMembers__c})</expression>
         <scale>0</scale>
     </formulas>
     <formulas>
