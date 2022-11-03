@@ -431,7 +431,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 * delle due entita' e aggiornarle con i relativi codici
                 * Update 2022-10-10 logica non risulta essere necessaria per la commodity ambiente
                 */
-                else if(o.Commodity__c.equalsIgnoreCase('Acqua') /*|| o.Commodity__c.equalsIgnoreCase('Ambiente')*/)
+                else if(o.Commodity__c.equalsIgnoreCase('Acqua') && String.isBlank(o.ContractAccountCode__c) /*|| o.Commodity__c.equalsIgnoreCase('Ambiente')*/)
                 {
                     ordersNonEnergy.add(o);
                 }
