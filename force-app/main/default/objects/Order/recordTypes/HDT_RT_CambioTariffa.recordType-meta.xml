@@ -2574,6 +2574,10 @@
 			<fullName>Annullato</fullName>
 			<default>false</default>
 		</values>
+        <values>
+			<fullName>In attesa Validazione</fullName>
+			<default>false</default>
+		</values>
 		<values>
 			<fullName>Annullato per decorrenza dei termini</fullName>
 			<default>false</default>
