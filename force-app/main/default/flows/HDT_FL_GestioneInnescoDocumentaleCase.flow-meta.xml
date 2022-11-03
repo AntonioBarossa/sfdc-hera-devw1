@@ -4,7 +4,7 @@
     <assignments>
         <name>Assign_Status_and_Law80</name>
         <label>Assign Status and Law80</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>Get_Order.Phase__c</assignToReference>
@@ -41,9 +41,25 @@
         </connector>
     </assignments>
     <assignments>
+        <name>processType_VariazioneTARI</name>
+        <label>processType = VariazioneTARI</label>
+        <locationX>842</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessTypeCalculated</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>VariazioneTARI</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Documentale</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>set_processType_case_type</name>
         <label>processType = case type</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessTypeCalculated</assignToReference>
@@ -92,7 +108,7 @@
         <description>Valorizzare il processType da passare al component Documentale, in base al tipo di plico che deve essere stampato.</description>
         <name>Check_Tipo_Plico</name>
         <label>Tipo Plico?</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>set_processType_case_type</targetReference>
@@ -164,11 +180,26 @@
             </connector>
             <label>Reclamo</label>
         </rules>
+        <rules>
+            <name>Modifica_Dati_Contrattuali</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica dati contrattuali</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>processType_VariazioneTARI</targetReference>
+            </connector>
+            <label>Modifica Dati Contrattuali</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Order_o_Case</name>
         <label>Order o Case?</label>
-        <locationX>776</locationX>
+        <locationX>974</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Screen_Documentale_0</targetReference>
@@ -214,7 +245,7 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -235,7 +266,7 @@
     <recordLookups>
         <name>Get_Order</name>
         <label>Get Order</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -256,14 +287,14 @@
     <recordUpdates>
         <name>Update_Order</name>
         <label>Update Order</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>638</locationY>
         <inputReference>Get_Order</inputReference>
     </recordUpdates>
     <screens>
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>734</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -324,7 +355,7 @@
     <screens>
         <name>Screen_Documentale_0</name>
         <label>Screen Documentale</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -356,7 +387,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>650</locationX>
+        <locationX>848</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Order_o_Case</targetReference>
