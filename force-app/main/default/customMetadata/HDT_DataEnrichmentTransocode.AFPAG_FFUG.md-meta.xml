@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Method__c</field>
-        <value xsi:type="xsd:string">transCodeDoubleOppositeToDecimal</value>
+        <value xsi:type="xsd:string">transCodeSiNo</value>
     </values>
     <values>
         <field>Precision__c</field>

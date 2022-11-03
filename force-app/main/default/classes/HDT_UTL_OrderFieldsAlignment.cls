@@ -197,8 +197,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.isWinback__c = servicePoint.SwitchInWinback__c;
         orderToUpdate.SwitchOutDate__c = servicePoint.SwitchOutDate__c;
         orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c;
-        orderToUpdate.MarketOrigin__c = (String.isBlank(servicePoint.MarketOrigin__c) && servicePoint.RecordType.DeveloperName == 'HDT_RT_Acqua') ? 'Regolamentato' : servicePoint.MarketOrigin__c;
-        orderToUpdate.MarketOrigin__c = (String.isBlank(servicePoint.MarketOrigin__c) && servicePoint.RecordType.DeveloperName == 'HDT_RT_Ambiente') ? 'Regolamentato' : servicePoint.MarketOrigin__c;
+        orderToUpdate.MarketOrigin__c = (String.isBlank(orderToUpdate.MarketOrigin__c) && servicePoint.RecordType.DeveloperName == 'HDT_RT_Acqua') ? 'Regolamentato' : orderToUpdate.MarketOrigin__c;
+        orderToUpdate.MarketOrigin__c = (String.isBlank(orderToUpdate.MarketOrigin__c) && servicePoint.RecordType.DeveloperName == 'HDT_RT_Ambiente') ? 'Regolamentato' : orderToUpdate.MarketOrigin__c;
         orderToUpdate.Market__c =   servicePoint.RecordType.DeveloperName == 'HDT_RT_Acqua' || servicePoint.RecordType.DeveloperName == 'HDT_RT_Ambiente'?'Regolamentato':'Libero';
         orderToUpdate.PowerAvailable__c = servicePoint.PowerAvailable__c;
         orderToUpdate.VoltageLevel__c = servicePoint.VoltageLevel__c;

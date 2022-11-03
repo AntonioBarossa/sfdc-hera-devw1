@@ -431,7 +431,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 * delle due entita' e aggiornarle con i relativi codici
                 * Update 2022-10-10 logica non risulta essere necessaria per la commodity ambiente
                 */
-                else if(o.Commodity__c.equalsIgnoreCase('Acqua') /*|| o.Commodity__c.equalsIgnoreCase('Ambiente')*/)
+                else if(o.Commodity__c.equalsIgnoreCase('Acqua') && String.isBlank(o.ContractAccountCode__c) /*|| o.Commodity__c.equalsIgnoreCase('Ambiente')*/)
                 {
                     ordersNonEnergy.add(o);
                 }
@@ -481,7 +481,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
            }
         }
         if(commList != null && !commList.isEmpty()){
-            commSRV.createRecords(commList);
+            try
+            {
+                commSRV.createRecords(commList);
+            }
+            catch(Exception e)
+            {
+                System.debug(Logginglevel.Debug, e.getMessage());
+            }
         }
     }
 
@@ -539,6 +546,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         || (oldOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.IncomingCreditCheckResult__c == 'OK')
                         /**@af inserito per ricalcolo al documenti Validati */
                         || (oldOrder.Phase__c == 'In attesa validazione' && newOrder.Phase__c == 'Documentazione Validata')
+                        || (oldOrder.Phase__c == 'Quality Call OK' && newOrder.Phase__c == 'Esportazione VS Siebel')
+                        || (oldOrder.Phase__c == 'Documentazione Validata' && newOrder.Phase__c == 'Esportazione VS Siebel')
                     ){
                         if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
                             if((newOrder.Phase__c == 'Documentazione Validata' || newOrder.Phase__c == 'Esportazione VS Siebel') && Date.today() <= newOrder.DateSentToSII__c){

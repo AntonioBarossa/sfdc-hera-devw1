@@ -5,7 +5,7 @@
         <name>AssignCaldaiaSicura</name>
         <label>AssignCaldaiaSicura</label>
         <locationX>2404</locationX>
-        <locationY>6518</locationY>
+        <locationY>6734</locationY>
         <assignmentItems>
             <assignToReference>ExistCaldaiaSicura</assignToReference>
             <operator>Assign</operator>
@@ -28,7 +28,7 @@
         <name>AssignContaWatt</name>
         <label>AssignContaWatt</label>
         <locationX>1612</locationX>
-        <locationY>6518</locationY>
+        <locationY>6734</locationY>
         <assignmentItems>
             <assignToReference>ExistContaWatt</assignToReference>
             <operator>Assign</operator>
@@ -51,7 +51,7 @@
         <name>AssignEbike</name>
         <label>AssignEbike</label>
         <locationX>3460</locationX>
-        <locationY>6518</locationY>
+        <locationY>6734</locationY>
         <assignmentItems>
             <assignToReference>ExistEbike</assignToReference>
             <operator>Assign</operator>
@@ -99,7 +99,7 @@
         <name>AssignFotoVoltaico</name>
         <label>AssignFotoVoltaico</label>
         <locationX>4252</locationX>
-        <locationY>6518</locationY>
+        <locationY>6734</locationY>
         <assignmentItems>
             <assignToReference>ExistFotoVoltaico</assignToReference>
             <operator>Assign</operator>
@@ -147,7 +147,7 @@
         <name>AssignInstallazione</name>
         <label>AssignInstallazione</label>
         <locationX>1150</locationX>
-        <locationY>3158</locationY>
+        <locationY>3374</locationY>
         <assignmentItems>
             <assignToReference>ContainsInstallazioneTermostato</assignToReference>
             <operator>Assign</operator>
@@ -163,7 +163,7 @@
         <name>AssignInstallazioneStandard</name>
         <label>AssignInstallazioneStandard</label>
         <locationX>1150</locationX>
-        <locationY>4166</locationY>
+        <locationY>4382</locationY>
         <assignmentItems>
             <assignToReference>ContainsInstallazioneStandard</assignToReference>
             <operator>Assign</operator>
@@ -179,7 +179,7 @@
         <name>AssignLED</name>
         <label>AssignLED</label>
         <locationX>1084</locationX>
-        <locationY>6518</locationY>
+        <locationY>6734</locationY>
         <assignmentItems>
             <assignToReference>ExistLED</assignToReference>
             <operator>Assign</operator>
@@ -202,7 +202,7 @@
         <name>AssignLedKit</name>
         <label>AssignLedKit</label>
         <locationX>1150</locationX>
-        <locationY>3494</locationY>
+        <locationY>3710</locationY>
         <assignmentItems>
             <assignToReference>KitLedVariable</assignToReference>
             <operator>Assign</operator>
@@ -218,7 +218,7 @@
         <name>AssignMonopattino</name>
         <label>AssignMonopattino</label>
         <locationX>3724</locationX>
-        <locationY>6518</locationY>
+        <locationY>6734</locationY>
         <assignmentItems>
             <assignToReference>ExistMonopattino</assignToReference>
             <operator>Assign</operator>
@@ -234,7 +234,7 @@
         <name>AssignNoProblemAcqua</name>
         <label>AssignNoProblemAcqua</label>
         <locationX>3196</locationX>
-        <locationY>6518</locationY>
+        <locationY>6734</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemAcqua</assignToReference>
             <operator>Assign</operator>
@@ -257,7 +257,7 @@
         <name>AssignNoProblemGas</name>
         <label>AssignNoProblemGas</label>
         <locationX>2140</locationX>
-        <locationY>6518</locationY>
+        <locationY>6734</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemGas</assignToReference>
             <operator>Assign</operator>
@@ -280,7 +280,7 @@
         <name>AssignNoProblemLuce</name>
         <label>AssignNoProblemLuce</label>
         <locationX>1876</locationX>
-        <locationY>6518</locationY>
+        <locationY>6734</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemLuce</assignToReference>
             <operator>Assign</operator>
@@ -303,7 +303,7 @@
         <name>AssignRicaricaPrivata</name>
         <label>AssignRicaricaPrivata</label>
         <locationX>2932</locationX>
-        <locationY>6518</locationY>
+        <locationY>6734</locationY>
         <assignmentItems>
             <assignToReference>ExistRicaricaPrivata</assignToReference>
             <operator>Assign</operator>
@@ -326,7 +326,7 @@
         <name>AssignRicaricaPubblica</name>
         <label>AssignRicaricaPubblica</label>
         <locationX>2668</locationX>
-        <locationY>6518</locationY>
+        <locationY>6734</locationY>
         <assignmentItems>
             <assignToReference>ExistRicaricaPubblica</assignToReference>
             <operator>Assign</operator>
@@ -342,7 +342,7 @@
         <name>AssignSanifica</name>
         <label>AssignSanifica</label>
         <locationX>3988</locationX>
-        <locationY>6518</locationY>
+        <locationY>6734</locationY>
         <assignmentItems>
             <assignToReference>ExistSanifica</assignToReference>
             <operator>Assign</operator>
@@ -358,7 +358,7 @@
         <name>AssignStringEle</name>
         <label>AssignStringEle</label>
         <locationX>50</locationX>
-        <locationY>5486</locationY>
+        <locationY>5702</locationY>
         <assignmentItems>
             <assignToReference>ContainerEleGas</assignToReference>
             <operator>Add</operator>
@@ -374,7 +374,7 @@
         <name>AssignStringGas</name>
         <label>AssignStringGas</label>
         <locationX>314</locationX>
-        <locationY>5486</locationY>
+        <locationY>5702</locationY>
         <assignmentItems>
             <assignToReference>ContainerEleGas</assignToReference>
             <operator>Add</operator>
@@ -390,7 +390,7 @@
         <name>AssignThermo</name>
         <label>AssignThermo</label>
         <locationX>1348</locationX>
-        <locationY>6518</locationY>
+        <locationY>6734</locationY>
         <assignmentItems>
             <assignToReference>ExistThermo</assignToReference>
             <operator>Assign</operator>
@@ -487,7 +487,7 @@
         <name>CounterTermostato</name>
         <label>CounterTermostato</label>
         <locationX>1150</locationX>
-        <locationY>2822</locationY>
+        <locationY>3038</locationY>
         <assignmentItems>
             <assignToReference>TermostatoQuantity</assignToReference>
             <operator>Add</operator>
@@ -503,7 +503,7 @@
         <name>CounterWallBox</name>
         <label>CounterWallBox</label>
         <locationX>1150</locationX>
-        <locationY>3830</locationY>
+        <locationY>4046</locationY>
         <assignmentItems>
             <assignToReference>WallBoxCounter</assignToReference>
             <operator>Add</operator>
@@ -519,7 +519,7 @@
         <name>Vas_PresentiAssign</name>
         <label>Vas PresentiAssign</label>
         <locationX>2800</locationX>
-        <locationY>6278</locationY>
+        <locationY>6494</locationY>
         <assignmentItems>
             <assignToReference>VariableVasPresenti</assignToReference>
             <operator>Assign</operator>
@@ -535,7 +535,7 @@
         <name>Bonus_Decision</name>
         <label>Bonus Decision</label>
         <locationX>402</locationX>
-        <locationY>1598</locationY>
+        <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision</targetReference>
         </defaultConnector>
@@ -567,7 +567,7 @@
         <name>Bonus_Decision_0</name>
         <label>Bonus Decision</label>
         <locationX>842</locationX>
-        <locationY>1598</locationY>
+        <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision_0</targetReference>
         </defaultConnector>
@@ -599,7 +599,7 @@
         <name>Bonus_Decision_0_0</name>
         <label>Bonus Decision</label>
         <locationX>1282</locationX>
-        <locationY>1478</locationY>
+        <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision_0_0</targetReference>
         </defaultConnector>
@@ -624,7 +624,7 @@
         <name>Bonus_Decision_0_0_0</name>
         <label>Bonus Decision</label>
         <locationX>1722</locationX>
-        <locationY>1478</locationY>
+        <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision_0_0_0</targetReference>
         </defaultConnector>
@@ -643,6 +643,190 @@
                 <targetReference>Condizioni_Economiche_Bonus_0_0_0</targetReference>
             </connector>
             <label>isBonus</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Bonus_Obbligatori_Decision</name>
+        <label>Bonus Obbligatori Decision</label>
+        <locationX>842</locationX>
+        <locationY>1478</locationY>
+        <defaultConnector>
+            <targetReference>Bonus_Decision_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotBonusObbligatorio</defaultConnectorLabel>
+        <rules>
+            <name>isBonusObbligatorio</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa Web</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Bonus_Obbligatorio_FAM_INB_EE</targetReference>
+            </connector>
+            <label>isBonusObbligatorio</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Bonus_Obbligatori_Decision_0</name>
+        <label>Bonus Obbligatori Decision</label>
+        <locationX>402</locationX>
+        <locationY>1478</locationY>
+        <defaultConnector>
+            <targetReference>Bonus_Decision</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotBonusObbligatorio</defaultConnectorLabel>
+        <rules>
+            <name>isBonusObbligatorio_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa Web</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Bonus_Obbligatorio_FAM_OUT_EE</targetReference>
+            </connector>
+            <label>isBonusObbligatorio</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Bonus_Obbligatori_Decision_0_0</name>
+        <label>Bonus Obbligatori Decision</label>
+        <locationX>1282</locationX>
+        <locationY>1478</locationY>
+        <defaultConnector>
+            <targetReference>Bonus_Decision_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotBonusObbligatorio</defaultConnectorLabel>
+        <rules>
+            <name>isBonusObbligatorio_0_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa Web</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Bonus_Obbligatorio_FAM_OUT_GAS</targetReference>
+            </connector>
+            <label>isBonusObbligatorio</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Bonus_Obbligatori_Decision_0_0_0</name>
+        <label>Bonus Obbligatori Decision</label>
+        <locationX>1722</locationX>
+        <locationY>1478</locationY>
+        <defaultConnector>
+            <targetReference>Bonus_Decision_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotBonusObbligatorio</defaultConnectorLabel>
+        <rules>
+            <name>isBonusObbligatorio_0_0_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa Web</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Bonus_Obbligatorio_FAM_INB_GAS</targetReference>
+            </connector>
+            <label>isBonusObbligatorio</label>
         </rules>
     </decisions>
     <decisions>
@@ -699,7 +883,7 @@
         <name>CanaleVenditaDecision_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>798</locationX>
-        <locationY>4598</locationY>
+        <locationY>4814</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_EE_0</targetReference>
         </defaultConnector>
@@ -724,7 +908,7 @@
         <name>CanaleVenditaDecision_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1326</locationX>
-        <locationY>4598</locationY>
+        <locationY>4814</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_GAS_0</targetReference>
         </defaultConnector>
@@ -824,7 +1008,7 @@
         <name>Categoria_Cliente_Decision_0</name>
         <label>Categoria Cliente Decision</label>
         <locationX>820</locationX>
-        <locationY>6926</locationY>
+        <locationY>7142</locationY>
         <defaultConnectorLabel>isAziende</defaultConnectorLabel>
         <rules>
             <name>isFamiglie_0</name>
@@ -846,7 +1030,7 @@
         <name>ChannelDecision</name>
         <label>ChannelDecision</label>
         <locationX>622</locationX>
-        <locationY>7166</locationY>
+        <locationY>7382</locationY>
         <defaultConnector>
             <targetReference>Conferma_Adesione_Screen_0</targetReference>
         </defaultConnector>
@@ -871,7 +1055,7 @@
         <name>ConstainsInstallStandard</name>
         <label>ConstainsInstallStandard</label>
         <locationX>1282</locationX>
-        <locationY>4046</locationY>
+        <locationY>4262</locationY>
         <defaultConnector>
             <targetReference>CounterLoop</targetReference>
         </defaultConnector>
@@ -896,7 +1080,7 @@
         <name>ContainsKitLed</name>
         <label>ContainsKitLed</label>
         <locationX>1282</locationX>
-        <locationY>3374</locationY>
+        <locationY>3590</locationY>
         <defaultConnector>
             <targetReference>ContainsWallBox</targetReference>
         </defaultConnector>
@@ -921,7 +1105,7 @@
         <name>ContainsTermostatoConInstallazione</name>
         <label>ContainsTermostatoConInstallazione</label>
         <locationX>1282</locationX>
-        <locationY>3038</locationY>
+        <locationY>3254</locationY>
         <defaultConnector>
             <targetReference>ContainsKitLed</targetReference>
         </defaultConnector>
@@ -946,7 +1130,7 @@
         <name>ContainsWallBox</name>
         <label>ContainsWallBox</label>
         <locationX>1282</locationX>
-        <locationY>3710</locationY>
+        <locationY>3926</locationY>
         <defaultConnector>
             <targetReference>ConstainsInstallStandard</targetReference>
         </defaultConnector>
@@ -971,7 +1155,7 @@
         <name>isGasOrisEleDecision</name>
         <label>isGasOrisEleDecision</label>
         <locationX>182</locationX>
-        <locationY>5366</locationY>
+        <locationY>5582</locationY>
         <defaultConnector>
             <targetReference>AssignStringGas</targetReference>
         </defaultConnector>
@@ -996,7 +1180,7 @@
         <name>Promo_Decision</name>
         <label>Promo Decision</label>
         <locationX>402</locationX>
-        <locationY>1934</locationY>
+        <locationY>2150</locationY>
         <defaultConnector>
             <targetReference>GetOrderItem</targetReference>
         </defaultConnector>
@@ -1035,7 +1219,7 @@
         <name>Promo_Decision_0</name>
         <label>Promo Decision</label>
         <locationX>842</locationX>
-        <locationY>1934</locationY>
+        <locationY>2150</locationY>
         <defaultConnector>
             <targetReference>GetOrderItem</targetReference>
         </defaultConnector>
@@ -1067,7 +1251,7 @@
         <name>Promo_Decision_0_0</name>
         <label>Promo Decision</label>
         <locationX>1282</locationX>
-        <locationY>1814</locationY>
+        <locationY>2150</locationY>
         <defaultConnector>
             <targetReference>GetOrderItem</targetReference>
         </defaultConnector>
@@ -1106,7 +1290,7 @@
         <name>Promo_Decision_0_0_0</name>
         <label>Promo Decision</label>
         <locationX>1722</locationX>
-        <locationY>1814</locationY>
+        <locationY>2150</locationY>
         <defaultConnector>
             <targetReference>GetOrderItem</targetReference>
         </defaultConnector>
@@ -1170,7 +1354,7 @@
         <name>Servizio_Decision_0</name>
         <label>Servizio Decision</label>
         <locationX>1062</locationX>
-        <locationY>4478</locationY>
+        <locationY>4694</locationY>
         <defaultConnector>
             <targetReference>CanaleVenditaDecision_0_0_0</targetReference>
         </defaultConnector>
@@ -1220,7 +1404,7 @@
         <name>Termostato</name>
         <label>ContainsTermostato</label>
         <locationX>1282</locationX>
-        <locationY>2702</locationY>
+        <locationY>2918</locationY>
         <defaultConnector>
             <targetReference>ContainsTermostatoConInstallazione</targetReference>
         </defaultConnector>
@@ -1252,7 +1436,7 @@
         <name>Vas_Presenti_Decision</name>
         <label>Vas Presenti Decision</label>
         <locationX>1854</locationX>
-        <locationY>6158</locationY>
+        <locationY>6374</locationY>
         <defaultConnector>
             <targetReference>Vas_PresentiAssign</targetReference>
         </defaultConnector>
@@ -1277,7 +1461,7 @@
         <name>WhichVasName</name>
         <label>WhichVasName</label>
         <locationX>2800</locationX>
-        <locationY>6398</locationY>
+        <locationY>6614</locationY>
         <defaultConnector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </defaultConnector>
@@ -1522,7 +1706,7 @@
     <formulas>
         <name>ProfiloCalcolato_Famiglie</name>
         <dataType>String</dataType>
-        <expression>IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;12&quot;), &quot;12&quot;, 
+        <expression>IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;24&quot;), &quot;24&quot;, 
  IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;Sole&quot;), &quot;Sole-Luna&quot;, 
  IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;SL&quot;), &quot;Sole-Luna&quot;, 
   IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;Luna&quot;), &quot;Sole-Luna&quot;, &quot;&quot;))))</expression>
@@ -1533,7 +1717,7 @@
         <name>CounterLoop</name>
         <label>CounterLoop</label>
         <locationX>1062</locationX>
-        <locationY>2582</locationY>
+        <locationY>2798</locationY>
         <collectionReference>GetOrderItem</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1575,7 +1759,7 @@
         <name>Order_Items_Vas_Loop</name>
         <label>Order Items Vas Loop</label>
         <locationX>820</locationX>
-        <locationY>5918</locationY>
+        <locationY>6134</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVASBonusOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1608,7 +1792,7 @@
         <name>GetOrderItem</name>
         <label>GetOrderItem</label>
         <locationX>1062</locationX>
-        <locationY>2462</locationY>
+        <locationY>2678</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CounterLoop</targetReference>
@@ -1629,7 +1813,7 @@
         <name>GetOrderProduct</name>
         <label>GetOrderProduct</label>
         <locationX>182</locationX>
-        <locationY>5246</locationY>
+        <locationY>5462</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>isGasOrisEleDecision</targetReference>
@@ -1650,7 +1834,7 @@
         <name>GetParent</name>
         <label>GetParent</label>
         <locationX>182</locationX>
-        <locationY>5126</locationY>
+        <locationY>5342</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetOrderProduct</targetReference>
@@ -1682,60 +1866,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
-        <name>Bonus_Obbligatorio</name>
+        <name>Bonus_Obbligatorio_FAM_INB_EE</name>
         <label>Bonus Obbligatorio</label>
-        <locationX>402</locationX>
-        <locationY>1478</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Bonus_Decision</targetReference>
-        </connector>
-        <fields>
-            <name>Copy_1_of_NIZ12_EE_BONUS_1_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus %&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Web Luce</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Bonus_Obbligatorio_0</name>
-        <label>Bonus Obbligatorio</label>
-        <locationX>842</locationX>
-        <locationY>1478</locationY>
+        <locationX>710</locationX>
+        <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1743,40 +1877,66 @@
             <targetReference>Bonus_Decision_0</targetReference>
         </connector>
         <fields>
-            <name>Copy_1_of_NIZ12_EE_BONUS_1</name>
+            <name>Bonus_Obb_FAM_INB_EE</name>
             <fieldText>&lt;p&gt;&lt;strong&gt;Bonus %&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Web Luce</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Bonus_Obbligatorio_FAM_INB_GAS</name>
+        <label>Bonus Obbligatorio</label>
+        <locationX>1590</locationX>
+        <locationY>1598</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Bonus_Decision_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>Bonus_Obb_FAM_INB_GAS</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/smc&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Bonus_Obbligatorio_FAM_OUT_EE</name>
+        <label>Bonus Obbligatorio</label>
+        <locationX>270</locationX>
+        <locationY>1598</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Bonus_Decision</targetReference>
+        </connector>
+        <fields>
+            <name>Bonus_Obb_FAM_OUT_EE</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus %&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Bonus_Obbligatorio_FAM_OUT_GAS</name>
+        <label>Bonus Obbligatorio</label>
+        <locationX>1150</locationX>
+        <locationY>1598</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Bonus_Decision_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>Bonus_Obb_FAM_OUT_GAS</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/smc&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -1785,7 +1945,7 @@
         <name>Condizioni_Economiche_Bonus</name>
         <label>Condizioni Economiche Bonus</label>
         <locationX>270</locationX>
-        <locationY>1718</locationY>
+        <locationY>1934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1879,7 +2039,7 @@
         <name>Condizioni_Economiche_Bonus_0</name>
         <label>Condizioni Economiche Bonus</label>
         <locationX>710</locationX>
-        <locationY>1718</locationY>
+        <locationY>1934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1980,18 +2140,13 @@
         <name>Condizioni_Economiche_Bonus_0_0</name>
         <label>Condizioni Economiche Bonus</label>
         <locationX>1150</locationX>
-        <locationY>1598</locationY>
+        <locationY>1934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
             <targetReference>Promo_Decision_0_0</targetReference>
         </connector>
-        <fields>
-            <name>NIZ12_GAS_BONUS_1_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/Smc&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura del corrispettivo di commercializzazione all’ingrosso sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
         <fields>
             <name>NIZ12_GAS_BONUS_2_0</name>
             <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/a&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Bonus Soluzioni Sostenibili&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
@@ -2086,18 +2241,13 @@
         <name>Condizioni_Economiche_Bonus_0_0_0</name>
         <label>Condizioni Economiche Bonus</label>
         <locationX>1590</locationX>
-        <locationY>1598</locationY>
+        <locationY>1934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
             <targetReference>Promo_Decision_0_0_0</targetReference>
         </connector>
-        <fields>
-            <name>NIZ12_GAS_BONUS_1</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/Smc&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura del corrispettivo di commercializzazione all’ingrosso sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
         <fields>
             <name>NIZ12_GAS_BONUS_2</name>
             <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/a&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Bonus Soluzioni Sostenibili&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
@@ -2197,7 +2347,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Bonus_Obbligatorio</targetReference>
+            <targetReference>Bonus_Obbligatori_Decision_0</targetReference>
         </connector>
         <fields>
             <name>NIZ12_CONDIZIONI_ECONOMICHE_FAM_OUT_TITLE</name>
@@ -2409,7 +2559,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Bonus_Obbligatorio_0</targetReference>
+            <targetReference>Bonus_Obbligatori_Decision</targetReference>
         </connector>
         <fields>
             <name>NIZ12_CE_TITLE</name>
@@ -2648,7 +2798,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Bonus_Decision_0_0</targetReference>
+            <targetReference>Bonus_Obbligatori_Decision_0_0</targetReference>
         </connector>
         <fields>
             <name>NIZ12_GAS_OUT_CE_TITLE_0</name>
@@ -2723,7 +2873,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Bonus_Decision_0_0_0</targetReference>
+            <targetReference>Bonus_Obbligatori_Decision_0_0_0</targetReference>
         </connector>
         <fields>
             <name>NIZ12_GAS_OUT_CE_TITLE</name>
@@ -2821,7 +2971,7 @@
         <name>Condizioni_Economiche_Promozioni</name>
         <label>Condizioni Economiche Promozioni</label>
         <locationX>270</locationX>
-        <locationY>2054</locationY>
+        <locationY>2270</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2869,7 +3019,7 @@
         <name>Condizioni_Economiche_Promozioni_0</name>
         <label>Condizioni Economiche Promozioni</label>
         <locationX>710</locationX>
-        <locationY>2054</locationY>
+        <locationY>2270</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2903,7 +3053,7 @@
         <name>Condizioni_Economiche_Promozioni_0_0</name>
         <label>Condizioni Economiche Promozioni</label>
         <locationX>1150</locationX>
-        <locationY>1934</locationY>
+        <locationY>2270</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2973,7 +3123,7 @@
         <name>Condizioni_Economiche_Promozioni_0_0_0</name>
         <label>Condizioni Economiche Promozioni</label>
         <locationX>1590</locationX>
-        <locationY>1934</locationY>
+        <locationY>2270</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3043,7 +3193,7 @@
         <name>Conferma_Adesione_Screen</name>
         <label>Conferma Adesione Screen</label>
         <locationX>490</locationX>
-        <locationY>7286</locationY>
+        <locationY>7502</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3568,7 +3718,7 @@
         <name>Conferma_Adesione_Screen_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>754</locationX>
-        <locationY>7286</locationY>
+        <locationY>7502</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4164,7 +4314,7 @@
         <name>Dati_Tecnici_Famiglie_EE</name>
         <label>Dati Tecnici Famiglie EE</label>
         <locationX>666</locationX>
-        <locationY>4718</locationY>
+        <locationY>4934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4292,7 +4442,7 @@
         </fields>
         <fields>
             <name>NIZ12_OUT_EE_DT_TEXTBOX_6_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la potenza impegnata è  {!LoopOrdiniFigliOfferta.PowerCommitted__c}kW?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il profilo scelto è il {!ProfiloCalcolato_Famiglie} e la durata del prezzo fisso è 24 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la potenza impegnata è  {!LoopOrdiniFigliOfferta.PowerCommitted__c}kW?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il profilo scelto è il {!ProfiloCalcolato_Famiglie} e la durata del prezzo fisso è 12 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -4302,7 +4452,7 @@
         <name>Dati_Tecnici_Famiglie_EE_0</name>
         <label>Dati Tecnici Famiglie EE</label>
         <locationX>930</locationX>
-        <locationY>4718</locationY>
+        <locationY>4934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4430,7 +4580,7 @@
         </fields>
         <fields>
             <name>NIZ12_INB_EE_DT_TEXTBOX_6</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la potenza impegnata è  {!LoopOrdiniFigliOfferta.PowerCommitted__c}kW?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il profilo scelto è il {!ProfiloCalcolato_Famiglie} e la durata del prezzo fisso è 24 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la potenza impegnata è  {!LoopOrdiniFigliOfferta.PowerCommitted__c}kW?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il profilo scelto è il {!ProfiloCalcolato_Famiglie} e la durata del prezzo fisso è 12 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4535,7 +4685,7 @@
         <name>Dati_Tecnici_Famiglie_GAS_0</name>
         <label>Dati Tecnici Famiglie GAS</label>
         <locationX>1458</locationX>
-        <locationY>4718</locationY>
+        <locationY>4934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4663,7 +4813,7 @@
         </fields>
         <fields>
             <name>NIZ12_INB_GAS_DT_TEXTBOX_6</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che usa il gas per {!LoopOrdiniFigliOfferta.ImplantType__c}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice PDR del contatore GAS è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la durata del prezzo fisso scelta è 24 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che usa il gas per {!LoopOrdiniFigliOfferta.ImplantType__c}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice PDR del contatore GAS è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la durata del prezzo fisso scelta è 12 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4775,7 +4925,7 @@
         <name>Dati_Tecnici_Famiglie_GAS_0_0</name>
         <label>Dati Tecnici Famiglie GAS</label>
         <locationX>1194</locationX>
-        <locationY>4718</locationY>
+        <locationY>4934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4903,7 +5053,7 @@
         </fields>
         <fields>
             <name>NIZ12_OUT_GAS_DT_TEXTBOX_6_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che usa il gas per {!LoopOrdiniFigliOfferta.ImplantType__c}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice PDR del contatore GAS è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la durata del prezzo fisso scelta è 24 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che usa il gas per {!LoopOrdiniFigliOfferta.ImplantType__c}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice PDR del contatore GAS è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la durata del prezzo fisso scelta è 12 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -4913,7 +5063,7 @@
         <name>Durata_Contratto</name>
         <label>Durata Contratto</label>
         <locationX>622</locationX>
-        <locationY>7046</locationY>
+        <locationY>7262</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5003,7 +5153,7 @@
         <name>Servizi_Bundle</name>
         <label>Servizi Bundle</label>
         <locationX>182</locationX>
-        <locationY>5702</locationY>
+        <locationY>5918</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5255,7 +5405,7 @@
         <name>HDT_Script_VAS</name>
         <label>HDT Script - VAS</label>
         <locationX>1854</locationX>
-        <locationY>6038</locationY>
+        <locationY>6254</locationY>
         <connector>
             <targetReference>Vas_Presenti_Decision</targetReference>
         </connector>

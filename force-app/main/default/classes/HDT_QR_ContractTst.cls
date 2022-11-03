@@ -43,6 +43,8 @@ public with sharing class HDT_QR_ContractTst {
             contractList[0].ServicePoint__c = spList[0].Id;
             contractList[0].Status = 'Attivo';
             contractList[0].SBQQ__Order__c = orderList[0].Id;
+            contractList[0].StartDate = System.today();
+            contractList[0].EndDate = system.today().addDays(1);
             insert contractList;
         }
     }
