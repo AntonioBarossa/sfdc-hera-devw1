@@ -52,6 +52,8 @@ public class HDT_SCH_PostSalesMasterBatchTst {
         kArt.urlName = 'original';
         kArt.ExpirationDate__c = Date.today()-5;
         insert kArt;
+        HDT_UTL_DataFactoryTst.createDaysToExpiration(1, true,'30', 'PostSales');
+        HDT_UTL_DataFactoryTst.createDaysToExpiration(1, true,'30', 'Autolettura');
 
     }
 

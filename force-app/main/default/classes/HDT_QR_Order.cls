@@ -430,6 +430,7 @@ public inherited sharing class HDT_QR_Order {
             SystemModstamp,
             Status,
             ContractSigned__c,
+            ContractAccountCode__c,
             SignedDate__c,
             SignatureMethod__c,
             DocSendingMethod__c,
