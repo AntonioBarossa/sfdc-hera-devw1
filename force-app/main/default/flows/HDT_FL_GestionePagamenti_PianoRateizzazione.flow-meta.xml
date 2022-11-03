@@ -1370,9 +1370,9 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>RentProcessRuleOutput.MaxInstallmentsNumber__c</leftValueReference>
-                <operator>WasSet</operator>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
