@@ -7,6 +7,12 @@
 **/
 public with sharing class HDT_UTL_ExpSieRavv {
 
+    static String vNomeOperandoReale;
+    static String vNomeOperandoReale2;
+    static String vNomeOperandoFittizio;
+    static String vNomeOperandoFittizio2;
+    static String vNewValoreOperando;
+
     @AuraEnabled(cacheable=false)
     public static void createExportSobjects(HDT_WRP_SieExport wrapper){
         //cancellare gli esistenti record di ravvedimento operoso
@@ -43,6 +49,10 @@ public with sharing class HDT_UTL_ExpSieRavv {
             return this.sobjectTypeName;
         }
 
+        private HDT_WRP_SieExport getWrapper(){
+            return this.wrapper;
+        }
+
         @SuppressWarnings('PMD.ExcessiveParameterList')
         ExpRavv__c createExpRavv(String operandName, String operandValue){
             ExpRavv__c exportRecord = new ExpRavv__c();
@@ -71,15 +81,6 @@ public with sharing class HDT_UTL_ExpSieRavv {
     }
 
     private static List<ExpRavv__c> getExportRavv(HDT_WRP_SieExport wrapper){
-
-        String vNomeOperando;
-        String vValoreOperando;
-        String vNomeOperandoReale;
-        String vNomeOperandoReale2;
-        String vNomeOperandoFittizio;
-        String vNomeOperandoFittizio2;
-        String vNewValoreOperando;
-
         HDT_UTL_SieSobjectCreation createSobjUtl = new HDT_UTL_SieSobjectCreation(wrapper);
         List<ExpRavv__c> listToInsert = new List<ExpRavv__c>();
 
@@ -94,116 +95,142 @@ public with sharing class HDT_UTL_ExpSieRavv {
             }
         }
         else if('case'.equalsIgnoreCase(createSobjUtl.getSobjectType())){
-            Case caso = (Case) wrapper.record;
-            if(!'X'.equalsIgnoreCase(wrapper.period)){
-                if( !'A'.equalsIgnoreCase(caso.BillingCategory__c)){
-                    switch on caso.Subprocess__c {
-                        when 'Superficie' {
-                            vNomeOperandoReale = 'TFSC000000';
-                            vNomeOperandoFittizio ='TFSCRAV000';
-                            vNewValoreOperando = caso.DeclaredArea__c.format();
-                        }
-                        when 'DOM_Componenti non residenti' {
-                            vNomeOperandoReale = 'TRSOSP0000';
-                            vNomeOperandoFittizio ='TFNCERAV00';
-                            vNewValoreOperando = caso.NotResidentMembers__c.format();
-                        }
-                        when 'NON DOM_ISTAT/Ronchi' {
-                            vNomeOperandoReale = 'TRSOSP0000';
-                            vNomeOperandoReale2 ='TUSCATCOM0';
-                            vNomeOperandoFittizio ='TUCATCMRAV';
-                            vNomeOperandoFittizio2 ='TUSCATRAV0';
-                            vNewValoreOperando = caso.RonchiCode__c;
-                        }
-                    }
-                }  
-            }
-            if('Y'.equalsIgnoreCase(wrapper.period)){
-                if(wrapper.missingDue == 0){   //SE mancatoDovuto Assente
-                    if(caso.Subprocess__c.equalsIgnoreCase('Superficie') 
-                        || caso.Subprocess__c.equalsIgnoreCase('DOM_Componenti non residenti')
-                        || caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi')){
-                        listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoFittizio,vNewValoreOperando));
-                    }
-                    populateList(createSobjUtl,false,caso,listToInsert,vNomeOperando,vValoreOperando,vNomeOperandoReale,vNomeOperandoReale2,vNomeOperandoFittizio,vNomeOperandoFittizio2,vNewValoreOperando);
-                    if('B'.equalsIgnoreCase(caso.BillingCategory__c)){
-                        listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando)); 
-                    }
-                } 
-                else{   //SE mancatoDovuto Presente: 
-                    vNomeOperando = vNomeOperandoFittizio;
-                    vValoreOperando = vNewValoreOperando;
-                    listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando)); 
-                    populateList(createSobjUtl,true,caso,listToInsert,vNomeOperando,vValoreOperando,vNomeOperandoReale,vNomeOperandoReale2,vNomeOperandoFittizio,vNomeOperandoFittizio2,vNewValoreOperando);
-                      
-                }
-            }
-            if('z'.equalsIgnoreCase(wrapper.period)){
-                if('case'.equalsIgnoreCase(createSobjUtl.getSobjectType())){
-                    if(wrapper.missingDue == 0){  //SE mancatoDovuto Assente
-                        if(caso.Subprocess__c.equalsIgnoreCase('Superficie') 
-                            || caso.Subprocess__c.equalsIgnoreCase('DOM_Componenti non residenti') 
-                            || caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi')){
-                            vNomeOperando = vNomeOperandoFittizio;
-                            vValoreOperando = vNewValoreOperando;
-                            listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando));
-                            populateList(createSobjUtl,false,caso,listToInsert,vNomeOperando,vValoreOperando,vNomeOperandoReale,vNomeOperandoReale2,vNomeOperandoFittizio,vNomeOperandoFittizio2,vNewValoreOperando);
-                       
-                        }
-                    }else{  //SE mancatoDovuto Presente
-                        if(caso.Subprocess__c.equalsIgnoreCase('Superficie') || caso.Subprocess__c.equalsIgnoreCase('DOM_Componenti non residenti')){
-                            vNomeOperando = vNomeOperandoFittizio;
-                            vValoreOperando = vNewValoreOperando;
-                            listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando));
-                        
-                            // if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi')){
-                            //     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoFittizio2,vValoreOperando));
-                            // }
-                            vNomeOperando = vNomeOperandoReale;
-                            vValoreOperando = 'OLD';
-                            listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando));
-                            // if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi')){
-                            //     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoReale2,vValoreOperando));
-                            // }
-                            vValoreOperando = vNewValoreOperando;
-                            listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando));
-                            // if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi')){
-                            //     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoReale2,vValoreOperando));
-                            // }
-                        }
-                    }
-                }
-            }
+            caseSieExp(createSobjUtl, listToInsert);
         }
         return listToInsert;
     }
 
-    private static void populateList(HDT_UTL_SieSobjectCreation createSobjUtl,Boolean checkBilling,Case caso,List<ExpRavv__c> listToInsert,String vNomeOperando,String vValoreOperando,
-                                String vNomeOperandoReale,String vNomeOperandoReale2,String vNomeOperandoFittizio,String vNomeOperandoFittizio2,String vNewValoreOperando){
+    @SuppressWarnings('PMD.ifelsestmtsmustusebraces, PMD.ifstmtsmustusebraces')
+    private static void caseSieExp(HDT_UTL_SieSobjectCreation createSobjUtl, List<ExpRavv__c> listToInsert){
+        String vNomeOperando;
+        String vValoreOperando;
 
-        if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi')){
-            listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoFittizio2,vValoreOperando));
-        }
+        HDT_WRP_SieExport wrapper = createSobjUtl.getWrapper();
+        Case caso = (Case) wrapper.record;
+        if(('X'.equalsIgnoreCase(wrapper.period) || 'A'.equalsIgnoreCase(caso.BillingCategory__c)))     return;
 
-        vNomeOperando = vNomeOperandoReale;
-        vValoreOperando = 'OLD';
-        listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando));
-
-        if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi')){
-            listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoReale2,vValoreOperando));
-        }
-
-        vValoreOperando = vNewValoreOperando;
-        listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando));
-
-        if(checkBilling){
-            if('B'.equalsIgnoreCase(caso.BillingCategory__c)){
-                listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando)); 
+        switch on caso.Subprocess__c {
+            when 'Superficie' {
+                vNomeOperandoReale = 'TFSC000000';
+                vNomeOperandoFittizio ='TFSCRAV000';
+                vNewValoreOperando = caso.DeclaredArea__c.format();
+            }
+            when 'DOM_Componenti non residenti' {
+                vNomeOperandoReale = 'TRSOSP0000';
+                vNomeOperandoFittizio ='TFNCERAV00';
+                vNewValoreOperando = caso.NotResidentMembers__c.format();
+            }
+            when 'NON DOM_ISTAT/Ronchi' 
+            {
+                vNomeOperandoReale = 'TRSOSP0000';
+                vNomeOperandoReale2 ='TUSCATCOM0';
+                vNomeOperandoFittizio ='TUCATCMRAV';
+                vNomeOperandoFittizio2 ='TUSCATRAV0';
+                vNewValoreOperando = caso.RonchiCode__c;
             }
         }
+        if('Y'.equalsIgnoreCase(wrapper.period)){
+            if(!(wrapper.missingDue> 0)){   //SE mancatoDovuto Assente
+                if(caso.Subprocess__c.equalsIgnoreCase('Superficie') 
+                    || caso.Subprocess__c.equalsIgnoreCase('DOM_Componenti non residenti')
+                    || caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi')){
+                        
+                    vNomeOperando=vNomeOperandoFittizio;
+                    vValoreOperando=vNewValoreOperando;
+                    listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando));
+                    if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi'))     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoFittizio2,vValoreOperando));
 
-        if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi')){
-            listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoReale2,vValoreOperando));
+                    vNomeOperando=vNomeOperandoReale;
+                    vValoreOperando='OLD';
+                    listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando));
+                    if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi'))     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoReale2,vValoreOperando));
+
+                    vValoreOperando=vNewValoreOperando;
+                    listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando));
+                    if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi'))     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoReale2,vValoreOperando));
+
+
+                    if('B'.equalsIgnoreCase(caso.BillingCategory__c)){
+                        listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando)); 
+                        if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi'))     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoReale2,vValoreOperando));
+                    }
+                }
+
+            } 
+            else{   //SE mancatoDovuto Presente: 
+
+                if(caso.Subprocess__c.equalsIgnoreCase('Superficie') || caso.Subprocess__c.equalsIgnoreCase('DOM_Componenti non residenti')){
+                    vNomeOperando=vNomeOperandoFittizio;
+                    vValoreOperando=vNewValoreOperando;
+                    listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando, vValoreOperando));
+
+                    //if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi'))     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoFittizio2,vValoreOperando));
+                    //cannever be truth
+
+                    vNomeOperando=vNomeOperandoReale;
+                    vValoreOperando='OLD';
+                    listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando, vValoreOperando));
+                    //if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi'))     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoReale2,vValoreOperando));
+                    //cannever be truth
+
+                    vValoreOperando=vNewValoreOperando;
+                    listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando, vValoreOperando));
+                    //if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi'))     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoReale2,vValoreOperando));
+                    //cannever be truth
+
+                    if('B'.equalsIgnoreCase(caso.BillingCategory__c)){
+                        listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando, vValoreOperando));
+                        //if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi'))     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoReale2,vValoreOperando));
+                        //cannever be truth
+                    }
+                }                    
+            }
         }
+        if('z'.equalsIgnoreCase(wrapper.period)){
+            if(!(wrapper.missingDue> 0)){  //SE mancatoDovuto Assente, !>0 contempla anche il caso null
+                if(caso.Subprocess__c.equalsIgnoreCase('Superficie') 
+                    || caso.Subprocess__c.equalsIgnoreCase('DOM_Componenti non residenti') 
+                    || caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi')){
+                    
+                    vNomeOperando = vNomeOperandoFittizio;
+                    vValoreOperando = vNewValoreOperando;
+                    listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando));
+                    if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi'))     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoFittizio2,vValoreOperando));
+                    
+                    vNomeOperando=vNomeOperandoReale;
+                    vValoreOperando='OLD';
+                    listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando));
+                    if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi'))     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoReale2,vValoreOperando));
+
+                    vValoreOperando = vNewValoreOperando;
+                    listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando));
+                    if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi'))     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoReale2,vValoreOperando));
+                }
+            }else{  //SE mancatoDovuto Presente
+                if(caso.Subprocess__c.equalsIgnoreCase('Superficie') || caso.Subprocess__c.equalsIgnoreCase('DOM_Componenti non residenti')){
+                    vNomeOperando = vNomeOperandoFittizio;
+                    vValoreOperando = vNewValoreOperando;
+                    listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando));
+                
+                    // if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi')){
+                    //     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoFittizio2,vValoreOperando));
+                    // }
+                    vNomeOperando = vNomeOperandoReale;
+                    vValoreOperando = 'OLD';
+                    listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando));
+                    // if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi')){
+                    //     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoReale2,vValoreOperando));
+                    // }
+                    vValoreOperando = vNewValoreOperando;
+                    listToInsert.add(createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando));
+                    // if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi')){
+                    //     listToInsert.add(createSobjUtl.createExpRavv(vNomeOperandoReale2,vValoreOperando));
+                    // }
+                }
+            }
+            //}
+        }
+        
     }
+
 }
