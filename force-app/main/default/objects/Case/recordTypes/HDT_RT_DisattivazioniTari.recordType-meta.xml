@@ -3,7 +3,7 @@
     <fullName>HDT_RT_DisattivazioniTari</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>HDT_RT_DisattivazioniTari</label>
+    <label>Disattivazioni Ambiente</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
