@@ -362,6 +362,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
                     String newPhase = (myOrder.ProcessType__c == 'Voltura') && isNotVoltureAcceptanceWorked && !myOrder.Commodity__c.containsIgnoreCase('Acqua')? 'Accettazione Voltura': HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione';
                     newPhase = myOrder.ProcessType__c == 'Voltura - Subentro Scarico produttivo'? 'In attesa esito SAP' : newPhase;
+                    if('Documentazione Validata'== newPhase && STRING.isNotBlank(myOrder.ApprovalType__c) && !'3 - Nessuna'.equalsIgnoreCase(myOrder.ApprovalType__c)){
+                        newPhase = 'In Attesa Approvazione';//Approvazione Agevolazione
+                    }
 
                     childOrdersDocValid.add(new Order(
                         Id = myOrder.Id,
@@ -428,7 +431,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 * delle due entita' e aggiornarle con i relativi codici
                 * Update 2022-10-10 logica non risulta essere necessaria per la commodity ambiente
                 */
-                else if(o.Commodity__c.equalsIgnoreCase('Acqua') /*|| o.Commodity__c.equalsIgnoreCase('Ambiente')*/)
+                else if(o.Commodity__c.equalsIgnoreCase('Acqua') && String.isBlank(o.ContractAccountCode__c) /*|| o.Commodity__c.equalsIgnoreCase('Ambiente')*/)
                 {
                     ordersNonEnergy.add(o);
                 }
@@ -478,7 +481,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
            }
         }
         if(commList != null && !commList.isEmpty()){
-            commSRV.createRecords(commList);
+            try
+            {
+                commSRV.createRecords(commList);
+            }
+            catch(Exception e)
+            {
+                System.debug(Logginglevel.Debug, e.getMessage());
+            }
         }
     }
 
@@ -536,6 +546,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         || (oldOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.IncomingCreditCheckResult__c == 'OK')
                         /**@af inserito per ricalcolo al documenti Validati */
                         || (oldOrder.Phase__c == 'In attesa validazione' && newOrder.Phase__c == 'Documentazione Validata')
+                        || (oldOrder.Phase__c == 'Quality Call OK' && newOrder.Phase__c == 'Esportazione VS Siebel')
+                        || (oldOrder.Phase__c == 'Documentazione Validata' && newOrder.Phase__c == 'Esportazione VS Siebel')
                     ){
                         if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
                             if((newOrder.Phase__c == 'Documentazione Validata' || newOrder.Phase__c == 'Esportazione VS Siebel') && Date.today() <= newOrder.DateSentToSII__c){
@@ -870,8 +882,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 if ( String.isNotBlank(String.valueOf(temp.ServicePoint__c))) {
                     ServicePoint__c sp=new ServicePoint__c(id=temp.ServicePoint__c);
                     sp.supplytype__c = temp.ServicePoint__r.supplytypeTemp__c;
-                    sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;    
-                    sp.SAPImplantCode__c=temp.SapImplantCode__c; 
+                    sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;  
+                    if (String.isNotBlank(temp.SAPImplantCode__c)) {
+                        sp.SAPImplantCode__c= temp.SapImplantCode__c; 
+                    }  
                     sp.account__c = temp.AccountId;
                     mapObjToUpdate.put(sp.Id, sp);
                 }
@@ -1356,7 +1370,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              * Pratica Gestita
              * per pratiche a transitorio
              */
-            Set<String> finalStatuses = new Set<String>{'Annullato','KO definitivo','Pratica gestita','KO gestito','Eliminato','KO','Pratica Rifiutata','Chiuso'};
+            Set<String> finalStatuses = new Set<String>{'Annullato','KO definitivo','Pratica gestita','KO gestito','Eliminato','KO','Pratica rifiutata','Chiuso'};
             if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))&&(finalStatuses.contains((String)newOrder.get('SiebelStatus__c'))))
             {
                 response = true;
@@ -1375,12 +1389,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     public static void transitoryPhaseManagement(List<SObject> newOrderList, Map<Id,SObject> oldOrderMap)
     {
         Id bonusScontiRtId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId();
+        Id vasRtId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
+        Id defaultRtId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Default').getRecordTypeId();
         List<ServiceRequest__c> serviceRequestToDelete = new List<ServiceRequest__c>();
         Set<Id> orderIds = new Set<Id>();
-        Set<Id> parentOrderIds = new Set<Id>();
+        //fix 915259C
+        //Set<Id> parentOrderIds = new Set<Id>();
+        Set<Id> quoteOrderIds = new Set<Id>();
+        Set<Id> orderReferenceIds = new Set<Id>();
+        Map<Id,Id> orderQuoteMap = new Map<Id,Id>();
+        //fine fix 915259C
         Map<Id,String> mapVasPhase = new Map<Id,String>();
         Map<Id,String> mapVasStatus = new Map<Id,String>();
-        Set<String> negativeOutcomes = new Set<String>{'Annullato','KO definitivo','Eliminato','KO','Pratica Rifiutata','KO gestito'};
+        Set<String> negativeOutcomes = new Set<String>{'Annullato','KO definitivo','Eliminato','KO','Pratica rifiutata','KO gestito'};
         Set<String> positiveOutcomes = new Set<String>{'Pratica gestita','Chiuso'};
         for(Order newOrder : (List<Order>) newOrderList)
         {
@@ -1410,8 +1431,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 : negativeOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                     ? 'Annullato' 
                     : '';
-                mapVasPhase.put(newOrder.ParentOrder__c, vasPhase);
-                mapVasStatus.put(newOrder.ParentOrder__c, vasStatus);
+                //fix 915259C
+                /* mapVasPhase.put(newOrder.ParentOrder__c, vasPhase);
+                mapVasStatus.put(newOrder.ParentOrder__c, vasStatus); */
+                mapVasPhase.put(newOrder.SBQQ__Quote__c, vasPhase);
+                mapVasStatus.put(newOrder.SBQQ__Quote__c, vasStatus);
+                orderQuoteMap.put(newOrder.Id, newOrder.SBQQ__Quote__c);
+                //fine fix 915259C
                 /* Update Fase e Status */
                 if(!String.isEmpty(newPhase))
                 {
@@ -1428,7 +1454,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     if(!orderIds.contains(newOrder.Id))
                     {
                         orderIds.add(newOrder.Id);
-                        parentOrderIds.add(newOrder.ParentOrder__c);
+                        //fix 915259C
+                        //parentOrderIds.add(newOrder.ParentOrder__c);
+                    }
+                    if (newOrder.RecordTypeId != bonusScontiRtId && newOrder.RecordTypeId != vasRtId){
+                        quoteOrderIds.add(newOrder.SBQQ__Quote__c);
+                        orderReferenceIds.add(newOrder.Id);
                     }
                 }
             }
@@ -1438,14 +1469,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
             if(!mapVasPhase.isEmpty())
             {
-                List<ServiceRequest__c> serviceRequests = [SELECT Id, 
-                    Order__c,
-                    Order__r.ParentOrder__c,
-                    Order__r.Process__c,
-                    NextPhase__c
-                    FROM ServiceRequest__c 
-                    WHERE Order__r.ParentOrder__c IN :parentOrderIds
-                    AND Order__r.IsTransition__c = true WITH SECURITY_ENFORCED];
+                List<ServiceRequest__c> serviceRequests = HDT_QR_ServiceRequest.getTransitoryServiceRequest(orderIds,orderReferenceIds,quoteOrderIds);
                 List<Order> vasScontiOrders = new List<Order>();
                 for(ServiceRequest__c sr : serviceRequests)
                 {
@@ -1462,12 +1486,18 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     {
                         continue;
                     }
+                    //fix 915259C
+                    if ((sr.Order__r.RecordTypeId != vasRtId && sr.Order__r.RecordTypeId != bonusScontiRtId && (sr.Order__r.RecordTypeId != defaultRtId || !sr.Order__r.isBillableVas__c))
+                        ||(sr.Order__r.OrderReference__c != null && !orderQuoteMap.containsKey(sr.Order__r.OrderReference__c))){
+                        continue;
+                    }
+                    Id keyId = sr.Order__r.OrderReference__c != null ? orderQuoteMap.get(sr.Order__r.OrderReference__c) : sr.Order__r.SBQQ__Quote__c;
                     Order orderVas = new Order();
                     orderVas.Id = sr.Order__c;
-                    if(mapVasPhase.get(sr.Order__r.ParentOrder__c).equalsIgnoreCase('Annullato'))
+                    if(mapVasPhase.get(keyId).equalsIgnoreCase('Annullato'))
                     {
-                        orderVas.Phase__c = mapVasPhase.get(sr.Order__r.ParentOrder__c);
-                        orderVas.Status = mapVasStatus.get(sr.Order__r.ParentOrder__c);
+                        orderVas.Phase__c = mapVasPhase.get(keyId);
+                        orderVas.Status = mapVasStatus.get(keyId);
                         vasScontiOrders.add(orderVas);
                         serviceRequestToDelete.add(sr);
                     }
@@ -1481,7 +1511,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     else
                     {
                         orderVas.Phase__c = sr.NextPhase__c;
-                        orderVas.Status = mapVasStatus.get(sr.Order__r.ParentOrder__c);
+                        orderVas.Status = mapVasStatus.get(keyId);
                         vasScontiOrders.add(orderVas);
                     }
                 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permette l&apos;accesso alla Partner Community agli utenti interni Standard</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>HDT_UserAccessToPartner</label>
+</PermissionSet>

@@ -761,12 +761,28 @@
                 <default>false</default>
                 <label>Contratto Non Richiesto</label>
             </value>
+            <value>
+                <fullName>Gestione Rifiuti</fullName>
+                <default>false</default>
+                <label>Gestione Rifiuti</label>
+            </value>
+            <value>
+                <fullName>Segnalazioni Varie / Ambientali</fullName>
+                <default>false</default>
+                <label>Segnalazioni Varie / Ambientali</label>
+            </value>
+            <value>
+                <fullName>Consumo Anomalo Idrico</fullName>
+                <default>false</default>
+                <label>Consumo Anomalo Idrico</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Reclami</controllingFieldValue>
             <controllingFieldValue>Attivazioni</controllingFieldValue>
             <controllingFieldValue>Autolettura</controllingFieldValue>
             <controllingFieldValue>Informative</controllingFieldValue>
+            <controllingFieldValue>Segnalazioni</controllingFieldValue>
             <controllingFieldValue>Morosità</controllingFieldValue>
             <controllingFieldValue>Variazioni</controllingFieldValue>
             <controllingFieldValue>Generiche VAS</controllingFieldValue>
@@ -980,6 +996,18 @@
         <valueSettings>
             <controllingFieldValue>Informative</controllingFieldValue>
             <valueName>Informazioni servizi Hera</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni</controllingFieldValue>
+            <valueName>Gestione Rifiuti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni</controllingFieldValue>
+            <valueName>Segnalazioni Varie / Ambientali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni</controllingFieldValue>
+            <valueName>Consumo Anomalo Idrico</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Morosità</controllingFieldValue>

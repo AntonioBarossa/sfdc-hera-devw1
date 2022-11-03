@@ -224,7 +224,7 @@ public inherited sharing class HDT_LC_SaleVas {
                 Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Product__r.Name,SBQQ__Contract__r.SAPContractCode__c,
                     SBQQ__Contract__r.ContractNumber,
                     SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
-                    FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Fatturabili' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
+                    FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Fatturabili' AND IsMigrated__c = false AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
 
                 //removing subscriptions which already have a deactivation Case
                 List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE Phase__c NOT IN ('Annullato','Bozza Annullata') AND Type='Disattivazione VAS'
@@ -238,7 +238,7 @@ public inherited sharing class HDT_LC_SaleVas {
                 Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Product__r.Name,SBQQ__Contract__r.SAPContractCode__c,
                     SBQQ__Contract__r.ContractNumber,
                     SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
-                    FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Fatturabili' AND SBQQ__SubscriptionType__c = 'Renewable' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
+                    FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Fatturabili'AND IsMigrated__c = false AND SBQQ__SubscriptionType__c = 'Renewable' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
 
                 //removing subscriptions which already have a deactivation Case
                 List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE Phase__c NOT IN ('Annullato','Bozza Annullata') AND Type='Disattivazione VAS'
@@ -251,7 +251,7 @@ public inherited sharing class HDT_LC_SaleVas {
             when 'SUBS_VAS_SERVIZIO'{ 
                 Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Product__r.Name, SBQQ__Contract__r.ContractNumber,
                     SBQQ__Contract__r.SAPContractCode__c, SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
-                    FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Servizio' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
+                    FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Servizio' AND IsMigrated__c = false AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
 
                 //removing subscriptions which already have a deactivation Case
                 List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE Phase__c NOT IN ('Annullato','Bozza Annullata') AND Type='Disattivazione VAS'
@@ -286,12 +286,12 @@ public inherited sharing class HDT_LC_SaleVas {
                 // }
                 // records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract
                 //     WHERE (Id IN :contractIds OR ServicePoint__c IN :servicePointIds) AND Status!='Cessato' WITH SECURITY_ENFORCED];
-                sobjList.addAll([SELECT Id, SBQQ__Contract__c, SBQQ__Contract__r.ContractNumber, SBQQ__Contract__r.ServicePoint__c, 
+                sobjList.addAll([SELECT Id, SBQQ__Contract__c, SBQQ__Contract__r.Status, SBQQ__Contract__r.ContractNumber, SBQQ__Contract__r.ServicePoint__c, 
                  SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
-                 FROM SBQQ__Subscription__c WHERE SBQQ__Account__c = :searchString AND (VasPracticeCode__c != null OR SBQQ__Product__r.Family='VAS Fatturabili') AND SBQQ__Contract__r.Status = 'Attivo']);
-                sobjList.addAll([SELECT Id, Contract__c, Contract__r.ContractNumber, Contract__r.ServicePoint__c,
+                 FROM SBQQ__Subscription__c WHERE SBQQ__Account__c = :searchString AND (VasPracticeCode__c != null OR SBQQ__Product__r.Family='VAS Fatturabili') AND SBQQ__Contract__r.Status IN ('Attivo','Cessato')]);
+                sobjList.addAll([SELECT Id, Contract__c, Contract__r.Status, Contract__r.ContractNumber, Contract__r.ServicePoint__c,
                 Contract__r.ServicePoint__r.ServicePointCode__c, Contract__r.ServicePoint__r.SupplyAddress__c
-                 FROM Asset WHERE AccountId = :searchString AND VasPracticeCode__c != null AND Contract__r.Status = 'Attivo']);
+                 FROM Asset WHERE AccountId = :searchString AND VasPracticeCode__c != null AND Contract__r.Status IN ('Attivo','Cessato')]);
                 for(SObject sobj : sobjList)
                 {
                     String sobjName = sobj.getSObjectType().getDescribe().getName();
@@ -310,7 +310,7 @@ public inherited sharing class HDT_LC_SaleVas {
                     }
                 }
                  
-                records = [SELECT Id, SAPContractCode__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract WHERE ID IN :contractIds WITH SECURITY_ENFORCED];
+                records = [SELECT Id, SAPContractCode__c,Status, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract WHERE ID IN :contractIds WITH SECURITY_ENFORCED];
 
             }
             when 'SUBS_FROM_CONTRACT'{ 

@@ -8,8 +8,8 @@ public with sharing class HDT_SRV_EmailMessage {
     public static final String CASE_TYPE1 = 'Dichiarazione di intento';
     public static final String CASE_TYPE2 = 'Comunicazione di Fallimento';
     public static final String CASE_TYPE3 = 'Richiesta Parere';
-    public static final String CASE_TYPE4 = 'Gestione Rifiuti';
-    public static final String CASE_TYPE5 = 'Ambiente annullo richiesta senza appuntamento';
+    // public static final String CASE_TYPE4 = 'Gestione Rifiuti'; // HRAWRM-1941 (3 Riadattamento Processo)
+    // public static final String CASE_TYPE5 = 'Ambiente annullo richiesta senza appuntamento'; // HRAWRM-1941 (3 Riadattamento Processo)
     
     public static void insertEmailMessage(EmailMessage m){
         HDT_UTL_DatabaseService.insertSObject(m);
@@ -132,7 +132,7 @@ public with sharing class HDT_SRV_EmailMessage {
                 Case caseRecord = mapIdCase.get(email.ParentId);
                 System.debug(LoggingLevel.DEBUG, debugString + ' - Incoming Mail, case type: ' + caseRecord.Type);
                 
-                if(CASE_TYPE1.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE2.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE3.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE4.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE5.equalsIgnoreCase(caseRecord.Type)){
+                if(CASE_TYPE1.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE2.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE3.equalsIgnoreCase(caseRecord.Type) /* || CASE_TYPE4.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE5.equalsIgnoreCase(caseRecord.Type) */ ){ // HRAWRM-1941 (3 Riadattamento Processo)
                         caseRecord.Phase__c = 'Risposta Ricevuta';
                         //Gestione avanzamento ParentCase di Reclamo
                         if(CASE_TYPE3.equals(caseRecord.Type)){

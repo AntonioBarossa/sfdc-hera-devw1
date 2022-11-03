@@ -44,6 +44,8 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         {fieldName: 'K__c', required: false},
         {fieldName: 'I0__c', required: false},
         {fieldName: 'Lambda__c', required: false},
+        {fieldName: 'DailyContribution__c', required: false},
+        {fieldName: 'WeeklyContribution__c', required: false},
         {fieldName: 'ProductIdentifier__c', required: false}
 
     ];
@@ -218,6 +220,20 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         if(this.checkIsNotNull(techOffObj.Lambda__c)){
             if(techOffObj.Lambda__c >= 100){
                 returnObj.message = 'Incremento non valido per Lambda';
+                return returnObj;             
+            }
+        }
+
+        if(this.checkIsNotNull(techOffObj.DailyContribution__c)){
+            if(techOffObj.DailyContribution__c >= 10){
+                returnObj.message = 'Incremento non valido per CONT_GG';
+                return returnObj;             
+            }
+        }
+        
+        if(this.checkIsNotNull(techOffObj.WeeklyContribution__c)){
+            if(techOffObj.WeeklyContribution__c >= 10){
+                returnObj.message = 'Incremento non valido per CONT_SETT';
                 return returnObj;             
             }
         }

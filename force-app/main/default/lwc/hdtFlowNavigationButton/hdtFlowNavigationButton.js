@@ -21,7 +21,7 @@ export default class HdtFlowNavigationButton extends LightningElement {
     @api saveDraft;
     @api loadingSpinner = false;
     @api recordId;
-
+    @api disabledNavigationEvent;
     @api sessionid;
 
     @api availableActions = [];
@@ -161,19 +161,20 @@ export default class HdtFlowNavigationButton extends LightningElement {
     }
 
     handleGoNext() {
-        if(this.availableActions.find(action => action === 'NEXT')){
+        if(!this.disabledNavigationEvent){
+            if(this.availableActions.find(action => action === 'NEXT')){
 
-            const navigateNextEvent = new FlowNavigationNextEvent();
+                const navigateNextEvent = new FlowNavigationNextEvent();
 
-            this.dispatchEvent(navigateNextEvent);
+                this.dispatchEvent(navigateNextEvent);
 
-        } else {
+            } else {
 
-            const navigateFinish = new FlowNavigationFinishEvent();
+                const navigateFinish = new FlowNavigationFinishEvent();
 
-            this.dispatchEvent(navigateFinish);
+                this.dispatchEvent(navigateFinish);
+            }
         }
-
     }
 
     handlePrevious(){

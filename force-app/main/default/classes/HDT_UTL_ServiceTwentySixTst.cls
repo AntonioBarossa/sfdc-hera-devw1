@@ -36,6 +36,7 @@ public class HDT_UTL_ServiceTwentySixTst {
         
         List<Product2> prods = HDT_UTL_DataFactoryTst.createProduct2(1, false);
         prods[0].Family = 'VAS Fatturabili';
+        prods[0].Old__c  = 'N';
         insert prods;
         
         List<PricebookEntry> entries = HDT_UTL_DataFactoryTst.createPricebookEntry(prods, true, pricebookId);
@@ -93,5 +94,83 @@ public class HDT_UTL_ServiceTwentySixTst {
         
         System.assertEquals('', res, 'getFieldValue did not work correctly');
         System.assertNotEquals(null, res, 'getFieldValue did not work correctly');
+    }
+
+    @isTest static void testAmendmentManaged(){
+        Order o = [SELECT id,AccountId FROM Order];
+        Sale__c sale  = HDT_UTL_DataFactoryTst.createSale(1, true, o.AccountId,'Attiva')[0];
+        Contract contr = HDT_UTL_DataFactoryTst.createContract(1, true, o.AccountId)[0];
+        Opportunity opp = HDT_UTL_DataFactoryTst.createOpportunity(1, true)[0];
+        List<SBQQ__Quote__c> qList = HDT_UTL_DataFactoryTst.createQuote(2, false, o.Id, opp.Id, sale.Id, 'Amendment');
+        qList[0].ContractReference__c = contr.Id;
+        qList[1].ContractReference__c = contr.Id;
+        qList[1].SBQQ__Type__c = 'Quote';
+        insert qList;
+        SBQQ__Quote__c q = qList[0];
+        o.SBQQ__Quote__c = q.Id;
+        update o;
+        List<Service26Config__c> configs = HDT_UTL_DataFactoryTst.createService26Config(6, false);
+        configs[0].Type__c = 'Posizione';
+        configs[0].ProductFamily__c = 'VAS Fatturabili';
+        configs[0].Servizio__c = 'GAS';
+        configs[0].Occurrence__c = 2;
+        configs[0].Field__c = 'billable__c';
+        configs[1].Field__c = 'billable__c';
+        configs[1].SapCode__c = 'sapcode2';
+        configs[1].Type__c = 'Operando';
+        configs[1].ProductFamily__c = 'VAS Fatturabili';
+        configs[1].Servizio__c = 'GAS';
+        configs[1].Occurrence__c = 2;
+        configs[2].Type__c = 'Posizione';
+        configs[2].ProductFamily__c = 'VAS Fatturabili';
+        configs[2].Servizio__c = 'GAS';
+        configs[2].Occurrence__c = 3;
+        configs[2].Field__c = 'billable__c';
+        configs[3].Field__c = 'billable__c';
+        configs[3].SapCode__c = 'sapcode3';
+        configs[3].Type__c = 'Operando';
+        configs[3].ProductFamily__c = 'VAS Fatturabili';
+        configs[3].Servizio__c = 'GAS';
+        configs[3].Occurrence__c = 3;
+        configs[4].Type__c = 'Posizione';
+        configs[4].ProductFamily__c = 'VAS Fatturabili';
+        configs[4].Servizio__c = 'GAS';
+        configs[4].Occurrence__c = 4;
+        configs[4].Field__c = 'billable__c';
+        configs[5].Field__c = 'billable__c';
+        configs[5].SapCode__c = 'sapcode4';
+        configs[5].Type__c = 'Operando';
+        configs[5].ProductFamily__c = 'VAS Fatturabili';
+        configs[5].Servizio__c = 'GAS';
+        configs[5].Occurrence__c = 4;
+        insert configs;
+
+        configs[2].Operando__c = configs[3].id;
+        configs[4].Operando__c = configs[5].id;
+        update configs;
+
+        List<Product2> prods = HDT_UTL_DataFactoryTst.createProduct2(2, false);
+        prods[0].Family = 'VAS Fatturabili';
+        prods[0].Name  = 'VAS Fatturabili 2';
+        prods[0].Old__c  = 'Y';
+        prods[1].Family = 'VAS Fatturabili';
+        prods[1].Name  = 'VAS Fatturabili 4';
+        prods[1].Old__c  = 'Y';
+        insert prods;
+        prods = [SELECT Id FROM Product2];
+        List<SBQQ__QuoteLine__c> qliList = new List<SBQQ__QuoteLine__c>();
+        Integer i = 0;
+        for(SBQQ__QuoteLine__c ql : HDT_UTL_DataFactoryTst.createQuoteLines(prods[0].Id, q.Id, 3, false)){
+            qL.SBQQ__Existing__c = true;
+            qL.SBQQ__Product__c = prods[i].Id;
+            i++;
+            qliList.add(qL);           
+        }
+        insert qliList;
+        Test.startTest();
+            HDT_UTL_ServiceTwentySix service = new HDT_UTL_ServiceTwentySix();
+            HDT_UTL_ServiceTwentySix.HDT_WRP_DtoServiceTwentySix res = service.startProcess(o.Id); 
+            System.assertEquals('sapcode3', res.elements[0].field, 'testAmendmentManaged : doesn\'t work');
+        Test.stopTest();
     }
 }

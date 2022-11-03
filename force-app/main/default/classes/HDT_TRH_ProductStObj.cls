@@ -25,6 +25,7 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
         Map<Id, Integer> technicalOfferMap;
         //allUniqueProductCodeSet = checkProduct2Duplicate(allUniqueProductCodeSet);
 
+        List<Product2> productForTrigger = new List<Product2>();
         Set<Id> productIds = new  Set<Id>();// = Trigger.NewMap.keySet();
         Set<Id> productIdsForProductOption = new  Set<Id>();
         Set<Id> productIdsForTechOff = new  Set<Id>();
@@ -36,10 +37,20 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
 
         for(Product2 p : (Product2[])Trigger.New){
 
+            Product2 oldProd = (Product2)Trigger.oldMap.get(p.Id);
+
+            if(oldProd.NoSellable__c != p.NoSellable__c){
+                System.debug(LoggingLevel.DEBUG, '>>> this record skip trigger for NoSellable__c ');
+                //p.addError('generic error');
+                continue;
+            }
+            
+            productForTrigger.add(p);
+
             if(familySet.contains(p.Family)){
                 productIds.add(p.Id);
 
-                Product2 oldProd = (Product2)Trigger.oldMap.get(p.Id);
+                //Product2 oldProd = (Product2)Trigger.oldMap.get(p.Id);
 
                 // In Sviluppo --> Confermata
                 if(oldProd.Status__c.equalsIgnoreCase(Label.HDT_InDevelopment) && p.Status__c.equalsIgnoreCase(Label.HDT_Confirmed)){
@@ -55,9 +66,14 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
 
         }
 
+        System.debug(LoggingLevel.DEBUG, '>>> productForTrigger ' + productForTrigger.size());
         System.debug(LoggingLevel.DEBUG, '>>> productIds ' + productIds.size());
         System.debug(LoggingLevel.DEBUG, '>>> productIdsForProductOption ' + productIdsForProductOption.size());
         System.debug(LoggingLevel.DEBUG, '>>> productIdsForTechOff ' + productIdsForTechOff.size());
+
+        if(productForTrigger.size()==0){
+            return;
+        }
 
         if(productIds.size()==0){
             // if not in familySet ship trigger
@@ -75,7 +91,8 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
         HDT_WRP_ProductStObjProcess.HDT_WRP_StatusResponse statusResponse;
         Integer technicalOfferNumber;
         Integer productOptioNumber;
-        for(Product2 p : (Product2[])Trigger.New){
+        //for(Product2 p : (Product2[])Trigger.New){
+        for(Product2 p : productForTrigger){
 
             //if(allUniqueProductCodeSet.size() > 0 && allUniqueProductCodeSet.contains(generateUniqueCode(p))){
             //    System.debug(LoggingLevel.DEBUG, '>>> ADD ERROR');

@@ -97,7 +97,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
     public static CampaignMember cancelContract(String ordId, String activityId, String causal){
 
         List<String> notCancelPhase = new List<String>{
-            'Esito Ok da DL',
+            'Esito OK da DL',
             'Dati discordanti',
             'Annullato',
             'In lavorazione SAP',
@@ -149,7 +149,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 if(causal.equalsIgnoreCase('Contatto Quality Fallito')){
                     act = createActivityToClose(activityId);
                     act.wrts_prcgvr__Status__c = 'Non Esitata';
-                    act.ContactResult__c = 'Annullato'; 
+                    act.ContactResult__c = result; 
                     activitySrv.updateRecord(act);
                 }
                 else if(!checkOk){
@@ -181,7 +181,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             if(causal.equalsIgnoreCase('Contatto Quality Fallito')){
                 act = createActivityToClose(activityId);
                 act.wrts_prcgvr__Status__c = 'Non Esitata';
-                act.ContactResult__c = 'Annullato';
+                act.ContactResult__c = result;
                 activitySrv.updateRecord(act);
             }
             else if(!checkOk){

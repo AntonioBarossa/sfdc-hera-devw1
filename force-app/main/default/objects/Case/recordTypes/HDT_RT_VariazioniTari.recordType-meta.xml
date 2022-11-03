@@ -3,7 +3,7 @@
     <fullName>HDT_RT_VariazioniTari</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>HDT_RT_VariazioniTari</label>
+    <label>Variazioni Ambiente</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
@@ -8200,7 +8200,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9792,6 +9792,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Documentazione validata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Lavorazione</fullName>
             <default>false</default>
         </values>
@@ -9887,21 +9891,6 @@
         </values>
         <values>
             <fullName>SI</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PurificationPay__c</picklist>
-        <values>
-            <fullName>Esente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Intera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ridotta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10837,18 +10826,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>1401-Risc amb singoli</fullName>
             <default>false</default>
         </values>
@@ -10914,17 +10891,6 @@
         </values>
         <values>
             <fullName>G_ICD-Imposta Usi Domestici</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SewerPay__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>

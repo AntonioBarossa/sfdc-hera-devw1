@@ -368,7 +368,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     }
                 }
                 try{
-                    if(recordCase.Cluster__c == 'Preventivi'){
+                    if(recordCase.Cluster__c == 'Preventivi' && !'Acqua'.equalsIgnoreCase(recordCase.Commodity__c)){
                     	currentCase.QuotationValidityDate__c = dtMaxPrev;
                     } else if(nextPhase.equalsIgnoreCase('Esito OK Riduzione Potenza')){
                         currentCase.PowerReductionDate__c = dtMaxPrev;
@@ -491,7 +491,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 HDT_UTL_DatabaseService.updateSObject(ca);
             }
             //START>>>marco.arci@webresults.it Gestione Risposta per postSales Ambiente
-            if(recordCase.Commodity__c.equalsIgnoreCase('Ambiente')){
+            if('Ambiente'.equalsIgnoreCase(recordCase.Commodity__c)){
                 Contract contractAmb = new Contract();
                 ServicePoint__c spAmb = new ServicePoint__c();
                 if(implant != null && implant != recordCase.ServicePoint__r.SAPImplantCode__c){
@@ -502,7 +502,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 if(implantStatus != null && implantStatus != recordCase.ServicePoint__r.Status__c ){
                     spAmb.Id = recordCase.ServicePoint__c;
                     spAmb.Status__c = implantStatus;
-                }
+                } 
                 */
                 if(contractCode != null && contractCode != recordCase.Contract__r.SAPContractCode__c ){
                     contractAmb.Id = recordCase.Contract__c;
@@ -515,6 +515,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     spAmb.Id = recordCase.ServicePoint__c;
                     contractAmb.Status = contractStatus;
                     spAmb.SapContractStatus__c = contractStatus;
+                }
+                DateTime endDateTimeContractAmb = DateTime.valueOf(reqWrp.requestMap.get('DATA_EVENTO'));
+                Date endDateContractAmb = date.newinstance(endDateTimeContractAmb.year(), endDateTimeContractAmb.month(), endDateTimeContractAmb.day()); 
+                if( endDateContractAmb != null && 'Cessazione'.equalsIgnoreCase(recordCase.Type) ){
+                    contractAmb.Id = recordCase.Contract__c;
+                    contractAmb.EndDate = endDateContractAmb; 
                 }
                 if(contractAmb.Id != null){
                     HDT_UTL_DatabaseService.updateSObject(contractAmb);
@@ -723,8 +729,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             containerCaseNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
             herokuCode = reqWrp.requestMap.get('COD_PRAT_UTENTE');
             priorita = String.valueOf(reqWrp.requestMap.get('PRIORITA'));
-            codFisDistr = String.valueOf(reqWrp.requestMap.get('PARTITA_IVA'));
-            pivaDistr = String.valueOf(reqWrp.requestMap.get('CODICE_FISCALE'));
+            pivaDistr = String.valueOf(reqWrp.requestMap.get('PARTITA_IVA'));
+            codFisDistr = String.valueOf(reqWrp.requestMap.get('CODICE_FISCALE'));
             if(String.isNotBlank(tipoProcesso)){
                 processType = tipoProcesso;
             }
@@ -814,6 +820,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             }
                             if(String.isNotBlank(processType)){
                                 currentCase.Type = morUtl.transcodeProcess(processType);
+                                //W2 per la risoluzione contrattuale H2O da eseguire non prima del è Oggi + 6 gg lavorativi
+                                if(String.isNotBlank(currentCase.Type) && 'Risoluzione Contrattuale'.equalsIgnoreCase(currentCase.Type)){
+                                    currentCase.NotPerformedBefore__c = HDT_UTL_Case.addBusinessDay(System.today(),6);
+                                }
                             }
                             if(currentCase.PhoneNumber__c != null && String.isNotBlank(currentCase.PhoneNumber__c) && String.isNotBlank(recapito)){
                                 currentCase.PhoneNumber__c = recapito;

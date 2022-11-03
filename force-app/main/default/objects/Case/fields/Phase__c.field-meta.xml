@@ -595,6 +595,11 @@
                 <label>In sequenzializzazione</label>
             </value>
             <value>
+                <fullName>Intermedia</fullName>
+                <default>false</default>
+                <label>Intermedia</label>
+            </value>
+            <value>
                 <fullName>Inviare preventivo</fullName>
                 <default>false</default>
                 <label>Inviare preventivo</label>
@@ -743,6 +748,11 @@
                 <fullName>Pratica Riclassificata</fullName>
                 <default>false</default>
                 <label>Pratica Riclassificata</label>
+            </value>
+            <value>
+                <fullName>Presa in Carico</fullName>
+                <default>false</default>
+                <label>Presa in Carico</label>
             </value>
             <value>
                 <fullName>Presa in Carico KO</fullName>

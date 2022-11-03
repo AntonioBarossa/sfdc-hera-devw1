@@ -557,6 +557,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato per no conferma cliente</fullName>
             <default>false</default>
         </values>
@@ -593,6 +597,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Credit Check KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Disattivato%2FDisdetto %28Servizio%29</fullName>
             <default>false</default>
         </values>
@@ -602,6 +610,10 @@
         </values>
         <values>
             <fullName>Domiciliazione già presente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6683,7 +6695,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- <picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
             <fullName>Pagamento Online</fullName>
@@ -7065,8 +7077,8 @@
             <fullName>Verifiche cambio contatore pre attivazione</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
-    <picklistValues>
+    </picklistValues> -->
+   <!-- <picklistValues>
         <picklist>InformativeCluster__c</picklist>
         <values>
             <fullName>Ambiente</fullName>
@@ -7156,8 +7168,8 @@
             <fullName>Voltura</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
-    <picklistValues>
+    </picklistValues> -->
+  <!--  <picklistValues>
         <picklist>InformativeType__c</picklist>
         <values>
             <fullName>Modifica Contratti Preattivazione</fullName>
@@ -7691,7 +7703,7 @@
             <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues> -->
     <picklistValues>
         <picklist>IsSameReasonComplaint__c</picklist>
         <values>
@@ -7726,7 +7738,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <!-- <picklistValues>
         <picklist>MacroTopic__c</picklist>
         <values>
             <fullName>Appuntamento agente</fullName>
@@ -7804,7 +7816,7 @@
             <fullName>Richiesta di approfondimenti</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues> -->
     <picklistValues>
         <picklist>Market__c</picklist>
         <values>
@@ -9027,18 +9039,6 @@
         </values>
         <values>
             <fullName>13FM-Non domestici AT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
             <default>false</default>
         </values>
         <values>
