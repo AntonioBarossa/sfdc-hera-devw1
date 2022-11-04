@@ -43,12 +43,6 @@ public with sharing class HDT_UTL_ContentDocumentLink {
             if(!caseListToUpdate.isEmpty()){
                 HDT_UTL_DatabaseService.updateSObject(caseListToUpdate);
             }
-
-            // QuickAction.QuickActionRequest req = new QuickAction.QuickActionRequest();
-            // req.quickactionname = Schema.Case.QuickAction.HDT_RicaricaPagina;
-            // req.record = caseForRefresh;
-            // req.contextid = caseForRefresh.AccountId;
-            // QuickAction.QuickActionResult res = QuickAction.performQuickAction(req);
         }
     }
 }
