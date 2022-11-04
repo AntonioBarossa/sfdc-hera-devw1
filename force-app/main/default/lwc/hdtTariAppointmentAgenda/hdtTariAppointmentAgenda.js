@@ -32,13 +32,15 @@ const COLUMNSVIEW = [
     { label: 'Data Fine Appuntamento', fieldName: 'endDate', type: 'text' },
 ];
 
-class Objectfields{
-    constructor(startAppointment,endAppointment,phase,note,outcome){
-        this.startAppointment = startAppointment;
-        this.endAppointment = endAppointment;
-        this.phase = phase;
-        this.note = note;
-        this.outcome = outcome;
+class Wrapper{
+    constructor(purchaseOrderNumber,streetCoding,street,housenumber,indicator,typeInt,numberOfLines){
+        this.purchaseOrderNumber = purchaseOrderNumber;
+        this.streetCoding = streetCoding;
+        this.street = street;
+        this.housenumber = housenumber;
+        this.indicator = indicator;
+        this.typeInt = typeInt;
+        this.numberOfLines = numberOfLines;
     }
 }
 
@@ -96,15 +98,11 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     confirmAppointment(){
         this.showSpinner = true;
         let row = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
+        const wrap = new Wrapper(this.caseid,this.case.SupplyPostalCode__c,this.case.SupplyStreetName__c,this.case.InvoicingStreetCode__c,null,null,null);
+
         handleConfirm({
-            case : this.case,
-            purchaseOrderNumber : this.caseid,
-            streetCoding : this.case.SupplyPostalCode__c,
-            street : this.case.SupplyStreetName__c,
-            housenumber : this.case.InvoicingStreetCode__c,
-            typeInt : null,
-            indicator : null,
-            numberOfLines : null,
+            theCase : this.case,
+            wrap : wrap,
             startDate : row.startDate,
             endDate : row.endDate
         }).then(result =>{
@@ -128,12 +126,11 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         });
     }
 
-    createNewActivityAndUpdateCase(caseId, caseFields, templateName, activityFields){
+    createNewActivityAndUpdateCase(caseId, updateCase, templateName){
         handleNewActivityCreationAndCaseUpdate({
             caseId : caseId,
-            caseFields : JSON.stringify(caseFields),
-            templateName : templateName,
-            activityFields : JSON.stringify(activityFields)
+            updateCase : updateCase,
+            templateName : templateName
         }).then(result =>{
             console.log(result);
         }).catch(error =>{
@@ -221,20 +218,15 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
 
     handleSearchMethod(purchaseOrderNumber, streetCoding, street, housenumber,typeInt, indicator, numberOfLines){
         this.showSpinner = true;
+        const wrap = new Wrapper(purchaseOrderNumber, streetCoding, street, housenumber, typeInt, indicator, numberOfLines);
         handleSearch({
-            purchaseOrderNumber : purchaseOrderNumber,
-            streetCoding : streetCoding, 
-            street : street, 
-            housenumber : housenumber, 
-            typeInt : typeInt, 
-            indicator : indicator, 
-            numberOfLines : numberOfLines
+            wrap : wrap
         }).then(result =>{
             if(!result?.status == 'success'){ 
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
                 this.disableConfirmButton = true; 
-                this.createNewActivityAndUpdateCase(this.caseid, null, 'Contattare Cliente', null);
+                this.createNewActivityAndUpdateCase(this.case, false, 'Contattare Cliente');
             }else{
                 let data = JSON.parse(result);
                 let slots = [];
@@ -244,7 +236,6 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                     if(slots.length == 0){
                         this.case.Note__c = 'l’appuntamento non può essere preso perché l’agenda non restituisce alcuna data - ricontattare il cliente';
                         this.case.Outcome__c ='Empty_Slots';
-                        var caseFields = new Objectfields(null,null,null,this.case.Note__c,this.case.Outcome__c);
                         this.disableConfirmButton = true; 
                     }else{
                         slots.forEach(element => {
@@ -254,8 +245,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                             });
                         });
                         this.case.Outcome__c='Recived_Slots';
-                        var caseFields = new Objectfields(null,null,null,null,this.case.Outcome__c);
-                        this.createNewActivityAndUpdateCase(this.caseid, caseFields, null, null);
+                        this.createNewActivityAndUpdateCase(this.case, true, null);
                         this.disableCancelButton = false; 
                     }
                 }catch(e){
