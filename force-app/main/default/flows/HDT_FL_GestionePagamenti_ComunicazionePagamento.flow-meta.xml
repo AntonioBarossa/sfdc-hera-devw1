@@ -1345,6 +1345,7 @@
         <object>CityTechnicalData__c</object>
         <valueField>CadastralCity__c</valueField>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <name>AmountDifference</name>
         <dataType>Currency</dataType>
@@ -1804,6 +1805,12 @@
                 <name>required</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -2284,6 +2291,12 @@
                 <name>required</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -3257,6 +3270,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>AbiCodeSelector</name>

@@ -1850,6 +1850,7 @@
         <picklistField>PaymentType__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <name>AttachmentManagementFormula</name>
         <dataType>Boolean</dataType>
@@ -3249,6 +3250,12 @@
                 <name>inputSupplyCity</name>
                 <value>
                     <elementReference>GetCaseImporto.BillingCity__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
