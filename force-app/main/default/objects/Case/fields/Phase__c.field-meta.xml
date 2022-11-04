@@ -564,6 +564,11 @@
                 <label>In attesa validazione</label>
             </value>
             <value>
+                <fullName>In attesa validazione BO</fullName>
+                <default>false</default>
+                <label>In attesa validazione BO</label>
+            </value>
+            <value>
                 <fullName>In Classificazione</fullName>
                 <default>false</default>
                 <label>In Classificazione</label>
@@ -748,6 +753,11 @@
                 <fullName>Pratica Riclassificata</fullName>
                 <default>false</default>
                 <label>Pratica Riclassificata</label>
+            </value>
+            <value>
+                <fullName>Presa in Carico</fullName>
+                <default>false</default>
+                <label>Presa in Carico</label>
             </value>
             <value>
                 <fullName>Presa in Carico KO</fullName>

@@ -3,7 +3,7 @@
     <fullName>HDT_RT_ErroreFatturazione_TARI</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>HDT_RT_ErroreFatturazione_TARI</label>
+    <label>Errore di Fatturazione Ambiente</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>

@@ -46,6 +46,11 @@
         <label>Annullo voltura</label>
     </customValue>
     <customValue>
+        <fullName>Assenza del presupposto di applicazione del tributo</fullName>
+        <default>false</default>
+        <label>Assenza del presupposto di applicazione del tributo</label>
+    </customValue>
+    <customValue>
         <fullName>Autolettura non acquisibile</fullName>
         <default>false</default>
         <label>Autolettura non acquisibile</label>
