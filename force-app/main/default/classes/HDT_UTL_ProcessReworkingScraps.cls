@@ -136,13 +136,13 @@ public inherited sharing class HDT_UTL_ProcessReworkingScraps extends HDT_UTL_Pr
 
             if(processObj.autoNumber.startsWith('O-')) {
                 // set fields for update here
-
+                processObj.currOrder = setOrder(processObj.currOrder);
                 System.debug('>>> ORDER -> ' + String.valueOf(processObj.currOrder));
                 requestItemForOrder.add(processObj.requestItem);
                 orderToUpdate.add(processObj.currOrder);
             } else if(processObj.autoNumber.startsWith('C-')) {
                 // set fields for update here
-
+                processObj.currCase = setCase(processObj.currCase);
                 System.debug('>>> CASE -> ' + String.valueOf(processObj.currCase));
                 requestItemForCase.add(processObj.requestItem);
                 caseToUpdate.add(processObj.currCase);
@@ -188,6 +188,19 @@ public inherited sharing class HDT_UTL_ProcessReworkingScraps extends HDT_UTL_Pr
     //    mapWrapperFields = new Map<String, String>();
     //    mapWrapperFields.put(temp.labelField__c, temp.nameField__c);
     //}
+
+    public static Case setCase(Case caseToSet){
+        caseToSet.Phase__c = 'Da Inviare';
+        return caseToSet;
+    }
+
+    public static Order setOrder(Order orderToSet){
+        orderToSet.Phase__c = 'Comunicazione verso Heroku';
+        orderToSet.DiscardReason__c = null;
+        orderToSet.HerokuPracticeCode__c = null;
+        orderToSet.DistributorPracticeCode__c = null;
+        return orderToSet;
+    }
 
     private class HDT_WRP_ProcessObjects {
         private String autoNumber;
