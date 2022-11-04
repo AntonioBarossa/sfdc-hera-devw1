@@ -225,6 +225,43 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
+        <name>Copy_1_of_Check_Documenti</name>
+        <label>Copy 1 of Check Documenti</label>
+        <locationX>5572</locationX>
+        <locationY>398</locationY>
+        <actionName>HDT_UTL_CheckDocumentSelected</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Copy_1_of_Fase_Da_Inviare</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>beneficiary</name>
+            <value>
+                <elementReference>Get_Case_Aggiornato.AccountholderTypeBeneficiary__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>isForeign</name>
+            <value>
+                <elementReference>Get_Case_Aggiornato.IbanIsForeign__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Get_Case_Aggiornato.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>reimburseMethod</name>
+            <value>
+                <elementReference>Get_Case_Aggiornato.RefundMethod__c</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>Validazione_Iban</name>
         <label>Validazione Iban</label>
         <locationX>2371</locationX>
@@ -244,6 +281,22 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>50.0</apiVersion>
+    <assignments>
+        <name>Assegna_BillNumber</name>
+        <label>Assegna BillNumber</label>
+        <locationX>5440</locationX>
+        <locationY>1094</locationY>
+        <assignmentItems>
+            <assignToReference>CaseInput.BillNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetDocumentSelected.DocumentNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Copy_1_of_Aggiorna_con_dati_Account_e_cambia_Fase_Da_Inviare</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Assegna_Dati_Account</name>
         <label>Assegna Dati Account</label>
@@ -792,6 +845,73 @@
         </assignmentItems>
         <connector>
             <targetReference>AggiornaCase_NonBozza</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_AssegnaValori</name>
+        <label>Copy 1 of AssegnaValori</label>
+        <locationX>5440</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Copy_1_of_Check_Documenti.phase</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato2.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Copy_1_of_Check_Documenti.causalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato2.InvoiceList__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Copy_1_of_Check_Documenti.invoiceList</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato2.DocumentList__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Copy_1_of_Check_Documenti.documentList</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetDocumentSelected</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_Copy_1_of_AssegnaValori</name>
+        <label>Copy 1 of Copy 1 of AssegnaValori</label>
+        <locationX>5704</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Copy_1_of_Check_Documenti.phase</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato2.InvoiceList__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Copy_1_of_Check_Documenti.invoiceList</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato2.DocumentList__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Copy_1_of_Check_Documenti.documentList</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetDocumentSelected</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1596,6 +1716,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Copy_1_of_Fase_Da_Inviare</name>
+        <label>Copy 1 of Fase Da Inviare?</label>
+        <locationX>5572</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>Copy_1_of_Copy_1_of_AssegnaValori</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Da Inviare</defaultConnectorLabel>
+        <rules>
+            <name>Copy_1_of_Da_Inviare</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Copy_1_of_Check_Documenti.phase</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Da Inviare</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Check_Documenti_1.phase</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Attesa Modulo Firmato</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_AssegnaValori</targetReference>
+            </connector>
+            <label>Copy 1 of Da Inviare</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Copy_1_of_Salva_In_Bozza_o_Conferma</name>
         <label>Copy 1 of Salva In Bozza o Conferma?</label>
         <locationX>1056</locationX>
@@ -1630,6 +1782,28 @@
                 </rightValue>
             </conditions>
             <label>Salva in bozza</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Copy_3_of_Da_Inviare</name>
+        <label>Copy 3 of Da Inviare\</label>
+        <locationX>5572</locationX>
+        <locationY>1430</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Copy_2_of_Da_Inviare</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Copy_1_of_Check_Documenti.phase</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Da Inviare</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Loading_Screen</targetReference>
+            </connector>
+            <label>Copy 2 of Da Inviare</label>
         </rules>
     </decisions>
     <decisions>
@@ -1718,6 +1892,31 @@
                 <targetReference>Processo_Rimborso</targetReference>
             </connector>
             <label>non presenti</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Documenti_Trovati</name>
+        <label>Documenti Trovati?</label>
+        <locationX>5572</locationX>
+        <locationY>974</locationY>
+        <defaultConnector>
+            <targetReference>Copy_1_of_Aggiorna_con_dati_Account_e_cambia_Fase_Da_Inviare</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Trovati</defaultConnectorLabel>
+        <rules>
+            <name>Trovati</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetDocumentSelected</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_BillNumber</targetReference>
+            </connector>
+            <label>Trovati</label>
         </rules>
     </decisions>
     <decisions>
@@ -1876,7 +2075,7 @@
     <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
-        <locationX>3292</locationX>
+        <locationX>3556</locationX>
         <locationY>158</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1930,6 +2129,28 @@
                 <targetReference>Copy_1_of_Screen_Documenti_Selezionati</targetReference>
             </connector>
             <label>In Lavorazione</label>
+        </rules>
+        <rules>
+            <name>Elaborazione_Manuale</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CaseInput.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Elaborazione Manuale</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CaseInput.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rimborso</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_2_of_Screen_Documenti_Selezionati</targetReference>
+            </connector>
+            <label>Elaborazione Manuale</label>
         </rules>
     </decisions>
     <decisions>
@@ -2436,6 +2657,27 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetDocumentSelected</name>
+        <label>GetDocumentSelected</label>
+        <locationX>5572</locationX>
+        <locationY>854</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Documenti_Trovati</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>DocumentSelected__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
@@ -2515,6 +2757,16 @@
         <inputReference>GetCaseAggiornato2</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>Copy_1_of_Aggiorna_con_dati_Account_e_cambia_Fase_Da_Inviare</name>
+        <label>Copy 1 of Aggiorna con dati Account e cambia Fase Da Inviare</label>
+        <locationX>5572</locationX>
+        <locationY>1310</locationY>
+        <connector>
+            <targetReference>Copy_3_of_Da_Inviare</targetReference>
+        </connector>
+        <inputReference>CaseInput</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>updateCase</name>
         <label>updateCase</label>
         <locationX>1683</locationX>
@@ -2570,6 +2822,37 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Copy_1_of_Loading_Screen</name>
+        <label>Copy 1 of Loading Screen</label>
+        <locationX>5440</locationX>
+        <locationY>1550</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Copy_1_of_hdtLoadingSpinner_0_0_0</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Copy_1_of_Processo_Rimborso</name>
         <label>Copy 1 of Processo Rimborso</label>
         <locationX>50</locationX>
@@ -2608,6 +2891,87 @@
         </fields>
         <fields>
             <name>Copy_1_of_hdtDocumentSelector</name>
+            <extensionName>c:hdtAccountStatementPickerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>codiceCliente</name>
+                <value>
+                    <elementReference>CaseInput.Account.CustomerCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>contractAccount</name>
+                <value>
+                    <elementReference>CaseInput.BillingProfile__r.ContractAccountCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>CaseInput.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>CaseInput.Account.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>billingProfileId</name>
+                <value>
+                    <elementReference>CaseInput.BillingProfile__r.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>caseId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Copy_2_of_Screen_Documenti_Selezionati</name>
+        <label>Copy 2 of Screen Documenti Selezionati</label>
+        <locationX>5572</locationX>
+        <locationY>278</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Copy_1_of_Check_Documenti</targetReference>
+        </connector>
+        <fields>
+            <name>Copy_2_of_DisplayDocumentSelector</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Copy_2_of_hdtDocumentSelector</name>
             <extensionName>c:hdtAccountStatementPickerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -4065,7 +4429,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>3166</locationX>
+        <locationX>3430</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Il_Case_in_Bozza</targetReference>

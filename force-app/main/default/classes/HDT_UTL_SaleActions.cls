@@ -40,7 +40,7 @@ public with sharing class HDT_UTL_SaleActions
             SBQQ__RequiredBy__r.SBQQ__RequiredBy__r.Name,
             SBQQ__RequiredBy__r.ServicePoint__c
             FROM SBQQ__QuoteLine__c 
-            WHERE SBQQ__Quote__r.Sale__c = :saleId 
+            WHERE SBQQ__Quote__r.Sale__c = :saleId AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED];
         /* Identifies primary quote lines (see method for further information) */
         Map<String, List<SBQQ__QuoteLine__c>> groupingMap = identifyPrimaryQuoteLines(allQuoteLines);

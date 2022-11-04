@@ -682,7 +682,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     public Case handleRequestRichPass(HDT_WRP_HerokuPostSalesManager reqWrp){
         Case currentCase = new Case();
-        Case relatedCase = new Case();
+        List<Case> relatedCaseList = new List<Case>();
         Case containerCase = new Case();
         List<Case> caseInsertList = new List<Case>();
         List<Case> caseUpdateList = new List<Case>();
@@ -842,9 +842,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                                 containerCase = qrClass.getCaseRecord(containerCaseNumber);
                                 currentCase.ParentId = containerCase.Id;
                                 //get most recently created and not close related record
-                                relatedCase = qrClass.getRelatedCase(containerCase.Id);
-                                if(relatedCase != null){
-                                    currentCase.RelatedCase__c = relatedCase.Id;
+                                relatedCaseList = qrClass.getRelatedCase(containerCase.Id);
+                                if(relatedCaseList != null && !relatedCaseList.isEmpty()){
+                                    currentCase.RelatedCase__c = relatedCaseList[0].Id;
                                 }
                             } else { //SALESFORCE_KEY (aka contaienrCaseNumber) is null the container does not exist
                                 containerId = morUtl.handleContainer(currentCase);

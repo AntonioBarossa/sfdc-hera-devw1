@@ -211,6 +211,14 @@
                 <behavior>Readonly</behavior>
                 <field>NumberMembers__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ResidentDomesticHousingUnit__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NotResidentDomesticHousingUnit__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

@@ -578,6 +578,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Assenza del presupposto di applicazione del tributo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Classificazione errata</fullName>
             <default>false</default>
         </values>

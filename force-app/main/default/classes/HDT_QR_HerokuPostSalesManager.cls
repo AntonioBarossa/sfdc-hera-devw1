@@ -81,7 +81,7 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         LIMIT 1];
     }
 
-    public Case getRelatedCase(String recordId){
+    public List<Case> getRelatedCase(String recordId){
         return [SELECT Id,
         Type,
         Phase__c,

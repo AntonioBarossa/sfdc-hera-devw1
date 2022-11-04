@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Type__c</fullName>
     <externalId>false</externalId>
@@ -461,11 +461,6 @@
                 <label>Giro contatore da gestire</label>
             </value>
             <value>
-                <fullName>Modifica Indirizzo Fornitura</fullName>
-                <default>false</default>
-                <label>Modifica Indirizzo Fornitura</label>
-            </value>
-            <value>
                 <fullName>In attesa risposta cliente</fullName>
                 <default>false</default>
                 <label>In attesa risposta cliente</label>
@@ -509,6 +504,11 @@
                 <fullName>Invio registrazione</fullName>
                 <default>false</default>
                 <label>Invio registrazione</label>
+            </value>
+            <value>
+                <fullName>Istruttoria Back Office</fullName>
+                <default>false</default>
+                <label>Istruttoria Back Office</label>
             </value>
             <value>
                 <fullName>Istruttoria creata/Non necessaria</fullName>
@@ -569,6 +569,11 @@
                 <fullName>Modifica Contratti PreAttivazione</fullName>
                 <default>false</default>
                 <label>Modifica Contratti PreAttivazione</label>
+            </value>
+            <value>
+                <fullName>Modifica Indirizzo Fornitura</fullName>
+                <default>false</default>
+                <label>Modifica Indirizzo Fornitura</label>
             </value>
             <value>
                 <fullName>Note_di gestione pratica</fullName>
