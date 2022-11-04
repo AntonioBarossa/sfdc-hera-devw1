@@ -1700,7 +1700,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
         this.loading = true;
         let addressRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
-        
+        // Calcolo ATO per Idrico
+        if(this.allSubmitedFields['CommoditySector__c'] === 'Acqua' ){
+            let ato = await getATO({comune : addressRecord['Comune']});
+            this.allSubmitedFields['ATO__c'] = ato;
+        }
+
         if(this.spCodeChanged || this.allSubmitedFields['Distributor__c'] == undefined || this.allSubmitedFields['Distributor__c'].trim() == ''){
             
             if((this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica' && this.allSubmitedFields['PlugPresence__c'] == 'Si' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '') ||
@@ -1722,11 +1727,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     }
                     let comune = servizio == 'Gas' || servizio == 'Acqua' || servizio == 'Ambiente' ? addressRecord['Comune'] : '';
                     let presenzaAllaccio = this.allSubmitedFields['PlugPresence__c'] != undefined ? this.allSubmitedFields['PlugPresence__c'] : '';
-
-                    if(servizio === 'Acqua'){
-                        let ato = await getATO({comune : comune});
-                        this.allSubmitedFields['ATO__c'] = ato;
-                    }
 
                     getDistributorPointCode({code : radicePunto, commodity: servizio, comune : comune, presenzaAllaccio: presenzaAllaccio}).then(data => {
 
