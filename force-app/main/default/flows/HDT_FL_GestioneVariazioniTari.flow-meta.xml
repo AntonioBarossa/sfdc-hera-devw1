@@ -393,7 +393,7 @@
             <assignToReference>numeroPersoneConcatenazione</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getAfterSecondForm.ResidentMembers__c</elementReference>
+                <elementReference>residentMembers</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -669,7 +669,7 @@
             <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Gestione documentale</stringValue>
+                <stringValue>In attesa validazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -717,7 +717,7 @@
             <assignToReference>getAfterForm_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Gestione documentale</stringValue>
+                <stringValue>In attesa validazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -1158,7 +1158,7 @@
                 <leftValueReference>componentDocumentale_0.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>True</elementReference>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2244,7 +2244,13 @@
     <formulas>
         <name>notResidentMembers</name>
         <dataType>Number</dataType>
-        <expression>{!getAfterSecondForm.NumberMembers__c} - {!getAfterSecondForm.NotResidentMembers__c}</expression>
+        <expression>ABS({!getAfterSecondForm.NumberMembers__c} - {!getAfterSecondForm.NotResidentMembers__c})</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>residentMembers</name>
+        <dataType>Number</dataType>
+        <expression>ABS({!getAfterSecondForm.NumberMembers__c} - {!getAfterSecondForm.ResidentMembers__c})</expression>
         <scale>0</scale>
     </formulas>
     <formulas>

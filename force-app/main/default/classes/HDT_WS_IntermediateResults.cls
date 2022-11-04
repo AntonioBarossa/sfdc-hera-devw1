@@ -48,7 +48,28 @@ global with sharing class HDT_WS_IntermediateResults {
             try{
                 Case caseToUpdate = new Case();
                 caseToUpdate.Id= calloutCaseDt.caseId;
-                caseToUpdate.Phase__c = calloutCaseDt.field[0].phase;
+
+                // popola phase con condizione
+                Map<String, String> codToPhase = new Map<String, String>{
+                    '0050'=>'Approvata',
+                    '0007'=>'Rifiutata',
+                    '0060'=>'Presa In Carico'
+                };
+                // if('Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)) 
+                //     caseToUpdate.Phase__c = codToPhase.get(calloutCaseDt.field[0].codNota);
+                // else caseToUpdate.Phase__c = calloutCaseDt.field[0].phase;
+                caseToUpdate.Phase__c = 'Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)? codToPhase.get(calloutCaseDt.field[0].codNota) : calloutCaseDt.field[0].phase;
+
+                // mergiate "descNota" e "textNota" all’interno del campo “Description”
+                caseToUpdate.Description = //'Codice Activity: '+calloutCaseDt.field[0].codActivity+'\n'+
+                                           //'Codice Nota: *'+calloutCaseDt.field[0].codNota+'*'+'\n'+
+                                           'Descrizione Nota: '+calloutCaseDt.field[0].descNota+'\n'+
+                                           'Testo Nota: '+calloutCaseDt.field[0].textNota;
+
+                // passati "codActivity" e "codNota" nei rispettivi campi su Case
+                caseToUpdate.ActivityCode__c = calloutCaseDt.field[0].codActivity;
+                caseToUpdate.NoteCode__c = calloutCaseDt.field[0].codNota;
+
                 //c.exampleActivityCode = caseData.field[0].codActivity;
                 //Try Save all data
                 retList.add(caseToUpdate);
@@ -62,7 +83,16 @@ global with sharing class HDT_WS_IntermediateResults {
         }
 
         private Order populateOrder(String casePhase, Id orderId){
-            return null;
+            Order orderToUpdate = new Order();
+            orderToUpdate.Id = orderId;
+            /* controllo Phase */
+            if(casePhase=='Approvata'){
+                orderToUpdate.Phase__c = 'Comunicazione Verso Heroku';
+            } else if(casePhase=='Rifiutata'){
+                orderToUpdate.Phase__c = 'Annullata';
+                orderToUpdate.CancellationReason__c = 'Mancanza del presupposto';
+            }
+            return orderToUpdate;
         }
 
         private void insertLog(List<Database.SaveResult> saveResults){
@@ -95,24 +125,26 @@ global with sharing class HDT_WS_IntermediateResults {
         }
     }
 
+    @TestVisible
     private class HDT_WRP_Request{
-        String requestId {get;set;}
-        String dataRequest {get;set;}
-        List<HDT_WRP_Reminder> reminder {get;set;}
+        @TestVisible String requestId {get;set;}
+        @TestVisible String dataRequest {get;set;}
+        @TestVisible List<HDT_WRP_Reminder> reminder {get;set;}
     }
 
+    @TestVisible
     private class HDT_WRP_Reminder {
-		String caseId {get;set;}
-		String noticeId {get;set;}
-		List<HDT_WRP_Field> field {get;set;}
+		@TestVisible String caseId {get;set;}
+		@TestVisible String noticeId {get;set;}
+		@TestVisible List<HDT_WRP_Field> field {get;set;}
 	}
 
+    @TestVisible
     private class HDT_WRP_Field {
-		String codActivity {get;set;}
-		String codNota {get;set;}
-		String descNota {get;set;}
-		String textNota {get;set;}
-		String phase {get;set;}
+		@TestVisible String codActivity {get;set;}
+		@TestVisible String codNota {get;set;}
+		@TestVisible String descNota {get;set;}
+		@TestVisible String textNota {get;set;}
+		@TestVisible String phase {get;set;}
 	}
-
 }

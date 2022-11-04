@@ -8122,6 +8122,36 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>PayPurification__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PaySewer__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>PaymentType__c</picklist>
         <values>
             <fullName>In Compartecipazione</fullName>
@@ -10393,6 +10423,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>DGRER569%2F19 non allacciato%2Fuso irriguo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Elementi di dettaglio</fullName>
             <default>false</default>
         </values>
@@ -10430,6 +10464,10 @@
         </values>
         <values>
             <fullName>Modifica Dati di Recapito Votiva Modena</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Fognatura e Depurazione</fullName>
             <default>false</default>
         </values>
         <values>

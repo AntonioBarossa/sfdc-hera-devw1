@@ -5,6 +5,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import LightningConfirm from 'lightning/confirm';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent, FlowNavigationBackEvent } from 'lightning/flowSupport';
 import SUBPROCESS from '@salesforce/schema/Case.Subprocess__c';
+import TYPE from '@salesforce/schema/Case.Type';
 import COMMODITY from '@salesforce/schema/Case.Commodity__c';
 import OUTCOME from '@salesforce/schema/Case.Outcome__c';
 import NOTE from '@salesforce/schema/Case.PraxidiaNote__c';
@@ -18,6 +19,7 @@ export default class HdtDocumentValidation extends LightningElement {
 
     @track isValidated;
     @track subprocess;
+    @track type;
     @track columns;
 
     @track completeButton = 'Completa';
@@ -32,6 +34,7 @@ export default class HdtDocumentValidation extends LightningElement {
         { label: 'Documentazione incompleta di allegati', value: 'Documentazione incompleta di allegati' },
         { label: 'documentazione incompleta di più elementi', value: 'documentazione incompleta di più elementi' }
     ];
+    notIntegratedProcess = ['DOM_Coabitazioni','Dati catastali','DOM_Componenti residenti','Variazione Indirizzo di Fornitura'];
 
     columnsAccise = [
         { id: 1, name: 'PersonalData', label: 'Dati Anagrafici' },
@@ -62,10 +65,11 @@ export default class HdtDocumentValidation extends LightningElement {
         { id: 9, name: 'AtecoCode', label: 'Codice Ateco' },
     ];
 
-    @wire(getRecord, { recordId: '$recordId', fields: [SUBPROCESS,COMMODITY,OUTCOME,NOTE] })
+    @wire(getRecord, { recordId: '$recordId', fields: [SUBPROCESS,COMMODITY,OUTCOME,NOTE,TYPE] })
     wiredCase({ error, data }) {
         if (data) {
             this.subprocess = getFieldValue(data, SUBPROCESS);
+            this.type = getFieldValue(data,TYPE);
             this.commodity = getFieldValue(data, COMMODITY);
             this.noteValidation = getFieldValue(data,NOTE);
             this.valueWaste = getFieldValue(data,OUTCOME);
@@ -101,6 +105,15 @@ export default class HdtDocumentValidation extends LightningElement {
             this.dispatchEvent(new CustomEvent('closeaction'));
         }
     }
+
+    handleFinalUpdate(){
+        var nextPhase = this.notIntegratedProcess.includes(this.subprocess) || this.notIntegratedProcess.includes(this.type)?'In Lavorazione':'Da Inviare';
+        const fields = {};
+        fields[ID_FIELD.fieldApiName] = this.recordId;
+        fields[FASE.fieldApiName] = nextPhase;
+        var record = { fields };
+        this.updateRecordCase(record,false,false);
+    }
     updateRecordCase(recordInput,showMessage,finalUpdate){
         updateRecord(recordInput)
         .then(() => {
@@ -114,14 +127,11 @@ export default class HdtDocumentValidation extends LightningElement {
                 );
             }
             if(finalUpdate){
-                const fields = {};
-                fields[ID_FIELD.fieldApiName] = this.recordId;
-                fields[FASE.fieldApiName] = 'Da Inviare';
-                var record = { fields };
-                this.updateRecordCase(record,true,false);
+                this.handleFinalUpdate();
             }else{
-                const validated = { isValidated: true, subprocess: null };
-                this.dispatchEvent(new CustomEvent('complete', { detail: { validated } }));
+                //const validated = { isValidated: true, subprocess: null };
+                //this.dispatchEvent(new CustomEvent('complete', { detail: { validated } }));
+                this.dispatchEvent(new CustomEvent('closeaction'));
             }
         })
         .catch(error => {
@@ -139,19 +149,16 @@ export default class HdtDocumentValidation extends LightningElement {
         const fields = {};
         fields[ID_FIELD.fieldApiName] = this.recordId;
         fields[OUTCOME.fieldApiName] = this.valueWaste;
-        fields[NOTE.fieldApiName] = this.template.querySelector("lightning-input[data-id=noteWaste]").value;
+        fields[NOTE.fieldApiName] = this.template.querySelector("lightning-textarea[data-id=noteWaste]").value;
         if(this.valueWaste === 'Documentazione completa'){
             fields[FASE.fieldApiName] = 'Documentazione validata';
             const recordInput = { fields };
             this.handleConfirmClick(recordInput);
         }else{
+            const recordInput = { fields };
             this.updateRecordCase(recordInput,true,false);
-            const validated = { isValidated: true, subprocess: null };
-            this.dispatchEvent(new CustomEvent('complete', { detail: { validated } }));
         }
-        const recordInput = { fields };
-        
-        
+        const recordInput = { fields };        
     }
 
     handleClick(event) {

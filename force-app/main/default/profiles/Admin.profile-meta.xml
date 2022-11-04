@@ -2485,11 +2485,6 @@
 	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
-		<field>LandRegistry__c.IsArchived__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
 		<field>Order.IsArchived__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
@@ -6105,6 +6100,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.NoteDescription__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NoteCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.ActivityCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.NumberMembers__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7871,6 +7881,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.PaymentType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.PayPurification__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.PaySewer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13610,6 +13630,16 @@
         <field>LandRegistry__c.Case__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LandRegistry__c.CRMPracticeNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>LandRegistry__c.IsArchived__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>LandRegistry__c.CodeMissingRegistryData__c</field>
@@ -40455,7 +40485,7 @@
 	<recordTypeVisibilities>
         <default>false</default>
         <personAccountDefault>true</personAccountDefault>
-        <recordType>Case.HDT_RT_PagamentoUnicoAnnuale_TARI</recordType>
+        <recordType>Case.HDT_RT_PagamentoUnicoAnnualeTARI</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
 	<recordTypeVisibilities>

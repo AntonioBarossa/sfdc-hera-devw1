@@ -32,16 +32,17 @@ public with sharing class HDT_UTL_CaseTst {
         myactivityTemplate.wrts_prcgvr__DueDateField__c = 'my text Due Date Field';
         insert myactivityTemplate;
 
-        City__c city = new City__c();
-        city.Name = 'TEST';
-        city.Province__c = 'TS';
-        city.SDV__C = 'HCM';
-        insert city;
+        List<City__c> cityList = new List<City__c>();
+        cityList.add(new City__c(Name='TEST',Province__c='TS',SDV__C='HCM'));
+        cityList.add(new City__c(Name='TESTHC',Province__c='TA',SDV__C='HC'));
+        cityList.add(new City__c(Name='TESTEENE',Province__c='TE',SDV__C='EENE'));
+        insert cityList;
 
-        AtecoMatrix__c atecoMatrix = new AtecoMatrix__c();
-        atecoMatrix.AtecoCode__c = '9999';
-        atecoMatrix.City__c = 'TEST';
-        insert atecoMatrix;
+        List<AtecoMatrix__c>matrixEntries=new List<atecoMatrix__c>();
+        matrixEntries.add(new AtecoMatrix__c(AtecoCode__c='9999',City__c='TEST'));
+        matrixEntries.add(new AtecoMatrix__c(AtecoCode__c='9998',City__c='TESTHC'));
+        matrixEntries.add(new AtecoMatrix__c(AtecoCode__c='9997',City__c='TESTEENE'));
+        insert matrixEntries;
 
         AllineamentoGAA__c gaaAlignment1 = new AllineamentoGAA__c();
         gaaAlignment1.Rate_Category__c = 'ACDOMRESP0';
@@ -55,11 +56,13 @@ public with sharing class HDT_UTL_CaseTst {
     @isTest
     private static void caseFlowPredefaultsTest(){
 
-        List<Case> caseList = [SELECT Id, Note__c, Type FROM Case];
+        List<Case> caseList = [SELECT Id, Note__c, Type,Distributor__r.Code__c, ParentId, PODPDRFormula__c FROM Case];
 
         Case myCase = caseList[0];
         myCase.Note__c = 'Note';
-        myCase.type = 'Riattivazione Fornitura';
+        myCase.type = 'Nuovo Impianto';
+        myCase.Commodity__c='Acqua';
+        myCase.SupplyCity__c='TEST';
         update myCase;
 
 
@@ -68,7 +71,6 @@ public with sharing class HDT_UTL_CaseTst {
         HDT_UTL_Case.HDT_UTL_FlowInputs myInput = new HDT_UTL_Case.HDT_UTL_FlowInputs();
 
         Date myDate = Date.newInstance(2021, 09, 16);
-
         myInput.cluster = 'Preventivi';
         myInput.process = '';
         myInput.effectiveDate = myDate;
@@ -76,12 +78,17 @@ public with sharing class HDT_UTL_CaseTst {
         myInput.powerRequested = 5.5;
         myInput.salesCompany = 'mySalesCompany';
         myInput.currentCase = myCase;
+        myInput.genericInputString = '';
+
         inputs.add(myInput);
         
         //TESTING
         Test.startTest();
         Try{
-            
+
+            HDT_UTL_Case.caseFlowPredefaults(inputs);
+
+            myInput.powerRequested = 0;
             HDT_UTL_Case.caseFlowPredefaults(inputs);
             myInput.powerRequested = 0.9;
             HDT_UTL_Case.caseFlowPredefaults(inputs);
@@ -95,6 +102,8 @@ public with sharing class HDT_UTL_CaseTst {
             HDT_UTL_Case.caseFlowPredefaults(inputs);
 
             myInput.implantType = '13EM-Non domestici MT';
+            HDT_UTL_Case.caseFlowPredefaults(inputs);
+            myInput.powerRequested = 0;
             HDT_UTL_Case.caseFlowPredefaults(inputs);
             myInput.powerRequested = 108.5;
             HDT_UTL_Case.caseFlowPredefaults(inputs);
@@ -124,12 +133,27 @@ public with sharing class HDT_UTL_CaseTst {
             myInput.process = 'Contenitore';
             HDT_UTL_Case.caseFlowPredefaults(inputs);
 
+          /*   myInput.process = 'CreaBpCa';
+            HDT_UTL_Case.caseFlowPredefaults(inputs); */
+
+            myInput.process = 'CheckIsCommunity';
+            HDT_UTL_Case.caseFlowPredefaults(inputs);
+
             myInput.process = 'Annullamento';
             HDT_UTL_Case.caseFlowPredefaults(inputs);
 
+            myInput.process = 'getServicePointFromContract';
+            HDT_UTL_Case.caseFlowPredefaults(inputs);
+
+
+            /* myInput.process = 'calculateExpirationDate';
+            myInput.cluster = 'Reclami';
+            HDT_UTL_Case.caseFlowPredefaults(inputs); */
+            
+
             myInput.process = 'Adesione Rinuncia Fondo Fughe';
             myInput.cluster = 'Variazioni';
-            myInput.joinBottomAdhesion = 'Y';
+            //myInput.joinBottomAdhesion = 'Y';
             HDT_UTL_Case.caseFlowPredefaults(inputs);
 
             myInput.process = 'Modifica Unita Immobiliari Componenti';
@@ -137,8 +161,6 @@ public with sharing class HDT_UTL_CaseTst {
             myCase.RateCategory__c = 'ACDOMRESP0';
             update myCase;
             HDT_UTL_Case.caseFlowPredefaults(inputs);
-
-            
         }catch(DmlException e) {
             System.debug('The following exception has occurred: ' + e.getMessage());
         }        
@@ -250,8 +272,44 @@ public with sharing class HDT_UTL_CaseTst {
         inputs.add(input);
         Test.startTest();
             List<HDT_UTL_Case.HDT_UTL_FlowOutputs> result = HDT_UTL_Case.caseFlowPredefaults(inputs);
+            inputs[0].currentCase.SupplyCity__c='TESTHC';
+            result.addAll(HDT_UTL_Case.caseFlowPredefaults(inputs));
+            inputs[0].currentCase.SupplyCity__c='TESTEENE';
+            result.addAll(HDT_UTL_Case.caseFlowPredefaults(inputs));
         Test.stopTest();
         System.assertEquals(true, !result.isEmpty(), 'Test Fallito');
     }
 
+    /**​
+    * @author Elvin Iluca
+    * @date 02/11/2022
+    * @description HDT_UTL_CaseTst – Test Class for HDT_UTL_Case.cls
+    */
+
+    @isTest
+    static void calculateSalesCompanyCodeHcTst(){
+        String ret;
+        Test.startTest();
+        ret = HDT_UTL_Case.calculateSalesCompanyCode('HC');
+        Test.stopTest();
+        System.assertEquals('13V0000000', ret, 'Error calculate sales company');
+    }
+
+    @isTest
+    static void calculateSalesCompanyCodeHcmTst(){
+        String ret;
+        Test.startTest();
+        ret = HDT_UTL_Case.calculateSalesCompanyCode('HCM');
+        Test.stopTest();
+        System.assertEquals('10V0000160', ret, 'Error calculate sales company');
+    }
+
+    @isTest
+    static void calculateSalesCompanyCodeElseTst(){
+        String ret;
+        Test.startTest();
+        ret = HDT_UTL_Case.calculateSalesCompanyCode('Else');
+        Test.stopTest();
+        System.assertEquals('13V0000000', ret, 'Error calculate sales company');
+    }
 }

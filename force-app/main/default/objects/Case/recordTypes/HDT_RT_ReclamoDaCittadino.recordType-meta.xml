@@ -3,7 +3,7 @@
     <fullName>HDT_RT_ReclamoDaCittadino</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>HDT_RT_ReclamoDaCittadino</label>
+    <label>Reclamo Da Cittadino</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
