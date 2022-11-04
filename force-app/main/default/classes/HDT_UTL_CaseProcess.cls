@@ -148,6 +148,18 @@ public with sharing class HDT_UTL_CaseProcess {
         if( !oldCmor && newCmor) return true;
         return false;
     }
+    
+    public static Boolean isChangedPhase(List<Case> caseList, Map<Id,SObject> caseOldMap){
+        Case caseNew = caseList[0];
+		Case caseOld = (Case) caseOldMap.get(caseNew.Id);
+		String phaseNew = caseNew.Phase__c != null? caseNew.Phase__c:'';
+		String phaseOld = caseOld.Phase__c != null? caseOld.Phase__c:'';
+        if(
+            (String.isNotBlank(phaseNew) && String.isNotBlank(phaseOld) && phaseNew != phaseOld) || 
+            (String.isBlank(phaseOld) && String.isNotBlank(phaseNew))
+        )return true;
+        return false;
+    }
     public static Boolean manageCancellationProcess(List<Case> caseList, Map<Id,SObject> caseOldMap){
         HDT_QR_Case caseQr = new HDT_QR_Case();
 		Case caseNew = caseList[0];
