@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Unita_Abitative__c</fullName>
+    <fullName>NotResidentDomesticHousingUnit__c</fullName>
     <externalId>false</externalId>
-    <label>Unità Abitative Non Domestiche</label>
+    <label>Unità Abitative Domestico Non Residente</label>
     <precision>10</precision>
     <required>false</required>
     <scale>0</scale>

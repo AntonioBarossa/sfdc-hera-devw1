@@ -24,6 +24,6 @@
     </values>
     <values>
         <field>SfdcField__c</field>
-        <value xsi:type="xsd:string">Unita_Abitative__c</value>
+        <value xsi:type="xsd:string">ResidentDomesticHousingUnit__c</value>
     </values>
 </CustomMetadata>
