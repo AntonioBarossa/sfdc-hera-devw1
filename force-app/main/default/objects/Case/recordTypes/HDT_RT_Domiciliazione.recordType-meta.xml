@@ -8698,6 +8698,10 @@
             <fullName>Vocal Order</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Contratto già firmato</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SignalCategory__c</picklist>
