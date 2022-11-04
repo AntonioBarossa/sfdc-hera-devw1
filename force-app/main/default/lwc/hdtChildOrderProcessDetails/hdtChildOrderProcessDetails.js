@@ -837,6 +837,19 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
                 return;
                 }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='IntendedUse__c']") !== null 
+                && (this.template.querySelector("[data-id='IntendedUse__c']").value === ''
+                    || this.template.querySelector("[data-id='IntendedUse__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Destinazione Uso',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+                }
                 if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']") !== null 
                 && (this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']").value === ''
                     || this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']").value === null)) {
