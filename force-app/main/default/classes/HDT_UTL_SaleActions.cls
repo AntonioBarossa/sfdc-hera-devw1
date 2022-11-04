@@ -33,6 +33,7 @@ public with sharing class HDT_UTL_SaleActions
             SBQQ__Quote__r.ContractReference__c,
             SBQQ__Quote__r.OrderReference__c,
             SBQQ__Quote__r.AllowChangeUse__c,
+            SBQQ__Product__r.Family,
             SBQQ__Quote__r.AmendmentAllowed__c,
             SBQQ__Quote__r.Sale__r.Account__c,
             SBQQ__RequiredBy__r.BillingProfile__c,
@@ -94,7 +95,9 @@ public with sharing class HDT_UTL_SaleActions
                  * All quotelines with the same combination of ApprovalType__c and IntegratedSap__c belongs to the same group
                  * The group "identifier" is generated as "ApprovalType__c" + "IntegratedSap__c"
                  */
-                String key = quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c);
+                String key = quoteLine.SBQQ__Product__r.Family != null && quoteLine.SBQQ__Product__r.Family == 'Opzioni TARI'?
+                                    quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c) + 'Opzioni TARI' : 
+                                    quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c) ;
                 if(!result.containsKey(key))
                 {
                     result.put(key, new List<SBQQ__QuoteLine__c>());
@@ -274,7 +277,9 @@ public with sharing class HDT_UTL_SaleActions
             Boolean isTari = quoteLine.SBQQ__Product__r.Service__c != null && quoteLine.SBQQ__Product__r.Service__c.equalsIgnoreCase('Ambiente');
             if(isTari)
             {
-                key = quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c);
+                key = quoteLine.SBQQ__Product__r.Family != null && quoteLine.SBQQ__Product__r.Family == 'Opzioni TARI'?
+                                quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c) + 'Opzioni TARI' : 
+                                quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c) ;
             }
             else
             {
@@ -323,7 +328,9 @@ public with sharing class HDT_UTL_SaleActions
             {
                 continue;
             }
-            String key = quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c);
+            String key = quoteLine.SBQQ__Product__r.Family != null && quoteLine.SBQQ__Product__r.Family == 'Opzioni TARI'?
+                                    quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c) + 'Opzioni TARI' : 
+                                    quoteLine.SBQQ__Product__r.ApprovalType__c + String.valueOf(quoteLine.SBQQ__Product__r.IntegratedSAP__c) ;
             if((quoteLineGroupObj.get(key)).mainQuoteLineId == quoteLine.Id && quoteLine.ServicePoint__c == null)
             {
                 quoteLine.ServicePoint__c = quoteLineServicePointMap.get(quoteLine.SBQQ__RequiredBy__c);
