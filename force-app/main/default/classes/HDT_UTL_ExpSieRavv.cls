@@ -21,65 +21,6 @@ public with sharing class HDT_UTL_ExpSieRavv {
         return;
     }
 
-    public with sharing class HDT_WRP_SieExport{
-        @AuraEnabled public String period {get;set;}
-        @AuraEnabled public String subtype {get;set;}
-        @AuraEnabled public String cityCode {get;set;}
-        @AuraEnabled public Date declarationDate {get;set;}
-        @AuraEnabled public Date effectiveDate {get;set;}
-        @AuraEnabled public Date limitDateX {get;set;}
-        @AuraEnabled public Sobject record {get;set;}
-        @AuraEnabled public Integer missingDue  {
-            get { return missingDue > 0 ? 1 : 0; }
-            set { missingDue = value; }
-        }
-    }
-
-    private with sharing class HDT_UTL_SieSobjectCreation{
-        HDT_WRP_SieExport wrapper {get;set;}
-        String sobjectTypeName {get;set;}
-        List<ExpRavv__c> listToInsert {get;set;}
-        HDT_UTL_SieSobjectCreation(HDT_WRP_SieExport wrapper){
-            this.wrapper=wrapper;
-            this.sobjectTypeName = wrapper.record.Id.getSobjectType().getDescribe().getName().toLowerCase();
-            this.listToInsert = new List<ExpRavv__c>();
-        }
-
-        private String getSobjectType(){
-            return this.sobjectTypeName;
-        }
-
-        private HDT_WRP_SieExport getWrapper(){
-            return this.wrapper;
-        }
-
-        @SuppressWarnings('PMD.ExcessiveParameterList')
-        ExpRavv__c createExpRavv(String operandName, String operandValue){
-            ExpRavv__c exportRecord = new ExpRavv__c();
-            exportRecord.OperandName__c = operandName;
-            exportRecord.OperandValue__c = operandValue;
-
-            String billingCategory = (String) this.wrapper.record.get('BillingCategory__c');
-            exportRecord.SuspensionEndDate__c = this.wrapper.declarationDate.addDays(-1).format();
-            if(!'y'.equalsIgnoreCase(wrapper.period) || 'C'.equalsIgnoreCase(billingCategory) ){    
-                exportRecord.SuspensionStartDate__c = this.wrapper.effectiveDate.format();  
-            }else if('B'.equalsIgnoreCase(billingCategory)){
-                exportRecord.SuspensionStartDate__c = this.wrapper.limitDateX.format();
-            }
-
-            exportRecord.CityCode__c = this.wrapper.cityCode;
-            switch on this.sobjectTypeName {
-                when 'case' {
-                    exportRecord.Case__c=this.wrapper.record.Id;
-                }
-                when 'order' {
-                    exportRecord.Order__c=this.wrapper.record.Id;
-                }
-            }
-            this.listToInsert.add(exportRecord);
-            return exportRecord;
-        }
-    }
 
     private static List<ExpRavv__c> getExportRavv(HDT_WRP_SieExport wrapper){
         HDT_UTL_SieSobjectCreation createSobjUtl = new HDT_UTL_SieSobjectCreation(wrapper);
@@ -138,6 +79,66 @@ public with sharing class HDT_UTL_ExpSieRavv {
         if('y'.equalsIgnoreCase(createSobjUtl?.getWrapper()?.period) && 'B'.equalsIgnoreCase(caso.BillingCategory__c)){
             createSobjUtl.createExpRavv(vNomeOperando,vValoreOperando); 
             if(caso.Subprocess__c.equalsIgnoreCase('NON DOM_ISTAT/Ronchi'))     createSobjUtl.createExpRavv(operands.vNomeOperandoReale2,vValoreOperando);
+        }
+    }
+
+    private with sharing class HDT_UTL_SieSobjectCreation{
+        HDT_WRP_SieExport wrapper {get;set;}
+        String sobjectTypeName {get;set;}
+        List<ExpRavv__c> listToInsert {get;set;}
+        HDT_UTL_SieSobjectCreation(HDT_WRP_SieExport wrapper){
+            this.wrapper=wrapper;
+            this.sobjectTypeName = wrapper.record.Id.getSobjectType().getDescribe().getName().toLowerCase();
+            this.listToInsert = new List<ExpRavv__c>();
+        }
+
+        private String getSobjectType(){
+            return this.sobjectTypeName;
+        }
+
+        private HDT_WRP_SieExport getWrapper(){
+            return this.wrapper;
+        }
+
+        @SuppressWarnings('PMD.ExcessiveParameterList')
+        ExpRavv__c createExpRavv(String operandName, String operandValue){
+            ExpRavv__c exportRecord = new ExpRavv__c();
+            exportRecord.OperandName__c = operandName;
+            exportRecord.OperandValue__c = operandValue;
+
+            String billingCategory = (String) this.wrapper.record.get('BillingCategory__c');
+            exportRecord.SuspensionEndDate__c = this.wrapper.declarationDate.addDays(-1).format();
+            if(!'y'.equalsIgnoreCase(wrapper.period) || 'C'.equalsIgnoreCase(billingCategory) ){    
+                exportRecord.SuspensionStartDate__c = this.wrapper.effectiveDate.format();  
+            }else if('B'.equalsIgnoreCase(billingCategory)){
+                exportRecord.SuspensionStartDate__c = this.wrapper.limitDateX.format();
+            }
+
+            exportRecord.CityCode__c = this.wrapper.cityCode;
+            switch on this.sobjectTypeName {
+                when 'case' {
+                    exportRecord.Case__c=this.wrapper.record.Id;
+                }
+                when 'order' {
+                    exportRecord.Order__c=this.wrapper.record.Id;
+                }
+            }
+            this.listToInsert.add(exportRecord);
+            return exportRecord;
+        }
+    }
+
+    public with sharing class HDT_WRP_SieExport{
+        @AuraEnabled public String period {get;set;}
+        @AuraEnabled public String subtype {get;set;}
+        @AuraEnabled public String cityCode {get;set;}
+        @AuraEnabled public Date declarationDate {get;set;}
+        @AuraEnabled public Date effectiveDate {get;set;}
+        @AuraEnabled public Date limitDateX {get;set;}
+        @AuraEnabled public Sobject record {get;set;}
+        @AuraEnabled public Integer missingDue  {
+            get { return missingDue > 0 ? 1 : 0; }
+            set { missingDue = value; }
         }
     }
 
