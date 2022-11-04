@@ -64,7 +64,7 @@ public inherited sharing class HDT_UTL_ProcessReworkingScraps extends HDT_UTL_Pr
         orderList = new List<Order>();
         caseList = new List<Case>();
         Map<String, Case> caseMap = new Map<String, Case>();
-        Map<String, Order> OrderMap = new Map<String, Order>();
+        Map<String, Order> orderMap = new Map<String, Order>();
 
         if(orderNumberSet.size()>0){
 
