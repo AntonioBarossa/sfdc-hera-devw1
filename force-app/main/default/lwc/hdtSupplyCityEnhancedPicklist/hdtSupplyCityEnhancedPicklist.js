@@ -24,7 +24,6 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
 
     @api validate (){
         console.log("event catched   "+this.eventButton);
-        this.unsubscribeToMessageChannel();
         if('cancel' != this.eventButton && 'previous' != this.eventButton){
             let isValid = this.required ? this.outputSupplyCity != null : true;
             let msg = isValid? null : 'Selezionare un comune';
@@ -77,6 +76,10 @@ export default class HdtSupplyCityEnhancedPicklist extends LightningElement {
         this.subscribeMC();
         this.outputSupplyCity = this.inputSupplyCity;
         this.call_getCities();
+    }
+
+    disconnectedCallback(){
+        this.unsubscribeToMessageChannel();
     }
 
     call_getCities() {
