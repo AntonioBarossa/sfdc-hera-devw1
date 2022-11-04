@@ -564,6 +564,11 @@
                 <label>In attesa validazione</label>
             </value>
             <value>
+                <fullName>In attesa validazione BO</fullName>
+                <default>false</default>
+                <label>In attesa validazione BO</label>
+            </value>
+            <value>
                 <fullName>In Classificazione</fullName>
                 <default>false</default>
                 <label>In Classificazione</label>
