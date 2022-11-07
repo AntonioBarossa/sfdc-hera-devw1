@@ -124,7 +124,8 @@ public with sharing class HDT_UTL_CreditCheck {
                 
                 
                 req.bpAlternative = o.ServicePoint__r?.Account__r?.CustomerCode__c;
-                req.alternativeCustomerId = fiscalData;
+                //ticket 905174C email del 02/11/2022
+                //req.alternativeCustomerId = fiscalData;
             }
             
         }
