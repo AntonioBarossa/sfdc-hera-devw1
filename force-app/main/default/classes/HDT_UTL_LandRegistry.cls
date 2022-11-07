@@ -13,16 +13,17 @@ public with sharing class HDT_UTL_LandRegistry {
         system.debug('pratica caseId: ' + caseId);
         system.debug('pratica orderId: ' + orderId);
         system.debug('pratica servicePointId: ' + servicePointId);
-        list<LandRegistry__c> lndRgTable = new list<LandRegistry__c>();
+
         HDT_QR_LandRegistry qrClass = new HDT_QR_LandRegistry();
-        Id rtIdPraticaTARI = Schema.SObjectType.LandRegistry__c.getRecordTypeInfosByName().get('HDT_RT_DatiCatastali_PraticaTARI').getRecordTypeId();
+        Id rtIdPraticaTARI = Schema.SObjectType.LandRegistry__c.getRecordTypeInfosByName().get('DatiCatastali - Pratica Ambiente').getRecordTypeId();
 
         list<LandRegistry__c> praticaData = new list<LandRegistry__c>();
         if(caseId != null) praticaData = qrClass.getPraticaTARILandRegistryByCaseIds(new list<Id> {caseId});
         else if(orderId != null) praticaData = qrClass.getPraticaTARILandRegistryByOrderIds(new list<Id> {orderId});
-        system.debug('praticaData: ' + JSON.serialize(praticaData));
+        system.debug('praticaData1: ' + JSON.serialize(praticaData));
         if(!praticaData.isEmpty()) return praticaData;
 
+        list<LandRegistry__c> lndRgTable = new list<LandRegistry__c>();
         list<LandRegistry__c> originData = qrClass.getTARILandRegistryByServicePointIds(new list<Id> {servicePointId});
         for(LandRegistry__c curOriginRecord : originData){
             LandRegistry__c resultLR;
@@ -35,7 +36,11 @@ public with sharing class HDT_UTL_LandRegistry {
             lndRgTable.add(resultLR);
         }
         insert lndRgTable;
-        return lndRgTable;
+
+        if(caseId != null) praticaData = qrClass.getPraticaTARILandRegistryByCaseIds(new list<Id> {caseId});
+        else if(orderId != null) praticaData = qrClass.getPraticaTARILandRegistryByOrderIds(new list<Id> {orderId});
+        system.debug('praticaData2: ' + JSON.serialize(praticaData));
+        return praticaData;
     }
     
     @AuraEnabled
