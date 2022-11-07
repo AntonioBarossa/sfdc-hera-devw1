@@ -24,6 +24,10 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         String indicator;
         String numberOfLines;
 
+        public HDT_WRP_DataApp(){
+            return;
+        }
+
         public HDT_WRP_DataApp(String purchaseOrderNumber, String streetCoding, String street,
                                 String housenumber, String typeInt, String indicator, String numberOfLines) {
         
