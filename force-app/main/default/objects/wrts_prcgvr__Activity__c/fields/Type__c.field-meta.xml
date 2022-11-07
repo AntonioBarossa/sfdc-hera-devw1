@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Type__c</fullName>
     <externalId>false</externalId>
@@ -439,6 +439,11 @@
                 <fullName>In gestione</fullName>
                 <default>false</default>
                 <label>In gestione</label>
+            </value>
+            <value>
+                <fullName>Integrazione richiesta social</fullName>
+                <default>false</default>
+                <label>Integrazione richiesta social</label>
             </value>
             <value>
                 <fullName>Inviare Comunicazione Disconoscimento</fullName>

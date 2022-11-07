@@ -416,6 +416,11 @@
         <label>In gestione</label>
     </customValue>
     <customValue>
+        <fullName>Integrazione richiesta social</fullName>
+        <default>false</default>
+        <label>Integrazione richiesta social</label>
+    </customValue>
+    <customValue>
         <fullName>Inviare Comunicazione Disconoscimento</fullName>
         <default>false</default>
         <label>Inviare Comunicazione Disconoscimento</label>
