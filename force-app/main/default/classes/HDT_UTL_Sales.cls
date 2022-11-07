@@ -285,8 +285,10 @@ public with sharing class HDT_UTL_Sales {
                     else if((ord.Sale__r.Channel__c == 'Telefono' || ord.Sale__r.Channel__c == 'Teleselling Inbound') && ord.SignatureMethod__c == 'Vocal Order')
                     {
                         ord.Phase__c = 'Registrazione Validata';
+                        /*
                         ord.SignedDate__c = Date.today();
                         ord.DocumentalPhase__c = 'Plico firmato';
+                        */
                         childToUpdate.add(ord);
                     }
                     else if((ord.Sale__r.Channel__c == 'Teleselling Outbound' || ord.Sale__r.Channel__c == 'Teleselling Inbound') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){

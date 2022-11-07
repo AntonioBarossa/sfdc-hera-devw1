@@ -63,17 +63,14 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         List<wrts_prcgvr__Activity__c> activitiesAssigned = HDT_QR_ActivityCustom.getActivityCreatedByQualityBatch(ordersIdsList);
         List<wrts_prcgvr__Activity__c> activitiesToClose = new List<wrts_prcgvr__Activity__c>();
         Map<String, wrts_prcgvr__Activity__c> orderToActivityMap = new Map<String, wrts_prcgvr__Activity__c>();
-        Set<Id> siebelOrderWithActivity = new Set<Id>();
-        Set<Id> sfdcOrderWithActivity = new Set<Id>();
+        Set<Id> orderWithActivity = new Set<Id>();
         Set<Id> ordersAlreadyAssigned = new Set<Id>();
         for (wrts_prcgvr__Activity__c activityAssigned : activitiesAssigned) {
             if ('HDT_RT_ComfortQualityCall'.equalsIgnoreCase(activityAssigned.RecordType.DeveloperName)){
                 ordersAlreadyAssigned.add(activityAssigned.Order__c);
                 orderToActivityMap.put(activityAssigned.Order__c, activityAssigned);
-            }else if (HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL.equalsIgnoreCase(activityAssigned.type__c)){
-                siebelOrderWithActivity.add(activityAssigned.Order__c);
-            }else if(HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO.equalsIgnoreCase(activityAssigned.type__c)){
-                sfdcOrderWithActivity.add(activityAssigned.Order__c);
+            }else if ('Quality Scaduta'.equalsIgnoreCase(activityAssigned.type__c) || HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL.equalsIgnoreCase(activityAssigned.type__c) || HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO.equalsIgnoreCase(activityAssigned.type__c)){
+                orderWithActivity.add(activityAssigned.Order__c);
             }
         }
 
@@ -145,7 +142,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     parentToChildOrderMap.get(ord.ParentOrder__c).add(ord.OrderNumber);
                 }
 
-                if (!this.skipActivityCreation(ord.Id,ord.ParentOrder__c, siebelOrderWithActivity, sfdcOrderWithActivity) && needsActivity && ((!canDeleteOrder || (ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))))) {
+                if (!this.skipActivityCreation(ord.Id,ord.ParentOrder__c, orderWithActivity) && needsActivity && ((!canDeleteOrder || (ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))))) {
                     
                     String ordIdToAssoc = ord.Id;
 
@@ -293,7 +290,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                             PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
                             RelatedActivity__c = orderActivityMap.get(ordId).Id,
                             NumberingValidityStartDate__c = System.today(),
-                            NumberingValidityEndDate__c = System.today().addDays(30),
+                            NumberingValidityEndDate__c = System.today().addDays(50),
                             ExcludeFub__c = 'Si',
                             GenericField1__c = orderMap.get(ordId).AccountId
                         ));
@@ -319,10 +316,9 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         logs.saveMassiveRecords();
     }
 
-    private Boolean skipActivityCreation(Id orderId, Id parentOrderId, Set<Id> siebelOrderWithActivity, Set<Id> sfdcOrderWithActivity){
-        return siebelOrderWithActivity.contains(orderId) 
-            || sfdcOrderWithActivity.contains(orderId) 
-            || (parentOrderId != null && (siebelOrderWithActivity.contains(parentOrderId) || sfdcOrderWithActivity.contains(parentOrderId)));
+    private Boolean skipActivityCreation(Id orderId, Id parentOrderId, Set<Id> orderWithActivity){
+        return orderWithActivity.contains(orderId) 
+            || (parentOrderId != null && orderWithActivity.contains(parentOrderId));
     }
 
     private Boolean notCancellableOrder(Order ord){

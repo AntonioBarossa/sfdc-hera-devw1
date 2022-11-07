@@ -94,9 +94,20 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
         Test.startTest();
 
         Queue__c queue = [SELECT Id, Agency2__c, WorkGroup__c FROM Queue__c LIMIT 1];
-        List<Map<String,String>> returnedValue = HDT_LC_ActivityReassignmentTool.getWorkGroups(queue.WorkGroup__c);
+        List<Map<String,String>> returnedValue = HDT_LC_ActivityReassignmentTool.getWorkGroups(queue.WorkGroup__c, queue.Agency2__c);
         System.assertEquals(queue.WorkGroup__c, returnedValue[0].get('name'), 'NOME GRUPPO DI LAVORO ERRATO');
         System.assertEquals(queue.Agency2__c, returnedValue[0].get('agency'), 'AGENZIA GRUPPO DI LAVORO ERRATA');
+
+        Test.stopTest();
+    }
+
+    @isTest
+    private static void getPicklistValues() {
+        Test.startTest();
+
+        List<String> picklistValues = HDT_LC_ActivityReassignmentTool.getPickListValuesIntoList();
+
+        System.assertEquals(true, picklistValues != null && !picklistValues.isEmpty(), 'ERRORE NELL\'OTTENERE I VALORI DALLA PICKLIST.');
 
         Test.stopTest();
     }
