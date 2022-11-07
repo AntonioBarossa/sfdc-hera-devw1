@@ -190,14 +190,14 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     }
 
     @AuraEnabled(cacheable=true)
-    public static String getCase(String caseId,List<String> fields){
-        String response = '';
+    public static Case getCase(String caseId,List<String> fields){
+        Case caseToRet;
         try{
-            response = JSON.serialize(HDT_UTL_AppointmentAgenda.getCase(caseId,String.join(fields,',')));
+            caseToRet= HDT_UTL_AppointmentAgenda.getCase(caseId,String.join(fields,','));
         }catch (exception e){
             throw new AuraHandledException(e.getMessage());
         }
-        return response;
+        return caseToRet;
     }
     
     @AuraEnabled
