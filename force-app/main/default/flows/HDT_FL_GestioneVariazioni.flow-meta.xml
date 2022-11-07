@@ -190,7 +190,7 @@
     <actionCalls>
         <name>HDT_UTL_Case_ModUnitImm</name>
         <label>HDT_UTL_Case</label>
-        <locationX>17034</locationX>
+        <locationX>17078</locationX>
         <locationY>518</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
@@ -467,7 +467,7 @@
     <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare_0_0_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
-        <locationX>19762</locationX>
+        <locationX>19850</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato_0_0_0_0_0_0_0_0.Phase__c</assignToReference>
@@ -706,7 +706,7 @@
     <assignments>
         <name>Assegna_Anagrafica_Componenti</name>
         <label>Assegna Anagrafica Componenti</label>
-        <locationX>16858</locationX>
+        <locationX>16902</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0_0.Note__c</assignToReference>
@@ -814,7 +814,7 @@
     <assignments>
         <name>Assegna_Codice_Causale_0_0_0_0</name>
         <label>Assegna Codice Causale</label>
-        <locationX>17573</locationX>
+        <locationX>17595</locationX>
         <locationY>2750</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.CausalCode__c</assignToReference>
@@ -980,7 +980,7 @@
     <assignments>
         <name>Assegna_Domestico_Residente</name>
         <label>Assegna Domestico Residente</label>
-        <locationX>16902</locationX>
+        <locationX>16946</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>ProcessTypeModificaUnitImm</assignToReference>
@@ -1003,7 +1003,7 @@
     <assignments>
         <name>Assegna_Fase_Da_Inviare</name>
         <label>Assegna Fase Da Inviare</label>
-        <locationX>18266</locationX>
+        <locationX>18354</locationX>
         <locationY>3110</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Phase__c</assignToReference>
@@ -1049,7 +1049,7 @@
     <assignments>
         <name>Assegna_Promiscuo</name>
         <label>Assegna Promiscuo</label>
-        <locationX>17166</locationX>
+        <locationX>17210</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>ProcessTypeModificaUnitImm</assignToReference>
@@ -1339,7 +1339,7 @@
     <assignments>
         <name>Assegna_Valori_ModificaUnitaImmobiliari</name>
         <label>Assegna Valori</label>
-        <locationX>17034</locationX>
+        <locationX>17078</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
@@ -1466,7 +1466,7 @@
     <decisions>
         <name>Allineamento_GAA</name>
         <label>Allineamento GAA</label>
-        <locationX>17573</locationX>
+        <locationX>17595</locationX>
         <locationY>2870</locationY>
         <defaultConnector>
             <targetReference>Sottotipologia_Processo_0_0_0</targetReference>
@@ -1804,7 +1804,7 @@
     <decisions>
         <name>Avanzamento_Lettura_ModificaUnitaImmobiliari</name>
         <label>Avanzamento Lettura</label>
-        <locationX>18139</locationX>
+        <locationX>18194</locationX>
         <locationY>2390</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
@@ -1881,7 +1881,7 @@
     <decisions>
         <name>Case_in_Bozza</name>
         <label>Case in Bozza?</label>
-        <locationX>14922</locationX>
+        <locationX>14988</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>ScreenInputFiscale_0_0_0_0_0_0_0_0</targetReference>
@@ -1889,12 +1889,26 @@
         <defaultConnectorLabel>Non Bozza</defaultConnectorLabel>
         <rules>
             <name>Bozza</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
             <conditions>
                 <leftValueReference>GetInputCase.Phase__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Bozza</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Risposta Parere Ricevuta</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esenzione Modifica Fognatura Depurazione</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2850,7 +2864,7 @@
     <decisions>
         <name>OutcomeFormModificaUnitaImmobiliari</name>
         <label>OutcomeFormModificaUnitaImmobiliari</label>
-        <locationX>16990</locationX>
+        <locationX>17034</locationX>
         <locationY>2150</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
@@ -2901,7 +2915,7 @@
     <decisions>
         <name>OutcomeFormModificaUnitaImmobiliari_0</name>
         <label>OutcomeFormModificaUnitaImmobiliari</label>
-        <locationX>17034</locationX>
+        <locationX>17078</locationX>
         <locationY>1334</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
@@ -2952,7 +2966,7 @@
     <decisions>
         <name>Quale_Processo</name>
         <label>Quale Processo?</label>
-        <locationX>10082</locationX>
+        <locationX>10126</locationX>
         <locationY>398</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -3249,7 +3263,7 @@
     <decisions>
         <name>Sottotipologia_Processo</name>
         <label>Sottotipologia Processo</label>
-        <locationX>16990</locationX>
+        <locationX>17034</locationX>
         <locationY>1574</locationY>
         <defaultConnector>
             <targetReference>OutcomeFormModificaUnitaImmobiliari</targetReference>
@@ -3274,7 +3288,7 @@
     <decisions>
         <name>Sottotipologia_Processo_0</name>
         <label>Sottotipologia Processo</label>
-        <locationX>17034</locationX>
+        <locationX>17078</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Assegna_Promiscuo</targetReference>
@@ -3324,7 +3338,7 @@
     <decisions>
         <name>Sottotipologia_Processo_0_0_0</name>
         <label>Sottotipologia Processo?</label>
-        <locationX>18178</locationX>
+        <locationX>18222</locationX>
         <locationY>2990</locationY>
         <defaultConnector>
             <targetReference>Assegna_Fase_Da_Inviare</targetReference>
@@ -4014,7 +4028,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>Calcolo_Codice_Causale_ModUnitImm</name>
         <label>Calcolo Codice Causale</label>
-        <locationX>17573</locationX>
+        <locationX>17595</locationX>
         <locationY>2630</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -4371,7 +4385,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>GetCaseAggiornato_0_0_0_0_0_0_0_0</name>
         <label>GetCaseAggiornato</label>
-        <locationX>19762</locationX>
+        <locationX>19850</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -4476,7 +4490,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>GetCaseAggiornatoModificaUnitaImmobiliari_0</name>
         <label>GetCaseAggiornatoModificaUnitaImmobiliari</label>
-        <locationX>17573</locationX>
+        <locationX>17595</locationX>
         <locationY>2510</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -4497,7 +4511,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>GetCaseAggiornatoModificaUnitaImmobiliari_0_0</name>
         <label>GetCaseAggiornatoModificaUnitaImmobiliari</label>
-        <locationX>16990</locationX>
+        <locationX>17034</locationX>
         <locationY>1454</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -4560,7 +4574,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>GetInputCase</name>
         <label>Get Input Case</label>
-        <locationX>14922</locationX>
+        <locationX>14988</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -4711,7 +4725,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_00_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>19762</locationX>
+        <locationX>19850</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>Loading_Spinner_0_0_0_0</targetReference>
@@ -4821,7 +4835,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>16858</locationX>
+        <locationX>16902</locationX>
         <locationY>1934</locationY>
         <connector>
             <targetReference>OutcomeFormModificaUnitaImmobiliari</targetReference>
@@ -4855,7 +4869,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_1</name>
         <label>Aggiorna Case</label>
-        <locationX>18266</locationX>
+        <locationX>18354</locationX>
         <locationY>3230</locationY>
         <connector>
             <targetReference>Aggiorna_unit_su_SP_1</targetReference>
@@ -4905,7 +4919,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_ModificaUnitaImmobiliari</name>
         <label>Aggiorna Case</label>
-        <locationX>17034</locationX>
+        <locationX>17078</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>Sottotipologia_Processo_0</targetReference>
@@ -4948,7 +4962,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_unit_su_SP_1</name>
         <label>Aggiorna unità su SP</label>
-        <locationX>18266</locationX>
+        <locationX>18354</locationX>
         <locationY>3350</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -5432,7 +5446,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>Loading_Spinner_0_0_0_0</name>
         <label>Loading Spinner</label>
-        <locationX>19762</locationX>
+        <locationX>19850</locationX>
         <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -5747,7 +5761,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>Screen_Autolettura_ModificaUnitaImmobiliari</name>
         <label>Screen Autolettura</label>
-        <locationX>18139</locationX>
+        <locationX>18194</locationX>
         <locationY>2270</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -6095,7 +6109,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>Screen_Input_Fiscale_Fondo_Fughe_0</name>
         <label>Screen Input Fiscale Fondo Fughe</label>
-        <locationX>17034</locationX>
+        <locationX>17078</locationX>
         <locationY>1214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -6212,7 +6226,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>Screen_Inserimento_Anagrafica_Componenti</name>
         <label>Screen_Inserimento_Anagrafica_Componenti</label>
-        <locationX>16858</locationX>
+        <locationX>16902</locationX>
         <locationY>1694</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -7725,7 +7739,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>ScreenInputFiscale_0_0_0_0_0_0_0_0</name>
         <label>Screen Input Fiscale</label>
-        <locationX>19762</locationX>
+        <locationX>19850</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -7927,7 +7941,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>14796</locationX>
+        <locationX>14862</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetInputCase</targetReference>
@@ -8032,7 +8046,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <subflows>
         <name>Annulla_Prestazione_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>10082</locationX>
+        <locationX>10126</locationX>
         <locationY>4934</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -8158,7 +8172,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <subflows>
         <name>Annulla_Prestazione_FondoFughe_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>17034</locationX>
+        <locationX>17078</locationX>
         <locationY>4598</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
