@@ -7464,6 +7464,11 @@
     </fieldPermissions>	
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.SupplyUseType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>	
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.IntendedUse__c</field>
         <readable>true</readable>
     </fieldPermissions>
