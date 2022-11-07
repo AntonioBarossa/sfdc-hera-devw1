@@ -25,9 +25,25 @@
         </connector>
     </assignments>
     <assignments>
+        <name>assignFields</name>
+        <label>assignFields</label>
+        <locationX>446</locationX>
+        <locationY>1094</locationY>
+        <assignmentItems>
+            <assignToReference>caseToUpdate.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In attesa validazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>processType_reclamo</name>
         <label>processType = reclamo</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessTypeCalculated</assignToReference>
@@ -75,7 +91,7 @@
     <assignments>
         <name>set_processType_domiciliazione</name>
         <label>processType = domiciliazione</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessTypeCalculated</assignToReference>
@@ -91,7 +107,7 @@
     <assignments>
         <name>set_processType_preventivo</name>
         <label>processType = preventivo</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessTypeCalculated</assignToReference>
@@ -105,6 +121,45 @@
         </connector>
     </assignments>
     <decisions>
+        <name>actionAfterDocumental</name>
+        <label>actionAfterDocumental</label>
+        <locationX>578</locationX>
+        <locationY>974</locationY>
+        <defaultConnector>
+            <targetReference>updateCase</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Ambiente_Superficie</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>caseToUpdate.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>caseToUpdate.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica dati contrattuali</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>caseToUpdate.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Superficie</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>assignFields</targetReference>
+            </connector>
+            <label>Ambiente - Superficie</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Valorizzare il processType da passare al component Documentale, in base al tipo di plico che deve essere stampato.</description>
         <name>Check_Tipo_Plico</name>
         <label>Tipo Plico?</label>
@@ -114,6 +169,35 @@
             <targetReference>set_processType_case_type</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>SuperficieAmbiente</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica dati contrattuali</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Superficie</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>processType_Superficie</targetReference>
+            </connector>
+            <label>SuperficieAmbiente</label>
+        </rules>
         <rules>
             <name>Preventivo</name>
             <conditionLogic>or</conditionLogic>
@@ -265,6 +349,27 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>caseToUpdate</name>
+        <label>caseToUpdate</label>
+        <locationX>578</locationX>
+        <locationY>854</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>actionAfterDocumental</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
         <locationX>578</locationX>
@@ -333,6 +438,13 @@
         <locationX>1370</locationX>
         <locationY>638</locationY>
         <inputReference>Get_Order</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updateCase</name>
+        <label>updateCase</label>
+        <locationX>578</locationX>
+        <locationY>1310</locationY>
+        <inputReference>caseToUpdate</inputReference>
     </recordUpdates>
     <screens>
         <name>Screen_Documentale</name>
