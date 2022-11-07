@@ -3,6 +3,7 @@
 * Risoluzione "Debug Should Use Logging Level"
 * Risoluzione "Avoid debug statements since they impact on performance"
 */
+
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_PostSalesManager{
 
@@ -20,6 +21,11 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     }
 
+    public void submitForApproval(SObject inputCase)
+    {
+        Case currentCase = (Case) inputCase;
+        System.enqueueJob(new HDT_QBL_VoltureChangeManager(new List<Case>{currentCase}));
+    }
 
     public void changeQuotationType(SObject inputCase){
 
@@ -135,7 +141,9 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 acc.BillingCity = currentCase.BillingCity__c;
                 acc.BillingCityCode__c = currentCase.BillingCityCode__c;
                 acc.BillingCountry = currentCase.BillingCountry__c;
-                acc.BillingIsAddressVerified__c = currentCase.BillingIsAddressVerified__c;
+                /* Gestione indirizzo Estero */
+                Boolean isAddressVerified = (currentCase.BillingCountry__c != null && currentCase.BillingCountry__c.equalsIgnoreCase('Italia')) ? currentCase.BillingIsAddressVerified__c : true;
+                acc.BillingIsAddressVerified__c = isAddressVerified;
                 acc.BillingPlace__c = currentCase.BillingPlace__c;
                 acc.BillingPostalCode = currentCase.BillingPostalCode__c;
                 acc.BillingState = currentCase.BillingProvince__c;

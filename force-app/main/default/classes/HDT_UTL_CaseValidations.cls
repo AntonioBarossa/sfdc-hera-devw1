@@ -76,7 +76,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         } else if(caseType == 'Chiusura Contatore'){
 
-            result = validateDisattivazioni(fields);
+            result = validateDisattivazioni(fields,currentCase);
 
         } else if(caseType == 'Contratto Non Richiesto'){
 
@@ -134,16 +134,16 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     private String cessazioneValidate(Case currCase, String fields){
         //system.debug('init validate');
-        String result = '';
+        //String result = '';
         HDT_UTL_CityDataTariValidation cityDataTariValidation = new HDT_UTL_CityDataTariValidation();
         if( getFieldValue(fields, 'EffectiveDate__c') > getFieldValue(fields, 'DeclarationDate__c') || getFieldValue(fields, 'EffectiveDate__c') > String.valueOf(Date.today())) {
             //system.debug('Attenzione! La data di decorrenza non può essere maggiore della data dichiarazione e non può essere maggiore della data odierna');
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Attenzione! La data di decorrenza non può essere maggiore della data dichiarazione e non può essere maggiore della data odierna'));
         }
         //system.debug('preClass');
-        result = cityDataTariValidation.validate(fields, currCase.Id);
+        //result = cityDataTariValidation.validate(fields, currCase.Id);
         //system.debug('end validate');
-        return result == null ? JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success')) : result;
+        return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
     }
     
     /*
@@ -1047,30 +1047,31 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-    public String validateDisattivazioni(String fields){
+    public String validateDisattivazioni(String fields,Case currentCase){
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+        Date notBeforeDate = (String.isNotBlank(getFieldValue(fields, 'NotPerformedBefore__c'))) ? Date.valueOf(getFieldValue(fields, 'NotPerformedBefore__c')) : null;
+        Date requestDate   = (String.isNotBlank(getFieldValue(fields, 'WrittenReceiptRequestDate__c'))) ? Date.valueOf(getFieldValue(fields, 'WrittenReceiptRequestDate__c')) : null;
+        Boolean requiredAttachment = false;
+        Boolean isAcqua = false;
 
-        String result;
-
-        Date notBeforeDate = Date.valueOf(getFieldValue(fields, 'NotPerformedBefore__c'));
-        Date requestDate = Date.valueOf(getFieldValue(fields, 'WrittenReceiptRequestDate__c'));
-
-        if(notBeforeDate < System.today()){
-
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data non può essere nel passato'));
-
-        } else if(requestDate > System.today()){
-
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data non può essere nel futuro'));
-
-        } else {
-
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
-
+        if(String.isNotBlank(currentCase.Commodity__c) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
+            isAcqua = true;
+            List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+            requiredAttachment = attachedDocument != null && attachedDocument.size() > 0?true:false;
         }
-
-
+        if(notBeforeDate < System.today()){
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data "Da non eseguire prima del" non può essere nel passato'));
+        } else if(requestDate > System.today()){
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data richiesta non può essere nel futuro'));
+        } else if(isAcqua && notBeforeDate != null && requestDate != null){
+            Date lowBoundary = requestDate.addDays(5);
+            Date upBoundary = requestDate.addDays(60);
+            Boolean isInBoundary = (notBeforeDate >= lowBoundary && notBeforeDate <= upBoundary);
+            result = (!isInBoundary) ? JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data "Da non eseguire prima del" deve essere compresa fra '+lowBoundary.format()+' e '+upBoundary.format())) : result;
+        } else if(isAcqua && !requiredAttachment){
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Inserire un allegato'));
+        }
         return result;
-
     }
 
     public String validateAnnullamento(String fields){

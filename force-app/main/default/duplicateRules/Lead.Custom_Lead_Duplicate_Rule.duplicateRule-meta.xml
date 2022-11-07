@@ -35,9 +35,17 @@
     </duplicateRuleMatchRules>
     <duplicateRuleMatchRules>
         <matchRuleSObjectType>Contact</matchRuleSObjectType>
-        <matchingRule>Contact_Matching</matchingRule>
+        <matchingRule>Contact_Matching_2</matchingRule>
         <objectMapping>
             <inputObject>Lead</inputObject>
+            <mappingFields>
+                <inputField>FiscalCode__c</inputField>
+                <outputField>FiscalCode__c</outputField>
+            </mappingFields>
+            <mappingFields>
+                <inputField xsi:nil="true"/>
+                <outputField>CompanyOwner__c</outputField>
+            </mappingFields>
             <mappingFields>
                 <inputField>Email</inputField>
                 <outputField>Email</outputField>
@@ -51,8 +59,20 @@
                 <outputField>LastName</outputField>
             </mappingFields>
             <mappingFields>
+                <inputField>LeadSource</inputField>
+                <outputField>LeadSource</outputField>
+            </mappingFields>
+            <mappingFields>
                 <inputField>MobilePhone</inputField>
                 <outputField>MobilePhone</outputField>
+            </mappingFields>
+            <mappingFields>
+                <inputField>VATNumber__c</inputField>
+                <outputField>VATNumber__c</outputField>
+            </mappingFields>
+            <mappingFields>
+                <inputField>Phone</inputField>
+                <outputField>Phone</outputField>
             </mappingFields>
             <outputObject>Contact</outputObject>
         </objectMapping>

@@ -7,6 +7,7 @@ global with sharing class ConnectorEntityController {
 		Map<String,Object> attachdata = (Map<String,Object>) message.get('attachdata');
 		Map<String,String> result = new Map<String,String>();
 		wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+		HDT_SRV_LogService logs = new HDT_SRV_LogService('ConnectorEntityController');
 
 		try {
 			if((Integer) message.get('ErrorCode') > 0) {
@@ -80,6 +81,7 @@ global with sharing class ConnectorEntityController {
 			result.put('accountId', activity.Account__c);
 			result.put('contactId', activity.Contact__c);
 			result.put('leadId', activity.Lead__c);
+			logs.insertSingleLog('ConnectorEntityController', 'createActivity', jsonMessage,JSON.serialize(activity), null, activity.Id, null, null);
 		} catch (Exception e) {
 
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
@@ -102,6 +104,7 @@ global with sharing class ConnectorEntityController {
 	global static String closeActivity(String jsonMessage) {
 		Map<String,Object> message = (Map<String,Object>) JSON.deserializeUntyped(jsonMessage);
 		Map<String,Object> attachdata = (Map<String,Object>) message.get('attachdata');
+		HDT_SRV_LogService logs = new HDT_SRV_LogService('ConnectorEntityController');
 		System.debug('#message ' +message);
 		System.debug('#message JSON ' + jsonMessage);
 		System.debug('#attachdata JSON ' + json.serialize(attachdata));
@@ -127,6 +130,7 @@ global with sharing class ConnectorEntityController {
 			}
 
 			update activity;
+			logs.insertSingleLog('ConnectorEntityController', 'closeActivity', jsonMessage,JSON.serialize(activity), null, activity.Id, null, null);
 		} catch (Exception e) {
 			// WIP
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();

@@ -196,9 +196,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.AnnualConsumption__c = servicePoint.AnnualConsumption__c;
         orderToUpdate.isWinback__c = servicePoint.SwitchInWinback__c;
         orderToUpdate.SwitchOutDate__c = servicePoint.SwitchOutDate__c;
-        orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c == null ? ( servicePoint.RecordType.DeveloperName == 'HDT_RT_Acqua' ? 'Regolamentato' : 'Libero') : servicePoint.MarketOrigin__c;
-        //orderToUpdate.Market__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
-        orderToUpdate.Market__c =  'Libero';
+        orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c;
+        orderToUpdate.MarketOrigin__c = (String.isBlank(orderToUpdate.MarketOrigin__c) && servicePoint.RecordType.DeveloperName == 'HDT_RT_Acqua') ? 'Regolamentato' : orderToUpdate.MarketOrigin__c;
+        orderToUpdate.MarketOrigin__c = (String.isBlank(orderToUpdate.MarketOrigin__c) && servicePoint.RecordType.DeveloperName == 'HDT_RT_Ambiente') ? 'Regolamentato' : orderToUpdate.MarketOrigin__c;
+        orderToUpdate.Market__c =   servicePoint.RecordType.DeveloperName == 'HDT_RT_Acqua' || servicePoint.RecordType.DeveloperName == 'HDT_RT_Ambiente'?'Regolamentato':'Libero';
         orderToUpdate.PowerAvailable__c = servicePoint.PowerAvailable__c;
         orderToUpdate.VoltageLevel__c = servicePoint.VoltageLevel__c;
         orderToUpdate.DisconnectibilityPhone__c = servicePoint.DisconnectibilityPhone__c;
@@ -390,6 +391,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.CommercialProduct__c = orderItemList[0].Product2.Name;
             orderToUpdate.VasServiceActivationDate__c = orderItemList[0].DelayEffectiveDate__c;
             orderToUpdate.CommercialProductLink__c = orderItemList[0].Product2Id;
+            orderToUpdate.ApprovalType__c           = orderItemList[0].Product2.ApprovalType__c;
+            orderToUpdate.IntegratedSAP__c          = orderItemList[0].Product2.IntegratedSAP__c;
+            orderToUpdate.Surface__c                = orderItemList[0].Surface__c;
+            orderToUpdate.EmploymentMonthsInYear__c = orderItemList[0].MonthsOccupYear__c;
         }
         
     }
@@ -436,7 +441,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             }
         }
         
-        if((originalOrder.ServicePoint__c != null && !sconti.contains(mainItems[0].Product2.Family)) || mainItems.isEmpty()){
+        if((originalOrder.ServicePoint__c != null && !sconti.contains(mainItems[0].Product2.Family) && !'Opzioni TARI'.equalsIgnoreCase(mainItems[0].Product2.Family)) || mainItems.isEmpty()){
             return;
         }
         if(!sconti.contains(mainItems[0].Product2.Family)){
@@ -464,6 +469,11 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 Sobject reference = originalOrder.OrderReference__c!=null? (Sobject) originalOrder.OrderReference__r : (Sobject) originalOrder.ContractReference__r;
                 orderToUpdate.ServicePointCode__c=(String) reference.getSObject('ServicePoint__r')?.get('ServicePointCode__c');
                 orderToUpdate.ServicePoint__c = (String) reference.get('ServicePoint__c');
+            }else if('Opzioni TARI'.equalsIgnoreCase(mainItems[0].Product2.Family) && mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c!=null){
+                List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c);
+                if(!orderItemsPod.isEmpty()){
+                    orderToUpdate.OrderReference__c=orderItemsPod[0].OrderId;
+                }
             }
         }
         
@@ -524,12 +534,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                     }
                 }
             }
-        }
-        if(false){
-            orderToUpdate.ApprovalType__c           = mainItems[0].Product2.ApprovalType__c;
-            orderToUpdate.IntegratedSAP__c          = mainItems[0].Product2.IntegratedSAP__c;
-            orderToUpdate.Surface__c                = mainItems[0].Surface__c;
-            orderToUpdate.EmploymentMonthsInYear__c = mainItems[0].MonthsOccupYear__c;
         }
         if(orderToUpdate.ServicePoint__c != null)
         {

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_CreditCheckKO</fullName>
     <active>true</active>
@@ -2704,6 +2704,10 @@
         <values>
             <fullName>KO Credit Check</fullName>
             <default>true</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>

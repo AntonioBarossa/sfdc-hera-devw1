@@ -1163,42 +1163,55 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         if (this.servicePointRetrievedData != undefined) {
 
             if (this.servicePointRetrievedData['SupplyStreet__c'] != this.theRecord['Via']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyStreet__c'] = this.theRecord['Via'];
             }
             if (this.servicePointRetrievedData['SupplyCity__c'] != this.theRecord['Comune']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyCity__c'] = this.theRecord['Comune'];
             }
             if (this.servicePointRetrievedData['SupplyPostalCode__c'] != this.theRecord['CAP']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyPostalCode__c'] = this.theRecord['CAP'];
             }
             if (this.servicePointRetrievedData['SupplyCountry__c'] != this.theRecord['Stato']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyCountry__c'] = this.theRecord['Stato'];
             }
             if(!this.servicePointRetrievedData['SupplyCountry__c']){
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyCountry__c'] = 'ITALIA';
             }
             if (this.servicePointRetrievedData['SupplyProvince__c'] != this.theRecord['Provincia']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyProvince__c'] = this.theRecord['Provincia'];
             }
             if (this.servicePointRetrievedData['SupplySAPCityCode__c'] != this.theRecord['Codice Comune SAP']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplySAPCityCode__c'] = this.theRecord['Codice Comune SAP'];
             }
             if (this.servicePointRetrievedData['SupplySAPStreetCode__c'] != this.theRecord['Codice Via Stradario SAP']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplySAPStreetCode__c'] = this.theRecord['Codice Via Stradario SAP'];
             }
             if (this.servicePointRetrievedData['SupplyStreetNumberExtension__c'] != this.theRecord['Estens.Civico']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyStreetNumberExtension__c'] = this.theRecord['Estens.Civico'];
             }
             if (this.servicePointRetrievedData['SupplyStreetNumber__c'] != this.theRecord['Civico']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyStreetNumber__c'] = this.theRecord['Civico'];
             }
             if (this.servicePointRetrievedData['SupplyIsAddressVerified__c'] != this.theRecord['Flag Verificato']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyIsAddressVerified__c'] = this.theRecord['Flag Verificato'];
             }
             if (this.servicePointRetrievedData['SupplyPlaceCode__c'] != this.theRecord['Codice Localita']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyPlaceCode__c'] = this.theRecord['Codice Localita'];
             }
             if (this.servicePointRetrievedData['SupplyPlace__c'] != this.theRecord['Localita']) {
+                this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyPlace__c'] = this.theRecord['Localita'];
             }
         }
@@ -1687,7 +1700,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
         this.loading = true;
         let addressRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
-        
+        // Calcolo ATO per Idrico
+        if(this.allSubmitedFields['CommoditySector__c'] === 'Acqua' ){
+            let ato = await getATO({comune : addressRecord['Comune']});
+            this.allSubmitedFields['ATO__c'] = ato;
+        }
+
         if(this.spCodeChanged || this.allSubmitedFields['Distributor__c'] == undefined || this.allSubmitedFields['Distributor__c'].trim() == ''){
             
             if((this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica' && this.allSubmitedFields['PlugPresence__c'] == 'Si' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '') ||
@@ -1709,11 +1727,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     }
                     let comune = servizio == 'Gas' || servizio == 'Acqua' || servizio == 'Ambiente' ? addressRecord['Comune'] : '';
                     let presenzaAllaccio = this.allSubmitedFields['PlugPresence__c'] != undefined ? this.allSubmitedFields['PlugPresence__c'] : '';
-
-                    if(servizio === 'Acqua'){
-                        let ato = await getATO({comune : comune});
-                        this.allSubmitedFields['ATO__c'] = ato;
-                    }
 
                     getDistributorPointCode({code : radicePunto, commodity: servizio, comune : comune, presenzaAllaccio: presenzaAllaccio}).then(data => {
 

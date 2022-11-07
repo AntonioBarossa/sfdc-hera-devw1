@@ -430,6 +430,7 @@ public inherited sharing class HDT_QR_Order {
             SystemModstamp,
             Status,
             ContractSigned__c,
+            ContractAccountCode__c,
             SignedDate__c,
             SignatureMethod__c,
             DocSendingMethod__c,
@@ -606,6 +607,8 @@ public inherited sharing class HDT_QR_Order {
             SBQQ__Quote__c,
             CommercialProductCode__c,
             DocumentPackage__c,
+            ApprovalType__c,
+            IntegratedSAP__c,
             CommercialProduct__c,
             Type
             FROM
@@ -670,6 +673,8 @@ public inherited sharing class HDT_QR_Order {
             ParentOrder__r.Phase__c,
             IsEarlyActivation__c,
             DistributorCode__c,
+            ApprovalType__c,
+            IntegratedSAP__c,
             Commodity__c,
             ProcessCode__c
             FROM

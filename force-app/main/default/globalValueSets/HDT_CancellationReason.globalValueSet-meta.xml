@@ -46,6 +46,11 @@
         <label>Annullo voltura</label>
     </customValue>
     <customValue>
+        <fullName>Assenza del presupposto di applicazione del tributo</fullName>
+        <default>false</default>
+        <label>Assenza del presupposto di applicazione del tributo</label>
+    </customValue>
+    <customValue>
         <fullName>Autolettura non acquisibile</fullName>
         <default>false</default>
         <label>Autolettura non acquisibile</label>
@@ -119,6 +124,11 @@
         <fullName>Installazione Fallita</fullName>
         <default>false</default>
         <label>Installazione Fallita</label>
+    </customValue>
+    <customValue>
+        <fullName>Mancanza del presupposto</fullName>
+        <default>false</default>
+        <label>Mancanza del presupposto</label>
     </customValue>
     <customValue>
         <fullName>Mancanza titolarità</fullName>
@@ -209,6 +219,21 @@
         <fullName>Volontà estorta</fullName>
         <default>false</default>
         <label>Volontà estorta</label>
+    </customValue>
+    <customValue>
+        <fullName>Ammissibilità KO</fullName>
+        <default>false</default>
+        <label>Ammissibilità KO</label>
+    </customValue>
+	<customValue>
+        <fullName>Credit Check KO</fullName>
+        <default>false</default>
+        <label>Credit Check KO</label>
+    </customValue>
+	<customValue>
+        <fullName>Esito KO da SII</fullName>
+        <default>false</default>
+        <label>Esito KO da SII</label>
     </customValue>
     <masterLabel>Motivazione Annullamento</masterLabel>
     <sorted>true</sorted>

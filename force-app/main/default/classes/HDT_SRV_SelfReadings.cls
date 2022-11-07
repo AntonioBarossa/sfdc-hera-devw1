@@ -136,8 +136,13 @@ public with sharing class HDT_SRV_SelfReadings {
         if (cases.isEmpty()) {
             return null;
         }
-
+    
         Case readingCase = cases[0];
+        if(String.isNotBlank(readingCase.CommodityFormula__c) && ('Acqua'.equalsIgnoreCase(readingCase.CommodityFormula__c) || 'Teleriscaldamento'.equalsIgnoreCase(readingCase.CommodityFormula__c))){
+            inputParams.responseCode = 200;
+            return inputParams;
+        }
+
         System.debug(LoggingLevel.DEBUG, 'readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
 
         String readingFields = 'Id';
@@ -289,7 +294,8 @@ public with sharing class HDT_SRV_SelfReadings {
                 String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
                 String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
                 readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
-                HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                //Commentato perchè generava un doppio update del case
+                //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
                     if(enableTurbobilling && isEnergy){
                         HDT_UTL_Case.createActivity(caseId, errorMessage, 'CBS_AUT002__ESITO_KO_DA_SAP', 'Esito KO da SAP');
@@ -318,7 +324,7 @@ public with sharing class HDT_SRV_SelfReadings {
             }
         } else {
             if(enableTurbobilling && isEnergy){
-                readingCaseToUpdate.TecnicalPhase__c = 'Esito KO da SAP';
+                readingCaseToUpdate.TecnicalPhase__c = 'Esito OK da SAP';
                 HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
             }else{
                 // L'aggiornamento a Check preliminari OK non possiamo farlo adesso, poichè va fatta prima la seconda callout per l'invio letture a SAP.
@@ -373,6 +379,9 @@ public with sharing class HDT_SRV_SelfReadings {
         HDT_WRP_SelfReadingResponse retWrap = new HDT_WRP_SelfReadingResponse();
         retWrap.isResponseOk = true;
 
+        HDT_QR_Case queryCase = new HDT_QR_Case();
+        List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description,CommodityFormula__c');
+
         Case readingCaseToUpdate = new Case();
         readingCaseToUpdate.Id = caseId;
         /*
@@ -391,7 +400,7 @@ public with sharing class HDT_SRV_SelfReadings {
             // Infine settiamo l'esito OK dell'Invio Lettura.
             Case readingCaseToUpdateInvioLetture = new Case(); // Necessario un nuovo oggetto Case, altrimenti non sbianca la TechnicalPhase precedente.
             readingCaseToUpdateInvioLetture.Id = readingCaseToUpdate.Id;
-            readingCaseToUpdateInvioLetture.Phase__c = 'Inviata a SAP';
+            readingCaseToUpdateInvioLetture.Phase__c = !cases.isEmpty() && String.isNotBlank(cases[0].CommodityFormula__c) && 'Acqua'.equalsIgnoreCase(cases[0].CommodityFormula__c) ?  'Da Inviare' : 'Inviata a SAP';
             String serializedCase = JSON.serialize(readingCaseToUpdateInvioLetture);
             updateFuture(serializedCase);
         }
@@ -408,6 +417,8 @@ public with sharing class HDT_SRV_SelfReadings {
         HDT_WRP_SelfReadingResponse retWrap = new HDT_WRP_SelfReadingResponse();
         retWrap.isResponseOk = true;
 
+        HDT_QR_Case queryCase = new HDT_QR_Case();
+        List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description,CommodityFormula__c');
         Case readingCaseToUpdate = new Case();
         readingCaseToUpdate.Id = caseId;
         /*
@@ -420,7 +431,7 @@ public with sharing class HDT_SRV_SelfReadings {
             retWrap.isResponseOk = false;
             retWrap.checkAutoletturaDescription = getErrorMessage(sapIntegration);
         } else {
-            readingCaseToUpdate.Phase__c = 'Inviata a SAP';
+            readingCaseToUpdate.Phase__c = !cases.isEmpty() && String.isNotBlank(cases[0].CommodityFormula__c) && 'Acqua'.equalsIgnoreCase(cases[0].CommodityFormula__c) ?  'Da Inviare' : 'Inviata a SAP';
             String serializedCase = JSON.serialize(readingCaseToUpdate);
             updateFuture(serializedCase);
         }

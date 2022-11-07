@@ -143,6 +143,40 @@
             <valueName>Altro</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <controllingFieldValue>Fotovoltaico</controllingFieldValue>
+            <controllingFieldValue>Periodicità e fattura di chiusura</controllingFieldValue>
+            <controllingFieldValue>Consumi stimati errati</controllingFieldValue>
+            <controllingFieldValue>Modulistica</controllingFieldValue>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <controllingFieldValue>Privacy</controllingFieldValue>
+            <controllingFieldValue>Indennizzi</controllingFieldValue>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <controllingFieldValue>Erogazioni</controllingFieldValue>
+            <controllingFieldValue>Cessazioni</controllingFieldValue>
+            <controllingFieldValue>Validazioni</controllingFieldValue>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <controllingFieldValue>Continuità</controllingFieldValue>
+            <controllingFieldValue>Mancate letture</controllingFieldValue>
+            <controllingFieldValue>Verifica e ricostruzioni</controllingFieldValue>
+            <controllingFieldValue>Cambio misuratore</controllingFieldValue>
+            <controllingFieldValue>Ricalcoli</controllingFieldValue>
+            <controllingFieldValue>Condizioni economiche nuovi contratti</controllingFieldValue>
+            <controllingFieldValue>Cambio fornitore</controllingFieldValue>
+            <controllingFieldValue>Cmor (Corrispettivo morosità pregresse)</controllingFieldValue>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
+            <controllingFieldValue>Modifiche unilaterali</controllingFieldValue>
+            <controllingFieldValue>Recesso</controllingFieldValue>
+            <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
+            <controllingFieldValue>Autolettura (uso della)</controllingFieldValue>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <controllingFieldValue>Sicurezza</controllingFieldValue>
+            <controllingFieldValue>Valori della tensione/pressione</controllingFieldValue>
+            <valueName>Rinnovo condizioni economiche</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Indennizzi</controllingFieldValue>
             <valueName>Mancata/ritardata erogazione</valueName>
         </valueSettings>

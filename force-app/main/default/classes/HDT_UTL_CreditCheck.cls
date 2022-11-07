@@ -66,6 +66,9 @@ public with sharing class HDT_UTL_CreditCheck {
             if('Gas'.equalsIgnoreCase(o.ServicePoint__r.CommoditySector__c)){
                 iwd.commodity = 'GAS';
             }
+            if('Acqua'.equalsIgnoreCase(o.ServicePoint__r.CommoditySector__c)){
+                iwd.commodity = 'ACQUA';
+            }
             if (o.IsVAS__c){
                 iwd.annualConsumption = HDT_LC_ChildOrderProcessPrecheck.getConsumptionAnnualForVas(o.Id); 
             }else if(o.ServicePoint__r?.AnnualConsumption__c != null){
@@ -84,11 +87,17 @@ public with sharing class HDT_UTL_CreditCheck {
             req.crmId = String.valueOf(o.Id).substring(0,15);
             req.userId = o.CreatedById;
             req.jobTitle = o.ChannelTransCode__c;
-            req.internalCustomerId = o.Account?.CustomerCode__c;
+            req.internalCustomerId = o.Account != null?String.valueOf(o.Account.Id).substring(7,15):'';
             req.companyName = String.isNotBlank(o.Account?.FirstName__c)? o.Account.FirstName__c+separator+o.Account.LastName__c : o.Account?.LastName__c;
             req.externalCustomerId = String.isNotBlank(o.Account?.FiscalCode__c)? o.Account.FiscalCode__c : o.Account?.VATNumber__c;
             req.secondaryCustomerId = o.Account?.VATNumber__c;
-            req.bpClass =  bpClass;
+            /**
+             * FIX TK 914861C
+             * Description: Atos ha richiesto di inviare la marcatura per esteso. In precedenza veniva inviata la marcatura AS-IS Siebel.
+             * Azioni: Commentata riga 96 e aggiunta riga 97
+             * **/
+            //req.bpClass =  bpClass;
+            req.bpClass = o.Account?.CustomerMarking__c;
             req.bpCategory = o.Account?.Category__c;
             req.bpType = o.Account?.CustomerType__c;
             req.operation =  o.ProcessType__c;
@@ -115,7 +124,8 @@ public with sharing class HDT_UTL_CreditCheck {
                 
                 
                 req.bpAlternative = o.ServicePoint__r?.Account__r?.CustomerCode__c;
-                req.alternativeCustomerId = fiscalData;
+                //ticket 905174C email del 02/11/2022
+                //req.alternativeCustomerId = fiscalData;
             }
             
         }
@@ -219,7 +229,10 @@ public with sharing class HDT_UTL_CreditCheck {
         String rtDeveloperName = Schema.SObjectType.Order.getRecordTypeInfosById().get(newOrder.RecordTypeId).getDeveloperName();
         Boolean changePhase = String.isNotBlank(newOrder.Phase__c) ? !newOrder.Phase__c.equalsIgnoreCase(oldPhase) : String.isNotBlank(oldPhase);
         DateTime nowDateTime = DateTime.now();
-        if ( changePhase && warningStatusList.contains(newOrder.Phase__c?.toUpperCase())
+        String note = newOrder.isTransition__c && String.isNotBlank(newOrder.Note__c)? newOrder.Note__c : '';
+        if ( changePhase && warningStatusList.contains(newOrder.Phase__c?.toUpperCase()) 
+            //modifica per il transitorio Voltura Rifiutata altrimenti bloccherebbe l'invio verso siebel.
+            && !note.containsIgnoreCase('Voltura Rifiutata')
             && HDT_UTL_OrderProcess.checkRecordTypeForCreditCheck(rtDeveloperName, newOrder)
             && (newOrder.CreditCheckInProgress__c || 'KO'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c) || 'KO'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c))){
                 String newPhase = newOrder.CreditCheckInProgress__c? 'Attesa Credit Check' : 'Credit Check KO';

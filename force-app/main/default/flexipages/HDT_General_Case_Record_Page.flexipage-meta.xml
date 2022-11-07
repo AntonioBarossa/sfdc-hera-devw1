@@ -199,16 +199,8 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Case.Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>AttachedContentDocuments</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer6</identifier>
+                <componentName>hdtCaseFileUpload</componentName>
+                <identifier>c_hdtCaseFileUpload</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -220,6 +212,51 @@
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
                 <identifier>force_detailPanel</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>userInputFlowName</name>
+                    <value>Pagamenti_Piano_Rateizzazione_TARI_View</value>
+                </componentInstanceProperties>
+                <componentName>hdtRecordCommodityViewForm</componentName>
+                <identifier>c_hdtRecordCommodityViewForm</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Commodity__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Ambiente</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Piano Rateizzazione</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>userInputFlowName</name>
+                </componentInstanceProperties>
+                <componentName>hdtRecordCommodityViewForm</componentName>
+                <identifier>c_hdtRecordCommodityViewForm2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Commodity__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Ambiente</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Piano Rateizzazione</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -944,6 +981,16 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Case.HDT_ModificaDocumentiFatture</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Commodity__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Ambiente</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -1044,6 +1091,24 @@
                 </componentInstanceProperties>
                 <componentName>wrts_prcgvr:ProcessActionListLtgCmp_1_0</componentName>
                 <identifier>wrts_prcgvr_ProcessActionListLtgCmp_1_0</identifier>
+                <visibilityRule>
+                    <booleanFilter>(1 AND 2) OR 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Commodity__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Ambiente</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Status}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>New</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Commodity__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Ambiente</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

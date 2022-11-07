@@ -322,7 +322,7 @@
         <locationX>578</locationX>
         <locationY>1430</locationY>
         <defaultConnector>
-            <targetReference>Screen_Finale</targetReference>
+            <targetReference>Completa_processo</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Chiudi Attività</defaultConnectorLabel>
         <rules>
@@ -432,6 +432,7 @@
             <label>RT_HDT_CloseDistributorComunication</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>discordantDataManagement</name>
         <dataType>Boolean</dataType>
@@ -748,6 +749,22 @@
             <name>sObjectRecordToCancell</name>
             <value>
                 <stringValue>Order</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Completa_processo</name>
+        <label>Completa processo</label>
+        <locationX>974</locationX>
+        <locationY>1550</locationY>
+        <connector>
+            <targetReference>Screen_Finale</targetReference>
+        </connector>
+        <flowName>HDT_FL_CompleteProcess</flowName>
+        <inputAssignments>
+            <name>inputCustomAct</name>
+            <value>
+                <elementReference>Get_Activity.Id</elementReference>
             </value>
         </inputAssignments>
     </subflows>

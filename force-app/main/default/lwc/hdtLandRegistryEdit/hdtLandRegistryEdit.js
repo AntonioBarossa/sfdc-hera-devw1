@@ -7,7 +7,7 @@ import LNDRGS_OBJ from '@salesforce/schema/LandRegistry__c';
 import getCadastralCategories from '@salesforce/apex/HDT_UTL_LandRegistry.getCadastralCategories';
 import getCities from '@salesforce/apex/HDT_UTL_LandRegistry.getCities';
 
-const RT_NAME = 'HDT_RT_DatiCatastali_PraticaTARI';
+const RT_NAME = 'DatiCatastali - Pratica Ambiente';
 const FORM_LOAD_TO_DO = 'TO_DO';
 const FORM_LOAD_ALMOST_DONE = 'ALMOST_DONE';
 const FORM_LOAD_DONE = 'DONE';

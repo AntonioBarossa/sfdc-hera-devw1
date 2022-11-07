@@ -811,6 +811,84 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.dispatchEvent(toastErrorMessage);
                     return;
                 }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='DomesticResidentNumber__c']") !== null 
+                    && (this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === ''
+                        || this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Numero Componenti Domestico Residente',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='HydrantMouthsNumber__c']") !== null 
+                && (this.template.querySelector("[data-id='HydrantMouthsNumber__c']").value === ''
+                    || this.template.querySelector("[data-id='HydrantMouthsNumber__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Numero Bocche Idrante',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+                }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='IntendedUse__c']") !== null 
+                && (this.template.querySelector("[data-id='IntendedUse__c']").value === ''
+                    || this.template.querySelector("[data-id='IntendedUse__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Destinazione Uso',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+                }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']") !== null 
+                && (this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']").value === ''
+                    || this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Unita abitative domestico non residente',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+                }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='NotDomesticHousingUnit__c']") !== null 
+                && (this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value === ''
+                    || this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Unita abitative non domestiche',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+                }
+                if(this.template.querySelector("[data-id='ConnectionType__c']") !== null 
+                    && (this.template.querySelector("[data-id='ConnectionType__c']").value === ''
+                        || this.template.querySelector("[data-id='ConnectionType__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Tipo di Connessione',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
                 if(this.template.querySelector("[data-id='ConnectionType__c']") !== null 
                     && (this.template.querySelector("[data-id='ConnectionType__c']").value === ''
                         || this.template.querySelector("[data-id='ConnectionType__c']").value === null)) {

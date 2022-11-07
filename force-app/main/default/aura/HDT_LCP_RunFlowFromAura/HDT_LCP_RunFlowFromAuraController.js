@@ -166,7 +166,7 @@
             if(processType === 'Annullamento prestazione' || processType === 'Annullamento segnalazioni' || processType === 'Ripristina fase' || processType === 'Ripensamento'
                 || processType === 'KO Definitivo' || processType === 'KO Forzato' || processType === 'KO Risolto' 
                 || processType === 'Modifica dati contrattuali' || processType === 'Modifica post accertamento' || processType === 'AnnullamentoVarIndFornitura'
-                || processType === 'Cessazione' || processType === 'Cessazione post accertamento' || processType === 'Reclamo da cittadino' || processType === 'Posizionamento contenitore'
+                || processType === 'Cessazione' || processType === 'Cessazione post accertamento' || processType === 'Variazione indirizzo di fornitura tari' || processType === 'Reclamo da cittadino' || processType === 'Posizionamento contenitore'
                 || processType === 'Annullamento comunicazione pagamenti tari' || processType ==='Annullamento doppi pagamenti tari' || processType ==='Annullamento storno rateizzazione tari' || processType ==='Annullamento errore fatturazione'
                 || processType ==='Annullamento rimborso tari' || processType ==='Annullamento contratti TARI' || processType ==='Annullamento prestazione tari' || processType === 'Sospensione' || processType === 'Chiusura'){
 
@@ -249,8 +249,19 @@
 
         console.log('## inputVariables -> ');
         inputVariables.forEach(e => console.log('# ' + e.name + '- ' + e.value));
-
-        flow.startFlow(flowName, inputVariables);
+        var firstRun = myPageRef.state.c__firstRun;
+        if(!firstRun){
+            var newState = Object.assign({}, myPageRef.state, {c__firstRun:'true'});
+            component.find("navService").navigate({
+                type: myPageRef.type,
+                attributes: myPageRef.attributes,
+                state: newState
+            });
+            flow.startFlow(flowName, inputVariables);
+        }else{
+            helper.finishFlow(component, null);
+        }
+        
     },
     
     handleStatusChange : function (component, event, helper) {

@@ -48,6 +48,10 @@
                 <behavior>Readonly</behavior>
                 <field>DL155Place__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Iniziativa__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

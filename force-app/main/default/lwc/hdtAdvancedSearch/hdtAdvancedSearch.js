@@ -148,12 +148,6 @@ export default class HdtAdvancedSearch extends LightningElement {
         }
         this.maxRowSelected = (this.maxRowSelected ===false) ? 1 : this.originalData.length;        
 
-        if (this.maxRowSelected ===false){
-            this.maxRowSelected= 1
-        }else {
-            this.maxRowSelected = this.originalData.length
-        }
-
         getCustomMetadataTwo({processType:this.processtype,targetObject:this.targetObject}).then(data =>{
             console.log('targetObject XXX'+ JSON.stringify(this.targetobject));
             console.log('processType XXX'+ JSON.stringify(this.processtype));
@@ -395,9 +389,9 @@ export default class HdtAdvancedSearch extends LightningElement {
      * Create Data-Table
      */
     createTable(data) {
-        let i, j, temporary, chunk = 5;
+        let i, temporary, chunk = 5;
         this.pages = [];
-        for (i = 0, j = data.length; i < j; i += chunk) {
+        for (i = 0; i < data.length; i += chunk) {
             temporary = data.slice(i, i + chunk);
             this.pages.push(temporary);
         }
@@ -407,9 +401,7 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     reLoadTable() {
         this.tableData = this.pages[this.currentPage];
-
         console.log('tableData********'+ JSON.stringify(this.tableData));
-
     }
 
     nextPage() {
@@ -531,9 +523,23 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.isRicercainSAP= true;
             this.searchInputValue = event;
             console.log('#Length Event >>> ' + this.searchInputValue.length);
+            /**
+             * NTT 02112022
+             * Introdotto check sul queryType (checkbox) in quanto per l'h2o il pod ha una lunghezza inferiore ai 14
+             * E' possibile modificare il codice valorizzando il contractCode solo se il valore inizia per 3
+            */
             let contractCode = this.searchInputValue.length >= 14 ? '' : this.searchInputValue;
             let servicePointCode = this.searchInputValue.length >= 14 ? this.searchInputValue : '';
             let implantCode = this.searchInputValue.length === 10 && this.searchInputValue.startsWith("4")? this.searchInputValue:'';
+            if(this.queryType != null){
+                if(this.queryType.includes('pod')){
+                    contractCode = '';
+                    servicePointCode = this.searchInputValue;
+                }
+            }
+            //let contractCode = this.searchInputValue.length >= 14 ? '' : this.searchInputValue;
+            //let servicePointCode = this.searchInputValue.length >= 14 ? this.searchInputValue : '';
+            //let implantCode = this.searchInputValue.length === 10 && this.searchInputValue.startsWith("4")? this.searchInputValue:'';
             this.dispatchEvent(new CustomEvent('ricercainsap', {
                 detail: this.isRicercainSAP
             }));
@@ -670,7 +676,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                         }
                     }
                 }
-                console.log(this.originalData);
+                console.log('this.originalData >>> ' + this.originalData);
                 this.createTable(this.originalData); 
                 this.formatTableHeaderColumns(this.originalData);
                 var my_ids = [];

@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 14-09-2022
+ * @last modified on  : 24-10-2022
  * @last modified by  : Giacinto Florio
 **/
 @isTest
@@ -43,6 +43,43 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         HDT_UTL_ActivityCloseActions.getOnCloseActions(caso,activity, activityType);
         Test.stopTest();
 
+    }
+
+    @isTest 
+    static void executeOnCloseActionsCaseTest(){
+
+        Case caso = new Case();
+        caso.Type = 'Riduzione Superficie rifiuti spec promiscui';
+        caso.Phase__c = '';
+        insert caso;
+        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+        activity.Approved__c = 'si';
+        insert activity;
+
+        Test.startTest();
+        activity.wrts_prcgvr__Status__c = 'Chiusa';
+        activity.Case__c = caso.Id;
+        update activity;
+        System.assertEquals(activity.wrts_prcgvr__Status__c, 'Chiusa', 'OK');
+        Test.stopTest();
+    }
+
+    @isTest 
+    static void executeOnCloseActionsOrderTest(){
+
+        Account account = HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti')[0];
+        Order ordine = HDT_UTL_DataFactoryTst.createOrder(1, false, account.id, 'Bozza')[0];
+        insert ordine;
+        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+        activity.Approved__c = 'si';
+        insert activity;
+
+        Test.startTest();
+        activity.wrts_prcgvr__Status__c = 'Chiusa';
+        activity.Order__c = ordine.Id;
+        update activity;
+        System.assertEquals(activity.wrts_prcgvr__Status__c, 'Chiusa', 'OK');
+        Test.stopTest();
     }
 
     @isTest 
@@ -100,10 +137,10 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
 
         Test.startTest();
         HDT_UTL_ActivityCloseActions.HDT_WRP_Actions action = HDT_UTL_ActivityCloseActions.getOnCloseActions(ord, activity, activityType);
-        system.assertEquals(action.activityType, 'Contattare Cliente', 'Unexpected Logic');
+        system.assertEquals(action.activityType, 'Contattare Cliente', 'OK');
 		activity.Approved__c = 'si';
         action= HDT_UTL_ActivityCloseActions.getOnCloseActions(ord, activity, activityType);
-        system.assertEquals(action.phase, 'Documentazione Validata', 'Unexpected Logic');
+        system.assertEquals(action.phase, 'Documentazione Validata', 'OK');
         Test.stopTest();
 
     }

@@ -70,6 +70,10 @@
                 <behavior>Readonly</behavior>
                 <field>AccountClassCode__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ActivationDate__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

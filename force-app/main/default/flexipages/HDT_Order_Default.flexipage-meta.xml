@@ -461,7 +461,7 @@
                         <valueListItems>
                             <value>Order.Validazione_Documenti</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND (2 OR (3 AND 4))</booleanFilter>
+                                <booleanFilter>1 AND 5 AND (2 OR (3 AND 4))</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.IsVAS__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -481,6 +481,27 @@
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>HDT_RT_Voltura</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CommodityFormula__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Ambiente</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Order.Validazione_Documentale_Waste</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.CommodityFormula__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Ambiente</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>In attesa validazione</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

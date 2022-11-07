@@ -56,6 +56,16 @@ public inherited sharing class HDT_LC_CampaignsController {
             }
             else if(objectName.equalsIgnoreCase('Lead')) {
                 return  campaignMemberQr.getCampaignsByLeadPartner(id, currentUser);
+            }else if(objectName.equalsIgnoreCase('Account')) {
+                //return all active campaigns related to all contacts related to this Account
+                List<String> contacts = contactQr.getContactsIdByAccountId(id);
+                if (String.isNotBlank(category)) {
+                    if (String.isNotBlank(channel)) {
+                        return campaignMemberQr.filterCampaignsByCategoryAndChannelWithStatus(contacts, category, channel);
+                    }
+                    return campaignMemberQr.filterCampaignsByCategoryWithStatus(contacts, category);
+                }
+                return campaignMemberQr.getCampaignsFilteredByContactsWithStatus(contacts);
             }
             else {
                 return null;
@@ -442,7 +452,7 @@ public inherited sharing class HDT_LC_CampaignsController {
     @AuraEnabled(cacheable=true)
     public static CampaignMember getCampaignAndAccountByMember(String campaignMemberId){
         try {
-            CampaignMember cm = [SELECT Id, GenericField1__c ,Contact.AccountId, CampaignId, Campaign.CaseCategory__c, Campaign.CaseSubCategory__c, Campaign.ProcessType__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED];
+            CampaignMember cm = [SELECT Id, GenericField1__c ,Contact.AccountId, LeadId, CampaignId, Campaign.CaseCategory__c, Campaign.CaseSubCategory__c, Campaign.ProcessType__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED];
             return cm;
         }
         catch (Exception e) {
@@ -549,4 +559,5 @@ public inherited sharing class HDT_LC_CampaignsController {
         }
         return false;
     }
+    
 }

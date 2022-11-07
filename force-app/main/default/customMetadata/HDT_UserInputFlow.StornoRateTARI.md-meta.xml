@@ -10,7 +10,7 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {
-&quot;FieldName&quot; : &quot;ReasonStornoRate__c&quot;,
+&quot;FieldName&quot; : &quot;RateReversalReason__c&quot;,
 &quot;Required&quot; : true,
 &quot;Column&quot; : 1,
 &quot;ReadOnly&quot;:false
@@ -26,8 +26,8 @@
         <value xsi:type="xsd:string">[
 {&quot;FieldName&quot;:&quot;AccountId&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1, &quot;ReadOnly&quot;:true},
 {&quot;FieldName&quot;:&quot;BillingProfile__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;PhoneNumber__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
-{&quot;FieldName&quot; : &quot;InstallmentPlanNumber__c&quot;,&quot;Required&quot; : false,&quot;Column&quot; : 2}
+{&quot;FieldName&quot;:&quot;ContactPhone&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
+{&quot;FieldName&quot; : &quot;ContactMobile&quot;,&quot;Required&quot; : false,&quot;Column&quot; : 2}
 ]</value>
     </values>
     <values>

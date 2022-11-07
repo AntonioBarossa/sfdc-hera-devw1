@@ -3,7 +3,7 @@
     <fullName>HDT_RT_StornoRateizzazione_TARI</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>HDT_RT_StornoRateizzazione_TARI</label>
+    <label>Storno Rateizzazione Ambiente</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
@@ -8224,7 +8224,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10495,21 +10495,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>PurificationPay__c</picklist>
-        <values>
-            <fullName>Esente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Intera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ridotta</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>RateReversalReason__c</picklist>
         <values>
             <fullName>Piano Rate errato</fullName>
@@ -11506,17 +11491,6 @@
         </values>
         <values>
             <fullName>G_ICD-Imposta Usi Domestici</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SewerPay__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>

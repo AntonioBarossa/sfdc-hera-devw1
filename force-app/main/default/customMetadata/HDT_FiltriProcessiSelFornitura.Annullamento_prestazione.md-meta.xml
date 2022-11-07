@@ -15,6 +15,10 @@
         <value xsi:type="xsd:string">NO</value>
     </values>
     <values>
+        <field>RateCategory__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>StatoContratto__c</field>
         <value xsi:nil="true"/>
     </values>
@@ -28,6 +32,6 @@
     </values>
     <values>
         <field>TipoServizio__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Acqua,Ambiente</value>
     </values>
 </CustomMetadata>

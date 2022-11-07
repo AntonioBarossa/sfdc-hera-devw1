@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Causal_Process_to_Cancell__c</field>
-        <value xsi:type="xsd:string">SWG1</value>
+        <value xsi:type="xsd:string">SG1</value>
     </values>
     <values>
         <field>SelectedProcessCancellationReason__c</field>
