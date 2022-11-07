@@ -64,7 +64,7 @@ public with sharing class HDT_UTL_CampaignMember {
             campaignIds.add(item.CampaignId);
         }
       
-        Map <Id,Campaign> campMap=new Map<Id, Campaign>([SELECT Id, EndDate FROM Campaign WHERE Id IN: campaignIds]);
+        Map <Id,Campaign> campMap=new Map<Id, Campaign>([SELECT Id, EndDate, Tipology__c FROM Campaign WHERE Id IN: campaignIds]);
 
         for (Integer i = 0; i < newCampaignMember.size(); i++) {
             if ( campMap.containsKey(newCampaignMember[i].CampaignId)) {
@@ -72,7 +72,8 @@ public with sharing class HDT_UTL_CampaignMember {
                     newCampaignMember[i].NumberingValidityEndDate__c=campMap.get(newCampaignMember[i].CampaignId).EndDate;
                 }
                 else{
-                    newCampaignMember[i].NumberingValidityEndDate__c=Date.today().addYears(1);
+                    newCampaignMember[i].NumberingValidityEndDate__c=campMap.get(newCampaignMember[i].CampaignId).Tipology__c=='Quality Call' ? System.today().addDays(50) : Date.today().addYears(1); 
+                    //newCampaignMember[i].NumberingValidityEndDate__c=Date.today().addYears(1);
                 }
             }
         }

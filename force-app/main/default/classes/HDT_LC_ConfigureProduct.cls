@@ -81,10 +81,15 @@ public inherited sharing class HDT_LC_ConfigureProduct {
             Id = opportunityId,
             StageName = 'Closed Lost'
         );
-
+        
         sale.Id = opp.Sale__c;
         sale.IsTransition__c = false;
-        
+        /* IsTransition a false sulla vendita va messo solo ed esclusivamente se non vi sono altre quote con IsTransition a true*/
+        List<SBQQ__Quote__c> otherQuotes = [SELECT Id, IsTransition__c FROM SBQQ__Quote__c WHERE Id != :opp.SBQQ__PrimaryQuote__c AND Sale__c = :opp.Sale__c AND SBQQ__Status__c NOT IN ('Cancelled','Rejected') AND  IsTransition__c = true WITH SECURITY_ENFORCED];
+        if(!otherQuotes.isEmpty())
+        {
+            sale.IsTransition__c = true;
+        }
         sobjsToUpdate.add(quoteToUpdate);
         sobjsToUpdate.add(oppToUpdate);
         sobjsToUpdate.add(sale);
