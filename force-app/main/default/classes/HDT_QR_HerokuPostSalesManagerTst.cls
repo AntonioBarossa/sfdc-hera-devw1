@@ -221,7 +221,7 @@ public class HDT_QR_HerokuPostSalesManagerTst {
         Test.startTest();
     
         HDT_QR_HerokuPostSalesManager hpsm = new HDT_QR_HerokuPostSalesManager();
-        Case returnedCase = hpsm.getRelatedCase(parentCase.Id);
+        Case returnedCase = hpsm.getRelatedCase(parentCase.Id)[0];
 
         System.assertNotEquals(null, returnedCase, 'returnedCase = null');
 
