@@ -7876,6 +7876,10 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Sospeso parere interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In attesa risposta Mail</fullName>
             <default>false</default>
         </values>
