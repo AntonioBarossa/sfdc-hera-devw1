@@ -15,10 +15,11 @@ export default class hdtCampaignMemberButtonList extends NavigationMixin(Lightni
             console.log('CampaignProcessType --> '+this.CampaignProcessType);
             this.caseObj = {
                 'Subject': 'PostVendita',
-                'AccountId': data.Contact.AccountId,
+                'AccountId': data?.Contact?.AccountId,
                 'Cluster__c': data.Campaign.CaseCategory__c,
                 'Type': data.Campaign.CaseSubCategory__c,
-                'Campaign__c': data.CampaignId
+                'Campaign__c': data.CampaignId,
+                'Lead__c' : data.LeadId
             };
             console.log(JSON.stringify(this.caseObj));
         }).catch(error => {
@@ -34,7 +35,7 @@ export default class hdtCampaignMemberButtonList extends NavigationMixin(Lightni
     }
 
     newCaseClick() {
-        if(this.caseObj.AccountId != null && this.caseObj != null){
+        if(this.caseObj != null && (this.caseObj.AccountId != null || this.caseObj.Lead__c != null)){
             createNewCase({ c: this.caseObj }).then(data => {
                 console.log('case --> '+JSON.stringify(data));
                 

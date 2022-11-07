@@ -1060,14 +1060,14 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             requiredAttachment = attachedDocument != null && attachedDocument.size() > 0?true:false;
         }
         if(notBeforeDate < System.today()){
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data non può essere nel passato'));
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data "Da non eseguire prima del" non può essere nel passato'));
         } else if(requestDate > System.today()){
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data non può essere nel futuro'));
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data richiesta non può essere nel futuro'));
         } else if(isAcqua && notBeforeDate != null && requestDate != null){
             Date lowBoundary = requestDate.addDays(5);
             Date upBoundary = requestDate.addDays(60);
             Boolean isInBoundary = (notBeforeDate >= lowBoundary && notBeforeDate <= upBoundary);
-            result = (!isInBoundary) ? JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data deve essere compresa fra '+lowBoundary+' e '+upBoundary)) : result;
+            result = (!isInBoundary) ? JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data "Da non eseguire prima del" deve essere compresa fra '+lowBoundary.format()+' e '+upBoundary.format())) : result;
         } else if(isAcqua && !requiredAttachment){
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Inserire un allegato'));
         }

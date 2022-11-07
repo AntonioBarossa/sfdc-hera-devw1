@@ -165,7 +165,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                         Cluster__c = 'Attivazioni',
                         Type__c = ordToCheck[0].isTransition__c ? HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL : HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO, 
                         Process__c = transcodeProcessForActivity(ordToCheck[0].RecordType.DeveloperName) != null ? transcodeProcessForActivity(ordToCheck[0].RecordType.DeveloperName) : ordToCheck[0].ProcessType__c,
-                        Note__c = 'Non è stato possibile procedere all’annullamento, inserire un case di Annullamento contratti'
+                        Note__c = 'Quality esitata negativamente'
                     ));
                 }
             }

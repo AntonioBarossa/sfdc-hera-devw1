@@ -2846,6 +2846,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione contratto colonnetta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gestione Iva e Accise</fullName>
             <default>false</default>
         </values>
