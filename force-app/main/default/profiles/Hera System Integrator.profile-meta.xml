@@ -16482,6 +16482,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.CohabitantsNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.DomesticResidentNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -29638,6 +29643,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SurveyResponse__c.Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SurveyResponse__c.Lead__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

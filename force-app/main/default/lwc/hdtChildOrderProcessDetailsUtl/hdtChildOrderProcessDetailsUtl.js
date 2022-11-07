@@ -310,6 +310,7 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                     new fieldData('','SupplyCity__c',this.typeVisibility('acqua'),false,true,'',''),
                     new fieldData('','ProcessType__c',this.typeVisibility('acqua'),false,true,'',''),
                     new fieldData('Tariffa','RateCategory__c', this.typeVisibility('acqua'), false, true, '',''),
+                    new fieldData('','CohabitantsNumber__c', this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura', false, false, '',''),
                     new fieldData('Unita Immobiliari','RealEstateUnit__c', this.typeVisibility('acqua')  && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura', false, false, '','',
                         function(event){
                             checkHousingUnitRateCategory(event.target.value, this.order.RateCategory__c );

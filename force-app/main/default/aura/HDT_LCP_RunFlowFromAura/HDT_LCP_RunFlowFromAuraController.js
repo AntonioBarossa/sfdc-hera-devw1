@@ -249,8 +249,19 @@
 
         console.log('## inputVariables -> ');
         inputVariables.forEach(e => console.log('# ' + e.name + '- ' + e.value));
-
-        flow.startFlow(flowName, inputVariables);
+        var firstRun = myPageRef.state.c__firstRun;
+        if(!firstRun){
+            var newState = Object.assign({}, myPageRef.state, {c__firstRun:'true'});
+            component.find("navService").navigate({
+                type: myPageRef.type,
+                attributes: myPageRef.attributes,
+                state: newState
+            });
+            flow.startFlow(flowName, inputVariables);
+        }else{
+            helper.finishFlow(component, null);
+        }
+        
     },
     
     handleStatusChange : function (component, event, helper) {

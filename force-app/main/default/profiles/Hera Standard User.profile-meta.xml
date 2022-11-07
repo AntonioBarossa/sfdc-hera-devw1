@@ -386,6 +386,10 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_IndemnitiesDays__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_WarningStatusList__mdt</name>
     </customMetadataTypeAccesses>
     <custom>true</custom>
@@ -16237,6 +16241,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.CohabitantsNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.DomesticResidentNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -29177,6 +29186,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SurveyResponse__c.Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SurveyResponse__c.Lead__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

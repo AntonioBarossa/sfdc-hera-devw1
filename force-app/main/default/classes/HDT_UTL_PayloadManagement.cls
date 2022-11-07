@@ -75,7 +75,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             'DOM_Coabitazioni'=>'CM021',
             'DOM_Componenti residenti'=>'CM022',
             'Dati catastali'=>'CM030',
-            'Variazione Indirizzo Fornitura'=>'CM023'
+            'Variazione Indirizzo Fornitura'=>'CM023',
+            'Domiciliato in nucleo residente'=>'CM021'
             };
         if('Order'.equalsIgnoreCase(context)){
             process = HDT_UTL_DocumentalManagement.getValue('Order', 'ProcessType__c', 0, inputs, formParams);

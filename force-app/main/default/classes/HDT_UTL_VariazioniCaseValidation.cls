@@ -20,9 +20,9 @@ public with sharing class HDT_UTL_VariazioniCaseValidation implements HDT_UTL_Ca
         
         if ('Modifica Unita Immobiliari Componenti'.equals(caseType) && !'ACDOMRESP0'.equals(rateCategory)){
 
-            Case newCurrentCase = [SELECT ResidentDomesticHousingUnit__c, ResidentMembers__c , RateCategory__c  FROM Case WHERE Id =: recordId WITH SECURITY_ENFORCED LIMIT 1];
-            List<AmministrazioneSottotipologiaUso__c> categoriesList = [SELECT Id FROM AmministrazioneSottotipologiaUso__c WHERE Attivo__c = true AND TipologiaUso__c = 'Uso domestico' AND CodiceCategoriaTariffa__c =: newCurrentCase.RateCategory__c];
-            if (categoriesList.size() > 0 && newCurrentCase.ResidentDomesticHousingUnit__c > 0 && newCurrentCase.ResidentMembers__c <= 0){
+            Integer unitDomRes = Integer.valueOf(getFieldValue(fields, 'ResidentDomesticHousingUnit__c'));
+            Integer numCompDomRes = Integer.valueOf(getFieldValue(fields, 'ResidentMembers__c'));
+            if (unitDomRes > 0 && numCompDomRes <= 0){
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
                         'Attenzione! Il numero dei Componenti Domestici Residenti deve essere maggiore di 0.'));
             }
@@ -30,5 +30,10 @@ public with sharing class HDT_UTL_VariazioniCaseValidation implements HDT_UTL_Ca
 
         return result;
 
+    }
+
+    public String getFieldValue(String fields, String fieldToGet){
+        Map<String, Object> fieldsMap = (Map<String, Object>) JSON.deserializeUntyped(fields);
+        return String.valueOf(fieldsMap.get(fieldToGet));
     }
 }
