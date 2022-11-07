@@ -294,7 +294,8 @@ public with sharing class HDT_SRV_SelfReadings {
                 String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
                 String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
                 readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
-                HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                //Commentato perchè generava un doppio update del case
+                //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
                     if(enableTurbobilling && isEnergy){
                         HDT_UTL_Case.createActivity(caseId, errorMessage, 'CBS_AUT002__ESITO_KO_DA_SAP', 'Esito KO da SAP');

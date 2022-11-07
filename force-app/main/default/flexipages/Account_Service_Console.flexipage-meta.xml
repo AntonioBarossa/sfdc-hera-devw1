@@ -45,6 +45,9 @@
                         <valueListItems>
                             <value>CustomButton.Account.HDT_CheckAssessment</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Account.HDT_OdlAds</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -107,6 +110,9 @@
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Account.HDT_CheckAssessment</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.HDT_OdlAds</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

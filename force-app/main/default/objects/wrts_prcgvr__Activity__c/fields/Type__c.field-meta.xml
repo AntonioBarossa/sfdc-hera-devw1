@@ -386,6 +386,11 @@
                 <label>Gestione blocco sollecito</label>
             </value>
             <value>
+                <fullName>Gestione contratto colonnetta</fullName>
+                <default>false</default>
+                <label>Gestione contratto colonnetta</label>
+            </value>
+            <value>
                 <fullName>Gestione dati discordanti</fullName>
                 <default>false</default>
                 <label>Gestione dati discordanti</label>

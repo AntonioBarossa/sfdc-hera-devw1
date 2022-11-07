@@ -6050,6 +6050,10 @@
     <picklistValues>
         <picklist>FourthLevelComplaintClassification__c</picklist>
         <values>
+            <fullName>Rinnovo condizioni economiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Evoluzioni automatiche</fullName>
             <default>false</default>
         </values>

@@ -2793,10 +2793,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Back Office - Catalogo Prodotti</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Back Office - Contratti</fullName>
             <default>false</default>
         </values>
