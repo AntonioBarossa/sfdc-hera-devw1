@@ -273,7 +273,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(this.order.ServicePoint__r.RecordType.DeveloperName !== 'HDT_RT_Acqua' || !Array.isArray(rateCategories) ) return evaluationType !== 'required';
         
         // case Acqua
-        let rateCategory = this.order.RateCategory__c
+        let rateCategory = this.order.RateCategory__c;
         let result = evaluationType === 'notvisible';
         for(let rate of rateCategories)
         {
