@@ -184,6 +184,10 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
             'modalitaPagamentoAcconto' => depositPaymentMode
         };
 
+        //START 07/11/2022 - costanzo.lomele@webresults.it
+        if('Ambiente'.equalsIgnoreCase(currentCase.Commodity__c)) caseMap.put('rpType', 'r002');
+        //END 07/11/2022 - costanzo.lomele@webresults.it
+
         caseListMap.add(caseMap);
 
         caseInput.isParent = true;
