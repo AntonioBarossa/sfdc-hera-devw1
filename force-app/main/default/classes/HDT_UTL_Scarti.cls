@@ -404,7 +404,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti objectIds ' + objectIds);
         system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti templateName ' + templateName);
         try{
-            Map<String, wrts_prcgvr__ActivityTemplate__c> template = getTemplatesMapByName(new Set<String>{templateName});
+            Map<String, wrts_prcgvr__ActivityTemplate__c> template = getTemplatesMapByName(new Set<String>{templateName},getObjectName(objectIds[0]));
             system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti template ' + template);
             if(template.values().size() > 0){
                 wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');

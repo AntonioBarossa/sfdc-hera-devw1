@@ -170,9 +170,9 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
 
     getNewDate(){
         let purchaseOrderNumber = this.caseid;
-        let streetCoding = '';
-        let street = '';
-        let housenumber = '';
+        let streetCoding = this.case.SupplyPostalCode__c
+        let street = this.case.SupplyStreetName__c
+        let housenumber = this.case.InvoicingStreetCode__c
         let typeInt = '';
         let indicator = '';
         let numberOfLines = '';
