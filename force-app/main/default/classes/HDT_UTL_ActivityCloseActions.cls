@@ -161,6 +161,19 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         if( 'Modifica post accertamento'.equalsIgnoreCase(caseType) || 'Cessazione post accertamento'.equalsIgnoreCase(caseType)) {
             return new HDT_WRP_UpdateSobj('Completata'); //aggiorna la fase del case
         }
+        if( 'Modifica dati contrattuali'.equalsIgnoreCase(caseType) &&
+            'Superficie'.equalsIgnoreCase(selectedCase.Subprocess__c) && 
+            'Istruttoria Back Office'.equalsIgnoreCase(activity.Type__c)) {
+            if('Positivo'.equalsIgnoreCase(activity.ActivityOutcome__c)){
+                if(!selectedCase.ModuleFromContributor__c && 'Da Contribuente'.equalsIgnoreCase(selectedCase.RequestSource__c)){    
+                    return new HDT_WRP_UpdateSobj('Gestione Documentale');
+                }else{
+                    return new HDT_WRP_UpdateSobj('Da Inviare');
+                }
+            }else{
+                return new HDT_WRP_UpdateSobj('Annullato');
+            }
+        }
         //END >>> marco.arci@webresults.it
         if(caseType == 'Gestione Rifiuti' && 'Risposta Ricevuta'.equalsIgnoreCase(activityType)){
             if('si'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Annullato');
