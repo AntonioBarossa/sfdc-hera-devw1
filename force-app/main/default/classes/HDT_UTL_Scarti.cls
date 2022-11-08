@@ -1157,10 +1157,16 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             objectToUpdate.put('CancellationReason__c','Gestione scarto');
             objectToUpdate.put('Phase__c','Annullato');
             objectToUpdate.put('Status',status);
-            HDT_UTL_DatabaseService.updateSObject(objectToUpdate);
+            //HDT_UTL_DatabaseService.updateSObject(objectToUpdate);
+            updateObjectFuture(JSON.serialize(objectToUpdate));
         }
     }
     //EVERIS: END Gestione Scarti SAP
+    @future
+    private static void updateObjectFuture(String inputString){
+        SObject objectToUpdate = (SObject) JSON.deserialize(inputString, SObject.class);
+        HDT_UTL_DatabaseService.updateSObject(objectToUpdate);
+    }
 
 
     //EVERIS Gestione Scarto Transitorio
