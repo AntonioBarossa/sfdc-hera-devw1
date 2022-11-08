@@ -24,7 +24,7 @@
         </rules>
         <rules>
             <name>Aperta</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Activity.wrts_prcgvr__Status__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -32,10 +32,24 @@
                     <stringValue>Aperta</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Activity.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Presa Appuntamento</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Activity.wrts_prcgvr__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Creata</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Form_Sospensione</targetReference>
             </connector>
-            <label>Aperta</label>
+            <label>Aperta or Creata</label>
         </rules>
         <rules>
             <name>Sospesa</name>
