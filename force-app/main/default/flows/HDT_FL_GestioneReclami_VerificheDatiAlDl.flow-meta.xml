@@ -1157,6 +1157,7 @@
         <queriedFields>Subprocess__c</queriedFields>
         <queriedFields>ContractCode__c</queriedFields>
         <queriedFields>RecordTypeId</queriedFields>
+        <queriedFields>Type</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
