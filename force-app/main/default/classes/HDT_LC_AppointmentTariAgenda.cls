@@ -24,6 +24,10 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         String indicator;
         String numberOfLines;
 
+        public HDT_WRP_DataApp(){
+            return;
+        }
+
         public HDT_WRP_DataApp(String purchaseOrderNumber, String streetCoding, String street,
                                 String housenumber, String typeInt, String indicator, String numberOfLines) {
         
@@ -186,36 +190,33 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     }
 
     @AuraEnabled(cacheable=true)
-    public static String getCase(String caseId,List<String> fields){
-        String response = '';
+    public static Case getCase(String caseId,List<String> fields){
+        Case caseToRet;
         try{
-            response = JSON.serialize(HDT_UTL_AppointmentAgenda.getCase(caseId,String.join(fields,',')));
+            caseToRet= HDT_UTL_AppointmentAgenda.getCase(caseId,String.join(fields,','));
         }catch (exception e){
             throw new AuraHandledException(e.getMessage());
         }
-        return response;
+        return caseToRet;
     }
     
     @AuraEnabled
     public static void handleNewActivityCreationAndCaseUpdate(Case caso, Boolean updateCase, String templateName){    
         
         System.debug('templateName ->' + templateName); 
-        List<wrts_prcgvr__Activity__c> activitiesToInsert = null;
+        wrts_prcgvr__Activity__c actToIns = null;
         
         if(templateName!=null){
-            activitiesToInsert = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(new List<String>{caso.Id}, templateName);
-            for(wrts_prcgvr__Activity__c activity : activitiesToInsert){
-                activity.wrts_prcgvr__IsRequired__c=true;
-            }
+            actToIns = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName(caso.Id, templateName);
+            actToIns.wrts_prcgvr__IsRequired__c=true;
         }
         
         if(updateCase){
             HDT_UTL_DatabaseService.updateSObject(caso);
         }
 
-        if(activitiesToInsert?.size()>0){
-            System.debug('activitiesToInsert.size ->' + activitiesToInsert.size());
-            HDT_UTL_DatabaseService.insertSObject(activitiesToInsert);
+        if(actToIns!=null){
+            HDT_UTL_DatabaseService.insertSObject(actToIns);
         }
     }
 
