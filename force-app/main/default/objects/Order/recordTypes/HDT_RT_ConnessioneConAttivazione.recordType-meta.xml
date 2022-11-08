@@ -24,6 +24,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>SupplyUseType__c</picklist>
+        <values>
+            <fullName>ACQUEDOTTO CIVILE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ACQUEDOTTO INDUSTRIALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FOGNATURA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>IntendedUse__c</picklist>
         <values>
             <fullName>Alberghi%2Fpensioni</fullName>
