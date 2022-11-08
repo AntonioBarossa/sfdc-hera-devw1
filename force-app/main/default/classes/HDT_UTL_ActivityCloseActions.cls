@@ -162,7 +162,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             return new HDT_WRP_UpdateSobj('Completata'); //aggiorna la fase del case
         }
         if( 'Modifica dati contrattuali'.equalsIgnoreCase(caseType) &&
-            'Superficie'.equalsIgnoreCase(selectedCase.Subprocess__c) && 
+            'Superficie'.equalsIgnoreCase(activity.Case__r.Subprocess__c) && 
             'Istruttoria Back Office'.equalsIgnoreCase(activity.Type__c)) {
             if('Positivo'.equalsIgnoreCase(activity.ActivityOutcome__c)){
                 if(!selectedCase.ModuleFromContributor__c && 'Da Contribuente'.equalsIgnoreCase(selectedCase.RequestSource__c)){    
