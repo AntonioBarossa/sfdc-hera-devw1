@@ -157,12 +157,24 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     {
                         newOrder.EffectiveDate__c = getEffectiveDateBonus(orderId);
                     }
-                }                
+                }
                 when 'HDT_RT_CambioOfferte'
                 {
                     if('Acqua'.equalsIgnoreCase(order.Commodity__c))
                     {
                         newOrder.EffectiveDate__c = System.Today();
+                    }
+                }
+                when 'HDT_RT_ConnessioneConAttivazione'
+                {
+                    if('Acqua'.equalsIgnoreCase(order.Commodity__c))
+                    {
+                        newOrder.QuotationType__c = 'Analitico';
+                        newOrder.NotDisconnectabilityCustomer__c = 'No';
+                        newOrder.VAT__c = 'Iva 10% (Cod. 01)';
+                        newOrder.PaySewer__c = 'Si - Paga';
+                        newOrder.PayPurification__c = 'Si - Paga';
+                        newOrder.ResidentDomesticHousingUnit__c = 1;
                     }
                 }
 
