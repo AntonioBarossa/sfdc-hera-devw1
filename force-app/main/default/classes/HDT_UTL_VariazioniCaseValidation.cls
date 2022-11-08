@@ -30,11 +30,9 @@ public with sharing class HDT_UTL_VariazioniCaseValidation implements HDT_UTL_Ca
             }else if (numCompDomRes < unitDomRes) {
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
                         'Attenzione! Il numero dei Componenti Domestici Residenti deve essere maggiore o uguale al numero di Unità abitative domestico residente.'));
-            }else if (unitDomRes + unitDomNonRes < 2) {
+            }else if (unitDomRes + unitDomNonRes + unitNonDom < 2) {
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
-                        'Attenzione! La somma delle unità abitative domestiche deve essere maggiore o uguale a 2.'));
-            }else if (){
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Warning','Success'));
+                        'Attenzione! La somma delle unità abitative deve essere maggiore o uguale a 2.'));
             }
         }
 
