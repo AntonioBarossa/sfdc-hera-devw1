@@ -204,20 +204,18 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     public static void handleNewActivityCreationAndCaseUpdate(Case caso, Boolean updateCase, String templateName){    
         
         System.debug('templateName ->' + templateName); 
-        List<wrts_prcgvr__Activity__c> activitiesToInsert = null;
+        wrts_prcgvr__Activity__c actToIns = null;
         
         if(templateName!=null){
-            activitiesToInsert = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(new List<String>{caso.Id}, templateName);
-            for(wrts_prcgvr__Activity__c activity : activitiesToInsert){
-                activity.wrts_prcgvr__IsRequired__c=true;
-            }
+            actToIns = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName(caso.Id, templateName);
+            actToIns.wrts_prcgvr__IsRequired__c=true;
         }
         
         if(updateCase){
             HDT_UTL_DatabaseService.updateSObject(caso);
         }
 
-        if(activitiesToInsert?.size()>0){
+        if(actToIns!=null){
             System.debug('activitiesToInsert.size ->' + activitiesToInsert.size());
             HDT_UTL_DatabaseService.insertSObject(activitiesToInsert);
         }
