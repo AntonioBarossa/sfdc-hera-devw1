@@ -657,6 +657,20 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             }catch (Exception e){
                 return false;
             }
+        }else if ('modificaunitaimmobiliaricomponenti'.equalsIgnoreCase(method)){
+            try {
+                Id recordId = sb.get('Id') != null ? (Id)sb.get('Id') : null;
+                HDT_QR_ServicePoint qrServicePoint = new HDT_QR_ServicePoint(); 
+                ServicePoint__c sr = qrServicePoint.getRecordById(recordId,'RateCategory__c')[0];
+                Set<String> rateCategorySet = new Set<String>{'ACDOMRESP0','ACPROMISC0','ACPROMIBI0'};
+                if (rateCategorySet.contains(sr.RateCategory__c)) {
+                    return true;
+                }else{
+                    return false;
+                }
+            } catch (Exception e) {
+                return false;
+            }
         }
         return true;
     }
