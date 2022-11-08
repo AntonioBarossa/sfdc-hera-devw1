@@ -4,7 +4,7 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,ParentOrder__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivatedDate,LoginChannel__c, Account.CompanyOwner__c FROM Order Where Phase__c = \'In attesa conferma cliente\' AND QualityCall__c = true';
+        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,ParentOrder__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivatedDate,LoginChannel__c, Account.CompanyOwner__c FROM Order Where Phase__c = \'In attesa conferma cliente\' AND QualityCall__c = true AND ParentOrder__r.Status = \'Completed\'';
         return Database.getQueryLocator(query);
     }
 
