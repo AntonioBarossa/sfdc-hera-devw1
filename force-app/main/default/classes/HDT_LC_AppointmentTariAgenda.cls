@@ -216,8 +216,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         }
 
         if(actToIns!=null){
-            System.debug('activitiesToInsert.size ->' + activitiesToInsert.size());
-            HDT_UTL_DatabaseService.insertSObject(activitiesToInsert);
+            HDT_UTL_DatabaseService.insertSObject(actToIns);
         }
     }
 
