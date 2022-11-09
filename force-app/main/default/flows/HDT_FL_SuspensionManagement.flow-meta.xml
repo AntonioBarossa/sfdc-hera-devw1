@@ -4,7 +4,7 @@
     <decisions>
         <name>Check_Status_Activity</name>
         <label>Check Status Activity</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>Altro</defaultConnectorLabel>
         <rules>
@@ -67,6 +67,38 @@
             <label>Sospesa</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Is_Presa_Appuntamento_and_Esito_Contatto_valorizzato</name>
+        <label>Is Presa Appuntamento con Esito Contatto</label>
+        <locationX>446</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>Update_Activity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Esito Contatto Valorizzato o Altri Casi</defaultConnectorLabel>
+        <rules>
+            <name>Presa_Appuntamento</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Activity.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Presa Appuntamento</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Activity.ContactResult__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Esito_Contatto_Non_Valorizzato</targetReference>
+            </connector>
+            <label>Presa Appuntamento con Esito Contatto non valorizzato</label>
+        </rules>
+    </decisions>
     <dynamicChoiceSets>
         <name>SuspensionReason</name>
         <dataType>Picklist</dataType>
@@ -99,7 +131,7 @@
     <recordLookups>
         <name>Get_Activity</name>
         <label>Get Activity</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -120,8 +152,8 @@
     <recordUpdates>
         <name>Update_Activity</name>
         <label>Update Activity</label>
-        <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationX>578</locationX>
+        <locationY>638</locationY>
         <connector>
             <targetReference>SuspensionSuccessScreen</targetReference>
         </connector>
@@ -165,13 +197,13 @@
     <screens>
         <name>Form_Sospensione</name>
         <label>Form Sospensione</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Update_Activity</targetReference>
+            <targetReference>Is_Presa_Appuntamento_and_Esito_Contatto_valorizzato</targetReference>
         </connector>
         <fields>
             <name>SuspensionDueDate</name>
@@ -219,7 +251,7 @@
     <screens>
         <name>Riprendi_Attivit</name>
         <label>Riprendi Attività</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -242,10 +274,26 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Screen_Esito_Contatto_Non_Valorizzato</name>
+        <label>Screen Esito Contatto Non Valorizzato</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Display_Text_Esito_Contatto_Non_Valorizzato</name>
+            <fieldText>&lt;p&gt;Attenzione! Per poter procedere con la sospensione dell&apos;attività di Presa Appuntamento, occorre prima valorizzare il campo Esito Contatto.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>SuspensionErrorScreen</name>
         <label>SuspensionErrorScreen</label>
-        <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationX>842</locationX>
+        <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -260,8 +308,8 @@
     <screens>
         <name>SuspensionSuccessScreen</name>
         <label>SuspensionSuccessScreen</label>
-        <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -274,7 +322,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>452</locationX>
+        <locationX>584</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Activity</targetReference>
