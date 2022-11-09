@@ -1,10 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>54.0</apiVersion>
+    <assignments>
+        <name>Assegna_Motivazione_Presa_Appuntamento</name>
+        <label>Assegna Motivazione Presa Appuntamento</label>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>Motivazione_Sospensione</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Motivazione_sospensione_presa_appuntamento</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Activity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Picklist_Motivazione_Standard</name>
+        <label>Assegna Picklist Motivazione Standard</label>
+        <locationX>842</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>Motivazione_Sospensione</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SuspensionReasonPicklist</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Activity</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <name>In_attesa_ricontatto_cliente_non_trovato</name>
+        <choiceText>In attesa ricontatto cliente non trovato</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>In attesa ricontatto cliente non trovato</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Check_Status_Activity</name>
         <label>Check Status Activity</label>
-        <locationX>710</locationX>
+        <locationX>842</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>Altro</defaultConnectorLabel>
         <rules>
@@ -68,12 +108,37 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_Presa_Appuntamento</name>
+        <label>Is Presa Appuntamento?</label>
+        <locationX>710</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Picklist_Motivazione_Standard</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altre Activity</defaultConnectorLabel>
+        <rules>
+            <name>Presa_Appuntamento_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Activity.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Presa Appuntamento</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Motivazione_Presa_Appuntamento</targetReference>
+            </connector>
+            <label>Presa Appuntamento</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Presa_Appuntamento_and_Esito_Contatto_valorizzato</name>
         <label>Is Presa Appuntamento con Esito Contatto</label>
-        <locationX>446</locationX>
+        <locationX>512</locationX>
         <locationY>518</locationY>
         <defaultConnector>
-            <targetReference>Update_Activity</targetReference>
+            <targetReference>Is_Presa_Appuntamento</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Esito Contatto Valorizzato o Altri Casi</defaultConnectorLabel>
         <rules>
@@ -131,7 +196,7 @@
     <recordLookups>
         <name>Get_Activity</name>
         <label>Get Activity</label>
-        <locationX>710</locationX>
+        <locationX>842</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -152,8 +217,8 @@
     <recordUpdates>
         <name>Update_Activity</name>
         <label>Update Activity</label>
-        <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationX>710</locationX>
+        <locationY>974</locationY>
         <connector>
             <targetReference>SuspensionSuccessScreen</targetReference>
         </connector>
@@ -183,7 +248,7 @@
         <inputAssignments>
             <field>SuspensionReason__c</field>
             <value>
-                <elementReference>SuspensionReasonPicklist</elementReference>
+                <elementReference>Motivazione_Sospensione</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -197,7 +262,7 @@
     <screens>
         <name>Form_Sospensione</name>
         <label>Form Sospensione</label>
-        <locationX>446</locationX>
+        <locationX>512</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -219,6 +284,34 @@
             <fieldText>Motivazione sospensione</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Activity.Type__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Presa Appuntamento</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Motivazione_sospensione_presa_appuntamento</name>
+            <choiceReferences>In_attesa_ricontatto_cliente_non_trovato</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Motivazione sospensione</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Activity.Type__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Presa Appuntamento</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>SuspensionNote</name>
@@ -251,7 +344,7 @@
     <screens>
         <name>Riprendi_Attivit</name>
         <label>Riprendi Attività</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -292,8 +385,8 @@
     <screens>
         <name>SuspensionErrorScreen</name>
         <label>SuspensionErrorScreen</label>
-        <locationX>842</locationX>
-        <locationY>758</locationY>
+        <locationX>1106</locationX>
+        <locationY>1094</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -308,8 +401,8 @@
     <screens>
         <name>SuspensionSuccessScreen</name>
         <label>SuspensionSuccessScreen</label>
-        <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationX>710</locationX>
+        <locationY>1094</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -322,13 +415,20 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>584</locationX>
+        <locationX>716</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Activity</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>Motivazione_Sospensione</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
