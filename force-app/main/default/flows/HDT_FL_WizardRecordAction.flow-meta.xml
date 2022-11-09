@@ -4,9 +4,12 @@
         <name>HDT_UTL_Case_caseFlowPredefaults_sollecito</name>
         <label>HDT_UTL_Case caseFlowPredefaults</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Parent_case_variable_assignment</targetReference>
+        </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>currentCase</name>
@@ -23,13 +26,59 @@
         <inputParameters>
             <name>process</name>
             <value>
-                <stringValue>invio sollecito</stringValue>
+                <elementReference>$Label.invio_sollecito</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
-    <environments>Default</environments>
+    <assignments>
+        <name>Parent_case_variable_assignment</name>
+        <label>Parent case variable assignment</label>
+        <locationX>176</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>Get_case.NoticeNumber__c</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_case.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseDescription</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_case.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseNote</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_case.LastNoticeDay__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>HDT_UTL_Case_caseFlowPredefaults_sollecito.effectiveDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>update_parent_case</targetReference>
+        </connector>
+    </assignments>
+    <formulas>
+        <name>CaseDescription</name>
+        <dataType>String</dataType>
+        <expression>{!Get_case.Description} &amp; BR() &amp; {!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote}</expression>
+    </formulas>
+    <formulas>
+        <name>CaseNote</name>
+        <dataType>String</dataType>
+        <expression>{!Get_case.Description}&amp;BR()&amp;{!$Label.Note_Ultimo_Sollecito} &amp;{!Note}</expression>
+    </formulas>
     <interviewLabel>HDT_FL_WizardRecordAction {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_WizardRecordAction</label>
     <processMetadataValues>
@@ -51,6 +100,62 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>create_informativa_case</name>
+        <label>create informativa case</label>
+        <locationX>176</locationX>
+        <locationY>878</locationY>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>Get_case.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Informative</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Get_case.Contact.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Email__c</field>
+            <value>
+                <elementReference>Get_case.Email__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Note__c</field>
+            <value>
+                <elementReference>Note</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PhoneNumber__c</field>
+            <value>
+                <elementReference>Get_case.PhoneNumber__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>get_infortiva_rt.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>Informative</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>Get_case</name>
         <label>Get case</label>
@@ -58,7 +163,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Note</targetReference>
+            <targetReference>get_infortiva_rt</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -76,13 +181,57 @@
         <queriedFields>Note__c</queriedFields>
         <queriedFields>NoticeId__c</queriedFields>
         <queriedFields>Subprocess__c</queriedFields>
+        <queriedFields>NoticeNumber__c</queriedFields>
+        <queriedFields>AccountId</queriedFields>
+        <queriedFields>ContactId</queriedFields>
+        <queriedFields>PhoneNumber__c</queriedFields>
+        <queriedFields>Email__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>get_infortiva_rt</name>
+        <label>get infortiva rt</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Note</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_Informative</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>update_parent_case</name>
+        <label>update parent case</label>
+        <locationX>176</locationX>
+        <locationY>758</locationY>
+        <connector>
+            <targetReference>create_informativa_case</targetReference>
+        </connector>
+        <inputReference>Get_case</inputReference>
+    </recordUpdates>
     <screens>
         <name>Get_Note</name>
         <label>Get Note</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -105,7 +254,7 @@
             <targetReference>Get_case</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
