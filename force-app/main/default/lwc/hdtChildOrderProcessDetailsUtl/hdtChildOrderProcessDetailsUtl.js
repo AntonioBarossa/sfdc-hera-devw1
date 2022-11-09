@@ -437,6 +437,7 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                 new fieldData('Tariffa','RateCategory__c', this.typeVisibility('acqua'), false, true, '',''),
                 new fieldData('Classe Contatore','MeterClass__c', this.typeVisibility('acqua'), false, true, '',''),
                 new fieldData('Potenza impegnata','PowerCommitted__c', this.typeVisibility('ele'), false, true, '',''),
+                new fieldData('','SecurityDepositExcluded__c', this.typeVisibility('acqua'), false, false, '','Y'),
                 new fieldData('Potenza disponibile','PowerAvailable__c', this.typeVisibility('ele'), false, true, '',''),
                 new fieldData('Potenza richiesta','PowerRequested__c', this.typeVisibility('ele'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', '',''),
                 new fieldData('Tensione','VoltageLevel__c', this.typeVisibility('ele'), false, true, '',''),
