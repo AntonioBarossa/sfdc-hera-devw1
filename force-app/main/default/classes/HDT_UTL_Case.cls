@@ -182,6 +182,36 @@ public inherited sharing class HDT_UTL_Case {
             currentCase.EffectiveDate__c = dataDecorrenza;
             output.currentCase = currentCase;
         }
+        else if (System.Label.invio_sollecito.equalsIgnoreCase(process)){
+            // Case currentCase = inputs[0].currentCase;
+            // String inputString = inputs[0].genericInputString;
+            String body;
+
+           
+            HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
+            httpObj.headersMap = new Map<String, String>();
+            httpObj.httpMethod = 'POST';
+            httpObj.headersMap.put('Content-Type', 'application/json');    
+            //httpObj.endPoint = 'Callout:MulesoftBasePath/reminder';
+            httpObj.endPoint = 'https://eor9fkvcoyu8sal.m.pipedream.net';
+
+            Map<String, Object> bodyMap = new Map<String, Object>(); 
+            bodyMap.put('requestId',currentCase.Id);
+            bodyMap.put('dataRequest',Date.today());
+            bodyMap.put('caseId',currentCase.CaseNumber);
+            //bodyMap.put('noticeId',currentCase.NoticeId__c);
+            bodyMap.put('noticeId',(currentCase.NoticeId__c)?currentCase.NoticeId__c:'');
+            bodyMap.put('reminder','X');
+            //bodyMap.put('text',currentCase.Note__c);
+            bodyMap.put('text',(currentCase.Note__c)?currentCase.Note__c:'');
+
+            body = JSON.serialize(bodyMap);
+
+
+            HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
+     
+           
+        }
         outputs.add(output);
         return outputs;
     }
