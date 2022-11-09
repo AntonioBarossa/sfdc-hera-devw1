@@ -200,10 +200,10 @@ public inherited sharing class HDT_UTL_Case {
             bodyMap.put('dataRequest',Date.today());
             bodyMap.put('caseId',currentCase.CaseNumber);
             //bodyMap.put('noticeId',currentCase.NoticeId__c);
-            bodyMap.put('noticeId',(currentCase.NoticeId__c)?currentCase.NoticeId__c:'');
+            bodyMap.put('noticeId',String.isNotBlank(currentCase.NoticeId__c)?currentCase.NoticeId__c:'');
             bodyMap.put('reminder','X');
             //bodyMap.put('text',currentCase.Note__c);
-            bodyMap.put('text',(currentCase.Note__c)?currentCase.Note__c:'');
+            bodyMap.put('text',String.isNotBlank(currentCase.Note__c)?currentCase.Note__c:'');
 
             body = JSON.serialize(bodyMap);
 
