@@ -8191,6 +8191,10 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>In attesa di Verifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sospeso parere interno</fullName>
             <default>false</default>
         </values>
