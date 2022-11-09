@@ -527,8 +527,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         || (oldOrder.Phase__c == 'Quality Call OK' && newOrder.Phase__c == 'Esportazione VS Siebel')
                         || (oldOrder.Phase__c == 'Documentazione Validata' && newOrder.Phase__c == 'Esportazione VS Siebel')
                         //@ealpi aggiunto in caso di sblocco OK credit check
-                        ||('KO'.equalsIgnoreCase(oldOrder.OutgoingCreditCheckResult__c && 'OK'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c)))
-                        ||('KO'.equalsIgnoreCase(oldOrder.IncomingCreditCheckResult__c && 'OK'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c)))
+                        ||('KO'.equalsIgnoreCase(oldOrder.OutgoingCreditCheckResult__c) && 'OK'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c))
+                        ||('KO'.equalsIgnoreCase(oldOrder.IncomingCreditCheckResult__c) && 'OK'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c))
                     ){
                         if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
                             //1) Se la data di invio al sii è > o = ad oggi e la data di decorrenza è già calcolata (!= null) allora non deve essere calcolata
