@@ -180,6 +180,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
                         newOrder.PressureLevel__c  = 'BP';
                     }
+                    if(order.CommodityFormula__c == 'Acqua')
+                    {
+                        newOrder.SecurityDepositExcluded__c  = 'Y';
+                        newOrder.SeasonUse__c  = 'Nessuna stagionalita';
+                        newOrder.PayPurification__c  = 'No - Esente';
+                        newOrder.PaySewer__c  = 'No - Esente';
+                    }
                 }
                 when 'Connessione con Attivazione'{
                     if('Acqua'.equalsIgnoreCase(order.Commodity__c))
