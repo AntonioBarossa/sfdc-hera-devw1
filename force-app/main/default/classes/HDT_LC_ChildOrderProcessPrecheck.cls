@@ -165,19 +165,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         newOrder.EffectiveDate__c = System.Today();
                     }
                 }
-                when 'HDT_RT_ConnessioneConAttivazione'
-                {
-                    if('Acqua'.equalsIgnoreCase(order.Commodity__c))
-                    {
-                        newOrder.QuotationType__c = 'Analitico';
-                        newOrder.NotDisconnectabilityCustomer__c = 'No';
-                        newOrder.VAT__c = 'Iva 10% (Cod. 01)';
-                        newOrder.PaySewer__c = 'Si - Paga';
-                        newOrder.PayPurification__c = 'Si - Paga';
-                        newOrder.ResidentDomesticHousingUnit__c = 1;
-                    }
-                }
-
             }
 
             switch on processType {
@@ -192,6 +179,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
                         processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
                         newOrder.PressureLevel__c  = 'BP';
+                    }
+                }
+                when 'Connessione con Attivazione'{
+                    if('Acqua'.equalsIgnoreCase(order.Commodity__c))
+                    {
+                        newOrder.QuotationType__c = 'Analitico';
+                        newOrder.NotDisconnectabilityCustomer__c = 'No';
+                        newOrder.VAT__c = 'Iva 10% (Cod. 01)';
+                        newOrder.PaySewer__c = 'Si - Paga';
+                        newOrder.PayPurification__c = 'Si - Paga';
+                        newOrder.ResidentDomesticHousingUnit__c = 1;
                     }
                 }
             }
