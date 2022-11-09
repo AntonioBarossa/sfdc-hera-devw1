@@ -352,6 +352,52 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Aggiorna_Fase_in_attesa_verifica</name>
+        <label>Aggiorna Fase in attesa verifica</label>
+        <locationX>15450</locationX>
+        <locationY>3590</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In attesa di Verifica</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_3</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Aggiorna_Fase_in_attesa_verifica_2</name>
+        <label>Aggiorna Fase in attesa verifica</label>
+        <locationX>16506</locationX>
+        <locationY>3830</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In attesa di Verifica</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_4</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>1810</locationX>
@@ -2135,6 +2181,9 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>GetActivityTemplate_3</targetReference>
+            </connector>
             <label>Data Minore</label>
         </rules>
         <rules>
@@ -3826,6 +3875,9 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <label>CreateActivity</label>
         <locationX>15450</locationX>
         <locationY>3470</locationY>
+        <connector>
+            <targetReference>Aggiorna_Fase_in_attesa_verifica</targetReference>
+        </connector>
         <inputAssignments>
             <field>Case__c</field>
             <value>
@@ -3889,6 +3941,47 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <field>wrts_prcgvr__Description__c</field>
             <value>
                 <elementReference>GetActivityTemplate_0_1_0.wrts_prcgvr__Subject__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__Status__c</field>
+            <value>
+                <stringValue>Aperta</stringValue>
+            </value>
+        </inputAssignments>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>CreateActivity_3</name>
+        <label>CreateActivity</label>
+        <locationX>16506</locationX>
+        <locationY>3710</locationY>
+        <connector>
+            <targetReference>Aggiorna_Fase_in_attesa_verifica_2</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <elementReference>GetActivityTemplate_3.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__ActivityTemplate__c</field>
+            <value>
+                <elementReference>GetActivityTemplate_3.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__Description__c</field>
+            <value>
+                <elementReference>GetActivityTemplate_3.wrts_prcgvr__Subject__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4286,6 +4379,27 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CreateActivity_0_1_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Elaborazione Manuale</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__ActivityTemplate__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetActivityTemplate_3</name>
+        <label>GetActivityTemplate</label>
+        <locationX>16506</locationX>
+        <locationY>3590</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CreateActivity_3</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -5008,6 +5122,20 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <label>Aggiorna Case</label>
         <locationX>18530</locationX>
         <locationY>3350</locationY>
+        <inputReference>GetCaseAggiornatoModificaUnitaImmobiliari_0</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_3</name>
+        <label>Aggiorna Case</label>
+        <locationX>15450</locationX>
+        <locationY>3710</locationY>
+        <inputReference>GetCaseAggiornatoModificaUnitaImmobiliari_0</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_4</name>
+        <label>Aggiorna Case</label>
+        <locationX>16506</locationX>
+        <locationY>3950</locationY>
         <inputReference>GetCaseAggiornatoModificaUnitaImmobiliari_0</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -8226,7 +8354,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Annulla_Prestazione_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>10346</locationX>
-        <locationY>5198</locationY>
+        <locationY>5294</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -8352,7 +8480,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Annulla_Prestazione_FondoFughe_0</name>
         <label>Annulla Prestazione</label>
         <locationX>17430</locationX>
-        <locationY>4862</locationY>
+        <locationY>4958</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

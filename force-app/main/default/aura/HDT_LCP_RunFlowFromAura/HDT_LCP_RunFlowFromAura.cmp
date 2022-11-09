@@ -5,6 +5,7 @@
     <aura:attribute name="subTabToClose" type="String"/>
     <aura:attribute name="accountTabId" type="String"/>
     <aura:attribute name="leadTabId" type="String"/>
+    <aura:attribute name="orderTabId" type="String"/>
     <aura:attribute name="interactionTabId" type="String"/>
     <aura:attribute name="enableRefresh" type="Boolean"/>
     <aura:attribute name="resumeFromDraft" type="Boolean"/>
