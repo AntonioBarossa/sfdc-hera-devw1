@@ -235,6 +235,16 @@
         <default>false</default>
         <label>Esito KO da SII</label>
     </customValue>
+	<customValue>
+        <fullName>Esito KO da SII</fullName>
+        <default>false</default>
+        <label>Esito KO da SII</label>
+    </customValue>
+	<customValue>
+        <fullName>Mancata corrispondenza Anagrafe</fullName>
+        <default>false</default>
+        <label>Mancata corrispondenza Anagrafe</label>
+    </customValue>
     <masterLabel>Motivazione Annullamento</masterLabel>
     <sorted>true</sorted>
 </GlobalValueSet>
