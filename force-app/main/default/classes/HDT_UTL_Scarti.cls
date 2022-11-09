@@ -859,7 +859,15 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         set<id> parentObjectCase = new set<id>();
         set<id> parentObjectOrder = new set<id>();
         set<id> inputDataIds = new set<id>();
+        Set<String> activityTypeToCheck = new Set<String>{'ammissibilità ko','esito ko da dl','esito ko da sii'};
+        Map<Id,Set<String>> activityToCheckMap = new Map<Id,Set<String>>();
         for(wrts_prcgvr__Activity__c currAct : inputData){
+            if (currAct.Id != null && String.isNotBlank(currAct.Type__c) && activityTypeToCheck.contains(currAct.Type__c.toLowerCase()) && currAct.Id != null && currAct.wrts_prcgvr__ObjectId__c != null){
+                if (!activityToCheckMap.containsKey(currAct.wrts_prcgvr__ObjectId__c)){
+                    activityToCheckMap.put(currAct.wrts_prcgvr__ObjectId__c, new Set<String>());
+                }
+                activityToCheckMap.get(currAct.wrts_prcgvr__ObjectId__c).add(currAct.Type__c.toLowerCase());
+            }
             if(categories.contains(currAct.DiscardCategory__c) && !'Quality Scaduta'.equalsIgnoreCase(currAct.Type__c) && !HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL.equalsIgnoreCase(currAct.Type__c) && !HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO.equalsIgnoreCase(currAct.Type__c)){
                 inputDataIds.add(currAct.Id);
                 if(String.isNotBlank(currAct.wrts_prcgvr__ObjectId__c)){
@@ -881,17 +889,22 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi categories' + JSON.serializePretty(categories));
         system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi inputDataIds' + JSON.serializePretty(inputDataIds));
 
-        list<wrts_prcgvr__Activity__c> relatedActs = [SELECT id, wrts_prcgvr__Status__c 
+        //Le activity Ammissibilità KO, Esito KO da DL, Esito KO da SII devono essere chiuse se arriva un altra dello stesso tipo.
+        list<wrts_prcgvr__Activity__c> relatedActs = [SELECT id, wrts_prcgvr__Status__c,Type__c ,Order__c, Case__c
                                                       FROM wrts_prcgvr__Activity__c 
                                                       WHERE (Case__c IN :parentObjectCase OR Order__c IN :parentObjectOrder) 
                                                       AND DiscardCategory__c IN :categories 
                                                       AND Id NOT IN :inputDataIds
-                                                      AND wrts_prcgvr__Status__c NOT IN ('Chiusa','Sospesa')
                                                       AND wrts_prcgvr__IsClosed__c = false
-                                                      AND Type__c NOT IN ('Ammissibilità KO','Esito KO da DL','Esito KO da SII')
+                                                      AND (wrts_prcgvr__Status__c NOT IN ('Chiusa','Sospesa')
+                                                      OR Type__c IN ('Ammissibilità KO','Esito KO da DL','Esito KO da SII'))
                                                       WITH SECURITY_ENFORCED];
 
         system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi relatedActs' + JSON.serializePretty(relatedActs));
+        for(wrts_prcgvr__Activity__c relatedAct: relatedActs){
+            System.debug(LoggingLevel.DEBUG, '@@@@Primo ' + JSON.serializePretty(relatedAct));
+        }
+
         String endDate = activityValues.containsKey('DATA_ELABORAZIONE')? activityValues.get('DATA_ELABORAZIONE') :
                         activityValues.containsKey('DATA_EVENTO')? activityValues.get('DATA_EVENTO') : '';
         String cmp = activityValues.get('CMP');
@@ -905,6 +918,12 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             endDatetimeVal = Datetime.valueOf(endDate);
         }
         for(wrts_prcgvr__Activity__c relatedAct: relatedActs){
+            System.debug(LoggingLevel.DEBUG, '@@@@Secondo ' +JSON.serializePretty(relatedAct));
+            if (String.isNotBlank(relatedAct.Type__c) && activityTypeToCheck.contains(relatedAct.Type__c.toLowerCase()) 
+            &&((relatedAct.Case__c != null && (!activityToCheckMap.containsKey(relatedAct.Case__c) || (activityToCheckMap.get(relatedAct.Case__c) != null && !activityToCheckMap.get(relatedAct.Case__c).contains(relatedAct.Type__c.toLowerCase()))))
+            || (relatedAct.Order__c != null && (!activityToCheckMap.containsKey(relatedAct.Order__c) || (activityToCheckMap.get(relatedAct.Order__c) != null && !activityToCheckMap.get(relatedAct.Order__c).contains(relatedAct.Type__c.toLowerCase())))))){
+                    continue;
+            }
             system.debug(LoggingLevel.DEBUG, relatedAct);
             relatedAct.wrts_prcgvr__Status__c='Chiusa';
             relatedAct.EndDate__c = endDateVal;

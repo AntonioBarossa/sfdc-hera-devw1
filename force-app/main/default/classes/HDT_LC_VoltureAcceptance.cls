@@ -25,6 +25,12 @@ public with sharing class HDT_LC_VoltureAcceptance {
             sobjToUpdate.add(activity);
             System.Savepoint sp = Database.setSavePoint();
             try {
+                if ('Voltura Rifiutata'.equalsIgnoreCase(newPhase)){
+                    for (wrts_prcgvr__Activity__c act : HDT_QR_ActivityCustom.getActivityListCrediCheck(new Set<Id>{orderId})){
+                        wrts_prcgvr__Activity__c actToClose = new wrts_prcgvr__Activity__c(Id = act.Id,Note__c = 'Annullata per rifiuto voltura.', wrts_prcgvr__Status__c = 'Annullata');
+                        sobjToUpdate.add(actToClose);
+                    }
+                }
                 
                 if (HDT_UTL_Scarti.updateCloseDiscardActivity(activityId) && !HDT_UTL_DatabaseService.updateSObject(sobjToUpdate)){
                     response = 'Errore nell\'aggiornamento della fase dell\'ordine.';
