@@ -382,6 +382,15 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
         return valueOut;   
     }
 
+    public String transcodificaInfoDepurazione (String  valueIn) {
+        String valueOut = null;
+        valueOut = (valueIn == '0' || valueIn == '0.0000000') ? 'Utenza non servita' : valueOut;
+        valueOut = (valueIn == '1' || valueIn == '1.0000000') ? 'Utenza servita' : valueOut;
+        valueOut = (valueIn == '2' || valueIn == '2.0000000') ? 'Utenza non servita con progettazione in corso' : valueOut;      
+        valueOut = (valueIn == '3' || valueIn == '3.0000000') ? 'Utenza temporaneamente non servita' : valueOut;      
+        return valueOut;   
+    }
+
    /* public  String transCodeDoubleOppositeToDecimal(String doubleInput){
 
         String doubleOutput = doubleInput == '0.0000000' ? '1' : '0';

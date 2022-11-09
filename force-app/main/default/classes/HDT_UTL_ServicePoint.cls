@@ -280,13 +280,16 @@ public with sharing class HDT_UTL_ServicePoint {
         }
         if(mapRes.get('AFP_DEP355')!=null && !String.isBlank(mapRes.get('AFP_DEP355'))){
             if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 0) {
-                spNew.PurificationInfoOnTheInvoice__c = 'No - Esente';                
+                spNew.PurificationInfoOnTheInvoice__c = 'Utenza non servita';                
             }
             if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 1) {
-                spNew.PurificationInfoOnTheInvoice__c = 'Si - Paga';                
+                spNew.PurificationInfoOnTheInvoice__c = 'Utenza servita';                
             }
             if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 2) {
-                spNew.PurificationInfoOnTheInvoice__c = 'Si - Ridotta';                
+                spNew.PurificationInfoOnTheInvoice__c = 'Utenza non servita con progettazione in corso';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 3) {
+                spNew.PurificationInfoOnTheInvoice__c = 'Utenza temporaneamente non servita';                
             }
         }        
         if(mapRes.get('CODICE_ATECO')!=null && !String.isBlank(mapRes.get('CODICE_ATECO'))){
