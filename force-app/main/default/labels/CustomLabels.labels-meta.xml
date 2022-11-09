@@ -1001,4 +1001,11 @@
         <shortDescription>invio sollecito</shortDescription>
         <value>Invio Sollecito</value>
     </labels>
+    <labels>
+        <fullName>failed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>failed</shortDescription>
+        <value>failed</value>
+    </labels>
 </CustomLabels>
