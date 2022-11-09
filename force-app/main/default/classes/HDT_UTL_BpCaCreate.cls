@@ -448,5 +448,6 @@ public with sharing class HDT_UTL_BpCaCreate
         public String tipoAttivita {get;set;}
         public String commenti {get;set;}
         public String codiceBP {get;set;}
+        public String esito {get;set;}
     }
 }
