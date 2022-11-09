@@ -5,6 +5,7 @@ import handleView from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleView
 import handleConfirm from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleConfirm';
 import getCase from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.getCase';
 import handleNewActivityCreationAndCaseUpdate from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleNewActivityCreationAndCaseUpdate';
+import {equalsIgnoreCase} from 'c/hdtChildOrderProcessDetailsUtl';
 
 
 const OBJECT_FIELDS =[
@@ -57,7 +58,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     searchType;
     newDateLabel;
     showSpinner = true;
-    @track fieldsToRetrieve;
+    @track fieldsToRetrieve=OBJECT_FIELDS;
     @track isView = false;
 
     @wire(getCase,{caseId : '$caseid', fields : '$fieldsToRetrieve'})
@@ -70,7 +71,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
             console.error('status body: ' + JSON.stringify(error.body));
         }
         if (data && this.params){
-            this.case = JSON.parse(data);
+            this.case = data;
                 this.searchType = this.params.searchType;
                 this.showSpinner = false;
                 this.refreshRecord = false;
@@ -91,7 +92,6 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
             if (this.params.userCommunity === true || this.params.userCommunity === 'true'){
                 this.isCommunity = true;
             }
-            this.fieldsToRetrieve = OBJECT_FIELDS;
         }
     }
 
@@ -107,11 +107,12 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
             endDate : row.endDate
         }).then(result =>{
             
-            if (!result?.status == 'success'){
+            if (!equalsIgnoreCase(result?.status, 'success')){
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
             }else{
-                let data = JSON.parse(result);
+                //let data = JSON.parse(result);
+                let data = result;
                 if(data.status.localeCompare('success') === 0){
                     this.showAlert('Operazione Riuscita','L\'appuntamento è stato confermato','success');
                     this.refreshPage(true);
@@ -126,9 +127,9 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         });
     }
 
-    createNewActivityAndUpdateCase(caseId, updateCase, templateName){
+    createNewActivityAndUpdateCase(caso, updateCase, templateName){
         handleNewActivityCreationAndCaseUpdate({
-            caseId : caseId,
+            caso : caso,
             updateCase : updateCase,
             templateName : templateName
         }).then(result =>{
@@ -169,9 +170,9 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
 
     getNewDate(){
         let purchaseOrderNumber = this.caseid;
-        let streetCoding = '';
-        let street = '';
-        let housenumber = '';
+        let streetCoding = this.case.SupplyPostalCode__c
+        let street = this.case.SupplyStreetName__c
+        let housenumber = this.case.InvoicingStreetCode__c
         let typeInt = '';
         let indicator = '';
         let numberOfLines = '';
@@ -184,11 +185,12 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         handleView({
             purchaseOrderNumber : this.caseid
         }).then(result =>{
-            if (!result?.status == 'success'){
+            if (!equalsIgnoreCase(result?.status, 'success')){
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
             }else{
-                let data = JSON.parse(result);
+                //let data = JSON.parse(result);
+                let data = result;
                 if(data.status.localeCompare('success') === 0){
                     try{
                         let slots = data.data;
@@ -222,13 +224,14 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         handleSearch({
             wrap : wrap
         }).then(result =>{
-            if(!result?.status == 'success'){ 
+            if(!equalsIgnoreCase(result?.status, 'success')){ 
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
                 this.disableConfirmButton = true; 
                 this.createNewActivityAndUpdateCase(this.case, false, 'Contattare Cliente');
             }else{
-                let data = JSON.parse(result);
+                //let data = JSON.parse(result);
+                let data = result;
                 let slots = [];
                 try{
                     slots = data.data.appointmentData;

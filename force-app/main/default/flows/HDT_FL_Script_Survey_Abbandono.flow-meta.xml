@@ -393,31 +393,6 @@
             <stringValue>SORGENIA SPA</stringValue>
         </value>
     </choices>
-    <decisions>
-        <name>isResponseExistDecision</name>
-        <label>isResponseExistDecision</label>
-        <locationX>182</locationX>
-        <locationY>758</locationY>
-        <defaultConnector>
-            <targetReference>CreateSurveyResponse_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>isNotResponseExist</defaultConnectorLabel>
-        <rules>
-            <name>isResponseExist</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>GetSurveyResponse</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>UpdateSurveyResponse</targetReference>
-            </connector>
-            <label>isResponseExist</label>
-        </rules>
-    </decisions>
     <interviewLabel>HDT FL Script - Survey Abbandono {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT FL Script - Survey Abbandono</label>
     <processMetadataValues>
@@ -442,8 +417,8 @@
     <recordCreates>
         <name>CreateSurveyResponse_0</name>
         <label>CreateSurveyResponse</label>
-        <locationX>314</locationX>
-        <locationY>878</locationY>
+        <locationX>176</locationX>
+        <locationY>638</locationY>
         <inputAssignments>
             <field>Campaign__c</field>
             <value>
@@ -454,6 +429,12 @@
             <field>Contact__c</field>
             <value>
                 <elementReference>GetCampaignMember.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Lead__c</field>
+            <value>
+                <elementReference>GetCampaignMember.LeadId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -534,7 +515,7 @@
     <recordLookups>
         <name>GetCampaignMember</name>
         <label>GetCampaignMember</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -555,7 +536,7 @@
     <recordLookups>
         <name>GetOrder</name>
         <label>GetOrder</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -576,11 +557,11 @@
     <recordLookups>
         <name>GetSurvey</name>
         <label>GetSurvey</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>GetSurveyResponse</targetReference>
+            <targetReference>CreateSurveyResponse_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -594,126 +575,10 @@
         <object>SurveyCRM__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>GetSurveyResponse</name>
-        <label>GetSurveyResponse</label>
-        <locationX>182</locationX>
-        <locationY>638</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>isResponseExistDecision</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Contact__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCampaignMember.ContactId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Campaign__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCampaignMember.Campaign.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>SurveyCRM__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetSurvey.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>SurveyResponse__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordUpdates>
-        <name>UpdateSurveyResponse</name>
-        <label>UpdateSurveyResponse</label>
-        <locationX>50</locationX>
-        <locationY>878</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetSurveyResponse.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Response10__c</field>
-            <value>
-                <elementReference>RB4</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response11__c</field>
-            <value>
-                <elementReference>Rb6</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response12__c</field>
-            <value>
-                <elementReference>Rb8</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response1__c</field>
-            <value>
-                <elementReference>RB1</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response2__c</field>
-            <value>
-                <elementReference>RB2_Consapevole</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response3__c</field>
-            <value>
-                <elementReference>RB3_Consapevole</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response4__c</field>
-            <value>
-                <elementReference>RB4_Consapevole</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response5__c</field>
-            <value>
-                <elementReference>RB5_Consapevole</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response6__c</field>
-            <value>
-                <elementReference>Energia_Elettrica_1</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response7__c</field>
-            <value>
-                <elementReference>Gas_1</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Response8__c</field>
-            <value>
-                <elementReference>RB2</elementReference>
-            </value>
-        </inputAssignments>
-        <object>SurveyResponse__c</object>
-    </recordUpdates>
     <screens>
         <name>Screen1</name>
         <label>Screen1</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1359,7 +1224,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetCampaignMember</targetReference>

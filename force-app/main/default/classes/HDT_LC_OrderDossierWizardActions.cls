@@ -201,7 +201,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         updateCommodityWithConsumptionAnalisi(orderParent.Id);
 
-        orderParent = [SELECT Id, Phase__c, ContractSigned__c, SignMode__c, SignatureMethod__c FROM Order WHERE Id = :orderParent.Id WITH SECURITY_ENFORCED];
+        orderParent = [SELECT Id, Sale__r.Channel__c,  Phase__c, ContractSigned__c, SignMode__c, SignatureMethod__c FROM Order WHERE Id = :orderParent.Id WITH SECURITY_ENFORCED];
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
@@ -229,6 +229,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             }
         }
         else if(orderParent.Phase__c == 'Registrazione validata'){
+            if((orderParent.Sale__r.Channel__c == 'Telefono' || orderParent.Sale__r.Channel__c == 'Teleselling Inbound') && orderParent.SignatureMethod__c == 'Vocal Order')
+            {
+                orderToUpdate.SignedDate__c = Date.today();
+                orderToUpdate.DocumentalPhase__c = 'Plico firmato';
+            }
             orderToUpdate.Phase__c = 'Documentazione Gestita';
             orderToUpdate.status = 'Completed';
         }
