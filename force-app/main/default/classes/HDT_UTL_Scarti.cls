@@ -1148,8 +1148,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         }
         return requestMap;
     }
-
     private static void annulmentProcess(Id recordId,String objectType){
+        annulmentProcess(recordId,objectType,'');
+    }
+
+    private static void annulmentProcess(Id recordId,String objectType,String errorDescription){
         if (String.isNotEmpty(objectType)){
             SObject objectToUpdate = Schema.getGlobalDescribe().get(objectType).newSObject();
             String status = 'Case'.equalsIgnoreCase(objectType)? 'Closed' : 'Annullato';
@@ -1157,6 +1160,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             objectToUpdate.put('CancellationReason__c','Gestione scarto');
             objectToUpdate.put('Phase__c','Annullato');
             objectToUpdate.put('Status',status);
+            if(String.isNotBlank(errorDescription)){
+                objectToUpdate.put('DiscardDescription__c',errorDescription);
+            }
+            
+            
             //HDT_UTL_DatabaseService.updateSObject(objectToUpdate);
             updateObjectFuture(JSON.serialize(objectToUpdate));
         }
