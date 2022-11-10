@@ -1015,4 +1015,25 @@
         <shortDescription>Note Ultimo Sollecito</shortDescription>
         <value>Note Ultimo Sollecito:</value>
     </labels>
+    <labels>
+        <fullName>CaseTypeAmbientali</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Type Ambientali</shortDescription>
+        <value>Segnalazioni Ambientali</value>
+    </labels>
+    <labels>
+        <fullName>CaseTypeRifiuti</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Type Rifiuti</shortDescription>
+        <value>Gestione Rifiuti</value>
+    </labels>
+    <labels>
+        <fullName>CaseTypeScontoZona</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Type Sconto Zona</shortDescription>
+        <value>Agevolazione: Sconto Fuori Zona</value>
+    </labels>
 </CustomLabels>
