@@ -140,6 +140,11 @@
                 <default>false</default>
                 <label>Annullamento per Parere Negativo</label>
             </value>
+            <value>
+                <fullName>Assenza del presupposto di applicazione del tributo</fullName>
+                <default>false</default>
+                <label>Assenza del presupposto di applicazione del tributo</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -46,6 +46,11 @@
         <label>Annullo voltura</label>
     </customValue>
     <customValue>
+        <fullName>Assenza del presupposto di applicazione del tributo</fullName>
+        <default>false</default>
+        <label>Assenza del presupposto di applicazione del tributo</label>
+    </customValue>
+    <customValue>
         <fullName>Autolettura non acquisibile</fullName>
         <default>false</default>
         <label>Autolettura non acquisibile</label>
@@ -229,6 +234,11 @@
         <fullName>Esito KO da SII</fullName>
         <default>false</default>
         <label>Esito KO da SII</label>
+    </customValue>
+	<customValue>
+        <fullName>Mancata corrispondenza Anagrafe</fullName>
+        <default>false</default>
+        <label>Mancata corrispondenza Anagrafe</label>
     </customValue>
     <masterLabel>Motivazione Annullamento</masterLabel>
     <sorted>true</sorted>

@@ -564,6 +564,11 @@
                 <label>In attesa validazione</label>
             </value>
             <value>
+                <fullName>In attesa validazione BO</fullName>
+                <default>false</default>
+                <label>In attesa validazione BO</label>
+            </value>
+            <value>
                 <fullName>In Classificazione</fullName>
                 <default>false</default>
                 <label>In Classificazione</label>
@@ -998,6 +1003,11 @@
                 <fullName>Verifica in laboratorio</fullName>
                 <default>false</default>
                 <label>Verifica in laboratorio</label>
+            </value>
+            <value>
+                <fullName>In attesa di Verifica</fullName>
+                <default>false</default>
+                <label>In attesa di Verifica</label>
             </value>
         </valueSetDefinition>
     </valueSet>

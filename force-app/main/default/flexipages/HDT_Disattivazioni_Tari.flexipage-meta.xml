@@ -4,30 +4,18 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>actionNames</name>
+                    <name>lookupFieldName</name>
+                    <value>Id</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>collapsed</name>
-                    <value>false</value>
+                    <name>titleFieldName</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>enableActionsConfiguration</name>
-                    <value>true</value>
+                    <name>updateQuickActionName</name>
+                    <value>Case._LightningUpdateCase</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>enableActionsInNative</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideChatterActions</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>numVisibleActions</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentName>force:highlightsPanel</componentName>
-                <identifier>force_highlightsPanel</identifier>
+                <componentName>console:relatedRecord</componentName>
+                <identifier>console_relatedRecord2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>

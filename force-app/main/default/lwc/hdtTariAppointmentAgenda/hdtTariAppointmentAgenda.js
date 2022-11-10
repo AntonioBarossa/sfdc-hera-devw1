@@ -5,6 +5,7 @@ import handleView from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleView
 import handleConfirm from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleConfirm';
 import getCase from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.getCase';
 import handleNewActivityCreationAndCaseUpdate from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleNewActivityCreationAndCaseUpdate';
+import {equalsIgnoreCase} from 'c/hdtChildOrderProcessDetailsUtl';
 
 
 const OBJECT_FIELDS =[
@@ -32,13 +33,15 @@ const COLUMNSVIEW = [
     { label: 'Data Fine Appuntamento', fieldName: 'endDate', type: 'text' },
 ];
 
-class Objectfields{
-    constructor(startAppointment,endAppointment,phase,note,outcome){
-        this.startAppointment = startAppointment;
-        this.endAppointment = endAppointment;
-        this.phase = phase;
-        this.note = note;
-        this.outcome = outcome;
+class Wrapper{
+    constructor(purchaseOrderNumber,streetCoding,street,housenumber,indicator,typeInt,numberOfLines){
+        this.purchaseOrderNumber = purchaseOrderNumber;
+        this.streetCoding = streetCoding;
+        this.street = street;
+        this.housenumber = housenumber;
+        this.indicator = indicator;
+        this.typeInt = typeInt;
+        this.numberOfLines = numberOfLines;
     }
 }
 
@@ -55,7 +58,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     searchType;
     newDateLabel;
     showSpinner = true;
-    @track fieldsToRetrieve;
+    @track fieldsToRetrieve=OBJECT_FIELDS;
     @track isView = false;
 
     @wire(getCase,{caseId : '$caseid', fields : '$fieldsToRetrieve'})
@@ -68,7 +71,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
             console.error('status body: ' + JSON.stringify(error.body));
         }
         if (data && this.params){
-            this.case = JSON.parse(data);
+            this.case = data;
                 this.searchType = this.params.searchType;
                 this.showSpinner = false;
                 this.refreshRecord = false;
@@ -89,31 +92,27 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
             if (this.params.userCommunity === true || this.params.userCommunity === 'true'){
                 this.isCommunity = true;
             }
-            this.fieldsToRetrieve = OBJECT_FIELDS;
         }
     }
 
     confirmAppointment(){
         this.showSpinner = true;
         let row = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
+        const wrap = new Wrapper(this.caseid,this.case.SupplyPostalCode__c,this.case.SupplyStreetName__c,this.case.InvoicingStreetCode__c,null,null,null);
+
         handleConfirm({
-            case : this.case,
-            purchaseOrderNumber : this.caseid,
-            streetCoding : this.case.SupplyPostalCode__c,
-            street : this.case.SupplyStreetName__c,
-            housenumber : this.case.InvoicingStreetCode__c,
-            typeInt : null,
-            indicator : null,
-            numberOfLines : null,
+            theCase : this.case,
+            wrap : wrap,
             startDate : row.startDate,
             endDate : row.endDate
         }).then(result =>{
             
-            if (!result?.status == 'success'){
+            if (!equalsIgnoreCase(result?.status, 'success')){
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
             }else{
-                let data = JSON.parse(result);
+                //let data = JSON.parse(result);
+                let data = result;
                 if(data.status.localeCompare('success') === 0){
                     this.showAlert('Operazione Riuscita','L\'appuntamento è stato confermato','success');
                     this.refreshPage(true);
@@ -128,12 +127,11 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         });
     }
 
-    createNewActivityAndUpdateCase(caseId, caseFields, templateName, activityFields){
+    createNewActivityAndUpdateCase(caso, updateCase, templateName){
         handleNewActivityCreationAndCaseUpdate({
-            caseId : caseId,
-            caseFields : JSON.stringify(caseFields),
-            templateName : templateName,
-            activityFields : JSON.stringify(activityFields)
+            caso : caso,
+            updateCase : updateCase,
+            templateName : templateName
         }).then(result =>{
             console.log(result);
         }).catch(error =>{
@@ -172,9 +170,9 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
 
     getNewDate(){
         let purchaseOrderNumber = this.caseid;
-        let streetCoding = '';
-        let street = '';
-        let housenumber = '';
+        let streetCoding = this.case.SupplyPostalCode__c
+        let street = this.case.SupplyStreetName__c
+        let housenumber = this.case.InvoicingStreetCode__c
         let typeInt = '';
         let indicator = '';
         let numberOfLines = '';
@@ -187,11 +185,12 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         handleView({
             purchaseOrderNumber : this.caseid
         }).then(result =>{
-            if (!result?.status == 'success'){
+            if (!equalsIgnoreCase(result?.status, 'success')){
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
             }else{
-                let data = JSON.parse(result);
+                //let data = JSON.parse(result);
+                let data = result;
                 if(data.status.localeCompare('success') === 0){
                     try{
                         let slots = data.data;
@@ -221,22 +220,18 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
 
     handleSearchMethod(purchaseOrderNumber, streetCoding, street, housenumber,typeInt, indicator, numberOfLines){
         this.showSpinner = true;
+        const wrap = new Wrapper(purchaseOrderNumber, streetCoding, street, housenumber, typeInt, indicator, numberOfLines);
         handleSearch({
-            purchaseOrderNumber : purchaseOrderNumber,
-            streetCoding : streetCoding, 
-            street : street, 
-            housenumber : housenumber, 
-            typeInt : typeInt, 
-            indicator : indicator, 
-            numberOfLines : numberOfLines
+            wrap : wrap
         }).then(result =>{
-            if(!result?.status == 'success'){ 
+            if(!equalsIgnoreCase(result?.status, 'success')){ 
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
                 this.disableConfirmButton = true; 
-                this.createNewActivityAndUpdateCase(this.caseid, null, 'Contattare Cliente', null);
+                this.createNewActivityAndUpdateCase(this.case, false, 'Contattare Cliente');
             }else{
-                let data = JSON.parse(result);
+                //let data = JSON.parse(result);
+                let data = result;
                 let slots = [];
                 try{
                     slots = data.data.appointmentData;
@@ -244,7 +239,6 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                     if(slots.length == 0){
                         this.case.Note__c = 'l’appuntamento non può essere preso perché l’agenda non restituisce alcuna data - ricontattare il cliente';
                         this.case.Outcome__c ='Empty_Slots';
-                        var caseFields = new Objectfields(null,null,null,this.case.Note__c,this.case.Outcome__c);
                         this.disableConfirmButton = true; 
                     }else{
                         slots.forEach(element => {
@@ -254,8 +248,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                             });
                         });
                         this.case.Outcome__c='Recived_Slots';
-                        var caseFields = new Objectfields(null,null,null,null,this.case.Outcome__c);
-                        this.createNewActivityAndUpdateCase(this.caseid, caseFields, null, null);
+                        this.createNewActivityAndUpdateCase(this.case, true, null);
                         this.disableCancelButton = false; 
                     }
                 }catch(e){

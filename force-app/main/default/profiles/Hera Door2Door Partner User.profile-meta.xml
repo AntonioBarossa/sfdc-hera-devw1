@@ -481,6 +481,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.IntendedUse__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>AllineamentoGAA__c.Comune__c</field>
         <readable>true</readable>
@@ -1105,6 +1110,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.ATO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.CohabitantsNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2522,6 +2532,11 @@
 		<field>ContactPointPhone.IsArchived__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.PurificationInfoOnTheInvoice__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>ContentVersion.IsArchived__c</field>
@@ -7454,6 +7469,11 @@
     </fieldPermissions>	
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.SupplyUseType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>	
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.IntendedUse__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7470,6 +7490,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Unita_Abitative__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.ResidentDomesticHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NotResidentDomesticHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -28861,6 +28891,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SurveyResponse__c.Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SurveyResponse__c.Lead__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

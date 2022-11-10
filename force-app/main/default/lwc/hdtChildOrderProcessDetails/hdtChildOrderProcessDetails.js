@@ -273,7 +273,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(this.order.ServicePoint__r.RecordType.DeveloperName !== 'HDT_RT_Acqua' || !Array.isArray(rateCategories) ) return evaluationType !== 'required';
         
         // case Acqua
-        let rateCategory = this.order.RateCategory__c
+        let rateCategory = this.order.RateCategory__c;
         let result = evaluationType === 'notvisible';
         for(let rate of rateCategories)
         {
@@ -831,6 +831,19 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
                         message: 'Popolare il campo Numero Bocche Idrante',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+                }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='IntendedUse__c']") !== null 
+                && (this.template.querySelector("[data-id='IntendedUse__c']").value === ''
+                    || this.template.querySelector("[data-id='IntendedUse__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Destinazione Uso',
                         variant: 'error',
                         mode: 'sticky'
                     });

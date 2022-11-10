@@ -1060,6 +1060,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.CohabitantsNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.DomesticResidentNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6125,6 +6130,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.PurificationInfoOnTheInvoice__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.RateReversalReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7668,6 +7678,11 @@
         <field>Case.SupplyUseType__c</field>
         <readable>true</readable>
     </fieldPermissions>	
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SupplyUseType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>	
 	<fieldPermissions>
         <editable>true</editable>
         <field>Case.UseSubCategory__c</field>
@@ -7676,6 +7691,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Unita_Abitative__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.ResidentDomesticHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NotResidentDomesticHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14850,6 +14875,11 @@
         <field>OpportunityLineItem.TotalPrice</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.IntendedUse__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Order.FlagSending__c</field>
@@ -16435,6 +16465,11 @@
 		<field>Case.MissingDue__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.PurificationInfoOnTheInvoice__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.Process__c</field>
@@ -31653,6 +31688,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SurveyResponse__c.Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SurveyResponse__c.Lead__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

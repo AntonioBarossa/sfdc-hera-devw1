@@ -367,7 +367,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_Resume_Activity</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -377,11 +377,6 @@
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Gestione dati discordanti</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>HDT_RT_DistributorAppointment</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -594,7 +589,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>wrts_prcgvr__Activity__c.SospendiAttivita</value>
+                            <value>wrts_prcgvr__Activity__c.HDT_Suspend_Activity</value>
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
@@ -1140,6 +1135,40 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.SuspensionReason__c</fieldItem>
                 <identifier>RecordSuspensionReason__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ContactResult__c</fieldItem>
+                <identifier>RecordContactResult_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Presa Appuntamento</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NoteRicontattoCliente__c</fieldItem>
+                <identifier>RecordNoteRicontattoCliente_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Presa Appuntamento</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

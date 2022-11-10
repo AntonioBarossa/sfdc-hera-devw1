@@ -143,6 +143,9 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                             when 'transCodeSiNoConDescr' {
                                 transcodeMap.put(transcodeConfig.SfdcField__c, depsSrv.transCodeSiNoConDescr(position.valore));
                             }
+                            when 'transcodificaInfoDepurazione' {
+                                transcodeMap.put(transcodeConfig.SfdcField__c, depsSrv.transcodificaInfoDepurazione(position.valore));
+                            }
                             
                         }
                     } else {

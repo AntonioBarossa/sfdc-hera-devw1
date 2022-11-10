@@ -199,16 +199,8 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Case.Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>AttachedContentDocuments</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer6</identifier>
+                <componentName>hdtCaseFileUpload</componentName>
+                <identifier>c_hdtCaseFileUpload</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
