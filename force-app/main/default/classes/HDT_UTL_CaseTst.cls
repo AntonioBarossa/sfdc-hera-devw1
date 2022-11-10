@@ -206,8 +206,7 @@ public with sharing class HDT_UTL_CaseTst {
         }
         Test.stopTest();
         
-        System.debug('ok' + outputs[0].effectiveDate);
-        System.assertEquals(1,1,'ko');
+        System.assertEquals(String.isBlank(outputs[0].cancellationNote), true ,'Error: invio sollecito non riuscito');
 
     }
 
@@ -253,8 +252,8 @@ public with sharing class HDT_UTL_CaseTst {
         }
         Test.stopTest();
         
-        System.debug('ko' + outputs[0].effectiveDate);
-        System.assertEquals(1,1,'ko');
+        
+        System.assertEquals(String.isBlank(outputs[0].cancellationNote), false ,'Error: invio sollecito non riuscito');
 
     }
 
