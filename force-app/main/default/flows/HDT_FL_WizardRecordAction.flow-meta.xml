@@ -3,8 +3,8 @@
     <actionCalls>
         <name>HDT_UTL_Case_caseFlowPredefaults_sollecito</name>
         <label>HDT_UTL_Case caseFlowPredefaults</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -35,8 +35,8 @@
     <assignments>
         <name>Parent_case_variable_assignment</name>
         <label>Parent case variable assignment</label>
-        <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Get_case.NoticeNumber__c</assignToReference>
             <operator>Add</operator>
@@ -69,15 +69,61 @@
             <targetReference>update_parent_case</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>filter_on_Sobject_and_process_type</name>
+        <label>filter on Sobject and process type</label>
+        <locationX>182</locationX>
+        <locationY>158</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Case_GR_SA_ASFZ</name>
+            <conditionLogic>1 AND (2 OR 3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>SObjectName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Case</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.CaseTypeAmbientali</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.CaseTypeScontoZona</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.CaseTypeRifiuti</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_case</targetReference>
+            </connector>
+            <label>Case &amp; Gestione Rifiuti or Segnalazioni Ambientali  or Agevolazione: Sconto Fuori Zona</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>CaseDescription</name>
         <dataType>String</dataType>
-        <expression>{!Get_case.Description} &amp; BR() &amp; {!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote}</expression>
+        <expression>IF( AND(LEN({!Get_case.Description})&gt;0,LEN({!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote})&gt;0 ), 
+{!Get_case.Description} &amp; BR() &amp; {!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote},
+ IF( LEN({!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote})&gt;0, {!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote},{!Get_case.Description}))</expression>
     </formulas>
     <formulas>
         <name>CaseNote</name>
         <dataType>String</dataType>
-        <expression>{!Get_case.Description}&amp;BR()&amp;{!$Label.Note_Ultimo_Sollecito} &amp;{!Note}</expression>
+        <expression>IF(LEN({!Get_case.Note__c})&gt;0, {!Get_case.Note__c}&amp;BR()&amp;{!$Label.Note_Ultimo_Sollecito} &amp;{!Note}, {!$Label.Note_Ultimo_Sollecito} &amp;{!Note})</expression>
     </formulas>
     <interviewLabel>HDT_FL_WizardRecordAction {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_WizardRecordAction</label>
@@ -103,8 +149,8 @@
     <recordCreates>
         <name>create_informativa_case</name>
         <label>create informativa case</label>
-        <locationX>176</locationX>
-        <locationY>878</locationY>
+        <locationX>50</locationX>
+        <locationY>998</locationY>
         <inputAssignments>
             <field>AccountId</field>
             <value>
@@ -136,6 +182,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>PhoneNumber__c</field>
             <value>
                 <elementReference>Get_case.PhoneNumber__c</elementReference>
@@ -159,8 +211,8 @@
     <recordLookups>
         <name>Get_case</name>
         <label>Get case</label>
-        <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationX>50</locationX>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>get_infortiva_rt</targetReference>
@@ -186,13 +238,14 @@
         <queriedFields>ContactId</queriedFields>
         <queriedFields>PhoneNumber__c</queriedFields>
         <queriedFields>Email__c</queriedFields>
+        <queriedFields>Description</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <name>get_infortiva_rt</name>
         <label>get infortiva rt</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Note</targetReference>
@@ -220,8 +273,8 @@
     <recordUpdates>
         <name>update_parent_case</name>
         <label>update parent case</label>
-        <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationX>50</locationX>
+        <locationY>878</locationY>
         <connector>
             <targetReference>create_informativa_case</targetReference>
         </connector>
@@ -230,8 +283,8 @@
     <screens>
         <name>Get_Note</name>
         <label>Get Note</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -248,13 +301,13 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_case</targetReference>
+            <targetReference>filter_on_Sobject_and_process_type</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
