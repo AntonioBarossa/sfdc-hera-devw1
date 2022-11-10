@@ -16,5 +16,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>/lightning/cmp/c__HDT_LCP_RunFlowFromAura?c__recordid={!Case.Id}&amp;c__flowName=HDT_FL_WizardRecordAction&amp;c__processType={!Case.Type}</url>
+    <url>/lightning/cmp/c__HDT_LCP_RunFlowFromAura?c__recordid={!Case.Id}&amp;c__flowName=HDT_FL_WizardRecordAction&amp;c__processType={!Case.Type}&amp;c__sObjectApi=Case</url>
 </WebLink>
