@@ -157,7 +157,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     {
                         newOrder.EffectiveDate__c = getEffectiveDateBonus(orderId);
                     }
-                }                
+                }
                 when 'HDT_RT_CambioOfferte'
                 {
                     if('Acqua'.equalsIgnoreCase(order.Commodity__c))
@@ -165,7 +165,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         newOrder.EffectiveDate__c = System.Today();
                     }
                 }
-
             }
 
             switch on processType {
@@ -180,6 +179,24 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
                         processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
                         newOrder.PressureLevel__c  = 'BP';
+                    }
+                    if(order.CommodityFormula__c == 'Acqua')
+                    {
+                        newOrder.SecurityDepositExcluded__c  = 'Y';
+                        newOrder.SeasonUse__c  = 'Nessuna stagionalita';
+                        newOrder.PayPurification__c  = 'No - Esente';
+                        newOrder.PaySewer__c  = 'No - Esente';
+                    }
+                }
+                when 'Connessione con Attivazione'{
+                    if('Acqua'.equalsIgnoreCase(order.Commodity__c))
+                    {
+                        newOrder.QuotationType__c = 'Analitico';
+                        newOrder.NotDisconnectabilityCustomer__c = 'No';
+                        newOrder.VAT__c = 'Iva 10% (Cod. 01)';
+                        newOrder.PaySewer__c = 'Si - Paga';
+                        newOrder.PayPurification__c = 'Si - Paga';
+                        newOrder.ResidentDomesticHousingUnit__c = 1;
                     }
                 }
             }

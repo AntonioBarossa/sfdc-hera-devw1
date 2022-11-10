@@ -243,6 +243,7 @@
             <label>Variazione TARI</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <interviewLabel>Gestione Innesco Documentale - Case {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Innesco Documentale - Case</label>
     <processMetadataValues>

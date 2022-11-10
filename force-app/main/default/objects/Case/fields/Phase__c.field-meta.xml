@@ -1004,6 +1004,11 @@
                 <default>false</default>
                 <label>Verifica in laboratorio</label>
             </value>
+            <value>
+                <fullName>In attesa di Verifica</fullName>
+                <default>false</default>
+                <label>In attesa di Verifica</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
