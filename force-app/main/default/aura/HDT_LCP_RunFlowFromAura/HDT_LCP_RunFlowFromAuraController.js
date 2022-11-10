@@ -195,8 +195,7 @@
                 inputVariables.push({ name : 'activityId', type : 'String', value : activityId });
             }
 
-            if(processType==$A.get("$Label.c.CaseTypeAmbientali") || processType==$A.get("$Label.c.CaseTypeScontoZona") || $A.get("$Label.c.CaseTypeRifiuti")){
-                console.log('Sobject push');
+            if(processType==$A.get("$Label.c.CaseTypeAmbientali") || processType==$A.get("$Label.c.CaseTypeScontoZona") || processType==$A.get("$Label.c.CaseTypeRifiuti")){
                 inputVariables.push({ name : 'SObjectName', type : 'String', value : sObject });
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
             }
