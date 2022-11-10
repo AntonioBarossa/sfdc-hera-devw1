@@ -172,6 +172,92 @@ public with sharing class HDT_UTL_CaseTst {
         
     }
 
+    /**​
+    * @author Elvin Iluca
+    * @date 10/11/2022
+    * @description HDT_UTL_CaseTst – Test Class for HDT_UTL_Case.cls
+    */
+
+    @isTest
+    private static void caseFlowPredefaultsTestInvioSollecitoOk(){
+        
+        List<Case> caseList = [SELECT Id, Note__c, Type,CaseNumber, NoticeId__c, Status FROM Case LIMIT 1];
+
+        List<HDT_UTL_Case.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Case.HDT_UTL_FlowInputs>();
+        HDT_UTL_Case.HDT_UTL_FlowInputs myInput = new HDT_UTL_Case.HDT_UTL_FlowInputs();
+
+        List<HDT_UTL_Case.HDT_UTL_FlowOutputs> outputs = new List<HDT_UTL_Case.HDT_UTL_FlowOutputs>();
+
+        myInput.process = System.Label.invio_sollecito;
+        myInput.currentCase = caseList[0];
+
+        inputs.add(myInput);
+
+        // public HDT_UTL_CaseTstMock(Integer setStatusCode, String setStatus, String status, Map<String,Object> data)
+        //ok response
+        Map<String, Object> dataMock = new Map<String,Object>{'esito'=>'test esito'};
+        Test.setMock(HttpCalloutMock.class, new HDT_UTL_CaseTstMock(200, 'ok', 'success', dataMock));
+
+        Test.startTest();
+        Try{
+            outputs = HDT_UTL_Case.caseFlowPredefaults(inputs);
+        }catch(DmlException e) {
+            System.debug('The following exception has occurred: ' + e.getMessage());
+        }
+        Test.stopTest();
+        
+        System.debug('ok' + outputs[0].effectiveDate);
+        System.assertEquals(1,1,'ko');
+
+    }
+
+        /**​
+    * @author Elvin Iluca
+    * @date 10/11/2022
+    * @description HDT_UTL_CaseTst – Test Class for HDT_UTL_Case.cls
+    */
+
+    @isTest
+    private static void caseFlowPredefaultsTestInvioSollecitoKo(){
+        
+        List<Case> caseList = [SELECT Id, Note__c, Type,CaseNumber, NoticeId__c, Status FROM Case LIMIT 1];
+
+        List<HDT_UTL_Case.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Case.HDT_UTL_FlowInputs>();
+        HDT_UTL_Case.HDT_UTL_FlowInputs myInput = new HDT_UTL_Case.HDT_UTL_FlowInputs();
+
+        List<HDT_UTL_Case.HDT_UTL_FlowOutputs> outputs = new List<HDT_UTL_Case.HDT_UTL_FlowOutputs>();
+
+        myInput.process = System.Label.invio_sollecito;
+        myInput.currentCase = caseList[0];
+
+        inputs.add(myInput);
+
+        // public HDT_UTL_CaseTstMock(Integer setStatusCode, String setStatus, String status, Map<String,Object> data)
+        //ko response
+        Map<String, Object> errorDetail = new Map<String,Object>{
+            'code' => 'BAD_REQUEST',
+            'message' => 'There was an issue with your request message',
+             'additionalInfo' => 'Bad Request : There was an issue with your request message'
+        };
+
+        List<Map<String, Object>> errorDetails = new List<Map<String, Object>>();
+        errorDetails.add(errorDetail);
+
+        Test.setMock(HttpCalloutMock.class, new HDT_UTL_CaseTstMock(500, 'ko', 'failed', errorDetails));
+
+        Test.startTest();
+        Try{
+            outputs = HDT_UTL_Case.caseFlowPredefaults(inputs);
+        }catch(DmlException e) {
+            System.debug('The following exception has occurred: ' + e.getMessage());
+        }
+        Test.stopTest();
+        
+        System.debug('ko' + outputs[0].effectiveDate);
+        System.assertEquals(1,1,'ko');
+
+    }
+
     @isTest
     static void removeFacilityBundle(){
 
@@ -311,5 +397,51 @@ public with sharing class HDT_UTL_CaseTst {
         ret = HDT_UTL_Case.calculateSalesCompanyCode('Else');
         Test.stopTest();
         System.assertEquals('13V0000000', ret, 'Error calculate sales company');
+    }
+
+     /**​
+    * @author Elvin Iluca
+    * @date 10/11/2022
+    * @description HDT_UTL_CaseTst – Test Class for HDT_UTL_Case.cls
+    */
+
+    public class HDT_UTL_CaseTstMock implements HttpCalloutMock {
+        String status;
+        Map<String,Object> data;
+        List<Map<String, Object>> errorDetails;
+        Integer setStatusCode;
+        String setStatus;
+
+        public HDT_UTL_CaseTstMock(Integer setStatusCode, String setStatus, String status, Map<String,Object> data){
+            this.setStatusCode = setStatusCode;
+            this.setStatus = setStatus; 
+            this.status = status;
+            this.data = data;
+
+        }
+
+        public HDT_UTL_CaseTstMock(Integer setStatusCode, String setStatus, String status, List<Map<String, Object>> errorDetails){
+            this.setStatusCode = setStatusCode;
+            this.setStatus = setStatus; 
+            this.status = status;
+            this.errorDetails = errorDetails;    
+        }
+
+        public HTTPResponse respond(HTTPRequest request) {
+            HttpResponse response = new HttpResponse();
+            response.setHeader('Content-Type', 'application/json');
+            map<String, Object> bodyMap = new map<String, Object>{
+                'status'=> status,
+                'correlationId'=>'2ddbd94c-96c0-4aa2-a0fe-bb7603ebca7c',
+                'timestamp'=>'2022-08-06T17:49:57.819+02:00',
+                'data'=> data,
+                'errorDetails' => errorDetails
+            };
+
+            response.setBody(JSON.serialize(bodyMap));
+            response.setStatusCode(setStatusCode);
+            response.setStatus(setStatus);
+            return response; 
+        }
     }
 }
