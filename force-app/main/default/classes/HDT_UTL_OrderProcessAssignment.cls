@@ -213,10 +213,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
 		String commodity = ord.ServicePoint__r.CommoditySector__c;
         
         for (ProcessMatrix__c process : allProcesses) {
-            if(commodity == 'Ambiente' && process.Commodity__c == 'Ambiente'){
-                availableProcesses.add(process);
-            }     
-            else if(ord.RateCategory__c == 'APSCARPRO0' && process.ProcessName__c == 'Voltura - Subentro Scarico produttivo')
+            if(ord.RateCategory__c == 'APSCARPRO0' && process.ProcessName__c == 'Voltura - Subentro Scarico produttivo')
             {
                 availableProcesses.add(process);
             }
