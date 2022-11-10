@@ -35,6 +35,13 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
     disableMaterialButton = true;
     _recentWithdrawal = false;
     _withdrawalFee=false;
+    _toastErrorMessage = [
+        'Per informazioni sui costi, consultare il nostro sito.',
+        {
+            url: 'https://www.gruppomarchemultiservizi.it/#/ambiente/servizi_di_raccolta_a_domicilio',
+            label: ' www.gruppomarchemultiservizi.it',
+        },
+    ];
 
     get privateAreaPaid(){
         return this._checkResidente? this._withdrawConfiguration?.PayIfIsPrivateAreaDom__c : this._withdrawConfiguration?.PayIfIsPrivateAreaNotDom__c;
@@ -115,13 +122,13 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
             console.log('### DataUltimoRitiro-nMesi -> ' + dateSubtracted);
 
             if(this.lastWithdrawDate > dateSubtracted){
-                this.showMessage('Attenzione', 'Ritiro a pagamento causa ultimo ritiro più recente di '+ n +' mesi','error');
+                this.showMessage('Attenzione', 'Ritiro a pagamento causa ultimo ritiro più recente di '+ n +' mesi','error', true);
                 //this.template.querySelector("[data-id='WithdrawalFee__c']").value = true;
                 this._recentWithdrawal = true;
                 this.cubatureLimit=null;
                 return true;
             }else if(("Y" == this.privateAreaPaid)  && this.template.querySelector("[data-id='WithdrawalPrivateArea__c']").value ){//(Y==Y)==true?
-                this.showMessage('Attenzione', 'Ritiro a pagamento se effettuato in area privata', 'error');
+                this.showMessage('Attenzione', 'Ritiro a pagamento se effettuato in area privata', 'error', true);
                 //this.template.querySelector("[data-id='WithdrawalFee__c']").value = true;
                 this._recentWithdrawal = true;
                 this.cubatureLimit=null;
@@ -150,12 +157,25 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
     }
 
 
-    showMessage(title, message, variant) {
-        const toastErrorMessage = new ShowToastEvent({
-            title: title,
-            message: message,
-            variant: variant
-        });
+    showMessage(title, message, variant, messageData) {
+        let toastErrorMessage;
+        if (arguments.length == 3){
+            toastErrorMessage = new ShowToastEvent({
+                title: title,
+                message: message,
+                variant: variant,
+                mode: 'sticky'
+            
+            });
+        }else{
+            toastErrorMessage = new ShowToastEvent({
+                title: title,
+                message: message + '. {0} {1}',
+                variant: variant,
+                mode: 'sticky',
+                messageData: this._toastErrorMessage
+            });
+        }
         this.dispatchEvent(toastErrorMessage);
     }
 
