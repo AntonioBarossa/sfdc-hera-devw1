@@ -184,43 +184,21 @@ public inherited sharing class HDT_UTL_Case {
         }
         else if (System.Label.invio_sollecito.equalsIgnoreCase(process)){
             String body;
-            Boolean forcedResponse=true;
             HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
             httpObj.headersMap = new Map<String, String>();
             httpObj.httpMethod = 'POST';
             httpObj.headersMap.put('Content-Type', 'application/json');    
             httpObj.endPoint = 'Callout:MulesoftBasePath/reminder';
-            Map<String, Object> bodyMap = new Map<String, Object>(); 
-            bodyMap.put('requestId',currentCase.Id);
-            bodyMap.put('dataRequest',Date.today());
-            bodyMap.put('caseId',currentCase.CaseNumber);
-            bodyMap.put('noticeId',String.isNotBlank(currentCase.NoticeId__c)?currentCase.NoticeId__c:'');
-            bodyMap.put('reminder','X');
-            bodyMap.put('text',String.isNotBlank(currentCase.Note__c)?currentCase.Note__c:'');
-            body = JSON.serialize(bodyMap);
+            body = JSON.serialize(new Map<String, Object>{
+                'requestId'=>currentCase.Id,'dataRequest'=>Date.today(),'caseId'=>currentCase.CaseNumber,'noticeId'=>String.isNotBlank(currentCase.NoticeId__c)?currentCase.NoticeId__c:'',
+                'reminder'=>'X','text'=>String.isNotBlank(currentCase.Note__c)?currentCase.Note__c:''
+            });
             output.effectiveDate = Date.today();
-            //HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse respWrp=(HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse)JSON.deserialize(HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj).body,HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse.class);
-            //if(respWrp.status.equalsIgnoreCase(System.Label.failed)){
-            //    HDT_UTL_IntegrationLog.handleGenericErrorRequest(body, 'POST', respWrp.errorDetails[0].additionalInfo , System.Label.invio_sollecito, currentCase.Id);
-            //    output.cancellationNote = String.valueof(datetime.now()) + ': Pratica errata';
-            //}
-
-            if(forcedResponse){
-               Map<String,Object> Request=new Map<String,Object>{
-                    'status'=>'success',
-                    'correlationId'=>'2ddbd94c-96c0-4aa2-a0fe-bb7603ebca7c',
-                    'timestamp'=>'2020-08-06T17:49:57.819+02:00',
-                    'data'=> new Map<String,Object>{'esito'=>'test esito'}
-                };
-                HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse succRequest=(HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse) JSON.deserialize(JSON.serialize(Request), HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse.class) ;
-                //set return HDT_UTL_FlowOutputs
-                
-                
-
-                System.debug(succRequest);
+            HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse respWrp=(HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse)JSON.deserialize(HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj).body,HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse.class);
+            if(respWrp.status.equalsIgnoreCase(System.Label.failed)){
+                HDT_UTL_IntegrationLog.handleGenericErrorRequest(body, 'POST', respWrp.errorDetails[0].additionalInfo , System.Label.invio_sollecito, currentCase.Id);
+                output.cancellationNote = String.valueof(datetime.now()) + ': Pratica errata';
             }
-            //System.debug(respWrp);
-           
         }
         outputs.add(output);
         return outputs;
