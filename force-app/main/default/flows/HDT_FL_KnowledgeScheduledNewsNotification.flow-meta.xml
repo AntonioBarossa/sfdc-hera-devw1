@@ -94,7 +94,6 @@
                 <targetReference>Prima_Versione_News</targetReference>
             </connector>
             <label>Schedulazione Pubblicata</label>
-            <maxBatchSize>50</maxBatchSize>
             <offsetNumber>5</offsetNumber>
             <offsetUnit>Minutes</offsetUnit>
             <recordField>ToPublishDate__c</recordField>
