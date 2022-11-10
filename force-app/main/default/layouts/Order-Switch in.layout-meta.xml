@@ -585,14 +585,14 @@
             <sortOrder>21</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>EscalationCmp</actionName>
+            <actionName>Order.Conferma_finale</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>22</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Order.Conferma_finale</actionName>
+            <actionName>EscalationCmp</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>22</sortOrder>
+            <sortOrder>23</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>FeedItem.PollPost</actionName>

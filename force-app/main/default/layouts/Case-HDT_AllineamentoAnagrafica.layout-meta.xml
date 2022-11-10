@@ -454,7 +454,7 @@
         <platformActionListItems>
             <actionName>EscalationCmp</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>4</sortOrder>
+            <sortOrder>5</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
