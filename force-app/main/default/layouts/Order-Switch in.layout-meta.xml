@@ -590,6 +590,11 @@
             <sortOrder>22</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>EscalationCmp</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>23</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>FeedItem.PollPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>3</sortOrder>
