@@ -18,6 +18,13 @@ export default class HdtMaterialSelection extends LightningElement {
     @api isDisable;
 
     _cubatureLimit;
+    _toastErrorMessage = [
+        'Per informazioni sui costi, consultare il nostro sito.',
+        {
+            url: 'https://www.gruppomarchemultiservizi.it/#/ambiente/servizi_di_raccolta_a_domicilio',
+            label: ' www.gruppomarchemultiservizi.it',
+        },
+    ];
 
     @api
     get cubatureLimit() {
@@ -52,7 +59,7 @@ export default class HdtMaterialSelection extends LightningElement {
             }
 
             if(doCloseLogic){
-                this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');
+                this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error', true);
                 this.isPaymentNeeded = true;
                 this.closeModal();
             }
@@ -165,7 +172,7 @@ export default class HdtMaterialSelection extends LightningElement {
                 if(this.allCubatureSelected >= this.cubatureLimit){
                     if(!this.isAlreadyWarned){
                         if(this.showModal){
-                            this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error');
+                            this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error', true);
                         }
                         this.isPaymentNeeded = true;
                         this.isAlreadyWarned = true;
@@ -181,12 +188,25 @@ export default class HdtMaterialSelection extends LightningElement {
         // }
     }
 
-    showMessage(title, message, variant) {
-        const toastErrorMessage = new ShowToastEvent({
-            title: title,
-            message: message,
-            variant: variant
-        });
+    showMessage(title, message, variant, messageData) {
+        let toastErrorMessage;
+        if (arguments.length == 3){
+            toastErrorMessage = new ShowToastEvent({
+                title: title,
+                message: message,
+                variant: variant,
+                mode: 'sticky'
+            
+            });
+        }else{
+            toastErrorMessage = new ShowToastEvent({
+                title: title,
+                message: message + '. {0} {1}',
+                variant: variant,
+                mode: 'sticky',
+                messageData: this._toastErrorMessage
+            });
+        }
         this.dispatchEvent(toastErrorMessage);
     }
 
