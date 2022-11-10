@@ -1083,7 +1083,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> act: ' +  act);
                 HDT_UTL_DatabaseService.insertSObject(act);
             }else if (String.isNotEmpty(templateName)){
-                annulmentProcess(recordId, objectType);
+                annulmentProcess(recordId, objectType,requestDiscardManagemnt.get('DISCARD_MESSAGE'));
             }
         }
     }
