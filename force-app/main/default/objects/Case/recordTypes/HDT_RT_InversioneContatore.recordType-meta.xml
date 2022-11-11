@@ -9128,6 +9128,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Comunicazioni con il DL</fullName>
             <default>false</default>
         </values>
