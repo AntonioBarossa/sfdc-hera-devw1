@@ -2115,6 +2115,11 @@
 		<field>ContactPointPhone.IsArchived__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.PurificationInfoOnTheInvoice__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>ContentVersion.IsArchived__c</field>
@@ -9895,6 +9900,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.CollectedDifference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.CommoditySectorFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

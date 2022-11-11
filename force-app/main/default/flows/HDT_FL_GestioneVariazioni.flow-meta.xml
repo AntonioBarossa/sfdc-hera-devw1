@@ -405,6 +405,29 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Aggiorna_Fase_in_attesa_verifica_3</name>
+        <label>Aggiorna Fase in attesa verifica</label>
+        <locationX>15978</locationX>
+        <locationY>3830</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In attesa di Verifica</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_5</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>1810</locationX>
@@ -3844,6 +3867,9 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <label>CreateActivity</label>
         <locationX>15978</locationX>
         <locationY>3710</locationY>
+        <connector>
+            <targetReference>Aggiorna_Fase_in_attesa_verifica_3</targetReference>
+        </connector>
         <inputAssignments>
             <field>Case__c</field>
             <value>
@@ -5142,6 +5168,13 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Aggiorna_Case_4</name>
         <label>Aggiorna Case</label>
         <locationX>16506</locationX>
+        <locationY>3950</locationY>
+        <inputReference>GetCaseAggiornatoModificaUnitaImmobiliari_0</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_5</name>
+        <label>Aggiorna Case</label>
+        <locationX>15978</locationX>
         <locationY>3950</locationY>
         <inputReference>GetCaseAggiornatoModificaUnitaImmobiliari_0</inputReference>
     </recordUpdates>
