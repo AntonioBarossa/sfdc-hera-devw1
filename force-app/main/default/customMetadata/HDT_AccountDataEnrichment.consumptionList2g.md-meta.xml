@@ -126,7 +126,7 @@
     </values>
     <values>
         <field>Credential__c</field>
-        <value xsi:type="xsd:string">callout:</value>
+        <value xsi:type="xsd:string">Callout:consumptionList2g</value>
     </values>
     <values>
         <field>UseMock__c</field>
