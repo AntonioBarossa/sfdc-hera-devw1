@@ -205,8 +205,8 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         
         System.debug('templateName ->' + templateName); 
         wrts_prcgvr__Activity__c actToIns = null;
-        
-        if(templateName!=null){
+        Boolean isNoActivityUncompleted = [ SELECT Count() FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c!='Chiusa' AND wrts_prcgvr__ActivityTemplate__r.Name = 'Contattare Cliente' ] == 0;
+        if(templateName!=null && isNoActivityUncompleted){
             actToIns = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName(caso.Id, templateName);
             actToIns.wrts_prcgvr__IsRequired__c=true;
         }

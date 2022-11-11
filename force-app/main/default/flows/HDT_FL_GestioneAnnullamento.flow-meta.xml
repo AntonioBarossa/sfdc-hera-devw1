@@ -833,6 +833,13 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Fase</targetReference>
         </connector>
@@ -1940,6 +1947,7 @@
         </rules>
     </decisions>
     <description>Flow che si occupa della gestione dei processi di Post Sales Cluster Annullamento.</description>
+    <environments>Default</environments>
     <formulas>
         <name>EffectiveDateFormula</name>
         <dataType>Date</dataType>

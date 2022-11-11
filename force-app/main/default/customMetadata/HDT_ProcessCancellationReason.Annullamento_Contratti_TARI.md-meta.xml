@@ -20,6 +20,6 @@
     </values>
     <values>
         <field>RecordType__c</field>
-        <value xsi:type="xsd:string">HDT_RT_Annullamento</value>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>
