@@ -14,7 +14,10 @@ public with sharing class HDT_BA_ExpiredOrders implements Database.Batchable<sOb
         //Date todayDate = Date.today();
         //Marco Ficorella - 10/11/2022 GestioneAnnullamentoOrdiniNonFirmati --> rimosso filtro per record type in quanto devono essere considerati tutti gli ordini
         //Set<String> recordTypeSet = new Set<String>{'HDT_RT_VAS','HDT_RT_ScontiBonus'};
-        return Database.getQueryLocator('SELECT Id,Status, DocusignExpirationDate__c,SignatureMethod__c,Phase__c,CancellationReason__c,(select id,Status,Phase__c from Orders__r where Phase__c NOT IN (\'Completata\', \'Annullato\',\'Voltura Rifiutata\')) FROM Order WHERE (DocusignExpirationDate__c != null AND DocusignExpirationDate__c < TODAY ) and Phase__c NOT IN (\'Documentazione Gestita\',\'Annullato\',\'Completata\') and SignatureMethod__c=\'OTP Remoto\'');
+        //Marco Ficorella - 11/11/2022 GestioneAnnullamentoOrdiniNonFirmati --> Recupero Parametri filtro da custom metadata
+        List<HDT_NotSignedOrderFilterBatch__mdt> customMtdList = [SELECT ChildOrdersStatus__c,ParentOrdersStatus__c,SignatureMethod__c FROM HDT_NotSignedOrderFilterBatch__mdt where DeveloperName='NotSignedOrders' LIMIT 1];
+
+        return Database.getQueryLocator('SELECT Id,Status, DocusignExpirationDate__c,SignatureMethod__c,Phase__c,CancellationReason__c,(select id,Status,Phase__c from Orders__r where Phase__c NOT IN :customMtdList[0].ChildOrdersStatus__c) FROM Order WHERE (DocusignExpirationDate__c != null AND DocusignExpirationDate__c < TODAY ) and Phase__c NOT IN :customMtdList[0].ParentOrdersStatus__c and SignatureMethod__c IN :customMtdList[0].SignatureMethod__c ');
     }
     
     //BATCH EXECUTE
@@ -23,7 +26,7 @@ public with sharing class HDT_BA_ExpiredOrders implements Database.Batchable<sOb
         List<Id> parentOrderList=new List<Id>(ordersToNullify.size());
         for(Order myOrder : ordersToNullify){
             orderIdSetToWork.add(myOrder.Id);
-            parentOrderList(myOrder.Id);
+            parentOrderList.add(myOrder.Id);
             if(myOrder.Orders__r.size()==0){
                 continue;
             } else {
