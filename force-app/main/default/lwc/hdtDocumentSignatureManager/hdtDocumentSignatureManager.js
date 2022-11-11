@@ -193,7 +193,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                         signSendModeList.push(signSendMode);
                     }
                     console.log('### Before Sportello Excepion');
-                    if(!existCartacea && this.currentUserChannel && this.currentUserChannel === 'Sportello')
+                    if(!existCartacea && this.currentUserChannel && (this.currentUserChannel === 'Sportello' || this.currentUserChannel.toLowerCase().includes('back office') || this.currentUserChannel === 'Protocollo'))
                     {
                         console.log('### Start Sportello Excepion');
                         sendMode = [];
