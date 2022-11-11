@@ -9754,6 +9754,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contract.CommoditySectorFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contract.CommonInvoiceDescription__c</field>
         <readable>true</readable>
     </fieldPermissions>

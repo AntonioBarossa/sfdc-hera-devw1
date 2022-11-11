@@ -19,7 +19,7 @@ export default class HdtMaterialSelection extends LightningElement {
 
     _cubatureLimit;
     _toastErrorMessage = [
-        'Per informazioni sui costi, consultare il nostro sito.',
+        'Per informazioni sui costi, consultare il nostro sito',
         {
             url: 'https://www.gruppomarchemultiservizi.it/#/ambiente/servizi_di_raccolta_a_domicilio',
             label: ' www.gruppomarchemultiservizi.it',

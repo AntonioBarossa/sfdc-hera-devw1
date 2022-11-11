@@ -36,7 +36,7 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
     _recentWithdrawal = false;
     _withdrawalFee=false;
     _toastErrorMessage = [
-        'Per informazioni sui costi, consultare il nostro sito.',
+        'Per informazioni sui costi, consultare il nostro sito',
         {
             url: 'https://www.gruppomarchemultiservizi.it/#/ambiente/servizi_di_raccolta_a_domicilio',
             label: ' www.gruppomarchemultiservizi.it',
