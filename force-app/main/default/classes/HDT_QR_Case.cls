@@ -135,11 +135,11 @@ public inherited sharing class HDT_QR_Case {
     /*****Sviluppo per Campagne */
 
     public List<Case> getRecordCreatedYesterdayDifferentBy(String cluster){
-        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,MacroTopic__c,SalesCompany__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c != : cluster AND createddate = Yesterday WITH SECURITY_ENFORCED LIMIT 3000];
+        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,MacroTopic__c,SalesCompany__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c != : cluster AND createddate = Yesterday WITH SECURITY_ENFORCED];
     }
 
     public List<Case> getRecordCreatedInRequestedDateDifferentBy(String cluster, Datetime startDt, Datetime endDt){
-        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,MacroTopic__c,SalesCompany__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c != : cluster AND CreatedDate >=:startDt and CreatedDate <: endDt WITH SECURITY_ENFORCED LIMIT 3000];
+        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,MacroTopic__c,SalesCompany__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c != : cluster AND CreatedDate >=:startDt and CreatedDate <: endDt WITH SECURITY_ENFORCED];
     }
 
     public List<Case> getRecordCreatedLastWeekEqualsBy(String cluster){
