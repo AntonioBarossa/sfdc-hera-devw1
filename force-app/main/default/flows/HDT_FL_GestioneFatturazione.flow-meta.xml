@@ -60,7 +60,7 @@
     <actionCalls>
         <name>Clona_Reading_Case_Padre</name>
         <label>Clona Reading Case Padre</label>
-        <locationX>3053</locationX>
+        <locationX>3207</locationX>
         <locationY>4646</locationY>
         <actionName>HDT_SRV_SelfReadings</actionName>
         <actionType>apex</actionType>
@@ -81,7 +81,7 @@
     <actionCalls>
         <name>Crea_Case_Autolettura</name>
         <label>Crea Case Autolettura</label>
-        <locationX>3053</locationX>
+        <locationX>3207</locationX>
         <locationY>3710</locationY>
         <actionName>HDT_UTL_CreateGenericCase</actionName>
         <actionType>apex</actionType>
@@ -119,7 +119,7 @@
     <assignments>
         <name>Assegna_Codice_Causale</name>
         <label>Assegna Codice Causale</label>
-        <locationX>3053</locationX>
+        <locationX>3207</locationX>
         <locationY>4406</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Autolettura.CausalCode__c</assignToReference>
@@ -278,7 +278,7 @@
     <assignments>
         <name>Set_Fase</name>
         <label>Set Fase Inviata a SAP</label>
-        <locationX>3053</locationX>
+        <locationX>3207</locationX>
         <locationY>4190</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Autolettura.Phase__c</assignToReference>
@@ -294,7 +294,7 @@
     <assignments>
         <name>Set_Fase_In_attesa</name>
         <label>Set Fase Attesa check preliminari</label>
-        <locationX>2789</locationX>
+        <locationX>2943</locationX>
         <locationY>4190</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Autolettura.Phase__c</assignToReference>
@@ -668,7 +668,7 @@
     <decisions>
         <name>Choose_Next_Phase</name>
         <label>Next Phase?</label>
-        <locationX>2547</locationX>
+        <locationX>2701</locationX>
         <locationY>3470</locationY>
         <defaultConnector>
             <targetReference>Set_Phase_In_Lavorazione</targetReference>
@@ -691,7 +691,7 @@
         </rules>
         <rules>
             <name>Elaborazione_Manuale</name>
-            <conditionLogic>1 OR 2 OR (3 AND 4)</conditionLogic>
+            <conditionLogic>(1 AND 2) OR 3</conditionLogic>
             <conditions>
                 <leftValueReference>Query_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -700,24 +700,17 @@
                 </rightValue>
             </conditions>
             <conditions>
+                <leftValueReference>Query_Case.CommodityFormula__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
                 <leftValueReference>UpdatedCase.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Errore di Lettura</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Query_Case.Type</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Inversione del Contatore</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Query_Case.CommodityFormula__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Acqua</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -868,7 +861,7 @@
     <decisions>
         <name>Prima_Bolletta_non_ancora_emessa</name>
         <label>Prima Bolletta non ancora emessa?</label>
-        <locationX>3625</locationX>
+        <locationX>3779</locationX>
         <locationY>3710</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -929,7 +922,7 @@
     <decisions>
         <name>Turbobilling_Decision</name>
         <label>Turbobilling Decision</label>
-        <locationX>3053</locationX>
+        <locationX>3207</locationX>
         <locationY>4070</locationY>
         <defaultConnector>
             <targetReference>Assegna_Codice_Causale</targetReference>
@@ -1050,6 +1043,7 @@
             <label>Commodity Acqua</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>ConvertTipoDocumentoToUppercase</name>
         <dataType>String</dataType>
@@ -1137,7 +1131,7 @@
     <recordLookups>
         <name>Copy_1_of_Calcolo_Codice_Causale</name>
         <label>Calcolo Codice Causale</label>
-        <locationX>3053</locationX>
+        <locationX>3207</locationX>
         <locationY>3950</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1172,7 +1166,7 @@
     <recordLookups>
         <name>Get_Case_Autolettura</name>
         <label>Get Case Autolettura</label>
-        <locationX>3053</locationX>
+        <locationX>3207</locationX>
         <locationY>3830</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1281,7 +1275,7 @@
     <recordUpdates>
         <name>Aggiorna_Case_Autolettura</name>
         <label>Aggiorna Case Autolettura</label>
-        <locationX>3053</locationX>
+        <locationX>3207</locationX>
         <locationY>4526</locationY>
         <connector>
             <targetReference>Clona_Reading_Case_Padre</targetReference>
@@ -1291,7 +1285,7 @@
     <recordUpdates>
         <name>Copy_1_of_Set_Phase_In_Lavorazione</name>
         <label>Copy 1 of Set Phase In Lavorazione</label>
-        <locationX>1469</locationX>
+        <locationX>1623</locationX>
         <locationY>3590</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1390,7 +1384,7 @@
     <recordUpdates>
         <name>Set_Phase_Comunicazioni_con_il_DL</name>
         <label>Set Phase Comunicazioni con il DL</label>
-        <locationX>2261</locationX>
+        <locationX>2415</locationX>
         <locationY>3590</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1411,7 +1405,7 @@
     <recordUpdates>
         <name>Set_Phase_Da_Inviare</name>
         <label>Set Phase Da Inviare</label>
-        <locationX>1997</locationX>
+        <locationX>2151</locationX>
         <locationY>3590</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
@@ -1435,7 +1429,7 @@
     <recordUpdates>
         <name>Set_Phase_Elaborazione_Manuale</name>
         <label>Set Phase Elaborazione Manuale</label>
-        <locationX>1733</locationX>
+        <locationX>1887</locationX>
         <locationY>3590</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1456,7 +1450,7 @@
     <recordUpdates>
         <name>Set_Phase_In_Lavorazione</name>
         <label>Set Phase In Lavorazione</label>
-        <locationX>3625</locationX>
+        <locationX>3779</locationX>
         <locationY>3590</locationY>
         <connector>
             <targetReference>Prima_Bolletta_non_ancora_emessa</targetReference>
@@ -1480,7 +1474,7 @@
     <recordUpdates>
         <name>Set_Phase_Sospesa</name>
         <label>Set Phase Sospesa</label>
-        <locationX>3053</locationX>
+        <locationX>3207</locationX>
         <locationY>3590</locationY>
         <connector>
             <targetReference>Crea_Case_Autolettura</targetReference>
@@ -2692,7 +2686,7 @@
     <screens>
         <name>SollecitoEmissioneBollettaEndScreen</name>
         <label>Fine flow Sollecito Emissione Bolletta</label>
-        <locationX>3493</locationX>
+        <locationX>3647</locationX>
         <locationY>3830</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2713,7 +2707,7 @@
     <screens>
         <name>Spinner</name>
         <label>Spinner</label>
-        <locationX>1997</locationX>
+        <locationX>2151</locationX>
         <locationY>3710</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
