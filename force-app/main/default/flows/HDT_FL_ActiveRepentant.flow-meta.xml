@@ -255,7 +255,7 @@
             <inputParameters>
                 <name>sottotipo</name>
                 <value>
-                    <stringValue>Subentro</stringValue>
+                    <elementReference>getOrder.ProcessType__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
