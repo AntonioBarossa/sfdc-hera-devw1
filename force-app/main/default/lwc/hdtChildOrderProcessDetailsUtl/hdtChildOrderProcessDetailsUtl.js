@@ -113,7 +113,7 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                 hasAllegatiObbligatori: true,
                 diffObjApi: 'Sale',
                 processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),
-                nextActions : (evt) => 
+                nextActions : (evt, currentSectionIndex, nextSectionStep) => 
                     {
                         savePredefaultedFields.call(this, evt?.currentTarget?.value);
                         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
@@ -142,6 +142,10 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                         }
                         //check mandatory section field section
                         if(checkSectionRequiredFields.call(this, evt?.currentTarget?.value)){   return true;}
+                        /*You can do async operations before submitting
+                            this function must return true, launch promise and when you're done, launch 
+                            this.updateProcess(currentSectionIndex, nextSectionStep);
+                        */
                     },
                 data:[
                     //new fieldData('Codice Punto','ServicePointCode__c',this.typeVisibility('both'),true, true, '', ''),
