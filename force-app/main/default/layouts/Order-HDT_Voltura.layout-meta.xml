@@ -245,7 +245,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>AtecoCode__c</field>
+                <field>HerAteco__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
