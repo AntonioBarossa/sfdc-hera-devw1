@@ -37,6 +37,7 @@ export default class HdtActiveRepentant extends LightningElement {
 
     //variables from flow
     @api recordId;
+    @api hideFields=false;
     @api objectApiName;
     @api outputWrp={};
     @api sessionid;
@@ -65,7 +66,7 @@ export default class HdtActiveRepentant extends LightningElement {
     connectedCallback(){
         this.loading++;
         this.getTablesConfig();
-        if(this.recordId){
+        if(!this.hideFields){
             this.subscribeMC();
             const oldWrpStr = window.sessionStorage.getItem(this.sessionid);
             if(this.sessionid && oldWrpStr){
@@ -80,7 +81,7 @@ export default class HdtActiveRepentant extends LightningElement {
 
     buttonPressed() {
         this.disabled=true;
-        if(this.recordId){
+        if(!this.hideFields){
             //flow
             let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
             let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
@@ -340,7 +341,7 @@ export default class HdtActiveRepentant extends LightningElement {
 
         this.dispatchEvent(evt);
 
-        if(this.recordId)    this.populateFormFields(evt);
+        if(!this.hideFields)    this.populateFormFields(evt);
         this.limitDateX=null;
         this.limitDateY=null;
         this.missedDueDate=null;//reset data to avoid conflicts
