@@ -29,7 +29,7 @@ public with sharing class HDT_UTL_ExpSieRavvTst {
         Order ordine = [Select id From Order LIMIT 1];
         ordine.BillingCategory__c = 'C';
         update ordine;
-        HDT_UTL_ExpSieRavv.HDT_WRP_SieExport wrapper = new HDT_UTL_ExpSieRavv.HDT_WRP_SieExport();
+        HDT_WRP_SieRavvExport wrapper = new HDT_WRP_SieRavvExport();
         wrapper.period   = '';
         wrapper.subtype  = '';
         wrapper.cityCode = '';
@@ -52,7 +52,7 @@ public with sharing class HDT_UTL_ExpSieRavvTst {
         caso.Subprocess__c = 'NON DOM_ISTAT/Ronchi';
         caso.BillingCategory__c = 'C';
         update caso;
-        HDT_UTL_ExpSieRavv.HDT_WRP_SieExport wrapper = new HDT_UTL_ExpSieRavv.HDT_WRP_SieExport();
+        HDT_WRP_SieRavvExport wrapper = new HDT_WRP_SieRavvExport();
         wrapper.period   = 'Y';
         wrapper.subtype  = '';
         wrapper.cityCode = '';

@@ -12,7 +12,7 @@ public with sharing class HDT_UTL_ExpSieRavv {
     private static String vValoreOperando;
 
     @AuraEnabled(cacheable=false)
-    public static void createExportSobjects(HDT_WRP_SieExport wrapper){
+    public static void createExportSobjects(HDT_WRP_SieRavvExport wrapper){
         //cancellare gli esistenti record di ravvedimento operoso
         HDT_UTL_DatabaseService.deleteSObject([Select id From ExpRavv__c Where Case__c =:wrapper.record.Id OR Order__c =:wrapper.record.Id]);
         //creare e inserire i nuovi
@@ -22,7 +22,7 @@ public with sharing class HDT_UTL_ExpSieRavv {
     }
 
 
-    private static List<ExpRavv__c> getExportRavv(HDT_WRP_SieExport wrapper){
+    private static List<ExpRavv__c> getExportRavv(HDT_WRP_SieRavvExport wrapper){
         HDT_UTL_SieSobjectCreation createSobjUtl = new HDT_UTL_SieSobjectCreation(wrapper);
 
         if('order'.equalsIgnoreCase(createSobjUtl.getSobjectType())){
@@ -41,7 +41,7 @@ public with sharing class HDT_UTL_ExpSieRavv {
     
     private static void caseSieExp(HDT_UTL_SieSobjectCreation createSobjUtl){
 
-        HDT_WRP_SieExport wrapper = createSobjUtl.getWrapper();
+        HDT_WRP_SieRavvExport wrapper = createSobjUtl.getWrapper();
         Case caso = (Case) wrapper.record;
         if(('X'.equalsIgnoreCase(wrapper.period) || 'A'.equalsIgnoreCase(caso.BillingCategory__c)))     return;
 
@@ -83,10 +83,10 @@ public with sharing class HDT_UTL_ExpSieRavv {
     }
 
     private with sharing class HDT_UTL_SieSobjectCreation{
-        HDT_WRP_SieExport wrapper {get;set;}
+        HDT_WRP_SieRavvExport wrapper {get;set;}
         String sobjectTypeName {get;set;}
         List<ExpRavv__c> listToInsert {get;set;}
-        HDT_UTL_SieSobjectCreation(HDT_WRP_SieExport wrapper){
+        HDT_UTL_SieSobjectCreation(HDT_WRP_SieRavvExport wrapper){
             this.wrapper=wrapper;
             this.sobjectTypeName = wrapper.record.Id.getSobjectType().getDescribe().getName().toLowerCase();
             this.listToInsert = new List<ExpRavv__c>();
@@ -96,7 +96,7 @@ public with sharing class HDT_UTL_ExpSieRavv {
             return this.sobjectTypeName;
         }
 
-        private HDT_WRP_SieExport getWrapper(){
+        private HDT_WRP_SieRavvExport getWrapper(){
             return this.wrapper;
         }
 
@@ -128,7 +128,7 @@ public with sharing class HDT_UTL_ExpSieRavv {
         }
     }
 
-    public with sharing class HDT_WRP_SieExport{
+    /*public with sharing class HDT_WRP_SieRavvExport{
         @AuraEnabled public String period {get;set;}
         @AuraEnabled public String subtype {get;set;}
         @AuraEnabled public String cityCode {get;set;}
@@ -140,7 +140,7 @@ public with sharing class HDT_UTL_ExpSieRavv {
             get { return missingDue > 0 ? 1 : 0; }
             set { missingDue = value; }
         }
-    }
+    }*/
 
     private with sharing class HDT_WRP_Operandi{
         String vNomeOperandoReale;
