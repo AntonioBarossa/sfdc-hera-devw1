@@ -287,6 +287,7 @@ export default class HdtActiveRepentant extends LightningElement {
 
     checkData(data, terms) {
         var declarationDate = new Date(this.dateDichiarazione.substring(0, 10));
+        this.periodType=null;
 
         this.getLimitDateX(data);
         this.getLimitDateY(data.CriteriaY__c, data.DayY__c);
