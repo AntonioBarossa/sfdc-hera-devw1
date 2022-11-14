@@ -113,13 +113,14 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                 hasAllegatiObbligatori: true,
                 diffObjApi: 'Sale',
                 processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),
-                nextActions : (evt) => 
+                nextActions : (evt, currentSectionIndex, nextSectionStep) => 
                     {
                         savePredefaultedFields.call(this, evt?.currentTarget?.value);
                         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
                         let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
+                        const activeRepentant = this.template.querySelector("c-hdt-active-repentant");
                         //if(!this.isActiveRepentantPressed){
-                        if(this.template.querySelector("c-hdt-active-repentant")?.validateDate(decorrenza, dichiarazione)){
+                        if(activeRepentant?.validateDate(decorrenza, dichiarazione)){
                             this.showMessage('Errore', 'Verificare il ravvedimento operoso prima di procedere', 'error');
                             return true;
                         }
@@ -142,6 +143,21 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                         }
                         //check mandatory section field section
                         if(checkSectionRequiredFields.call(this, evt?.currentTarget?.value)){   return true;}
+                        /*You can do async operations before submitting
+                            this function must return true, launch promise and when you're done, launch 
+                            this.updateProcess(currentSectionIndex, nextSectionStep);
+                        */
+                        if(activeRepentant){
+                            activeRepentant?.exportSieData(this.order)
+                            .then(()=>{
+                                this.updateProcess(currentSectionIndex, nextSectionStep);
+                            })
+                            .catch(error=>{
+                                console.error(error);
+                                this.showMessage('Errore', "Errore salvataggio ravvedimento operoso", 'error');
+                            })
+                            return true;
+                        }
                     },
                 data:[
                     //new fieldData('Codice Punto','ServicePointCode__c',this.typeVisibility('both'),true, true, '', ''),
