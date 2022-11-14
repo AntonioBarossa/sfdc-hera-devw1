@@ -40,6 +40,13 @@
                     <elementReference>companyOwner</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>companyOwner</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>showToast_1_0</targetReference>
             </connector>
@@ -142,6 +149,7 @@
             <label>errorData</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>errorMessage</name>
         <dataType>String</dataType>
