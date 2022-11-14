@@ -674,8 +674,8 @@
     <assignments>
         <name>AssegnaValori_1</name>
         <label>AssegnaValori</label>
-        <locationX>3645</locationX>
-        <locationY>1039</locationY>
+        <locationX>3619</locationX>
+        <locationY>1089</locationY>
         <assignmentItems>
             <assignToReference>GetOrder.CancellationRequestDate__c</assignToReference>
             <operator>Assign</operator>
@@ -1529,6 +1529,13 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Dati discordanti</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito KO da DBO</stringValue>
                 </rightValue>
             </conditions>
             <connector>
