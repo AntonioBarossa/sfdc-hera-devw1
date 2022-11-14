@@ -36,7 +36,7 @@ public with sharing class HDT_UTL_ExpSieRavvTst {
         wrapper.declarationDate = System.today();
         wrapper.effectiveDate   = System.today();
         wrapper.limitDateX      = System.today();
-        wrapper.missingDue = 0;
+        wrapper.missingDue = 'N';
         wrapper.record = ordine;
 
         HDT_UTL_ExpSieRavv.createExportSobjects(wrapper);
@@ -59,7 +59,7 @@ public with sharing class HDT_UTL_ExpSieRavvTst {
         wrapper.declarationDate = System.today();
         wrapper.effectiveDate   = System.today();
         wrapper.limitDateX      = System.today();
-        wrapper.missingDue = 0;
+        wrapper.missingDue = 'N';
         wrapper.record = caso;
 
         HDT_UTL_ExpSieRavv.createExportSobjects(wrapper);
