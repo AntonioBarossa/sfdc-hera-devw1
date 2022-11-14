@@ -827,6 +827,21 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 }
                 currActivities = (wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => parentObjId});
                 currActivities[0].wrts_prcgvr__Description__c = handlesItem.getSObjectType() == schema.et4ae5__IndividualEmailResult__c.getSObjectType() ? 'Scarto EMAIL Marketing Cloud' : (handlesItem.getSObjectType()==schema.SMSTracking__c.getSObjectType() ? 'Scarto SMS Marketing Cloud' : '');
+                if(handlesItem.getSObjectType() == schema.et4ae5__IndividualEmailResult__c.getSObjectType()){
+                    currActivities[0].Individual_Email_Result__c = (Id)handlesItem.get('Id');
+                    if(handlesItem.get('et4ae5__Contact__c') != null && String.isNotBlank((string)handlesItem.get('et4ae5__Contact__c')))
+                        currActivities[0].Contact__c = (Id)handlesItem.get('et4ae5__Contact__c');
+                    if(handlesItem.get('Account__c') != null && String.isNotBlank((string)handlesItem.get('Account__c')))
+                        currActivities[0].Account__c = (Id)handlesItem.get('Account__c');
+                }
+                else if(handlesItem.getSObjectType() == schema.SMSTracking__c.getSObjectType()){
+                    currActivities[0].SMS_Tracking__c = (Id)handlesItem.get('Id');
+                    if(handlesItem.get('ContactID__c') != null && String.isNotBlank((string)handlesItem.get('ContactID__c')))
+                        currActivities[0].Contact__c = (Id)handlesItem.get('ContactID__c');
+                    if(handlesItem.get('Account__c') != null && String.isNotBlank((string)handlesItem.get('Account__c')))
+                        currActivities[0].Account__c = (Id)handlesItem.get('Account__c');
+                }
+
                 insertedActivities.addAll(currActivities);
             }
             HDT_UTL_DatabaseService.insertSObject(insertedActivities);
