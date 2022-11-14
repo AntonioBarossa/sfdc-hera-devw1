@@ -225,15 +225,9 @@ public with sharing class HDT_UTL_ProcessDateManager {
 			
 			for(Order order : orderList){
 				//CAMBIO OFFERTA DATA FIRMA - SWITCH IN DATA INVIO SII
-<<<<<<< HEAD
-				if(order.DocumentalProcessType__c.equalsIgnoreCase('Cambio offerta')){
-					dateToFrom = Date.today() > order.SignedDate__c ? Date.today() : order.SignedDate__c;
-				}else if(order.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
-=======
 				if(order.DocumentalProcessType__c != null && order.DocumentalProcessType__c.equalsIgnoreCase('Cambio offerta')){
-					dateToFrom = order.SignedDate__c;
+					dateToFrom = Date.today() > order.SignedDate__c ? Date.today() : order.SignedDate__c;
 				}else if(order.DocumentalProcessType__c != null && order.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
->>>>>>> master
 					dateToFrom = order.DateSentToSII__c;
 				}else if(order.EffectiveDate__c == null){
 					order.EffectiveDate__c = order.SignedDate__c;
