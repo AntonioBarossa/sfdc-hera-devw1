@@ -499,7 +499,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 mapOld.put(act.id,act);
             }
             for(wrts_prcgvr__Activity__c act : newList){
-                if((mapOld.get(act.id).ContactResult__c != act.ContactResult__c) && 'Presa Appuntamento'.equalsIgnoreCase(act.Type__c)){
+                if((mapOld.get(act.id).ContactResult__c != act.ContactResult__c) && !String.isBlank(act.ContactResult__c) && 'Presa Appuntamento'.equalsIgnoreCase(act.Type__c)){
                     nowDate = Datetime.now();
                     nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
                     act.NoteRicontattoCliente__c = !String.isBlank(mapOld.get(act.id).NoteRicontattoCliente__c) ? mapOld.get(act.id).NoteRicontattoCliente__c + '\n' + act.ContactResult__c + ' in data ' + nowDateFormat : act.ContactResult__c + ' in data ' + nowDateFormat;
