@@ -3,6 +3,7 @@
     <fullName>HDT_RT_VerificheAcqua</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <label>Verifiche Acqua</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
@@ -710,17 +711,6 @@
         </values>
         <values>
             <fullName>Volontà estorta</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>CaseSource__c</picklist>
-        <values>
-            <fullName>Gestore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Utente</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7062,7 +7052,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8212,11 +8202,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Annullamento - Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DBO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8292,7 +8290,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DBO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8439,21 +8445,6 @@
         </values>
         <values>
             <fullName>SI</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PurificationPay__c</picklist>
-        <values>
-            <fullName>Esente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Intera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ridotta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8763,7 +8754,7 @@
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
-            <fullName>D%E2%80%99ufficio</fullName>
+            <fullName>D'ufficio</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9101,6 +9092,110 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>1100-ACQUA --- Non definito ---</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1101-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1102-Non domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1103-Attivita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1104-Scar%2E poz priv%2E civ%2E cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1105-Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1106-Cantiere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1107-Colonnetta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1108-Irriguo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1109-Comunale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1110-Ente pubblico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1111-Promiscuo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1112-Subfornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1113-Uso interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1114-Rete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1115-Scar poz priv%2Eciv no cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1116-Scar%2E acq reflue uso ind</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1117-Autobotte %28solo usi Hera%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1118-Scar ind no cont%2E ACQ%2BPOZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1119-Scar%2E ind%2Ele  cont%2E div</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1120-Scar%2E ind%2Ele no cont%2E div</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1121-Scar%2Epozzo priv%2E ind cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1122-Scar%2Epoz priv%2Eind%2Eno cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1123-Prel%2E pozzo priv%2E no fatt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1201-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1202-Non domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>13A0-Usi di Abitazione BT</fullName>
             <default>false</default>
         </values>
@@ -9129,26 +9224,47 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>13X0-Usi interni BT</fullName>
+            <fullName>1401-Risc amb singoli</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>13Y0-Usi interni MT</fullName>
+            <fullName>1402-Risc AcquaIS - Raffr Sing</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>13Z0-Grossisti</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SewerPay__c</picklist>
-        <values>
-            <fullName>No</fullName>
+            <fullName>1403-Risc Amb centr</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Si</fullName>
+            <fullName>1404-Attivita produttive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1405-Risc AcquaIS-Raffr Centr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1406-Acqua calda Sing unità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1407-Acqua calda Centr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1408-Ospedalieri</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1409-Usi interni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1410-Solo Raffrescamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1411-Piscine e Palestre</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -11089,6 +11205,10 @@
         </values>
         <values>
             <fullName>Rimborso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimozione Agevolazione</fullName>
             <default>false</default>
         </values>
         <values>

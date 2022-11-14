@@ -149,18 +149,30 @@
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
     <gender>Masculine</gender>
     <label>AllineamentoGAA</label>
     <nameField>
+        <displayFormat>GAA-{0000}</displayFormat>
         <label>AllineamentoGAA Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>AllineamentoGAA</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <profileSearchLayouts>
+        <fields>NAME</fields>
+        <fields>Comune__c</fields>
+        <fields>Frequenza__c</fields>
+        <fields>Rate_Category__c</fields>
+        <profileName>System Administrator</profileName>
+    </profileSearchLayouts>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Comune__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Frequenza__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Rate_Category__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
     <visibility>Public</visibility>

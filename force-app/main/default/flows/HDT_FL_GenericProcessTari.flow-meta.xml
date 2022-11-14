@@ -47,14 +47,14 @@
             <assignToReference>theCase.Commodity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Tari</stringValue>
+                <stringValue>Ambiente</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>theCase.OperationType__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Modifica dati contr.stesso Cli</stringValue>
+                <stringValue>Modifica dati contr. stesso Cli</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -140,14 +140,14 @@
             <assignToReference>theCase.Commodity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Tari</stringValue>
+                <stringValue>Ambiente</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>theCase.OperationType__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Modifica dati contr.stesso Cli</stringValue>
+                <stringValue>Modifica dati contr. stesso Cli</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -233,14 +233,14 @@
             <assignToReference>theCase.Commodity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Tari</stringValue>
+                <stringValue>Ambiente</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>theCase.OperationType__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Modifica dati contr.stesso Cli</stringValue>
+                <stringValue>Modifica dati contr. stesso Cli</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -319,14 +319,14 @@
             <assignToReference>theCase.Commodity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Tari</stringValue>
+                <stringValue>Ambiente</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>theCase.OperationType__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Modifica dati contr.stesso Cli</stringValue>
+                <stringValue>Modifica dati contr. stesso Cli</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -405,14 +405,14 @@
             <assignToReference>theCase.Commodity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Tari</stringValue>
+                <stringValue>Ambiente</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>theCase.OperationType__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Modifica dati contr.stesso Cli</stringValue>
+                <stringValue>Modifica dati contr. stesso Cli</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -582,7 +582,7 @@
                 <leftValueReference>theCase.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Riduzione Superficie rifiuti spec promiscui</stringValue>
+                    <stringValue>Riduz. Superficie rifiuti spec promiscui</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -654,7 +654,7 @@
                 <leftValueReference>theCase.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Riduzione Superficie rifiuti spec promiscui</stringValue>
+                    <stringValue>Riduz. Superficie rifiuti spec promiscui</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -676,7 +676,7 @@
     <formulas>
         <name>mostraAllegatiFormula</name>
         <dataType>Boolean</dataType>
-        <expression>OR(ISPICKVAL({!theCase.Type}, &quot;Formulari Richiesta Sconto&quot;), ISPICKVAL({!theCase.Type}, &quot;Riduzione Superficie rifiuti spec promiscui&quot;))</expression>
+        <expression>OR(ISPICKVAL({!theCase.Type}, &quot;Formulari Richiesta Sconto&quot;), ISPICKVAL({!theCase.Type}, &quot;Riduz. Superficie rifiuti spec promiscui&quot;))</expression>
     </formulas>
     <formulas>
         <name>OrderIdServizio</name>
@@ -791,6 +791,7 @@
         <locationX>842</locationX>
         <locationY>1886</locationY>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Next_Step</targetReference>
         </connector>
         <filterLogic>and</filterLogic>

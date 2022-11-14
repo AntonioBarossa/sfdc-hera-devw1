@@ -199,16 +199,8 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Case.Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>AttachedContentDocuments</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer6</identifier>
+                <componentName>hdtCaseFileUpload</componentName>
+                <identifier>c_hdtCaseFileUpload</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -220,6 +212,51 @@
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
                 <identifier>force_detailPanel</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>userInputFlowName</name>
+                    <value>Pagamenti_Piano_Rateizzazione_TARI_View</value>
+                </componentInstanceProperties>
+                <componentName>hdtRecordCommodityViewForm</componentName>
+                <identifier>c_hdtRecordCommodityViewForm</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Commodity__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Ambiente</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Piano Rateizzazione</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>userInputFlowName</name>
+                </componentInstanceProperties>
+                <componentName>hdtRecordCommodityViewForm</componentName>
+                <identifier>c_hdtRecordCommodityViewForm2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Commodity__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Ambiente</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Piano Rateizzazione</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -754,7 +791,7 @@
                         <valueListItems>
                             <value>CustomButton.Case.HDT_Annullamento</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND (6 OR (7 AND 8))</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND (6 OR (7 AND 8)) AND 9</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.NotCancellable__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -794,6 +831,32 @@
                                     <leftValue>{!$Permission.CustomPermission.HDT_CP_AnnullamentoPraticheInVolo}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Commodity__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Ambiente</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Case.HDT_DynamicCancellation</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Closed</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.NotCancellable__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Commodity__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Ambiente</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -915,6 +978,16 @@
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>In Lavorazione</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Case.HDT_ModificaDocumentiFatture</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Commodity__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Ambiente</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

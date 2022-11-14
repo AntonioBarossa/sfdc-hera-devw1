@@ -11,39 +11,89 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Data consenso E-mail PEC Invio Bolletta</fullName>
+                <fullName>SendCertifiedEmailConsentDate__c</fullName>
                 <default>false</default>
                 <label>Data consenso E-mail PEC Invio Bolletta</label>
             </value>
             <value>
-                <fullName>Data inizio Validità Codice Destinatario</fullName>
+                <fullName>SubjectCodeStartDate__c</fullName>
                 <default>false</default>
-                <label>Data inizio Validità Codice Destinatario</label>
+                <label>Data Inizio Codice Destinatario</label>
             </value>
             <value>
-                <fullName>Data invio richiesta</fullName>
+                <fullName>SendRequestDate__c</fullName>
                 <default>false</default>
                 <label>Data invio richiesta</label>
             </value>
             <value>
-                <fullName>Data decorrenza</fullName>
+                <fullName>EffectiveDate__c</fullName>
                 <default>false</default>
                 <label>Data decorrenza</label>
             </value>
             <value>
-                <fullName>Data differita</fullName>
+                <fullName>DeferredDate__c</fullName>
                 <default>false</default>
                 <label>Data differita</label>
             </value>
             <value>
-                <fullName>Data lettura Attuale</fullName>
+                <fullName>CustomerRequestDate__c</fullName>
                 <default>false</default>
-                <label>Data lettura Attuale</label>
+                <label>Data inserimento richiesta</label>
             </value>
             <value>
-                <fullName>Data lettura retroattiva</fullName>
+                <fullName>SignedDate__c</fullName>
                 <default>false</default>
-                <label>Data lettura retroattiva</label>
+                <label>Data Firma</label>
+            </value>
+            <value>
+                <fullName>RetroactiveDate__c</fullName>
+                <default>false</default>
+                <label>Data Retroattiva</label>
+            </value>
+            <value>
+                <fullName>CancellationRequestDate__c</fullName>
+                <default>false</default>
+                <label>Data Richiesta Annullamento/Ripensamento</label>
+            </value>
+            <value>
+                <fullName>SendToDistributorDate__c</fullName>
+                <default>false</default>
+                <label>Data invio DL</label>
+            </value>
+            <value>
+                <fullName>ValidityDateEstimate__c</fullName>
+                <default>false</default>
+                <label>Data Validita Preventivo</label>
+            </value>
+            <value>
+                <fullName>WizardCompletedDate__c</fullName>
+                <default>false</default>
+                <label>Data completamento wizard</label>
+            </value>
+            <value>
+                <fullName>DocumentReceiptDate__c</fullName>
+                <default>false</default>
+                <label>Data ricezione documenti</label>
+            </value>
+            <value>
+                <fullName>TerminationDate__c</fullName>
+                <default>false</default>
+                <label>Data Cessazione</label>
+            </value>
+            <value>
+                <fullName>ChangePhaseDate__c</fullName>
+                <default>false</default>
+                <label>Data Cambio Fase</label>
+            </value>
+            <value>
+                <fullName>SubjectCodeEndDate__c</fullName>
+                <default>false</default>
+                <label>Data Fine Validità Codice Destinatario</label>
+            </value>
+            <value>
+                <fullName>SapContractActivationDate__c</fullName>
+                <default>false</default>
+                <label>Data Attivazione Contratto SAP</label>
             </value>
         </valueSetDefinition>
     </valueSet>

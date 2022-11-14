@@ -34,6 +34,9 @@ public inherited sharing class HDT_QR_Contract {
         String filter = 'Activated';
         List<Contract> con= new List<Contract>();
         Contract c = new Contract();
+        if(code==null){
+            code = '';
+        }
         if(isSuperUser==true){
             // fixed because throws error: no viable alternative at character '\'
             // String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status,CreatedDate FROM Contract  WHERE ServicePoint__r.ServicePointCode__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' +' LIMIT 1';      
@@ -116,6 +119,7 @@ public inherited sharing class HDT_QR_Contract {
     * @return List<Contract>
     */
     public List<Contract> getTempNewActivationContractsByAccountId(String accountId){
+        Date maxDate = Date.newInstance(2099, 1, 1);
         contractSrv.checkReadAccess('Name,AccountId,ContractNumber,Status,SAPContractCode__c'); 
         return [
             SELECT
@@ -131,7 +135,7 @@ public inherited sharing class HDT_QR_Contract {
             Contract
             WHERE AccountId = :accountId									 
             AND Status IN ('Activated', 'Attivo')
-            AND SBQQ__Order__r.ProcessType__c = 'Temporanea - Nuova Attivazione'
+            AND EndDate < :maxDate
             WITH SECURITY_ENFORCED
         ];
     }

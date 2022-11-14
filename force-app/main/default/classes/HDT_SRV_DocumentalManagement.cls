@@ -95,6 +95,16 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		return body;
 	}
 
+	public static void traceRequest(Map<String,String> resultMap, String body,String recordId){
+		String code = resultMap.get('code');
+		String result = resultMap.get('result');
+		Boolean enableTrace =  String.isNotBlank(System.Label.HDT_DocTraceEnable) && 'Y'.equalsIgnoreCase(System.Label.HDT_DocTraceEnable)?true:false;
+		if(enableTrace && String.isNotBlank(code) && String.isNotBlank(result) && result!='000'){
+			ContentVersion cv = HDT_UTL_DocumentalManagement.createContentVersion(body,'PayloadDocumentale','JSON');
+			HDT_UTL_DocumentalManagement.createContentLink(cv.Id,recordId);
+		}
+	}
+
 	public static String generateGetAttachmentRequest(String recordId){
 		if (String.isBlank(recordId)) {
 			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c per visualizzare il documento.');
@@ -103,6 +113,9 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		DocumentalActivity__c actMoga = HDT_QR_DocumentalConfiguration.getDocumentalActivityById(recordId);
 		if (actMoga == null) {
 			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c per visualizzare il documento.');
+		}
+		if(String.isNotBlank(actMoga.DocumentalSystem__c) && 'Intesa'.equalsIgnoreCase(actMoga.DocumentalSystem__c)){
+			throw new HDT_UTL_HeraException('I documenti gestiti in OTP sono visibili tramite il tasto Visualizza Plico');
 		}
 
 		if (String.isBlank(actMoga.AttachmentCode__c)) {
@@ -663,6 +676,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					}
 					
 				}catch(Exception ex){
+					HDT_UTL_IntegrationLog.handleGenericErrorRequest(JSON.serialize(listOfRadio),'POST', ex.getMessage()+' row number --> ' + ex.getLineNumber(), 'Handle Docusign Notify', (String)record.get('Id'));
 					System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
 				}
 			}

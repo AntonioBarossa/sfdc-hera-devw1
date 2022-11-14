@@ -3,6 +3,7 @@
     <fullName>HDT_RT_ConsumoAnomaloIdrico</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <label>Consumo Anomalo Idrico</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
@@ -155,6 +156,36 @@
         </values>
         <values>
             <fullName>Stesso Sottoscrittore</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PayPurification__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PaySewer__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1242,17 +1273,6 @@
         </values>
         <values>
             <fullName>Volontà estorta</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>CaseSource__c</picklist>
-        <values>
-            <fullName>Gestore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Utente</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8239,7 +8259,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9787,6 +9807,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Approvazione KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Attesa risposta cliente</fullName>
             <default>false</default>
         </values>
@@ -9839,7 +9867,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In attesa allegati</fullName>
+            <fullName>In Attesa Approvazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9872,6 +9900,14 @@
         </values>
         <values>
             <fullName>Verifica in corso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mancata risposta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -9962,21 +9998,6 @@
         </values>
         <values>
             <fullName>SI</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PurificationPay__c</picklist>
-        <values>
-            <fullName>Esente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Intera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ridotta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10430,11 +10451,11 @@
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
-            <fullName>D%E2%80%99ufficio</fullName>
+            <fullName>Da gestore</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Da contribuente</fullName>
+            <fullName>Da utente</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10912,18 +10933,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>1401-Risc amb singoli</fullName>
             <default>false</default>
         </values>
@@ -10989,17 +10998,6 @@
         </values>
         <values>
             <fullName>G_ICD-Imposta Usi Domestici</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SewerPay__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -12662,6 +12660,10 @@
 			<fullName>Riduzione Agevolazione dopo Accertamento</fullName>
 			<default>false</default>
 		</values>
+        <values>
+            <fullName>Rimozione Agevolazione</fullName>
+            <default>false</default>
+        </values>
 		<values>
 			<fullName>Sconti Collettivi Pap</fullName>
 			<default>false</default>

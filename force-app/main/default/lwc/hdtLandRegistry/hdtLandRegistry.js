@@ -22,26 +22,34 @@ const COLUMNS = [
 
 export default class HdtLandRegistry extends LightningElement {
     
+    @api orderId;                       //inputOnly
+    @api caseId;                        //inputOnly
     @api servicePointId;                //inputOnly
     @api preSelectedLandRegistryId;     //inputOnly
     @api required;                      //inputOnly
     @api readonly;                      //inputOnly
     @api selectedLandRegistryId;        //outputOnly
+    
+    @api validate (){
+        let isValid = this.tableData?.length != 0;
+        let msg = isValid? null : 'Inserire almeno un dato catastale.';
+        return { isValid : isValid, errorMessage: msg };
+    }
 
     @track tableData = [];
     @track tableSelectedRows = [];
     @track tableColumns = COLUMNS;
+    @track _selectedLandRegistryId;
 
     // showTable=false;
     showSpinner = false;
 
     _required;
     _readonly;
-    @track _selectedLandRegistryId;
 
     connectedCallback(){
-        this.required=true;                                     //MOCKATO PER TEST (da togliere)
-        this.servicePointId = 'a281X000000DqcVQAS';             //MOCKATO PER TEST (da togliere)
+        //this.required=true;                                     //MOCKATO PER TEST (da togliere)
+        //this.servicePointId = 'a281X000000DqcVQAS';             //MOCKATO PER TEST (da togliere)
         console.log('### connectedCallback preSelectedLandRegistryId', this.preSelectedLandRegistryId);
         this.call_retrieveLandRegistryTable();
         this._required = this.required;
@@ -54,7 +62,7 @@ export default class HdtLandRegistry extends LightningElement {
         console.log('### call_retrieveLandRegistryTable');
         this.showTable=false;
         this.showSpinner = true;
-        retrieveLandRegistryTable({ servicePointIds : this.servicePointId })
+        retrieveLandRegistryTable({ caseId: this.caseId, orderId: this.orderId, servicePointId: this.servicePointId })
             .then(result => {
                 console.log('### result', JSON.stringify(result));
                 this.tableData = result;

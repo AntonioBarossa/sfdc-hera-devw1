@@ -149,6 +149,11 @@
                 <label>Prezzo Netto Comunita Solare</label>
             </value>
             <value>
+                <fullName>Prezzo Netto PiuControllo</fullName>
+                <default>false</default>
+                <label>Prezzo Netto PiuControllo</label>
+            </value>
+            <value>
                 <fullName>Prezzo Netto Ranton</fullName>
                 <default>false</default>
                 <label>Prezzo Netto Ranton</label>
@@ -340,6 +345,11 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Tre per te</label>
+            </value>
+            <value>
+                <fullName>Nuova Impronta Zero 12 Mesi</fullName>
+                <default>false</default>
+                <label>Nuova Impronta Zero 12 Mesi</label>
             </value>
         </valueSetDefinition>
     </valueSet>

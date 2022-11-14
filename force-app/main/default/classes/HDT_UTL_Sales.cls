@@ -285,8 +285,10 @@ public with sharing class HDT_UTL_Sales {
                     else if((ord.Sale__r.Channel__c == 'Telefono' || ord.Sale__r.Channel__c == 'Teleselling Inbound') && ord.SignatureMethod__c == 'Vocal Order')
                     {
                         ord.Phase__c = 'Registrazione Validata';
+                        /*
                         ord.SignedDate__c = Date.today();
                         ord.DocumentalPhase__c = 'Plico firmato';
+                        */
                         childToUpdate.add(ord);
                     }
                     else if((ord.Sale__r.Channel__c == 'Teleselling Outbound' || ord.Sale__r.Channel__c == 'Teleselling Inbound') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
@@ -544,6 +546,7 @@ public with sharing class HDT_UTL_Sales {
             System.debug(LoggingLevel.DEBUG, ex.getMessage());
         }
     }
+
     public static void handleContractVariation(Order order,Order orderOriginal){
         String processType = '';
         String contractId = '';
@@ -579,8 +582,26 @@ public with sharing class HDT_UTL_Sales {
                     }
                 //}
             }
+            
         }catch(Exception ex){
+            sendEmail(ex,order,orderOriginal);
             System.debug(LoggingLevel.DEBUG, ex.getMessage());
+        }
+    }
+
+    private static void sendEmail(Exception ex, Order ord, Order originalOrder){
+        try{
+            list <OrgWideEmailAddress> orgWideAddress = [SELECT Id FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address'  LIMIT 1];
+			
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			mail.setOrgWideEmailAddressId(orgWideAddress[0].Id);
+            mail.setToAddresses(new String[]{'EVERIS_HERA_DT@nttdata.com'});
+			mail.setSubject('Error: Class HDT_UTL_Sales method handleContractVariation');
+            String body='Exception messagge: ERROR: ' + ex.getMessage() + ' Error Line: ' +ex.getLineNumber() + ' order: ' +JSON.serialize(ord) + ' orderOriginal: '+JSON.serialize(originalOrder);
+			mail.setPlainTextBody (body);
+			Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+        }catch(Exception e){
+            System.debug(LoggingLevel.DEBUG, 'Send Email Error: ' + ex.getMessage());
         }
     }
 }

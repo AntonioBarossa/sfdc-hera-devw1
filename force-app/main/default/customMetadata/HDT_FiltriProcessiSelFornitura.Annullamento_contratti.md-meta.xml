@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>StatoContratto__c</field>
-        <value xsi:type="xsd:string">Attivo,Inattivo</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>StatoFornitura__c</field>
@@ -32,6 +32,6 @@
     </values>
     <values>
         <field>TipoServizio__c</field>
-        <value xsi:type="xsd:string">Energia Elettrica,Gas,Acqua,Ambiente</value>
+        <value xsi:type="xsd:string">Energia Elettrica,Gas,Acqua</value>
     </values>
 </CustomMetadata>

@@ -101,6 +101,13 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                     OutgoingCreditCheckResult__c=mapChildOrders.get(childOrd?.OrderReference__c)?.OutgoingCreditCheckResult__c                        
                 );
                 ordersToUpdate.add(o);//get CCheck Result from offer
+            /*}else if( 'HDT_RT_AgevolazioniAmbiente'== childOrd.RecordType.DeveloperName || 'HDT_RT_ModificaTariffaRimozione'==childOrd.RecordType.DeveloperName){
+                if('3 - Nessuna'.equalsIgnoreCase(childOrd.ApprovalType__c))    continue;
+                Order o = new Order(
+                    Id=childOrd.Id,
+                    Phase__c = 'In attesa Approvazione'
+                );
+                ordersToUpdate.add( o );*/
             }else if(childOrd.RecordType.DeveloperName != 'HDT_RT_ScontiBonus'){
                 if(quoteIdsMap.containsKey(childOrd.SBQQ__Quote__c)){
                     ordersToUpdate.add(new Order( Id = childOrd.Id, isMultipleQuoteOffer__c=true));
@@ -194,7 +201,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         updateCommodityWithConsumptionAnalisi(orderParent.Id);
 
-        orderParent = [SELECT Id, Phase__c, ContractSigned__c, SignMode__c, SignatureMethod__c FROM Order WHERE Id = :orderParent.Id WITH SECURITY_ENFORCED];
+        orderParent = [SELECT Id, Sale__r.Channel__c,  Phase__c, ContractSigned__c, SignMode__c, SignatureMethod__c FROM Order WHERE Id = :orderParent.Id WITH SECURITY_ENFORCED];
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
@@ -222,6 +229,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             }
         }
         else if(orderParent.Phase__c == 'Registrazione validata'){
+            if((orderParent.Sale__r.Channel__c == 'Telefono' || orderParent.Sale__r.Channel__c == 'Teleselling Inbound') && orderParent.SignatureMethod__c == 'Vocal Order')
+            {
+                orderToUpdate.SignedDate__c = Date.today();
+                orderToUpdate.DocumentalPhase__c = 'Plico firmato';
+            }
             orderToUpdate.Phase__c = 'Documentazione Gestita';
             orderToUpdate.status = 'Completed';
         }
@@ -444,8 +456,15 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         //initialization the result for no fraud, then search for fraud condition
         Map<String,Object> result = new Map<String,Object>();
         Boolean isFraud = false;
+        Boolean existNoEnergy = false;
         String message = 'Nessuna frode trovata.';
-
+        Map<String,Boolean> energyMap = new Map<String,Boolean>{
+            'Energia Elettrica'=>true,
+            'Gas'=>true,
+            'Acqua'=>false,
+            'Teleriscaldamento'=>false,
+            'Ambiente'=>false
+        };
         Order parentOrder = new Order();
         List<String> processList = new List<String>();
 
@@ -454,6 +473,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         
         for(Order singleOrder : orderList)
         {
+            String commodity = singleOrder.CommodityFormula__c;
             if(singleOrder.ParentOrder__c == null)
             {
                 parentOrder = singleOrder;
@@ -462,9 +482,12 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             {
                 processList.add(singleOrder.ProcessType__c);
             }
+            if(String.isNotBlank(commodity) && energyMap.get(commodity) != null && !energyMap.get(commodity) && !existNoEnergy){
+                existNoEnergy = true;
+            }
         }
 
-        if(!orderList.isEmpty()){
+        if(!orderList.isEmpty() && !existNoEnergy){
             List<AmministrazioneFrodi__c> ammFrodiList = [SELECT BpNumber__c FROM AmministrazioneFrodi__c WHERE (Processo__c IN :processList AND CanaleVendita__c=: parentOrder.Channel__c AND CategoriaCliente__c=: parentOrder.Account.Category__c) WITH SECURITY_ENFORCED ];
             
             if( ammFrodiList != null && !ammFrodiList.isEmpty() ){
@@ -513,10 +536,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         }
         //email
         if( order.ShippingMail__c != null ){
-            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.ShippingMail__c WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.ShippingMail__c AND Type__c = 'E-mail Anagrafica' WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
             maxCount = swapMax(maxCount, count );
         }else if( order.Contact__r.Email != null ){
-            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.Contact__r.Email WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.Contact__r.Email AND Type__c = 'E-mail Anagrafica' WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
             maxCount = swapMax(maxCount, count );
         }
         return maxCount;
@@ -542,7 +565,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         Order.ServicePointCode__c,
         Order.VasSubtype__c
         FROM OrderItem
-        WHERE Order.ParentOrder__c = :orderParentId
+        WHERE Order.ParentOrder__c = :orderParentId AND Order.Status NOT IN ('Annullato')
         WITH SECURITY_ENFORCED];
 
         List<SObject> sobjToUpdate = new List<SObject>();

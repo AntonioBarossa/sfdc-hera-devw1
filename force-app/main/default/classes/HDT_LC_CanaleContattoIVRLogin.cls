@@ -15,6 +15,15 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
     
     @AuraEnabled
     public static String checkContractualEnvelope(String orderId,String username,String password ){
+        Set<String> transitoryStopPhase = new Set<String>{
+            'ESPORTAZIONE VS SIEBEL',
+            'IN CORSO CARICAMENTO SIEBEL',
+            'CARICAMENTO SIEBEL OK',
+            'CARICAMENTO SIEBEL KO',
+            'ANNULLATO',
+            'COMPLETATA'
+
+        };
         String result = '';
         List<Order> childOrderList = new List<Order>();
         List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> platformEvents = new List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>();
@@ -33,6 +42,9 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
             childOrderList = checkConfirmation.childOrders;
             for(Order childOrder : childOrderList)
             {
+                if (childOrder.isTransition__c && String.isNotBlank(childOrder.Phase__c) && transitoryStopPhase.contains(childOrder.Phase__c.toUpperCase())){
+                    continue;
+                }
                 Order childOrd = new Order();
                 childOrd.Id = childOrder.Id;
                 String phase = childOrder.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_VAS') && (childOrder.VasSubtype__c == null || (childOrder.VasSubtype__c != null && !childOrder.VasSubtype__c.equalsIgnoreCase('Analisi Consumi')))
@@ -44,18 +56,22 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
                 childOrd.ConfirmCustomerContract__c = 'Web';
                 platformEvents.add(new HDT_PEV_VoltureChangeManagerUpdateSObj__e(SerializedSobj__c=JSON.serialize(childOrd)));
             }
-            List<Database.SaveResult> srList = Eventbus.publish(platformEvents);   
-            for(Database.SaveResult sr : srList)
-            {
-                if(sr.isSuccess())
+            if(platformEvents.size() > 1){
+                List<Database.SaveResult> srList = Eventbus.publish(platformEvents);   
+                for(Database.SaveResult sr : srList)
                 {
-                    result = 'success';
+                    if(sr.isSuccess())
+                    {
+                        result = 'success';
+                    }
+                    else 
+                    {
+                        result = 'Errore';
+                        break;
+                    }
                 }
-                else 
-                {
-                    result = 'Errore';
-                    break;
-                }
+            }else {
+                result = 'success';
             }
         }
         return result;

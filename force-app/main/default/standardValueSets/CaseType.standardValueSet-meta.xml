@@ -67,6 +67,11 @@
         <label>Autolettura da processo</label>
     </standardValue>
     <standardValue>
+        <fullName>Avviso di Servizio</fullName>
+        <default>false</default>
+        <label>Avviso di Servizio</label>
+    </standardValue>
+    <standardValue>
         <fullName>BP/CA - errata categoria</fullName>
         <default>false</default>
         <label>BP/CA - errata categoria</label>
@@ -537,6 +542,11 @@
         <label>Rimborso</label>
     </standardValue>
     <standardValue>
+        <fullName>Rimozione Agevolazione</fullName>
+        <default>false</default>
+        <label>Rimozione Agevolazione</label>
+    </standardValue>
+    <standardValue>
         <fullName>Rimozione Impianto</fullName>
         <default>false</default>
         <label>Rimozione Impianto</label>
@@ -550,6 +560,11 @@
         <fullName>Ripristino Fornitura Interrotta</fullName>
         <default>false</default>
         <label>Ripristino Fornitura Interrotta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Risoluzione Contrattuale</fullName>
+        <default>false</default>
+        <label>Risoluzione Contrattuale</label>
     </standardValue>
     <standardValue>
         <fullName>Risoluzione No Disalimentabile</fullName>

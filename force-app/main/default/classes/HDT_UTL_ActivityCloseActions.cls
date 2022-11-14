@@ -2,33 +2,57 @@
  * @description       : 
  * @author            : federico.defelice@webresults.it
  * @group             : WR
- * @last modified on  : 28-07-2022
+ * @last modified on  : 14-09-2022
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.CyclomaticComplexity , PMD.NcssMethodCount')
 public with sharing class HDT_UTL_ActivityCloseActions {
 
-    private inherited sharing class HDT_WRP_Actions extends HDT_UTL_ActivityTemplate.HDT_WRP_Infos {
+    @TestVisible
+    private inherited sharing virtual class HDT_WRP_Actions extends HDT_UTL_ActivityTemplate.HDT_WRP_Infos {
 
+        @TestVisible
         private String phase;
         private String parentSObjectPhase;
-        HDT_WRP_Actions(String phase, String activityType, Boolean isMandatory, String actualPhase){
-            super(activityType, isMandatory, actualPhase);
-            this.phase = phase;  
+        private Sobject sobjToUpdate; 
+
+        HDT_WRP_Actions(){
+            return;
         }
-        HDT_WRP_Actions(String phase){
+        
+        HDT_WRP_Actions(String activityType, Boolean isMandatory, String actualPhase){
+            super(activityType, isMandatory, actualPhase);
+        }
+    }
+
+    private inherited sharing class HDT_WRP_CreateActivity extends HDT_WRP_Actions{
+        HDT_WRP_CreateActivity(String phase, String activityType, Boolean isMandatory, String actualPhase){
+            super(activityType, isMandatory, actualPhase);
             this.phase = phase;
         }
-        HDT_WRP_Actions(String phase, String parentSObjectPhase){
+        HDT_WRP_CreateActivity(String activityType, Boolean isMandatory, String actualPhase){
+            super(activityType, isMandatory, actualPhase);
+        }
+    }
+
+    private inherited sharing class HDT_WRP_UpdateSobj extends HDT_WRP_Actions{
+        HDT_WRP_UpdateSobj(String phase){
+            this.phase=phase;
+        }
+
+        HDT_WRP_UpdateSobj(String phase, String parentSObjectPhase){
             this(phase);
             this.parentSObjectPhase = parentSObjectPhase;
         }
     }
 
+    @TestVisible
     private inherited sharing class HDT_WRP_Queue implements Queueable{
 
         Map<Id, HDT_WRP_Actions> actionsCase;
         Map<Id, HDT_WRP_Actions> actionsOrder;
+        
+        @TestVisible
         HDT_WRP_Queue(Map<Id, HDT_WRP_Actions> actionsCase, Map<Id, HDT_WRP_Actions> actionsOrder){
             this.actionsCase=actionsCase;
             this.actionsOrder=actionsOrder;
@@ -104,7 +128,12 @@ public with sharing class HDT_UTL_ActivityCloseActions {
 
         if (allActivity.isEmpty())    return new Map<String,List<wrts_prcgvr__Activity__c>>();
         Map<String,List<wrts_prcgvr__Activity__c>> result = new Map<String,List<wrts_prcgvr__Activity__c>>();
-        List<wrts_prcgvr__Activity__c> activities = [SELECT Case__r.Id, Case__r.Type, Case__r.Phase__c, Case__r.RelatedCase__c, Case__r.PhaseStory__c, Order__r.Id, Order__r.Type, Order__r.Phase__c, Order__r.PhaseStory__c, wrts_prcgvr__ActivityTemplate__r.Name FROM wrts_prcgvr__Activity__c WHERE Id IN :allActivity  WITH Security_Enforced];
+        List<wrts_prcgvr__Activity__c> activities = [SELECT Case__r.Id, Case__r.Type, Case__r.Phase__c, Case__r.RelatedCase__c, Case__r.PhaseStory__c, Case__r.Subprocess__c, Case__r.RecordType.DeveloperName,
+                                                            Order__r.Id, Order__r.ProcessType__c, Order__r.Phase__c, Order__r.PhaseStory__c, 
+                                                            wrts_prcgvr__ActivityTemplate__r.Name 
+                                                     FROM wrts_prcgvr__Activity__c 
+                                                     WHERE Id IN :allActivity  
+                                                     WITH Security_Enforced];
         List<wrts_prcgvr__Activity__c> caseActivities  = new List<wrts_prcgvr__Activity__c>();
         List<wrts_prcgvr__Activity__c> orderActivities = new List<wrts_prcgvr__Activity__c>();
         
@@ -118,34 +147,124 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         return result;
     }
 
+    @TestVisible
     private static HDT_WRP_Actions getOnCloseActions(Case selectedCase, wrts_prcgvr__Activity__c activity, String activityType){
         String approved = activity.Approved__c;
+        String outcome = activity.ActivityOutcome__c;
         String caseType = selectedCase.Type;
         activityType=STRING.isNotBlank(activityType)? activityType : ''; 
 
-        if(caseType == 'Formulari Richiesta Sconto')       return new HDT_WRP_Actions('Completata');
-        if(caseType == 'Sconti Collettivi Pap')            return new HDT_WRP_Actions('Completata');
-        if(caseType == 'Conferimento Centri di Raccolta')  return new HDT_WRP_Actions('Completata');
+        if(caseType == 'Formulari Richiesta Sconto')       return new HDT_WRP_UpdateSobj('Completata');
+        if(caseType == 'Sconti Collettivi Pap')            return new HDT_WRP_UpdateSobj('Completata');
+        if(caseType == 'Conferimento Centri di Raccolta')  return new HDT_WRP_UpdateSobj('Completata');
         
-        if(caseType == 'Riduzione Superficie rifiuti spec promiscui') {
-            if('Gestione Manuale SAP'.equalsIgnoreCase(activityType))   return new HDT_WRP_Actions('Completata');
-            if(approved.equalsIgnoreCase('si')) return new HDT_WRP_Actions(null, 'Gestione Manuale SAP', true, selectedCase.Phase__c);//Se gestione SAP non va in completata subito
-            if(approved.equalsIgnoreCase('no')) return new HDT_WRP_Actions('Annullato');   
+        if(caseType == 'Riduz. Superficie rifiuti spec promiscui') {
+            if('Gestione Manuale SAP'.equalsIgnoreCase(activityType))   return new HDT_WRP_UpdateSobj('Completata');
+            if('si'.equalsIgnoreCase(approved)) return new HDT_WRP_CreateActivity('Gestione Manuale SAP', true, selectedCase.Phase__c);//Se gestione SAP non va in completata subito
+            if('no'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Annullato');   
         }
+        //START >>> marco.arci@webresults.it
+
+        if( 'HDT_RT_VariazioniTari'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName) ||
+            'HDT_RT_DisattivazioniTari'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName)) return tariLogicVarDis(selectedCase, activity);
+
+        //END >>> marco.arci@webresults.it
         if(caseType == 'Gestione Rifiuti' && 'Risposta Ricevuta'.equalsIgnoreCase(activityType)){
-            if(approved.equalsIgnoreCase('si')) return new HDT_WRP_Actions('Annullato');
+            if('si'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Annullato');
 
             Matcher match = Pattern.compile('\\|\\|([a-zA-Z\\xa0\\s]+)@@Richiesto Annullamento').matcher(selectedCase.PhaseStory__c);
-            if(approved.equalsIgnoreCase('no') && match.find())     return new HDT_WRP_Actions(match.group(1));
+            if('no'.equalsIgnoreCase(approved) && match.find())     return new HDT_WRP_UpdateSobj(match.group(1));
         }
         if(caseType == 'Ambiente annullo richiesta senza appuntamento' && 'Risposta Ricevuta'.equalsIgnoreCase(activityType)){
-            if(approved.equalsIgnoreCase('si'))     return new HDT_WRP_Actions('Completata', 'Annullato');
-            if(approved.equalsIgnoreCase('no'))     return new HDT_WRP_Actions('Annullato');
+            if('si'.equalsIgnoreCase(approved))     return new HDT_WRP_UpdateSobj('Completata', 'Annullato');
+            if('no'.equalsIgnoreCase(approved))     return new HDT_WRP_UpdateSobj('Annullato');
+        }
+        return null;
+    }
+    
+	@TestVisible
+    private static HDT_WRP_Actions getOnCloseActions(Order selectedOrder, wrts_prcgvr__Activity__c activity, String activityType){
+        String approved = activity.Approved__c;
+        String activityName=STRING.isNotBlank(activity.Name)? activity.Name : ''; 
+        String orderActualPhase=STRING.isNotBlank(selectedOrder.Phase__c)? selectedOrder.Phase__c : '';
+        String orderType = selectedOrder.ProcessType__c;
+        
+        if( 
+            'Approvazione Agevolazione'.containsIgnoreCase(activityName)
+            && new set<String>{'Modifica Tariffa', 'Modifica Tariffa - Rimozione Agevolazione'}.contains(orderType)
+        ){
+            if(approved.equalsIgnoreCase('no')) return new HDT_WRP_CreateActivity('Contattare Cliente', false, orderActualPhase);
+            if ('In attesa Approvazione'.equalsIgnoreCase(orderActualPhase))   return new HDT_WRP_UpdateSobj('Documentazione Validata');
         }
         return null;
     }
 
-    private static HDT_WRP_Actions getOnCloseActions(Order selectedOrder, wrts_prcgvr__Activity__c activity, String activityType){
+    //START >>> marco.arci@webresults.it
+    @TestVisible
+    private static HDT_WRP_Actions tariLogicVarDis(Case selectedCase, wrts_prcgvr__Activity__c activity){
+
+        Set<String> subprocessesIntegrati= new Set<String>{
+            'Superficie',
+            'DOM_Componenti non residenti',
+            'NON DOM_ISTAT/Ronchi'
+        };
+        Set<String> subprocessesNonIntegrati= new Set<String>{
+            'DOM_Coabitazioni',
+            'DOM_Componenti residenti',
+            'Dati catastali',
+            'Domiciliato in nucleo residente'
+        };
+        String outcome = activity.ActivityOutcome__c;
+        String caseType = selectedCase.Type;
+
+        if( 'Modifica dati contrattuali'.equalsIgnoreCase(caseType) &&
+            'Superficie'.equalsIgnoreCase(selectedCase.Subprocess__c) && 
+            'Istruttoria Back Office'.equalsIgnoreCase(activity.Type__c)) {
+            if('Positivo'.equalsIgnoreCase(outcome)){
+                if(!selectedCase.ModuleFromContributor__c && 'Da Contribuente'.equalsIgnoreCase(selectedCase.RequestSource__c)){    
+                    return new HDT_WRP_UpdateSobj('Gestione Documentale');
+                }else{
+                    return new HDT_WRP_UpdateSobj('Da Inviare');
+                }
+            }else{
+                return new HDT_WRP_UpdateSobj('Annullato');
+            }
+        }
+
+        if( 'Modifica post accertamento'.equalsIgnoreCase(caseType) || 
+            'Cessazione post accertamento'.equalsIgnoreCase(caseType) ||
+            ('Modifica dati contrattuali'.equalsIgnoreCase(caseType) &&
+             subprocessesNonIntegrati.contains(selectedCase.Subprocess__c))){
+            if('Positivo'.equalsIgnoreCase(outcome)){
+                return new HDT_WRP_UpdateSobj('Completata'); //aggiorna la fase del case
+            }else{
+                return new HDT_WRP_UpdateSobj('Annullato');
+            }
+        }
+
+        if( 'Cessazione'.equalsIgnoreCase(caseType) ||
+           	('Modifica dati contrattuali'.equalsIgnoreCase(caseType) && 
+            ('Superficie'.equalsIgnoreCase(selectedCase.Subprocess__c) && !'Istruttoria Back Office'.equalsIgnoreCase(activity.Type__c)) ||
+            subprocessesIntegrati.contains(selectedCase.Subprocess__c))) {
+            switch on selectedCase.Phase__c {
+                when 'Comunicazione verso Heroku KO'{
+                    if('Positivo'.equalsIgnoreCase(outcome)){
+                        return new HDT_WRP_UpdateSobj('Da Inviare'); //aggiorna la fase del case
+                    }else{
+                        return new HDT_WRP_UpdateSobj('Annullato');
+                    }
+                }
+                when 'Esito KO da SAP'{
+                    if('Positivo'.equalsIgnoreCase(outcome)){
+                        return new HDT_WRP_UpdateSobj('Completata'); //aggiorna la fase del case
+                    }else{
+                        return new HDT_WRP_UpdateSobj('Annullato');
+                    }
+                }
+            }
+        }
         return null;
     }
+
+    //END >>> marco.arci@webresults.it
 }

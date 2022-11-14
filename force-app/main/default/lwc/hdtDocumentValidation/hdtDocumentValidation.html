@@ -1,28 +1,28 @@
 <template>
-
     <lightning-card>
-
         <div slot="title" class="slds-align_absolute-center">Validazione Documentale</div>
-
-        <template for:each={columns} for:item="column">
-
-            <lightning-input key={column.id}
-                class="slds-p-around_small" 
-                type="checkbox"
-                label={column.label}
-                name={column.name}></lightning-input>
-
+        <template if:false={showWaste}>
+            <template for:each={columns} for:item="column">
+                <lightning-input key={column.id} class="slds-p-around_small" type="checkbox" label={column.label}
+                    name={column.name}></lightning-input>
+            </template>
         </template>
-
+        <template if:true={showWaste}>
+            <lightning-combobox
+            name="esito"
+            label="Esito Validazione"
+            value={valueWaste}
+            placeholder="Seleziona l'esito"
+            options={optionsWaste}
+            onchange={handleChange}></lightning-combobox>
+            <lightning-textarea label="Note validazione" value={noteValidation} data-id="noteWaste"></lightning-textarea>
+        </template>
         <div class="slds-float_right" slot="footer">
-
-
-            <lightning-button class="slds-m-right_xx-small slds-m-top_xx-small slds-m-bottom_xx-small" label={closeButton} disabled={disableButton} name='close' variant="neutral" onclick={handleClick}></lightning-button>
-            <lightning-button clas="slds-m-top_xx-small slds-m-bottom_xx-small" label={completeButton} disabled={disableButton} name='complete' variant="brand" onclick={handleClick}></lightning-button>
-            
-
+            <lightning-button class="slds-m-right_xx-small slds-m-top_xx-small slds-m-bottom_xx-small"
+                label={closeButton} disabled={disableButton} name='close' variant="neutral" onclick={handleClick}>
+            </lightning-button>
+            <lightning-button clas="slds-m-top_xx-small slds-m-bottom_xx-small" label={completeButton}
+                disabled={disableButton} name='complete' variant="brand" onclick={handleClick}></lightning-button>
         </div>
-
     </lightning-card>
-    
 </template>

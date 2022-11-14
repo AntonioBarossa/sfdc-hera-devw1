@@ -16,17 +16,18 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
     @AuraEnabled
     public static Map<String,Object> checkCompatibilitySales(Map<String,Object> servReq, Boolean isPostSales){
         try {
-            System.debug(servReq);
             Map<String,Object> resMap = new Map<String,Object>();
             List<ServiceRequest__c> srList = new List<ServiceRequest__c>();
+            
             ServiceRequest__c srRequest = new ServiceRequest__c();
-            srRequest.ServicePointCode__c = String.valueOf(servReq.get('servicePointCode')); 
+            srRequest.ServicePointCode__c = String.valueOf(servReq.get('servicePointCode'));
             srRequest.Status__c = 'Bozza';
             srRequest.Order__c = String.valueOf(servReq.get('order'));
             srRequest.CommoditySector__c = String.valueOf(servReq.get('commoditySector'));
             srRequest.Type__c = String.valueOf(servReq.get('type'));
-            if(srRequest.Type__c.equalsIgnoreCase('Case'))
+            if(srRequest.Type__c.equalsIgnoreCase('Case') && String.isNotBlank(srRequest.ServicePointCode__c))
             {
+                // FAP: Questa query potrebbe essere non più necessaria se il parametro servReq.get('servicePoint') viene sempre valorizzato da selezione fornitura
                 List<ServicePoint__c> sp = [SELECT Id FROM ServicePoint__c WHERE ServicePointCode__c = :srRequest.ServicePointCode__c WITH SECURITY_ENFORCED];
                 if(!sp.isEmpty())
                 {
@@ -77,12 +78,15 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             resMap.put('ServiceRequest', srRequest);
             if(!result.incompatibilities.isEmpty()){
                 resMap.put('compatibility', getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities));
-                if(isPostSales!= null &&isPostSales){
+                if(isPostSales!= null && isPostSales){
                     try {
-                        List<ServiceRequest__c> srToDeletes = HDT_QR_ServiceRequest.getCanceledServiceRequests(sReq.ServicePointCode__c);
-                        for(ServiceRequest__c srToDelete : srToDeletes){
-                            HDT_SRV_ServiceRequest.deleteRecord(srToDelete);
-                        }
+                        List<ServiceRequest__c> srToDeletes = new List<ServiceRequest__c>();
+                        if(String.isNotBlank(sReq.ServicePointCode__c)){
+                            srToDeletes = HDT_QR_ServiceRequest.getCanceledServiceRequests(sReq.ServicePointCode__c);
+                        }else if(String.isNotBlank(sReq.ServicePoint__c)) {
+                            srToDeletes = HDT_QR_ServiceRequest.getCanceledServiceRequestsBySpId(sReq.ServicePoint__c);
+                        }               
+                        HDT_SRV_ServiceRequest.deleteRecord(srToDeletes);
                     } catch (Exception err) {
                         System.debug(err.getMessage());
                     }

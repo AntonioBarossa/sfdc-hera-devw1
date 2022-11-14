@@ -4,8 +4,12 @@
 * @description Class that holds util functions for wrts_prcgvr__Activity__c
 * @history Keltin Mesonjesi – 18/06/2021 – Created class
 */
+
 @SuppressWarnings('PMD.CyclomaticComplexity, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ActivityCustom {
+
+    public final Static String ANNULLAMENTO_SIEBEL = 'Annullamento processo transitorio Siebel';
+    public final Static String CONTRATTO_NON_RICHIESTO = 'Contratto non richiesto da gestire';
     
     private FINAL static string APPOINTMENTDEVELOPERNAME = 'HDT_RT_DistributorAppointment';
     private FINAL static string MODCONFERMATO = 'Modifica confermata';
@@ -344,11 +348,12 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             if (String.isNotBlank(activity.wrts_prcgvr__Status__c) && stateToConvert.contains(activity.wrts_prcgvr__Status__c.toLowerCase())){
                 activity.wrts_prcgvr__Status__c = 'Chiusa';
             }
-            if (activity.EndDate__c == null && String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase())){
-                activity.EndDate__c = Date.today();
-            }
-            if (activity.ActivityEndTime__c == null && String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase())){
+            if (String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase()) && (activity.ActivityEndTime__c == null || activity.ActivityEndTime__c < activity.ActivityStartTime__c)  ){
                 activity.ActivityEndTime__c = DateTime.now();
+            }
+            if (String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase())
+            && activity.ActivityEndTime__c != null){
+                activity.EndDate__c = activity.ActivityEndTime__c.date();
             }
         }
     }
@@ -365,6 +370,10 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 act.ParentCluster__c = null;
                 act.ParentProcess__c = null;
                 act.ParentSubprocess__c = null;
+            }
+            //ticket 920338C non togliere in alcuni casi quando il record viene creato da Automated Process, non viene valorizzato il recordtype.
+            if (act.RecordTypeId == null){
+                act.RecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Default').getRecordTypeId();
             }
         }
         Map<Id,Case> caseFieldProcessMap = new Map<Id,Case>();
@@ -478,6 +487,27 @@ public inherited sharing class HDT_UTL_ActivityCustom {
 
         HDT_UTL_ActivityCloseActions.executeOnCloseActions(newTriggerList, oldTriggerMap);
 
+    }
+
+    @AuraEnabled
+    public static void setNoteRicontattoCliente(List<wrts_prcgvr__Activity__c> oldList,List<wrts_prcgvr__Activity__c> newList){
+        Map<String,wrts_prcgvr__Activity__c> mapOld = new Map<String,wrts_prcgvr__Activity__c>();
+        Datetime nowDate = null;
+        String nowDateFormat = '';
+        try {
+            for(wrts_prcgvr__Activity__c act : oldList){
+                mapOld.put(act.id,act);
+            }
+            for(wrts_prcgvr__Activity__c act : newList){
+                if((mapOld.get(act.id).ContactResult__c != act.ContactResult__c) && !String.isBlank(act.ContactResult__c) && 'Presa Appuntamento'.equalsIgnoreCase(act.Type__c)){
+                    nowDate = Datetime.now();
+                    nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+                    act.NoteRicontattoCliente__c = !String.isBlank(mapOld.get(act.id).NoteRicontattoCliente__c) ? mapOld.get(act.id).NoteRicontattoCliente__c + '\n' + act.ContactResult__c + ' in data ' + nowDateFormat : act.ContactResult__c + ' in data ' + nowDateFormat;
+                }
+            }
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Throwed exception: ' + e.getMessage());
+        }
     }
 
 }

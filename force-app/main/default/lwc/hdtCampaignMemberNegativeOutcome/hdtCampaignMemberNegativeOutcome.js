@@ -1,38 +1,59 @@
 import { LightningElement, track, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateCampaignMemberStatusValue from '@salesforce/apex/HDT_LC_CampaignsController.updateCampaignMemberStatus';
-import getchannel from '@salesforce/apex/HDT_LC_CampaignsController.getCampaignChannel';
+import getNegativeOutcomeValues from '@salesforce/apex/HDT_LC_CampaignsController.getOutcomeValues';
 
 export default class HdtCampaignMemberNegativeOutcome extends LightningElement {
     @track isModalOpen = false;
     @track value;
     @api campaignMemberId;
 
-    options = [
-        { value: 'Black List', label: 'Black List' },
-        { value: 'Già Cliente', label: 'Già Cliente' },
-        { value: 'Da poco con altro Gestore', label: 'Da poco con altro Gestore' },
-        { value: 'Cliente non coperto rete gas', label: 'Cliente non coperto rete gas' },
-        { value: 'Non interessato all offerta', label: 'Non interessato all offerta' },
-        { value: 'Prima attivazione', label: 'Prima attivazione' },
-        { value: 'Script completato', label: 'Script completato' },
-        { value: 'Riaggancia e rifiuta il contatto', label: 'Riaggancia e rifiuta il contatto' },
-        { value: 'Fuori Target', label: 'Fuori Target' },
-        { value: 'Titolare della fornitura non disponibile', label: 'Titolare della fornitura non disponibile' },
-        { value: 'La proposta non è competitiva', label: 'La proposta non è competitiva' }
-    ];
+    options;
+
+    // options = [
+    //     { value: 'Black List', label: 'Black List' },
+    //     { value: 'Già Cliente', label: 'Già Cliente' },
+    //     { value: 'Da poco con altro Gestore', label: 'Da poco con altro Gestore' },
+    //     { value: 'Cliente non coperto rete gas', label: 'Cliente non coperto rete gas' },
+    //     { value: 'Non interessato all offerta', label: 'Non interessato all offerta' },
+    //     { value: 'Prima attivazione', label: 'Prima attivazione' },
+    //     { value: 'Script completato', label: 'Script completato' },
+    //     { value: 'Riaggancia e rifiuta il contatto', label: 'Riaggancia e rifiuta il contatto' },
+    //     { value: 'Fuori Target', label: 'Fuori Target' },
+    //     { value: 'Titolare della fornitura non disponibile', label: 'Titolare della fornitura non disponibile' },
+    //     { value: 'La proposta non è competitiva', label: 'La proposta non è competitiva' }
+    // ];
 
     negativeResultClick() {
-        getchannel({'campaignMemberId': this.campaignMemberId}).then(channel=>{
-            if(channel=='Door to Door'){
-                this.options=[
-                    { value: 'Cliente rifiuta la vendita', label: 'Cliente rifiuta la vendita' }
-                ];
+       
+        getNegativeOutcomeValues({'campaignMemberId': this.campaignMemberId , 'outcomeType': 'Utile Negativo'}).then(result => {
+
+            console.log('result --> '+JSON.stringify(result));
+            var conts = result;
+            for(var key in conts){
+                console.log('conts[key] --> '+conts[key]);
+                console.log('key --> '+key);
+                const option = {
+                    label: key,
+                    value: conts[key]
+                };
+
+                if(this.options != undefined){
+                    this.options = [...this.options, option];
+                }
+                else{
+                    this.options = [option];
+                }
+
             }
-            this.isModalOpen = true;
-        }).catch(err => {
-            console.log(err);
+
+            console.log('this.options --> '+JSON.stringify(this.options));
+        })
+        .catch(error => {
+            alert(JSON.stringify(error));
         });
+    
+        this.isModalOpen = true;
     }
     closeModal() {
         this.isModalOpen = false;

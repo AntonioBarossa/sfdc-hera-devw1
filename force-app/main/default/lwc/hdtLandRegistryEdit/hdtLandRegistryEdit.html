@@ -19,6 +19,10 @@
             <lightning-input-field class="slds-hide" field-name="LegalCity__c"></lightning-input-field>         
             <lightning-input-field class="slds-hide" field-name="RegistryCity__c"></lightning-input-field>
 
+            <lightning-input-field class="slds-hide" field-name="RegistryCategory__c"></lightning-input-field>         
+            <lightning-input-field class="slds-hide" field-name="LegalCity__c"></lightning-input-field>         
+            <lightning-input-field class="slds-hide" field-name="RegistryCity__c"></lightning-input-field>
+            
             <lightning-layout multiple-rows>
 
                 <lightning-layout-item size="4" padding="around-medium">
@@ -100,11 +104,11 @@
                 <lightning-layout-item size="4" padding="around-medium">
                     <lightning-input-field variant="label-stacked" required={_required} disabled={disableForm} field-name="Title__c" onchange={handleFieldChange}></lightning-input-field>
                 </lightning-layout-item>
-
+                <!--
                 <lightning-layout-item size="4" padding="around-medium">
                     <lightning-input-field variant="label-stacked" disabled value={servicePointId} field-name="ServicePoint__c"></lightning-input-field>
                 </lightning-layout-item>
-
+                -->
                 <lightning-layout-item size="12" padding="around-medium">
                     <lightning-layout horizontal-align="end">
                         <lightning-layout-item>

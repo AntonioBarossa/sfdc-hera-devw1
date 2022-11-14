@@ -298,7 +298,7 @@ public class HDT_SRV_AnagAlignmentTst {
     static void testHandleResponse(){
 
         ServicePoint__c servPoint = [SELECT Id, ServicePointCode__c FROM ServicePoint__c LIMIT 1];
-        Case currentCase = [SELECT Id, Type, ServicePoint__c FROM Case LIMIT 1];
+        Case currentCase = [SELECT Id, Type, ServicePoint__c,CommodityFormula__c,Commodity__c FROM Case LIMIT 1];
 
         Test.startTest();
 

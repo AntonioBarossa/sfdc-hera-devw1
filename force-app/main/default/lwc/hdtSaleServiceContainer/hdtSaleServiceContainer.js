@@ -76,11 +76,22 @@ export default class hdtSaleServiceContainer extends LightningElement {
         if(event.detail.oldSupplyType !== undefined) {
             oldSupplyType = event.detail.oldSupplyType;
         }
-
+        console.log('##17012022## ServicePoint >>> ' + JSON.stringify(this.servicePoint));
         createSaleServiceItemTile({servicePoint:this.servicePoint, sale:this.saleRecord, oldSupplyType: oldSupplyType}).then(data =>{
 
             this.refreshTileData();
             this.dispatchEvent(new CustomEvent('newtile'));
+            
+            console.log('isMeterRelation ---> '+ data.isMeterRelation);
+            if( data.isMeterRelation ){
+                const toastWarning = new ShowToastEvent({
+                    title: 'Warning',
+                    message: 'Relazione Contatore non nullo!',
+                    variant: 'warning'
+                });
+                this.dispatchEvent(toastWarning);
+            }
+
             if(data.isTransition && data.message === false){
                 const toastWarning = new ShowToastEvent({
                     title: 'Warning',

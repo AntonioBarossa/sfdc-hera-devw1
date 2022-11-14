@@ -1,10 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>Calcola_parametri_rate</name>
+        <label>Calcola parametri rate</label>
+        <locationX>3251</locationX>
+        <locationY>2858</locationY>
+        <actionName>HDT_SRV_InstallmentPlansTari</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>checkTariManaged</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>comuneUbicazione</name>
+            <value>
+                <elementReference>Comune_di_ubicazione_0.outputSupplyCity</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>importoDaRateizzare</name>
+            <value>
+                <elementReference>GetCaseImporto.AmountToPayInInstallments__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>prodottoDiPrimoLivello</name>
+            <value>
+                <elementReference>Prodotto_di_Servizio_0</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>GetCaseImporto.Id</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Check_If_Process_Is_TARI</name>
+        <label>Check if Process is TARI</label>
+        <locationX>4690</locationX>
+        <locationY>158</locationY>
+        <actionName>HDT_UTL_TariManagement</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Il_Case_in_Bozza</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>caseId</name>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>catalogId</name>
+            <value>
+                <elementReference>accountStatementFilderId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>method</name>
+            <value>
+                <stringValue>checkTariProcess</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <actionCalls>
         <name>InterrogaRegoleRateizzazione</name>
         <label>Interroga Regole Rateizzazione</label>
-        <locationX>1700</locationX>
-        <locationY>1118</locationY>
+        <locationX>2327</locationX>
+        <locationY>5378</locationY>
         <actionName>HDT_UTL_InstallmentPlans</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -15,6 +83,12 @@
             <name>caseId</name>
             <value>
                 <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>isTariProcess</name>
+            <value>
+                <elementReference>Check_If_Process_Is_TARI.isTariProcess</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
@@ -29,8 +103,8 @@
     <actionCalls>
         <name>Predefault_Valori</name>
         <label>Predefault Valori`</label>
-        <locationX>2970</locationX>
-        <locationY>398</locationY>
+        <locationX>3611</locationX>
+        <locationY>2042</locationY>
         <actionName>HDT_SRV_InstallmentPlans</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -50,6 +124,72 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>isTariProcess</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>totalToPay</name>
+            <value>
+                <elementReference>CaseInput.TotalToPay__c</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Predefault_Valori_0</name>
+        <label>Predefault Valori Tari</label>
+        <locationX>3875</locationX>
+        <locationY>2042</locationY>
+        <actionName>HDT_SRV_InstallmentPlans</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>GetCaseImporto</targetReference>
+        </connector>
+        <flowTransactionModel>NewTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>accountId</name>
+            <value>
+                <elementReference>CaseInput.Account.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>applicazioneInteressi</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>customerCode</name>
+            <value>
+                <elementReference>CaseInput.Account.CustomerCode__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>isTariProcess</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>motivazione</name>
+            <value>
+                <stringValue>Disagio Economico</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>provenienzaRichiesta</name>
+            <value>
+                <stringValue>Da contribuente</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>recordId</name>
             <value>
                 <elementReference>CaseInput.Id</elementReference>
@@ -65,8 +205,8 @@
     <actionCalls>
         <name>Sottometti_ad_Approvazione</name>
         <label>Sottometti ad Approvazione</label>
-        <locationX>578</locationX>
-        <locationY>3902</locationY>
+        <locationX>842</locationX>
+        <locationY>8738</locationY>
         <actionName>HDT_UTL_CaseApprovalProcess</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -82,7 +222,7 @@
         <name>Assegna_Fase</name>
         <label>Assegna Fase</label>
         <locationX>1370</locationX>
-        <locationY>3782</locationY>
+        <locationY>8282</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -109,63 +249,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Fase_0_0</name>
+        <name>Assegna_Fase_0</name>
         <label>Assegna Fase</label>
-        <locationX>3746</locationX>
-        <locationY>518</locationY>
-        <assignmentItems>
-            <assignToReference>GetCaseNonBozza.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Da Inviare</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetCaseNonBozza.Status</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Passa_a_Da_Inviare_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assegna_Fase_0_0_0_0</name>
-        <label>Assegna Fase</label>
-        <locationX>1634</locationX>
-        <locationY>3782</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Case.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Da Inviare</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case.Status</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case.InstallmentAmount__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>InstallmentAmount</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Passa_a_Da_Inviare_0_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assegna_Fase_0_0_0_0_0</name>
-        <label>Assegna Fase</label>
-        <locationX>578</locationX>
-        <locationY>3662</locationY>
+        <locationX>842</locationX>
+        <locationY>8282</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -199,54 +286,33 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Fase_0_0_0_0_0_0_0</name>
+        <name>Assegna_Fase_0_0</name>
         <label>Assegna Fase</label>
-        <locationX>842</locationX>
-        <locationY>3902</locationY>
+        <locationX>4846</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
-            <assignToReference>Get_Case.Phase__c</assignToReference>
+            <assignToReference>GetCaseNonBozza.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Attesa Modulo Firmato</stringValue>
+                <stringValue>Da Inviare</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Case.Status</assignToReference>
+            <assignToReference>GetCaseNonBozza.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case.SuspensionDays__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>GetSuspensioDays.SuspensionDays__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case.SuspensionDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case.InstallmentAmount__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>InstallmentAmount</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
-            <targetReference>Passa_In_Attesa_Approvazione_0</targetReference>
+            <targetReference>Passa_a_Da_Inviare_0</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Fase_0_0_0_0_0_0_0_0</name>
+        <name>Assegna_Fase_0_0_0</name>
         <label>Assegna Fase</label>
         <locationX>1106</locationX>
-        <locationY>3902</locationY>
+        <locationY>8282</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -287,10 +353,77 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Fase_0_0_0_0</name>
+        <label>Assegna Fase</label>
+        <locationX>1634</locationX>
+        <locationY>8282</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.InstallmentAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>InstallmentAmount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Passa_a_Da_Inviare_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Fase_0_0_0_0_0_0_0_0_0</name>
+        <label>Assegna Fase</label>
+        <locationX>578</locationX>
+        <locationY>8282</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Attesa Modulo Firmato</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.InstallmentAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>InstallmentAmount</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.ApprovalProcess__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Passa_In_Attesa_Approvazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Valori_Fase</name>
         <label>Assegna Valori Fase</label>
         <locationX>50</locationX>
-        <locationY>2486</locationY>
+        <locationY>6986</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -312,8 +445,8 @@
     <assignments>
         <name>AssegnaCodiceCausale</name>
         <label>AssegnaCodiceCausale</label>
-        <locationX>1040</locationX>
-        <locationY>3422</locationY>
+        <locationX>1106</locationX>
+        <locationY>7922</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -343,7 +476,7 @@
         <name>AssegnaOutputPianoRata_0_0</name>
         <label>AssegnaOutputPianoRata</label>
         <locationX>314</locationX>
-        <locationY>1598</locationY>
+        <locationY>6098</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.ApprovalProcess__c</assignToReference>
             <operator>Assign</operator>
@@ -373,7 +506,7 @@
         <name>AssegnaOutputPianoRata_0_0_0</name>
         <label>AssegnaOutputPianoRata</label>
         <locationX>578</locationX>
-        <locationY>1598</locationY>
+        <locationY>6098</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.ApprovalProcess__c</assignToReference>
             <operator>Assign</operator>
@@ -396,7 +529,7 @@
         <name>AssegnaOutputPianoRata_0_0_0_0</name>
         <label>AssegnaOutputPianoRata</label>
         <locationX>842</locationX>
-        <locationY>1598</locationY>
+        <locationY>6098</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.MaxInstallmentsNumber__c</assignToReference>
             <operator>Assign</operator>
@@ -419,7 +552,7 @@
         <name>AssegnaOutputPianoRata_0_0_0_0_0</name>
         <label>AssegnaOutputPianoRata</label>
         <locationX>1106</locationX>
-        <locationY>1598</locationY>
+        <locationY>6098</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.AttachmentManagement__c</assignToReference>
             <operator>Assign</operator>
@@ -432,10 +565,91 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_case_values</name>
+        <label>Assign case values</label>
+        <locationX>4274</locationX>
+        <locationY>4610</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case_0.BillingCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Comune_di_ubicazione_0.outputSupplyCity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_0.CutomerAssisted__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Cliente_Assistito</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_0.RateCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Prodotto_di_Servizio_0</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_0.PaymentType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Tipo_pagamento</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_0.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_0.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Tari_Recordtype.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_0.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Importo Minimo Singola Rata: €{!Calcola_parametri_rate.importoMinimoSingolaRata}</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_case_record</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Close_Tari_Case</name>
+        <label>Close Tari Case</label>
+        <locationX>2690</locationX>
+        <locationY>5858</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Tari_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>GestioneAllegati</name>
         <label>GestioneAllegati</label>
         <locationX>578</locationX>
-        <locationY>2030</locationY>
+        <locationY>6530</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.AttachmentManagement__c</assignToReference>
             <operator>Assign</operator>
@@ -447,6 +661,38 @@
             <targetReference>AggiornaCase</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Salva_prima_data_di_scadenza</name>
+        <label>Salva prima data di scadenza</label>
+        <locationX>3831</locationX>
+        <locationY>1214</locationY>
+        <assignmentItems>
+            <assignToReference>documentSelectedExpirationDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_selected_documents.ExpirationDate__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>I_documenti_hanno_la_stessa_data</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_comune_ubicazione</name>
+        <label>Update comune ubicazione</label>
+        <locationX>3251</locationX>
+        <locationY>2738</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseImporto.BillingCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Comune_di_ubicazione_0.outputSupplyCity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Calcola_parametri_rate</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <description>--None--</description>
         <name>EmptyString</name>
@@ -454,6 +700,22 @@
         <dataType>String</dataType>
         <value>
             <stringValue></stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>In_compartecipazione_o_totalmente_da_istituzioni_pubbliche</name>
+        <choiceText>In compartecipazione o totalmente da istituzioni pubbliche</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>In compartecipazione o totalmente da istituzioni pubbliche</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>N</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
         </value>
     </choices>
     <choices>
@@ -488,11 +750,92 @@
             <stringValue>Cliente revoca la domiciliazione</stringValue>
         </value>
     </choices>
+    <choices>
+        <name>S</name>
+        <choiceText>Sì</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Sì</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>TATUDRES01</name>
+        <choiceText>Domestico residente</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>TATUDRES01</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>TIA_VAR_DATI</name>
+        <choiceText>TIA_VAR_DATI</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>TIA_VAR_DATI</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Totalmente_dal_cliente</name>
+        <choiceText>Totalmente dal cliente</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Totalmente dal Cliente</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>UsoDomesticoResidenteTIA_Domesticinonresidenti</name>
+        <choiceText>TIA - Domestici non residenti</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>TIA - Domestici non residenti</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>UsoDomesticoResidenteTIA_Domesticiresidenti</name>
+        <choiceText>TIA - Domestici residenti</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>TIA - Domestici residenti</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>UsoNonDomesticoTIA_Utenzenondomestiche</name>
+        <choiceText>TIA - Utenze non domestiche</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>TIA - Utenze non domestiche</stringValue>
+        </value>
+    </choices>
+    <decisions>
+        <name>Alert_comune_di_fornitura</name>
+        <label>Alert comune di fornitura?</label>
+        <locationX>3680</locationX>
+        <locationY>3458</locationY>
+        <defaultConnector>
+            <targetReference>Controllo_coerenza_dati_inseriti</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Alert</defaultConnectorLabel>
+        <rules>
+            <name>Alert</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Tari_Layout.SupplyCity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>GRANAROLO DELL&apos;EMILIA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Alert_Comune_di_fornitura_screen</targetReference>
+            </connector>
+            <label>Alert</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Attesa_Modulo_Firmato</name>
         <label>Attesa Modulo Firmato?</label>
         <locationX>1502</locationX>
-        <locationY>3662</locationY>
+        <locationY>8162</locationY>
         <defaultConnector>
             <targetReference>Assegna_Fase_0_0_0_0</targetReference>
         </defaultConnector>
@@ -514,16 +857,16 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Attesa_Modulo_Firmato_0_0_0_0_0</name>
+        <name>Attesa_Modulo_Firmato_0_0_0_0_0_0_0</name>
         <label>Attesa Modulo Firmato?</label>
-        <locationX>974</locationX>
-        <locationY>3782</locationY>
+        <locationX>710</locationX>
+        <locationY>8162</locationY>
         <defaultConnector>
-            <targetReference>Assegna_Fase_0_0_0_0_0_0_0_0</targetReference>
+            <targetReference>Assegna_Fase_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Da Inviare</defaultConnectorLabel>
         <rules>
-            <name>Attesa_Modulo_Firmato_0_0_0_0</name>
+            <name>Attesa_Modulo_Firmato_0_0_0_0_0_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>DocumentalFormula</leftValueReference>
@@ -533,16 +876,215 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Fase_0_0_0_0_0_0_0</targetReference>
+                <targetReference>Assegna_Fase_0_0_0_0_0_0_0_0_0</targetReference>
             </connector>
             <label>Attesa Modulo Firmato</label>
         </rules>
     </decisions>
     <decisions>
+        <name>Attesa_Modulo_Firmato_0_0_0_0_0_0_0_0_0</name>
+        <label>Attesa Modulo Firmato?</label>
+        <locationX>710</locationX>
+        <locationY>8618</locationY>
+        <defaultConnector>
+            <targetReference>Sottometti_ad_Approvazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Da Inviare</defaultConnectorLabel>
+        <rules>
+            <name>Attesa_Modulo_Firmato_0_0_0_0_0_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DocumentalFormula</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Attesa Modulo Firmato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Ci_sono_documenti_selezionati</name>
+        <label>Ci sono documenti selezionati?</label>
+        <locationX>3743</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>Loop_selected_documents</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>NessunDocumentoSelezionato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetSelectedDocuments</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Nessun_Documento_Selezionato</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Ci_sono_documenti_selezionati_InLavorazione</name>
+        <label>Ci sono documenti selezionati?</label>
+        <locationX>5242</locationX>
+        <locationY>638</locationY>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>No_InLavorazione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetSelectedDocuments_InLavorazione</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Nessun_Documento_Selezionato_InLavorazione</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Cliente_Assistito_Decision</name>
+        <label>Cliente Assistito?</label>
+        <locationX>4274</locationX>
+        <locationY>4034</locationY>
+        <defaultConnector>
+            <targetReference>Allegati_Obbligatori_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Cliente_Assistito</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Case_Layout_0_0</targetReference>
+            </connector>
+            <label>Sì</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Controllo_coerenza_dati_inseriti</name>
+        <label>Controllo coerenza dati inseriti</label>
+        <locationX>3680</locationX>
+        <locationY>3794</locationY>
+        <defaultConnector>
+            <targetReference>Get_Case_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Dati coerenti</defaultConnectorLabel>
+        <rules>
+            <name>Valore_numero_massimo_rate_concedibili_non_valido</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Tari_Layout.RequestSource__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>D&apos;ufficio</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Tari_Layout.MaxInstallmentsNumber__c</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Tari_Layout.MaxInstallmentsNumber__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>Calcola_parametri_rate.numeroMassimoRateConcedibili</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Valore_numero_massimo_rate_non_consentito</targetReference>
+            </connector>
+            <label>Valore numero massimo rate concedibili non valido</label>
+        </rules>
+        <rules>
+            <name>Numero_rate_non_consentito</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Tari_Layout.RequestSource__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>D’ufficio</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Tari_Layout.InstallmentNumberRequired__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>Get_Case_Tari_Layout.MaxInstallmentsNumber__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Numero_rate_non_valido</targetReference>
+            </connector>
+            <label>Numero rate non consentito</label>
+        </rules>
+        <rules>
+            <name>Valore_singola_rata_troppo_basso</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Tari_Layout.RequestSource__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>D’ufficio</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>checkSingleInstallmentAmount</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Valore_singola_rata_non_consentito</targetReference>
+            </connector>
+            <label>Valore singola rata troppo basso</label>
+        </rules>
+        <rules>
+            <name>Valore_da_rateizzare_troppo_basso</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Tari_Layout.RequestSource__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>D’ufficio</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>checkMinInstallmentsAmount</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Valore_da_rateizzare_non_consentito</targetReference>
+            </connector>
+            <label>Valore da rateizzare troppo basso</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Documentale</name>
         <label>Documentale?</label>
-        <locationX>1601</locationX>
-        <locationY>2846</locationY>
+        <locationX>1634</locationX>
+        <locationY>7346</locationY>
         <defaultConnector>
             <targetReference>ScreenDocumentale</targetReference>
         </defaultConnector>
@@ -564,10 +1106,42 @@
         </rules>
     </decisions>
     <decisions>
+        <name>I_documenti_hanno_la_stessa_data</name>
+        <label>I documenti hanno la stessa data?</label>
+        <locationX>3963</locationX>
+        <locationY>1430</locationY>
+        <defaultConnector>
+            <targetReference>Loop_selected_documents</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Sì</defaultConnectorLabel>
+        <rules>
+            <name>No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>documentSelectedExpirationDate</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Loop_selected_documents.ExpirationDate__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Check_If_Process_Is_TARI.isTariProcess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Alert_data_scadenza_non_coincidente</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
-        <locationX>3490</locationX>
-        <locationY>158</locationY>
+        <locationX>4690</locationX>
+        <locationY>278</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Bozza</name>
@@ -613,12 +1187,27 @@
             </connector>
             <label>Non Inviata a SAP/SAP KO/KO Rilavorato</label>
         </rules>
+        <rules>
+            <name>In_Lavorazione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CaseInput.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Lavorazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Inserimento_Documenti_InLavorazione</targetReference>
+            </connector>
+            <label>In Lavorazione</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Importo_Superiore_a_50</name>
         <label>Importo Superiore a 50?</label>
-        <locationX>2970</locationX>
-        <locationY>638</locationY>
+        <locationX>3743</locationX>
+        <locationY>2378</locationY>
         <defaultConnector>
             <targetReference>Screen_Regola_non_Trovata_0</targetReference>
         </defaultConnector>
@@ -641,16 +1230,112 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Screen_Case_Layout</targetReference>
+                <targetReference>Is_TARI_Process</targetReference>
             </connector>
             <label>Superiore</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_TARI_Process</name>
+        <label>Is TARI Process</label>
+        <locationX>2904</locationX>
+        <locationY>2498</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Case_Layout_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Is TARI Process</defaultConnectorLabel>
+        <rules>
+            <name>Is_Not_TARI_Process</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Check_If_Process_Is_TARI.isTariProcess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Check_If_Process_Is_TARI.isTariProcess</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Case_Layout</targetReference>
+            </connector>
+            <label>Is Not TARI Process</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_TARI_Process_0</name>
+        <label>Is TARI Process</label>
+        <locationX>1700</locationX>
+        <locationY>5738</locationY>
+        <defaultConnector>
+            <targetReference>Close_Tari_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Is TARI Process</defaultConnectorLabel>
+        <rules>
+            <name>Is_Not_TARI_Process_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Check_If_Process_Is_TARI.isTariProcess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Check_If_Process_Is_TARI.isTariProcess</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Residuo_nullo</targetReference>
+            </connector>
+            <label>Is Not TARI Process</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_TARI_Process_0_0</name>
+        <label>Is TARI Process</label>
+        <locationX>3743</locationX>
+        <locationY>1922</locationY>
+        <defaultConnector>
+            <targetReference>Predefault_Valori_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Is TARI Process</defaultConnectorLabel>
+        <rules>
+            <name>Is_Not_TARI_Process_0_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Check_If_Process_Is_TARI.isTariProcess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Check_If_Process_Is_TARI.isTariProcess</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Predefault_Valori</targetReference>
+            </connector>
+            <label>Is Not TARI Process</label>
         </rules>
     </decisions>
     <decisions>
         <name>Modalit_Acconto_Bonifico</name>
         <label>Modalità Acconto: Bonifico?</label>
         <locationX>710</locationX>
-        <locationY>1910</locationY>
+        <locationY>6410</locationY>
         <defaultConnector>
             <targetReference>AggiornaCase</targetReference>
         </defaultConnector>
@@ -675,7 +1360,7 @@
         <name>NumeroRateNull</name>
         <label>NumeroRateNull?</label>
         <locationX>446</locationX>
-        <locationY>1478</locationY>
+        <locationY>5978</locationY>
         <defaultConnector>
             <targetReference>AssegnaOutputPianoRata_0_0_0</targetReference>
         </defaultConnector>
@@ -685,9 +1370,9 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>RentProcessRuleOutput.MaxInstallmentsNumber__c</leftValueReference>
-                <operator>WasSet</operator>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -700,7 +1385,7 @@
         <name>NumeroRateNull_0</name>
         <label>NumeroRateNull?</label>
         <locationX>974</locationX>
-        <locationY>1478</locationY>
+        <locationY>5978</locationY>
         <defaultConnector>
             <targetReference>AssegnaOutputPianoRata_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -710,9 +1395,9 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>RentProcessRuleOutput.MaxInstallmentsNumber__c</leftValueReference>
-                <operator>WasSet</operator>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -722,10 +1407,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Piano_di_rateizzazione_concedibile</name>
+        <label>Piano di rateizzazione concedibile?</label>
+        <locationX>3251</locationX>
+        <locationY>3098</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Case_Layout_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Sì</defaultConnectorLabel>
+        <rules>
+            <name>PianoRateizzazione_NoPianoRateizzazione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Calcola_parametri_rate.pianoRateizzazioneTrovato</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Alert_Piano_Rateizzazione_0_0</targetReference>
+            </connector>
+            <label>Piano Rate non trovato</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Piano_Rate_Concedibile_SME</name>
         <label>Piano Rate Concedibile? (SME)</label>
         <locationX>710</locationX>
-        <locationY>2366</locationY>
+        <locationY>6866</locationY>
         <defaultConnector>
             <targetReference>GetCaseDocumentale</targetReference>
         </defaultConnector>
@@ -756,8 +1466,8 @@
     <decisions>
         <name>Processo_Approvativo</name>
         <label>Processo Approvativo?</label>
-        <locationX>1040</locationX>
-        <locationY>3542</locationY>
+        <locationX>1106</locationX>
+        <locationY>8042</locationY>
         <defaultConnector>
             <targetReference>Attesa_Modulo_Firmato</targetReference>
         </defaultConnector>
@@ -774,9 +1484,9 @@
             </conditions>
             <conditions>
                 <leftValueReference>RentProcessRuleOutput.MaxInstallmentsNumber__c</leftValueReference>
-                <operator>WasSet</operator>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -829,7 +1539,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Fase_0_0_0_0_0</targetReference>
+                <targetReference>Attesa_Modulo_Firmato_0_0_0_0_0_0_0</targetReference>
             </connector>
             <label>Da Approvare</label>
         </rules>
@@ -852,8 +1562,8 @@
     <decisions>
         <name>Regola_Trovata</name>
         <label>Regola Trovata?</label>
-        <locationX>1700</locationX>
-        <locationY>1238</locationY>
+        <locationX>2327</locationX>
+        <locationY>5498</locationY>
         <defaultConnector>
             <targetReference>Screen_Regola_non_Trovata</targetReference>
         </defaultConnector>
@@ -869,7 +1579,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Residuo_nullo</targetReference>
+                <targetReference>Refresh_Regola</targetReference>
             </connector>
             <label>Trovata</label>
         </rules>
@@ -878,7 +1588,7 @@
         <name>Residuo_nullo</name>
         <label>Residuo nullo?</label>
         <locationX>710</locationX>
-        <locationY>1358</locationY>
+        <locationY>5858</locationY>
         <defaultConnector>
             <targetReference>NumeroRateNull_0</targetReference>
         </defaultConnector>
@@ -902,12 +1612,12 @@
     <decisions>
         <name>Salva_o_Conferma</name>
         <label>Salva o Conferma?</label>
-        <locationX>2459</locationX>
-        <locationY>878</locationY>
+        <locationX>2904</locationX>
+        <locationY>5138</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 AND 2) OR (3 AND 4)</conditionLogic>
             <conditions>
                 <leftValueReference>hdtRecordEditForm.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
@@ -922,6 +1632,20 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0_tari.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0_tari.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Get_Case</targetReference>
             </connector>
@@ -929,7 +1653,7 @@
         </rules>
         <rules>
             <name>Annulla</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 AND 2) OR (3 AND 4)</conditionLogic>
             <conditions>
                 <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
@@ -944,6 +1668,20 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0_tari.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0_tari.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Annullamento_Prestazione</targetReference>
             </connector>
@@ -953,8 +1691,8 @@
     <decisions>
         <name>Salva_o_Conferma_0</name>
         <label>Salva o Conferma?</label>
-        <locationX>1601</locationX>
-        <locationY>3182</locationY>
+        <locationX>1634</locationX>
+        <locationY>7682</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0_0</name>
@@ -998,7 +1736,7 @@
         <name>Salva_o_Conferma_0_0</name>
         <label>Salva o Conferma?</label>
         <locationX>1370</locationX>
-        <locationY>2726</locationY>
+        <locationY>7226</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annulla_0_0</name>
@@ -1045,11 +1783,72 @@
             <label>Conferma</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Valorizza_variabile_d_appoggio</name>
+        <label>Valorizza variabile d&apos;appoggio</label>
+        <locationX>3963</locationX>
+        <locationY>1094</locationY>
+        <defaultConnector>
+            <targetReference>I_documenti_hanno_la_stessa_data</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Già valorizzata</defaultConnectorLabel>
+        <rules>
+            <name>Variabile_ancora_non_valorizzata</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>documentSelectedExpirationDate</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Salva_prima_data_di_scadenza</targetReference>
+            </connector>
+            <label>Variabile ancora non valorizzata</label>
+        </rules>
+    </decisions>
     <description>Flow per la Gestione del processo Piano Rateizzazione del Cluster Pagamenti</description>
+    <dynamicChoiceSets>
+        <name>citiesPicklist</name>
+        <dataType>String</dataType>
+        <displayField>CadastralCity__c</displayField>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </filters>
+        <object>CityTechnicalData__c</object>
+        <sortField>CadastralCity__c</sortField>
+        <sortOrder>Asc</sortOrder>
+        <valueField>CadastralCity__c</valueField>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>paymentTypes</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>PaymentType__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <name>AttachmentManagementFormula</name>
         <dataType>Boolean</dataType>
         <expression>NOT({!RentProcessRuleOutput.AttachmentManagement__c})</expression>
+    </formulas>
+    <formulas>
+        <name>checkMinInstallmentsAmount</name>
+        <dataType>Boolean</dataType>
+        <expression>{!Get_Case_Tari_Layout.MinInstallmentAmount__c} &lt; {!Get_Case_Tari_Layout.AmountToPayInInstallments__c}</expression>
+    </formulas>
+    <formulas>
+        <name>checkSingleInstallmentAmount</name>
+        <dataType>Boolean</dataType>
+        <expression>{!Calcola_parametri_rate.importoMinimoSingolaRata} &lt; ({!Get_Case_Tari_Layout.AmountToPayInInstallments__c} / {!Get_Case_Tari_Layout.InstallmentNumberRequired__c})</expression>
     </formulas>
     <formulas>
         <name>DataPrimaScadenza</name>
@@ -1078,8 +1877,27 @@
         <expression>({!Get_Case.AmountToPayInInstallments__c} - {!DepositAmount})/{!Get_Case.InstallmentNumberRequired__c}</expression>
         <scale>2</scale>
     </formulas>
+    <formulas>
+        <name>test1</name>
+        <dataType>Boolean</dataType>
+        <expression>TEXT({!RentProcessRuleOutput.MaxInstallmentsNumber__c}) = &quot;&quot;</expression>
+    </formulas>
     <interviewLabel>Gestione Pagamenti - Piano Rateizzazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Piano Rateizzazione</label>
+    <loops>
+        <name>Loop_selected_documents</name>
+        <label>Loop documents selected</label>
+        <locationX>3743</locationX>
+        <locationY>974</locationY>
+        <collectionReference>GetSelectedDocuments</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Valorizza_variabile_d_appoggio</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Is_TARI_Process_0_0</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -1102,8 +1920,8 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>1700</locationX>
-        <locationY>998</locationY>
+        <locationX>2327</locationX>
+        <locationY>5258</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>InterrogaRegoleRateizzazione</targetReference>
@@ -1121,10 +1939,81 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Case_0</name>
+        <label>Get Case</label>
+        <locationX>4274</locationX>
+        <locationY>3914</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Cliente_Assistito_Decision</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Case_Tari_Layout</name>
+        <label>Get Case</label>
+        <locationX>3680</locationX>
+        <locationY>3338</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Alert_comune_di_fornitura</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Tari_Recordtype</name>
+        <label>Get Tari Recordtype</label>
+        <locationX>4274</locationX>
+        <locationY>4490</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_case_values</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_PianoRateizzazione</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetCaseDocumentale</name>
         <label>GetCaseDocumentale</label>
         <locationX>1370</locationX>
-        <locationY>2486</locationY>
+        <locationY>6986</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Inserimento_Allegato_Obbligatorio</targetReference>
@@ -1144,8 +2033,8 @@
     <recordLookups>
         <name>GetCaseImporto</name>
         <label>GetCaseImporto</label>
-        <locationX>2970</locationX>
-        <locationY>518</locationY>
+        <locationX>3743</locationX>
+        <locationY>2258</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Importo_Superiore_a_50</targetReference>
@@ -1165,8 +2054,8 @@
     <recordLookups>
         <name>GetCaseNonBozza</name>
         <label>GetCaseNonBozza</label>
-        <locationX>3746</locationX>
-        <locationY>398</locationY>
+        <locationX>4846</locationX>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Fase_0_0</targetReference>
@@ -1186,8 +2075,8 @@
     <recordLookups>
         <name>GetCodiceCausale</name>
         <label>GetCodiceCausale</label>
-        <locationX>1040</locationX>
-        <locationY>3302</locationY>
+        <locationX>1106</locationX>
+        <locationY>7802</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaCodiceCausale</targetReference>
@@ -1226,13 +2115,59 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>GetSuspensioDays</name>
-        <label>GetSuspensioDays</label>
-        <locationX>974</locationX>
-        <locationY>3662</locationY>
+        <name>GetSelectedDocuments</name>
+        <label>GetSelectedDocuments</label>
+        <locationX>3743</locationX>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Attesa_Modulo_Firmato_0_0_0_0_0</targetReference>
+            <targetReference>Ci_sono_documenti_selezionati</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>DocumentSelected__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>ExpirationDate__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetSelectedDocuments_InLavorazione</name>
+        <label>GetSelectedDocuments</label>
+        <locationX>5242</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Ci_sono_documenti_selezionati_InLavorazione</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>DocumentSelected__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>ExpirationDate__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetSuspensioDays</name>
+        <label>GetSuspensioDays</label>
+        <locationX>1106</locationX>
+        <locationY>8162</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Fase_0_0_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1253,11 +2188,45 @@
         <object>HDT_SuspensionDays__mdt</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <description>Query della regola per rinfrescare anche i valori Null, i campi vengono mappati singolarmente</description>
+        <name>Refresh_Regola</name>
+        <label>Refresh Regola</label>
+        <locationX>1700</locationX>
+        <locationY>5618</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_TARI_Process_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RentProcessRuleOutput.Id</elementReference>
+            </value>
+        </filters>
+        <object>RentProcessRule__c</object>
+        <outputReference>RentProcessRuleOutput</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>AttachmentManagement__c</queriedFields>
+        <queriedFields>MaxInstallmentsNumber__c</queriedFields>
+        <queriedFields>ApprovalProcess__c</queriedFields>
+        <queriedFields>Category__c</queriedFields>
+        <queriedFields>ApplicationInterests__c</queriedFields>
+        <queriedFields>CAWithOrWithoutSEPA__c</queriedFields>
+        <queriedFields>SuspensionInPastTwelveMonths__c</queriedFields>
+        <queriedFields>Deposit__c</queriedFields>
+        <queriedFields>RefundableEscape__c</queriedFields>
+        <queriedFields>WorkStatus__c</queriedFields>
+        <queriedFields>City__c</queriedFields>
+        <queriedFields>RateCategory__c</queriedFields>
+    </recordLookups>
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>710</locationX>
-        <locationY>2246</locationY>
+        <locationY>6746</locationY>
         <connector>
             <targetReference>Piano_Rate_Concedibile_SME</targetReference>
         </connector>
@@ -1267,21 +2236,21 @@
         <name>Passa_a_Chiuso</name>
         <label>Passa a &quot;Chiuso&quot;</label>
         <locationX>50</locationX>
-        <locationY>2606</locationY>
+        <locationY>7106</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>1370</locationX>
-        <locationY>3902</locationY>
+        <locationY>8402</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Passa_a_Da_Inviare_0</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
-        <locationX>3746</locationX>
-        <locationY>638</locationY>
+        <locationX>4846</locationX>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Loading_Screen_0</targetReference>
         </connector>
@@ -1291,7 +2260,7 @@
         <name>Passa_a_Da_Inviare_0_0</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>1634</locationX>
-        <locationY>3902</locationY>
+        <locationY>8402</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
@@ -1300,25 +2269,208 @@
     <recordUpdates>
         <name>Passa_In_Attesa_Approvazione</name>
         <label>Passa &quot;In Attesa Approvazione&quot;</label>
-        <locationX>578</locationX>
-        <locationY>3782</locationY>
+        <locationX>710</locationX>
+        <locationY>8498</locationY>
         <connector>
-            <targetReference>Sottometti_ad_Approvazione</targetReference>
+            <targetReference>Attesa_Modulo_Firmato_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Passa_In_Attesa_Approvazione_0</name>
         <label>Passa &quot;In Attesa Approvazione&quot;</label>
-        <locationX>974</locationX>
-        <locationY>4118</locationY>
+        <locationX>1106</locationX>
+        <locationY>8402</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>Update_case_record</name>
+        <label>Update case record</label>
+        <locationX>4274</locationX>
+        <locationY>4730</locationY>
+        <connector>
+            <targetReference>Salva_o_Conferma</targetReference>
+        </connector>
+        <inputReference>Get_Case_0</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Tari_Case</name>
+        <label>Update Tari Case</label>
+        <locationX>2690</locationX>
+        <locationY>5978</locationY>
+        <inputReference>Get_Case</inputReference>
+    </recordUpdates>
+    <screens>
+        <name>Alert_Comune_di_fornitura_screen</name>
+        <label>Alert Comune di fornitura</label>
+        <locationX>3548</locationX>
+        <locationY>3578</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Controllo_coerenza_dati_inseriti</targetReference>
+        </connector>
+        <fields>
+            <name>Alert_fornitura</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;È stata selezionato il comune di fornitura &lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 12px;&quot;&gt;{!Get_Case_Tari_Layout.SupplyCity__c}, &lt;/strong&gt;&lt;span style=&quot;font-size: 11pt; font-family: Calibri, sans-serif;&quot;&gt;﻿la richiesta di rateizzazione può essere fatta anche oltre la scadenza purché non oltre quella dell’ultima rata dell’anno.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Alert_data_scadenza_non_coincidente</name>
+        <label>Alert data scadenza non coincidente</label>
+        <locationX>3831</locationX>
+        <locationY>1550</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Inserimento_Documenti</targetReference>
+        </connector>
+        <fields>
+            <name>Alert_data_di_scadenza</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;La &lt;strong&gt;Data Scadenza&lt;/strong&gt; di tutti i documenti selezionati deve coincidere&lt;span style=&quot;font-size: 11pt; font-family: Calibri, sans-serif;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Alert_Piano_Rateizzazione_0_0</name>
+        <label>Alert Piano Rateizzazione</label>
+        <locationX>2822</locationX>
+        <locationY>3218</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Screen_Case_Layout_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>Alert_piano_rateizzazione_body_0</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Oxygen, Ubuntu, &amp;quot;Fira Sans&amp;quot;, &amp;quot;Droid Sans&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, sans-serif; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Piano Rate non concedibile!&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Allegati_Obbligatori_Screen</name>
+        <label>Allegati Obbligatori</label>
+        <locationX>4274</locationX>
+        <locationY>4370</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Get_Tari_Recordtype</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader_0_0_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>allegati_obbligatori</name>
+            <extensionName>c:hdtAttachmentManager</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>paramsWrap</name>
+                <value>
+                    <elementReference>parmsWrap</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>allegati_obbligatori_buttons</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <screens>
         <name>Inserimento_Allegato_Obbligatorio</name>
         <label>Inserimento Allegato Obbligatorio</label>
         <locationX>1370</locationX>
-        <locationY>2606</locationY>
+        <locationY>7106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1433,13 +2585,13 @@
     <screens>
         <name>Inserimento_Documenti</name>
         <label>Inserimento Documenti</label>
-        <locationX>2970</locationX>
-        <locationY>278</locationY>
+        <locationX>3743</locationX>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Predefault_Valori</targetReference>
+            <targetReference>GetSelectedDocuments</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_0_0</name>
@@ -1512,10 +2664,91 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Inserimento_Documenti_InLavorazione</name>
+        <label>Inserimento Documenti</label>
+        <locationX>5242</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>GetSelectedDocuments_InLavorazione</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader_0_0_InLavorazione</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>DocumentSelector_inLavorazione</name>
+            <extensionName>c:hdtAccountStatementPickerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>codiceCliente</name>
+                <value>
+                    <elementReference>CaseInput.Account.CustomerCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>contractAccount</name>
+                <value>
+                    <elementReference>CaseInput.BillingProfile__r.ContractAccountCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>CaseInput.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>CaseInput.Account.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>billingProfileId</name>
+                <value>
+                    <elementReference>CaseInput.BillingProfile__r.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>caseId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
         <locationX>1634</locationX>
-        <locationY>4022</locationY>
+        <locationY>8522</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1545,8 +2778,8 @@
     <screens>
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
-        <locationX>3746</locationX>
-        <locationY>758</locationY>
+        <locationX>4846</locationX>
+        <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1574,10 +2807,65 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Nessun_Documento_Selezionato</name>
+        <label>Nessun Documento Selezionato</label>
+        <locationX>3611</locationX>
+        <locationY>758</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Loop_selected_documents</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader_NoSelectedDocument</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;Non è stato selezionato alcun documento!&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Nessun_Documento_Selezionato_InLavorazione</name>
+        <label>Nessun Documento Selezionato</label>
+        <locationX>5110</locationX>
+        <locationY>758</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>DisplayHeader_NoSelectedDocument_InLavorazione</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;Non è stato selezionato alcun documento!&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Numero_rate_non_valido</name>
+        <label>Numero rate non valido</label>
+        <locationX>3350</locationX>
+        <locationY>3914</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Screen_Case_Layout_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>Alert_numero_di_rate</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;È stato inserito un numero di rate superiore al massimo consentito per i driver selezionati&lt;span style=&quot;font-size: 11pt; font-family: Calibri, sans-serif;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Numero massimo rate concedibili: {!Get_Case_Tari_Layout.MaxInstallmentsNumber__c}&lt;/p&gt;&lt;p&gt;Numero rate richieste: {!Get_Case_Tari_Layout.InstallmentNumberRequired__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Screen_Case_Layout</name>
         <label>Screen Case Layout</label>
-        <locationX>2459</locationX>
-        <locationY>758</locationY>
+        <locationX>2558</locationX>
+        <locationY>2618</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1691,10 +2979,352 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Screen_Case_Layout_0</name>
+        <label>Screen Case Layout</label>
+        <locationX>3680</locationX>
+        <locationY>3218</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Get_Case_Tari_Layout</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Ritirata_richiesta_scritta_cliente</name>
+            <choiceReferences>S</choiceReferences>
+            <choiceReferences>N</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Ritirata richiesta scritta cliente</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Cliente_Assistito</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <elementReference>Get_Case_Tari_Layout.CutomerAssisted__c</elementReference>
+            </defaultValue>
+            <fieldText>Cliente Assistito</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>hdtRecordEditForm_0_tari</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextStep</name>
+                <value>
+                    <stringValue>NEXT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Piano Rateizzazione TARI</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>CaseInput.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelPreviousButton</name>
+                <value>
+                    <stringValue>Indietro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Case_Layout_0_0</name>
+        <label>Screen Case Layout</label>
+        <locationX>4142</locationX>
+        <locationY>4154</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Allegati_Obbligatori_Screen</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Tipo_pagamento</name>
+            <choiceReferences>Totalmente_dal_cliente</choiceReferences>
+            <choiceReferences>In_compartecipazione_o_totalmente_da_istituzioni_pubbliche</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Tipo pagamento</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>tipo_pagamento_buttons</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetCaseImporto.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Case_Layout_0_0_0</name>
+        <label>Screen Case Layout</label>
+        <locationX>3251</locationX>
+        <locationY>2618</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Update_comune_ubicazione</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader_0_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Comune_di_ubicazione_0</name>
+            <extensionName>c:hdtSupplyCityEnhancedPicklist</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Comune di Ubicazione</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>inputSupplyCity</name>
+                <value>
+                    <elementReference>GetCaseImporto.BillingCity__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Prodotto_di_Servizio_0</name>
+            <choiceReferences>UsoNonDomesticoTIA_Utenzenondomestiche</choiceReferences>
+            <choiceReferences>UsoDomesticoResidenteTIA_Domesticinonresidenti</choiceReferences>
+            <choiceReferences>UsoDomesticoResidenteTIA_Domesticiresidenti</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Prodotto di Servizio</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Importo_da_rateizzare</name>
+            <fieldText>&lt;p&gt;Importo da Rateizzare&lt;/p&gt;&lt;p&gt;€{!GetCaseImporto.AmountToPayInInstallments__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>tari_driver_buttons</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetCaseImporto.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>3746</locationX>
-        <locationY>278</locationY>
+        <locationX>4846</locationX>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1774,8 +3404,8 @@
     <screens>
         <name>Screen_Regola_non_Trovata</name>
         <label>Screen Regola non Trovata</label>
-        <locationX>2690</locationX>
-        <locationY>1358</locationY>
+        <locationX>2954</locationX>
+        <locationY>5618</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1847,8 +3477,8 @@
     <screens>
         <name>Screen_Regola_non_Trovata_0</name>
         <label>Screen Regola non Trovata</label>
-        <locationX>3482</locationX>
-        <locationY>758</locationY>
+        <locationX>4582</locationX>
+        <locationY>2498</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1866,8 +3496,8 @@
     <screens>
         <name>ScreenDocumentale</name>
         <label>Screen Documentale</label>
-        <locationX>1689</locationX>
-        <locationY>2966</locationY>
+        <locationX>1722</locationX>
+        <locationY>7466</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1920,19 +3550,79 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Valore_da_rateizzare_non_consentito</name>
+        <label>Valore da rateizzare non consentito</label>
+        <locationX>3878</locationX>
+        <locationY>3914</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Screen_Case_Layout_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>Alert_importo_da_rateizzare</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;L&apos;&lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Importo Da Rateizzare&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt; risulta inferiore all&apos;&lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Importo Minimo Rateizzabile.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Importo Da Rateizzare: {!Get_Case_Tari_Layout.AmountToPayInInstallments__c}&lt;/p&gt;&lt;p&gt;Importo Minimo Rateizzabile: {!Get_Case_Tari_Layout.MinInstallmentAmount__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Valore_numero_massimo_rate_non_consentito</name>
+        <label>Valore numero massimo rate non consentito</label>
+        <locationX>3086</locationX>
+        <locationY>3914</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Screen_Case_Layout_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>Alert_numero_massimo_rate</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Il &lt;/span&gt;&lt;strong&gt;Numero massimo rate concedibili&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt; deve essere compreso tra i valori &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;1&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt; e &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!Calcola_parametri_rate.numeroMassimoRateConcedibili} &lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;inclusi&lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Valore_singola_rata_non_consentito</name>
+        <label>Valore singola rata non consentito</label>
+        <locationX>3614</locationX>
+        <locationY>3914</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Screen_Case_Layout_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>Alert_importo_singola_rata</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ATTENZIONE:&lt;/p&gt;&lt;p&gt;In base al &lt;strong&gt;Numero Rate Richieste&lt;/strong&gt; il valore di ogni singola rata risulta inferiore all&apos;&lt;strong&gt;Importo Minimo Singola Rata&lt;/strong&gt; pari a&lt;span style=&quot;background-color: rgb(255, 255, 255); font-family: &amp;quot;Salesforce Sans&amp;quot;, Arial, sans-serif; color: rgb(22, 50, 92);&quot;&gt; € {!Calcola_parametri_rate.importoMinimoSingolaRata}.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
-        <locationX>3364</locationX>
+        <locationX>4564</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Il_Case_in_Bozza</targetReference>
+            <targetReference>Check_If_Process_Is_TARI</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>Annullamento_Prestazione</name>
         <label>Annullamento Prestazione</label>
-        <locationX>2954</locationX>
-        <locationY>998</locationY>
+        <locationX>3218</locationX>
+        <locationY>5258</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1957,7 +3647,7 @@
         <name>Annullamento_Prestazione_0</name>
         <label>Annullamento Prestazione</label>
         <locationX>1898</locationX>
-        <locationY>3302</locationY>
+        <locationY>7802</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1981,8 +3671,8 @@
     <subflows>
         <name>Annullamento_Prestazione_0_0</name>
         <label>Annullamento Prestazione</label>
-        <locationX>2690</locationX>
-        <locationY>1478</locationY>
+        <locationX>2954</locationX>
+        <locationY>5738</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2007,7 +3697,7 @@
         <name>Annullamento_Prestazione_0_0_0</name>
         <label>Annullamento Prestazione</label>
         <locationX>314</locationX>
-        <locationY>2846</locationY>
+        <locationY>7346</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2031,8 +3721,8 @@
     <subflows>
         <name>Annullamento_Prestazione_0_0_0_0</name>
         <label>Annullamento Prestazione</label>
-        <locationX>3482</locationX>
-        <locationY>878</locationY>
+        <locationX>4582</locationX>
+        <locationY>2618</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2053,6 +3743,54 @@
             </value>
         </inputAssignments>
     </subflows>
+    <subflows>
+        <name>checkTariManaged</name>
+        <label>checkTariManaged</label>
+        <locationX>3251</locationX>
+        <locationY>2978</locationY>
+        <connector>
+            <targetReference>Piano_di_rateizzazione_concedibile</targetReference>
+        </connector>
+        <flowName>HDT_FL_CheckTariManaged</flowName>
+        <inputAssignments>
+            <name>city</name>
+            <value>
+                <elementReference>Comune_di_ubicazione_0.outputSupplyCity</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>companyOwner</name>
+            <value>
+                <elementReference>GetCaseImporto.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>declarationDate</name>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>effectiveDate</name>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>isBlocking</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <variables>
+        <name>accountStatementFilderId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>CaseInput</name>
         <dataType>SObject</dataType>
@@ -2062,8 +3800,23 @@
         <objectType>Case</objectType>
     </variables>
     <variables>
+        <name>documentSelectedExpirationDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>ErrorMessageOutput</name>
         <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>parmsWrap</name>
+        <apexClass>HDT_LC_AttachmentManager</apexClass>
+        <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
@@ -2085,5 +3838,13 @@
         <value>
             <stringValue>Conferma</stringValue>
         </value>
+    </variables>
+    <variables>
+        <name>test</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
     </variables>
 </Flow>

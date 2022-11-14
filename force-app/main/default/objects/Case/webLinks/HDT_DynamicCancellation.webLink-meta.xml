@@ -12,8 +12,20 @@
     <protected>false</protected>
     <url>/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__id={!Case.Id}&amp;
 c__accid={!Case.AccountId}&amp;
+c__sObjectRecordToCancell=Case&amp;
 c__flowName=HDT_FL_GestioneAnnullamento&amp;
-c__processType={!IF(ISPICKVAL(Case.Type,&apos;Variazione indirizzo di fornitura&apos;),
-																				&apos;Variazione indirizzo di fornitura tari&apos;,
-																				TEXT(Case.Type))}</url>
+c__processType={!CASE(Case.Type,
+																&apos;Variazione indirizzo di fornitura&apos;,&apos;Variazione indirizzo di fornitura tari&apos;,
+																&apos;Errore di Fatturazione&apos;,&apos;Annullamento errore fatturazione&apos;,
+																&apos;Storno Rateizzazione&apos;,&apos;Annullamento storno rateizzazione tari&apos;,
+																&apos;Piano Rateizzazione&apos;,&apos;Annullamento storno rateizzazione tari&apos;,
+																&apos;Comunicazione Pagamento&apos;,&apos;Annullamento comunicazione pagamenti tari&apos;,
+																&apos;Doppi Pagamenti/Incassi&apos;,&apos;Annullamento doppi pagamenti tari&apos;,
+																&apos;Rimborso&apos;,&apos;Annullamento rimborso tari&apos;,
+																&apos;Conferimento Centri di Raccolta&apos;,&apos;Annullamento prestazione&apos;,
+																&apos;Formulari Richiesta Sconto&apos;,&apos;Annullamento prestazione&apos;,
+																&apos;Riduz. superficie rifiuti spec promiscui&apos;,&apos;Annullamento prestazione&apos;,
+																&apos;Rimozione Agevolazione&apos;,&apos;Annullamento prestazione&apos;,
+																&apos;Sconti Collettivi Pap&apos;,&apos;Annullamento prestazione&apos;,
+																TEXT(Case.Type))}</url>
 </WebLink>

@@ -41,6 +41,11 @@
                 <label>Annullamento Allineamento</label>
             </value>
             <value>
+                <fullName>Annullamento processo transitorio Siebel</fullName>
+                <default>false</default>
+                <label>Annullamento processo transitorio Siebel</label>
+            </value>
+            <value>
                 <fullName>Anticipo Appuntamento</fullName>
                 <default>false</default>
                 <label>Anticipo Appuntamento</label>
@@ -49,6 +54,11 @@
                 <fullName>Approvazione Bonus Commerciale</fullName>
                 <default>false</default>
                 <label>Approvazione Bonus Commerciale</label>
+            </value>
+            <value>
+                <fullName>Approvazione Gestione Fuga</fullName>
+                <default>false</default>
+                <label>Approvazione Gestione Fuga</label>
             </value>
             <value>
                 <fullName>Approvazione Offerte</fullName>
@@ -191,6 +201,11 @@
                 <label>Contratti/Bonus Commerciale</label>
             </value>
             <value>
+                <fullName>Contratto non richiesto da gestire</fullName>
+                <default>false</default>
+                <label>Contratto non richiesto da gestire</label>
+            </value>
+            <value>
                 <fullName>Correzione dati</fullName>
                 <default>false</default>
                 <label>Correzione dati</label>
@@ -291,9 +306,19 @@
                 <label>Eseguire Gestione Manuale SAP</label>
             </value>
             <value>
+                <fullName>Esito approvazione</fullName>
+                <default>false</default>
+                <label>Esito approvazione</label>
+            </value>
+            <value>
                 <fullName>Esito Da Gestire</fullName>
                 <default>false</default>
                 <label>Esito Da Gestire</label>
+            </value>
+            <value>
+                <fullName>Esito KO da DBO</fullName>
+                <default>false</default>
+                <label>Esito KO da DBO</label>
             </value>
             <value>
                 <fullName>Esito KO da DL</fullName>
@@ -356,6 +381,16 @@
                 <label>Gestione Back Office</label>
             </value>
             <value>
+                <fullName>Gestione blocco sollecito</fullName>
+                <default>false</default>
+                <label>Gestione blocco sollecito</label>
+            </value>
+            <value>
+                <fullName>Gestione contratto colonnetta</fullName>
+                <default>false</default>
+                <label>Gestione contratto colonnetta</label>
+            </value>
+            <value>
                 <fullName>Gestione dati discordanti</fullName>
                 <default>false</default>
                 <label>Gestione dati discordanti</label>
@@ -399,6 +434,11 @@
                 <fullName>Gestione processi Ultima Istanza</fullName>
                 <default>false</default>
                 <label>Gestione processi Ultima Istanza</label>
+            </value>
+            <value>
+                <fullName>Gestione richiesta social</fullName>
+                <default>false</default>
+                <label>Gestione richiesta social</label>
             </value>
             <value>
                 <fullName>Gestione Sblocco al Calcolo</fullName>
@@ -471,6 +511,11 @@
                 <label>Invio registrazione</label>
             </value>
             <value>
+                <fullName>Istruttoria Back Office</fullName>
+                <default>false</default>
+                <label>Istruttoria Back Office</label>
+            </value>
+            <value>
                 <fullName>Istruttoria creata/Non necessaria</fullName>
                 <default>false</default>
                 <label>Istruttoria creata/Non necessaria</label>
@@ -479,6 +524,11 @@
                 <fullName>Iva e Accise da validare</fullName>
                 <default>false</default>
                 <label>Iva e Accise da validare</label>
+            </value>
+            <value>
+                <fullName>KO creazione BP CA</fullName>
+                <default>false</default>
+                <label>KO creazione BP CA</label>
             </value>
             <value>
                 <fullName>KO Credit Check</fullName>
@@ -524,6 +574,11 @@
                 <fullName>Modifica Contratti PreAttivazione</fullName>
                 <default>false</default>
                 <label>Modifica Contratti PreAttivazione</label>
+            </value>
+            <value>
+                <fullName>Modifica Indirizzo Fornitura</fullName>
+                <default>false</default>
+                <label>Modifica Indirizzo Fornitura</label>
             </value>
             <value>
                 <fullName>Note_di gestione pratica</fullName>
@@ -631,11 +686,6 @@
                 <label>Protocollo - Reclami</label>
             </value>
             <value>
-                <fullName>Protocollo - Segnalazioni</fullName>
-                <default>false</default>
-                <label>Protocollo - Segnalazioni</label>
-            </value>
-            <value>
                 <fullName>Protocollo - Reclami Contratti</fullName>
                 <default>false</default>
                 <label>Protocollo - Reclami Contratti</label>
@@ -644,6 +694,11 @@
                 <fullName>Protocollo - Reclami Post Vendita</fullName>
                 <default>false</default>
                 <label>Protocollo - Reclami Post Vendita</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Segnalazioni</fullName>
+                <default>false</default>
+                <label>Protocollo - Segnalazioni</label>
             </value>
             <value>
                 <fullName>Protocollo - Variazioni</fullName>
@@ -669,6 +724,11 @@
                 <fullName>Quality Call</fullName>
                 <default>false</default>
                 <label>Quality Call</label>
+            </value>
+            <value>
+                <fullName>Quality Scaduta</fullName>
+                <default>false</default>
+                <label>Quality Scaduta</label>
             </value>
             <value>
                 <fullName>Rapporti con i distributori e SII</fullName>
@@ -879,6 +939,11 @@
                 <fullName>Venditore Non Definito</fullName>
                 <default>false</default>
                 <label>Venditore Non Definito</label>
+            </value>
+            <value>
+                <fullName>Verifica Back Office</fullName>
+                <default>false</default>
+                <label>Verifica Back Office</label>
             </value>
             <value>
                 <fullName>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</fullName>

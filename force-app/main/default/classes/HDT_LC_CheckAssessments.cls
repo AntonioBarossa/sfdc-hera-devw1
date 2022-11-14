@@ -11,8 +11,8 @@ public with sharing class HDT_LC_CheckAssessments {
 
 	public virtual class HDT_WRP_AssessmentsReq extends HDT_WS_Request{
 		String codiceFiscalePartitaIva;
-		String comuneFornitura;
-		String tipoPersona;
+		String comuneFornitura;//Codice comune fornitura, char5
+		String tipoPersona;//F || G
 
 		public HDT_WRP_AssessmentsReq(String cfPiva, String comuneFornitura, String tipoPersona) {
 			this.codiceFiscalePartitaIva = cfPiva;
@@ -24,37 +24,38 @@ public with sharing class HDT_LC_CheckAssessments {
 	public class HDT_WS_CheckAssessmentsResponse extends HDT_WS_Response{
 		@AuraEnabled public String status {get;set;}
 		@AuraEnabled public List<HDT_WRP_RowAssessment> data {get;set;}
+		@AuraEnabled public List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails> errorDetails {get;set;}
 	}
 
 	@SuppressWarnings('PMD.TooManyFields')
-	private class HDT_WRP_RowAssessment {
+	@TestVisible private class HDT_WRP_RowAssessment {
 
-    	@AuraEnabled public String chiaveContribuente;
-		@AuraEnabled public String pratica;
-		@AuraEnabled public String numeroProvvedimento;
-		@AuraEnabled public String dataProvvedimento;
-		@AuraEnabled public String ab;
-		@AuraEnabled public String bs;
-		@AuraEnabled public String ragioneSociale;
-		@AuraEnabled public String citta;
-		@AuraEnabled public String via;
-		@AuraEnabled public String civico;
-		@AuraEnabled public String barrato;
-		@AuraEnabled public String scala;
-		@AuraEnabled public String provincia;
-		@AuraEnabled public String annoEmisProv;
-		@AuraEnabled public String tipoTributo;
-		@AuraEnabled public String causale;
-		@AuraEnabled public String dataNotifica;
-		@AuraEnabled public String dataAdesione;
-		@AuraEnabled public String dataRuolo;
-		@AuraEnabled public String dataCoattivo;
-		@AuraEnabled public String dataContenzioso;
-		@AuraEnabled public String datatRegistroPagamento;
-		@AuraEnabled public String dataPagamentoAvviso;
-		@AuraEnabled public String stato;
-		@AuraEnabled public String tipoAccertamento;
-		@AuraEnabled public String messaggio;
+    	@TestVisible @AuraEnabled public String chiaveContribuente;
+		@TestVisible @AuraEnabled public String pratica;
+		@TestVisible @AuraEnabled public String numeroProvvedimento;
+		@TestVisible @AuraEnabled public String dataProvvedimento;
+		@TestVisible @AuraEnabled public String ab;
+		@TestVisible @AuraEnabled public String bs;
+		@TestVisible @AuraEnabled public String ragioneSociale;
+		@TestVisible @AuraEnabled public String citta;
+		@TestVisible @AuraEnabled public String via;
+		@TestVisible @AuraEnabled public String civico;
+		@TestVisible @AuraEnabled public String barrato;
+		@TestVisible @AuraEnabled public String scala;
+		@TestVisible @AuraEnabled public String provincia;
+		@TestVisible @AuraEnabled public String annoEmisProv;
+		@TestVisible @AuraEnabled public String tipoTributo;
+		@TestVisible @AuraEnabled public String causale;
+		@TestVisible @AuraEnabled public String dataNotifica;
+		@TestVisible @AuraEnabled public String dataAdesione;
+		@TestVisible @AuraEnabled public String dataRuolo;
+		@TestVisible @AuraEnabled public String dataCoattivo;
+		@TestVisible @AuraEnabled public String dataContenzioso;
+		@TestVisible @AuraEnabled public String datatRegistroPagamento;
+		@TestVisible @AuraEnabled public String dataPagamentoAvviso;
+		@TestVisible @AuraEnabled public String stato;
+		@TestVisible @AuraEnabled public String tipoAccertamento;
+		@TestVisible @AuraEnabled public String messaggio;
 
 	}
   

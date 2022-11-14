@@ -5,7 +5,7 @@
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
 
-@SuppressWarnings('PMD.CyclomaticComplexity, PMD.ExcessiveParameterList, PMD.NcssMethodCount')
+@SuppressWarnings('PMD.CyclomaticComplexity, PMD.ExcessiveParameterList, PMD.NcssMethodCount,PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_ChildOrderProcessActions {
     
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
@@ -84,9 +84,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     orderToUpdate.Phase__c='In attesa perfezionamento documentazione';
                 }*/
             }
-            when 'HDT_RT_ModificaTariffaRimozione', 'HDT_RT_AgevolazioniAmbiente'{
-                orderToUpdate.Phase__c = '1 - Avviso di servizio'.equalsIgnoreCase(currentOrder.ApprovalType__c)? 'In Attesa Approvazione' : 'Documentazione Validata';
-            }
+            //when 'HDT_RT_ModificaTariffaRimozione', 'HDT_RT_AgevolazioniAmbiente'{
+                //orderToUpdate.Phase__c = '1 - Avviso di servizio'.equalsIgnoreCase(currentOrder.ApprovalType__c)? 'In Attesa Approvazione' : 'Documentazione Validata';
+            //}
             when 'HDT_RT_Subentro' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
@@ -273,6 +273,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 if(currentOrder.VASSubtype__c != null && currentOrder.VASSubtype__c.equalsIgnoreCase('Analisi Consumi'))
                 {
                     orderToUpdate.ProcessCode__c = currentOrder.Commodity__c.equalsIgnoreCase('Energia Elettrica') ? 'VCE' : 'VCG';
+                }
+
+                if ('VAS Fatturabili'.equalsIgnoreCase(currentOrder.VASType__c) && String.isBlank(currentOrder.CommercialProductCode__c) && 'Analisi Consumi'.equalsIgnoreCase(currentOrder.CommercialProduct__c)&& 'Energia Elettrica'.equalsIgnoreCase(currentOrder.CommodityFormula__c)){
+                        setVasProductField(orderToUpdate, currentOrder);
                 }
             }
         }
@@ -575,5 +579,33 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             return fixedFeeExclVat;
         }
         return fixedFeeExclVat == null ? null : fixedFeeExclVat*(1+vatNumber);
+    }
+
+    private static void setVasProductField(Order ordToUpdate,Order originalOrder){
+        Id contractId = originalOrder.ContractReference__c;
+        Id servicePointId = originalOrder.ServicePoint__c;
+        Id parentOrderId = originalOrder.ParentOrder__c;
+        try{
+            if(String.isNotBlank(contractId)){
+                HDT_QR_Contract qrContract = new HDT_QR_Contract();
+                SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractId);
+                if(subscription != null){
+                    ordToUpdate.CommercialProduct__c = subscription.SBQQ__ProductName__c;
+                    ordToUpdate.CommercialProductCode__c = subscription.ProductCode__c;
+                    ordToUpdate.CommercialProductVersion__c = subscription.VersionFormula__c;
+                }
+            }else if(String.isNotBlank(servicePointId) && String.isNotBlank(parentOrderId)) {
+                HDT_QR_OrderItem qrOrderItems = new HDT_QR_OrderItem();
+                OrderItem orderItem = qrOrderItems.getOfferActivationItem(parentOrderId,servicePointId);
+                if(orderItem != null){
+                    ordToUpdate.CommercialProduct__c = orderItem.Product2.Name;
+                    ordToUpdate.CommercialProductCode__c = orderItem.Product2.ProductCode;
+                    ordToUpdate.CommercialProductVersion__c = orderItem.Product2.Version__c;            
+                }
+            }
+        }catch(Exception e){
+            System.debug(LoggingLevel.INFO, 'setVasProductField : ' + e.getMessage());
+        }
+        
     }
 }

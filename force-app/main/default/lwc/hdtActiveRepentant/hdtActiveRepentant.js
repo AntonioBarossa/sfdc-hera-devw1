@@ -2,6 +2,7 @@ import { LightningElement, api, track, wire } from "lwc";
 import getPeriods from "@salesforce/apex/HDT_LC_ActiveRepentant.getPeriods";
 import getTerms from "@salesforce/apex/HDT_LC_ActiveRepentant.getTerms";
 import getTables from "@salesforce/apex/HDT_LC_ActiveRepentant.getTables";
+import createRecordForSie from "@salesforce/apex/HDT_UTL_ExpSieRavv.createExportSobjects";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { MessageContext, subscribe, unsubscribe, APPLICATION_SCOPE} from "lightning/messageService";
 import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
@@ -18,11 +19,23 @@ class outputData{
     }
 }//Prendere anche data dichiarazione in maniera dinamica
 
+class sieExport{
+    constructor(period, subtype, cityCode, declarationDate, effectiveDate, limitDateX, missingDue){
+        this.period=period;
+        this.subtype=subtype;
+        this.cityCode=cityCode;
+        this.declarationDate=declarationDate;
+        this.effectiveDate=effectiveDate;
+        this.limitDateX=limitDateX;
+        this.missingDue=missingDue;
+    }
+}
+
 export default class HdtActiveRepentant extends LightningElement {
     @track missedDueDate;
     @track limitDateX;
     @track limitDateY;
-    @track period;
+    @track periodTable;
     @track termsAdministration;
     @track cityData;//Comuni non affidatari
     skipCheck = false;
@@ -37,15 +50,23 @@ export default class HdtActiveRepentant extends LightningElement {
 
     //variables from flow
     @api recordId;
+    @api hideFields=false;
     @api objectApiName;
     @api outputWrp={};
     @api sessionid;
+    @api companyOwner;
+    @api record;
+    @api outputExportSie;
 
     @wire(MessageContext)
 	messageContext;
 
     get showSpinner(){
         return this.formLoading || this.loading>0;
+    }
+
+    get isCompanyMms(){
+        return "MMS".localeCompare(this.companyOwner) === 0;
     }
 
     get isCase(){
@@ -59,7 +80,7 @@ export default class HdtActiveRepentant extends LightningElement {
     connectedCallback(){
         this.loading++;
         this.getTablesConfig();
-        if(this.recordId){
+        if(!this.hideFields){
             this.subscribeMC();
             const oldWrpStr = window.sessionStorage.getItem(this.sessionid);
             if(this.sessionid && oldWrpStr){
@@ -74,15 +95,17 @@ export default class HdtActiveRepentant extends LightningElement {
 
     buttonPressed() {
         this.disabled=true;
-        if(this.recordId){
+        if(!this.hideFields){
             //flow
             let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
             let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
+            this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = "";//blank values
+            this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = "";//blank values
             if(dichiarazione){     this.startActiveRepentant(decorrenza, dichiarazione);  }  
             else{   this.showMessage("Attenzione!", "Popolare Data Dichiarazione", "error");this.disabled=false;    }
         }else{
             //wizard Attivazioni
-            this.dispatchEvent(CustomEvent("request_data"));
+            this.dispatchEvent(new CustomEvent("request_data"));
         }
         return;
     }
@@ -152,24 +175,43 @@ export default class HdtActiveRepentant extends LightningElement {
         }
     }
 
+    @api exportSieData(sobject){//this method returns a promise to handle;
+        this.outputExportSie.sobject = sobject;
+        //this.outputExportSie.missingDue=missingDue;
+        return createRecordForSie({wrapper:this.outputExportSie});
+    }
+
     checkComuniNonAffidatari(dateDecorrenza, dateDichiarazione){
-        if(this.cityData?.CutOverEndDate__c && dateDichiarazione.getTime() > new Date(this.cityData?.CutOverEndDate__c).getTime()){
+        
+        if(!(this.cityData?.TARIManagingStartDate__c && this.cityData?.TARIManagingEndDate__c && this.cityData?.CutOverEndDate__c)){
+            this.showMessage(
+                "Attenzione!",
+                this.cityData?.CityNotManagedAlert__c? this.cityData.CityNotManagedAlert__c : "Comune Non Gestito",
+                "error"
+            );
+            this.dateDecorrenza=null;
+            this.disabled=false;
+            return true;
+        }
+
+        if( (dateDecorrenza.getTime() < new Date(this.cityData?.TARIManagingStartDate__c).getTime() || dateDecorrenza.getTime() > new Date(this.cityData?.TARIManagingEndDate__c).getTime())){
+            this.showMessage(
+                "Attenzione!",
+                this.cityData.CityNotManagedAlert__c? this.cityData.CityNotManagedAlert__c : "Comune Non Gestito",
+                "error"
+            );
+            this.dateDecorrenza=null;
+            this.disabled=false;
+            return true;
+        }
+        
+        if( dateDichiarazione.getTime() > new Date(this.cityData?.CutOverEndDate__c).getTime()){
             this.showMessage(
                 "Attenzione!",
                 "La data di contatto è successiva a quella di fine cut-over",
                 "error"
             );
             this.dateDichiarazione=null;
-            this.disabled=false;
-            return true;
-        }
-        if(this.cityData?.TARIManagingStartDate__c && this.cityData?.TARIManagingEndDate__c && (dateDecorrenza.getTime() < new Date(this.cityData?.TARIManagingStartDate__c).getTime() || dateDecorrenza.getTime() > new Date(this.cityData?.TARIManagingEndDate__c).getTime())){
-            this.showMessage(
-                "Attenzione!",
-                this.cityData.CityNotManagedAlert__c,
-                "error"
-            );
-            this.dateDecorrenza=null;
             this.disabled=false;
             return true;
         }
@@ -184,9 +226,9 @@ export default class HdtActiveRepentant extends LightningElement {
         if (data?.length) {
             console.log("data " + data[0].Id);
             this.termsAdministration= terms;
-            this.period = data[0];
+            this.periodTable = data[0];
         }else{
-            console.log("#getTablesConfig -> Data not found! " + JSON.stringify(error));
+            console.log("#getTablesConfig -> Data not found! ");
             this.skipCheck=true;
         }
     }
@@ -202,9 +244,9 @@ export default class HdtActiveRepentant extends LightningElement {
             //let {termsTable : data, termsAdministration: terms, cityData} = wrp;
             //this.cityData=cityData?.[0];
             //if(this.checkComuniNonAffidatari(new Date(this.dateDecorrenza))) return;
-            if (this.period) {
+            if (this.periodTable) {
                 this.skipCheck=false;
-                this.checkData(this.period, this.termsAdministration);
+                this.checkData(this.periodTable, this.termsAdministration);
             }
         }catch(error) {
             console.log("#ErrorGetPeriods -> " + JSON.stringify(error));
@@ -212,7 +254,6 @@ export default class HdtActiveRepentant extends LightningElement {
         }finally{
             this.finish();
         }
-        //this.checkMissedDue();
     }
 
     getLimitDateX(data) {
@@ -278,13 +319,13 @@ export default class HdtActiveRepentant extends LightningElement {
         if (declarationDate.getTime() >= this.limitDateY.getTime()) {
             console.log("Periodo non ravv Z");
             this.periodType ="Z";
-            this.showMessage("Attenzione!", this.period.PopupZ__c, " error", "sticky");
+            if(!this.isCompanyMms)   this.showMessage("Attenzione!", this.periodTable.PopupZ__c, " error", "sticky");
             return;
         } else {
             console.log("Periodo Ravvedibile Y");
             this.periodType ="Y";
-            //this.calculateMissedDue(terms, declarationDate);
-            this.showMessage("Attenzione!", this.period.PopupY__c, " error", "sticky");
+            this.calculateMissedDue(terms, declarationDate);
+            if(!this.isCompanyMms)   this.showMessage("Attenzione!", this.periodTable.PopupY__c, " error", "sticky");
         }
     }
 
@@ -300,22 +341,45 @@ export default class HdtActiveRepentant extends LightningElement {
     }
 
     finish() {
-        const evt = CustomEvent("end_algorithm", {
+
+        let dx = this.limitDateX? new Date(this.limitDateX) : null;
+        dx?.setDate(dx?.getDate() + 1);//add 1 day
+        dx = dx? this.getFormattedDate(dx) : null;
+
+        let dy = this.limitDateY? new Date(this.limitDateY) : null;
+        dy?.setDate(dy?.getDate() + 1);//add 1 day
+        dy = dy? this.getFormattedDate(dy) : null;
+
+        const evt = new CustomEvent("end_algorithm", {
             detail: {
-                dateX: this.limitDateX? this.getFormattedDate(this.limitDateX.setDate(this.limitDateX.getDate() + 1)) : null,
-                dateY: this.limitDateY? this.getFormattedDate(this.limitDateY.setDate(this.limitDatey.getDate() + 1)) : null,
-                //missedDue: this.missedDueDate,
+                dateX: dx,
+                dateY: dy,
+                missedDue: this.missedDueDate,
                 period: this.periodType
             }
         });
 
         this.dispatchEvent(evt);
+        this.outputExportSie=new sieExport(
+            this.periodType,
+            this.sottotipo,
+            this.cityData?.CityCode__c,
+            this.dateDichiarazione,
+            this.dateDecorrenza,
+            this.limitDateX,
+            this.missedDueDate? "Y" : "N"
+        );
 
-        if(this.recordId)    this.populateFormFields(evt);
+        if(!this.hideFields)    this.populateFormFields(evt);
         this.limitDateX=null;
         this.limitDateY=null;
         this.missedDueDate=null;//reset data to avoid conflicts
+        this.periodType=null;
         this.disabled=false;
+    }
+
+    addDays(date, days){
+        date.setDate()
     }
 
     populateFormFields(event) {//function executed on parent context

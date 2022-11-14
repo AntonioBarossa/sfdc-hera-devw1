@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>IsNumber__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>IsTranscode__c</field>
@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Precision__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:double">0.0</value>
     </values>
     <values>
         <field>SapField__c</field>

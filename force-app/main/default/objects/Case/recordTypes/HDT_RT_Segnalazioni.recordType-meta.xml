@@ -3,7 +3,8 @@
     <fullName>HDT_RT_Segnalazioni</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>HDT_RT_Segnalazioni</label>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
+    <label>Segnalazioni</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
@@ -1246,17 +1247,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>CaseSource__c</picklist>
-        <values>
-            <fullName>Gestore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Utente</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Category__c</picklist>
         <values>
             <fullName>Accedi</fullName>
@@ -1951,6 +1941,10 @@
             <fullName>Ambiente</fullName>
             <default>false</default>
         </values>
+        <values>
+			<fullName>Segnalazioni</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Annullamento</fullName>
             <default>false</default>
@@ -8211,7 +8205,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9782,8 +9776,24 @@
 			<fullName>In Lavorazione</fullName>
 			<default>false</default>
 		</values>
+        <values>
+			<fullName>Intermedia</fullName>
+			<default>false</default>
+		</values>
 		<values>
 			<fullName>Inviata a Sap</fullName>
+			<default>false</default>
+		</values>
+        <values>
+			<fullName>Approvata</fullName>
+			<default>false</default>
+		</values>
+        <values>
+			<fullName>Rifiutata</fullName>
+			<default>false</default>
+		</values>
+        <values>
+			<fullName>Presa In Carico</fullName>
 			<default>false</default>
 		</values>
 		<values>
@@ -9882,21 +9892,6 @@
         </values>
         <values>
             <fullName>SI</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PurificationPay__c</picklist>
-        <values>
-            <fullName>Esente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Intera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ridotta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10350,7 +10345,7 @@
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
-            <fullName>D%E2%80%99ufficio</fullName>
+            <fullName>D'ufficio</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10832,18 +10827,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>1401-Risc amb singoli</fullName>
             <default>false</default>
         </values>
@@ -10909,17 +10892,6 @@
         </values>
         <values>
             <fullName>G_ICD-Imposta Usi Domestici</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SewerPay__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -12553,7 +12525,11 @@
 		<values>
 			<fullName>Ambiente annullo richiesta senza appuntamento</fullName>
 			<default>false</default>
-		</values>
+		</values>   
+        <values>
+			<fullName>Avviso di Servizio</fullName>
+			<default>false</default>
+		</values>     
 		<values>
 			<fullName>Conferimento Centri di Raccolta</fullName>
 			<default>false</default>
@@ -12578,6 +12554,10 @@
 			<fullName>Riduzione Agevolazione dopo Accertamento</fullName>
 			<default>false</default>
 		</values>
+        <values>
+            <fullName>Rimozione Agevolazione</fullName>
+            <default>false</default>
+        </values>
 		<values>
 			<fullName>Sconti Collettivi Pap</fullName>
 			<default>false</default>

@@ -8,27 +8,28 @@
     </values>
     <values>
         <field>FieldsJSON__c</field>
-        <value xsi:type="xsd:string">[
-{
-&quot;FieldName&quot;: &quot;UseSubCategory__c&quot;,
-&quot;Required&quot;: true,
-&quot;Column&quot;: 1
-},
-{
-&quot;FieldName&quot;: &quot;CustomerRequestDate__c&quot;,
-&quot;Required&quot;: false,
-&quot;Column&quot;: 1
-},
-{
-&quot;FieldName&quot;: &quot;EffectiveDate__c&quot;,
-&quot;Required&quot;: false,
-&quot;Column&quot;: 2
-},
-{
-&quot;FieldName&quot;: &quot;SignalOutcome__c&quot;,
-&quot;Required&quot;: false,
-&quot;Column&quot;: 2
-}
+        <value xsi:type="xsd:string">[{
+        &quot;FieldName&quot;: &quot;UseSubCategory__c&quot;,
+        &quot;Required&quot;: true,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;CustomerRequestDate__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;EffectiveDate__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;Type&quot;,
+        &quot;ReadOnly&quot;: true,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;SignalOutcome__c&quot;,
+        &quot;Required&quot;: true,
+        &quot;Column&quot;: 2
+    }
 ]</value>
     </values>
     <values>
@@ -52,14 +53,18 @@
 },
 {
 &quot;FieldName&quot;: &quot;AddressFormula__c&quot;,
+&quot;Column&quot;: 1
+},
+{
+&quot;FieldName&quot;: &quot;PaySewer__c&quot;,
 &quot;Column&quot;: 2
 },
 {
-&quot;FieldName&quot;: &quot;SewerPay__c&quot;,
+&quot;FieldName&quot;: &quot;PayPurification__c&quot;,
 &quot;Column&quot;: 2
 },
 {
-&quot;FieldName&quot;: &quot;PurificationPay__c&quot;,
+&quot;FieldName&quot;: &quot;PurificationInfoOnTheInvoice__c&quot;,
 &quot;Column&quot;: 2
 }
 ]</value>

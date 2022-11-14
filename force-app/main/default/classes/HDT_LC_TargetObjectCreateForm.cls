@@ -40,11 +40,16 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     }
     @AuraEnabled
     public static ServicePoint__c createServicePoint2(ServicePoint__c servicePoint,Sale__c sale) {
+        return createServicePoint2(servicePoint, sale, true);
+    }
+
+    @AuraEnabled
+    public static ServicePoint__c createServicePoint2(ServicePoint__c servicePoint,Sale__c sale, Boolean callWinBack) {
 
         if(servicePoint.MeterStatus__c == 'Bozza'){
             servicePoint.Account__c=null;
         }
-        updateServicePoint3(servicePoint,sale);
+        updateServicePoint3(servicePoint,sale,callWinBack);
         return servicePoint;
     }
 
@@ -52,6 +57,11 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
      * This method is necessary because passing the object directly Removes the decimals from the numbers */
     @AuraEnabled
     public static ServicePoint__c createServicePoinString(String servicePoint, Sale__c sale){
+        return createServicePoinString(servicePoint, sale, true);
+    }
+
+    @AuraEnabled
+    public static ServicePoint__c createServicePoinString(String servicePoint, Sale__c sale,Boolean callWinBack){
                 
         ServicePoint__c servicePointObject = (ServicePoint__c)JSON.deserialize(servicePoint, ServicePoint__c.class);
         servicePointObject.ImplantTypeTemp__c = servicePointObject.ImplantType__c;
@@ -59,7 +69,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         servicePointObject.SupplyType__c = null;
         servicePointObject.ImplantType__c = null;
 
-        createServicePoint2(servicePointObject, sale);
+        createServicePoint2(servicePointObject, sale, callWinBack);
 
         return servicePointObject;
 
@@ -121,8 +131,11 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         serviceSp.updateRecord(servicePo);
     }
 
-    public static void updateServicePoint3(ServicePoint__c servicePo,Sale__c sa) {   
-        
+    public static void updateServicePoint3(ServicePoint__c servicePo,Sale__c sa) {
+        updateServicePoint3(servicePo, sa, true);
+    }
+    
+    public static void updateServicePoint3(ServicePoint__c servicePo,Sale__c sa, Boolean callWinBack) { 
         if(servicePo.ServicePointCode__c != null){
 
             Sale__c s = new Sale__c();
@@ -134,6 +147,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
             if(sa != null){
                 boolean isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
                 //if(isTransitorio){
+                if (callWinBack){
                     HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
                     if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                         if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
@@ -143,6 +157,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                             }
                         }
                     }
+                }
                 //}
             }
         }
@@ -201,17 +216,11 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
 
     @AuraEnabled
     public static String getAto(String comune){
+        String toReturn = '';
+        List<TownATOTable__c> atoList = [Select id, ATO__c from TownATOTable__c where Town__c =:comune WITH SECURITY_ENFORCED];
+        toReturn = (!atoList.isEmpty() && String.isNotBlank(atoList[0].ATO__c)) ? atoList[0].ATO__c : toReturn;
 
-        List<TownATOTable__c> myRecordList = [Select id, ATO__c, Town__c from TownATOTable__c where Town__c =:comune WITH SECURITY_ENFORCED];
-        if(!myRecordList.isEmpty()){
-            if(myRecordList[0].ATO__c !=null ){
-                return myRecordList[0].ATO__C;
-            }else{
-                return '';
-            }
-        }else{
-            return '';
-        }
+        return toReturn;
     }
 
     @AuraEnabled

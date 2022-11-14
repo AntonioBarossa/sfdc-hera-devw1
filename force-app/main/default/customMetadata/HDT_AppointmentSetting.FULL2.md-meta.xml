@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>FULL2</label>
+    <protected>false</protected>
+    <values>
+        <field>Flag__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Type__c</field>
+        <value xsi:type="xsd:string">Link Community</value>
+    </values>
+    <values>
+        <field>Value1__c</field>
+        <value xsi:type="xsd:string">00D3N0000008mj0</value>
+    </values>
+    <values>
+        <field>Value2__c</field>
+        <value xsi:type="xsd:string">https://heravendita--full2.sandbox.my.site.com/PrendiAppuntamento</value>
+    </values>
+    <values>
+        <field>Value3__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Value4__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

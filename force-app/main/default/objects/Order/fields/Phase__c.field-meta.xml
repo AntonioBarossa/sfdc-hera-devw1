@@ -96,9 +96,19 @@
                 <label>Annullamento - Errore invio a DL/SII</label>
             </value>
             <value>
+                <fullName>Annullamento - Esito KO da DBO</fullName>
+                <default>false</default>
+                <label>Annullamento - Esito KO da DBO</label>
+            </value>
+            <value>
                 <fullName>Annullamento - Esito KO da DL/SII</fullName>
                 <default>false</default>
                 <label>Annullamento - Esito KO da DL/SII</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Esito OK da DBO</fullName>
+                <default>false</default>
+                <label>Annullamento - Esito OK da DBO</label>
             </value>
             <value>
                 <fullName>Annullamento - Esito OK da DL/SII</fullName>
@@ -257,6 +267,11 @@
                 <label>Conferma Appuntamento KO</label>
             </value>
             <value>
+                <fullName>Creazione BP-CA</fullName>
+                <default>false</default>
+                <label>Creazione BP-CA</label>
+            </value>
+            <value>
                 <fullName>Credit Check KO</fullName>
                 <default>false</default>
                 <label>Credit Check KO</label>
@@ -384,6 +399,11 @@
                 <label>Esito KO da SII</label>
             </value>
             <value>
+                <fullName>Esito OK da DBO</fullName>
+                <default>false</default>
+                <label>Esito OK da DBO</label>
+            </value>
+            <value>
                 <fullName>Esito OK da DL</fullName>
                 <default>false</default>
                 <label>Esito OK da DL</label>
@@ -467,6 +487,11 @@
                 <fullName>In attesa validazione</fullName>
                 <default>false</default>
                 <label>In attesa validazione</label>
+            </value>
+            <value>
+                <fullName>In attesa Verifica</fullName>
+                <default>false</default>
+                <label>In attesa Verifica</label>
             </value>
             <value>
                 <fullName>In Corso caricamento Siebel</fullName>

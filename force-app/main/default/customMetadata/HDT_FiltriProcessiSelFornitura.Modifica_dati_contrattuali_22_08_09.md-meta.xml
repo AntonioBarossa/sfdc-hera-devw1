@@ -16,15 +16,15 @@
     </values>
     <values>
         <field>RateCategory__c</field>
-        <value xsi:type="xsd:string">TATUDRES01</value>
-    </values>
-    <values>
-        <field>StatoContratto__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>
-        <field>StatoFornitura__c</field>
+        <field>StatoContratto__c</field>
         <value xsi:type="xsd:string">Attivo,Bozza</value>
+    </values>
+    <values>
+        <field>StatoFornitura__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>TipoProcesso__c</field>

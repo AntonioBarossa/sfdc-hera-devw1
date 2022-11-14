@@ -13,73 +13,157 @@
     <values>
         <field>ColumnData__c</field>
         <value xsi:type="xsd:string">[
-  {
-    &quot;tableTitle&quot;: &quot;ODL &amp; ADS&quot;,
-    &quot;iconName&quot;: &quot;standard:endorsement&quot;,
-    &quot;columns&quot;: [
-      {
-        &quot;label&quot;: &quot;tipoOdl&quot;,
-        &quot;fieldName&quot;: &quot;Attività&quot;
-      },
-      {
-        &quot;label&quot;: &quot;codiceOdl&quot;,
-        &quot;fieldName&quot;: &quot;Codice ODL&quot;
-      },
-      {
-        &quot;label&quot;: &quot;posizione&quot;,
-        &quot;fieldName&quot;: &quot;Posizione ODL&quot;
-      },
-      {
-        &quot;label&quot;: &quot;datareg&quot;,
-        &quot;fieldName&quot;: &quot;Data Registrazione&quot;
-      },
-      {
-        &quot;label&quot;: &quot;settoreMerc&quot;,
-        &quot;fieldName&quot;: &quot;Settore merceologico&quot;
-      },
-      {
-        &quot;label&quot;: &quot;prodServ&quot;,
-        &quot;fieldName&quot;: &quot;Codice Prodotto&quot;
-      },
-      {
-        &quot;label&quot;: &quot;stato&quot;,
-        &quot;fieldName&quot;: &quot;Stato&quot;
-      },
-      {
-        &quot;label&quot;: &quot;dataStato&quot;,
-        &quot;fieldName&quot;: &quot;Data stato&quot;
-      },
-      {
-        &quot;label&quot;: &quot;nota1&quot;,
-        &quot;fieldName&quot;: &quot;Note&quot;
-      },
-      {
-        &quot;label&quot;: &quot;descCdl&quot;,
-        &quot;fieldName&quot;: &quot;Descrizione centro lavoro&quot;
-      },
-      {
-        &quot;label&quot;: &quot;appuntamento&quot;,
-        &quot;fieldName&quot;: &quot;Inizio appuntamento&quot;
-      },
-      {
-        &quot;label&quot;: &quot;oraApp&quot;,
-        &quot;fieldName&quot;: &quot;Telegestito&quot;
-      },
-      {
-        &quot;label&quot;: &quot;telegest&quot;,
-        &quot;fieldName&quot;: &quot;Codice preventivo&quot;
-      },
-      {
-        &quot;label&quot;: &quot;codPreven&quot;,
-        &quot;fieldName&quot;: &quot;Codice contratto&quot;
-      }
-    ]
-  }
-]</value>
+    {
+      &quot;tableTitle&quot;: &quot;ODL &amp; ADS&quot;,
+      &quot;iconName&quot;: &quot;standard:endorsement&quot;,
+      &quot;columns&quot;: [
+        {
+          &quot;fieldName&quot;: &quot;tipoOdl&quot;,
+          &quot;label&quot;: &quot;Attività&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;codiceOdl&quot;,
+          &quot;label&quot;: &quot;Codice ODL&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;posizione&quot;,
+          &quot;label&quot;: &quot;Posizione ODL&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;datareg&quot;,
+          &quot;label&quot;: &quot;Data Registrazione&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;settoreMerc&quot;,
+          &quot;label&quot;: &quot;Settore merceologico&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;prodServ&quot;,
+          &quot;label&quot;: &quot;Prod Serv&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;stato&quot;,
+          &quot;label&quot;: &quot;Stato&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;dataStato&quot;,
+          &quot;label&quot;: &quot;Data stato&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;nota1&quot;,
+          &quot;label&quot;: &quot;Note&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;nota2&quot;,
+          &quot;label&quot;: &quot;Note2&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;nota3&quot;,
+          &quot;label&quot;: &quot;Note3&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;nota4&quot;,
+          &quot;label&quot;: &quot;Note4&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;nota5&quot;,
+          &quot;label&quot;: &quot;Note5&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;nota6&quot;,
+          &quot;label&quot;: &quot;Note6&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;nota7&quot;,
+          &quot;label&quot;: &quot;Note7&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;nota8&quot;,
+          &quot;label&quot;: &quot;Note8&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;nota9&quot;,
+          &quot;label&quot;: &quot;Note9&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;nota10&quot;,
+          &quot;label&quot;: &quot;Note10&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;destInterv&quot;,
+          &quot;label&quot;: &quot;Dest Interv&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;descCdl&quot;,
+          &quot;label&quot;: &quot;Desc Cdl&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;appuntamento&quot;,
+          &quot;label&quot;: &quot;Appuntamento&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;oraApp&quot;,
+          &quot;label&quot;: &quot;Ora App&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;telegest&quot;,
+          &quot;label&quot;: &quot;Tele Gest&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;codPreven&quot;,
+          &quot;label&quot;: &quot;Codice Preven&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;posPreven&quot;,
+          &quot;label&quot;: &quot;Pos Preven&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;codContratto&quot;,
+          &quot;label&quot;: &quot;Cod contratto&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;rifAnthea&quot;,
+          &quot;label&quot;: &quot;Rif Anthea&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+          &quot;fieldName&quot;: &quot;serviceRequest&quot;,
+          &quot;label&quot;: &quot;Service Request&quot;,
+          &quot;initialWidth&quot;: 140
+        }
+      ]
+    }
+  ]</value>
     </values>
     <values>
         <field>Credential__c</field>
-        <value xsi:type="xsd:string">Callout:MulesoftBasePath/transfers/lock-unlock-calculations</value>
+        <value xsi:type="xsd:string">Callout:MulesoftBasePath/data-enrichment/view-odl-ads</value>
     </values>
     <values>
         <field>UseMock__c</field>

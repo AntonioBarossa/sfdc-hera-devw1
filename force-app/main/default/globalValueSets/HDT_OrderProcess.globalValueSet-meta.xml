@@ -180,6 +180,11 @@
         <default>false</default>
         <label>Voltura - Subentro Scarico produttivo</label>
     </customValue>
+    <customValue>
+        <fullName>Aggiunta Attacco con Attivazione</fullName>
+        <default>false</default>
+        <label>Aggiunta Attacco con Attivazione</label>
+    </customValue>
     <description>Lista Processi Ordine</description>
     <masterLabel>Processo Ordine</masterLabel>
     <sorted>false</sorted>
