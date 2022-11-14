@@ -977,6 +977,11 @@
         <field>Order.AnnualTARIPayment__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.UseSubCategory__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.IntendedUse__c</field>
