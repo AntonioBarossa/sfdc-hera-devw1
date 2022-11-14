@@ -60,9 +60,12 @@ public with sharing class HDT_UTL_ExpSieRavvTst {
         wrapper.effectiveDate   = System.today();
         wrapper.limitDateX      = System.today();
         wrapper.missingDue = 'N';
-        wrapper.record = caso;
 
-        HDT_UTL_ExpSieRavv.createExportSobjects(wrapper);
+        HDT_UTL_ExpSieRavv.HDT_WRP_InvocableInput invInput = new HDT_UTL_ExpSieRavv.HDT_WRP_InvocableInput();
+        invInput.wrap=wrapper;
+        invInput.caso=caso;
+
+        HDT_UTL_ExpSieRavv.createExportSobjectsInvocable(new List<HDT_UTL_ExpSieRavv.HDT_WRP_InvocableInput>{invInput});
         System.assertEquals(caso.BillingCategory__c,'C','Test OK');
         Test.stopTest();
     }
