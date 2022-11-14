@@ -580,7 +580,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         const sectionNextActions = this.pendingSteps[event.target.getAttribute('data-section-index')]?.nextActions;
         if(sectionNextActions && sectionNextActions instanceof Function ){
-            if(sectionNextActions(event)) return;//Azioni automatiche da eseguire definite nel JSON del Wizard
+            if(sectionNextActions(event, currentSectionIndex, nextSectionStep)) return;//Azioni automatiche da eseguire definite nel JSON del Wizard
         }
         
         console.log('currentSectionName '+currentSectionName);
