@@ -847,8 +847,8 @@
     <assignments>
         <name>Passa_Fase_In_Lavorazione_0</name>
         <label>Passa Fase In Lavorazione</label>
-        <locationX>1764</locationX>
-        <locationY>1602</locationY>
+        <locationX>1757</locationX>
+        <locationY>1603</locationY>
         <assignmentItems>
             <assignToReference>GetCaseScreen.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -863,6 +863,9 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Update_Prevalorizzazione_0_0</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Prevalorizzazione_Case</name>
@@ -2473,6 +2476,13 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <locationX>1754</locationX>
         <locationY>1362</locationY>
         <inputReference>GetRecord</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Prevalorizzazione_0_0</name>
+        <label>Update Prevalorizzazione</label>
+        <locationX>1827</locationX>
+        <locationY>1807</locationY>
+        <inputReference>GetCaseScreen</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Voltura_Tecnica_Dati_Discordanti</name>
