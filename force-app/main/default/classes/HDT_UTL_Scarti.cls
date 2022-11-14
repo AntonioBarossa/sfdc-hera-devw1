@@ -862,7 +862,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         Set<String> activityTypeToCheck = new Set<String>{'ammissibilità ko','esito ko da dl','esito ko da sii'};
         Map<Id,Set<String>> activityToCheckMap = new Map<Id,Set<String>>();
         for(wrts_prcgvr__Activity__c currAct : inputData){
-            if (currAct.Id != null && String.isNotBlank(currAct.Type__c) && activityTypeToCheck.contains(currAct.Type__c.toLowerCase()) && currAct.Id != null && currAct.wrts_prcgvr__ObjectId__c != null){
+            if (currAct.Id != null && String.isNotBlank(currAct.Type__c) && activityTypeToCheck.contains(currAct.Type__c.toLowerCase()) && currAct.wrts_prcgvr__ObjectId__c != null){
                 if (!activityToCheckMap.containsKey(currAct.wrts_prcgvr__ObjectId__c)){
                     activityToCheckMap.put(currAct.wrts_prcgvr__ObjectId__c, new Set<String>());
                 }
@@ -901,9 +901,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                                       WITH SECURITY_ENFORCED];
 
         system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi relatedActs' + JSON.serializePretty(relatedActs));
-        for(wrts_prcgvr__Activity__c relatedAct: relatedActs){
-            System.debug(LoggingLevel.DEBUG, '@@@@Primo ' + JSON.serializePretty(relatedAct));
-        }
 
         String endDate = activityValues.containsKey('DATA_ELABORAZIONE')? activityValues.get('DATA_ELABORAZIONE') :
                         activityValues.containsKey('DATA_EVENTO')? activityValues.get('DATA_EVENTO') : '';
@@ -918,7 +915,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             endDatetimeVal = Datetime.valueOf(endDate);
         }
         for(wrts_prcgvr__Activity__c relatedAct: relatedActs){
-            System.debug(LoggingLevel.DEBUG, '@@@@Secondo ' +JSON.serializePretty(relatedAct));
             if (String.isNotBlank(relatedAct.Type__c) && activityTypeToCheck.contains(relatedAct.Type__c.toLowerCase()) 
             &&((relatedAct.Case__c != null && (!activityToCheckMap.containsKey(relatedAct.Case__c) || (activityToCheckMap.get(relatedAct.Case__c) != null && !activityToCheckMap.get(relatedAct.Case__c).contains(relatedAct.Type__c.toLowerCase()))))
             || (relatedAct.Order__c != null && (!activityToCheckMap.containsKey(relatedAct.Order__c) || (activityToCheckMap.get(relatedAct.Order__c) != null && !activityToCheckMap.get(relatedAct.Order__c).contains(relatedAct.Type__c.toLowerCase())))))){
