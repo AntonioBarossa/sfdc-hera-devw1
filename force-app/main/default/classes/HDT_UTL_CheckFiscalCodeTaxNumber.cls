@@ -42,7 +42,20 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
         return false;
     }
 
-
+    /* Nel calcolo del lead viene eseguito un controllo prima sulla validita' del codice fiscale
+    * Poi lo calcola nuovamente
+    * in caso di citta' con piu' codici belfiore e' necessario calcolare il codice fiscale 
+    * per ogni possibile citycode
+    */
+    public static Boolean matchEstimatedSetFiscalCode(Map<String, String> infoData, String fiscalCode)
+    {
+        Set<String> estimatedSetFiscalCode=HDT_UTL_CalculateFiscalCode.calculateSetFiscalCode(infoData);
+        if(!estimatedSetFiscalCode.isEmpty() && estimatedSetFiscalCode.contains(fiscalCode))
+        {
+            return true;
+        }
+        return false;
+    }
 
     @AuraEnabled
     public static Map<String,Object> getDataFromFiscalCodeData(String fiscalCodes){
