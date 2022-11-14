@@ -454,6 +454,108 @@ public with sharing class HDT_UTL_CaseProcess {
     */
     public static void createActivityFromContract(List<Case> cases){
         try{
+            Map<Id,Case> mapCases = new Map<Id,Case>(cases);
+            List<String> caseIds =  new List<String>();
+            caseIds.addAll((Set<String>)JSON.deserialize(JSON.serialize(mapCases.keyset()), Set<String>.class));
+            system.debug('##### caseIds: '+caseIds);
+            List<wrts_prcgvr__Activity__c> notInsertActivity = HDT_QR_Activity.getActivityFromTypeList(caseIds, new Set<String>{'Aprire variazione','Aprire Cessazione'});
+
+            system.debug('##### mapCases: '+mapCases);
+            for(wrts_prcgvr__Activity__c currAct : notInsertActivity){
+                mapCases.remove(currAct.Case__c);
+            }
+            system.debug('##### newMapCases: '+mapCases);
+
+            Map<String,Case> mapUniqueCase = new Map<String,Case>{};
+            Map<String, List<String>> fieldsMap = new Map<String,List<String>>{'AccountId' => new List<String>(), 'SupplyCity__c' => new List<String>(), 'SupplyStreetName__c' => new List<String>()};
+            for(Case currCase : mapCases.values()){
+                system.debug('@@@ Case Id:'+currCase.Id);
+
+                fieldsMap.get('AccountId').add(currCase.AccountId);
+                fieldsMap.get('SupplyCity__c').add(currCase.SupplyCity__c);
+                fieldsMap.get('SupplyStreetName__c').add(currCase.SupplyStreetName__c);
+
+                system.debug('@@@ Case AccountId:'+fieldsMap.get('AccountId'));
+                system.debug('@@@ Case SupplyCity__c:'+fieldsMap.get('SupplyCity__c'));
+                system.debug('@@@ Case SupplyStreetName__c:'+fieldsMap.get('SupplyStreetName__c'));
+            }
+
+            List<Contract> relatedContracts = [ SELECT Id, AccountId, ServicePoint__r.SupplyCity__c, ServicePoint__r.SupplyStreetName__c
+                                                                                                                                                        FROM Contract
+                                                                                                                                                        WHERE AccountId IN: fieldsMap.get('AccountId')
+                                                                                                                                                        AND ServicePoint__r.SupplyCity__c IN: fieldsMap.get('SupplyCity__c')
+                                                                                                                                                        AND ServicePoint__r.SupplyStreetName__c IN: fieldsMap.get('SupplyStreetName__c')
+                                                                                                                                                        AND ServicePoint__r.CommoditySector__c = 'Ambiente'
+                                                                                                                                                        AND Status = 'Attivo'];
+            system.debug('#####relatedContracts: '+relatedContracts);
+
+            Map<String,Contract> mapUniqueContract = new Map<String,Contract>{};
+            for(Contract currContract : relatedContracts){
+                mapUniqueContract.put(  String.valueOf(currContract.AccountId)+
+                                        currContract.ServicePoint__r.SupplyCity__c.toUpperCase()+
+                                        currContract.ServicePoint__r.SupplyStreetName__c.toUpperCase(),currContract);
+                system.debug('##### uniqueContract'+(   String.valueOf(currContract.AccountId)+
+                                                        currContract.ServicePoint__r.SupplyCity__c.toUpperCase()+
+                                                        currContract.ServicePoint__r.SupplyStreetName__c.toUpperCase()));
+            }
+
+            List<Case> toAnnul = new List<Case>();
+            String tempUniqueKey;
+            List<Id> modPostAccForActivity = new List<Id>();
+            List<Id> cesPostAccForActivity = new List<Id>();
+            for(Case currCase : mapCases.values()){
+
+                tempUniqueKey = String.valueOf(currCase.AccountId)+
+                                currCase.SupplyCity__c.toUpperCase()+
+                                currCase.SupplyStreetName__c.toUpperCase();
+                system.debug('##### uniqueCase: '+tempUniqueKey);
+
+                if(mapUniqueContract.get(tempUniqueKey) != null){
+                    if('Modifica post accertamento'.equalsIgnoreCase(currCase.Type)){
+                        modPostAccForActivity.add(currCase.Id);
+                    }else if('Cessazione post accertamento'.equalsIgnoreCase(currCase.Type)){
+                        cesPostAccForActivity.add(currCase.Id);
+                    }
+                }else{
+                    if(Date.valueOf(currCase.CreatedDate).daysBetween(Date.valueOf(system.today()))>=30){
+                        toAnnul.add(new Case(   Id = currCase.Id, 
+                                                Status = 'Closed',
+                                                Phase__c='Chiuso'));
+                    }
+                }
+
+            }
+
+            List<wrts_prcgvr__Activity__c> actToInsert = new List<wrts_prcgvr__Activity__c>();
+            actToInsert.addAll(HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(modPostAccForActivity, 'CBS_VAR005__GESTIONE_MANUALE'));
+            actToInsert.addAll(HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(cesPostAccForActivity, 'CBS_DIS002__GESTIONE_MANUALE'));
+
+            system.debug('##### activity: '+actToInsert);
+            String caseType;
+            for(wrts_prcgvr__Activity__c currAct : actToInsert){
+                system.debug('####wrts_prcgvr__ObjectId__c: '+currAct.wrts_prcgvr__ObjectId__c);
+                caseType = mapCases.get((Id)currAct.wrts_prcgvr__ObjectId__c).Type;
+                if('Modifica post accertamento'.equalsIgnoreCase(caseType)){
+                    currAct.Type__c='Aprire Variazione';
+                }else if('Cessazione post accertamento'.equalsIgnoreCase(caseType)){
+                    currAct.Type__c='Aprire Cessazione';
+                }
+                currAct.Account__c = currAct.Case__r.AccountId;
+                currAct.ServicePoint__c = currAct.Case__r.ServicePoint__c;
+                currAct.wrts_prcgvr__Status__c = 'Aperta';
+                currAct.DiscardCategory__c = 'Manuale';
+            }
+            system.debug('#### actToInsert already updated: '+actToInsert);
+
+            system.debug('@@@ before dml operation');
+            update toAnnul;
+            insert actToInsert;
+        }catch(exception e){
+            system.debug(e);
+        }
+
+        /*
+        try{
             Map<String, List<String>> fieldsMap = new Map<String,List<String>>{'AccountId' => new List<String>(), 'SupplyCity__c' => new List<String>(), 'SupplyStreetName__c' => new List<String>()};
             List<Case> toAnnul = new List<Case>();
             List<String> caseIds = new List<String>();
@@ -479,12 +581,7 @@ public with sharing class HDT_UTL_CaseProcess {
                                             AND ServicePoint__r.SupplyStreetName__c IN: fieldsMap.get('SupplyStreetName__c')
                                             AND Status = 'Attivo'];
             system.debug('@@@@ related contract: '+relatedContracts);
-            List<wrts_prcgvr__Activity__c> notInsertActivity = HDT_QR_Activity.getActivityFromTypeList(caseIds, new Set<String>{'Aprire variazione','Aprire Cessazione'});
             
-            List<Id> excludedCases = new List<Id>();
-            for(wrts_prcgvr__Activity__c currAct : notInsertActivity){
-                excludedCases.add(currAct.Case__c);
-            }
             
             List<wrts_prcgvr__Activity__c> newActivityToInsert = new List<wrts_prcgvr__Activity__c>();
             wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c();
@@ -532,6 +629,7 @@ public with sharing class HDT_UTL_CaseProcess {
         }catch(exception e){
             system.debug(e);
         }
+        */
     }
     public static void setCloseStatusForAll(List<Case> caseList){
         for(Case c : caseList) {
