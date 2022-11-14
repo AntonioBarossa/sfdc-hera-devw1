@@ -2873,10 +2873,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto su migrazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Verifiche contratti</fullName>
             <default>false</default>
         </values>
