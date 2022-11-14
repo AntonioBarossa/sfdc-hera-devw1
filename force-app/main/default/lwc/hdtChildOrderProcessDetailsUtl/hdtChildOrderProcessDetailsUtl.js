@@ -148,7 +148,7 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                             this.updateProcess(currentSectionIndex, nextSectionStep);
                         */
                         if(activeRepentant){
-                            activeRepentant?.exportSieData()
+                            activeRepentant?.exportSieData(this.order)
                             .then(()=>{
                                 this.updateProcess(currentSectionIndex, nextSectionStep);
                             })

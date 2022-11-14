@@ -20,13 +20,14 @@ class outputData{
 }//Prendere anche data dichiarazione in maniera dinamica
 
 class sieExport{
-    constructor(period, subtype, cityCode, declarationDate, effectiveDate, limitDateX){
+    constructor(period, subtype, cityCode, declarationDate, effectiveDate, limitDateX, missingDue){
         this.period=period;
         this.subtype=subtype;
         this.cityCode=cityCode;
         this.declarationDate=declarationDate;
         this.effectiveDate=effectiveDate;
         this.limitDateX=limitDateX;
+        this.missingDue=missingDue;
     }
 }
 
@@ -174,9 +175,9 @@ export default class HdtActiveRepentant extends LightningElement {
         }
     }
 
-    @api exportSieData(sobject, missingDue){//this method returns a promise to handle;
+    @api exportSieData(sobject){//this method returns a promise to handle;
         this.outputExportSie.sobject = sobject;
-        this.outputExportSie.missingDue=missingDue;
+        //this.outputExportSie.missingDue=missingDue;
         return createRecordForSie({wrapper:this.outputExportSie});
     }
 
@@ -366,7 +367,7 @@ export default class HdtActiveRepentant extends LightningElement {
             this.dateDichiarazione,
             this.dateDecorrenza,
             this.limitDateX,
-            this.template.querySelector("[data-id='MissingDueAmount__c']")?.value? "Y" : "N"
+            this.missedDueDate? "Y" : "N"
         );
 
         if(!this.hideFields)    this.populateFormFields(evt);
