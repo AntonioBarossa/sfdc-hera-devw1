@@ -9,8 +9,8 @@
 global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     private static final String REQUEST_PATH = '/notice';
-    private final static String PHASE = 'Documentazione Validata';
-    HDT_WS_SalesApexCalloutAction calloutUtl = new HDT_WS_SalesApexCalloutAction();
+    //private final static String PHASE = 'Documentazione Validata';
+    //HDT_WS_SalesApexCalloutAction calloutUtl = new HDT_WS_SalesApexCalloutAction();
 
     global HDT_WS_SegnalazioniTari() {
         return;
@@ -26,6 +26,7 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
 
     public class HDT_WRP_ResponseData{
         @AuraEnabled public String esito {get;set;}
+        @AuraEnabled public String noticeId {get;set;}
     }
 
     global Object execute(Object args) {
@@ -55,6 +56,9 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
     
             HDT_WRP_SegnalazioniTariResponse res = (HDT_WRP_SegnalazioniTariResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH,'POST', mapToSendCallout, HDT_WRP_SegnalazioniTariResponse.class);
             System.debug(LoggingLevel.DEBUG,'response -> ' + res); 
+            if(STRING.isNotBlank(res?.data?.esito)){
+                HDT_UTL_DatabaseService.updateSObject(new Case(Id=obj.Id, NoticeId__c=res.data.esito));
+            }
 
         } catch (Exception ex) {
             //Error Handling
