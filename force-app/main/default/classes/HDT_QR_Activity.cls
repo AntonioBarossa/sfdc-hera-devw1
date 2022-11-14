@@ -57,13 +57,13 @@ public inherited sharing class HDT_QR_Activity {
         List<wrts_prcgvr__Activity__c> actList = new List<wrts_prcgvr__Activity__c>();
         String nameObject = ((Id)parentIds[0]).getSObjectType().getDescribe().getName();
         if('Case'.equalsIgnoreCase(nameObject)){
-            actList = [SELECT Id, RecordTypeId, Case__c, Case__r.RecordType.DeveloperName, Order__c, Order__r.Id, Order__r.AgencyCode__c, Order__r.RecordType.DeveloperName 
+            actList = [SELECT Id, RecordTypeId, Case__c, Case__r.RecordType.DeveloperName, Case__r.AccountId, Order__r.AccountId, Order__c, Order__r.Id, Order__r.AgencyCode__c, Order__r.RecordType.DeveloperName, CreatedDate
                        FROM wrts_prcgvr__Activity__c 
                        WHERE Type__c = :actTypes
                        AND Case__c = :parentIds
                        WITH SECURITY_ENFORCED];
         }else if('Order'.equalsIgnoreCase(nameObject)){
-            actList = [SELECT Id, RecordTypeId, Case__c, Case__r.RecordType.DeveloperName, Order__c, Order__r.Id, Order__r.AgencyCode__c, Order__r.RecordType.DeveloperName 
+            actList = [SELECT Id, RecordTypeId, Case__c, Case__r.RecordType.DeveloperName, Case__r.AccountId, Order__r.AccountId, Order__c, Order__r.Id, Order__r.AgencyCode__c, Order__r.RecordType.DeveloperName, CreatedDate
                        FROM wrts_prcgvr__Activity__c 
                        WHERE Type__c = :actTypes
                        AND Order__c = :parentIds
