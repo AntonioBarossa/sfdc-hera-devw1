@@ -10,7 +10,7 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
 
     private static final String REQUEST_PATH = '/notice';
     //private final static String PHASE = 'Documentazione Validata';
-    //HDT_WS_SalesApexCalloutAction calloutUtl = new HDT_WS_SalesApexCalloutAction();
+    HDT_WS_SalesApexCalloutAction calloutUtl = new HDT_WS_SalesApexCalloutAction();
 
     global HDT_WS_SegnalazioniTari() {
         return;
