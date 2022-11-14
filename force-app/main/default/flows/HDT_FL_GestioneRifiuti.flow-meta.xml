@@ -4,7 +4,7 @@
         <name>Redirect</name>
         <label>Redirect</label>
         <locationX>1832</locationX>
-        <locationY>2642</locationY>
+        <locationY>2762</locationY>
         <actionName>c:HDT_LCP_FlowRedirectAdvanced</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -27,7 +27,7 @@
         <name>Assign_Configs_Records</name>
         <label>Assign Configs Records</label>
         <locationX>2954</locationX>
-        <locationY>1838</locationY>
+        <locationY>1958</locationY>
         <assignmentItems>
             <assignToReference>ritiri_gratuiti_configs</assignToReference>
             <operator>Assign</operator>
@@ -43,7 +43,7 @@
         <name>Assign_Configs_Records0</name>
         <label>Assign Configs Records</label>
         <locationX>2338</locationX>
-        <locationY>1478</locationY>
+        <locationY>1598</locationY>
         <assignmentItems>
             <assignToReference>ritiri_gratuiti_configs</assignToReference>
             <operator>Assign</operator>
@@ -59,7 +59,7 @@
         <name>Assign_Process_Type</name>
         <label>Assign Process Type</label>
         <locationX>864</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -89,7 +89,7 @@
         <name>Assign_Process_Type_0</name>
         <label>Assign Process Type</label>
         <locationX>2118</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -105,7 +105,7 @@
         <name>Assign_Process_Type_0_0</name>
         <label>Assign Process Type</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -122,7 +122,7 @@
         <name>Assign_Process_Type_0_0_0</name>
         <label>Assign Process Type</label>
         <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -139,7 +139,7 @@
         <name>AssignServicePoint</name>
         <label>AssignServicePoint</label>
         <locationX>2954</locationX>
-        <locationY>1598</locationY>
+        <locationY>1718</locationY>
         <assignmentItems>
             <assignToReference>ServicePointFornitura</assignToReference>
             <operator>Assign</operator>
@@ -155,7 +155,7 @@
         <name>AssignServicePoint_0</name>
         <label>AssignServicePoint</label>
         <locationX>2338</locationX>
-        <locationY>1718</locationY>
+        <locationY>1838</locationY>
         <assignmentItems>
             <assignToReference>ServicePointFornitura</assignToReference>
             <operator>Assign</operator>
@@ -172,7 +172,7 @@
         <name>InheritFieldsfromOldCase</name>
         <label>Inherit Fields from Old Case</label>
         <locationX>2118</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>theCase.ParentId</assignToReference>
             <operator>Assign</operator>
@@ -305,7 +305,7 @@
         <name>InheritFieldsfromOldCase_0</name>
         <label>Inherit Fields from Old Case</label>
         <locationX>1546</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>theCase.AlternativeAddress__c</assignToReference>
             <operator>Assign</operator>
@@ -458,7 +458,7 @@
         <name>junctionClone</name>
         <label>junctionClone</label>
         <locationX>2778</locationX>
-        <locationY>1598</locationY>
+        <locationY>1718</locationY>
         <assignmentItems>
             <assignToReference>newJunction.Case__c</assignToReference>
             <operator>Assign</operator>
@@ -488,7 +488,7 @@
         <name>populate_case_fields</name>
         <label>populate case fields</label>
         <locationX>3482</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>theCase.Cluster__c</assignToReference>
             <operator>Assign</operator>
@@ -519,7 +519,7 @@
         <name>putIndirizzi</name>
         <label>putIndirizzi</label>
         <locationX>864</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>theCaseIndirizzi.Id</assignToReference>
             <operator>Assign</operator>
@@ -535,7 +535,7 @@
         <name>CB_Appuntamenti</name>
         <label>CB Appuntamenti</label>
         <locationX>1150</locationX>
-        <locationY>1598</locationY>
+        <locationY>1718</locationY>
         <defaultConnector>
             <targetReference>DaInviare</targetReference>
         </defaultConnector>
@@ -560,7 +560,7 @@
         <name>Company_Owner_MMS</name>
         <label>isCompanyOwnerMMS</label>
         <locationX>2778</locationX>
-        <locationY>1238</locationY>
+        <locationY>1358</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Selezione_Indirizzi_0</targetReference>
@@ -630,7 +630,7 @@
         <name>Context</name>
         <label>Context</label>
         <locationX>1832</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>populate_case_fields</targetReference>
         </defaultConnector>
@@ -728,7 +728,7 @@
         <name>Context_0</name>
         <label>Context</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Assign_Process_Type_0_0_0</targetReference>
         </defaultConnector>
@@ -761,7 +761,7 @@
         <name>Context_0_0</name>
         <label>Context</label>
         <locationX>2118</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>FlowCompatibility</targetReference>
         </defaultConnector>
@@ -794,7 +794,7 @@
         <name>isCompatible</name>
         <label>isCompatible</label>
         <locationX>2426</locationX>
-        <locationY>1118</locationY>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>Company_Owner_MMS</targetReference>
         </defaultConnector>
@@ -823,7 +823,7 @@
         <name>NextStep</name>
         <label>Next Step</label>
         <locationX>864</locationX>
-        <locationY>1238</locationY>
+        <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>getUpdatedFields</targetReference>
         </defaultConnector>
@@ -859,6 +859,7 @@
             <label>Salva In Bozza</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>checkboxIndirizzo</name>
         <dataType>Boolean</dataType>
@@ -890,7 +891,7 @@
         <name>cloneJunctions</name>
         <label>cloneJunctions</label>
         <locationX>2690</locationX>
-        <locationY>1478</locationY>
+        <locationY>1598</locationY>
         <collectionReference>getPreselectedMaterials</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -923,7 +924,7 @@
         <name>createJunctions</name>
         <label>createJunctions</label>
         <locationX>2690</locationX>
-        <locationY>1814</locationY>
+        <locationY>1934</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>getRitiriGratuitiConfig_0</targetReference>
@@ -934,7 +935,7 @@
         <name>Insert_theCase</name>
         <label>Insert theCase</label>
         <locationX>2118</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <connector>
             <targetReference>Context_0_0</targetReference>
         </connector>
@@ -944,7 +945,7 @@
         <name>Insert_theCase_0</name>
         <label>Insert theCase</label>
         <locationX>864</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Selezione_Indirizzi_0</targetReference>
         </connector>
@@ -954,7 +955,7 @@
         <name>Insert_theCase_0_0</name>
         <label>Insert theCase</label>
         <locationX>1546</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>
@@ -964,7 +965,7 @@
         <name>getAccount</name>
         <label>getAccount</label>
         <locationX>1832</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Context</targetReference>
@@ -985,7 +986,7 @@
         <name>getOldCase</name>
         <label>getOldCase</label>
         <locationX>1832</locationX>
-        <locationY>158</locationY>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getAccount</targetReference>
@@ -1006,7 +1007,7 @@
         <name>getPreselectedMaterials</name>
         <label>getPreselectedMaterials</label>
         <locationX>2690</locationX>
-        <locationY>1358</locationY>
+        <locationY>1478</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>cloneJunctions</targetReference>
@@ -1027,7 +1028,7 @@
         <name>getRitiriGratuitiConfig</name>
         <label>getRitiriGratuitiConfig</label>
         <locationX>2954</locationX>
-        <locationY>1718</locationY>
+        <locationY>1838</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_Configs_Records</targetReference>
@@ -1048,7 +1049,7 @@
         <name>getRitiriGratuitiConfig_0</name>
         <label>getRitiriGratuitiConfig</label>
         <locationX>2338</locationX>
-        <locationY>1358</locationY>
+        <locationY>1478</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_Configs_Records0</targetReference>
@@ -1069,7 +1070,7 @@
         <name>getServicePoint</name>
         <label>getServicePoint</label>
         <locationX>2954</locationX>
-        <locationY>1478</locationY>
+        <locationY>1598</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssignServicePoint</targetReference>
@@ -1090,7 +1091,7 @@
         <name>getServicePoint_0</name>
         <label>getServicePoint</label>
         <locationX>2338</locationX>
-        <locationY>1598</locationY>
+        <locationY>1718</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssignServicePoint_0</targetReference>
@@ -1111,7 +1112,7 @@
         <name>getTabellaAppuntamento</name>
         <label>getTabellaAppuntamento</label>
         <locationX>1150</locationX>
-        <locationY>1478</locationY>
+        <locationY>1598</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CB_Appuntamenti</targetReference>
@@ -1139,7 +1140,7 @@
         <name>getUpdatedFields</name>
         <label>getUpdatedFields</label>
         <locationX>1150</locationX>
-        <locationY>1358</locationY>
+        <locationY>1478</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getTabellaAppuntamento</targetReference>
@@ -1165,7 +1166,7 @@
         <name>DaInviare</name>
         <label>Da Inviare</label>
         <locationX>1282</locationX>
-        <locationY>1718</locationY>
+        <locationY>1838</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>
@@ -1195,7 +1196,7 @@
         <name>InAttAppuntamento</name>
         <label>In Att Appuntamento</label>
         <locationX>1018</locationX>
-        <locationY>1718</locationY>
+        <locationY>1838</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>
@@ -1209,6 +1210,9 @@
         </filters>
         <inputAssignments>
             <field>Note__c</field>
+            <value>
+                <elementReference>NotaToSend</elementReference>
+            </value>
         </inputAssignments>
         <inputAssignments>
             <field>Phase__c</field>
@@ -1222,7 +1226,7 @@
         <name>servicePointUpdate</name>
         <label>servicePointUpdate</label>
         <locationX>2954</locationX>
-        <locationY>1958</locationY>
+        <locationY>2078</locationY>
         <connector>
             <targetReference>Screen_Hergo</targetReference>
         </connector>
@@ -1288,7 +1292,7 @@
         <name>Update_Indirizzi</name>
         <label>Update Indirizzi</label>
         <locationX>864</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <connector>
             <targetReference>WizardScreen</targetReference>
         </connector>
@@ -1298,7 +1302,7 @@
         <name>Screen_Hergo</name>
         <label>Screen_Hergo</label>
         <locationX>2778</locationX>
-        <locationY>2174</locationY>
+        <locationY>2294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1404,7 +1408,7 @@
         <name>Selezione_Indirizzi_0</name>
         <label>Selezione Indirizzi</label>
         <locationX>864</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1438,10 +1442,24 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>test_empty_screen</name>
+        <label>test empty screen</label>
+        <locationX>1832</locationX>
+        <locationY>158</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>getOldCase</targetReference>
+        </connector>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>WizardScreen</name>
         <label>Wizard Screen</label>
         <locationX>864</locationX>
-        <locationY>1118</locationY>
+        <locationY>1238</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1541,7 +1559,7 @@
         <locationX>1706</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>getOldCase</targetReference>
+            <targetReference>test_empty_screen</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -1549,7 +1567,7 @@
         <name>FlowCompatibility</name>
         <label>Flow Compatibility</label>
         <locationX>2426</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <connector>
             <targetReference>isCompatible</targetReference>
         </connector>
@@ -1566,7 +1584,7 @@
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>578</locationX>
-        <locationY>1358</locationY>
+        <locationY>1478</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>
@@ -1600,7 +1618,7 @@
         <name>Selezione_Fornitura</name>
         <label>Selezione Fornitura</label>
         <locationX>2954</locationX>
-        <locationY>1358</locationY>
+        <locationY>1478</locationY>
         <connector>
             <targetReference>getServicePoint</targetReference>
         </connector>

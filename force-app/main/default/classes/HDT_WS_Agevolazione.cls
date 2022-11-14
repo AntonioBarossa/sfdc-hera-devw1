@@ -59,6 +59,9 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
                 ordToUpdate.TecnicalPhase__c=PHASE;
             }
 
+            /*if(STRING.isNotBlank(res?.data?.esito)){//Aggiornare Case Istruttoria
+                HDT_UTL_DatabaseService.updateSObject(new Case(Id=obj.Id, NoticeId__c=res.data.esito));
+            }*/
             if(!Test.isRunningTest()){
                 HDT_UTL_DatabaseService.updateSObject(ordToUpdate);
             }

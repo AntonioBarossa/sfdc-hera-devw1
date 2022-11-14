@@ -67,6 +67,11 @@
         <label>Autolettura da processo</label>
     </standardValue>
     <standardValue>
+        <fullName>Avviso di Servizio</fullName>
+        <default>false</default>
+        <label>Avviso di Servizio</label>
+    </standardValue>
+    <standardValue>
         <fullName>BP/CA - errata categoria</fullName>
         <default>false</default>
         <label>BP/CA - errata categoria</label>
