@@ -14,7 +14,6 @@
     <lightning:navigation aura:id="navService" />
     <aura:attribute name="processType" type="String" />
     <aura:attribute name="recordTypeName" type="String" />
-
     <!--Attributi Cluster Annullamento-->    
     <!--aura:attribute name="cluster" type="String" /-->
     <aura:attribute name="recordToCancell" type="String" />

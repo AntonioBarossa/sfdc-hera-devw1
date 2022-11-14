@@ -1469,6 +1469,21 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.LastNoticeDay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NoticeId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NoticeNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Account.BusinessNameRcuFormula__c</field>
         <readable>true</readable>
@@ -9802,6 +9817,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.CollectedDifference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.CommoditySectorFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -41,7 +41,7 @@ export default class HdtAccountDataEnrichment extends LightningElement {
         console.log('>>> relatedToId: ' + this.relatedToId);
         console.log('--------------');
         this.getConfiguration();
-        this.backendCall();
+        
     }
 
     getConfiguration(){
@@ -75,7 +75,8 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                 this.columns = result.tables[0].columns;
                 this.height1 = 'singleTable';
             } 
-
+            
+            this.backendCall();
 
         }).catch(error => {
             console.log('# error -> ' + error);
@@ -116,11 +117,12 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                         this.data = obj.data;
                         break;
                     case 'odlAdsView':
-                        this.data = obj.data;
+                        this.data = obj.data.posizioni;
                         break;
                     default:
                         this.data = obj.data.posizioni;
                 }
+
             }
 
             this.showSpinner = false;
