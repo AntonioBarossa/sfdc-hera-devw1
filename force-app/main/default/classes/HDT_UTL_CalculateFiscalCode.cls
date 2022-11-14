@@ -42,7 +42,7 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
         for(String singleCode : cityCodes)
         {
             String fiscalCode='';
-            if(''.equals(checkCitta)){
+            if(''.equals(singleCode)){
                 fiscalCode = null ;
             }else{
                 
