@@ -360,7 +360,7 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
         
         System.debug(LoggingLevel.DEBUG, campCode);
     
-        List <AmministrazioneSottotipologiaUso__c> subTypList = [SELECT SottotipologiaUso__c FROM AmministrazioneSottotipologiaUso__c where Societa__c=: campCode AND
+        List <AmministrazioneSottotipologiaUso__c> subTypList = [SELECT SottotipologiaUso__c FROM AmministrazioneSottotipologiaUso__c WHERE Societa__c=: campCode AND
         CodiceCategoriaTariffa__c=: prodCode AND Attivo__c=TRUE WITH SECURITY_ENFORCED];
         
         String subTyp = null;

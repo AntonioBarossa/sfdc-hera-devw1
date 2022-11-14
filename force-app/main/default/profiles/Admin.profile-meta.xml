@@ -14912,6 +14912,11 @@
 	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
+		<field>Order.UseSubCategory__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
 		<field>Order.RonchiCode__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
