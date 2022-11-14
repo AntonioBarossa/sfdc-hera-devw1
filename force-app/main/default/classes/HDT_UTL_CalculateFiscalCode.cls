@@ -25,6 +25,41 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
         }
         return fiscalCode;
     }
+    /* Nel calcolo del lead viene eseguito un controllo prima sulla validita' del codice fiscale
+    * Poi lo calcola nuovamente
+    * in caso di citta' con piu' codici belfiore e' necessario calcolare il codice fiscale 
+    * per ogni possibile citycode
+    */
+    public static Set<String> calculateSetFiscalCode(Map<String,String> infoData){
+        String city = infoData.get('birthPlace').toUpperCase();
+        Set<String> cityCodes = new Set<String>();
+        Set<String> fiscalCodes = new Set<String>();
+        List<City__c> checkCitta = [SELECT BelfioreCode__c FROM City__c WHERE Name = :city AND BelfioreCode__c != null WITH SECURITY_ENFORCED];
+        for(City__c singleCity : checkCitta)
+        {
+            cityCodes.add(singleCity.BelfioreCode__c);
+        }
+        for(String singleCode : cityCodes)
+        {
+            String fiscalCode='';
+            if(''.equals(singleCode)){
+                fiscalCode = null ;
+            }else{
+                
+                fiscalCode += getLastNameCode(infoData.get('lastName').toUpperCase().replaceAll('\'', '').deleteWhitespace());//HRAWRM-763,HRAWRM-800
+                fiscalCode += getFirstNameCode(infoData.get('firstName').toUpperCase().replaceAll('\'', '').deleteWhitespace());//HRAWRM-763,HRAWRM-800
+
+                fiscalCode += getYear(infoData.get('birthDate'));
+                fiscalCode += getMonthLetter(infoData.get('birthDate'));
+                fiscalCode += getDayAndGenderCode(infoData.get('birthDate'), infoData.get('gender'));
+                fiscalCode += singleCode;
+                System.debug(singleCode);
+                fiscalCode += getControlLetter(fiscalCode);
+            }
+            fiscalCodes.add(fiscalCode);
+        }
+        return fiscalCodes;
+    }
     private static Boolean isVowel(String test, String letter){
         return test.contains(letter)?true:false;
     }

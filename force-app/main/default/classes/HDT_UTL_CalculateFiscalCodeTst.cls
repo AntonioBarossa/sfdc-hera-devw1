@@ -26,6 +26,21 @@ public class HDT_UTL_CalculateFiscalCodeTst {
 
     }
     @isTest 
+    static void calculateSetFiscalCodeTest(){
+        Map<String,String> infoDtata = new Map<String,String>();
+        infoDtata.put('birthPlace', 'Roma');
+        infoDtata.put('birthDate', String.valueOf(Date.today().addDays(-100)));
+        infoDtata.put('lastName', 'LastNameTest');
+        infoDtata.put('firstName', 'FirtNameTest');
+        infoDtata.put('gender', 'Maschio');
+        Set<String> resultSetFiscalCode =HDT_UTL_CalculateFiscalCode.calculateSetFiscalCode(infoDtata);
+        List<String> resultFiscalCode = new List<String>(resultSetFiscalCode);
+        System.assertEquals(true, !resultFiscalCode.isEmpty(), 'Calculate FiscalCode Test');
+        System.assertEquals(16, resultFiscalCode[0].length(), 'Calculate FiscalCode Test');
+        System.assertNotEquals(true, resultFiscalCode[0].length()<16, 'FiscalCode is wrong');
+
+    }
+    @isTest 
     static void calculateFiscalCodeBirthPlaceNotFoundTest(){
         Map<String,String> infoDtata = new Map<String,String>();
         infoDtata.put('birthPlace', 'Milan');
