@@ -2,6 +2,7 @@ import { LightningElement, api, track, wire } from "lwc";
 import getPeriods from "@salesforce/apex/HDT_LC_ActiveRepentant.getPeriods";
 import getTerms from "@salesforce/apex/HDT_LC_ActiveRepentant.getTerms";
 import getTables from "@salesforce/apex/HDT_LC_ActiveRepentant.getTables";
+import createRecordForSie from "@salesforce/apex/HDT_UTL_ExpSieRavv.createExportSobjects";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { MessageContext, subscribe, unsubscribe, APPLICATION_SCOPE} from "lightning/messageService";
 import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
@@ -17,6 +18,17 @@ class outputData{
         this.dateDichiarazione=dateDichiarazione;
     }
 }//Prendere anche data dichiarazione in maniera dinamica
+
+class sieExport{
+    constructor(period, subtype, cityCode, declarationDate, effectiveDate, limitDateX){
+        this.period=period;
+        this.subtype=subtype;
+        this.cityCode=cityCode;
+        this.declarationDate=declarationDate;
+        this.effectiveDate=effectiveDate;
+        this.limitDateX=limitDateX;
+    }
+}
 
 export default class HdtActiveRepentant extends LightningElement {
     @track missedDueDate;
@@ -162,6 +174,12 @@ export default class HdtActiveRepentant extends LightningElement {
         }
     }
 
+    @api exportSieData(sobject, missingDue){//this method returns a promise to handle;
+        this.outputExportSie.sobject = sobject;
+        this.outputExportSie.missingDue=missingDue;
+        return createRecordForSie({wrapper:this.outputExportSie});
+    }
+
     checkComuniNonAffidatari(dateDecorrenza, dateDichiarazione){
         
         if(!(this.cityData?.TARIManagingStartDate__c && this.cityData?.TARIManagingEndDate__c && this.cityData?.CutOverEndDate__c)){
@@ -287,7 +305,6 @@ export default class HdtActiveRepentant extends LightningElement {
 
     checkData(data, terms) {
         var declarationDate = new Date(this.dateDichiarazione.substring(0, 10));
-        this.periodType=null;
 
         this.getLimitDateX(data);
         this.getLimitDateY(data.CriteriaY__c, data.DayY__c);
@@ -342,11 +359,21 @@ export default class HdtActiveRepentant extends LightningElement {
         });
 
         this.dispatchEvent(evt);
+        this.outputExportSie=new sieExport(
+            this.periodType,
+            this.sottotipo,
+            this.cityData?.CityCode__c,
+            this.dateDichiarazione,
+            this.dateDecorrenza,
+            this.limitDateX,
+            this.template.querySelector("[data-id='MissingDueAmount__c']")?.value? "Y" : "N"
+        );
 
         if(!this.hideFields)    this.populateFormFields(evt);
         this.limitDateX=null;
         this.limitDateY=null;
         this.missedDueDate=null;//reset data to avoid conflicts
+        this.periodType=null;
         this.disabled=false;
     }
 

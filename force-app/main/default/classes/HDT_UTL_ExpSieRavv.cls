@@ -13,6 +13,7 @@ public with sharing class HDT_UTL_ExpSieRavv {
 
     @AuraEnabled(cacheable=false)
     public static void createExportSobjects(HDT_WRP_SieRavvExport wrapper){
+        if(wrapper == null || wrapper?.record?.Id == null)     return;
         //cancellare gli esistenti record di ravvedimento operoso
         HDT_UTL_DatabaseService.deleteSObject([Select id From ExpRavv__c Where Case__c =:wrapper.record.Id OR Order__c =:wrapper.record.Id]);
         //creare e inserire i nuovi
@@ -21,13 +22,22 @@ public with sharing class HDT_UTL_ExpSieRavv {
         return;
     }
 
+    @InvocableMethod(label='Crea Record SIE Ravv')
+    public static void createExportSobjectsInvocable(List<HDT_WRP_InvocableInput> wrappers){
+        if(wrappers?.isEmpty() == false){
+            wrappers[0].wrap.record = wrappers[0].ord != null? (Sobject)wrappers[0].ord : (Sobject)wrappers[0].caso;
+            createExportSobjects(wrappers[0].wrap);
+        }
+        return;
+    }
+
 
     private static List<ExpRavv__c> getExportRavv(HDT_WRP_SieRavvExport wrapper){
         HDT_UTL_SieSobjectCreation createSobjUtl = new HDT_UTL_SieSobjectCreation(wrapper);
 
         if('order'.equalsIgnoreCase(createSobjUtl.getSobjectType())){
-            Order ord = (Order) wrapper.record;
-            if(('X'.equalsIgnoreCase(wrapper.period) || 'A'.equalsIgnoreCase(ord.BillingCategory__c)))     return null;
+            Order ord = (Order) wrapper?.record;
+            if(('X'.equalsIgnoreCase(wrapper?.period) || 'A'.equalsIgnoreCase(ord.BillingCategory__c)))     return null;
             
             String nomeOperando = 'TRSOSP0000';
             String valoreOperando = 'TSCFM';
@@ -51,7 +61,7 @@ public with sharing class HDT_UTL_ExpSieRavv {
         if(!(subprocesses.contains(caso.Subprocess__c)))    return;
         //Per variazioni, i processi ammessi sono solo 3
 
-        if(wrapper.missingDue> 0 && 'NON DOM_ISTAT/Ronchi'.equalsIgnoreCase(caso.Subprocess__c))    return;
+        if('Y'.equalsIgnoreCase(wrapper.missingDue) && 'NON DOM_ISTAT/Ronchi'.equalsIgnoreCase(caso.Subprocess__c))    return;
         //Inoltre se mancato dovuto presente, il processo non deve essere istat/ronchi
 
         if('Y'.equalsIgnoreCase(wrapper.period) || 'z'.equalsIgnoreCase(wrapper.period)){
@@ -103,25 +113,30 @@ public with sharing class HDT_UTL_ExpSieRavv {
         @SuppressWarnings('PMD.ExcessiveParameterList')
         ExpRavv__c createExpRavv(String operandName, String operandValue){
             ExpRavv__c exportRecord = new ExpRavv__c();
-            exportRecord.OperandName__c = operandName;
-            exportRecord.OperandValue__c = operandValue;
+            try{
+                exportRecord.OperandName__c = operandName;
+                exportRecord.OperandValue__c = operandValue;
 
-            String billingCategory = (String) this.wrapper.record.get('BillingCategory__c');
-            exportRecord.SuspensionEndDate__c = this.wrapper.declarationDate.addDays(-1).format();
-            if(!'y'.equalsIgnoreCase(wrapper.period) || 'C'.equalsIgnoreCase(billingCategory) ){    
-                exportRecord.SuspensionStartDate__c = this.wrapper.effectiveDate.format();  
-            }else if('B'.equalsIgnoreCase(billingCategory)){
-                exportRecord.SuspensionStartDate__c = this.wrapper.limitDateX.format();
-            }
+                String billingCategory = (String) this.wrapper.record.get('BillingCategory__c');
+                exportRecord.SuspensionEndDate__c = this.wrapper.declarationDate.addDays(-1).format();
+                if(!'y'.equalsIgnoreCase(wrapper.period) || 'C'.equalsIgnoreCase(billingCategory) ){    
+                    exportRecord.SuspensionStartDate__c = this.wrapper.effectiveDate.format();  
+                }else if('B'.equalsIgnoreCase(billingCategory)){
+                    exportRecord.SuspensionStartDate__c = this.wrapper.limitDateX.format();
+                }
 
-            exportRecord.CityCode__c = this.wrapper.cityCode;
-            switch on this.sobjectTypeName {
-                when 'case' {
-                    exportRecord.Case__c=this.wrapper.record.Id;
+                exportRecord.CityCode__c = this.wrapper.cityCode;
+                switch on this.sobjectTypeName {
+                    when 'case' {
+                        exportRecord.Case__c=this.wrapper.record.Id;
+                    }
+                    when 'order' {
+                        exportRecord.Order__c=this.wrapper.record.Id;
+                    }
                 }
-                when 'order' {
-                    exportRecord.Order__c=this.wrapper.record.Id;
-                }
+            }catch(Exception e){
+                system.debug('An exception has occurred creating Sie at '+e.getStackTraceString());
+                return null;
             }
             this.listToInsert.add(exportRecord);
             return exportRecord;
@@ -141,6 +156,12 @@ public with sharing class HDT_UTL_ExpSieRavv {
             set { missingDue = value; }
         }
     }*/
+
+    public with sharing class HDT_WRP_InvocableInput{
+        @InvocableVariable public HDT_WRP_SieRavvExport wrap;
+        @InvocableVariable public Case caso;
+        @InvocableVariable public Order ord;
+    }
 
     private with sharing class HDT_WRP_Operandi{
         String vNomeOperandoReale;

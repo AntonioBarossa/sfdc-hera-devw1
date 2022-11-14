@@ -6,8 +6,5 @@ public with sharing class HDT_WRP_SieRavvExport {
     @AuraEnabled public Date effectiveDate {get;set;}
     @AuraEnabled public Date limitDateX {get;set;}
     @AuraEnabled public Sobject record {get;set;}
-    @AuraEnabled public Integer missingDue  {
-        get { return missingDue > 0 ? 1 : 0; }
-        set { missingDue = value; }
-    }
+    @AuraEnabled public String missingDue {get;set;}
 }

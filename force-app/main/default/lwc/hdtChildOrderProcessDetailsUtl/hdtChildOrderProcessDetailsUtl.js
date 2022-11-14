@@ -118,8 +118,9 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                         savePredefaultedFields.call(this, evt?.currentTarget?.value);
                         let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
                         let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
+                        const activeRepentant = this.template.querySelector("c-hdt-active-repentant");
                         //if(!this.isActiveRepentantPressed){
-                        if(this.template.querySelector("c-hdt-active-repentant")?.validateDate(decorrenza, dichiarazione)){
+                        if(activeRepentant?.validateDate(decorrenza, dichiarazione)){
                             this.showMessage('Errore', 'Verificare il ravvedimento operoso prima di procedere', 'error');
                             return true;
                         }
@@ -146,6 +147,17 @@ import rateCategoryVisibility from 'c/hdtChildOrderProcessDetails';
                             this function must return true, launch promise and when you're done, launch 
                             this.updateProcess(currentSectionIndex, nextSectionStep);
                         */
+                        if(activeRepentant){
+                            activeRepentant?.exportSieData()
+                            .then(()=>{
+                                this.updateProcess(currentSectionIndex, nextSectionStep);
+                            })
+                            .catch(error=>{
+                                console.error(error);
+                                this.showMessage('Errore', "Errore salvataggio ravvedimento operoso", 'error');
+                            })
+                            return true;
+                        }
                     },
                 data:[
                     //new fieldData('Codice Punto','ServicePointCode__c',this.typeVisibility('both'),true, true, '', ''),
