@@ -39,11 +39,6 @@
                 <label>Account e Billing Profile</label>
             </value>
             <value>
-                <fullName>Adesione Fondo Fughe</fullName>
-                <default>false</default>
-                <label>Adesione Fondo Fughe</label>
-            </value>
-            <value>
                 <fullName>Agevolazione</fullName>
                 <default>false</default>
                 <label>Agevolazione</label>
@@ -52,11 +47,6 @@
                 <fullName>Aggiunta Attacco</fullName>
                 <default>false</default>
                 <label>Aggiunta Attacco</label>
-            </value>
-            <value>
-                <fullName>Aggiunta Attacco senza Attivazione</fullName>
-                <default>false</default>
-                <label>Aggiunta Attacco senza Attivazione</label>
             </value>
             <value>
                 <fullName>Antincendio</fullName>
@@ -279,11 +269,6 @@
                 <label>Rid. Agev. Dopo Accertamento</label>
             </value>
             <value>
-                <fullName>Rinuncia Fondo Fughe</fullName>
-                <default>false</default>
-                <label>Rinuncia Fondo Fughe</label>
-            </value>
-            <value>
                 <fullName>Sezionamento Allacciamento</fullName>
                 <default>false</default>
                 <label>Sezionamento Allacciamento</label>
@@ -413,11 +398,6 @@
         <valueSettings>
             <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
             <controllingFieldValue>Nuovo Impianto - Aggiunta Attacco</controllingFieldValue>
-            <valueName>Aggiunta Attacco senza Attivazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
-            <controllingFieldValue>Nuovo Impianto - Aggiunta Attacco</controllingFieldValue>
             <valueName>Nuovo Allaccio</valueName>
         </valueSettings>
         <valueSettings>
@@ -473,27 +453,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
-            <valueName>Agevolazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
             <valueName>Rid. Agev. Dopo Accertamento</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
-            <valueName>Adesione Fondo Fughe</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
-            <valueName>Rinuncia Fondo Fughe</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
-            <valueName>DGRER569/19 non allacciato/uso irriguo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
-            <valueName>Modifica Fognatura e Depurazione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Verifica Interna</controllingFieldValue>
@@ -538,6 +498,14 @@
         <valueSettings>
             <controllingFieldValue>Istruttoria</controllingFieldValue>
             <valueName>Parere Preventivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>DGRER569/19 non allacciato/uso irriguo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Modifica Fognatura e Depurazione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Interventi con Verifica</controllingFieldValue>
