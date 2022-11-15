@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>NewEmailC</label>
+    <label>Nuova E-mail</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

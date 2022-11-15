@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_QuotationNumberC</label>
+    <label>Numero Preventivo</label>
     <length>25</length>
     <required>false</required>
     <type>Text</type>

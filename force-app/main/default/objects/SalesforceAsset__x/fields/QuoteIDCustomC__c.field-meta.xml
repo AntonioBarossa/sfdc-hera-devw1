@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>QuoteIDCustomC</label>
+    <label>ID Custom Quota</label>
     <length>18</length>
     <required>false</required>
     <type>Text</type>

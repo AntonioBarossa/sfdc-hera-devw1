@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_VASBillingModeC</label>
+    <label>Modalità di Fatturazione VAS</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

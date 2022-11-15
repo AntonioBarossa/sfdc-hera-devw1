@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>EffectiveDateC</label>
+    <label>Data Decorrenza</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

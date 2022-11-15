@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_IsInvoicingVerifiedC</label>
+    <label>Indirizzo Verificato [Spedizione/Fatturazione]</label>
     <type>Checkbox</type>
 </CustomField>

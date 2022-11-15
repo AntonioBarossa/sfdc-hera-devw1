@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ser_DateOfLastAlignmentGAAC</label>
+    <label>Data ultimo allineamento GAA</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

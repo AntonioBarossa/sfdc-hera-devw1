@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ind_HasOptedOutOfEmailC</label>
+    <label>Disicritto alle liste di distribuzione</label>
     <type>Checkbox</type>
 </CustomField>

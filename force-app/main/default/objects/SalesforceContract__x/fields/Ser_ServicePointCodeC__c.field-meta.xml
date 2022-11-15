@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ser_ServicePointCodeC</label>
+    <label>Codice Punto</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

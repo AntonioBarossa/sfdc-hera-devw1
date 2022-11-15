@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SBQQ_SegmentLabelC</label>
+    <label>Etichetta Segmento</label>
     <length>25</length>
     <required>false</required>
     <type>Text</type>

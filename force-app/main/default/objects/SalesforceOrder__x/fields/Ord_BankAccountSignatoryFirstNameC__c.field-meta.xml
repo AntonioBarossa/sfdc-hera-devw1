@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_BankAccountSignatoryFirstNameC</label>
+    <label>Nome intestatario c/c</label>
     <length>60</length>
     <required>false</required>
     <type>Text</type>

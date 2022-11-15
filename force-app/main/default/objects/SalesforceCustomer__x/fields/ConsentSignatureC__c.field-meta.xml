@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ConsentSignatureC</label>
+    <label>Consenso Firma</label>
     <type>Checkbox</type>
 </CustomField>

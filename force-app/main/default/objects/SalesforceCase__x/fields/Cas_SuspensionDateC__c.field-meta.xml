@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_SuspensionDateC</label>
+    <label>Data Sospensione</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

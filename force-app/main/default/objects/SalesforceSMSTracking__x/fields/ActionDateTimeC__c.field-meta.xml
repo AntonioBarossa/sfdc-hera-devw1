@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ActionDateTimeC</label>
+    <label>ActionDateTime</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

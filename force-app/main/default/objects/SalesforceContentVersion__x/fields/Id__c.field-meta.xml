@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Id</label>
+    <label>ContentVersion ID</label>
     <length>18</length>
     <required>false</required>
     <type>Text</type>

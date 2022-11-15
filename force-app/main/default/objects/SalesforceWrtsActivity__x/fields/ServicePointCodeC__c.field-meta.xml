@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ServicePointCodeC</label>
+    <label>Matricola/PdR</label>
     <type>Checkbox</type>
 </CustomField>

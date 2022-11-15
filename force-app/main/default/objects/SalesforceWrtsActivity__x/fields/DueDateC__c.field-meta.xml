@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>DueDateC</label>
+    <label>Data scadenza</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

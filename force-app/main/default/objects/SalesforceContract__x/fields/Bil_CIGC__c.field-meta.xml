@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Bil_CIGC</label>
+    <label>CIG</label>
     <length>10</length>
     <required>false</required>
     <type>Text</type>

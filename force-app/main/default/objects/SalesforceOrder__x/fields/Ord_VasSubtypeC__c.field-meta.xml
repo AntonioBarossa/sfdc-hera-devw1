@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_VasSubtypeC</label>
+    <label>Sottotipo VAS</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

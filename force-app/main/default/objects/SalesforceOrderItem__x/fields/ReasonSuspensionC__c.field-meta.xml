@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ReasonSuspensionC</label>
+    <label>Motivo Sospensione</label>
     <length>40</length>
     <required>false</required>
     <type>Text</type>

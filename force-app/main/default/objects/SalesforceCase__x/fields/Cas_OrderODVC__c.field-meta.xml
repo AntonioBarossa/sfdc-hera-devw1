@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_OrderODVC</label>
+    <label>Ordine ODV</label>
     <length>100</length>
     <required>false</required>
     <type>Text</type>

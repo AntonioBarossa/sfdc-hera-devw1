@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_DateSentToSIIC</label>
+    <label>Data Invio al SII</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

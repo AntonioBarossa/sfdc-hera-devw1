@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_ShippingIsAddressVerifiedC</label>
+    <label>Indirizzo verificato [Spedizione]</label>
     <type>Checkbox</type>
 </CustomField>

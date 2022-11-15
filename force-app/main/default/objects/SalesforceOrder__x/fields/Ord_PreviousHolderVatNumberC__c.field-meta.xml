@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_PreviousHolderVatNumberC</label>
+    <label>P.Iva precedente intestatario</label>
     <length>11</length>
     <required>false</required>
     <type>Text</type>

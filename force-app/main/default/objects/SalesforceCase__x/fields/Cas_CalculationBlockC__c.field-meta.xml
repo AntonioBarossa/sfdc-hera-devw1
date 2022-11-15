@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_CalculationBlockC</label>
+    <label>Blocco al Calcolo T1</label>
     <type>Checkbox</type>
 </CustomField>

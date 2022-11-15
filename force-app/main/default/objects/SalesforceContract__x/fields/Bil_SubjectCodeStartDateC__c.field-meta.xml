@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Bil_SubjectCodeStartDateC</label>
+    <label>Data inizio validità codice destinatario</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

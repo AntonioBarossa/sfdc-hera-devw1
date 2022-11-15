@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Bil_BankAccountSignatoryFiscalCodeC</label>
+    <label>Codice Fiscale Sottoscrittore CC</label>
     <length>16</length>
     <required>false</required>
     <type>Text</type>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_MaxRequiredPotentialC</label>
+    <label>Potenzialità Massima Richiesta</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

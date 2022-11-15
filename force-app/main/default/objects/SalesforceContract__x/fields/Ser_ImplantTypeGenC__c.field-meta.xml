@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ser_ImplantTypeGenC</label>
+    <label>Tipo Impianto Gen</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_IncomingCreditCheckResultC</label>
+    <label>Esito Credit Check Entrante</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ReadingSerialNumber3C</label>
+    <label>Matricola 3</label>
     <length>18</length>
     <required>false</required>
     <type>Text</type>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_CategoryCodeC</label>
+    <label>Codice Categoria</label>
     <length>4</length>
     <required>false</required>
     <type>Text</type>

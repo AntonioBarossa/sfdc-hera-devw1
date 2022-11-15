@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>QAdTicketCallTimeC</label>
+    <label>Data e ora chiamata biglietto</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

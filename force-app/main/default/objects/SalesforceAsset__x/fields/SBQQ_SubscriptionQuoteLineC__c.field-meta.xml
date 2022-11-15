@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SBQQ_SubscriptionQuoteLineC</label>
+    <label>Sottoscrizione Linea Quota</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

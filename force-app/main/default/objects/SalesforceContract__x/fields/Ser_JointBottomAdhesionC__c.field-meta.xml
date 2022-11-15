@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ser_JointBottomAdhesionC</label>
+    <label>Adesione fondo fughe</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

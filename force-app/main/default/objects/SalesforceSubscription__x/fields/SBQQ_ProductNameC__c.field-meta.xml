@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SBQQ_ProductNameC</label>
+    <label>Nome Prodotto</label>
     <length>1300</length>
     <type>LongTextArea</type>
     <visibleLines>10</visibleLines>

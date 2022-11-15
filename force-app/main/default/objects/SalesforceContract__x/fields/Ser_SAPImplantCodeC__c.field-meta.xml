@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ser_SAPImplantCodeC</label>
+    <label>Impianto SAP</label>
     <length>20</length>
     <required>false</required>
     <type>Text</type>

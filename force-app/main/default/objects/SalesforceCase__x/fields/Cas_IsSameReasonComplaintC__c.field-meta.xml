@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_IsSameReasonComplaintC</label>
+    <label>Cliente reclama per lo stesso motivo</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

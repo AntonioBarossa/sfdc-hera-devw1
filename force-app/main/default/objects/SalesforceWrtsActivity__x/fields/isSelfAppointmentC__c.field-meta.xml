@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>isSelfAppointmentC</label>
+    <label>Appuntamento Self</label>
     <type>Checkbox</type>
 </CustomField>

@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_NewAttemptC</label>
+    <label>Nuovo Tentativo</label>
     <type>Checkbox</type>
 </CustomField>

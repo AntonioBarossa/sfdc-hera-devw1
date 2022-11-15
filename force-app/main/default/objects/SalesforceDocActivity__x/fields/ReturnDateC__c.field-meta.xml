@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ReturnDateC</label>
+    <label>Data Rientro</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

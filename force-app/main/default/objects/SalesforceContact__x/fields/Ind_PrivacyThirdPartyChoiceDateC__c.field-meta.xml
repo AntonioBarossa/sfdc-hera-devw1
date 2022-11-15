@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ind_PrivacyThirdPartyChoiceDateC</label>
+    <label>Data consenso dati a terzi</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

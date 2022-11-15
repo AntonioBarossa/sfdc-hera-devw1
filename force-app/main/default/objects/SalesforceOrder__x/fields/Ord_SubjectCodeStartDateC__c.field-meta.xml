@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_SubjectCodeStartDateC</label>
+    <label>Data Inizio Codice Destinatario</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

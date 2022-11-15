@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>DistributorsSlotC</label>
+    <label>Slot Distributore</label>
     <length>3000</length>
     <type>LongTextArea</type>
     <visibleLines>10</visibleLines>

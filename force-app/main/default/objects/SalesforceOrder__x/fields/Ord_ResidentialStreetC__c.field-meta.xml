@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_ResidentialStreetC</label>
+    <label>Via [Residenziale/Sede Legale]</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

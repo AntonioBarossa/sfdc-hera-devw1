@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Owner_Name</label>
+    <label>Owner ID</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

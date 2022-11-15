@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>MogaCreatedDateC</label>
+    <label>Data Creazione MOGA</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

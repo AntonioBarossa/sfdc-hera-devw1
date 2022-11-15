@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SBQQ_TerminatedDateC</label>
+    <label>Data Terminazione</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

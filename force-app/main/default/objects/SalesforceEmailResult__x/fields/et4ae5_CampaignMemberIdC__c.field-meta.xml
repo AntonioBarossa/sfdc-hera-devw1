@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>et4ae5_CampaignMemberIdC</label>
+    <label>Campaign Member ID</label>
     <length>100</length>
     <required>false</required>
     <type>Text</type>

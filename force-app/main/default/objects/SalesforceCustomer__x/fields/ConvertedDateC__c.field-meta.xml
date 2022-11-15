@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ConvertedDateC</label>
+    <label>Data Conversione</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

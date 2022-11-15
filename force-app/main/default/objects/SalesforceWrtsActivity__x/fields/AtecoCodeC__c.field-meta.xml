@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>AtecoCodeC</label>
+    <label>Codice Ateco</label>
     <type>Checkbox</type>
 </CustomField>

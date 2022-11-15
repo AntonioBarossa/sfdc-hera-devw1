@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Con_SAPContractCodeC</label>
+    <label>Codice Contratto SAP</label>
     <length>10</length>
     <required>false</required>
     <type>Text</type>

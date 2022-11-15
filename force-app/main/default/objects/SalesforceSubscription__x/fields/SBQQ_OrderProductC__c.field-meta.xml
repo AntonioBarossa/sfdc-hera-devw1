@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SBQQ_OrderProductC</label>
+    <label>Ordine Prodotto</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_SendCertifiedEmailConsentDateC</label>
+    <label>Data consenso E-mail PEC Invio Bolletta</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

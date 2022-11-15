@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Bil_BankAgencyC</label>
+    <label>Agenzia banca</label>
     <length>100</length>
     <required>false</required>
     <type>Text</type>

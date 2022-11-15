@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>RequiredOfficeActivityC</label>
+    <label>Attività sede richiesta</label>
     <type>Checkbox</type>
 </CustomField>

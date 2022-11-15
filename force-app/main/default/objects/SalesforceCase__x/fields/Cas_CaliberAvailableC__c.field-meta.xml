@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_CaliberAvailableC</label>
+    <label>Classe contatore disponibile</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

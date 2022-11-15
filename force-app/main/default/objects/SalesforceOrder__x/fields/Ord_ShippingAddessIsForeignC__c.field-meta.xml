@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_ShippingAddessIsForeignC</label>
+    <label>Indirizzo Estero</label>
     <type>Checkbox</type>
 </CustomField>

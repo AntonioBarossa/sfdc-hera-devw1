@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_ApprovalProcessC</label>
+    <label>Processo Approvativo</label>
     <type>Checkbox</type>
 </CustomField>

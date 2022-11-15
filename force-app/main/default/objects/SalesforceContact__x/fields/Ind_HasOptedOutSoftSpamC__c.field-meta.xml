@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ind_HasOptedOutSoftSpamC</label>
+    <label>Diniego Soft-Spam/Legittimo interesse</label>
     <type>Checkbox</type>
 </CustomField>

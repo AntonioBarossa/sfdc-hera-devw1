@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>LastOutcomeFUBC</label>
+    <label>Ultimo Esito FUB</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

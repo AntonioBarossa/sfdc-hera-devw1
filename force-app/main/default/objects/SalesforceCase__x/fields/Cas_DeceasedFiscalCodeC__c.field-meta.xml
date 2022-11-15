@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_DeceasedFiscalCodeC</label>
+    <label>Codice fiscale del defunto</label>
     <length>16</length>
     <required>false</required>
     <type>Text</type>

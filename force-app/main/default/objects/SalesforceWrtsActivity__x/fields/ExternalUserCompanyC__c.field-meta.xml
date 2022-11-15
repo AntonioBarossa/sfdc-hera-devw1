@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ExternalUserCompanyC</label>
+    <label>Società utente esterno</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

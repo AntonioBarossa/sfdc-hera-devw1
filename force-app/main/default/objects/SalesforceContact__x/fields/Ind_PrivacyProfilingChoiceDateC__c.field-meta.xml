@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ind_PrivacyProfilingChoiceDateC</label>
+    <label>Data Consenso Profilazione</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

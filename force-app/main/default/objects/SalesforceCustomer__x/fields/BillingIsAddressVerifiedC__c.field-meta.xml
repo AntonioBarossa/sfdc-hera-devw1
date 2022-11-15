@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>BillingIsAddressVerifiedC</label>
+    <label>Indirizzo Verificato [Residenziale/Sede Legale]</label>
     <type>Checkbox</type>
 </CustomField>

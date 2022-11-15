@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ReadingOldValueCorrectorC</label>
+    <label>Lettura Precedente Correttore</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

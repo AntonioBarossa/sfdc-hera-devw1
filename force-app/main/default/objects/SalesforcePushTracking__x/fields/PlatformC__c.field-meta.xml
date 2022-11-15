@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>PlatformC</label>
+    <label>Sistema Operativo</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

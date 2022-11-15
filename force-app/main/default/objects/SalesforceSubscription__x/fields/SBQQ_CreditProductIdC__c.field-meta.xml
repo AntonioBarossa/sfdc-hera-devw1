@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SBQQ_CreditProductIdC</label>
+    <label>Id Prodotto Credito</label>
     <length>1300</length>
     <type>LongTextArea</type>
     <visibleLines>10</visibleLines>

@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SentToMulesoftC</label>
+    <label>Sent To Mulesoft</label>
     <type>Checkbox</type>
 </CustomField>

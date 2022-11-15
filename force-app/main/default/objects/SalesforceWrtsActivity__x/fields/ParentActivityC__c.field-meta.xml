@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ParentActivityC</label>
+    <label>Activity Correlata</label>
     <length>18</length>
     <required>false</required>
     <type>Text</type>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_MobilePhoneNoticePesseC</label>
+    <label>Telefono cellulare preavviso pers. Pesse</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

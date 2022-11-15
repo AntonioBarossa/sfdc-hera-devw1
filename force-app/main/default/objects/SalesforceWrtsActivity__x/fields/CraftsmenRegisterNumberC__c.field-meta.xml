@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>CraftsmenRegisterNumberC</label>
+    <label>N. Iscrizione albo artigiani</label>
     <type>Checkbox</type>
 </CustomField>

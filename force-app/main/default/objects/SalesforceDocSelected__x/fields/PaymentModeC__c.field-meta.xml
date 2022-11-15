@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>PaymentModeC</label>
+    <label>Modalità di Pagamento</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

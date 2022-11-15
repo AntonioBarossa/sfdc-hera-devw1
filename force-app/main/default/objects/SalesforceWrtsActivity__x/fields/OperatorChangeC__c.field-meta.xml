@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>OperatorChangeC</label>
+    <label>Cambio Operatore</label>
     <type>Checkbox</type>
 </CustomField>

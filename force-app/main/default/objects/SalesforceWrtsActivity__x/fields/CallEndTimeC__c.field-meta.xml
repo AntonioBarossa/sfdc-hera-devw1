@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>CallEndTimeC</label>
+    <label>Fine Chiamata</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

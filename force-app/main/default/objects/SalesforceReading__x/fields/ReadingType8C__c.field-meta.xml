@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ReadingType8C</label>
+    <label>Tipo Lettura 8</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

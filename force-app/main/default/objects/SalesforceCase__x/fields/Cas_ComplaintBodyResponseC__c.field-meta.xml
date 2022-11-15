@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_ComplaintBodyResponseC</label>
+    <label>Corpo Risposta Reclamo </label>
     <length>32000</length>
     <type>LongTextArea</type>
     <visibleLines>10</visibleLines>

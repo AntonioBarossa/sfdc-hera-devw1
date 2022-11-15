@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>VasReturnedProductDateC</label>
+    <label>Data reso prodotto </label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

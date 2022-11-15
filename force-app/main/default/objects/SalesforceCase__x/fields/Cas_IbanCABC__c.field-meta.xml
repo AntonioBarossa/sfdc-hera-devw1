@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_IbanCABC</label>
+    <label>CAB</label>
     <length>5</length>
     <required>false</required>
     <type>Text</type>

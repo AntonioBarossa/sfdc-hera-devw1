@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SBQQ_DimensionTypeC</label>
+    <label>Tipo Dimensioni</label>
     <length>1300</length>
     <type>LongTextArea</type>
     <visibleLines>10</visibleLines>

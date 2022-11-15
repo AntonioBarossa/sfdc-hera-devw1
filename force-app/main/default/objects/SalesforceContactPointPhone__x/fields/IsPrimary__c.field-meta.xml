@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>IsPrimary</label>
+    <label>Primario</label>
     <type>Checkbox</type>
 </CustomField>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>InboxMessageOpenedC</label>
+    <label>InboxMessageOpened</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

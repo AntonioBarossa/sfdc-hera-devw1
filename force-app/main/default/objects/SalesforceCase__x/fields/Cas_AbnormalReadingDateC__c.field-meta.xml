@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_AbnormalReadingDateC</label>
+    <label>Data Lettura Anomala</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

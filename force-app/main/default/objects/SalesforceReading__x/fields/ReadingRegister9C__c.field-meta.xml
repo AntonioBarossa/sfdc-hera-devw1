@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ReadingRegister9C</label>
+    <label>Registro Lettura 9</label>
     <length>3</length>
     <required>false</required>
     <type>Text</type>

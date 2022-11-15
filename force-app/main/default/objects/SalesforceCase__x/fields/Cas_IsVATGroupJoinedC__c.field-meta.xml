@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_IsVATGroupJoinedC</label>
+    <label>Flag Adesione Gruppo IVA</label>
     <type>Checkbox</type>
 </CustomField>

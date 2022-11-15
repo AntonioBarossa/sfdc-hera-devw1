@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ReadingDateMeterC</label>
+    <label>Data Lettura Misuratore</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

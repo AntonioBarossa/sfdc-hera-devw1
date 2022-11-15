@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_BirthDateC</label>
+    <label>Data di nascita</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

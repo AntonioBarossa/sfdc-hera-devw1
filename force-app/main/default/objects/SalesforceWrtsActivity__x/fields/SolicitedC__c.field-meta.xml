@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SolicitedC</label>
+    <label>Attività Sollecitata</label>
     <type>Checkbox</type>
 </CustomField>

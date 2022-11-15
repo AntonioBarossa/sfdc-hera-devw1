@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>LinkedEntityId</label>
+    <label>ID entità collegata</label>
     <length>18</length>
     <required>false</required>
     <type>Text</type>

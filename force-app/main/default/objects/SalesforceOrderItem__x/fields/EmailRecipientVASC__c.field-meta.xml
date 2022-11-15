@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>EmailRecipientVASC</label>
+    <label>Email destinatario VAS</label>
     <length>80</length>
     <required>false</required>
     <type>Text</type>

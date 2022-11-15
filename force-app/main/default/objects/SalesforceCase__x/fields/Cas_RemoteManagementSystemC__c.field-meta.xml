@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_RemoteManagementSystemC</label>
+    <label>Impianto tele gestito</label>
     <type>Checkbox</type>
 </CustomField>

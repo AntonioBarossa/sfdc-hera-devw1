@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SBQQ_OriginalUnitCostC</label>
+    <label>Costo Unità originale</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

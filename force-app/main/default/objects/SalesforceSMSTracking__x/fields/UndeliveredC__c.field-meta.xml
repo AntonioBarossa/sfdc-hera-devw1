@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>UndeliveredC</label>
+    <label>Non Consegnato</label>
     <type>Checkbox</type>
 </CustomField>

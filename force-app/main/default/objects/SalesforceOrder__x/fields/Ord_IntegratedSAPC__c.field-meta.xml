@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_IntegratedSAPC</label>
+    <label>Integrato SAP per TARI</label>
     <type>Checkbox</type>
 </CustomField>

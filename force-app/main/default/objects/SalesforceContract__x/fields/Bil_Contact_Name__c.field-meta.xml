@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Bil_Contact_Name</label>
+    <label>Contatto Titolare</label>
     <length>100</length>
     <required>false</required>
     <type>Text</type>

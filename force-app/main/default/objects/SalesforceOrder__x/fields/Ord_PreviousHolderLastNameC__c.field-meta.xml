@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_PreviousHolderLastNameC</label>
+    <label>Cognome precedente intestatario</label>
     <length>100</length>
     <required>false</required>
     <type>Text</type>

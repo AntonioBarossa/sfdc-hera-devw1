@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cam_Name</label>
+    <label>Campagna</label>
     <length>18</length>
     <required>false</required>
     <type>Text</type>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>CategoryTypeClientC</label>
+    <label>Tipo Cliente/Categoria</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

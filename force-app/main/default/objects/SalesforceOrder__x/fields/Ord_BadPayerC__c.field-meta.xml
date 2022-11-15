@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_BadPayerC</label>
+    <label>Cattivo Pagatore</label>
     <type>Checkbox</type>
 </CustomField>

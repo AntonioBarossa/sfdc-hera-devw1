@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_MaterialDescriptionC</label>
+    <label>Descrizione Materiale da Inviare</label>
     <length>400</length>
     <type>LongTextArea</type>
     <visibleLines>10</visibleLines>

@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_VATfacilitationFlagC</label>
+    <label>Flag Agevolazione IVA</label>
     <type>Checkbox</type>
 </CustomField>

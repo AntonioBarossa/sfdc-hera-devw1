@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_CancellationRequestDateC</label>
+    <label>Data Richiesta Annullamento/Ripensamento</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

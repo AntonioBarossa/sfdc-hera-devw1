@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_RetroactiveDateC</label>
+    <label>Data Retroattiva</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

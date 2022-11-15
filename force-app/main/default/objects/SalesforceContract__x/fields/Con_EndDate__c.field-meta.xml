@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Con_EndDate</label>
+    <label>Data Cessazione Contratto</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

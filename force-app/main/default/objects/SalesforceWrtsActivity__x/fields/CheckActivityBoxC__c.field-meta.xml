@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>CheckActivityBoxC</label>
+    <label>Contrassegnare casella attività</label>
     <type>Checkbox</type>
 </CustomField>

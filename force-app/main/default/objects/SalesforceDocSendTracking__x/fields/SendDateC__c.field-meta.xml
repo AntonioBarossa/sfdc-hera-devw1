@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SendDateC</label>
+    <label>Data invio</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

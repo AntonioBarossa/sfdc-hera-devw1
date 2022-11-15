@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>DiscountEurMWhC</label>
+    <label>Sconto (Eur/MWh)</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

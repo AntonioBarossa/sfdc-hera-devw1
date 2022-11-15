@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ShowInBillC</label>
+    <label>Mostra in fattura</label>
     <type>Checkbox</type>
 </CustomField>

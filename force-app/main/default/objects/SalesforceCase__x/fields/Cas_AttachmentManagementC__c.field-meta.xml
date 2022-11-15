@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_AttachmentManagementC</label>
+    <label>Gestione Allegati</label>
     <type>Checkbox</type>
 </CustomField>

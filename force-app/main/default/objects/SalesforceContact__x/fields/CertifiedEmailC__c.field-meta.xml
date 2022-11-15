@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>CertifiedEmailC</label>
+    <label>Pec</label>
     <length>240</length>
     <required>false</required>
     <type>Text</type>

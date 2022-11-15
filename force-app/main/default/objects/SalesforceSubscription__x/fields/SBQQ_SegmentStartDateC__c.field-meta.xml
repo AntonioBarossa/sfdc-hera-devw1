@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SBQQ_SegmentStartDateC</label>
+    <label>Inizio Data Segmento</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

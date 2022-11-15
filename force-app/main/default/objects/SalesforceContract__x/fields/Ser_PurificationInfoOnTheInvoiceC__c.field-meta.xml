@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ser_PurificationInfoOnTheInvoiceC</label>
+    <label>Info depurazione in fatt.</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

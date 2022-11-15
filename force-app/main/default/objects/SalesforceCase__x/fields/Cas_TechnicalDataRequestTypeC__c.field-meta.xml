@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_TechnicalDataRequestTypeC</label>
+    <label>Tipo Richiesta Dati Tecnici</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

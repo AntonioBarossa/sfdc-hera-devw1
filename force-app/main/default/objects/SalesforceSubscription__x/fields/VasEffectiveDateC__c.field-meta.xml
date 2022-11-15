@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>VasEffectiveDateC</label>
+    <label>Data Decorrenza VAS</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Bil_IbanCountryC</label>
+    <label>Paese</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

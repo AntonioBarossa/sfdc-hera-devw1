@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>OpenDateC</label>
+    <label>Data Apertura</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

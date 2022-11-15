@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Bil_RevocationDateC</label>
+    <label>Data Revoca</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

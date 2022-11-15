@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>OutboundC</label>
+    <label>Outbound</label>
     <type>Checkbox</type>
 </CustomField>

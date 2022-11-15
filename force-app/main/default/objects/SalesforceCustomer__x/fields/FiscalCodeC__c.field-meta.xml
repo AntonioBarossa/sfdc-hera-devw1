@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>FiscalCodeC</label>
+    <label>Codice Fiscale</label>
     <length>16</length>
     <required>false</required>
     <type>Text</type>

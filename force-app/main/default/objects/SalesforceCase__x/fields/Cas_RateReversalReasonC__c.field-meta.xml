@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_RateReversalReasonC</label>
+    <label>Motivazione storno rate</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

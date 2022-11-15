@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ActivityEndTimeC</label>
+    <label>Fine Attività</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

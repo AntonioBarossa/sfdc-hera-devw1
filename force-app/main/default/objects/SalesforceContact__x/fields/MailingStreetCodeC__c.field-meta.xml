@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>MailingStreetCodeC</label>
+    <label>Codice Via Stradario SAP [Residenziale/Sede Legale]</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

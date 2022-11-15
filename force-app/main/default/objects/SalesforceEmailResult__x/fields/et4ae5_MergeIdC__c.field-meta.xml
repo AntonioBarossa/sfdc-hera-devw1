@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>et4ae5_MergeIdC</label>
+    <label>Merge Id</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

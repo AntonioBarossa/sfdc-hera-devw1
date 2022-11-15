@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_TechnicalFeasibilityC</label>
+    <label>Fattibilita tecnica</label>
     <type>Checkbox</type>
 </CustomField>

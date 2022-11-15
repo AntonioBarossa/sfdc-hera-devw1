@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_FlyingRequestC</label>
+    <label>Pratica in volo</label>
     <type>Checkbox</type>
 </CustomField>

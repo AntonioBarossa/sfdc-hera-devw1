@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ActivityStartTimeC</label>
+    <label>Inizio Attività</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

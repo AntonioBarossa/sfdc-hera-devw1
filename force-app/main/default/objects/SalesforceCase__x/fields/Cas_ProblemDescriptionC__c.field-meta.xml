@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_ProblemDescriptionC</label>
+    <label>Descrizione problematica</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

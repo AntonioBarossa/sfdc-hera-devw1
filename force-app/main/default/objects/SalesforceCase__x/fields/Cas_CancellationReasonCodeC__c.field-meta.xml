@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_CancellationReasonCodeC</label>
+    <label>Codice Causale Annullamento</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

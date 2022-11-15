@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>IsSmsCapable</label>
+    <label>Puà ricevere SMS</label>
     <type>Checkbox</type>
 </CustomField>

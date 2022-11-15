@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Bil_SignatoryTypeC</label>
+    <label>Tipo Sottoscrittore</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

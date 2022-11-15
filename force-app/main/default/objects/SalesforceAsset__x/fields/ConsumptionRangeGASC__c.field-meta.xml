@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ConsumptionRangeGASC</label>
+    <label>Fasce Consumo GAS</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

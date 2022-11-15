@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>VasReplacementDateC</label>
+    <label>Data Sostituito</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

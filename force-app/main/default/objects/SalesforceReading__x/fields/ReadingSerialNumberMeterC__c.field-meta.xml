@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ReadingSerialNumberMeterC</label>
+    <label>Matricola Misuratore</label>
     <length>18</length>
     <required>false</required>
     <type>Text</type>

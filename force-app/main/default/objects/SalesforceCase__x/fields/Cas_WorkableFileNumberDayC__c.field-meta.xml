@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_WorkableFileNumberDayC</label>
+    <label>Nà giorni pratica lavorabile</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

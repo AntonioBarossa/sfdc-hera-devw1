@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>CciaaSelfCertModuleC</label>
+    <label>modulo autocertificazione cciaa</label>
     <type>Checkbox</type>
 </CustomField>

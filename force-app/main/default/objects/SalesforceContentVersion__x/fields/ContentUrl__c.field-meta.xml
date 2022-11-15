@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ContentUrl</label>
+    <label>Content URL</label>
     <length>1333</length>
     <type>LongTextArea</type>
     <visibleLines>10</visibleLines>

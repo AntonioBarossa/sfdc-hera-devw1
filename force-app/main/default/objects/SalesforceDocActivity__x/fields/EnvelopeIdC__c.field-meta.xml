@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>EnvelopeIdC</label>
+    <label>Id Plico</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

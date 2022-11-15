@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>QAdCallIDC</label>
+    <label>ID Chiamata QAd</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

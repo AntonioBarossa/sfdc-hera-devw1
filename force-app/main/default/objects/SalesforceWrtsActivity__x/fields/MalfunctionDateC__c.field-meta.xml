@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>MalfunctionDateC</label>
+    <label>Data Malfunzionamento</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

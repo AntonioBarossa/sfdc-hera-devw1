@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_ContractStartDateC</label>
+    <label>Data Attivazione Contratto</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

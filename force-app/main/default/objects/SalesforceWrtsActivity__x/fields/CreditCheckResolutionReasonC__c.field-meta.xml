@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>CreditCheckResolutionReasonC</label>
+    <label>Causale Risoluzione Credit Check</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

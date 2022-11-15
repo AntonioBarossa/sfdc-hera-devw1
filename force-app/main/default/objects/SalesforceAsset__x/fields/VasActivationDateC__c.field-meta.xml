@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>VasActivationDateC</label>
+    <label>VAS - Data Attivazione</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

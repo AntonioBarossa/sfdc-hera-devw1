@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_ExistingInstallmentsPlanNumberC</label>
+    <label>Numero Piani Rata Esistenti</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

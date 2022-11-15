@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>GreenGasOptionC</label>
+    <label>Green Gas Option</label>
     <type>Checkbox</type>
 </CustomField>

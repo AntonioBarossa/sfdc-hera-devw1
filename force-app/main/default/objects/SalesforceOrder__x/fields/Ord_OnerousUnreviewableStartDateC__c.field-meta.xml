@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_OnerousUnreviewableStartDateC</label>
+    <label>Inizio Periodo Non Ravvedibileà</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

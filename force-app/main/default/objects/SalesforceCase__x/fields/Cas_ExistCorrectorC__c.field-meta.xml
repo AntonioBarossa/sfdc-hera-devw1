@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_ExistCorrectorC</label>
+    <label>Presenza correttore</label>
     <type>Checkbox</type>
 </CustomField>

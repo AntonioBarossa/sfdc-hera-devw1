@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_NotPerformedBeforeC</label>
+    <label>Da non eseguire prima del</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ser_AreaDeclaredTARIC</label>
+    <label>Superficie dichiarata TARI</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ReadingDigitNumberMeterC</label>
+    <label>Cifre Lettura Misuratore</label>
     <length>2</length>
     <required>false</required>
     <type>Text</type>

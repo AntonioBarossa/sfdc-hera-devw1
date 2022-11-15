@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>AppointmentTimeSlotToConfirmC</label>
+    <label>Fascia appuntamento da confermare</label>
     <length>11</length>
     <required>false</required>
     <type>Text</type>

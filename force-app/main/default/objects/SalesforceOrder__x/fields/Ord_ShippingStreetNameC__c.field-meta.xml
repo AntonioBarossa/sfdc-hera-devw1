@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_ShippingStreetNameC</label>
+    <label>Nome Via [Spedizione]</label>
     <length>200</length>
     <required>false</required>
     <type>Text</type>

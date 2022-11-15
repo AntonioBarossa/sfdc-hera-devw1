@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_MaxAfterthoughtDateC</label>
+    <label>Data Massima Ripensamento</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

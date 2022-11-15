@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>LastModifiedDate</label>
+    <label>Last Modified Date</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

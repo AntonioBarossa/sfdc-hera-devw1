@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SBQQ_RequiredByAssetC</label>
+    <label>Richiesto da Asset</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

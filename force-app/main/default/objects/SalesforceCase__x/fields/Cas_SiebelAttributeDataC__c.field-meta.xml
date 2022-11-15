@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_SiebelAttributeDataC</label>
+    <label>Attributi Siebel</label>
     <length>32000</length>
     <type>LongTextArea</type>
     <visibleLines>10</visibleLines>

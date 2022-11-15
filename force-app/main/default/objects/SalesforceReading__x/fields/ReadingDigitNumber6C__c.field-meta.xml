@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ReadingDigitNumber6C</label>
+    <label>Cifre Lettura 6</label>
     <length>2</length>
     <required>false</required>
     <type>Text</type>

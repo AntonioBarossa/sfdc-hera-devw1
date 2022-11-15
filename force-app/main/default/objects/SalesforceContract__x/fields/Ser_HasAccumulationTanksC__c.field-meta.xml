@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ser_HasAccumulationTanksC</label>
+    <label>Ha vasche accumulo</label>
     <type>Checkbox</type>
 </CustomField>

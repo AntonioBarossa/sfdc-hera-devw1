@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>VasPracticeDateC</label>
+    <label>Data inserimento ordine</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

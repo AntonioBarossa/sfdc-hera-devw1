@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>IsWrongFiscalDataC</label>
+    <label>Dati fiscali errati</label>
     <type>Checkbox</type>
 </CustomField>

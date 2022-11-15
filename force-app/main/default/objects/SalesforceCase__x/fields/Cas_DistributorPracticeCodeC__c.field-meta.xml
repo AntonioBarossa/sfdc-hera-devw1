@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_DistributorPracticeCodeC</label>
+    <label>Codice pratica distributore</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

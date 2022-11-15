@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SBQQ_PriceDimensionC</label>
+    <label>Dimensioni Prezzo</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

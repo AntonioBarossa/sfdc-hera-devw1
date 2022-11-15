@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>DocumentalSystemC</label>
+    <label>Sistema di Archiviazione</label>
     <length>1000</length>
     <type>LongTextArea</type>
     <visibleLines>10</visibleLines>

@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Bil_ReminderFlagC</label>
+    <label>Flag per sollecito</label>
     <type>Checkbox</type>
 </CustomField>

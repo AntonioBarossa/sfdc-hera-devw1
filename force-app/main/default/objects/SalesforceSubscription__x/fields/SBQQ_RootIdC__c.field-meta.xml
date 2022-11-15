@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SBQQ_RootIdC</label>
+    <label>Id Radice</label>
     <length>18</length>
     <required>false</required>
     <type>Text</type>

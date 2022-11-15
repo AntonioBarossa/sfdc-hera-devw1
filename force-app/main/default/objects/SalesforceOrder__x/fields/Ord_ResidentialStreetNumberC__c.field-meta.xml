@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_ResidentialStreetNumberC</label>
+    <label>Civico [Residenziale/Sede Legale]</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_ConnectionTypeC</label>
+    <label>Tipo di connessione</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_ExpirationDateC</label>
+    <label>Data Scadenza</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

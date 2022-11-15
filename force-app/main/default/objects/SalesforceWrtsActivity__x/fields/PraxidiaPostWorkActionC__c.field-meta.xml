@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>PraxidiaPostWorkActionC</label>
+    <label>Azione Post Lavorazione Praxidia</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

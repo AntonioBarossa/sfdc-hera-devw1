@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>IsReadC</label>
+    <label>Notifica Letta</label>
     <type>Checkbox</type>
 </CustomField>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>DistributorFirstDateC</label>
+    <label>Data primo Slot Distributore</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_PreviousHoldeCompanyNameC</label>
+    <label>Ragione sociale precedente intestatario</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

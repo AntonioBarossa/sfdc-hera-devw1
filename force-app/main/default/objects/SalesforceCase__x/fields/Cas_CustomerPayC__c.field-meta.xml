@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_CustomerPayC</label>
+    <label>Cliente Paga</label>
     <type>Checkbox</type>
 </CustomField>

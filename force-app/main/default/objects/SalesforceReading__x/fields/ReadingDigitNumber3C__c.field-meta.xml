@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ReadingDigitNumber3C</label>
+    <label>Cifre Lettura 3</label>
     <length>2</length>
     <required>false</required>
     <type>Text</type>

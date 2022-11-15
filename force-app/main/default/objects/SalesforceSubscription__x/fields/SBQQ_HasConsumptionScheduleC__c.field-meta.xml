@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SBQQ_HasConsumptionScheduleC</label>
+    <label>Ha Programma Consumi</label>
     <type>Checkbox</type>
 </CustomField>

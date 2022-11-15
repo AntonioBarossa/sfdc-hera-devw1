@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_CAWithOrWithoutSEPAC</label>
+    <label>CA con/senza SEPA</label>
     <type>Checkbox</type>
 </CustomField>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_IbanCodeNumberC</label>
+    <label>Numero Conto</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>GlobalMigrationKeyC</label>
+    <label>Chiave globale di migrazione</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

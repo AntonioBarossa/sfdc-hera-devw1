@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_CommercialIdC</label>
+    <label>Venduto Da</label>
     <length>100</length>
     <required>false</required>
     <type>Text</type>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>CodeMissingRegistryDataC</label>
+    <label>Codice Assenza Dati Catastali</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

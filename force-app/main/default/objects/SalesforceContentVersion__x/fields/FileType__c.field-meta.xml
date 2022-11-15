@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>FileType</label>
+    <label>File Type</label>
     <length>20</length>
     <required>false</required>
     <type>Text</type>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ord_PreviousHolderFiscalCodeC</label>
+    <label>C.F. Precdente intestatario</label>
     <length>16</length>
     <required>false</required>
     <type>Text</type>

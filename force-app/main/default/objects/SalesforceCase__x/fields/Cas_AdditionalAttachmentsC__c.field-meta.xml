@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cas_AdditionalAttachmentsC</label>
+    <label>Allegati aggiuntivi</label>
     <length>1000</length>
     <type>LongTextArea</type>
     <visibleLines>10</visibleLines>
