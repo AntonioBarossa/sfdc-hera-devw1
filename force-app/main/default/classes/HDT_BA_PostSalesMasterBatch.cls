@@ -120,8 +120,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                             }
                             currentCase.EffectiveDate__c = recalculatedDate ? HDT_UTL_Case.addBusinessDay(currentCase.Order__r.EffectiveDate__c,3) : HDT_UTL_Case.addBusinessDay(System.today(),3);
                             currentCase.Phase__c = recalculatedDate ? 'In attesa Data Decorrenza' : 'Da Inviare';
-                            myCurrentCaseList.add(currentCase);
-                        }   
+                            myCurrentCaseList.add(currentCase);   
                         //START MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
                         }else if('In Lavorazione'.equalsIgnoreCase(currentCase.Phase__c) && ('Cessazione post accertamento'.equalsIgnoreCase(currentCase.Type) || 'Modifica post accertamento'.equalsIgnoreCase(currentCase.Type))){
                             casesToCheck.add(currentCase);
