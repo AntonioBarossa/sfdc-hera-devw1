@@ -201,10 +201,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             }
 
             newOrder.NotDisconnectabilityCustomer__c = 'No';
-            newOrder.VAT__c = 
-                order.CommodityFormula__c == 'Energia Elettrica' ?
-                    order.SupplyType__c == 'Domestico' ? 'Iva 10% (Cod. 01)' : 'Iva 22% (Cod. 02)'
-                : 'Iva 22% (Cod. 02)';
+            newOrder.VAT__c = order.CommodityFormula__c == 'Energia Elettrica' ?
+                                    order.SupplyType__c == 'Domestico' ? 'Iva 10% (Cod. 01)' : 'Iva 22% (Cod. 02)' : 'Iva 22% (Cod. 02)';
+
+            newOrder.UseSubCategory__c = order.CommodityFormula__c == 'Acqua' ? 
+                                            HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c ) : '';
             
             if(order.CommodityFormula__c == 'Gas')
             {
