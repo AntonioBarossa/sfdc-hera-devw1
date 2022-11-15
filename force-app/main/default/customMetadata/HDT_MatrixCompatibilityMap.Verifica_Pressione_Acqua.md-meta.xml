@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Verifica Pressione</value>
+        <value xsi:type="xsd:string">Verifica Tensione - Pressione</value>
     </values>
     <values>
         <field>ServiceRequestType__c</field>
