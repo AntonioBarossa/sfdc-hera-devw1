@@ -123,5 +123,27 @@ public inherited sharing class HDT_UTL_NewsNotificationCenter {
 
     }
 
+    @InvocableMethod(Label = 'Batch Notifiche News')
+    public static List<HDT_UTL_FlowOutputs> sendNotificationFromFlow(List<HDT_UTL_FlowInputs> inputs)
+    {
+        List<HDT_UTL_FlowOutputs> outputs = new List<HDT_UTL_FlowOutputs>();
+
+        Knowledge__kav article = inputs[0].article;
+        sendNotification(article);
+
+        return outputs;
+    }
+    
+    public class HDT_UTL_FlowInputs
+    {
+        @InvocableVariable
+        public Knowledge__kav article;
+    }
+    public class HDT_UTL_FlowOutputs
+    {
+        @InvocableVariable
+        public String output;    
+    }
+
 
 }

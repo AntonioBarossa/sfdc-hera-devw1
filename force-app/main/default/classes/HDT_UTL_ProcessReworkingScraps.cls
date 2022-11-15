@@ -69,7 +69,7 @@ public inherited sharing class HDT_UTL_ProcessReworkingScraps extends HDT_UTL_Pr
         if(orderNumberSet.size()>0){
 
             orderList = [
-                SELECT Id, OrderNumber
+                SELECT Id, OrderNumber, ProcessType__c, Phase__c
                 FROM Order
                 WHERE Ordernumber IN :orderNumberSet
                 WITH SECURITY_ENFORCED
@@ -195,7 +195,21 @@ public inherited sharing class HDT_UTL_ProcessReworkingScraps extends HDT_UTL_Pr
     }
 
     public static Order setOrder(Order orderToSet){
-        orderToSet.Phase__c = 'Comunicazione verso Heroku';
+
+        String fase = 'Comunicazione verso Heroku';
+        switch on orderToSet.ProcessType__c {
+            when  'Voltura' {
+                fase = 'Documentazione Validata';
+            }
+            when 'VAS' {
+                fase = 'Comunicazione Motore VAS';
+            }
+        }
+        if ('Caricamento Siebel KO'.equalsIgnoreCase(orderToSet.Phase__c)){
+            fase = 'Esportazione VS Siebel';
+        }
+
+        orderToSet.Phase__c = fase;
         orderToSet.DiscardReason__c = null;
         orderToSet.HerokuPracticeCode__c = null;
         orderToSet.DistributorPracticeCode__c = null;

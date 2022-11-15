@@ -533,7 +533,11 @@ public inherited sharing class HDT_LC_CampaignsController {
                 (cmdt.Category__c == 'Outbound' && cmdt.Channel__c == 'Door to Door' && campaignList[0].Channel__c=='Door to Door')) && (cmdt.OutcomeCategory__c == outcomeType)
             )  {
                 system.debug('PUNTO 2');
-                partialOutcomeValues.put(cmdt.StatusName__c, cmdt.StatusName__c);
+                if(outcomeType !=  'Esito Parziale')
+                    partialOutcomeValues.put(cmdt.StatusName__c, cmdt.StatusName__c);
+                else
+                    partialOutcomeValues.put(cmdt.StatusName__c, cmdt.DeveloperName);
+
             }
             system.debug('PUNTO 3');
         }

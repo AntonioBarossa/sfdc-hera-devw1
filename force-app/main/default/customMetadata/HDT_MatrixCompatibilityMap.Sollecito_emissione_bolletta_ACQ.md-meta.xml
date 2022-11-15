@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>CommoditySector__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Acqua</value>
     </values>
     <values>
         <field>ProcessType__c</field>
