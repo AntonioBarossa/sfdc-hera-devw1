@@ -301,8 +301,8 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                                 infoData.put('birthPlace',tempLead.Birthcity__c);
                                 infoData.put('gender',tempLead.Gender__c);
        
-                                System.debug('return ' +HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedFCode(infoData,tempLead.FiscalCode__c));
-                                if ( ! HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedFCode(infoData,tempLead.FiscalCode__c)) {
+                                System.debug('return ' +HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedSetFiscalCode(infoData,tempLead.FiscalCode__c));
+                                if ( ! HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedSetFiscalCode(infoData,tempLead.FiscalCode__c)) {
                                     tempLead.addError('Inserire un codice fiscale valido');
                                 }
                                 //HRAWRM-491 End 27/09/2021 Controllo codice fiscale stimato

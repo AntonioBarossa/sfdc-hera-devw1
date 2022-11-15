@@ -143,97 +143,66 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
 
     public String getCaliber(String caliber){
+        Map<String, String> caliberMap = new Map<String, String>{
+            'A0101' => '5 x 20 - 4 mc',
+            'A0202' => '6 x 20 - 4 mc',
+            'A0701' => '7 x 20 - 4 mc',
+            'A0112' => '10 x 30 - 10 mc',
+            'A0205' => '11 x 30 - 10 mc',
+            'A0206' => '20 x 40 - 16 mc',
+            'A0102' => '3 x 15 - 2.5 mc',
+            'A0201' => '4 x 15 - 2.5 mc',
+            'A0501' => '5 x 15 - 2.5 mc',
+            'A0207' => '30 x 50 - 30 mc',
+            'A0215' => '31 x 50 - 30 mc',
+            'A0301' => '32 x 50 - 30 mc',
+            'A0208' => '7 x 25 - 6.3 mc',
+            'A0209' => 'WV 100 - 100 mc',
+            'A0304' => 'WV 100 - 100 mc',
+            'A0407' => 'WV 100 - 100 mc',
+            'A0408' => 'WV 100 - 100 mc',
+            'A0805' => 'WV 100 - 100 mc',
+            'A0104' => 'WV 50 - 25 mc',
+            'A0302' => 'WV 50 - 25 mc',
+            'A0402' => 'WV 50 - 25 mc',
+            'A0801' => 'WV 50 - 25 mc',
+            'A0802' => 'WV 50 - 25 mc',
+            'A0403' => 'WV 65 - 50 mc',
+            'A0404' => 'WV 65 - 50 mc',
+            'A0421' => 'WV 65 - 50 mc',
+            'A0803' => 'WV 65 - 50 mc',
+            'A0303' => 'WV 80 - 63 mc',
+            'A0405' => 'WV 80 - 63 mc',
+            'A0406' => 'WV 80 - 63 mc',
+            'A0422' => 'WV 80 - 63 mc',
+            'A0804' => 'WV 80 - 63 mc',
+            'A0305' => 'WV150 - 300 mc',
+            'A0411' => 'WV150 - 300 mc',
+            'A0412' => 'WV150 - 300 mc',
+            'A0807' => 'WV150 - 300 mc',
+            'A0904' => 'WV150 - 300 mc',
+            'GRT005' => 'G10',
+            'GRT010' => 'G100',
+            'GRT015' => 'G1000',
+            'GRT006' => 'G16',
+            'GRT011' => 'G160',
+            'GRT016' => 'G1600',
+            'GRT002' => 'G2,5',
+            'GRT007' => 'G25',
+            'GRT012' => 'G250',
+            'GRT003' => 'G4',
+            'GRT008' => 'G40',
+            'GRT013' => 'G400',
+            'GRT017' => 'G4000',
+            'GRT004' => 'G6',
+            'GRT009' => 'G65',
+            'GRT014' => 'G650',
+            'GRT018' => 'G6500'
+        };
 
         String result;
 
-        switch on caliber{
-
-            when 'GRT005'{
-
-                result = 'G10';
-
-            }
-            when 'GRT010'{
-
-                result = 'G100';
-
-            }
-            when 'GRT015'{
-
-                result = 'G1000';
-
-            }
-            when 'GRT006'{
-
-                result = 'G16';
-
-            }when 'GRT011'{
-
-                result = 'G160';
-
-            }
-            when 'GRT016'{
-
-                result = 'G1600';
-
-            }
-            when 'GRT002'{
-
-                result = 'G2,5';
-
-            }
-            when 'GRT007'{
-
-                result = 'G25';
-
-            }when 'GRT012'{
-
-                result = 'G250';
-
-            }
-            when 'GRT003'{
-
-                result = 'G4';
-
-            }
-            when 'GRT008'{
-
-                result = 'G40';
-
-            }
-            when 'GRT013'{
-
-                result = 'G400';
-
-            }when 'GRT017'{
-
-                result = 'G4000';
-
-            }
-            when 'GRT004'{
-
-                result = 'G6';
-
-            }
-            when 'GRT009'{
-
-                result = 'G65';
-
-            }
-            when 'GRT014'{
-
-                result = 'G650';
-
-            }when 'GRT018'{
-
-                result = 'G6500';
-
-            }
-
-
-        }
-
-        return result;
+        return caliberMap.get(caliber) != null? caliberMap.get(caliber):'';
 
     }
 
