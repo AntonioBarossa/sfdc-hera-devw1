@@ -1113,7 +1113,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> act: ' +  act);
                 HDT_UTL_DatabaseService.insertSObject(act);
             }else if (String.isNotEmpty(templateName)){
-                annulmentProcess(recordId, objectType);
+                annulmentProcess(recordId, objectType,requestDiscardManagemnt.get('DISCARD_MESSAGE'));
             }
         }
     }
@@ -1178,8 +1178,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         }
         return requestMap;
     }
-
     private static void annulmentProcess(Id recordId,String objectType){
+        annulmentProcess(recordId,objectType,'');
+    }
+
+    private static void annulmentProcess(Id recordId,String objectType,String errorDescription){
         if (String.isNotEmpty(objectType)){
             SObject objectToUpdate = Schema.getGlobalDescribe().get(objectType).newSObject();
             String status = 'Case'.equalsIgnoreCase(objectType)? 'Closed' : 'Annullato';
@@ -1187,10 +1190,21 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             objectToUpdate.put('CancellationReason__c','Gestione scarto');
             objectToUpdate.put('Phase__c','Annullato');
             objectToUpdate.put('Status',status);
-            HDT_UTL_DatabaseService.updateSObject(objectToUpdate);
+            if(String.isNotBlank(errorDescription)){
+                objectToUpdate.put('DiscardDescription__c',errorDescription);
+            }
+            
+            
+            //HDT_UTL_DatabaseService.updateSObject(objectToUpdate);
+            updateObjectFuture(JSON.serialize(objectToUpdate));
         }
     }
     //EVERIS: END Gestione Scarti SAP
+    @future
+    private static void updateObjectFuture(String inputString){
+        SObject objectToUpdate = (SObject) JSON.deserialize(inputString, SObject.class);
+        HDT_UTL_DatabaseService.updateSObject(objectToUpdate);
+    }
 
 
     //EVERIS Gestione Scarto Transitorio
