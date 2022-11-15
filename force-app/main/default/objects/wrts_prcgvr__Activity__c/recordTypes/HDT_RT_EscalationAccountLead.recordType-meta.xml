@@ -2829,10 +2829,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto su migrazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Verifiche documentale</fullName>
             <default>false</default>
         </values>
