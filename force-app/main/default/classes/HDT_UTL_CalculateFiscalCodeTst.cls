@@ -207,7 +207,7 @@ public class HDT_UTL_CalculateFiscalCodeTst {
     static void cleanFiscalCodeFromOmocodiaTst()
     {
         String testCode = 'MRCMRC80ALMHRLMG';
-        String assertCode = 'MRCMRC89A01H501Y';
+        String assertCode = 'MRCMRC80A01H501Y';
         Test.startTest();
             String result = HDT_UTL_CalculateFiscalCode.cleanFiscalCodeFromOmocodia(testCode);
         Test.stopTest();
