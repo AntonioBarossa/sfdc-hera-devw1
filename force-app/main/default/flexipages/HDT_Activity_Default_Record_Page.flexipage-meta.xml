@@ -1204,6 +1204,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.SMS_Tracking__c</fieldItem>
+                <identifier>RecordSMS_Tracking__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.SMS_Tracking__r.Name}</leftValue>
@@ -1219,6 +1220,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Individual_Email_Result__c</fieldItem>
+                <identifier>RecordIndividual_Email_Result__c</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Individual_Email_Result__r.Name}</leftValue>
