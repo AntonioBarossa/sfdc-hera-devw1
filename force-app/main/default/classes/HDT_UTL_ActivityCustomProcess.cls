@@ -512,4 +512,33 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         }
 
     }
+
+    public static void closeParentEntityCanceledActivity(List<wrts_prcgvr__Activity__c> newActList, List<wrts_prcgvr__Activity__c> oldActList){
+        Set<Id> caseIds = new Set<Id>();
+        Set<Id> orderIds = new Set<Id>();
+        Map<Id, wrts_prcgvr__Activity__c> oldActMap = new Map<Id, wrts_prcgvr__Activity__c>(oldActList);
+        for(wrts_prcgvr__Activity__c act : newActList){
+            if(act.wrts_prcgvr__Status__c=='Annullata' && oldActMap.get(act.id).wrts_prcgvr__Status__c!='Annullata' && 'Presa Appuntamento'.equalsIgnoreCase(act.Type__c) && 'Terzo contatto fallito'.equalsIgnoreCase(act.ContactResult__c)){
+                caseIds.add((ID)act.Case__c);
+                orderIds.add((ID)act.Order__c);
+            }
+        }
+
+        Map<Id, Case> casesToUpdate = new Map<Id, Case>([SELECT id, Phase__c FROM Case WHERE Phase__c <> 'Annullato' AND Status <> 'Closed' AND Id IN :caseIds WITH SECURITY_ENFORCED]);
+        Map<Id, Order> ordersToUpdate = new Map<Id, Order>([SELECT id, Phase__c FROM Order WHERE Phase__c <> 'Annullato' AND Status <> 'Closed' AND Id IN :orderIds WITH SECURITY_ENFORCED]);
+        if(!casesToUpdate.isEmpty()){
+            for(Case c : casesToUpdate.values()){
+                c.Phase__c='Annullato';
+                c.Status='Closed';
+            }
+        }
+        if(!ordersToUpdate.isEmpty()){
+            for(Order o : ordersToUpdate.values()){
+                o.Phase__c='Annullato';
+                o.Status='Activated';
+            }
+        }
+        new HDT_SRV_Case().updateRecords(casesToUpdate.values());
+        new HDT_SRV_Order().updateRecords(ordersToUpdate.values());
+    }
 }
