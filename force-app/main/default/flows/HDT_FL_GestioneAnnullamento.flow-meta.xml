@@ -3043,6 +3043,12 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
                     <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
@@ -3055,45 +3061,15 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>cancelButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>density</name>
                 <value>
                     <stringValue>Comfy</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva In Bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Conferma Pratica</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>objectName</name>
                 <value>
                     <stringValue>Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -3115,12 +3091,6 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>showReadOnly</name>
                 <value>
                     <booleanValue>true</booleanValue>
@@ -3130,6 +3100,62 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
                 <name>addContentDocument</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>bottoniScreen</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>Brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -3318,7 +3344,7 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
             <targetReference>Can_Proceed</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Chiudi_Activity_Custom_Ripristino_Fase_Case</name>
         <label>Chiudi Activity Custom Ripristino Fase Case</label>
