@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ReadingDate8C__c</fullName>
+    <description>ReadingDate8C</description>
+    <externalDeveloperName>ReadingDate8C</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>ReadingDate8C</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

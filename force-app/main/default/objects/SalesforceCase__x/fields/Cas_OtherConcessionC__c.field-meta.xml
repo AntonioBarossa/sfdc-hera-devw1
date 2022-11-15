@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cas_OtherConcessionC__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Cas_OtherConcessionC</description>
+    <externalDeveloperName>Cas_OtherConcessionC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Cas_OtherConcessionC</label>
+    <type>Checkbox</type>
+</CustomField>

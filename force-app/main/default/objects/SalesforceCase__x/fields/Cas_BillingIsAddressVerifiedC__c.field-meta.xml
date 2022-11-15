@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cas_BillingIsAddressVerifiedC__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Cas_BillingIsAddressVerifiedC</description>
+    <externalDeveloperName>Cas_BillingIsAddressVerifiedC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Cas_BillingIsAddressVerifiedC</label>
+    <type>Checkbox</type>
+</CustomField>

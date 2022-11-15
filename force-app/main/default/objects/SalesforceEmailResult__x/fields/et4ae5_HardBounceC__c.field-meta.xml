@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>et4ae5_HardBounceC__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>et4ae5_HardBounceC</description>
+    <externalDeveloperName>et4ae5_HardBounceC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>et4ae5_HardBounceC</label>
+    <type>Checkbox</type>
+</CustomField>

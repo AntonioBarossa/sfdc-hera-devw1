@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ser_SwitchOutDateC__c</fullName>
+    <description>Ser_SwitchOutDateC</description>
+    <externalDeveloperName>Ser_SwitchOutDateC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Ser_SwitchOutDateC</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>
