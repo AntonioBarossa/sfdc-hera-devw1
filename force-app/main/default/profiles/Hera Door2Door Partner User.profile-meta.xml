@@ -480,6 +480,11 @@
         <field>Order.WasteCommodityType__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.UseSubCategory__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.IntendedUse__c</field>
@@ -1320,6 +1325,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.MethodSignedAccepted__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.Individual_Email_Result__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.SMS_Tracking__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

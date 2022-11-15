@@ -1375,6 +1375,13 @@
                     <stringValue>Doppi Pagamenti/Incassi</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Promessa di Pagamento Ente</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Riprendi_Da_Bozza</targetReference>
             </connector>

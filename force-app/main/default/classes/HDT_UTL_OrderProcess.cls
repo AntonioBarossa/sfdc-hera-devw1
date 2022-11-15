@@ -526,7 +526,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     && newOrder.SignedDate__c != null
                     && (newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
                         || newOrder.DocumentalProcessType__c.containsIgnoreCase('Voltura')
-                        || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch'))
+                        || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch')
+                        || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Cambio Offerta'))
                 ){
                     if(!activityMap.isEmpty() && newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
                         && oldOrder.MaxAfterthoughtDate__c != null && oldOrder.MaxAfterthoughtDate__c > activityMap.get(oldOrder.Id).ActivityEndTime__c)
@@ -548,13 +549,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         || (oldOrder.Phase__c == 'In attesa validazione' && newOrder.Phase__c == 'Documentazione Validata')
                         || (oldOrder.Phase__c == 'Quality Call OK' && newOrder.Phase__c == 'Esportazione VS Siebel')
                         || (oldOrder.Phase__c == 'Documentazione Validata' && newOrder.Phase__c == 'Esportazione VS Siebel')
+                        //@ealpi aggiunto in caso di sblocco OK credit check
+                        ||(!'OK'.equalsIgnoreCase(oldOrder.OutgoingCreditCheckResult__c) && 'OK'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c))
+                        ||(!'OK'.equalsIgnoreCase(oldOrder.IncomingCreditCheckResult__c) && 'OK'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c))
                     ){
-                        if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
+                        if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')
+                        || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Cambio Offerta')){
                             //1) Se la data di invio al sii è > o = ad oggi e la data di decorrenza è già calcolata (!= null) allora non deve essere calcolata
-                            if((newOrder.Phase__c == 'Documentazione Validata' || newOrder.Phase__c == 'Esportazione VS Siebel') && Date.today() <= newOrder.DateSentToSII__c && newOrder.EffectiveDate__c != null){
+                            if((newOrder.Phase__c == 'Documentazione Validata' || newOrder.Phase__c == 'Esportazione VS Siebel') && newOrder.EffectiveDate__c != null
+                            && ((newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') && Date.today() <= newOrder.DateSentToSII__c)
+                            ||(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Cambio Offerta') && Date.today() <= newOrder.SignedDate__c))){
                                 continue;
                             //2) se oggi abbiamo superato la data di invio al SII allora imposto la data di invio ad oggi.
-                            }else if (Date.today() > newOrder.DateSentToSII__c){
+                            }else if (newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') && Date.today() > newOrder.DateSentToSII__c){
                                 newOrder.DateSentToSII__c = Date.today();
                             }
                             //Se la data di decorrenza non è stata calcolata per qualsiasi motivo (1) oppure ho superato la data di invio al SII (2)

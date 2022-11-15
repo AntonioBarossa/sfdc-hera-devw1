@@ -440,6 +440,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     ( this.rateCategoryVisibility(rateCategories.AFUNDC) && this.rateCategoryVisibility(rateCategories.AFUNDCreq) ) ||
                     ( this.rateCategoryVisibility(rateCategories.AFUNDI) && this.rateCategoryVisibility(rateCategories.AFUNDIreq) ) ||
                     ( this.rateCategoryVisibility(rateCategories.AFUNDZ) && this.rateCategoryVisibility(rateCategories.AFUNDZreq) ) , false, '',''),
+                new fieldData('','ZootechnicalHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDZ), false, false, '',''),
                 new fieldData('Tipo Mercato','Market__c', this.typeVisibility('gas') || this.typeVisibility('ele'), false, true, '',''),
                 new fieldData('Settore merceologico','CommodityFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Distributore','DistributorFormula__c', this.typeVisibility('both'), false, true, '',''),
