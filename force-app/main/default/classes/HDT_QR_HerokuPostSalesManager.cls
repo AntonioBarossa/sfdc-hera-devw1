@@ -69,7 +69,7 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
     * tramite errore sulla pratica stessa
     */
     public Contract getContract(String servicePointId){
-        return [SELECT Id,BillingProfile__c,SAPContractCode__c, EndDate FROM Contract WHERE ServicePoint__c=:servicePointId AND Status IN ('Attivo','Cessato') WITH SECURITY_ENFORCED LIMIT 1];
+        return [SELECT Id,BillingProfile__c,SAPContractCode__c, EndDate FROM Contract WHERE ServicePoint__c=:servicePointId AND Status IN ('Attivo','Cessato') WITH SECURITY_ENFORCED ORDER BY Status ASC  LIMIT 1 ];
     }
 
     public HDT_CausalCodeCalculation__mdt getCausalCode(String cluster, String process, String commodity){
