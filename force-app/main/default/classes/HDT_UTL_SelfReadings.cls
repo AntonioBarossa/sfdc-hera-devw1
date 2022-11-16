@@ -161,10 +161,6 @@ public inherited sharing class HDT_UTL_SelfReadings {
         c.CausalCode__c = causalCodeMdt.CausalCode__c;
 
         switch on request.outcome {
-            /* In caso di OK partirebbe la chiamata verso SAP e poi Heroku sul quale ultimo nel caso di pratica gia' presente
-            * andrebbe in scarto rimanendo nella fase Comunicazione Verso Heroku KO
-            * In questo caso viene eseguito il controllo di compatibilità per bloccare la pratica
-            */
             when 'OK' {
                 c.Phase__c = 'Check preliminari OK';
             }
@@ -176,10 +172,6 @@ public inherited sharing class HDT_UTL_SelfReadings {
                 c.Phase__c = 'Annullato';
                 c.Status = 'Closed';
             }
-            /** Osservando la velocita' con cui Mulesoft invia gli aggiornamenti
-             * Potrebbe andare in errore il controllo di compatibilita'
-             * Per questo conviene lasciarlo sull'OK in quanto in caso di KO la pratica verrebbe comunque annullata
-             */
             when else {
                 c.Phase__c = 'Bozza';
                 c.Status = 'In Lavorazione';

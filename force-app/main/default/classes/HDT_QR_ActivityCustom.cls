@@ -148,7 +148,6 @@ public inherited sharing class HDT_QR_ActivityCustom {
             wrts_prcgvr__Status__c,
             case__c,
             case__r.phase__c,
-            Case__r.Note__c,
             recordtypeid,
             Contact__c,
             Distributor__c,
