@@ -5,8 +5,8 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
     public static Boolean checkForReminderMail(Id recordId){
         List<EmailMessage> emailMessageList = new List<EmailMessage>();
         emailMessageList = HDT_QR_MailSender.getEmailMessage(recordId, 'Comunicazione dal gestore');
-        //return !(emailMessageList.size() == 0);
-        return true;
+        return !(emailMessageList.size() == 0);
+        //return true;
     }
 
     public static HDT_WRP_MailSender.HDT_WRP_Result getReminderMetadataHelper(Id recordId) {
@@ -141,9 +141,10 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             mailCase.Type = 'Comunicazione con il Gestore';
             mailCase.Phase__c = 'Bozza';
             mailCase.Status = 'New';
-            mailCase.Cluster__c = null;
-            mailCase.ParentId = null;
+            mailCase.Cluster__c = 'Informative';
+            mailCase.ParentId = caseId;
             mailCase.ServiceRequestID__c = '';
+            mailCase.PhaseStory__c = null;
 
             SObjectType objtype = Schema.getGlobalDescribe().get('Case');
             Schema.DescribeSObjectResult objRes = objtype.getDescribe();

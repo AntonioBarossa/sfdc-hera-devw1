@@ -2298,6 +2298,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito Consuntivazione KO</fullName>
+              <default>false</default>
+          </values>
+        <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
         </values>
