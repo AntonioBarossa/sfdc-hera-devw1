@@ -2871,7 +2871,7 @@
             <inputParameters>
                 <name>sottotipo</name>
                 <value>
-                    <elementReference>getAfterSecondForm.Type</elementReference>
+                    <elementReference>getAfterSecondForm.Subprocess__c</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

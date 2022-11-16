@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Calculate_Expiration_Date</name>
         <label>Calculate Expiration Date</label>
-        <locationX>710</locationX>
+        <locationX>578</locationX>
         <locationY>638</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
@@ -89,7 +89,7 @@
     <assignments>
         <name>AssegnaFase_0</name>
         <label>Assegna Fase</label>
-        <locationX>710</locationX>
+        <locationX>578</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
@@ -120,7 +120,7 @@
         <name>Chiusura_Activity</name>
         <label>Chiusura Activity</label>
         <locationX>578</locationX>
-        <locationY>1118</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>Get_Activity.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -200,7 +200,7 @@
     <decisions>
         <name>In_sospensione_o_chiusura</name>
         <label>In sospensione o chiusura?</label>
-        <locationX>600</locationX>
+        <locationX>512</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Richiesta_del_Cliente_accolta_0_0</targetReference>
@@ -276,31 +276,6 @@
             <label>Sospeso Contatto Cliente</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>thereAreActivity</name>
-        <label>thereAreActivity</label>
-        <locationX>710</locationX>
-        <locationY>998</locationY>
-        <defaultConnector>
-            <targetReference>Reset_Transaction</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>yes_therAreActivity</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Activity</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Chiusura_Activity</targetReference>
-            </connector>
-            <label>yes</label>
-        </rules>
-    </decisions>
     <dynamicChoiceSets>
         <name>RichiestaAccolta</name>
         <dataType>Picklist</dataType>
@@ -309,7 +284,6 @@
         <picklistField>CustomerRequestAccomplished__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
-    <environments>Default</environments>
     <formulas>
         <name>ClosureProcessType</name>
         <dataType>String</dataType>
@@ -344,11 +318,11 @@
     <recordLookups>
         <name>Get_Activity</name>
         <label>Get Activity</label>
-        <locationX>710</locationX>
+        <locationX>578</locationX>
         <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>thereAreActivity</targetReference>
+            <targetReference>Chiusura_Activity</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -372,7 +346,7 @@
     <recordLookups>
         <name>Get_Case_Aggiornato</name>
         <label>Get Case Aggiornato</label>
-        <locationX>710</locationX>
+        <locationX>578</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -393,7 +367,7 @@
     <recordLookups>
         <name>GetInputCase</name>
         <label>Get Input Case</label>
-        <locationX>600</locationX>
+        <locationX>512</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -415,7 +389,7 @@
         <name>Aggiorna_Activity</name>
         <label>Aggiorna Activity</label>
         <locationX>578</locationX>
-        <locationY>1238</locationY>
+        <locationY>1118</locationY>
         <connector>
             <targetReference>Reset_Transaction</targetReference>
         </connector>
@@ -424,8 +398,8 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>710</locationX>
-        <locationY>1574</locationY>
+        <locationX>578</locationX>
+        <locationY>1358</locationY>
         <inputReference>Get_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -438,8 +412,8 @@
     <screens>
         <name>Reset_Transaction</name>
         <label>Reset Transaction</label>
-        <locationX>710</locationX>
-        <locationY>1454</locationY>
+        <locationX>578</locationX>
+        <locationY>1238</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -555,7 +529,7 @@
     <screens>
         <name>Richiesta_del_Cliente_accolta_0_0</name>
         <label>Screen Errore</label>
-        <locationX>1018</locationX>
+        <locationX>842</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -571,7 +545,7 @@
     <screens>
         <name>Richiesta_del_Cliente_accolta_0_0_0</name>
         <label>Richiesta Cliente Accolta</label>
-        <locationX>710</locationX>
+        <locationX>578</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -674,7 +648,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>474</locationX>
+        <locationX>386</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetInputCase</targetReference>
