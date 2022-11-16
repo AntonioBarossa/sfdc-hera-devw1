@@ -310,6 +310,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'),
                 data:[
                     new fieldData('Tipo Voltura','VoltureType__c',this.typeVisibility('both'),true,false,'',''),
+                    new fieldData('','Subprocess__c',this.typeVisibility('both'),false,false,'',''),
                     new fieldData('','EffectiveDate__c',this.typeVisibility('both'),true,false,'',''),
                     new fieldData('','SignedDate__c',this.order.ParentOrder__r.SignedDate__c != null,true,true,'',this.order.ParentOrder__r.SignedDate__c),
                     new fieldData('','RetroactiveDate__c',this.typeVisibility('acqua') && this.order.Volture__c === 'Retroattiva' ,true,true,'',''),
