@@ -368,7 +368,7 @@ export default class HdtActiveRepentant extends LightningElement {
             this.cityData?.CityCode__c,
             this.dateDichiarazione,
             this.dateDecorrenza,
-            this.getFormattedDate(this.limitDateX),
+            dx,
             this.missedDueDate? "Y" : "N"
         );
 
