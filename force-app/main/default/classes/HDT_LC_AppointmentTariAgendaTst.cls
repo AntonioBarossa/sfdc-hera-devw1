@@ -76,7 +76,9 @@ public with sharing class HDT_LC_AppointmentTariAgendaTst {
         data.endDate='';
         appConfirm.data = data;
 
-        HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp wrap = new HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp('', '', '', '', '', '', '', '', startDate, endDate);
+        HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp wrap = new HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp();
+        wrap.startDate=startDate;
+        wrap.endDate=endDate;
 
         HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentConfirmResponse res = HDT_LC_AppointmentTariAgenda.handleConfirm(theCase, wrap);
        
@@ -152,7 +154,7 @@ public with sharing class HDT_LC_AppointmentTariAgendaTst {
         appAgenda.add(app);
         data.appointmentData = appAgenda;
 
-        HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp wrap = new HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp('', '', '', '', '', '', '', '', null, null);
+        HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp wrap = new HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp(null, null, null, null, null, null);
 
         HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentSearchResponse res = (HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentSearchResponse) HDT_LC_AppointmentTariAgenda.handleSearch(wrap);
         System.assertEquals(200, res.statusCode, 'The call was not successful');

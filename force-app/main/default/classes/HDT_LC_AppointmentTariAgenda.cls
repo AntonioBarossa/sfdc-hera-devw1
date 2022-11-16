@@ -24,15 +24,15 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         String indicator;
         String numberOfLines;
         String city;
-        Datetime startDate;
-        Datetime endDate;
+        @TestVisible Datetime startDate;
+        @TestVisible Datetime endDate;
 
         public HDT_WRP_DataApp(){
             return;
         }
 
         public HDT_WRP_DataApp(String purchaseOrderNumber, String streetCoding, String street,
-                                String housenumber, String typeInt, String indicator, String numberOfLines, String city, Datetime startDate, Datetime endDate) {
+                                String housenumber, String typeInt, String city) {
         
             this.purchaseOrderNumber = purchaseOrderNumber;
             this.streetCoding = streetCoding;
@@ -42,8 +42,8 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             this.indicator = indicator;
             this.numberOfLines = numberOfLines;
             this.city = city;
-            this.startDate = startDate;
-            this.endDate = endDate;
+            //this.startDate = startDate;
+            //this.endDate = endDate;
         }
 
     }
