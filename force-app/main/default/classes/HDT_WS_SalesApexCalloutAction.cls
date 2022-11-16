@@ -104,8 +104,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                     }
                     else if(w.objectType == 'Order'){
                         for( wrts_prcgvr.MRR_1_0.Field f : w.fields){
-                            if(f.name.equalsIgnoreCase('TIPO_OPERAZIONE') && 'Voltura'.equalsIgnoreCase((String)obj.get('ProcessType__c')) && 'Acqua'.equalsIgnoreCase((String)obj.get('Commodity__c')) ){
-                                f.value = (String)obj.get('Subprocess__c');
+                            if( f.name.equalsIgnoreCase('TIPO_OPERAZIONE') && 'Voltura'.equalsIgnoreCase(f.value) && 'Acqua'.equalsIgnoreCase(commodity) ){
+                                f.value = 'Voltura ' + (String)obj.get('Subprocess__c');
                             }
                         }
                     }
