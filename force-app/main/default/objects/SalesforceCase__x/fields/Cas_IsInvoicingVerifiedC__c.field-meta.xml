@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Indirizzo Verificato [Spedizione/Fatturazione]</label>
+    <label>Indirizzo Verificato [Sped./Fatt.]</label>
     <type>Checkbox</type>
 </CustomField>

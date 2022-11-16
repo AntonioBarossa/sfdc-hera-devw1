@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Rifiuta supporto al calcolo del ravvedimento operoso</label>
+    <label>Rifiuta supp. al calc. del ravv. operoso</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

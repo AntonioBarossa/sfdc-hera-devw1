@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Codice Via Stradario SAP [Residenziale/Sede Legale]</label>
+    <label>Codice Via Strad. SAP [Res./Sede Legale]</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

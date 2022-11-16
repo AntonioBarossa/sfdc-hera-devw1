@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Codice Località [Residenziale/Sede Legale]</label>
+    <label>Codice Località [Res./Sede Legale]</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

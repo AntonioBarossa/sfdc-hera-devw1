@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Recapito Telefonico erede/beneficiario alternativo</label>
+    <label>Recapito Telefonico erede/benef. alt.</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>
