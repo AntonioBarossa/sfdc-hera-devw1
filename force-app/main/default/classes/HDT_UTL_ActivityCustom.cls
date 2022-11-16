@@ -72,7 +72,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             Case c = new Case();
             c.Id = s.Case__c;
             c.phase__c	='In Lavorazione';
-            c.Note__c = causale;
+            c.Note__c = s.Case__r.Note__c != null ? s.Case__r.Note__c + '\n Esito Approvazione: ' + causale : 'Esito Approvazione: ' + causale;
             sobjToUpdate.add(c);
 
             HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
