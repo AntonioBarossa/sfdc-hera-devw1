@@ -80,7 +80,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
             console.error('status body: ' + JSON.stringify(error.body));
         }
         if (data && this.params){
-            this.case = data;
+            this.case = {...data};
                 this.searchType = this.params.searchType;
                 this.showSpinner = false;
                 this.refreshRecord = false;
