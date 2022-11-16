@@ -107,7 +107,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     confirmAppointment(){
         this.showSpinner = true;
         let row = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
-        const wrap = new Wrapper(this.caseid,this.case.InvoicingStreetCode__c,this.case.InvoicingStreetName__c,this.case.InvoicingStreetNumber__c, this.case.TypeOperation__c, this.case.InvoicingCity__c);
+        const wrap = this.createWrapper();
         wrap.startDate=row.startDate;
         wrap.endDate=row.endDate;
         handleConfirm({
@@ -177,18 +177,21 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     }
 
     getNewDate(){
+        const wrap = this.createWrapper();
+        this.handleSearchMethod(wrap);
+    }
+
+    createWrapper(){
         let purchaseOrderNumber = this.caseid;
-        let streetCoding = this.case.InvoicingPostalCode__c
-        let street = this.case.InvoicingStreetName__c
+        let streetCoding = this.case.InvoicingStreetCode__c
         let housenumber = this.case.InvoicingStreetNumber__c
         let typeInt = this.case.TypeOperation__c;
         let indicator = '';
         let numberOfLines = '';
         let city = this.case.InvoicingCity__c;
+        let street = `${this.case.InvoicingStreetName__c}, ${housenumber} ${this.case.InvoicingPostalCode__c} ${city}`;
 
-        const wrap = new Wrapper(purchaseOrderNumber, streetCoding, street, housenumber, typeInt, city, indicator, numberOfLines);
-
-        this.handleSearchMethod(wrap);
+        return new Wrapper(purchaseOrderNumber, streetCoding, street, housenumber, typeInt, city, indicator, numberOfLines);
     }
 
     handleViewMethod(){
