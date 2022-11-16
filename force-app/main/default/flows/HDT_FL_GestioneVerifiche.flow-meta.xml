@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Chiudi_Activity_Scarto</name>
         <label>Chiudi Activity Scarto</label>
-        <locationX>1810</locationX>
+        <locationX>1942</locationX>
         <locationY>1430</locationY>
         <actionName>HDT_LC_EditScartiComplessi</actionName>
         <actionType>apex</actionType>
@@ -273,7 +273,7 @@
     <assignments>
         <name>Assenga_Process_Type_0_0</name>
         <label>Assenga Process Type</label>
-        <locationX>1810</locationX>
+        <locationX>1942</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -289,7 +289,7 @@
     <assignments>
         <name>Assenga_Process_Type_0_0_0</name>
         <label>Assenga Process Type</label>
-        <locationX>2074</locationX>
+        <locationX>2206</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -305,7 +305,7 @@
     <assignments>
         <name>Init_Case_Per_Risottomissione</name>
         <label>Init Case Per Risottomissione</label>
-        <locationX>1810</locationX>
+        <locationX>1942</locationX>
         <locationY>1550</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.HerokuPracticeCode__c</assignToReference>
@@ -328,7 +328,7 @@
     <assignments>
         <name>Predeterminabile</name>
         <label>Predeterminabile</label>
-        <locationX>2074</locationX>
+        <locationX>2338</locationX>
         <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
@@ -369,7 +369,7 @@
     <decisions>
         <name>Check_Rilavorazione_Scarto</name>
         <label>Rilavorazione Scarto?</label>
-        <locationX>1942</locationX>
+        <locationX>2074</locationX>
         <locationY>1310</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Case</targetReference>
@@ -466,7 +466,7 @@
     <decisions>
         <name>Energia_Elettrica_o_Gas_0</name>
         <label>Energia Elettrica o Gas?</label>
-        <locationX>1942</locationX>
+        <locationX>2074</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Assenga_Process_Type_0_0_0</targetReference>
@@ -491,7 +491,7 @@
     <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
-        <locationX>1551</locationX>
+        <locationX>1617</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Energia_Elettrica_o_Gas_0</targetReference>
@@ -718,7 +718,7 @@
     <decisions>
         <name>Tipo_Preventivo</name>
         <label>Tipo Preventivo</label>
-        <locationX>1942</locationX>
+        <locationX>2074</locationX>
         <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Predeterminabile</targetReference>
@@ -739,11 +739,41 @@
             </connector>
             <label>Rapido</label>
         </rules>
+        <rules>
+            <name>Rapido_a_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Verifica Interna</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Interventi con Verifica</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Lettura su Contratto Aperto</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Predeterminabile</targetReference>
+            </connector>
+            <label>Rapido a 0</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Tipologia_Case</name>
         <label>Tipologia Case?</label>
-        <locationX>800</locationX>
+        <locationX>833</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Il_Case_in_Bozza</targetReference>
@@ -766,6 +796,7 @@
         </rules>
     </decisions>
     <description>Adeguamenti per Gestione Scarti</description>
+    <environments>Default</environments>
     <formulas>
         <name>Calcola_Quotation_Validity_Date_Acqua</name>
         <dataType>Date</dataType>
@@ -805,7 +836,7 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>800</locationX>
+        <locationX>833</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -878,7 +909,7 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>1942</locationX>
+        <locationX>2074</locationX>
         <locationY>1766</locationY>
         <connector>
             <targetReference>LoadSpinner</targetReference>
@@ -945,7 +976,7 @@
     <screens>
         <name>LoadSpinner</name>
         <label>LoadSpinner</label>
-        <locationX>1942</locationX>
+        <locationX>2074</locationX>
         <locationY>1886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1158,7 +1189,7 @@
     <screens>
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>1942</locationX>
+        <locationX>2074</locationX>
         <locationY>854</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1237,7 +1268,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>674</locationX>
+        <locationX>707</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>

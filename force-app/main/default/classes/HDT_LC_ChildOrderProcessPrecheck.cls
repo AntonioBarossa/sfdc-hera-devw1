@@ -118,7 +118,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     processType = selectedProcessObject.get('RecordTypeName__c').equalsIgnoreCase('HDT_RT_Voltura') ? 'Voltura' : 'Voltura con Switch';
                     newOrder.Subprocess__c = 'Standard';
                     newOrder.VoltureType__c = 'Ordinaria';
-                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
+                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : processCode;
+                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Gas'? 'VTG' : processCode;
+                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Acqua'? 'MA1' : processCode;
                     newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                     newOrder.SapContractCode__c = sapCode;
                     newOrder.Id = orderId;

@@ -476,6 +476,11 @@
                 <label>In gestione</label>
             </value>
             <value>
+                <fullName>Integrazione richiesta social</fullName>
+                <default>false</default>
+                <label>Integrazione richiesta social</label>
+            </value>
+            <value>
                 <fullName>Inviare Comunicazione Disconoscimento</fullName>
                 <default>false</default>
                 <label>Inviare Comunicazione Disconoscimento</label>

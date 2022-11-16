@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ActivityEndTimeC__c</fullName>
+    <description>ActivityEndTimeC</description>
+    <externalDeveloperName>ActivityEndTimeC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Fine Attività</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

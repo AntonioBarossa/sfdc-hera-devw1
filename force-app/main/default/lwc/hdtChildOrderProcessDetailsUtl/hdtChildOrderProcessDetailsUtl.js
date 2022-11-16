@@ -310,6 +310,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'),
                 data:[
                     new fieldData('Tipo Voltura','VoltureType__c',this.typeVisibility('both'),true,false,'',''),
+                    new fieldData('','Subprocess__c',this.typeVisibility('both'),false,false,'',''),
                     new fieldData('','EffectiveDate__c',this.typeVisibility('both'),true,false,'',''),
                     new fieldData('','SignedDate__c',this.order.ParentOrder__r.SignedDate__c != null,true,true,'',this.order.ParentOrder__r.SignedDate__c),
                     new fieldData('','RetroactiveDate__c',this.typeVisibility('acqua') && this.order.Volture__c === 'Retroattiva' ,true,true,'',''),
@@ -425,7 +426,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('','NotDisconnectabilityCustomer__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AF_NODISAL), false, false, '',''),
                 new fieldData('','SupplyUseType__c', this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione', false, false, '','ACQUEDOTTO CIVILE'),
                 new fieldData('','SeasonUse__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.ZGEWKEY), this.rateCategoryVisibility(rateCategories.ZGEWKEYreq), false, '',''),
-                new fieldData('','ForfaitSewer__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AQVOL_FORF), false, true, '',''),
+                new fieldData('','ForfaitSewer__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AQVOL_FORF), false, false, '',''),
                 new fieldData('','HydrantMouthsNumber__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AF_BOC_IDR), this.rateCategoryVisibility(rateCategories.AF_BOC_IDRreq), false, '',''),
                 new fieldData('','NumerousComunity__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFNUM_COMP), false, true, '',''),
                 new fieldData('','DomesticResidentNumber__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFNCOMP), this.rateCategoryVisibility(rateCategories.AFNCOMPreq), false, '',''),
