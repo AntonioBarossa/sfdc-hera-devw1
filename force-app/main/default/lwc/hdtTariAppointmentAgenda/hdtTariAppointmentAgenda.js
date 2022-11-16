@@ -48,7 +48,7 @@ class Wrapper{
         this.housenumber = housenumber;
         this.indicator = indicator;
         this.city = city;
-        this.typeInt = typeInt;
+        this.typeInt = typeInt?.toUpperCase();
         this.numberOfLines = numberOfLines;
 
     }
