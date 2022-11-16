@@ -2,10 +2,10 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 16-11-2022
+ * @last modified on  : 04-11-2022
  * @last modified by  : Giacinto Florio
 **/
-@SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfStmtsMustUseBraces, PMD.IfElseStmtsMustUseBraces, PMD.pmdAvoidDebugStatements, PMD.CyclomaticComplexity, PMD.ClassNamingConventions, PMD.AvoidDebugStatements')
+@SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfStmtsMustUseBraces, PMD.IfElseStmtsMustUseBraces, PMD.pmdAvoidDebugStatements, PMD.CyclomaticComplexity, PMD.ClassNamingConventions')
 public with sharing class HDT_LC_AppointmentTariAgenda {
     
     private static HDT_SRV_AppointmentAgenda srvAgenda = new HDT_SRV_AppointmentAgenda();
@@ -51,9 +51,8 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         String typeInt;
         String indicator;
         String numberOfLines;
-        String city;
 
-        public HDT_WRP_AppointmentReqSearch(HDT_WRP_DataApp wrap, String city) {
+        public HDT_WRP_AppointmentReqSearch(HDT_WRP_DataApp wrap) {
         
             this.purchaseOrderNumber = wrap.purchaseOrderNumber;
             this.streetCoding = wrap.streetCoding;
@@ -62,7 +61,6 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             this.typeInt = wrap.typeInt;
             this.indicator = wrap.indicator;
             this.numberOfLines = wrap.numberOfLines;
-            this.city = city;
         }
     }
 
@@ -143,10 +141,10 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     }
 
     @AuraEnabled(cacheable=true)
-    public static HDT_WS_AppointmentSearchResponse handleSearch(HDT_WRP_DataApp wrap, String city) {
-        HDT_WRP_AppointmentReqSearch req = new HDT_WRP_AppointmentReqSearch(wrap, city);
+    public static HDT_WS_AppointmentSearchResponse handleSearch(HDT_WRP_DataApp wrap) {
+        HDT_WRP_AppointmentReqSearch req = new HDT_WRP_AppointmentReqSearch(wrap);
         HDT_WS_AppointmentSearchResponse res = (HDT_WS_AppointmentSearchResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH_SEARCH,'POST', req, HDT_WS_AppointmentSearchResponse.class);
-        System.Debug(LoggingLevel.DEBUG,'search res -> ' + res); 
+        System.Debug('search res -> ' + res); 
         return res;
     }
 
@@ -157,6 +155,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         
         if(Test.isRunningTest()){
             res.status = 'success';
+            System.debug('@@@ response ->' + res);
         }
 
         if(res.status.equalsIgnoreCase('success')){
@@ -170,7 +169,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
                 FreeWithdraw__c ritiro = new FreeWithdraw__c();
                 ritiro.ServicePoint__c = theCase.ServicePoint__c;
                 ritiro.LastFreeWithdrawDate__c = dataRitiro;
-                System.debug(LoggingLevel.DEBUG, 'ritiro -> ' + ritiro);
+                System.debug('ritiro -> ' + ritiro);
                 HDT_UTL_DatabaseService.insertSObject(ritiro);
             }
             HDT_UTL_DatabaseService.updateSObject(theCase);
@@ -204,7 +203,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     @AuraEnabled
     public static void handleNewActivityCreationAndCaseUpdate(Case caso, Boolean updateCase, String templateName){    
         
-        System.debug(LoggingLevel.DEBUG,'templateName ->' + templateName); 
+        System.debug('templateName ->' + templateName); 
         wrts_prcgvr__Activity__c actToIns = null;
         Boolean isNoActivityUncompleted = [ SELECT Count() FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c!='Chiusa' AND wrts_prcgvr__ActivityTemplate__r.Name = 'Contattare Cliente' ] == 0;
         if(templateName!=null && isNoActivityUncompleted){
@@ -224,14 +223,14 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     @AuraEnabled
     public static void updateCase(List<Case> cases){ 
         if(cases?.size()>0){
-            System.debug(LoggingLevel.DEBUG, 'cases.size ->' + cases.size());
+            System.debug('cases.size ->' + cases.size());
             HDT_UTL_DatabaseService.insertSObject(cases);
         }
     }
 
     public static HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento initAppointmentRequestCase(Id caseId,requestType requestMethod){
         HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento appointment = new HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento();
-        //Case caso = HDT_UTL_AppointmentAgenda.getCase(caseId,FIELDS_FOR_QUERY_CASE);
+        Case caso = HDT_UTL_AppointmentAgenda.getCase(caseId,FIELDS_FOR_QUERY_CASE);
         appointment.documentkey = 'test';
         appointment.rifRich = 'test';
         String modApp = 'test';
