@@ -15,17 +15,17 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     private static final String REQUEST_PATH_CONFIRM = '/appointments/confirm';
     private static final String REQUEST_PATH_VIEW = '/appointments';
 
-    public virtual class HDT_WRP_DataApp{
-        String purchaseOrderNumber;
-        String streetCoding;
-        String street;
-        String housenumber;
-        String typeInt;
-        String indicator;
-        String numberOfLines;
-        String city;
-        @TestVisible Datetime startDate;
-        @TestVisible Datetime endDate;
+    public class HDT_WRP_DataApp{
+        @AuraEnabled public String purchaseOrderNumber {get;set;}
+        @AuraEnabled public String streetCoding {get;set;}
+        @AuraEnabled public String street {get;set;}
+        @AuraEnabled public String housenumber {get;set;}
+        @AuraEnabled public String typeInt {get;set;}
+        @AuraEnabled public String indicator {get;set;}
+        @AuraEnabled public String numberOfLines {get;set;}
+        @AuraEnabled public String city {get;set;}
+        @AuraEnabled public Datetime startDate {get;set;}
+        @AuraEnabled public Datetime endDate {get;set;}
 
         public HDT_WRP_DataApp(){
             return;
