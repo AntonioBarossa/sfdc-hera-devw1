@@ -1281,6 +1281,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>InvoicingStreetCode__c</field>
+            <value>
+                <elementReference>getServicePoint.SupplyStreetCode__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ServicePoint__c</field>
             <value>
                 <elementReference>Selezione_Fornitura.ServicePointId</elementReference>

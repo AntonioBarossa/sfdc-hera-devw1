@@ -23,7 +23,9 @@ const OBJECT_FIELDS =[
     'InvoicingPostalCode__c',
     'InvoicingStreetNumber__c',
     'InvoicingStreetName__c',
-    'InvoicingStreetCode__c'
+    'InvoicingCity__c',
+    'InvoicingStreetCode__c',
+    'TypeOperation__c'
 ];
 
 const COLUMNS = [
@@ -39,14 +41,16 @@ const COLUMNSVIEW = [
 ];
 
 class Wrapper{
-    constructor(purchaseOrderNumber,streetCoding,street,housenumber,indicator,typeInt,numberOfLines){
+    constructor(purchaseOrderNumber,streetCoding,street,housenumber,typeInt, city, indicator, numberOfLines){
         this.purchaseOrderNumber = purchaseOrderNumber;
         this.streetCoding = streetCoding;
         this.street = street;
         this.housenumber = housenumber;
         this.indicator = indicator;
+        this.city = city;
         this.typeInt = typeInt;
         this.numberOfLines = numberOfLines;
+
     }
 }
 
@@ -103,13 +107,12 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     confirmAppointment(){
         this.showSpinner = true;
         let row = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
-        const wrap = new Wrapper(this.caseid,this.case.InvoicingPostalCode__c,this.case.InvoicingStreetName__c,this.case.InvoicingStreetNumber__c,null,null,null);
-
+        const wrap = new Wrapper(this.caseid,this.case.InvoicingStreetCode__c,this.case.InvoicingStreetName__c,this.case.InvoicingStreetNumber__c, this.case.TypeOperation__c, this.case.InvoicingCity__c);
+        wrap.startDate=row.startDate;
+        wrap.endDate=row.endDate;
         handleConfirm({
             theCase : this.case,
-            wrap : wrap,
-            startDate : row.startDate,
-            endDate : row.endDate
+            wrap : wrap
         }).then(result =>{
             
             if (!equalsIgnoreCase(result?.status, 'success')){
@@ -178,11 +181,12 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         let streetCoding = this.case.InvoicingPostalCode__c
         let street = this.case.InvoicingStreetName__c
         let housenumber = this.case.InvoicingStreetNumber__c
-        let typeInt = '';
+        let typeInt = this.case.TypeOperation__c;
         let indicator = '';
         let numberOfLines = '';
+        let city = this.case.InvoicingCity__c;
 
-        const wrap = new Wrapper(purchaseOrderNumber, streetCoding, street, housenumber, typeInt, indicator, numberOfLines);
+        const wrap = new Wrapper(purchaseOrderNumber, streetCoding, street, housenumber, typeInt, city, indicator, numberOfLines);
 
         this.handleSearchMethod(wrap);
     }
