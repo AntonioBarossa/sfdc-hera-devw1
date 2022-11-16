@@ -18,12 +18,9 @@ const OBJECT_FIELDS =[
     'CreatedDate',
     'SupplyPostalCode__c',
     'SupplyStreetName__c',
-    'SupplyStreetNumber__c',
-    'SupplyStreetCode__c',
-    'InvoicingPostalCode__c',
-    'InvoicingStreetNumber__c',
-    'InvoicingStreetName__c',
-    'InvoicingStreetCode__c'
+    'InvoicingStreetCode__c',
+    'SupplyCity__c',
+    'TypeOperation__c'
 ];
 
 const COLUMNS = [
@@ -103,7 +100,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     confirmAppointment(){
         this.showSpinner = true;
         let row = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
-        const wrap = new Wrapper(this.caseid,this.case.InvoicingPostalCode__c,this.case.InvoicingStreetName__c,this.case.InvoicingStreetNumber__c,null,null,null);
+        const wrap = new Wrapper(this.caseid,this.case.SupplyPostalCode__c,this.case.SupplyStreetName__c,this.case.InvoicingStreetCode__c,null,null,null);
 
         handleConfirm({
             theCase : this.case,
@@ -175,16 +172,15 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
 
     getNewDate(){
         let purchaseOrderNumber = this.caseid;
-        let streetCoding = this.case.InvoicingPostalCode__c
-        let street = this.case.InvoicingStreetName__c
-        let housenumber = this.case.InvoicingStreetNumber__c
-        let typeInt = '';
+        let streetCoding = this.case.SupplyStreetCode__c
+        let street = this.case.SupplyStreetName__c
+        let housenumber = this.case.InvoicingStreetCode__c
+        let typeInt = this.case.TypeOperation__c;
         let indicator = '';
         let numberOfLines = '';
+        let city = this.case.SupplyCity__c;
 
-        const wrap = new Wrapper(purchaseOrderNumber, streetCoding, street, housenumber, typeInt, indicator, numberOfLines);
-
-        this.handleSearchMethod(wrap);
+        this.handleSearchMethod(purchaseOrderNumber, streetCoding, street, housenumber,typeInt, indicator, numberOfLines, city);
     }
 
     handleViewMethod(){
@@ -225,10 +221,12 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         });
     }
 
-    handleSearchMethod(wrap){
+    handleSearchMethod(purchaseOrderNumber, streetCoding, street, housenumber,typeInt, indicator, numberOfLines, city){
         this.showSpinner = true;
+        const wrap = new Wrapper(purchaseOrderNumber, streetCoding, street, housenumber, typeInt, indicator, numberOfLines);
         handleSearch({
-            wrap : wrap
+            wrap : wrap,
+            city : city
         }).then(result =>{
             if(!equalsIgnoreCase(result?.status, 'success')){ 
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
