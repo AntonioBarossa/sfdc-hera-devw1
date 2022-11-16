@@ -90,14 +90,14 @@ public with sharing class HDT_UTL_ProcessDateManager {
                         else{
                             Date dataRipensamento = order.MaxAfterthoughtDate__c;
                             if(dataRipensamento != null && order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale' ){
-								if(dataRipensamento > Date.Today()){
+								if(dataRipensamento >= Date.Today()){
 									dateSentToSii = dataRipensamento.addDays(1);
 								}else if(dataRipensamento < Date.Today()){
-									dateSentToSii = Date.today();
+									dateSentToSii = order.IsTransition__c? Date.today().addDays(1) : Date.today();
 								}
-								else {
+								/* else {
 									dateSentToSii = dataRipensamento;
-								}
+								} */
                             }else {
 								dateSentToSii = Date.today();
 							}
