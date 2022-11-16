@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ord_ClusterC__c</fullName>
+    <description>Ord_ClusterC</description>
+    <externalDeveloperName>Ord_ClusterC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Cluster</label>
+    <length>255</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -50,13 +50,19 @@
             "searchKey"     : cmp.get('v.searchKey'),
             "sortBy"        : cmp.get('v.sortedBy'),
             "sortDirection" : cmp.get('v.sortedDirection'),
-            "filterby"      : cmp.get('v.value')
+            "filterby"      : cmp.get('v.value'),
+            "silos"         : cmp.get('v.silosValue')
         }); 
         action.setCallback(this, function(response) {
             this.stopSpinner(cmp);
             let rows=[];
             var state = response.getState();
             if (cmp.isValid() && state == "SUCCESS") {
+                if(!response.getReturnValue()){
+                    this.message="Il Silos selezionato non è ammesso per la tua utenza!";
+                    this.showNotification();
+                    return;
+                }
                 var records =response.getReturnValue();
                 records.forEach(function(record){
                     record.linkName = '/'+record.Id;

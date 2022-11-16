@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LegalFormTypeC__c</fullName>
+    <description>LegalFormTypeC</description>
+    <externalDeveloperName>LegalFormTypeC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Tipo Forma Giuridica</label>
+    <length>255</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

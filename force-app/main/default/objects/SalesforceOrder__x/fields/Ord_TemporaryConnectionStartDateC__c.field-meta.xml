@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ord_TemporaryConnectionStartDateC__c</fullName>
+    <description>Ord_TemporaryConnectionStartDateC</description>
+    <externalDeveloperName>Ord_TemporaryConnectionStartDateC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Data inizio connessione temporanea</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>
