@@ -137,11 +137,11 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         //which of these items are bonuses
         //the size of each list is the number of occurence that family has
         for(OrderItem item : items){
-            if(!familyToOccurrencies.containsKey(item.Product2.Family)){
+            if(!familyToOccurrencies.containsKey((item.Product2.Family).toLowerCase())){
                 //system.debug('3');
-                familyToOccurrencies.put(item.Product2.Family, new List<OrderItem>());
+                familyToOccurrencies.put((item.Product2.Family).toLowerCase(), new List<OrderItem>());
             }
-            familyToOccurrencies.get(item.Product2.Family).add(item);
+            familyToOccurrencies.get((item.Product2.Family).toLowerCase()).add(item);
         }
         //system.debug(order.CommodityFormula__c);
         //system.debug(familyToOccurrencies.keyset());
@@ -171,13 +171,13 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         //The for loop below populate familyOperando Map, list of all products id to query and all fields to query
         //system.debug('5a');
         for(Service26Config__c operando : configs){
-            if(!familyToOperando.containsKey(operando.ProductFamily__c)){
-                familyToOperando.put(operando.ProductFamily__c, new List<Service26Config__c>());
+            if(!familyToOperando.containsKey((operando.ProductFamily__c).toLowerCase())){
+                familyToOperando.put((operando.ProductFamily__c).toLowerCase(), new List<Service26Config__c>());
             }
-            familyToOperando.get(operando.ProductFamily__c).add(operando);
+            familyToOperando.get((operando.ProductFamily__c).toLowerCase()).add(operando);
             if(operando.Occurrence__c==1){
                 //system.debug('5b');
-                for(orderItem item : familyToOccurrencies.get(operando.ProductFamily__c)){
+                for(orderItem item : familyToOccurrencies.get((operando.ProductFamily__c).toLowerCase())){
                     productIds.add(item.Product2Id);
                 }
                 for(Service26Config__c position : Operando.Service26Configs__r){
