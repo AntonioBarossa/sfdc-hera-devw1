@@ -11,11 +11,15 @@ export default class HdtCampaignMemberPartialOutcome extends LightningElement {
     @track value;
     @api campaignMemberId;
 
+    valueLabel;
+
     options;
 
     partialResultClick() {
 
         getPartialOutcomeValues({'campaignMemberId': this.campaignMemberId , 'outcomeType': 'Esito Parziale'}).then(result => {
+
+            this.options = [];
 
             console.log('result --> '+JSON.stringify(result));
             var conts = result;
@@ -26,7 +30,7 @@ export default class HdtCampaignMemberPartialOutcome extends LightningElement {
                     label: key,
                     value: conts[key]
                 };
-
+                
                 if(this.options != undefined){
                     this.options = [...this.options, option];
                 }
@@ -50,9 +54,14 @@ export default class HdtCampaignMemberPartialOutcome extends LightningElement {
 
     submitDetails() {
         console.log('this.value --> '+this.value);
-        updateCampaignMemberStatusValue({ 'campaignMemberId': this.campaignMemberId, 'statusValue': this.value }).then(data => {
+        console.log('this.valueLabel --> '+this.valueLabel);
+        updateCampaignMemberStatusValue({ 'campaignMemberId': this.campaignMemberId, 'statusValue': this.valueLabel }).then(data => {
             console.log("ok" + JSON.stringify(data));
             this.isModalOpen = false;
+
+            
+
+
             let status = this.value;
             this.dispatchEvent(new CustomEvent('aftersubmit', { detail: {status} }));
         }).catch(err => {
@@ -63,5 +72,16 @@ export default class HdtCampaignMemberPartialOutcome extends LightningElement {
     handleChange(event) {
         this.value = event.detail.value;
         console.log(this.value);
+
+        for(var key in this.options){
+            console.log('key --> '+key);
+            if(this.options[key].value == this.value){
+                this.valueLabel = this.options[key].label;
+                break;
+            }
+        }
+        
+        console.log('this.valueLabel --> '+this.valueLabel);
+
     }
 }

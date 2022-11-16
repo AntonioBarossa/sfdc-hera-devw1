@@ -8,10 +8,21 @@ public with sharing class HDT_LC_ClientHistory {
 
     private static  Map<String, List<String>> mappingRoleToMarcatura = new Map<String, List<String>>{
         'HDT_BackOffice' => new List<String>{},
+        'HDT_FrontOffice_Reseller' => new List<String>{},
         'HDT_FrontOffice_AAAEBT' => new List<String>{'AAS Persona fisica','AAS Ditta individuale','AAS Azienda','AAS Parti comuni','AAS Condominio','AAS Associazione'},
         'HDT_FrontOffice_HERA_COMM' => new List<String>{'D1 - Persona fisica', 'D2 - Ditta individuale', 'D3 - Azienda', 'D4 - Parti comuni', 'D5 - Condominio', 'D6 - Associazione', 'D7 - BP Doppio'},
         'HDT_FrontOffice_MMS' => new List<String>{'MMS Persona fisica','MMS Ditta individuale','MMS Azienda','MMS Parti comuni','MMS Condominio','MMS Associazione'}
     };
+    
+    //>>>START 25/10/2022 costanzo.lomele@webresults.it Wave 2
+    private static  Map<String, List<String>> mappingRoleToCompanyOwner = new Map<String, List<String>>{
+        'HDT_BackOffice' => new List<String>{},
+        'HDT_FrontOffice_AAAEBT' => new List<String>{'AAA-EBT'},
+        'HDT_FrontOffice_HERA_COMM' => new List<String>{'HERA COMM'},
+        'HDT_FrontOffice_MMS' => new List<String>{'MMS'},
+        'HDT_FrontOffice_Reseller' => new List<String>{'Reseller'}
+    };
+    //>>>END 25/10/2022 costanzo.lomele@webresults.it Wave 2
 
     public class HDT_LC_Link{
         @AuraEnabled public String label;
@@ -32,6 +43,7 @@ public with sharing class HDT_LC_ClientHistory {
         @AuraEnabled public String Id {get;set;}
         @AuraEnabled public String isStoricizzato {get;set;}
         @AuraEnabled public String NomeProprio {get;set;}
+        @AuraEnabled public String silos {get;set;}
  
         public HDT_LC_Customer(String Nome,
                         String CodiceFiscale,
@@ -39,7 +51,8 @@ public with sharing class HDT_LC_ClientHistory {
                         String CodiceCliente,
                         String Id,
                         String isStoricizzato,
-                        String NomeProprio
+                        String NomeProprio,
+                        String silos
                         ){
                         this.Nome	        = Nome;	
                         this.CodiceFiscale	= CodiceFiscale;	
@@ -48,6 +61,7 @@ public with sharing class HDT_LC_ClientHistory {
                         this.Id	            = Id;
                         this.isStoricizzato = isStoricizzato;
                         this.NomeProprio    = NomeProprio;
+                        this.silos          = silos;
                 }             
      }
      // End Refactoring post intervento Andrea
@@ -73,21 +87,40 @@ public with sharing class HDT_LC_ClientHistory {
         else return null;
     }
     
+    public static List<String> getSilosFromRole(){
+        String uRoleId = UserInfo.getUserRoleId();
+        if(uRoleId != null){
+            if (!Schema.sObjectType.UserRole.fields.DeveloperName.isAccessible()){
+                return null;
+            }    
+            String roleDevName = [SELECT DeveloperName FROM UserRole  WHERE Id = :uRoleId LIMIT 1].DeveloperName;            
+            return mappingRoleToCompanyOwner.get(roleDevName);
+        }
+        else return null;
+    }
+    
     @AuraEnabled
-    public static List<HDT_LC_Customer> getExternalCustomer( String searchKey, String sortBy, String sortDirection, String filterby) {
+    public static List<HDT_LC_Customer> getExternalCustomer( String searchKey, String sortBy, String sortDirection, String filterby, String silos) {
         
         List <HDT_LC_Customer> wrapperToreturn = new List <HDT_LC_Customer>();
+
+        // se il ruolo non è presente nella mappa allora non ha alcun permesso di visualizzazione sugli account
+
+        List<String> marcaturePermesse = getMarkingsFromRole();
+        system.debug(marcaturePermesse);
+        if(marcaturePermesse == null){
+            return wrapperToreturn;
+        }
+
+        List<String> silosPermessi = getSilosFromRole();
+        system.debug(silosPermessi);
+        if(silosPermessi != null && !silosPermessi.contains(silos)){
+            return null;
+        }
  
         if ( searchKey != null && searchKey != '' && searchKey.length() > 5) {
 
-            List<String> marcaturePermesse = getMarkingsFromRole();
-            
-            system.debug(marcaturePermesse);
-            // se il ruolo non è presente nella mappa allora non ha alcun permesso di visualizzazione sugli account
-            if(marcaturePermesse == null){
-                return wrapperToreturn;
-            }
-            
+            //>>> QUERY SU SIEBELCUSTOMER
             String queryStoricizzati = 'select Id, ALIAS_NAME__c, TAX_IDEN_NUM__c ,VAT_REGN_NUM__c,NAME_1__c , OU_NUM__c FROM SiebelCustomer__x ';   
             if(filterby=='Codice Fiscale'){
                 queryStoricizzati +=' WHERE TAX_IDEN_NUM__c = :searchKey';
@@ -95,9 +128,8 @@ public with sharing class HDT_LC_ClientHistory {
                 queryStoricizzati += ' WHERE VAT_REGN_NUM__c = :searchKey';
             }else if(filterby=='Codice Cliente'){
                 queryStoricizzati += ' WHERE OU_NUM__c = :searchKey';
-            }     
-            // filtro marcatura
-            // queryStoricizzati += getQueryMarcaturaString(marcaturePermesse, 'SiebelCustomer__x');
+            }
+
             if (marcaturePermesse.size() > 0)
                 queryStoricizzati += ' AND X_MARCATURA_CLIENTE__c = :marcaturePermesse ';
 
@@ -105,29 +137,6 @@ public with sharing class HDT_LC_ClientHistory {
                 queryStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
             }
             List<SiebelCustomer__x> listSiebelCustomer = HDT_UTL_ObjectManagerTst.records(Database.query( String.escapeSingleQuotes(queryStoricizzati) )); 
-            
-            //List<SiebelCustomer__x> listSiebelCustomer = Database.query( String.escapeSingleQuotes(queryStoricizzati) );
-            
-            //START>>> Modifica Task HRAWRM-691 marco.arci@webresults.it
-            /*
-            String queryNonStoricizzati = 'select Id, FirstName__c,LastName__c  , FiscalCode__c ,VATNumber__c, CustomerCode__c FROM Account ';   
-            if(filterby=='Codice Fiscale'){
-                queryNonStoricizzati +=' WHERE FiscalCode__c = :searchKey';
-            }else if(filterby=='Partita Iva'){
-                queryNonStoricizzati += ' WHERE VATNumber__c = :searchKey';
-            }else if(filterby=='Codice Cliente'){
-                queryNonStoricizzati += ' WHERE CustomerCode__c = :searchKey';
-            }     
-            // filtro marcatura
-            if (marcaturePermesse.size() > 0)
-                queryNonStoricizzati += ' AND CustomerMarking__c = :marcaturePermesse ';
-
-            if (sortBy != null && sortDirection != null ) {
-                queryNonStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
-            } 
-            List<Account> listAccount =  Database.query( String.escapeSingleQuotes(queryNonStoricizzati) );
-            */
-            //END>>> Modifica Task HRAWRM-691 marco.arci@webresults.it
 
             for(SiebelCustomer__x SiebelCustomer:listSiebelCustomer){
                 wrapperToreturn.add(
@@ -138,27 +147,44 @@ public with sharing class HDT_LC_ClientHistory {
                         SiebelCustomer.OU_NUM__c,
                         SiebelCustomer.Id,
                         'SI',
-                        SiebelCustomer.NAME_1__c
+                        SiebelCustomer.NAME_1__c,
+                        null
                         )
                 );
             }
-            //START>>> Modifica Task HRAWRM-691 marco.arci@webresults.it
-            /*
-            for(Account sfCustomer:listAccount){
+            
+            //>>> QUERY SU SALESFORCECUSTOMER
+            String querySvecchiati = 'select Id, FiscalCodeC__c, VATNumberC__c, CustomerCodeC__c, FirstNameC__c, LastNameC__c, CompanyOwnerC__c FROM SalesforceCustomer__x ';
+            if(filterby=='Codice Fiscale'){
+                querySvecchiati +=' WHERE FiscalCodeC__c = :searchKey';
+            }else if(filterby=='Partita Iva'){
+                querySvecchiati += ' WHERE VATNumberC__c = :searchKey';
+            }else if(filterby=='Codice Cliente'){
+                querySvecchiati += ' WHERE CustomerCodeC__c = :searchKey';
+            }
+
+            if (marcaturePermesse.size() > 0)
+                querySvecchiati += ' AND CompanyOwnerC__c IN :silosPermessi ';
+
+            if (sortBy != null && sortDirection != null ) {
+                querySvecchiati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
+            }
+            List<SalesforceCustomer__x> listSalesforceCustomer = HDT_UTL_ObjectManagerTst.records(Database.query( String.escapeSingleQuotes(querySvecchiati) )); 
+
+            for(SalesforceCustomer__x salesforceCustomer : listSalesforceCustomer){
                 wrapperToreturn.add(
                     new HDT_LC_Customer(
-                        sfCustomer.LastName__c,
-                        sfCustomer.FiscalCode__c,
-                        sfCustomer.VATNumber__c,
-                        sfCustomer.CustomerCode__c,
-                        sfCustomer.Id,
+                        salesforceCustomer.LastNameC__c,                       
+                        salesforceCustomer.FiscalCodeC__c,
+                        salesforceCustomer.VATNumberC__c,
+                        salesforceCustomer.CustomerCodeC__c,
+                        salesforceCustomer.Id,
                         'NO',
-                        sfCustomer.FirstName__c
+                        salesforceCustomer.FirstNameC__c,
+                        salesforceCustomer.CompanyOwnerC__c
                         )
                 );
             }
-            */
-            //END>>> Modifica Task HRAWRM-691 marco.arci@webresults.it
         }
         return wrapperToreturn;
     }

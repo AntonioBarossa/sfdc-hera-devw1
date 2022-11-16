@@ -113,7 +113,7 @@ export default class HdtActiveRepentant extends LightningElement {
     @api validateDate(dateDecorrenza, dateDichiarazione) {
         //valida controllo, dateDecorrenza non può essere futura
         if(this.disabled)   return true;//algoritmo in fase di calcolo
-        if(this.skipCheck)  return false;//controllo non necessario
+        //if(this.skipCheck)  return false;//controllo non necessario
         return !((this.dateDecorrenza && this.dateDecorrenza == dateDecorrenza) && (this.dateDichiarazione && this.dateDichiarazione?.startsWith(dateDichiarazione)));//controlla che la data decorrenza sia popolata e aggiornata
     }
 
@@ -174,6 +174,8 @@ export default class HdtActiveRepentant extends LightningElement {
             this.disabled=false;
         }
     }
+
+    
 
     @api exportSieData(sobject){//this method returns a promise to handle;
         this.outputExportSie.sobject = sobject;
