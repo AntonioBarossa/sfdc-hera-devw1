@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 04-11-2022
+ * @last modified on  : 16-11-2022
  * @last modified by  : Giacinto Florio
 **/
 @isTest
@@ -76,9 +76,9 @@ public with sharing class HDT_LC_AppointmentTariAgendaTst {
         data.endDate='';
         appConfirm.data = data;
 
-        HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp wrap = new HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp('', '', '', '', '', '', '');
+        HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp wrap = new HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp('', '', '', '', '', '', '', '', startDate, endDate);
 
-        HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentConfirmResponse res = HDT_LC_AppointmentTariAgenda.handleConfirm(theCase, wrap, startDate, endDate);
+        HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentConfirmResponse res = HDT_LC_AppointmentTariAgenda.handleConfirm(theCase, wrap);
        
         System.assertEquals(200, res.statusCode, 'The call was not successful');
         System.assertNotEquals(400, res.statusCode, 'The returned status code was not correct');
@@ -152,7 +152,7 @@ public with sharing class HDT_LC_AppointmentTariAgendaTst {
         appAgenda.add(app);
         data.appointmentData = appAgenda;
 
-        HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp wrap = new HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp('', '', '', '', '', '', '');
+        HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp wrap = new HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp('', '', '', '', '', '', '', '', null, null);
 
         HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentSearchResponse res = (HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentSearchResponse) HDT_LC_AppointmentTariAgenda.handleSearch(wrap);
         System.assertEquals(200, res.statusCode, 'The call was not successful');
@@ -186,7 +186,7 @@ public with sharing class HDT_LC_AppointmentTariAgendaTst {
 
         List<String> fields = new List<String>();
         fields.add('Id');
-        String response = HDT_LC_AppointmentTariAgenda.getCase(caso.Id,fields);
+        Case response = HDT_LC_AppointmentTariAgenda.getCase(caso.Id,fields);
         System.assertEquals(response!= null, true, 'OK');
         
         Test.stopTest();
