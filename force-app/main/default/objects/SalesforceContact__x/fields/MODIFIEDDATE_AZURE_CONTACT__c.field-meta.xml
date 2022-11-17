@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MODIFIEDDATE_AZURE_CONTACT__c</fullName>
+    <description>MODIFIEDDATE_AZURE_CONTACT</description>
+    <externalDeveloperName>MODIFIEDDATE_AZURE_CONTACT</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>MODIFIEDDATE_AZURE_CONTACT</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

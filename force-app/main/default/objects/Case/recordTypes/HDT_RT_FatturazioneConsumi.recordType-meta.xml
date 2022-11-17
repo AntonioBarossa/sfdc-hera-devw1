@@ -8276,10 +8276,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Blocco per frode</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Calamità Naturali</fullName>
             <default>false</default>
         </values>
@@ -8397,10 +8393,6 @@
         </values>
         <values>
             <fullName>Informazione su doppio pagamento%2Fincasso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Malfunzionamento</fullName>
             <default>false</default>
         </values>
         <values>

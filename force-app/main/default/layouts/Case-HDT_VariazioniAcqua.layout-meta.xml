@@ -695,6 +695,14 @@
         <fields>et4ae5__Contact_ID__c</fields>
         <relatedList>et4ae5__IndividualEmailResult__c.CaseID__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>ReadingValueMeter__c</fields>
+        <fields>ReadingOldValueCorrector__c</fields>
+        <fields>ReadingSerialNumberMeter__c</fields>
+        <fields>ReadingDate__c</fields>
+        <relatedList>Reading__c.CaseAcqua__c</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
