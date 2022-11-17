@@ -54,7 +54,7 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
             HDT_UTL_GenerateMultilevelJson gen = new HDT_UTL_GenerateMultilevelJson(mapObj);
             Map<String, Object> mapToSendCallout = gen.generateMap();
     
-            HDT_WRP_SegnalazioniTariResponse res = (HDT_WRP_SegnalazioniTariResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH,'POST', mapToSendCallout, HDT_WRP_SegnalazioniTariResponse.class);
+            HDT_WRP_SegnalazioniTariResponse res = (HDT_WRP_SegnalazioniTariResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftHergoPath',REQUEST_PATH,'POST', mapToSendCallout, HDT_WRP_SegnalazioniTariResponse.class);
             System.debug(LoggingLevel.DEBUG,'response -> ' + res); 
             if(STRING.isNotBlank(res?.data?.esito)){
                 HDT_UTL_DatabaseService.updateSObject(new Case(Id=obj.Id, NoticeId__c=res.data.esito));
