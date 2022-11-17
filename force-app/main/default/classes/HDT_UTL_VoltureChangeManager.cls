@@ -450,7 +450,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
              */
             if(isUpdateStep != null && isUpdateStep == true &&  order.EffectiveDate__c != null && !isFromEdit)
             {
-                if( order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
+                if(!currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Acqua') && order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
                 {
                     if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva')))
                     {

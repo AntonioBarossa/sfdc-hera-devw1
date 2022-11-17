@@ -239,7 +239,11 @@ public with sharing class HDT_UTL_ProcessDateManager {
 				}
 				
 				if( order.SignedDate__c != null && ( order.DocumentalProcessType__c.equalsIgnoreCase('Voltura') || order.DocumentalProcessType__c.equalsIgnoreCase('Voltura con autolettura') ) ){
-					order.EffectiveDate__c = order.SignedDate__c.addDays(3);
+					if(order.CommodityFormula__c != null && 'Acqua'.equalsIgnoreCase(order.CommodityFormula__c)){
+						order.EffectiveDate__c = System.today();
+					}else{
+						order.EffectiveDate__c = order.SignedDate__c.addDays(3);
+					}	
 				}
 
 				if(dateToFrom != null){
