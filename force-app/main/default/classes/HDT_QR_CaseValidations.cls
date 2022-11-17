@@ -59,7 +59,7 @@ public inherited sharing class HDT_QR_CaseValidations {
 
     public String getUserSessionRole(){
 
-        String userId= UserInfo.getSessionId();
+        String userId= UserInfo.getUserId();
         String roleName;
 
         rolename = [SELECT UserRole.Name
