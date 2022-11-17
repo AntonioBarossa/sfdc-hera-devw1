@@ -160,9 +160,36 @@ public inherited sharing class HDT_UTL_SelfReadings {
         HDT_CausalCodeCalculation__mdt causalCodeMdt = causalCodeHandler.calculateCausalCode(c.Cluster__c, c.Type, '', request.commodity);
         c.CausalCode__c = causalCodeMdt.CausalCode__c;
 
+        /**@frpanico 2022-11
+         * Sulle autoletture IVR e' necessario inserire il controllo di compatibilita'
+         * In quanto altrimenti possono crearei N pratiche di cui N-1 andranno in Heroku KO
+         * Poiche' esiste gia' la prima pratica
+         * Dalla velocita' con cui arrivano i due messaggi di creazione e poi di OK 
+         * Che appaiono quasi simultanei e' necessario inserire il controllo di compatibilita'
+         * Sul Check preliminari OK piuttosto che sulla Bozza
+         * Dato che nel caso in cui il check sia in KO il Case viene annullato
+         */
         switch on request.outcome {
             when 'OK' {
-                c.Phase__c = 'Check preliminari OK';
+                String compatibility = '';
+                try
+                {
+                     compatibility = HDT_UTL_MatrixCompatibility.checkCompatibilityPostSales(c);
+                }
+                catch(Exception e)
+                {
+                    compatibility = '';
+                }
+                if(String.isEmpty(compatibility))
+                {
+                    c.Phase__c = 'Check preliminari OK';
+                }
+                else
+                {
+                    c.Phase__c = 'Annullato';
+                    c.Status = 'Closed';
+                    c.CancellationReason__c = 'Processo incompatibile';
+                }
             }
             when 'KO' {
                 c.Phase__c = 'Check preliminari KO';
