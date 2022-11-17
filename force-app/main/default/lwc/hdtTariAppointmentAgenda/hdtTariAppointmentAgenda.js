@@ -23,7 +23,9 @@ const OBJECT_FIELDS =[
     'InvoicingPostalCode__c',
     'InvoicingStreetNumber__c',
     'InvoicingStreetName__c',
-    'InvoicingStreetCode__c'
+    'InvoicingCity__c',
+    'InvoicingStreetCode__c',
+    'TypeOperation__c'
 ];
 
 const COLUMNS = [
@@ -39,14 +41,16 @@ const COLUMNSVIEW = [
 ];
 
 class Wrapper{
-    constructor(purchaseOrderNumber,streetCoding,street,housenumber,indicator,typeInt,numberOfLines){
+    constructor(purchaseOrderNumber,streetCoding,street,housenumber,typeInt, city, indicator, numberOfLines){
         this.purchaseOrderNumber = purchaseOrderNumber;
         this.streetCoding = streetCoding;
         this.street = street;
         this.housenumber = housenumber;
         this.indicator = indicator;
-        this.typeInt = typeInt;
+        this.city = city;
+        this.typeInt = typeInt?.toUpperCase();
         this.numberOfLines = numberOfLines;
+
     }
 }
 
@@ -76,7 +80,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
             console.error('status body: ' + JSON.stringify(error.body));
         }
         if (data && this.params){
-            this.case = data;
+            this.case = {...data};
                 this.searchType = this.params.searchType;
                 this.showSpinner = false;
                 this.refreshRecord = false;
@@ -103,13 +107,12 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     confirmAppointment(){
         this.showSpinner = true;
         let row = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
-        const wrap = new Wrapper(this.caseid,this.case.InvoicingPostalCode__c,this.case.InvoicingStreetName__c,this.case.InvoicingStreetNumber__c,null,null,null);
-
+        const wrap = this.createWrapper();
+        wrap.startDate=row.startDate;
+        wrap.endDate=row.endDate;
         handleConfirm({
             theCase : this.case,
-            wrap : wrap,
-            startDate : row.startDate,
-            endDate : row.endDate
+            wrap : wrap
         }).then(result =>{
             
             if (!equalsIgnoreCase(result?.status, 'success')){
@@ -174,17 +177,21 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     }
 
     getNewDate(){
+        const wrap = this.createWrapper();
+        this.handleSearchMethod(wrap);
+    }
+
+    createWrapper(){
         let purchaseOrderNumber = this.caseid;
-        let streetCoding = this.case.InvoicingPostalCode__c
-        let street = this.case.InvoicingStreetName__c
+        let streetCoding = this.case.InvoicingStreetCode__c
         let housenumber = this.case.InvoicingStreetNumber__c
-        let typeInt = '';
+        let typeInt = this.case.TypeOperation__c;
         let indicator = '';
         let numberOfLines = '';
+        let city = this.case.InvoicingCity__c;
+        let street = `${this.case.InvoicingStreetName__c}, ${housenumber} ${this.case.InvoicingPostalCode__c} ${city}`;
 
-        const wrap = new Wrapper(purchaseOrderNumber, streetCoding, street, housenumber, typeInt, indicator, numberOfLines);
-
-        this.handleSearchMethod(wrap);
+        return new Wrapper(purchaseOrderNumber, streetCoding, street, housenumber, typeInt, city, indicator, numberOfLines);
     }
 
     handleViewMethod(){

@@ -121,7 +121,7 @@
     <assignments>
         <name>Aggiorna_Da_Inviare</name>
         <label>Aggiorna Preventivo Accettato</label>
-        <locationX>1810</locationX>
+        <locationX>2074</locationX>
         <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
@@ -575,7 +575,7 @@
         <defaultConnectorLabel>Predeterminabile</defaultConnectorLabel>
         <rules>
             <name>Rapido_0_euro</name>
-            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+            <conditionLogic>1 OR (2 AND 3) OR 4</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
@@ -595,6 +595,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Lettura su Contratto Aperto</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Verifica Integrita Sigilli</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -680,7 +687,7 @@
         <defaultConnectorLabel>NO</defaultConnectorLabel>
         <rules>
             <name>Skip_Si</name>
-            <conditionLogic>1 OR (2 AND 3) OR 4</conditionLogic>
+            <conditionLogic>1 OR (2 AND 3) OR 4 OR 5</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
@@ -709,6 +716,13 @@
                     <stringValue>Verifica Rottura Impianto Cliente</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Verifica Integrita Sigilli</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>OperationCode_Valorizzato</targetReference>
             </connector>
@@ -725,23 +739,8 @@
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Rapido_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Case.QuotationType__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Rapido</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Aggiorna_Da_Inviare</targetReference>
-            </connector>
-            <label>Rapido</label>
-        </rules>
-        <rules>
             <name>Rapido_a_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -757,10 +756,17 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Case.Subprocess__c</leftValueReference>
+                <leftValueReference>Get_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Lettura su Contratto Aperto</stringValue>
+                    <stringValue>Verifica Integrita Sigilli</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Verifica Tensione - Pressione</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -768,6 +774,21 @@
                 <targetReference>Predeterminabile</targetReference>
             </connector>
             <label>Rapido a 0</label>
+        </rules>
+        <rules>
+            <name>Rapido_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.QuotationType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rapido</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiorna_Da_Inviare</targetReference>
+            </connector>
+            <label>Rapido</label>
         </rules>
     </decisions>
     <decisions>

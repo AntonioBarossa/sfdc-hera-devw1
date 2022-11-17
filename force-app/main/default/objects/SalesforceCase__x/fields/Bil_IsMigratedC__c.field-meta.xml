@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bil_IsMigratedC__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Bil_IsMigratedC</description>
+    <externalDeveloperName>Bil_IsMigratedC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Bil_IsMigratedC</label>
+    <type>Checkbox</type>
+</CustomField>

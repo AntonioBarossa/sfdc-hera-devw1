@@ -2,10 +2,10 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 04-11-2022
+ * @last modified on  : 16-11-2022
  * @last modified by  : Giacinto Florio
 **/
-@SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfStmtsMustUseBraces, PMD.IfElseStmtsMustUseBraces, PMD.pmdAvoidDebugStatements, PMD.CyclomaticComplexity, PMD.ClassNamingConventions')
+@SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfStmtsMustUseBraces, PMD.IfElseStmtsMustUseBraces, PMD.pmdAvoidDebugStatements, PMD.CyclomaticComplexity, PMD.ClassNamingConventions, PMD.AvoidDebugStatements')
 public with sharing class HDT_LC_AppointmentTariAgenda {
     
     private static HDT_SRV_AppointmentAgenda srvAgenda = new HDT_SRV_AppointmentAgenda();
@@ -15,21 +15,24 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     private static final String REQUEST_PATH_CONFIRM = '/appointments/confirm';
     private static final String REQUEST_PATH_VIEW = '/appointments';
 
-    public virtual class HDT_WRP_DataApp{
-        String purchaseOrderNumber;
-        String streetCoding;
-        String street;
-        String housenumber;
-        String typeInt;
-        String indicator;
-        String numberOfLines;
+    public class HDT_WRP_DataApp{
+        @AuraEnabled public String purchaseOrderNumber {get;set;}
+        @AuraEnabled public String streetCoding {get;set;}
+        @AuraEnabled public String street {get;set;}
+        @AuraEnabled public String housenumber {get;set;}
+        @AuraEnabled public String typeInt {get;set;}
+        @AuraEnabled public String indicator {get;set;}
+        @AuraEnabled public String numberOfLines {get;set;}
+        @AuraEnabled public String city {get;set;}
+        @AuraEnabled public Datetime startDate {get;set;}
+        @AuraEnabled public Datetime endDate {get;set;}
 
         public HDT_WRP_DataApp(){
             return;
         }
 
         public HDT_WRP_DataApp(String purchaseOrderNumber, String streetCoding, String street,
-                                String housenumber, String typeInt, String indicator, String numberOfLines) {
+                                String housenumber, String typeInt, String city) {
         
             this.purchaseOrderNumber = purchaseOrderNumber;
             this.streetCoding = streetCoding;
@@ -38,6 +41,9 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             this.typeInt = typeInt;
             this.indicator = indicator;
             this.numberOfLines = numberOfLines;
+            this.city = city;
+            //this.startDate = startDate;
+            //this.endDate = endDate;
         }
 
     }
@@ -51,6 +57,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         String typeInt;
         String indicator;
         String numberOfLines;
+        String city;
 
         public HDT_WRP_AppointmentReqSearch(HDT_WRP_DataApp wrap) {
         
@@ -61,6 +68,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             this.typeInt = wrap.typeInt;
             this.indicator = wrap.indicator;
             this.numberOfLines = wrap.numberOfLines;
+            this.city = wrap.city;
         }
     }
 
@@ -94,7 +102,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         Datetime startDate;
         Datetime endDate;
         
-        public HDT_WRP_AppointmentReqConfirm(HDT_WRP_DataApp wrap, Datetime startDate, Datetime endDate) {
+        public HDT_WRP_AppointmentReqConfirm(HDT_WRP_DataApp wrap) {
 
             this.purchaseOrderNumber = wrap.purchaseOrderNumber;
             this.streetCoding = wrap.streetCoding;
@@ -103,8 +111,8 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             this.typeInt = wrap.typeInt;
             this.indicator = wrap.indicator;
             this.numberOfLines = wrap.numberOfLines;
-            this.startDate = startDate;
-            this.endDate = endDate;
+            this.startDate = wrap.startDate;
+            this.endDate = wrap.endDate;
 
         }
     }
@@ -144,23 +152,22 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     public static HDT_WS_AppointmentSearchResponse handleSearch(HDT_WRP_DataApp wrap) {
         HDT_WRP_AppointmentReqSearch req = new HDT_WRP_AppointmentReqSearch(wrap);
         HDT_WS_AppointmentSearchResponse res = (HDT_WS_AppointmentSearchResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH_SEARCH,'POST', req, HDT_WS_AppointmentSearchResponse.class);
-        System.Debug('search res -> ' + res); 
+        System.Debug(LoggingLevel.DEBUG,'search res -> ' + res); 
         return res;
     }
 
     @AuraEnabled
-    public static HDT_WS_AppointmentConfirmResponse handleConfirm(Case theCase, HDT_WRP_DataApp wrap, Datetime startDate, Datetime endDate) {
-        HDT_WRP_AppointmentReqConfirm req = new HDT_WRP_AppointmentReqConfirm(wrap, startDate, endDate);
+    public static HDT_WS_AppointmentConfirmResponse handleConfirm(Case theCase, HDT_WRP_DataApp wrap) {
+        HDT_WRP_AppointmentReqConfirm req = new HDT_WRP_AppointmentReqConfirm(wrap);
         HDT_WS_AppointmentConfirmResponse res = (HDT_WS_AppointmentConfirmResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH_CONFIRM,'POST', req, HDT_WS_AppointmentConfirmResponse.class);
         
         if(Test.isRunningTest()){
             res.status = 'success';
-            System.debug('@@@ response ->' + res);
         }
 
         if(res.status.equalsIgnoreCase('success')){
-            theCase.StartAppointment__c = startDate;
-            theCase.EndAppointment__c = endDate;
+            theCase.StartAppointment__c = wrap.startDate;
+            theCase.EndAppointment__c = wrap.endDate;
             theCase.Phase__c = 'Da Inviare';
             theCase.Outcome__c ='Recived_Slots';
 
@@ -169,7 +176,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
                 FreeWithdraw__c ritiro = new FreeWithdraw__c();
                 ritiro.ServicePoint__c = theCase.ServicePoint__c;
                 ritiro.LastFreeWithdrawDate__c = dataRitiro;
-                System.debug('ritiro -> ' + ritiro);
+                System.debug(LoggingLevel.DEBUG, 'ritiro -> ' + ritiro);
                 HDT_UTL_DatabaseService.insertSObject(ritiro);
             }
             HDT_UTL_DatabaseService.updateSObject(theCase);
@@ -203,7 +210,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     @AuraEnabled
     public static void handleNewActivityCreationAndCaseUpdate(Case caso, Boolean updateCase, String templateName){    
         
-        System.debug('templateName ->' + templateName); 
+        System.debug(LoggingLevel.DEBUG,'templateName ->' + templateName); 
         wrts_prcgvr__Activity__c actToIns = null;
         Boolean isNoActivityUncompleted = [ SELECT Count() FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c!='Chiusa' AND wrts_prcgvr__ActivityTemplate__r.Name = 'Contattare Cliente' ] == 0;
         if(templateName!=null && isNoActivityUncompleted){
@@ -223,14 +230,14 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     @AuraEnabled
     public static void updateCase(List<Case> cases){ 
         if(cases?.size()>0){
-            System.debug('cases.size ->' + cases.size());
+            System.debug(LoggingLevel.DEBUG, 'cases.size ->' + cases.size());
             HDT_UTL_DatabaseService.insertSObject(cases);
         }
     }
 
     public static HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento initAppointmentRequestCase(Id caseId,requestType requestMethod){
         HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento appointment = new HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento();
-        Case caso = HDT_UTL_AppointmentAgenda.getCase(caseId,FIELDS_FOR_QUERY_CASE);
+        //Case caso = HDT_UTL_AppointmentAgenda.getCase(caseId,FIELDS_FOR_QUERY_CASE);
         appointment.documentkey = 'test';
         appointment.rifRich = 'test';
         String modApp = 'test';

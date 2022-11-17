@@ -468,7 +468,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         Order parentOrder = new Order();
         List<String> processList = new List<String>();
 
-        List<Order> orderList =[SELECT Account.Category__c, ParentOrder__c, PhoneNumber__c, ShippingMail__c, Contact__r.HomePhone, Contact__r.Phone, Contact__r.Email, ProcessType__c, Channel__c, CustomerCategory__c
+        List<Order> orderList =[SELECT Account.Category__c, CommodityFormula__c,ParentOrder__c, PhoneNumber__c, ShippingMail__c, Contact__r.HomePhone, Contact__r.Phone, Contact__r.Email, ProcessType__c, Channel__c, CustomerCategory__c
                                 FROM Order WHERE Id=:recordId OR ParentOrder__c = :recordId WITH SECURITY_ENFORCED];
         
         for(Order singleOrder : orderList)
