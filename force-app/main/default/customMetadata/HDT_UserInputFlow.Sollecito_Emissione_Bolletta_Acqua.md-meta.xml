@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Commodity__c</field>
-        <value xsi:type="xsd:string">Energia Elettrica</value>
+        <value xsi:type="xsd:string">Acqua</value>
     </values>
     <values>
         <field>FieldsJSON__c</field>
@@ -13,17 +13,12 @@
        &quot;FieldName&quot; : &quot;Reason__c&quot;,
        &quot;Required&quot; : true,
        &quot;Column&quot; : 1
-    },
-   {
-       &quot;FieldName&quot; : &quot;Order__c&quot;,
-       &quot;Required&quot; : false,
-       &quot;Column&quot; : 1
     }
 ]</value>
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Sollecito Emissione Bolletta Energia Elettrica</value>
+        <value xsi:type="xsd:string">Sollecito Emissione Bolletta Acqua</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>

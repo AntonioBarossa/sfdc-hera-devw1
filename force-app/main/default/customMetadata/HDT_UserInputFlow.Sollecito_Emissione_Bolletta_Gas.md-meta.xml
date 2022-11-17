@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Commodity__c</field>
-        <value xsi:type="xsd:string">Energia Elettrica</value>
+        <value xsi:type="xsd:string">Gas</value>
     </values>
     <values>
         <field>FieldsJSON__c</field>
@@ -23,7 +23,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Sollecito Emissione Bolletta Energia Elettrica</value>
+        <value xsi:type="xsd:string">Sollecito Emissione Bolletta Gas</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
