@@ -634,7 +634,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>SalesCompanyPicklist.outcome</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>NotEqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
