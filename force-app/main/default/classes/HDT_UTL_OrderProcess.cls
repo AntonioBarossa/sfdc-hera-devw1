@@ -540,7 +540,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                 continue;
                             //2) se oggi abbiamo superato la data di invio al SII allora imposto la data di invio ad oggi.
                             }else if (newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') && Date.today() > newOrder.DateSentToSII__c){
-                                newOrder.DateSentToSII__c = Date.today();
+                                newOrder.DateSentToSII__c = newOrder.isTransition__c ? Date.today().addDays(1) : Date.today();
                             }
                             //Se la data di decorrenza non è stata calcolata per qualsiasi motivo (1) oppure ho superato la data di invio al SII (2)
                             //allora ricalcolo la data di decorrenza( caso (1) utilizzo sempre la stessa data invio al sii, caso (2) la correggo ad oggi) 

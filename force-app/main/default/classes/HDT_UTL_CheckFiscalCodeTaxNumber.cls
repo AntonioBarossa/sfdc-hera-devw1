@@ -35,7 +35,12 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
         String estimatedFCode=HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoData);
         /*System.debug('Inserted FiscalCode:'+fiscalCode);
         System.debug('Estimated FiscalCode:'+estimatedFCode);*/
-        if (estimatedFCode.equalsIgnoreCase(fiscalCode)) {
+
+        /* Se ci sono piu record per il calcolo del codice fiscale in caso di omocodia
+        * Se non c'e' il record nell'oggetto city che contempla l'omocodia
+        * allora viene confrontato comunque il codice fiscale pulito dall'omocodia
+        */
+        if (estimatedFCode.equalsIgnoreCase(HDT_UTL_CalculateFiscalCode.cleanFiscalCodeFromOmocodia(fiscalCode))) {
             return true;
             
         }
@@ -50,7 +55,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
     public static Boolean matchEstimatedSetFiscalCode(Map<String, String> infoData, String fiscalCode)
     {
         Set<String> estimatedSetFiscalCode=HDT_UTL_CalculateFiscalCode.calculateSetFiscalCode(infoData);
-        if(!estimatedSetFiscalCode.isEmpty() && estimatedSetFiscalCode.contains(fiscalCode))
+        if(!estimatedSetFiscalCode.isEmpty() && estimatedSetFiscalCode.contains(HDT_UTL_CalculateFiscalCode.cleanFiscalCodeFromOmocodia(fiscalCode)))
         {
             return true;
         }
@@ -66,6 +71,8 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
         String birthDate= '';
         String city='';
         String cityCode= '';
+        String fisCode = fiscalCodes.replaceAll( '\\s+', '');
+        fiscalCodes = HDT_UTL_CalculateFiscalCode.cleanFiscalCodeFromOmocodia(fiscalCodes);
        // for(String s:fiscalCodes.keySet()){
             try {
                 cityCode= fiscalCodes.replaceAll( '\\s+', '').substring(11,15);
@@ -145,7 +152,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 dataFromFiscalCode.put('gender', gender);
                 dataFromFiscalCode.put('birthDate', birthDate);
                 dataFromFiscalCode.put('birthPlace', city);
-                res.put(fiscalCode,dataFromFiscalCode);
+                res.put(fisCode,dataFromFiscalCode);
            
             } catch (Exception e) {
                // e.setMessage('Inserire un codice fiscale valido');
