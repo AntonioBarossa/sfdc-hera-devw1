@@ -314,11 +314,11 @@ public with sharing class HDT_UTL_ServiceTwentySix {
             WITH SECURITY_ENFORCED
             ORDER BY SBQQ__Product__r.OLD__c DESC
         ]){
-            if (!freePositionForFamily.keySet().contains(qLine.SBQQ__Product__r.Family)){
-                freePositionForFamily.put(qLine.SBQQ__Product__r.Family, this.getAllPositions(familyToOperando.get(qLine.SBQQ__Product__r.Family).size()));
+            if (!freePositionForFamily.keySet().contains((qLine.SBQQ__Product__r.Family).toLowerCase())){
+                freePositionForFamily.put((qLine.SBQQ__Product__r.Family).toLowerCase(), this.getAllPositions(familyToOperando.get((qLine.SBQQ__Product__r.Family).toLowerCase()).size()));
             }
-            if (freePositionForFamily.keySet().contains(qLine.SBQQ__Product__r.Family)){
-                removePosition(freePositionForFamily.get(qLine.SBQQ__Product__r.Family),qLine);
+            if (freePositionForFamily.keySet().contains((qLine.SBQQ__Product__r.Family).toLowerCase())){
+                removePosition(freePositionForFamily.get((qLine.SBQQ__Product__r.Family).toLowerCase()),qLine);
             }
         }
 
