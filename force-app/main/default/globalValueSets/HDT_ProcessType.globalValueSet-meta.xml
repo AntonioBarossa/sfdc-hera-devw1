@@ -1486,6 +1486,12 @@
         <label>Contenzioso in corso - EE</label>
     </customValue>
     <customValue>
+        <fullName>Unificazione/Separazione BP-CA-Bolletta - ACQ</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Unificazione/Separazione BP-CA-Bolletta - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Contenzioso in corso - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
