@@ -66,7 +66,14 @@ public with sharing class HDT_SRV_SelfReadings {
                 readingFields += fields;
             }
         }
-        Reading__c reading = queryReadings.getReading('Case', caseId, readingCase.CommodityFormula__c, readingFields);
+        Reading__c reading;
+        try{
+            reading = queryReadings.getReading('Case', caseId, readingCase.CommodityFormula__c, readingFields);
+        }catch (Exception ex){
+            inputParams.requestBody = '$001:Error Reading';
+            return inputParams;
+        }
+        
         System.debug(LoggingLevel.DEBUG, 'reading: ' + reading);
         
         JSONGenerator gen = JSON.createGenerator(false);
@@ -80,28 +87,33 @@ public with sharing class HDT_SRV_SelfReadings {
         gen.writeFieldName('position');
         gen.writeStartArray();
         
-        if (readingCase.CommodityFormula__c == 'Gas') {
-            gen.writeStartObject();
-            gen.writeStringField('register', reading.ReadingRegisterMeter__c);
-            gen.writeStringField('reading', String.valueOf(reading.ReadingValueMeter__c));
-            gen.writeEndObject();
-
-            if (reading.ReadingValueCorrector__c != null && String.isNotBlank(reading.ReadingRegisterCorrector__c)) {
+        try{
+            if (readingCase.CommodityFormula__c == 'Gas') {
                 gen.writeStartObject();
-                gen.writeStringField('register', reading.ReadingRegisterCorrector__c);
-                gen.writeStringField('reading', String.valueOf(reading.ReadingValueCorrector__c));
+                gen.writeStringField('register', reading.ReadingRegisterMeter__c);
+                gen.writeStringField('reading', String.valueOf(reading.ReadingValueMeter__c));
                 gen.writeEndObject();
+    
+                if (reading.ReadingValueCorrector__c != null && String.isNotBlank(reading.ReadingRegisterCorrector__c)) {
+                    gen.writeStartObject();
+                    gen.writeStringField('register', reading.ReadingRegisterCorrector__c);
+                    gen.writeStringField('reading', String.valueOf(reading.ReadingValueCorrector__c));
+                    gen.writeEndObject();
+                }
+            } else {
+                Integer registersCount = HDT_UTL_SelfReadings.getRegistersCount(reading);
+                for (Integer i = 1; i <= registersCount; i++) {
+                    List<String> indexParam = new List<String> { String.valueOf(i) };
+                    gen.writeStartObject();
+                    gen.writeStringField('register', (String) reading.get(String.format('ReadingRegister{0}__c', indexParam)));
+                    Decimal readingValue = (Decimal) reading.get(String.format('ReadingValue{0}__c', indexParam));
+                    gen.writeStringField('reading', String.valueOf(readingValue));
+                    gen.writeEndObject();
+                }
             }
-        } else {
-            Integer registersCount = HDT_UTL_SelfReadings.getRegistersCount(reading);
-            for (Integer i = 1; i <= registersCount; i++) {
-                List<String> indexParam = new List<String> { String.valueOf(i) };
-                gen.writeStartObject();
-                gen.writeStringField('register', (String) reading.get(String.format('ReadingRegister{0}__c', indexParam)));
-                Decimal readingValue = (Decimal) reading.get(String.format('ReadingValue{0}__c', indexParam));
-                gen.writeStringField('reading', String.valueOf(readingValue));
-                gen.writeEndObject();
-            }
+        }catch (Exception ex){
+            inputParams.requestBody = '$001:Error Reading';
+            return inputParams;
         }
 
         gen.writeEndArray();
@@ -166,52 +178,57 @@ public with sharing class HDT_SRV_SelfReadings {
         gen.writeFieldName('element');
         gen.writeStartArray();
         
-        if (readingCase.CommodityFormula__c == 'Gas') {
-            gen.writeStartObject();
-            gen.writeStringField('counter', '1');
-            gen.writeStringField('typology', reading.ReadingTypeMeter__c);
-            gen.writeStringField('identifier', reading.ReadingSerialNumberMeter__c);
-            gen.writeStringField('section', reading.ReadingBandMeter__c);
-            gen.writeStringField('register', reading.ReadingRegisterMeter__c);
-            gen.writeStringField('um', reading.ReadingUnitMeter__c);
-            gen.writeStringField('digit', reading.ReadingDigitNumberMeter__c);
-            gen.writeStringField('date', String.valueOf(reading.ReadingDateMeter__c));
-            gen.writeStringField('reading', String.valueOf(reading.ReadingValueMeter__c));
-            gen.writeEndObject();
-
-            if (reading.ReadingValueCorrector__c != null) {
+        try{
+            if (readingCase.CommodityFormula__c == 'Gas') {
                 gen.writeStartObject();
-                gen.writeStringField('counter', '2');
-                gen.writeStringField('typology', reading.ReadingTypeCorrector__c);
-                gen.writeStringField('identifier', reading.ReadingSerialNumberCorrector__c);
-                gen.writeStringField('section', reading.ReadingBandCorrector__c);
-                gen.writeStringField('register', reading.ReadingRegisterCorrector__c);
-                gen.writeStringField('um', reading.ReadingUnitCorrector__c);
-                gen.writeStringField('digit', reading.ReadingDigitNumberCorrector__c);
-                gen.writeStringField('date', String.valueOf(reading.ReadingDateCorrector__c));
-                gen.writeStringField('reading', String.valueOf(reading.ReadingValueCorrector__c));
+                gen.writeStringField('counter', '1');
+                gen.writeStringField('typology', reading.ReadingTypeMeter__c);
+                gen.writeStringField('identifier', reading.ReadingSerialNumberMeter__c);
+                gen.writeStringField('section', reading.ReadingBandMeter__c);
+                gen.writeStringField('register', reading.ReadingRegisterMeter__c);
+                gen.writeStringField('um', reading.ReadingUnitMeter__c);
+                gen.writeStringField('digit', reading.ReadingDigitNumberMeter__c);
+                gen.writeStringField('date', String.valueOf(reading.ReadingDateMeter__c));
+                gen.writeStringField('reading', String.valueOf(reading.ReadingValueMeter__c));
                 gen.writeEndObject();
+    
+                if (reading.ReadingValueCorrector__c != null) {
+                    gen.writeStartObject();
+                    gen.writeStringField('counter', '2');
+                    gen.writeStringField('typology', reading.ReadingTypeCorrector__c);
+                    gen.writeStringField('identifier', reading.ReadingSerialNumberCorrector__c);
+                    gen.writeStringField('section', reading.ReadingBandCorrector__c);
+                    gen.writeStringField('register', reading.ReadingRegisterCorrector__c);
+                    gen.writeStringField('um', reading.ReadingUnitCorrector__c);
+                    gen.writeStringField('digit', reading.ReadingDigitNumberCorrector__c);
+                    gen.writeStringField('date', String.valueOf(reading.ReadingDateCorrector__c));
+                    gen.writeStringField('reading', String.valueOf(reading.ReadingValueCorrector__c));
+                    gen.writeEndObject();
+                }
+            } else {
+                Integer registersCount = HDT_UTL_SelfReadings.getRegistersCount(reading);
+                for (Integer i = 1; i <= registersCount; i++) {
+                    List<String> indexParam = new List<String> { String.valueOf(i) };
+                    gen.writeStartObject();
+                    gen.writeStringField('counter', String.valueOf(i));
+                    gen.writeStringField('typology', (String) reading.get(String.format('ReadingType{0}__c', indexParam)));
+                    gen.writeStringField('identifier', (String) reading.get(String.format('ReadingSerialNumber{0}__c', indexParam)));
+                    gen.writeStringField('section', (String) reading.get(String.format('ReadingBand{0}__c', indexParam)));
+                    gen.writeStringField('register', (String) reading.get(String.format('ReadingRegister{0}__c', indexParam)));
+                    gen.writeStringField('um', (String) reading.get(String.format('ReadingUnit{0}__c', indexParam)));
+                    gen.writeStringField('digit', (String) reading.get(String.format('ReadingDigitNumber{0}__c', indexParam)));
+                    Date readingDate = (Date) reading.get(String.format('ReadingDate{0}__c', indexParam));
+                    gen.writeStringField('date', String.valueOf(readingDate));
+                    Decimal readingValue = (Decimal) reading.get(String.format('ReadingValue{0}__c', indexParam));
+                    gen.writeStringField('reading', String.valueOf(readingValue));
+                    gen.writeEndObject();
+                }
             }
-        } else {
-            Integer registersCount = HDT_UTL_SelfReadings.getRegistersCount(reading);
-            for (Integer i = 1; i <= registersCount; i++) {
-                List<String> indexParam = new List<String> { String.valueOf(i) };
-                gen.writeStartObject();
-                gen.writeStringField('counter', String.valueOf(i));
-                gen.writeStringField('typology', (String) reading.get(String.format('ReadingType{0}__c', indexParam)));
-                gen.writeStringField('identifier', (String) reading.get(String.format('ReadingSerialNumber{0}__c', indexParam)));
-                gen.writeStringField('section', (String) reading.get(String.format('ReadingBand{0}__c', indexParam)));
-                gen.writeStringField('register', (String) reading.get(String.format('ReadingRegister{0}__c', indexParam)));
-                gen.writeStringField('um', (String) reading.get(String.format('ReadingUnit{0}__c', indexParam)));
-                gen.writeStringField('digit', (String) reading.get(String.format('ReadingDigitNumber{0}__c', indexParam)));
-                Date readingDate = (Date) reading.get(String.format('ReadingDate{0}__c', indexParam));
-                gen.writeStringField('date', String.valueOf(readingDate));
-                Decimal readingValue = (Decimal) reading.get(String.format('ReadingValue{0}__c', indexParam));
-                gen.writeStringField('reading', String.valueOf(readingValue));
-                gen.writeEndObject();
-            }
+        }catch (Exception ex){
+            inputParams.requestBody = '$001:Error Reading';
+            return inputParams;
         }
-
+        
         gen.writeEndArray();
         gen.writeEndObject();
 
@@ -234,6 +251,19 @@ public with sharing class HDT_SRV_SelfReadings {
     @SuppressWarnings('PMD.AvoidDebugStatements')
     public static HDT_WRP_SelfReadingResponse handleResponse(HDT_WRP_GenericSapIntegration sapIntegration, String checkAutoletturaDescription) {
         System.debug(LoggingLevel.DEBUG, 'Handling response for request type: ' + sapIntegration.requestType);
+        if ('$001:Error Reading'.equals(sapIntegration.requestBody)){
+            HDT_WRP_SelfReadingResponse retWrap = new HDT_WRP_SelfReadingResponse();
+            retWrap.isResponseOk = false;
+            Case readingCaseToUpdate = new Case(
+                Id = sapIntegration.recordId,
+                Status = 'Closed',
+                Phase__c = 'Annullato',
+                CancellationReason__c = 'Pratica Errata',
+                Description = 'Dati autolettura errati o incompleti'
+            );
+            updateFuture(JSON.serialize(readingCaseToUpdate));
+            return retWrap;
+        }
         switch on sapIntegration.requestType {
             when 'CheckAutolettura' {
                 return handleResponseCheckAutolettura(sapIntegration);
