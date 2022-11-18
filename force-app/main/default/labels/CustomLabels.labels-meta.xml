@@ -1036,4 +1036,11 @@
         <shortDescription>Case Type Sconto Zona</shortDescription>
         <value>Agevolazione: Sconto Fuori Zona</value>
     </labels>
+    <labels>
+        <fullName>no_configuration_found</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>no configuration found</shortDescription>
+        <value>No configuration record found</value>
+    </labels>
 </CustomLabels>
