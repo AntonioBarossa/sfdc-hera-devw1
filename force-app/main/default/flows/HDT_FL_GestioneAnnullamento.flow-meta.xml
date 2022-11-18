@@ -1254,6 +1254,13 @@
                     <stringValue>Switch Out SII</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore invio a DL/SII</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_Fase_Precedente</targetReference>
             </connector>
@@ -1348,6 +1355,13 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Amm. Precheck KO SII</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore invio a DL/SII</stringValue>
                 </rightValue>
             </conditions>
             <connector>
