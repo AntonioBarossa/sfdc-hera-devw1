@@ -256,6 +256,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.NumeratorGroup__c = servicePoint.NumeratorGroup__c;
         orderToUpdate.isSTG__c = servicePoint.isSTG__c;
         orderToUpdate.surface__c= servicePoint.AreaDeclaredTARI__c;
+        orderToUpdate.ATO__c = 'Acqua'.equalsIgnoreCase(servicePoint.CommoditySector__c) ? servicePoint.ATO__c : '';
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId, Order orderOld){
