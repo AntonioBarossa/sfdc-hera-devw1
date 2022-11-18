@@ -520,6 +520,7 @@ public with sharing class HDT_SRV_SalesHandler {
 
                                         if(((mapRequestFields.get('FASE') == 'Esito OK da DBO' && !ordRetrieved.CausalCode__c.equalsIgnoreCase('E01')) || ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti')) && redirectPreventivo){
                                             ord.Phase__c = 'Inviare preventivo';
+                                            ord.QuotationType__c = 'Analitico';
                                         }else{
 
                                             if(mapRequestFields.get('FASE') == 'Esito OK da DBO'){
