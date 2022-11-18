@@ -625,6 +625,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.Individual_Email_Result__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.SMS_Tracking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.Phase__c</field>
         <readable>true</readable>
     </fieldPermissions>  
@@ -2448,6 +2458,21 @@
 		<field>Case.IsArchived__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.LastNoticeDay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NoticeId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NoticeNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Contact.IsArchived__c</field>
@@ -10022,6 +10047,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contract.CommoditySectorFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contract.CommonInvoiceDescription__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -14888,6 +14918,11 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Order.SubscriberPlace__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.UseSubCategory__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>

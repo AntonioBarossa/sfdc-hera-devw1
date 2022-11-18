@@ -78,6 +78,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
 
         //f. defelice Chiusura case Proroga Temp
         //HDT_UTL_ActivityCustomProcess.closeSobjectOnActivityClosing(trigger.new, trigger.old);
+        HDT_UTL_ActivityCustomProcess.closeParentEntityCanceledActivity(trigger.new, trigger.old);
         HDT_UTL_ActivityCustom.checkForMandatoryAttachment((Map<Id, wrts_prcgvr__Activity__c>) trigger.newMap);
 
         //GiFlorio  

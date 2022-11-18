@@ -27,5 +27,6 @@ c__processType={!CASE(Case.Type,
 																&apos;Riduz. superficie rifiuti spec promiscui&apos;,&apos;Annullamento prestazione&apos;,
 																&apos;Rimozione Agevolazione&apos;,&apos;Annullamento prestazione&apos;,
 																&apos;Sconti Collettivi Pap&apos;,&apos;Annullamento prestazione&apos;,
+																&apos;Reclamo Scritto/Rich. Info&apos;,&apos;Annullamento prestazione&apos;,
 																TEXT(Case.Type))}</url>
 </WebLink>

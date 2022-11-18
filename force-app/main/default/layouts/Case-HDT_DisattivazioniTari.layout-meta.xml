@@ -6,12 +6,7 @@
         <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
         <label>Case Information</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ReliefToApply__c</field>
-            </layoutItems>
-        </layoutColumns>
+        <layoutColumns/>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -330,9 +325,10 @@
         <fields>NAME</fields>
         <fields>Type__c</fields>
         <fields>wrts_prcgvr__Description__c</fields>
+        <fields>OWNER.LAST_NAME</fields>
         <fields>wrts_prcgvr__DueDate__c</fields>
         <fields>wrts_prcgvr__Status__c</fields>
-        <fields>OWNER.LAST_NAME</fields>
+        <fields>wrts_prcgvr__ActivityTemplate__c</fields>
         <fields>UPDATEDBY_USER</fields>
         <relatedList>wrts_prcgvr__Activity__c.Case__c</relatedList>
     </relatedLists>

@@ -109,6 +109,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_BA_ArchivedRecordsDelete</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_BA_ArchivedRecordsDeleteTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_BA_AttributesContact</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2969,6 +2977,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_InstallmentPlansTari</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_InstallmentPlansTariTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_Interaction</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -4222,10 +4238,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_LeadTst</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_ManageCaseItemTari</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

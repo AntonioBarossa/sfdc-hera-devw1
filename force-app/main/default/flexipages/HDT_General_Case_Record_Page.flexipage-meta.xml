@@ -1090,9 +1090,9 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>wrts_prcgvr:ProcessActionListLtgCmp_1_0</componentName>
-                <identifier>wrts_prcgvr_ProcessActionListLtgCmp_1_0</identifier>
+                <identifier>wrts_prcgvr_ProcessActionListLtgCmp_1_02</identifier>
                 <visibilityRule>
-                    <booleanFilter>(1 AND 2) OR 3</booleanFilter>
+                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Commodity__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -1103,6 +1103,31 @@
                         <operator>EQUAL</operator>
                         <rightValue>New</rightValue>
                     </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_RichiestaParere</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columnsButton</name>
+                    <value>2</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayTitle</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>whiteBackground</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>wrts_prcgvr:ProcessActionListLtgCmp_1_0</componentName>
+                <identifier>wrts_prcgvr_ProcessActionListLtgCmp_1_0</identifier>
+                <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Commodity__c}</leftValue>
                         <operator>NE</operator>

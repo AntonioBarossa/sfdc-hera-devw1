@@ -4,13 +4,26 @@
         action.setParams({recordId: component.get("v.recordId")});
         action.setCallback(this, function(response) {
             const data = JSON.parse(response.getReturnValue());
+            console.log(data.error);
             if(data.error) {
                 console.log(data.error);
             } else {
                 component.set("v.parentEntityField", data.parentEntityField);
                 component.set("v.recordTypeId", data.recordTypeId);
-                component.set("v.showForm", true);
                 component.set("v.showPriorityField", data.showPriorityField);
+                if(data.respectCriteria == "true"){
+                    component.set("v.showForm", true);
+                } else {
+                    var toastEvent = $A.get("e.force:showToast");
+                    toastEvent.setParams({
+                        "type": "error",
+                        "title": "Fallito",
+                        "message": data.errorMessage
+                    });
+                    toastEvent.fire();
+
+                    $A.get("e.force:closeQuickAction").fire();
+                }
             }
         });
         $A.enqueueAction(action);

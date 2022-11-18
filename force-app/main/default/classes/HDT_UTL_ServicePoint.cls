@@ -170,7 +170,7 @@ public with sharing class HDT_UTL_ServicePoint {
                 if(response.data.datiCatastali!=null && response.data.datiCatastali.size()>0 ) {
                     List <LandRegistry__c> landLst = new List<LandRegistry__c>();
                     try {     
-                        Id idLand = qrRecordType.getRecordTypeIdByName('HDT_RT_DatiCatastali_PraticaTARI');
+                        Id idLand = qrRecordType.getRecordTypeIdByName('HDT_RT_DatiCatastali_TARI');
                         for(HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_DatiCatastaliResponseObject l : response.data.datiCatastali){
 
                             LandRegistry__c landReg = new LandRegistry__c();
