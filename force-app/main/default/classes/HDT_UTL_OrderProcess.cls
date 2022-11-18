@@ -571,7 +571,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                 newOrdersListRecalc.add(newOrder);
                             }
                         }else {
-                            newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                            if(String.isNotBlank(newOrder.CommodityFormula__c) && 'Acqua'.equalsIgnoreCase(newOrder.CommodityFormula__c)){
+                                newOrder.EffectiveDate__c = System.today();
+                            }else{
+                                newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                            }
+                            
                         }
                     }else if(
                             (oldOrder.ConfirmCustomerContract__c == null || (oldOrder.ConfirmCustomerContract__c != null && oldOrder.ConfirmCustomerContract__c != newOrder.ConfirmCustomerContract__c)) 

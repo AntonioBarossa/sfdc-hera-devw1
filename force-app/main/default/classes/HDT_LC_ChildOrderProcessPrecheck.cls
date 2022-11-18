@@ -121,7 +121,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : processCode;
                     processCode = extraParams.get('servicePointType') == 'HDT_RT_Gas'? 'VTG' : processCode;
                     processCode = extraParams.get('servicePointType') == 'HDT_RT_Acqua'? 'MA1' : processCode;
-                    newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                    newOrder.EffectiveDate__c = processCode!= 'MA1'?orderSrv.addBusinessDay(System.today(), 3):System.today();
                     newOrder.SapContractCode__c = sapCode;
                     newOrder.Id = orderId;
                     //@frpanico "Chiamata Arricchimento Dati" per ulteriori predefault
@@ -193,7 +193,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 when 'Connessione con Attivazione'{
                     if('Acqua'.equalsIgnoreCase(order.Commodity__c))
                     {
-                        newOrder.QuotationType__c = 'Analitico';
+                        //newOrder.QuotationType__c = 'Analitico';
                         newOrder.VAT__c = 'Iva 10% (Cod. 01)';
                         newOrder.PaySewer__c = 'No - Esente';
                         newOrder.PayPurification__c = 'No - Esente';
