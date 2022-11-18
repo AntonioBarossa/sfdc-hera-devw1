@@ -386,7 +386,11 @@ public inherited sharing class HDT_QR_CampaignMember {
     * @return CampaignMember
     */
     public CampaignMember getByEcid(String ecid) {
-        List<CampaignMember> cmList = [
+        if (string.isBlank(ecid)) {
+            return null;
+        }
+        else{
+            List<CampaignMember> cmList = [
             SELECT
             Id, 
             Status  
@@ -394,8 +398,10 @@ public inherited sharing class HDT_QR_CampaignMember {
             WHERE Ecid__c = :ecid
             AND isToSendStatusReitek__c = true
             WITH SECURITY_ENFORCED
-        ];
-        return cmList != null && !cmList.isEmpty() ? cmList[0] : null;
+            ];
+            return cmList != null && !cmList.isEmpty() ? cmList[0] : null;
+        }
+
     }
 
     /**
