@@ -115,9 +115,9 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             String compatibility='';
             ServiceRequest__c srvRequest= new ServiceRequest__c();
             srvRequest.Case__c= cs.Id;
-            srvRequest.ServicePointCode__c= cs.PODPDRFormula__c;
+            srvRequest.ServicePointCode__c= cs.PODPDRFormula__c != null ? cs.PODPDRFormula__c : cs.ServicePointCode__c != null ? cs.ServicePointCode__c : null;
             srvRequest.Status__c= getStatus(cs.Status,'Case');
-            srvRequest.CommoditySector__c= cs.CommodityFormula__c;
+            srvRequest.CommoditySector__c= cs.CommodityFormula__c != null ? cs.CommodityFormula__c : cs.Commodity__c != null ? cs.Commodity__c : null;
             srvRequest.Type__c= 'Case';
             if(cs.ServicePoint__c != null){
                 srvRequest.ServicePoint__c= cs.ServicePoint__c;
