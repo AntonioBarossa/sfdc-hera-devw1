@@ -16,7 +16,7 @@ public with sharing class HDT_UTL_ServicePoint {
     @AuraEnabled
     public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response){
         HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
-        HDT_QR_LandRegistry landRegistryQR = new HDT_QR_LandRegistry();
+        HDT_QR_LandRegistry landRegistryQr = new HDT_QR_LandRegistry();
         ServicePoint__c spNew = new ServicePoint__c();
         if(sp != null){
             spNew = sp;
@@ -170,7 +170,7 @@ public with sharing class HDT_UTL_ServicePoint {
                 if(response.datiCatastali!=null && response.datiCatastali.size()>0 && spNew.Id != null) {
                     List <LandRegistry__c> landLstToInsert = new List<LandRegistry__c>();
                     try {     
-                        List <LandRegistry__c> landLstToDelete = landRegistryQR.getTARILandRegistryByServicePointIds(new list<Id>{spNew.Id});
+                        List <LandRegistry__c> landLstToDelete = landRegistryQr.getTARILandRegistryByServicePointIds(new list<Id>{spNew.Id});
                         Id idLand = qrRecordType.getRecordTypeIdByName('HDT_RT_DatiCatastali_TARI');
                         
                         for(HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_DatiCatastaliResponseObject l : response.datiCatastali){                       
