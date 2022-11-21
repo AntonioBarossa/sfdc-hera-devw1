@@ -244,7 +244,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
             if (!this.isProcessReading){
                 console.log('#RegisterObj >>> ' + JSON.stringify(this.registerObj));
                 this.registerObj.forEach(element => {
-                    if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
+                    if( this.isVolture && element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
                         this.advanceError = 'Impossibile procedere: Nuova Lettura deve essere valorizzata.';
                     } 
                 });
