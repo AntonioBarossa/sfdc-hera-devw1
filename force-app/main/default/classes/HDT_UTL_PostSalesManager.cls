@@ -674,23 +674,29 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     public void handleCreazioneActivityVariazioni(SObject inputCase){
         Case currentCase = (Case) inputCase;
         try {
-            if('Modifica Unita Immobiliari Componenti'.equalsIgnoreCase(currentCase.Type) &&('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c)) & !'ACDOMRESP0'.equalsIgnoreCase(currentCase.RateCategory__c)){
-                ServicePoint__c sp = [SELECT NotDomesticHousingUnit__c, NotResidentDomesticHousingUnit__c, ResidentDomesticHousingUnit__c FROM ServicePoint__c WHERE Id =: currentCase.ServicePoint__c WITH SECURITY_ENFORCED];
-                if(sp != null){
-                    Integer spUnitDomRes = (sp.ResidentDomesticHousingUnit__c != null) ? Integer.valueOf(sp.ResidentDomesticHousingUnit__c) : 0;
-                    Integer spUnitDomNonRes = (sp.NotResidentDomesticHousingUnit__c != null) ? Integer.valueOf(sp.NotResidentDomesticHousingUnit__c) : 0;
-                    Integer caseUnitDomRes = (currentCase.ResidentDomesticHousingUnit__c != null) ? Integer.valueOf(currentCase.ResidentDomesticHousingUnit__c) : 0;
-                    Integer caseUnitDomNonRes = (currentCase.NotResidentDomesticHousingUnit__c != null) ? Integer.valueOf(currentCase.NotResidentDomesticHousingUnit__c) : 0;
-    
-                    Integer totaleUnitServicePoint = spUnitDomRes + spUnitDomNonRes;
-                    Integer totaleUnitCase = caseUnitDomRes + caseUnitDomNonRes;
-                    if(totaleUnitServicePoint != totaleUnitCase){
-                        HDT_UTL_Case.createActivity(currentCase.Id, '', 'Elaborazione Manuale', 'Elaborazione Manuale');
-                    }else{
-                        currentCase.Phase__c = 'Completata';
-                        currentCase.Status = 'Closed';
-                        update currentCase;
+            if('Modifica Unita Immobiliari Componenti'.equalsIgnoreCase(currentCase.Type) &&('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c))){
+                if(!'ACDOMRESP0'.equalsIgnoreCase(currentCase.RateCategory__c)){ //in caso di Promiscuo faccio il check di variazione totale unità abitative
+                    ServicePoint__c sp = [SELECT NotDomesticHousingUnit__c, NotResidentDomesticHousingUnit__c, ResidentDomesticHousingUnit__c FROM ServicePoint__c WHERE Id =: currentCase.ServicePoint__c WITH SECURITY_ENFORCED];
+                    if(sp != null){
+                        Integer spUnitDomRes = (sp.ResidentDomesticHousingUnit__c != null) ? Integer.valueOf(sp.ResidentDomesticHousingUnit__c) : 0;
+                        Integer spUnitDomNonRes = (sp.NotResidentDomesticHousingUnit__c != null) ? Integer.valueOf(sp.NotResidentDomesticHousingUnit__c) : 0;
+                        Integer caseUnitDomRes = (currentCase.ResidentDomesticHousingUnit__c != null) ? Integer.valueOf(currentCase.ResidentDomesticHousingUnit__c) : 0;
+                        Integer caseUnitDomNonRes = (currentCase.NotResidentDomesticHousingUnit__c != null) ? Integer.valueOf(currentCase.NotResidentDomesticHousingUnit__c) : 0;
+        
+                        Integer totaleUnitServicePoint = spUnitDomRes + spUnitDomNonRes;
+                        Integer totaleUnitCase = caseUnitDomRes + caseUnitDomNonRes;
+                        if(totaleUnitServicePoint != totaleUnitCase){
+                            HDT_UTL_Case.createActivity(currentCase.Id, '', 'Elaborazione Manuale', 'Elaborazione Manuale');
+                        }else{
+                            currentCase.Phase__c = 'Completata';
+                            currentCase.Status = 'Closed';
+                            update currentCase;
+                        }
                     }
+                }else{ //in caso di Domestico alla ricezione dell'Esito OK da DBO imposto fase Completata
+                    currentCase.Phase__c = 'Completata';
+                    currentCase.Status = 'Closed';
+                    update currentCase;
                 }
             }
         } catch (Exception e) {
