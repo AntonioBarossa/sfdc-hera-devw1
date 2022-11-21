@@ -20,7 +20,7 @@ public with sharing class HDT_BA_ExpiredOrders implements Database.Batchable<sOb
         List<String>ParentOrdersStatus=customMtdList[0].ParentOrdersStatus__c.split('\n');
         List<String>SignatureMethod=customMtdList[0].SignatureMethod__c.split('\n');
 
-        return Database.getQueryLocator('SELECT Id,Status, DocusignExpirationDate__c,SignatureMethod__c,Phase__c,CancellationReason__c,(select id,Status,Phase__c from Orders__r where Phase__c NOT IN :ChildOrdersStatus ) FROM Order WHERE (DocusignExpirationDate__c != null AND DocusignExpirationDate__c < TODAY ) and Phase__c NOT IN :ParentOrdersStatus and SignatureMethod__c IN :SignatureMethod limit 10 ');
+        return Database.getQueryLocator('SELECT Id,Status, DocusignExpirationDate__c,SignatureMethod__c,Phase__c,CancellationReason__c,(select id,Status,Phase__c from Orders__r where Phase__c NOT IN :ChildOrdersStatus ) FROM Order WHERE (DocusignExpirationDate__c != null AND DocusignExpirationDate__c < TODAY ) and Phase__c NOT IN :ParentOrdersStatus and SignatureMethod__c IN :SignatureMethod  ');
     }
     
     //BATCH EXECUTE
