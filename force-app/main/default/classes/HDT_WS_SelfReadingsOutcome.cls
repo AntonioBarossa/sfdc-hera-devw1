@@ -74,7 +74,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
             Database.insert(selfReadingOutcomeRequestList, false);
             List<AsyncApexJob> selfReadingJob = [SELECT Id FROM AsyncApexJob WHERE ApexClass.Name = 'HDT_BA_HandleSelfReadingRequest' AND Status IN ('Queued','Processing','Preparing','Holding') WITH SECURITY_ENFORCED];
             if (selfReadingJob.isEmpty()){
-                Database.executeBatch(new HDT_BA_HandleSelfReadingRequest());
+                Database.executeBatch(new HDT_BA_HandleSelfReadingRequest(), 40);
             }
         }
 
