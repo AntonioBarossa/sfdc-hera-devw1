@@ -1,3 +1,3 @@
-trigger HDT_ContentDocumentLink on ContentDocumentLink (before insert, after insert) {
+trigger HDT_ContentDocumentLink on ContentDocumentLink (before insert) {
     new HDT_TRH_ContentDocumentLink().run();
 }
