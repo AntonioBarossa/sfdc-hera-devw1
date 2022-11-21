@@ -10,6 +10,7 @@ import isPreventivo from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.isPre
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
 import getReadingId from '@salesforce/apex/HDT_LC_SelfReading.getReadingId';
 import isAfterthoughtDaysZero from '@salesforce/apex/HDT_UTL_ProcessDateManager.isAfterthoughtDaysZero';
+import checkPermissionSet from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.checkPermissionSet';
 
 class fieldData{
     constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value) {
@@ -59,6 +60,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     acceptedFormatsIvaAcciseUpload = ['.pdf', '.png'];
     @track lastStepData = {};
     @track isNoDayAfterthought = false;
+    @track permissionFlag = true;
     loginChannel;
     get orderWithData(){
        console.log('#Order With Data >>> ' +JSON.stringify(this.sectionDataToSubmit));
@@ -1037,7 +1039,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 new fieldData('Classe prelievo','WithdrawalClass__c',  this.typeVisibility('gas'), this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta', '',''),
                 new fieldData('ConnectionMandate__c','ConnectionMandate__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica', '',''),
                 new fieldData('Fase richiesta','RequestPhase__c', this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', true, false, '',''),
-                new fieldData('Muc', 'IsMuc__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',false,false, '',''),
+                new fieldData('Muc', 'IsMuc__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',false,this.permissionFlag, '',''),
                 new fieldData('Codice Ateco','AtecoCode__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('SurfaceServed__c','SurfaceServed__c', this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'), true, false, '',''),
                 new fieldData('Convenzione/Associazione','ConventionAssociation__c', this.typeVisibility('both') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt') && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '',''),
@@ -1605,6 +1607,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     
     async connectedCallback(){
+
+        checkPermissionSet({}).then(data =>{
+            console.log('DATA£££' + data);
+
+            this.permissionFlag = !data;
+            console.log('PERMISSIONFLAG££' + this.permissionFlag);
+        })
         console.log('Details Callback Start');
 
         console.log('### VasSubtype__c >>> ' + this.order.VasSubtype__c);
@@ -1652,6 +1661,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if ( this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale'){
             this.isNoDayAfterthought = await isAfterthoughtDaysZero({order: this.order});
         }
+        
+
+
 
         console.log('hdtChildOrderProcessDetails - connectedCallback - END');
     }

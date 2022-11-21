@@ -153,8 +153,10 @@ public inherited sharing class HDT_UTL_SelfReadings {
         c.IntegrationId__c = request.integrationId;
         c.MeterCode__c = request.serialNumber;
         c.ReadingDate__c = request.readingDate != null ? request.readingDate : System.today();
-        c.DistributorCode__c = inputContract.ServicePoint__r.Distributor__r.Code__c;
-        c.SalesCompanyCode__c = isGas ? '10V0000160' : '13V0000000'; // TODO WAVE 2: adeguare con le altre company in ambito.
+        //c.DistributorCode__c = inputContract.ServicePoint__r.Distributor__r.Code__c;
+        //c.SalesCompanyCode__c = isGas ? '10V0000160' : '13V0000000'; // TODO WAVE 2: adeguare con le altre company in ambito.
+        String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest('', request.contractCode);
+        HDT_UTL_DataEnrichmentPostSales.handleResponse(serializedResponse, c);
 
         HDT_QR_CausalCodeCalculation causalCodeHandler = new HDT_QR_CausalCodeCalculation();
         HDT_CausalCodeCalculation__mdt causalCodeMdt = causalCodeHandler.calculateCausalCode(c.Cluster__c, c.Type, '', request.commodity);
