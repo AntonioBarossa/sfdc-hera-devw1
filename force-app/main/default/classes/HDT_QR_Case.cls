@@ -192,7 +192,8 @@ public inherited sharing class HDT_QR_Case {
             OwnedByUser__c,
             OwnerId,
             wrts_prcgvr__Status__c,
-            wrts_prcgvr__ActivityTemplate__r.Name
+            wrts_prcgvr__ActivityTemplate__r.Name,
+            Type__c
             FROM wrts_prcgvr__Activity__c
             WHERE (wrts_prcgvr__Status__c != 'Chiusa' AND wrts_prcgvr__Status__c != 'Annullata')
             AND wrts_prcgvr__IsClosed__c = false

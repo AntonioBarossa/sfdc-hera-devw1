@@ -628,7 +628,7 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getChildOrdersForDateCalculation(List<String> parentOrderIds){
         return [
             SELECT
-            Id,EffectiveDate__c,RecessNotice__c,WaiverRightAfterthought__c ,IsEarlyActivation__c ,ClientCategoryFormula__c,CommodityFormula__c,RecordType.DeveloperName,WizardCompletedDate__c,Account.RecordType.DeveloperName,Channel__c,Market__c,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c,IsActivationDeferred__c,ProcessType__c,MarketOrigin__c,ServicePoint__r.CommoditySector__c,VoltageLevel__c,SupplyType__c,CustomerCategory__c,SignatureMethod__c,DocSendingMethod__c
+            Id,EffectiveDate__c,RecessNotice__c,WaiverRightAfterthought__c ,IsEarlyActivation__c ,ClientCategoryFormula__c,CommodityFormula__c,RecordType.DeveloperName,WizardCompletedDate__c,Account.RecordType.DeveloperName,Channel__c,Market__c,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c,IsActivationDeferred__c,ProcessType__c,MarketOrigin__c,ServicePoint__r.CommoditySector__c,VoltageLevel__c,SupplyType__c,CustomerCategory__c,SignatureMethod__c,DocSendingMethod__c,IsTransition__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
