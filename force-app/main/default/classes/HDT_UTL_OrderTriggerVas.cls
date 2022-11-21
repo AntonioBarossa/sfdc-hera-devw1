@@ -29,7 +29,7 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
         Set<Id> canceledOrderQuotesIds = new Set<Id>();
         for (Order newOrder : (List<Order>)newMap.values()) {
             Order oldOrder = (Order) oldMap.get(newOrder.Id);
-            if (newOrder.RecordTypeId!=VAS_RT && newOrder.RecordTypeId!=SCONTIBONUS_RT && ((newOrder.Status==STATUS_CANCELLED && oldOrder.Status!=STATUS_CANCELLED) || ('Voltura Rifiutata'.equalsIgnoreCase(newOrder.Phase__c) && !newOrder.Phase__c.equalsIgnoreCase(oldOrder.Phase__c)) )) {
+            if (!'Annullamento Ordine di Riferimento'.equalsIgnoreCase(newOrder.CancellationReason__c) && newOrder.RecordTypeId!=VAS_RT && newOrder.RecordTypeId!=SCONTIBONUS_RT && ((newOrder.Status==STATUS_CANCELLED && oldOrder.Status!=STATUS_CANCELLED) || ('Voltura Rifiutata'.equalsIgnoreCase(newOrder.Phase__c) && !newOrder.Phase__c.equalsIgnoreCase(oldOrder.Phase__c)) )) {
                 canceledOrderIds.add( newOrder.Id );
                 if (newOrder.SBQQ__Quote__c != null){
                     canceledOrderQuotesIds.add(newOrder.SBQQ__Quote__c);
@@ -52,10 +52,12 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
 
     public static void cancelLinkedOrders(Set<Id> canceledOrderIds, Set<Id> canceledOrderQuotesIds){
         List<Order> ordersToWork = new List<Order>();
+        System.debug(' EDO CANCELL ORDER ID '+canceledOrderIds);
+        System.debug(' EDO CANCELL ORDER quote ID '+canceledOrderQuotesIds);
         if(!canceledOrderIds.isEmpty() && canceledOrderQuotesIds.isEmpty()){
-            ordersToWork = [SELECT Id, isBillableVas__c,Contact__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds WITH SECURITY_ENFORCED];
+            ordersToWork = [SELECT Id, isBillableVas__c,Contact__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE Phase__c != 'Annullato' AND OrderReference__c IN :canceledOrderIds WITH SECURITY_ENFORCED];
         }else if (!canceledOrderIds.isEmpty()){
-            ordersToWork = [SELECT Id, isBillableVas__c, Contact__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
+            ordersToWork = [SELECT Id, isBillableVas__c, Contact__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE Phase__c != 'Annullato' AND (OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds) WITH SECURITY_ENFORCED];
         }
 
        
@@ -111,6 +113,18 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
         if (orderToCheckVas.isEmpty()){
             return false;
         }
+        System.debug('EDO MAP '+orderToCheckVas);
+        Set<Id> orderItemSet = new Set<Id>();
+        for(OrderItem oi : [
+            SELECT id, OrderId  
+            FROM OrderItem 
+            WHERE (Product2.Family = 'VAS Fatturabili' OR Product2.Family = 'VAS Prodotto' OR Product2.Family = 'VAS Servizio') AND Order.id IN :orderToCheckVas.keySet() 
+            WITH SECURITY_ENFORCED]
+        ){
+            
+            orderItemSet.add(oi.OrderId);
+
+        }
         for (Order o : [
             SELECT id,isVas__c,VasSubType__c,CommodityFormula__c,PowerRequested__c,PowerCommitted__c, ServicePoint__r.Account__c,AccountId,SBQQ__Quote__r.AmendmentAllowed__c,ServicePoint__r.PlugPresence__c,ServicePoint__r.SAPContractStatus__c,ServicePoint__r.isReseller__c,IsWinback__c
             FROM Order 
@@ -125,14 +139,13 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
             
             if (
                 //Condizione per vas
-                (o.isVas__c) 
-                || ('Analisi Consumi'.equalsIgnoreCase(o.VasSubType__c))
+                (orderItemSet.contains(o.id))
                 //Condizione per Sconti e bonus
                 || ('Attivo'.equalsIgnoreCase(o.ServicePoint__r.SAPContractStatus__c) 
                 && plugPresence 
                 && o.ServicePoint__r.Account__c == o.AccountId 
                 && !o.ServicePoint__r.isReseller__c
-                && !o.IsWinback__c
+                && !o.ServicePoint__r.SwitchInWinback__c
                 && !isPowerChange
                 && o.SBQQ__Quote__r.AmendmentAllowed__c)
             ){
