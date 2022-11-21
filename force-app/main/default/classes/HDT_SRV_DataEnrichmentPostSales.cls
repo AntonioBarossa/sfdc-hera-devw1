@@ -291,30 +291,20 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
     }
 
     public Date getDateFromString(String stringDate){
-
-        //String Date is yyyymmdd
-        
-        Integer year = Integer.valueOf(stringDate.substring(0,4));
-        System.debug(LoggingLevel.DEBUG, '+++++ANNO+++++: ' + year);
-        Integer month = Integer.valueOf(stringDate.substring(4,6));
-        System.debug(LoggingLevel.DEBUG, '+++++MESE+++++: ' + month);
-        Integer day = Integer.valueOf(stringDate.substring(6,8));
-        System.debug(LoggingLevel.DEBUG, '+++++GIORNO+++++: ' + day);
-
-        if(year > 4000){
-
-            year = 4000;
-
+        //String Date format must be yyyymmdd
+        Date toReturn = null;
+        if(String.isNotBlank(stringDate)){
+            Integer year = Integer.valueOf(stringDate.substring(0,4));
+            Integer month = Integer.valueOf(stringDate.substring(4,6));
+            Integer day = Integer.valueOf(stringDate.substring(6,8));
+            year = year > 4000 ? 4000 : year;
+            toReturn = Date.newInstance(year,month,day);
         }
-
-        return Date.newInstance(Integer.valueOf(year), Integer.valueOf(month), Integer.valueOf(day));
-        
+        return toReturn;       
     }
 
     public Boolean variationsBlock(String sapValue){
-
-        return sapValue.equalsIgnoreCase('T1');
-
+        return 'T1'.equalsIgnoreCase(sapValue);
     }
 
     public static String handleSubType (String salesComp, String prodCode) {
