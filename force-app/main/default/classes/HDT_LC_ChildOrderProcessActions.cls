@@ -195,7 +195,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
                 }
-                if(currentOrder.EffectiveDate__c < orderSrv.addBusinessDay(System.today(), 3) || currentOrder.EffectiveDate__c == null){
+                if((!currentOrder.CommodityFormula__c.equalsIgnoreCase('Acqua') && currentOrder.EffectiveDate__c < orderSrv.addBusinessDay(System.today(), 3)) || currentOrder.EffectiveDate__c == null){
                     orderToUpdate.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                 }
                 if(currentOrder.CommodityFormula__c.equalsIgnoreCase('Energia Elettrica')){
@@ -273,6 +273,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 if(currentOrder.VASSubtype__c != null && currentOrder.VASSubtype__c.equalsIgnoreCase('Analisi Consumi'))
                 {
                     orderToUpdate.ProcessCode__c = currentOrder.Commodity__c.equalsIgnoreCase('Energia Elettrica') ? 'VCE' : 'VCG';
+                    /* 2022-11-10 Inserito avanzamento di fase per casistica Analisi Consumi legato a Switch In Ripristinatorio */
+                    if(currentOrder.ParentOrder__c != null && currentOrder.ParentOrder__r.Phase__c != null && currentOrder.ParentOrder__r.Phase__c.equalsIgnoreCase('Documentazione Gestita'))
+                    {
+                        orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
+                    }
                 }
 
                 if ('VAS Fatturabili'.equalsIgnoreCase(currentOrder.VASType__c) && String.isBlank(currentOrder.CommercialProductCode__c) && 'Analisi Consumi'.equalsIgnoreCase(currentOrder.CommercialProduct__c)&& 'Energia Elettrica'.equalsIgnoreCase(currentOrder.CommodityFormula__c)){

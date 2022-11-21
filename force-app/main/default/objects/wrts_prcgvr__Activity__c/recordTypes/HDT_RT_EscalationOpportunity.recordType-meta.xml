@@ -3017,10 +3017,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto su migrazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Verifiche Bonus Sociale</fullName>
             <default>false</default>
         </values>

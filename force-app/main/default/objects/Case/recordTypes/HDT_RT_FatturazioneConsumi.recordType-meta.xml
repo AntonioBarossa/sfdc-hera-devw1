@@ -360,6 +360,34 @@
             <fullName>G650</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>6 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>31 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CaliberRequested__c</picklist>
@@ -508,6 +536,34 @@
         </values>
         <values>
             <fullName>G650</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>31 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32 x 50 - 30 mc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8220,10 +8276,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Blocco per frode</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Calamità Naturali</fullName>
             <default>false</default>
         </values>
@@ -8341,10 +8393,6 @@
         </values>
         <values>
             <fullName>Informazione su doppio pagamento%2Fincasso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Malfunzionamento</fullName>
             <default>false</default>
         </values>
         <values>

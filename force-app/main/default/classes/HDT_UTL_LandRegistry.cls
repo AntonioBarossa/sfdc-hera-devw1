@@ -15,7 +15,7 @@ public with sharing class HDT_UTL_LandRegistry {
         system.debug('pratica servicePointId: ' + servicePointId);
 
         HDT_QR_LandRegistry qrClass = new HDT_QR_LandRegistry();
-        Id rtIdPraticaTARI = Schema.SObjectType.LandRegistry__c.getRecordTypeInfosByName().get('DatiCatastali - Pratica Ambiente').getRecordTypeId();
+        Id rtIdPraticaTARI = Schema.SObjectType.LandRegistry__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_DatiCatastali_PraticaTARI').getRecordTypeId();
 
         list<LandRegistry__c> praticaData = new list<LandRegistry__c>();
         if(caseId != null) praticaData = qrClass.getPraticaTARILandRegistryByCaseIds(new list<Id> {caseId});

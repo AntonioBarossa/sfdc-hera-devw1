@@ -2262,9 +2262,52 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>UseSubCategory__c</picklist>
+        <values>
+            <fullName>Altri usi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso agricolo e zootecnico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso artigianale e commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso condominiale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico non residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso industriale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico disalimentabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico non disalimentabile</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
             <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito Consuntivazione KO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2393,6 +2436,14 @@
         </values>
         <values>
             <fullName>Errore tecnico invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DBO</fullName>
             <default>false</default>
         </values>
         <values>

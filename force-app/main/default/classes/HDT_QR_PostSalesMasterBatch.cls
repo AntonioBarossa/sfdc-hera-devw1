@@ -275,7 +275,8 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         SupplyType__c,
         AnnualConsumption__c,
         CaliberAvailable__c,
-        CausalCode__c
+        CausalCode__c,
+        Order__r.EffectiveDate__c
         FROM Case
         WHERE Type = 'Voltura Tecnica'
         AND Phase__c = 'In attesa Data Decorrenza'

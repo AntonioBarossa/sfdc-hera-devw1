@@ -118,8 +118,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     processType = selectedProcessObject.get('RecordTypeName__c').equalsIgnoreCase('HDT_RT_Voltura') ? 'Voltura' : 'Voltura con Switch';
                     newOrder.Subprocess__c = 'Standard';
                     newOrder.VoltureType__c = 'Ordinaria';
-                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
-                    newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : processCode;
+                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Gas'? 'VTG' : processCode;
+                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Acqua'? 'MA1' : processCode;
+                    newOrder.EffectiveDate__c = processCode!= 'MA1'?orderSrv.addBusinessDay(System.today(), 3):System.today();
                     newOrder.SapContractCode__c = sapCode;
                     newOrder.Id = orderId;
                     //@frpanico "Chiamata Arricchimento Dati" per ulteriori predefault
@@ -191,20 +193,21 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 when 'Connessione con Attivazione'{
                     if('Acqua'.equalsIgnoreCase(order.Commodity__c))
                     {
-                        newOrder.QuotationType__c = 'Analitico';
-                        newOrder.NotDisconnectabilityCustomer__c = 'No';
+                        //newOrder.QuotationType__c = 'Analitico';
                         newOrder.VAT__c = 'Iva 10% (Cod. 01)';
-                        newOrder.PaySewer__c = 'Si - Paga';
-                        newOrder.PayPurification__c = 'Si - Paga';
+                        newOrder.PaySewer__c = 'No - Esente';
+                        newOrder.PayPurification__c = 'No - Esente';
                         newOrder.ResidentDomesticHousingUnit__c = 1;
                     }
                 }
             }
 
-                newOrder.VAT__c = 
-                    order.CommodityFormula__c == 'Energia Elettrica' ?
-                        order.SupplyType__c == 'Domestico' ? 'Iva 10% (Cod. 01)' : 'Iva 22% (Cod. 02)'
-                    : 'Iva 22% (Cod. 02)';
+            newOrder.NotDisconnectabilityCustomer__c = 'No';
+            newOrder.VAT__c = order.CommodityFormula__c == 'Energia Elettrica' ?
+                                    order.SupplyType__c == 'Domestico' ? 'Iva 10% (Cod. 01)' : 'Iva 22% (Cod. 02)' : 'Iva 22% (Cod. 02)';
+
+            newOrder.UseSubCategory__c = order.CommodityFormula__c == 'Acqua' ? 
+                                            HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c ) : '';
             
             if(order.CommodityFormula__c == 'Gas')
             {

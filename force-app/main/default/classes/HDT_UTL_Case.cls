@@ -182,6 +182,24 @@ public inherited sharing class HDT_UTL_Case {
             currentCase.EffectiveDate__c = dataDecorrenza;
             output.currentCase = currentCase;
         }
+        else if (System.Label.invio_sollecito.equalsIgnoreCase(process)){
+            String body;
+            HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
+            httpObj.headersMap = new Map<String, String>();
+            httpObj.httpMethod = 'POST';
+            httpObj.headersMap.put('Content-Type', 'application/json');    
+            httpObj.endPoint = 'callout:MulesoftBasePath/reminder';
+            body = JSON.serialize(new Map<String, Object>{
+                'requestId'=>currentCase.Id,'dataRequest'=>Date.today(),'caseId'=>currentCase.CaseNumber,'noticeId'=>String.isNotBlank(currentCase.NoticeId__c)?currentCase.NoticeId__c:'',
+                'reminder'=>'X','text'=>String.isNotBlank(currentCase.Note__c)?currentCase.Note__c:''
+            });
+            output.effectiveDate = Date.today();
+            HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse respWrp=(HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse)JSON.deserialize(HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj).body,HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse.class);
+            if(respWrp.status.equalsIgnoreCase(System.Label.failed)){
+                HDT_UTL_IntegrationLog.handleGenericErrorRequest(body, 'POST', respWrp.errorDetails[0].additionalInfo , System.Label.invio_sollecito, currentCase.Id);
+                output.cancellationNote = String.valueof(datetime.now()) +' '+respWrp.errorDetails[0].code+' | '+respWrp.errorDetails[0].additionalInfo;
+            }
+        }
         outputs.add(output);
         return outputs;
     }

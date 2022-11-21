@@ -8,17 +8,21 @@
  * 
  * Ex. Map('orderEntryMiOrders.0.orderEntryMiLineItems.0.action.0.hercodiceCentroLavoro'	=>	'1001001')
  * Creates this JSON:
- * { 
- *  orderEntryMiOrders:{
- *      [
-*          {orderEntryMiLineItems:[
-*              {action:[
-*                  {hercodiceCentroLavoro : "1001001"}
-*              ]}
-*          ]}
- *      ]
- *  }
- * }
+ *   {
+ *       "orderEntryMiOrders": [
+ *           {
+ *               "orderEntryMiLineItems": [
+ *                   {
+ *                       "action": [
+ *                           {
+ *                               "hercodiceCentroLavoro": "1001001"
+ *                           }
+ *                       ]
+ *                   }
+ *               ]
+ *           }
+ *       ]
+ *   }
 **/
 public with sharing class HDT_UTL_GenerateMultilevelJson {
 
@@ -38,6 +42,10 @@ public with sharing class HDT_UTL_GenerateMultilevelJson {
 
     public Map<String, Object> generateMap(){
         Map<String, Object> rootMap = new Map<String, Object>();//Mappa finale
+        return appendToMap(rootMap);
+    }
+
+    public Map<String, Object> appendToMap(Map<String, Object> rootMap){
         for (String path : this.namesValues.keySet()) {
             HDT_WRP_Row row = new HDT_WRP_Row(path, namesValues.get(path));
             row.recursiveInsertKeyValuePairOnMap(rootMap);

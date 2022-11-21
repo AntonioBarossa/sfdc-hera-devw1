@@ -3121,10 +3121,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto su migrazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Verifica comportamento Banca%2C Istituti Finanziari e Carte di Credito</fullName>
             <default>false</default>
         </values>

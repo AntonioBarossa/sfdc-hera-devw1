@@ -465,7 +465,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_CloseActivity</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR ( 2 AND 3 )</booleanFilter>
+                                <booleanFilter>1 OR ( 2 AND 3 ) OR 4 OR 5</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.ShowcompletedActivity__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -480,6 +480,16 @@
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Vocal Order non validato</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Description__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto SMS Marketing Cloud</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Description__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto EMAIL Marketing Cloud</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -1195,6 +1205,38 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.ActivityDurationFormula__c</fieldItem>
                 <identifier>RecordActivityDurationFormula__cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.SMS_Tracking__c</fieldItem>
+                <identifier>RecordSMS_Tracking__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.SMS_Tracking__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Individual_Email_Result__c</fieldItem>
+                <identifier>RecordIndividual_Email_Result__c</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Individual_Email_Result__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-52a62b0f-0db8-4db8-a0eb-dde5537c7162</name>

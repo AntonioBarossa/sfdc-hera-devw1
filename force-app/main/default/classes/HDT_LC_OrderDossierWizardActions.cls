@@ -468,7 +468,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         Order parentOrder = new Order();
         List<String> processList = new List<String>();
 
-        List<Order> orderList =[SELECT Account.Category__c, ParentOrder__c, PhoneNumber__c, ShippingMail__c, Contact__r.HomePhone, Contact__r.Phone, Contact__r.Email, ProcessType__c, Channel__c, CustomerCategory__c
+        List<Order> orderList =[SELECT Account.Category__c, CommodityFormula__c,ParentOrder__c, PhoneNumber__c, ShippingMail__c, Contact__r.HomePhone, Contact__r.Phone, Contact__r.Email, ProcessType__c, Channel__c, CustomerCategory__c
                                 FROM Order WHERE Id=:recordId OR ParentOrder__c = :recordId WITH SECURITY_ENFORCED];
         
         for(Order singleOrder : orderList)
@@ -569,6 +569,14 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         WITH SECURITY_ENFORCED];
 
         List<SObject> sobjToUpdate = new List<SObject>();
+        /*@frpanico 2022-11-17 
+        * La list di quoteLine e' necessaria per dividere i chunk
+        * Salesforce ha il limite di 10 chunk
+        * se ho due oggetti A e B e ordino la lista A B A B A B Salesforce li considera singoli chunk andando in errore "Not more than 10 chunks..."
+        * se ordino la lista A A A A A B B B B B Salesforce li considera come due chunk
+        */
+        List<SBQQ__QuoteLine__c> quoteLineToUpdate = new List<SBQQ__QuoteLine__c>();
+        
 
         Map<String, Map<String,OrderItem>> podOrderItemMap = new Map<String, Map<String,OrderItem>>();
         /* Build the map that groups orderItems for ServicePointCode of the related order */
@@ -608,9 +616,12 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             offertaCommQl.Surface__c = (Decimal) (podOrderItemMap.get(key).get('analisiConsumi')).get('Surface__c');
 
             sobjToUpdate.add(offertaCommerciale);
-            sobjToUpdate.add(offertaCommQl);
+            quoteLineToUpdate.add(offertaCommQl);
         }
-
+        if(!quoteLineToUpdate.isEmpty())
+        {
+            sobjToUpdate.addAll(quoteLineToUpdate);
+        }
         if(!sobjToUpdate.isEmpty())
         {
             HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);

@@ -2059,7 +2059,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text4_0_0</name>
-            <fieldText>&lt;p&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0129 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0139 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2104,7 +2104,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_3</name>
-            <fieldText>&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 84% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh, corrispettivo di commercializzazione, pari a 125 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 16% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 82% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh, corrispettivo di commercializzazione, pari a 125 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 18% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2195,7 +2195,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_3_0</name>
-            <fieldText>&lt;p&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0129 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa l’84% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh, il corrispettivo di commercializzazione, pari a 125 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 16% circa della spesa annua.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0139 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa l’82% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh, il corrispettivo di commercializzazione, pari a 125 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 18% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2203,7 +2203,7 @@
                     <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Prezzo Netto Special Web Luce</stringValue>
+                        <stringValue>Prezzo Netto Special Web Lavoro Luce</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2261,7 +2261,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text4</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Il prezzo applicato alla “componente energia” è il prezzo medio mensile del mercato olandese “TTF”, incrementato di un corrispettivo di trasporto pari a 0,06 € al metro cubo e in bolletta sarà denominato prezzo netto. Varierà mensilmente, e sarà adeguato al contenuto energetico del gas fornito.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo applicato alla componente energia sarà fino a tutto settembre il prezzo medio mensile del mercato olandese TTF,&amp;nbsp;&lt;/p&gt;&lt;p&gt;e da ottobre in poi sarà il prezzo medio mensile del mercato italiano PSV, incrementato di un corrispettivo sui consumi pari a 0,115 € al metro cubo.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2367,7 +2367,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text6</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;&amp;nbsp;•	Il prezzo applicato alla “componente energia” è il prezzo medio mensile del mercato olandese “TTF”, incrementato di un corrispettivo di trasporto pari a 0,06 € al metro cubo e in bolletta sarà denominato prezzo netto. Varierà mensilmente, e sarà adeguato al contenuto energetico del gas fornito.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo applicato alla componente energia sarà fino a tutto settembre il prezzo medio mensile del mercato olandese TTF,&amp;nbsp;e da ottobre in poi sarà il prezzo medio mensile del mercato italiano PSV, incrementato di un corrispettivo sui consumi pari a 0,115 € al metro cubo.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2412,7 +2412,7 @@
         </fields>
         <fields>
             <name>text11_0</name>
-            <fieldText>&lt;p&gt;•	La fornitura prevede un contributo sui consumi del cliente e pari a 0,035 € al metro cubo.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 96% della spesa annua per un cliente tipo, con 5.000 metri cubi di consumo annuo, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 125 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 4% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&amp;nbsp;•	Il prezzo netto ed il contributo rappresentano circa il 95% della spesa annua per un cliente tipo, con 5.000 metri cubi di consumo annuo, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 125 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 5% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2906,7 +2906,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_1</name>
-            <fieldText>&lt;p&gt;•	La fornitura prevede un contributo mensile onnicomprensivo a carico del cliente di pari a 9,5 €/mese, pari a 114 €/anno. Il prezzo netto ed il contributo rappresentano circa il 91% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Rimangono a carico del cliente il corrispettivo di dispacciamento compreso nella spesa per la materia energia, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, quelli compresi nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 9% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La fornitura prevede un contributo mensile onnicomprensivo a carico del cliente, pari a 120 €/anno. Il prezzo netto ed il contributo rappresentano circa il 90% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Rimangono a carico del cliente il corrispettivo di dispacciamento compreso nella spesa per la materia energia, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, quelli compresi nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 10% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3099,7 +3099,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_1_0</name>
-            <fieldText>&lt;p&gt;La fornitura prevede un contributo mensile a carico del cliente di 5 €.&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 79% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,002 €/kWh, corrispettivo di commercializzazione, pari a 90 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 21% circa della spesa annua&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;La fornitura prevede un contributo mensile onnicomprensivo a carico del cliente, pari a 120 €/anno. Il prezzo netto ed il contributo rappresentano circa il 90% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Rimangono a carico del cliente il corrispettivo di dispacciamento compreso nella spesa per la materia energia, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, quelli compresi nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 10% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3167,7 +3167,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text7</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia è il prezzo medio mensile del mercato olandese TTF, incrementato di un corrispettivo di trasporto pari a 0,05 € al metro cubo, e in bolletta sarà denominato prezzo netto. Varierà mensilmente e sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia sarà il prezzo medio mensile del mercato italiano PSV, incrementato di un corrispettivo sui consumi pari&amp;nbsp;a 0,08 € al metro cubo, e in bolletta sarà denominato prezzo netto. Varierà mensilmente e sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3182,7 +3182,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text2</name>
-            <fieldText>&lt;p&gt;La fornitura prevede un contributo mensile a carico del cliente di 4,00 €, nei casi di consumo annuo effettivo superiore a 300 metri cubi. In caso contrario il contributo mensile sarà di 2,00 €.&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 91% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 90 €/punto di fornitura/anno e 0,02 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 9% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;La fornitura prevede un contributo mensile a carico del cliente di 4,00 €, nei casi di consumo annuo effettivo superiore a 300 metri cubi. In caso contrario il contributo mensile sarà di 2,00 €.&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 100% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 90 €/punto di fornitura/anno e 0,02 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 0% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3197,7 +3197,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text8</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia è il prezzo medio mensile del mercato olandese TTF, incrementato di un corrispettivo di trasporto pari a 0,08 € al metro cubo, e in bolletta sarà denominato prezzo netto. Varierà mensilmente e sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia sarà fino a tutto settembre il prezzo medio mensile del mercato olandese TTF,&amp;nbsp;e da ottobre in poi sarà il prezzo medio mensile del mercato italiano PSV, incrementato di un corrispettivo sui consumi pari a 0,10 € al metro cubo.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3212,7 +3212,7 @@
         </fields>
         <fields>
             <name>text_3</name>
-            <fieldText>&lt;p&gt;La fornitura prevede un contributo mensile onnicomprensivo a carico del cliente di pari a 9,5 €/mese, pari a 114 €/anno. Il prezzo netto ed il contributo rappresentano circa il 97% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente gli oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 3% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;La fornitura prevede un contributo mensile onnicomprensivo a carico del cliente, pari a 120 €/anno. Il prezzo netto ed il contributo rappresentano circa il 95% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente gli oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 5% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3274,9 +3274,24 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Condizioni_Economiche_Famiglie_GAS_Text7_0</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} Gas che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia è il prezzo medio mensile del mercato olandese TTF, incrementato di un corrispettivo di trasporto pari a 0,08 € al metro cubo, e in bolletta sarà denominato prezzo netto. Varierà mensilmente e sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <name>entri_text_1</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} Gas che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_GAS_Text7_0</name>
+            <fieldText>&lt;p&gt;Il prezzo applicato alla componente energia è il prezzo medio mensile del mercato olandese TTF, incrementato di un corrispettivo di trasporto pari a 0,08 € al metro cubo, e in bolletta sarà denominato prezzo netto. Varierà mensilmente e sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prezzo Netto Special Web Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text2_0</name>
@@ -3295,7 +3310,7 @@
         </fields>
         <fields>
             <name>text_3_0</name>
-            <fieldText>&lt;p&gt;La fornitura prevede un contributo mensile a carico del cliente di 4,00 €.&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 91% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 90 €/punto di fornitura/anno e 0,02 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 9% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo applicato alla componente energia sarà fino a tutto settembre il prezzo medio mensile del mercato olandese TTF, e da ottobre in poi sarà il prezzo medio mensile del mercato italiano PSV, incrementato di un corrispettivo sui consumi pari a 0,10 € al metro cubo,, e in bolletta sarà denominato prezzo netto. Varierà mensilmente e sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La fornitura prevede un contributo mensile onnicomprensivo a carico del cliente, pari a 120 €/anno. Il prezzo netto ed il contributo rappresentano circa il 95% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente gli oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 5% circa della spesa annua.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>

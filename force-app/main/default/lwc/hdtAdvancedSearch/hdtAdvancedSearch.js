@@ -521,8 +521,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         return new Promise((resolve) => {
             this.preloading = true;
             this.isRicercainSAP= true;
-            this.searchInputValue = event;
-            console.log('#Length Event >>> ' + this.searchInputValue.length);
+            this.searchInputValue = event
             /**
              * NTT 02112022
              * Introdotto check sul queryType (checkbox) in quanto per l'h2o il pod ha una lunghezza inferiore ai 14
@@ -544,9 +543,9 @@ export default class HdtAdvancedSearch extends LightningElement {
                 detail: this.isRicercainSAP
             }));
             callService({contratto:contractCode, pod:servicePointCode,impianto:implantCode}).then(data =>{            
+                console.log('XXX callService (dataEnrichment): data --> '+JSON.stringify(data));
                 if(data.statusCode=='200' || this.postSales === true){
-                    if(data.statusCode != '200')
-                    {
+                    if(data.statusCode != '200'){
                         resolve();
                         return;
                     }
@@ -554,6 +553,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                     extractDataFromArriccDataServiceWithExistingSp({sp:'',response:data}).then(datas =>{
                         let sp = datas;
                         this.sp=sp;
+                        console.log('XXX extractDataFromArriccDataServiceWithExistingSp: datas --> '+JSON.stringify(datas));
                         if(sp!= undefined|| sp != null){
                             this.rowToSend = datas;
                             this.preloading = false;

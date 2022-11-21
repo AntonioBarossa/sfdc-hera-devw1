@@ -163,6 +163,17 @@ public with sharing class HDT_UTL_CreditCheck {
         }
     }
 
+    @future
+    @SuppressWarnings('PMD.AvoidDebugStatements')
+    public static void updateOrderFuture(String orderDataJSON){
+        try{
+            HDT_WRP_DataForUpdate orderData = (HDT_WRP_DataForUpdate)JSON.deserialize(orderDataJSON, HDT_WRP_DataForUpdate.class); 
+            HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{orderData});
+        }catch (Exception e){
+            System.debug(LoggingLevel.ERROR, e.getMessage()+ ' line: '+ e.getLineNumber() );
+        }
+    }
+
     public static Boolean managedErrorCode(String errorCode){
         List<HDT_CreditCheckExcludedCode__mdt> codiceErroriGestiti = HDT_QR_GenericQuery.getGenericRecords('Label', 'HDT_CreditCheckExcludedCode__mdt', 'ErrorCode__c = \''+errorCode+ '\' AND IsActive__c = true');
         return !codiceErroriGestiti.isEmpty();

@@ -7,7 +7,7 @@ public with sharing class HDT_UTL_Reclami
 
     private Map<String,String> calculateExpirationDate(Case inputCase, String supplyCity)
     {
-        String commodity = [ SELECT ServicePoint__r.CommoditySector__c FROM Case WHERE ( ParentId = :inputCase.ParentId OR ParentId = :inputCase.Id ) AND ServicePoint__c != null WITH SECURITY_ENFORCED ][0].ServicePoint__r.CommoditySector__c;
+        String commodity = inputCase.CommodityFormula__c;
         Map<String,String> result = new Map<String,String>();
 
         if ( 'Acqua'.equalsIgnoreCase(commodity) )
