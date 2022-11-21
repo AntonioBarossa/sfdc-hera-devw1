@@ -1,9 +1,15 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { loadStyle } from 'lightning/platformResourceLoader';
+import { getRecord } from 'lightning/uiRecordApi';
 import getFiles from '@salesforce/apex/HDT_LC_CaseFileUpload.getFiles';
 import deleteFile from '@salesforce/apex/HDT_LC_CaseFileUpload.deleteFile';
+import updatePhaseAllegatiRicevuti from '@salesforce/apex/HDT_LC_CaseFileUpload.updatePhaseAllegatiRicevuti';
 // import fileSelectorStyle from '@salesforce/resourceUrl/fileSelectorStyle';
+
+const FIELDS = ['Case.Type',
+				'Case.Cluster__c',
+                'Case.Phase__c'];
 
 export default class FileUploadExample extends LightningElement {
     @api recordId;
@@ -17,6 +23,24 @@ export default class FileUploadExample extends LightningElement {
     relatedUrl;    
     get acceptedFormats() {
         return ['.pdf', '.png', '.txt'];
+    }
+
+    @track caseRecord;
+    @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
+    wiredCase({ error, data }) {
+        if (error) {
+            let message = 'Unknown error';
+            if (Array.isArray(error.body)) {
+                message = error.body.map(e => e.message).join(', ');
+            } else if (typeof error.body.message === 'string') {
+                message = error.body.message;
+            }
+            console.log('data error ' +message);
+        } else if (data) {
+
+            this.caseRecord = data;
+            
+        }
     }
 
     connectedCallback() {
@@ -113,17 +137,11 @@ export default class FileUploadExample extends LightningElement {
             this.dispatchEvent(evt);
     
             this.getAttachmentFiles();
-    
-        //     setTimeout(() => {
-        //         eval("$A.get('e.force:refreshView').fire();");
-        //    }, 1000); 
 
         });
-
-        // this.template.querySelector('[data-id="agency"]').value = event.target.value;
-        // console.log('nuovo valore ' + this.template.querySelector('[data-id="agency"]').value);
-
     }
+
+
 
     handleUploadFinished(event) {
         const uploadedFiles = event.detail.files.length;
@@ -136,8 +154,17 @@ export default class FileUploadExample extends LightningElement {
 
         this.getAttachmentFiles();
 
-        setTimeout(() => {
-            eval("$A.get('e.force:refreshView').fire();");
-       }, 1000); 
+        if(this.caseRecord.fields.Type.value == 'Consumo Anomalo Idrico' && this.caseRecord.fields.Cluster__c.value == 'Segnalazioni' && !this.allegatiPresenti && this.caseRecord.fields.Phase__c.value == 'Risposta ricevuta'){
+            updatePhaseAllegatiRicevuti({recordId: this.recordId})
+            .then(() => {
+
+                setTimeout(() => {
+                    eval("$A.get('e.force:refreshView').fire();");
+            }, 2000); 
+
+            });
+        }
+
+        
     }
 }
