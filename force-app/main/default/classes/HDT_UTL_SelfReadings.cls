@@ -203,7 +203,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
             r.ReadingValueMeter__c = request.readings.value1;
             r.ReadingValueCorrector__c = request.readings.value2;
             r.ReadingSerialNumberMeter__c = request.readings.serialNumber1;
-            r.ReadingSerialNumber2__c = request.readings.serialNumber2;
+            r.ReadingSerialNumberCorrector__c = request.readings.serialNumber2;
             r.ReadingRegisterMeter__c = request.readings.register1;
             r.ReadingRegisterCorrector__c = request.readings.register2;
             r.ReadingTypeMeter__c = request.readings.type1;
@@ -290,9 +290,15 @@ public inherited sharing class HDT_UTL_SelfReadings {
         HDT_UTL_DatabaseService.upsertSObject(r);
         response.readingId = r.Id;
         if('Bozza'.equalsIgnoreCase(c.Phase__c)){
-            c.Phase__c = 'Attesa check preliminari';
+            c.Phase__c = 'Attivo'.equalsIgnoreCase(inputContract.Status)? 'Attesa check preliminari' : 'Bozza Annullata';
+            if('Bozza Annullata'.equalsIgnoreCase(c.Phase__c)){
+                c.Status = 'Closed';
+                c.CancellationNote__c = 'Contratto cessato';
+                c.CancellationReason__c = 'Pratica errata';
+            }
             HDT_UTL_DatabaseService.upsertSObject(c);
-        } 
+        }
+        
     }
 
     public static Map<String,DiscardAnnullmentRule__c> isAutomaticDiscard(Set<String> errorCodes) {
