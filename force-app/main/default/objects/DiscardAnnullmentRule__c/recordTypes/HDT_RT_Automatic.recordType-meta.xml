@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_RT_Automatic</fullName>
+    <active>true</active>
+    <label>Automatico</label>
+    <picklistValues>
+        <picklist>ActivityType__c</picklist>
+        <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO pre-MDM</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ControllingCommodity__c</picklist>
+        <values>
+            <fullName>Energia Elettrica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gas</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ControllingField__c</picklist>
+        <values>
+            <fullName>Description</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DiscardDescription%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DiscardReason%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DiscardNoteReliability__c</picklist>
+        <values>
+            <fullName>Alta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bassa</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ParentObject__c</picklist>
+        <values>
+            <fullName>Case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Order</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ProcessField__c</picklist>
+        <values>
+            <fullName>ProcessType%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Type</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ProcessValue__c</picklist>
+        <values>
+            <fullName>Autolettura da cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Offerta Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Offerta Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiusura Contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Connessione con Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consegna copia chiave GdM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interruzione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuovo Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione Fuori delibera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione In delibera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proroga Temporanea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recesso per Altri Motivi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riattivazione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riattivazione Fornitura non morosa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta lettura cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimozione Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione NO Contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione No Disalimentabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione No Sospensione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione Punto Sospeso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospensione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spostamento Contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporanea - Nuova Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Potenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica GDM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>
