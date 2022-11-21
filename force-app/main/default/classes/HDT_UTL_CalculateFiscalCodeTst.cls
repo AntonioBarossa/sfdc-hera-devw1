@@ -203,5 +203,15 @@ public class HDT_UTL_CalculateFiscalCodeTst {
         System.assertNotEquals(true, resultFiscalCode.length()<16, 'FiscalCode is wrong');
 
     }
+    @isTest
+    static void cleanFiscalCodeFromOmocodiaTst()
+    {
+        String testCode = 'MRCMRC80ALMHRLMG';
+        String assertCode = 'MRCMRC80A01H501Y';
+        Test.startTest();
+            String result = HDT_UTL_CalculateFiscalCode.cleanFiscalCodeFromOmocodia(testCode);
+        Test.stopTest();
+        System.assertEquals(assertCode, result, 'Fiscal code not cleaned correctly');
+    }
 
 }

@@ -11,21 +11,23 @@ public with sharing class HDT_UTL_CaseValidationsTst {
     public static final String TEST_NAME = 'HDT_UTL_CaseValidationsTst';
 
     private static HDT_UTL_CaseValidations caseValidationsUtl = new HDT_UTL_CaseValidations();
+    private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
     
     //Added Setup
     @TestSetup
-    static void setup(){ 
+    static void setup(){
         Case myCase = new Case();
         myCase.Type = 'Proroga Conn Temp';
         myCase.Cluster__c = 'Disattivazioni';
         myCase.TemporaryConnectionEndDate__c = Date.newInstance(2022, 08, 16);
-        insert myCase;      
+        insert myCase;  
     }
     
     //TEST SETUP
     private static void mySetup(){
 
-        HDT_UTL_DataFactoryTst.pClickCasePhase();        
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
+        HDT_UTL_DataFactoryTst.pClickInstance();   
 
         //Account
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
@@ -2415,6 +2417,42 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         Test.stopTest();
         
         System.assert(retrievedCase != null, 'retrievedCase is null');
+
+    }
+
+    @isTest
+    private static void validateTestType28(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType28';
+        System.debug(debugString);
+        
+        //SETUP
+        UserRole r = new UserRole();
+        r.DeveloperName = 'MyCustomRole';
+        r.Name = 'My Role';
+        insert r;
+
+        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
+		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+        internalUser.UserRoleId = r.Id;
+
+        insert internalUser;
+
+        Test.startTest();
+
+        System.runAs(internalUser){ 
+
+            HDT_QR_CaseValidations roleName = new HDT_QR_CaseValidations();
+
+            String roleNameBox = roleName.getUserSessionRole();
+
+            //ASSERTS
+            System.assert(roleNameBox != null, 'il ruolo non è popolato'); 
+
+        }
+        Test.stopTest();
+        
     }
 
 }
