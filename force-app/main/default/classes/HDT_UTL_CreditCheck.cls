@@ -164,6 +164,11 @@ public with sharing class HDT_UTL_CreditCheck {
     @SuppressWarnings('PMD.AvoidDebugStatements')
     public static void updateOrderFuture(String orderDataJSON){
         try{
+            Long startTime = Datetime.now().getTime();
+            Long actualTime;
+            do{
+                actualTime = Datetime.now().getTime();
+            }while (actualTime - startTime < 5000 && !Test.isRunningTest());
             HDT_WRP_DataForUpdate orderData = (HDT_WRP_DataForUpdate)JSON.deserialize(orderDataJSON, HDT_WRP_DataForUpdate.class); 
             HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{orderData});
         }catch (Exception e){
