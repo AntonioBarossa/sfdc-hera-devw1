@@ -10552,6 +10552,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DiscardAnnullmentRule__c.DiscardReason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DiscardAnnullmentRule__c.IsActive__c</field>
         <readable>true</readable>
     </fieldPermissions>
