@@ -3,6 +3,7 @@
 * @date 23/03/2021
 * @description HDT_UTL_ServicePoint Class
 * @history Luca Molino – 23/03/2021 – Created Class
+* 18/11/2022 - Fabio Palladino - Class refactoring e gestione dati castali 
 */
 public with sharing class HDT_UTL_ServicePoint {
     
@@ -14,7 +15,8 @@ public with sharing class HDT_UTL_ServicePoint {
     
     @AuraEnabled
     public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response){
-        
+        HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
+        HDT_QR_LandRegistry landRegistryQr = new HDT_QR_LandRegistry();
         ServicePoint__c spNew = new ServicePoint__c();
         if(sp != null){
             spNew = sp;
@@ -133,15 +135,11 @@ public with sharing class HDT_UTL_ServicePoint {
             Account a = accountQr.getAccountByDistributorKey(mapRes.get('DISTRIBUTORE'));
             spNew.Distributor__c = a.Id != null ? a.Id : ((sp != null && sp.Distributor__c != null) ? sp.Distributor__c : null);
         }
-        /**@frpanico 2022-05-27
-         * Aggiunta gestione campo VENDITORE
-         */
         if(mapRes.get('VENDITORE')!=null && !String.isBlank(mapRes.get('VENDITORE')))
         {
             String codiceVenditore = (String)mapRes.get('VENDITORE');
             List<HDT_MatriceSocietaVendita__mdt> salesCompanies = [SELECT SellerCompany__c FROM HDT_MatriceSocietaVendita__mdt WHERE SalesCompanyCode__c = :codiceVenditore WITH SECURITY_ENFORCED];
-            if(!salesCompanies.isEmpty())
-            {
+            if(!salesCompanies.isEmpty()){
                 spNew.Vendor__c = salesCompanies[0].SellerCompany__c;
             }
             spNew.SalesCompanyCode__c = codiceVenditore;
@@ -150,31 +148,35 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.ServicePointCode__c   = mapRes.get('POD');
             spNew.Name   = mapRes.get('POD');            
         }
+        if(mapRes.get('IMPIANTO')!=null && !String.isBlank(mapRes.get('IMPIANTO'))){            
+            spNew.SAPImplantCode__c = mapRes.get('IMPIANTO');
+        }
         if(mapRes.get('DESCRCOMM')!=null && !String.isBlank(mapRes.get('DESCRCOMM'))){            
             if(mapRes.get('DESCRCOMM')== 'Energia elettrica'){
                 spNew.CommoditySector__c = 'Energia Elettrica';
-                spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Ele'); //21/08/2021 - gabriele.rota@webresults.it
+                spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Ele');
             }
             else if(mapRes.get('DESCRCOMM')== 'Gas'){
                 spNew.CommoditySector__c = 'Gas';
-                spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Gas'); //21/08/2021 - gabriele.rota@webresults.it
+                spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Gas');
             }
             else if(mapRes.get('DESCRCOMM')== 'Acqua'){
                 spNew.CommoditySector__c = 'Acqua';
-                spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Acqua'); //21/08/2021 - gabriele.rota@webresults.it
+                spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Acqua');
             }
             else if(mapRes.get('DESCRCOMM')== 'Ambiente'){
                 spNew.CommoditySector__c = 'Ambiente';
-                spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Ambiente'); //21/08/2021 - gabriele.rota@webresults.it
-
-                if(response.data.datiCatastali!=null && response.data.datiCatastali.size()>0 ) {
-                    List <LandRegistry__c> landLst = new List<LandRegistry__c>();
+                spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Ambiente'); 
+                if(response.datiCatastali!=null && response.datiCatastali.size()>0 && spNew.Id != null) {
+                    List <LandRegistry__c> landLstToInsert = new List<LandRegistry__c>();
                     try {     
+                        List <LandRegistry__c> landLstToDelete = landRegistryQr.getTARILandRegistryByServicePointIds(new list<Id>{spNew.Id});
                         Id idLand = qrRecordType.getRecordTypeIdByName('HDT_RT_DatiCatastali_TARI');
-                        for(HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_DatiCatastaliResponseObject l : response.data.datiCatastali){
-
+                        
+                        for(HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_DatiCatastaliResponseObject l : response.datiCatastali){                       
                             LandRegistry__c landReg = new LandRegistry__c();
                             landReg.DestinationUsage__c = l.destinazione;
+                            landReg.CodeMissingRegistryData__c = l.codiceAssenzaDatiCatastali;
                             landReg.SapProgressive__c = l.progressivo;
                             landReg.LegalCity__c = l.comuneAmministrativo;
                             landReg.RegistryCity__c = l.comuneCatastale;
@@ -183,13 +185,19 @@ public with sharing class HDT_UTL_ServicePoint {
                             landReg.UnitType__c = l.tipoUnita;
                             landReg.Sheet__c = l.foglio;
                             landReg.ParticleSheet__c = l.particella;
+                            landReg.Subaltern__c = l.subalterno;
                             landReg.Title__c = l.qualificaTitolareUtenza;
                             landReg.RegistrySurface__c = Decimal.valueOf(l.superficeCatastale);
                             landReg.RecordTypeId = idLand;
-                            landLst.add(landReg);
+                            landReg.ServicePoint__c = spNew.Id;
+                            landReg.StartDate__c = dataEnrich.getDateFromString(mapRes.get('DATAATTIVAZIONE'));
+                            landReg.EndDate__c = dataEnrich.getDateFromString('99991231'.equals(mapRes.get('DATACESSAZIONE'))? null: mapRes.get('DATACESSAZIONE'));
+                            landReg.GlobalMigrationKey__c = 'DC_'+ spNew.SAPImplantCode__c + '_' + landReg.DestinationUsage__c + '_' + landReg.SapProgressive__c + '_' + String.valueof(landReg.StartDate__c);
+                            landLstToInsert.add(landReg);
+                            
                         }
-                        HDT_UTL_DatabaseService.insertSObject(landLst);
-
+                        HDT_UTL_DatabaseService.deleteSObject(landLstToDelete);
+                        HDT_UTL_DatabaseService.insertSObject(landLstToInsert);
                     } catch (Exception e) { 
                         System.debug(LoggingLevel.DEBUG,' Arricchimaneto LandRegistry Fallito: ' + e.getMessage());
                     }
@@ -202,9 +210,6 @@ public with sharing class HDT_UTL_ServicePoint {
         else if(mapRes.get('MOTGARANZIAFORN') == ''){            
             spNew.Disconnectable__c = 'No';
         }        
-        if(mapRes.get('IMPIANTO')!=null && !String.isBlank(mapRes.get('IMPIANTO'))){            
-            spNew.SAPImplantCode__c = mapRes.get('IMPIANTO');
-        }
         if(mapRes.get('RESELLER')!=null && !String.isBlank(mapRes.get('RESELLER'))){
             spNew.isReseller__c = mapRes.get('RESELLER') == 'X';
         }
@@ -247,19 +252,16 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.SwitchInWinback__c = false;
             spNew.SwitchOutDate__c = null;
         }
-        if(mapRes.get('TIPOIMPIANTO')!=null && !String.isBlank(mapRes.get('TIPOIMPIANTO'))){
-            HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
+        if(!String.isBlank(mapRes.get('TIPOIMPIANTO'))){
             spNew.ImplantType__c = dataEnrich.getPicklistValue('ServicePoint__c', 'ImplantType__c', mapRes.get('TIPOIMPIANTO'));
         }
-        if(mapRes.get('MODPAGUSCITA')!=null && !String.isBlank(mapRes.get('MODPAGUSCITA'))){
-            HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
+        if(!String.isBlank(mapRes.get('MODPAGUSCITA'))){
             spNew.MethodsForOutgoingPayments__c = dataEnrich.getPicklistValue('ServicePoint__c', 'MethodsForOutgoingPayments__c', mapRes.get('MODPAGUSCITA'));
         }
-        if(mapRes.get('AFPAG_FFUG')!=null && !String.isBlank(mapRes.get('AFPAG_FFUG'))){
-            HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
+        if(!String.isBlank(mapRes.get('AFPAG_FFUG'))){
             spNew.JointBottomAdhesion__c = dataEnrich.getPicklistValue('ServicePoint__c', 'JointBottomAdhesion__c', mapRes.get('AFPAG_FFUG'));
         }
-        if(mapRes.get('AFPAGA_DEP')!=null && !String.isBlank(mapRes.get('AFPAGA_DEP'))){
+        if(!String.isBlank(mapRes.get('AFPAGA_DEP'))){
             if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_DEP')))== 0) {
                 spNew.PayPurification__c = 'No - Esente';                
             }
