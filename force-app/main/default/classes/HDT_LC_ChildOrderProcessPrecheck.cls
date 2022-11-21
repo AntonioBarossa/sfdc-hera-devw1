@@ -176,42 +176,58 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     newOrder.WaiverRightAfterthought__c = 'Si';
                 }
                 when 'Prima Attivazione'{
-                    if(order.CommodityFormula__c == 'Gas')
-                    {
-                        processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
-                        processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
-                        newOrder.PressureLevel__c  = 'BP';
-                    }
-                    if(order.CommodityFormula__c == 'Acqua')
-                    {
-                        newOrder.SecurityDepositExcluded__c  = 'Y';
-                        newOrder.SeasonUse__c  = 'Nessuna stagionalita';
-                        newOrder.PayPurification__c  = 'No - Esente';
-                        newOrder.PaySewer__c  = 'No - Esente';
+                    switch on order.CommodityFormula__c {
+                        when 'Acqua' {
+                            newOrder.SecurityDepositExcluded__c  = 'Y';
+                            newOrder.SeasonUse__c  = 'Nessuna stagionalita';
+                            newOrder.PayPurification__c  = 'No - Esente';
+                            newOrder.PaySewer__c  = 'No - Esente';
+                        }
+                        when 'Gas' {
+                            processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
+                            processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
+                            newOrder.PressureLevel__c  = 'BP';
+                        }
                     }
                 }
                 when 'Connessione con Attivazione'{
                     if('Acqua'.equalsIgnoreCase(order.Commodity__c))
                     {
-                        //newOrder.QuotationType__c = 'Analitico';
                         newOrder.VAT__c = 'Iva 10% (Cod. 01)';
                         newOrder.PaySewer__c = 'No - Esente';
                         newOrder.PayPurification__c = 'No - Esente';
                         newOrder.ResidentDomesticHousingUnit__c = 1;
                     }
                 }
+                when 'Subentro'{
+                    if('Acqua'.equalsIgnoreCase(order.Commodity__c))
+                    {
+                        newOrder.PaySewer__c = 'Si - Paga';
+                        newOrder.PayPurification__c = 'Si - Paga';
+                        newOrder.SeasonUse__c  = 'Nessuna stagionalita';
+                    }
+                }
             }
 
             newOrder.NotDisconnectabilityCustomer__c = 'No';
-            newOrder.VAT__c = order.CommodityFormula__c == 'Energia Elettrica' ?
-                                    order.SupplyType__c == 'Domestico' ? 'Iva 10% (Cod. 01)' : 'Iva 22% (Cod. 02)' : 'Iva 22% (Cod. 02)';
-
-            newOrder.UseSubCategory__c = order.CommodityFormula__c == 'Acqua' ? 
-                                            HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c ) : '';
-            
-            if(order.CommodityFormula__c == 'Gas')
-            {
-                newOrder.ExciseGAS__c = (order.SupplyType__c == 'A-Domestico' || order.SupplyType__c == 'B-Condominio') ? 'Imposta Usi Domestici (Cod. G_ICD)' : 'Imposta usi non domestici iva 22% (Cod. G_ICC)';
+            newOrder.VAT__c = order.SupplyType__c = 'Iva 22% (Cod. 02)';
+        
+            switch on order.CommodityFormula__c {
+                when 'Acqua' {
+                    newOrder.UseSubCategory__c = HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c );
+                    newOrder.ATO__c = order.ServicePoint__r?.ATO__c;
+                    newOrder.Resident__c = ( 'Non Domestico'.equalsIgnoreCase(order.SupplyType__c) && order.ImplantType__c.containsIgnoreCase('promiscuo') );
+                }
+                when 'Energia Elettrica' {
+                    newOrder.VAT__c = order.SupplyType__c == 'Domestico' ? 'Iva 10% (Cod. 01)' : 'Iva 22% (Cod. 02)';
+                }
+                when 'Gas' {
+                    newOrder.ExciseGAS__c = (order.SupplyType__c == 'A-Domestico' || order.SupplyType__c == 'B-Condominio') ? 'Imposta Usi Domestici (Cod. G_ICD)' : 'Imposta usi non domestici iva 22% (Cod. G_ICC)';
+                    newOrder.PressureLevel__c = 'BP';
+                    //Logica Superficie Servita Start
+                    newOrder.SurfaceServed__c = 75;
+                    //Logica Superficie Servita End
+                }
             }
 
             //EVERIS: MODIFICATA LOGICA DI UPDATE PER GESTIRE I PREDEFAULT
@@ -223,10 +239,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             newOrder.ProcessCode__c = processCode;
             newOrder.AggregateBilling__c = 'Si';
             newOrder.Phase__c = 'Bozza';
-            newOrder.PressureLevel__c =  (extraParams.get('servicePointType') == 'HDT_RT_Gas') ? 'BP' : null;
-            //Logica Superficie Servita Start
-            newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas') ? 75 : null;
-            //Logica Superficie Servita End
             orderSrv.updateRecord(newOrder);
             //EVERIS 
         }
