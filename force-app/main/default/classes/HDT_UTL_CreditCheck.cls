@@ -168,7 +168,7 @@ public with sharing class HDT_UTL_CreditCheck {
             Long actualTime;
             do{
                 actualTime = Datetime.now().getTime();
-            }while (actualTime - startTime < 5000 && !Test.isRunningTest());
+            }while (actualTime - startTime < 5000);
             HDT_WRP_DataForUpdate orderData = (HDT_WRP_DataForUpdate)JSON.deserialize(orderDataJSON, HDT_WRP_DataForUpdate.class); 
             HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{orderData});
         }catch (Exception e){
