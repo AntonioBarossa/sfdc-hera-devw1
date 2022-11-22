@@ -1179,7 +1179,7 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Note__c</field>
+            <field>Description</field>
             <value>
                 <elementReference>NotaToSend</elementReference>
             </value>
@@ -1209,7 +1209,7 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Note__c</field>
+            <field>Description</field>
             <value>
                 <elementReference>NotaToSend</elementReference>
             </value>
@@ -1263,6 +1263,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>InvoicingStreetCode__c</field>
+            <value>
+                <elementReference>getServicePoint.SupplyStreetCode__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>InvoicingStreetName__c</field>
             <value>
                 <elementReference>getServicePoint.SupplyStreetName__c</elementReference>
@@ -1278,12 +1284,6 @@
             <field>InvoicingStreetNumber__c</field>
             <value>
                 <elementReference>getServicePoint.SupplyStreetNumber__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>InvoicingStreetCode__c</field>
-            <value>
-                <elementReference>getServicePoint.SupplyStreetCode__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

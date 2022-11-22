@@ -292,6 +292,31 @@ public inherited sharing class HDT_LC_ConfigureProduct {
  
     }
 
+    /***
+     * Nuovo Metodo VALIDO SOLO PER H20 che applica sulle quote line afferenti a contratti attivi sui quali si sta cambiando solo l'offerta (a parità di intestatario)
+     * il billing profile associato al contratto
+    */
+    public static void applyBillingProfileAsIs(Sale__c sale, List<SBQQ__QuoteLine__c> quoteLinesActive ){
+
+        List<SBQQ__QuoteLine__c> quoteLinesToUpdate = new List<SBQQ__QuoteLine__c>();
+
+        for(SBQQ__QuoteLine__c quoteLine : quoteLinesActive){
+
+            if('Attivo'.equalsIgnoreCase(quoteLine.SBQQ__Quote__r.ContractReference__r.Status) && 
+                quoteLine.SBQQ__Quote__r.SBQQ__Account__c == quoteLine.SBQQ__Quote__r.ContractReference__r.AccountId &&
+                'Acqua'.equalsIgnoreCase(quoteLine.ServicePoint__r.CommoditySector__c) )
+            {
+                quoteLine.BillingProfile__c = quoteLine.SBQQ__Quote__r?.ContractReference__r?.BillingProfile__c;
+                quoteLinesToUpdate.add(quoteLine);
+            }
+        }
+
+        if(!quoteLinesToUpdate.isEmpty()){
+            HDT_UTL_DatabaseService.updateSObject(quoteLinesToUpdate);
+        }
+
+    }
+
     @AuraEnabled
     public static wrapReturnValidity checkApprovedProduct(Sale__c sale){
         list<String> listId = new List<String>();
@@ -303,61 +328,64 @@ public inherited sharing class HDT_LC_ConfigureProduct {
         // Boolean hasPermission = FeatureManagement.checkPermission('HDT_CP_SuperUserCPQ');
         Map<String,wrts_prcgvr__Activity__c> orderLineActivity = new Map<String,wrts_prcgvr__Activity__c>();
         List<SBQQ__QuoteLine__c> quoteLinesActive = quoteLineQr.getActiveRecords(sale.Id);
-            if( !isSwitchInRipristinatorio(sale, quoteLinesActive ) ){
-                for(SBQQ__QuoteLine__c line : quoteLinesActive){
-                    if(line.SBQQ__Product__c != null && line.SBQQ__Product__r.Status__c == 'Scaduta' ){//line.SBQQ__Product__r.EndDate__c < date.today()){
-                        listId.add(line.id);                //segna i SBQQ__QuoteLine__c "Scaduti"
-                        checkIsPresent.put(line.id,true);
-                    }
+
+        applyBillingProfileAsIs( sale, quoteLinesActive );
+
+        if( !isSwitchInRipristinatorio(sale, quoteLinesActive ) ){
+            for(SBQQ__QuoteLine__c line : quoteLinesActive){
+                if(line.SBQQ__Product__c != null && line.SBQQ__Product__r.Status__c == 'Scaduta' ){//line.SBQQ__Product__r.EndDate__c < date.today()){
+                    listId.add(line.id);                //segna i SBQQ__QuoteLine__c "Scaduti"
+                    checkIsPresent.put(line.id,true);
                 }
             }
-            if(!listId.isEmpty()){ //per i SBQQ__QuoteLine__c Scaduti
-                List<wrts_prcgvr__Activity__c> listActivity = HDT_QR_ActivityCustom.getRecordByOrderLine(listId);
-                System.debug('*****DEBUGActivity:' + listActivity);
-                Set<String> quoteToUpdateId = new Set<String>();
-                List<SBQQ__Quote__c> quoteToUpdate = new List<SBQQ__Quote__c>();
-                for(wrts_prcgvr__Activity__c a : listActivity){
-                    orderLineActivity.put(a.QuoteLine__c,a);
-                }
-                System.debug('*****DEBUGActivity2:' + orderLineActivity);
-                for(SBQQ__QuoteLine__c line : quoteLinesActive){
-                    if(checkIsPresent.get(line.id)!= null){
-                        if(orderLineActivity.get(line.id) != null){ //"if" not needed???
-                            System.debug('*****DEBUGActivityDENTROIF:' + line);
-                            if(orderLineActivity.get(line.id) != null &&  orderLineActivity.get(line.id).approved__c != 'Si'){
-                                resp.responseError += (resp.responseError == '' ? line.sbqq__product__r.Name : ',' + line.sbqq__product__r.Name);
-                                resp.wrapCheck = false;
-                            }
-                        }
-                        else{
-                            System.debug('*****DEBUGActivityDENTROELSE:' + line);
+        }
+        if(!listId.isEmpty()){ //per i SBQQ__QuoteLine__c Scaduti
+            List<wrts_prcgvr__Activity__c> listActivity = HDT_QR_ActivityCustom.getRecordByOrderLine(listId);
+            System.debug('*****DEBUGActivity:' + listActivity);
+            Set<String> quoteToUpdateId = new Set<String>();
+            List<SBQQ__Quote__c> quoteToUpdate = new List<SBQQ__Quote__c>();
+            for(wrts_prcgvr__Activity__c a : listActivity){
+                orderLineActivity.put(a.QuoteLine__c,a);
+            }
+            System.debug('*****DEBUGActivity2:' + orderLineActivity);
+            for(SBQQ__QuoteLine__c line : quoteLinesActive){
+                if(checkIsPresent.get(line.id)!= null){
+                    if(orderLineActivity.get(line.id) != null){ //"if" not needed???
+                        System.debug('*****DEBUGActivityDENTROIF:' + line);
+                        if(orderLineActivity.get(line.id) != null &&  orderLineActivity.get(line.id).approved__c != 'Si'){
                             resp.responseError += (resp.responseError == '' ? line.sbqq__product__r.Name : ',' + line.sbqq__product__r.Name);
-                            idToCreateActivity.add(line.id);
-                            quoteToUpdateId.add(line.sbqq__quote__c);
                             resp.wrapCheck = false;
                         }
-                     }
-                }
-                if(idToCreateActivity != null && !idToCreateActivity.isEmpty()){
-                    Id recTypeId= null;
-                    RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
-                    if(rc !=null){
-                        recTypeId= rc.Id;
                     }
-                    List<wrts_prcgvr__Activity__c> listActivityToCreate = new List<wrts_prcgvr__Activity__c>();
-                    for(String s : idToCreateActivity){
-                        listActivityToCreate.add(new wrts_prcgvr__Activity__c(QuoteLine__c=s, RecordTypeId= recTypeId, Type__c= 'Approvazione Offerte',Account__c=sale.Account__r.Id,Sale__c=sale.id,wrts_prcgvr__Status__c='Aperta'));
+                    else{
+                        System.debug('*****DEBUGActivityDENTROELSE:' + line);
+                        resp.responseError += (resp.responseError == '' ? line.sbqq__product__r.Name : ',' + line.sbqq__product__r.Name);
+                        idToCreateActivity.add(line.id);
+                        quoteToUpdateId.add(line.sbqq__quote__c);
+                        resp.wrapCheck = false;
                     }
-                    for(String s : quoteToUpdateId){
-                        quoteToUpdate.add(new SBQQ__Quote__C(id=s,SBQQ__Status__c='In Revisione'));
-                    }
-                    System.debug('listActivityToCreate : ' + listActivityToCreate);
-                    actSrv.createRecord(listActivityToCreate);
-                    quoteSrv.updateRecords(quoteToUpdate);
-                }
-            }else{
-                return resp;
+                 }
             }
+            if(idToCreateActivity != null && !idToCreateActivity.isEmpty()){
+                Id recTypeId= null;
+                RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
+                if(rc !=null){
+                    recTypeId= rc.Id;
+                }
+                List<wrts_prcgvr__Activity__c> listActivityToCreate = new List<wrts_prcgvr__Activity__c>();
+                for(String s : idToCreateActivity){
+                    listActivityToCreate.add(new wrts_prcgvr__Activity__c(QuoteLine__c=s, RecordTypeId= recTypeId, Type__c= 'Approvazione Offerte',Account__c=sale.Account__r.Id,Sale__c=sale.id,wrts_prcgvr__Status__c='Aperta'));
+                }
+                for(String s : quoteToUpdateId){
+                    quoteToUpdate.add(new SBQQ__Quote__C(id=s,SBQQ__Status__c='In Revisione'));
+                }
+                System.debug('listActivityToCreate : ' + listActivityToCreate);
+                actSrv.createRecord(listActivityToCreate);
+                quoteSrv.updateRecords(quoteToUpdate);
+            }
+        }else{
+            return resp;
+        }
         
         return resp;
     }
