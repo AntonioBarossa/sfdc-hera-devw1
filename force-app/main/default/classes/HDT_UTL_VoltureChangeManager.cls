@@ -467,7 +467,17 @@ public with sharing class HDT_UTL_VoltureChangeManager {
                         order.RetroactiveDate__c = order.EffectiveDate__c;
                         order.Subprocess__c = 'Retroattiva';
                     }
-                } 
+                }else if(currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Acqua') && order.EffectiveDate__c < System.today()){
+
+                    if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva')))
+                    {
+                        message = 'Non hai i permessi per eseguire una voltura retroattiva';
+                        result='KO';
+                    }else {
+                        order.RetroactiveDate__c = order.EffectiveDate__c;
+                        order.Subprocess__c = 'Retroattiva';
+                    }
+                }
                 else 
                 {
                     order.RetroactiveDate__c = null;

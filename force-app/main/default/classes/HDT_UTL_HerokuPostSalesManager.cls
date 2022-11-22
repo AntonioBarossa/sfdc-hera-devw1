@@ -3,6 +3,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     private static HDT_QR_HerokuPostSalesManager hpsmQr = new HDT_QR_HerokuPostSalesManager();
     private static String typeAcc ='Acconto scaduto non pagato da gestire';
+    private static String verificaLaboratorio = 'NO';
 
     public String getCodeFromPhaseTransition(Case currentCase){
         String code;
@@ -184,6 +185,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String numPrev = reqWrp.requestMap.get('NUMPREV');
         String expectedExec = reqWrp.requestMap.get('TEMP_ES_PREV');
         String codErrAeeg = reqWrp.requestMap.get('CODERR_AEEG');
+        verificaLaboratorio = reqWrp.requestMap.get('VER_LABO');
         HDT_QR_HerokuPostSalesManager qrClass = new HDT_QR_HerokuPostSalesManager();
         //CHECK CROSS MINIMUM FIELD
         if(String.isBlank(method)){
@@ -568,6 +570,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 HDT_UTL_DatabaseService.updateSObject(currentCase);
                 currentCase.Phase__c = 'Piano Rata Annullato';  
             }
+            if(String.isNotBlank(type) && type.equalsIgnoreCase('Inviare Resoconto Verifica')){
+                wrts_prcgvr__Activity__c act  = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName(currentCase.Id,'CASE_INVIARE_RESOCONTO_VERIFICA');
+                if (act != null){
+                    HDT_UTL_DatabaseService.insertSObject(act);
+                }
+                return caseUpdate;
+            }
             updateFuture(JSON.serialize(currentCase));
             return caseUpdate;
         }else if (method.equalsIgnoreCase('AggiornaAppuntamento')){
@@ -641,7 +650,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(currentCase.Cluster__c.equalsIgnoreCase('Preventivi') && !currentCase.CausalCode__c.equalsIgnoreCase('E01')){
                 //DBO non invia mai il completata
                 currentCase.Phase__c = 'Inviare preventivo';
-            }else{
+            }else if(currentCase.Cluster__c.equalsIgnoreCase('Verifiche') && String.isNotBlank(verificaLaboratorio) && verificaLaboratorio.equalsIgnoreCase('SI')){
+                //In questo scenario restiamo in attesa del flusso 152 contenente l'allegato delle verifiche
+            }
+            else{
                 //DBO non invia mai il completata
                 currentCase.Phase__c = 'Completata';
                 currentCase.Status = 'Closed';
