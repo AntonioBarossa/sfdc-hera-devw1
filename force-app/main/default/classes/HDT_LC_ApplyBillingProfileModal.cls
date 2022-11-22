@@ -203,6 +203,11 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         {
             for(SBQQ__QuoteLine__c quoteLine : quoteLineWater)
             {
+                if('Attivo'.equalsIgnoreCase(quoteLine.SBQQ__Quote__r.ContractReference__r.Status) && 
+                    quoteLine.SBQQ__Quote__r.SBQQ__Account__c == quoteLine.SBQQ__Quote__r.ContractReference__r.AccountId )
+                {
+                    continue;
+                }
                 if(quoteLine.ServicePoint__c == null)
                 {
                     continue;
