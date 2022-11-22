@@ -827,6 +827,21 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 }
                 currActivities = (wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => parentObjId});
                 currActivities[0].wrts_prcgvr__Description__c = handlesItem.getSObjectType() == schema.et4ae5__IndividualEmailResult__c.getSObjectType() ? 'Scarto EMAIL Marketing Cloud' : (handlesItem.getSObjectType()==schema.SMSTracking__c.getSObjectType() ? 'Scarto SMS Marketing Cloud' : '');
+                if(handlesItem.getSObjectType() == schema.et4ae5__IndividualEmailResult__c.getSObjectType()){
+                    currActivities[0].Individual_Email_Result__c = (Id)handlesItem.get('Id');
+                    if(handlesItem.get('et4ae5__Contact__c') != null && String.isNotBlank((string)handlesItem.get('et4ae5__Contact__c')))
+                        currActivities[0].Contact__c = (Id)handlesItem.get('et4ae5__Contact__c');
+                    if(handlesItem.get('Account__c') != null && String.isNotBlank((string)handlesItem.get('Account__c')))
+                        currActivities[0].Account__c = (Id)handlesItem.get('Account__c');
+                }
+                else if(handlesItem.getSObjectType() == schema.SMSTracking__c.getSObjectType()){
+                    currActivities[0].SMS_Tracking__c = (Id)handlesItem.get('Id');
+                    if(handlesItem.get('ContactID__c') != null && String.isNotBlank((string)handlesItem.get('ContactID__c')))
+                        currActivities[0].Contact__c = (Id)handlesItem.get('ContactID__c');
+                    if(handlesItem.get('Account__c') != null && String.isNotBlank((string)handlesItem.get('Account__c')))
+                        currActivities[0].Account__c = (Id)handlesItem.get('Account__c');
+                }
+
                 insertedActivities.addAll(currActivities);
             }
             HDT_UTL_DatabaseService.insertSObject(insertedActivities);
@@ -862,7 +877,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         Set<String> activityTypeToCheck = new Set<String>{'ammissibilità ko','esito ko da dl','esito ko da sii'};
         Map<Id,Set<String>> activityToCheckMap = new Map<Id,Set<String>>();
         for(wrts_prcgvr__Activity__c currAct : inputData){
-            if (currAct.Id != null && String.isNotBlank(currAct.Type__c) && activityTypeToCheck.contains(currAct.Type__c.toLowerCase()) && currAct.Id != null && currAct.wrts_prcgvr__ObjectId__c != null){
+            if (currAct.Id != null && String.isNotBlank(currAct.Type__c) && activityTypeToCheck.contains(currAct.Type__c.toLowerCase()) && currAct.wrts_prcgvr__ObjectId__c != null){
                 if (!activityToCheckMap.containsKey(currAct.wrts_prcgvr__ObjectId__c)){
                     activityToCheckMap.put(currAct.wrts_prcgvr__ObjectId__c, new Set<String>());
                 }
@@ -901,9 +916,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                                       WITH SECURITY_ENFORCED];
 
         system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi relatedActs' + JSON.serializePretty(relatedActs));
-        for(wrts_prcgvr__Activity__c relatedAct: relatedActs){
-            System.debug(LoggingLevel.DEBUG, '@@@@Primo ' + JSON.serializePretty(relatedAct));
-        }
 
         String endDate = activityValues.containsKey('DATA_ELABORAZIONE')? activityValues.get('DATA_ELABORAZIONE') :
                         activityValues.containsKey('DATA_EVENTO')? activityValues.get('DATA_EVENTO') : '';
@@ -918,7 +930,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             endDatetimeVal = Datetime.valueOf(endDate);
         }
         for(wrts_prcgvr__Activity__c relatedAct: relatedActs){
-            System.debug(LoggingLevel.DEBUG, '@@@@Secondo ' +JSON.serializePretty(relatedAct));
             if (String.isNotBlank(relatedAct.Type__c) && activityTypeToCheck.contains(relatedAct.Type__c.toLowerCase()) 
             &&((relatedAct.Case__c != null && (!activityToCheckMap.containsKey(relatedAct.Case__c) || (activityToCheckMap.get(relatedAct.Case__c) != null && !activityToCheckMap.get(relatedAct.Case__c).contains(relatedAct.Type__c.toLowerCase()))))
             || (relatedAct.Order__c != null && (!activityToCheckMap.containsKey(relatedAct.Order__c) || (activityToCheckMap.get(relatedAct.Order__c) != null && !activityToCheckMap.get(relatedAct.Order__c).contains(relatedAct.Type__c.toLowerCase())))))){
