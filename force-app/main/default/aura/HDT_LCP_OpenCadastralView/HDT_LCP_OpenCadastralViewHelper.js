@@ -14,7 +14,7 @@
                     pageReference: {
                         type: 'standard__component',
                         attributes: { componentName: 'c__HDT_LCP_OpenCadastralViewLwc' },
-                        state: { c__recordid: recordId, c__sObjectType: sObjectName, c__tab: 'VDC' }
+                        state: { c__recordid: recordId, c__sobjecttype: sObjectName, c__tab: 'VDC' }
                     }
                 })
                     .then(function(subtabId) {

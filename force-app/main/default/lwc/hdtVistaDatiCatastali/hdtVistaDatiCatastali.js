@@ -30,7 +30,8 @@ export default class HdtVistaDatiCatastali extends LightningElement {
     rows;
 
     connectedCallback(){
-        console.log('hadVistaDatiCatastali recordId:', this.recordId);
+        console.log('>>recordId:', this.recordId);
+        console.log('>>sObjectType:', this.sObjectType);
         if(this.recordId) {
             getVistaDatiCatastali({ recordId: this.recordId })
             .then( result => {
