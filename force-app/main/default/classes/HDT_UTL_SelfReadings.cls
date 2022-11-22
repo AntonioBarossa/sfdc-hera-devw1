@@ -155,7 +155,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
         c.ReadingDate__c = request.readingDate != null ? request.readingDate : System.today();
         c.DistributorCode__c = inputContract.ServicePoint__r.Distributor__r.Code__c;
         c.ServicePointCode__c = inputContract.ServicePoint__r?.ServicePointCode__c;
-        c.Commodity__c = isGas ? 'Gas' : 'Energia Elettrica';
+        c.Commodity__c = isGas ? 'Gas' : 'Energia Elettrica'; /* Wave 2 Adeguare con altre company in ambito */
         c.SalesCompanyCode__c = isGas ? '10V0000160' : '13V0000000'; // TODO WAVE 2: adeguare con le altre company in ambito.
 
         HDT_QR_CausalCodeCalculation causalCodeHandler = new HDT_QR_CausalCodeCalculation();
