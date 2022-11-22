@@ -18,6 +18,11 @@
                 <label>Accettato Motore VAS</label>
             </value>
             <value>
+                <fullName>Inviato resoconto</fullName>
+                <default>false</default>
+                <label>Inviato resoconto</label>
+            </value>
+            <value>
                 <fullName>Accettazione Voltura Tecnica</fullName>
                 <default>false</default>
                 <label>Accettazione Voltura Tecnica</label>

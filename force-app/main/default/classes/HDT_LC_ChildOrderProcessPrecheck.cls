@@ -193,6 +193,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 when 'Connessione con Attivazione'{
                     if('Acqua'.equalsIgnoreCase(order.Commodity__c))
                     {
+                        //vuoto perchè E1 non riuscirebbe a generare il plico
+                        newOrder.QuotationType__c = '';
                         newOrder.VAT__c = 'Iva 10% (Cod. 01)';
                         newOrder.PaySewer__c = 'No - Esente';
                         newOrder.PayPurification__c = 'No - Esente';

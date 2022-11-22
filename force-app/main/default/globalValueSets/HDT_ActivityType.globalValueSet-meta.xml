@@ -621,6 +621,11 @@
         <label>Quality Call</label>
     </customValue>
     <customValue>
+        <fullName>Inviare Resoconto Verifica</fullName>
+        <default>false</default>
+        <label>Inviare Resoconto Verifica</label>
+    </customValue>
+    <customValue>
         <fullName>Rapporti con i distributori e SII</fullName>
         <default>false</default>
         <label>Rapporti con i distributori e SII</label>
