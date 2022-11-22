@@ -22,7 +22,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         scope.addAll(postsalesQr.getExpiredArticle());
         scope.addAll(postsalesQr.getPostAccertamentoCase());
         scope.addAll(postsalesQr.getSegnalazioniBozzaCase());
-        scope.addAll(postsalesQr.getRifiutiBozzaCase());
+        //scope.addAll(postsalesQr.getRifiutiBozzaCase());
         scope.addAll(postsalesQr.getActivitiesRicConsumi());
         return scope;
 
@@ -96,6 +96,9 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                         }else if( (currentCase.Cluster__c.equalsIgnoreCase('Preventivi') || currentCase.Cluster__c.equalsIgnoreCase('Verifiche')) && currentCase.Phase__c.equalsIgnoreCase('Attesa conferma preventivo cliente') ){
 
                             currentCase.Phase__c = 'Preventivo scaduto';
+                            if(String.isNotBlank(currentCase.QuotationType__c) && 'Analitico'.equalsIgnoreCase(currentCase.QuotationType__c)){
+                                currentCase.Status = 'Closed';
+                            }
                             myCurrentCaseList.add(currentCase);
 
                         }else if(currentCase.Type.equalsIgnoreCase('Contratto Non Richiesto') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
@@ -108,9 +111,16 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                 }
                             }
                         }else if( currentCase.Type.equalsIgnoreCase('Voltura Tecnica') && currentCase.Phase__c.equalsIgnoreCase('In attesa Data Decorrenza') ){
-                            currentCase.EffectiveDate__c = HDT_UTL_Case.addBusinessDay(System.today(),3);
-                            currentCase.Phase__c = 'Da Inviare';
-                            myCurrentCaseList.add(currentCase); 
+                            Boolean recalculatedDate = false;
+                            if(currentCase.Order__c != null && currentCase.Order__r.EffectiveDate__c != null && currentCase.EffectiveDate__c < currentCase.Order__r.EffectiveDate__c)
+                            {
+                                recalculatedDate = true;
+                                currentCase.SuspensionDate__c = System.today();
+                                currentCase.SuspensionDays__c = currentCase.SuspensionDate__c.daysBetween(currentCase.Order__r.EffectiveDate__c);
+                            }
+                            currentCase.EffectiveDate__c = recalculatedDate ? HDT_UTL_Case.addBusinessDay(currentCase.Order__r.EffectiveDate__c,3) : HDT_UTL_Case.addBusinessDay(System.today(),3);
+                            currentCase.Phase__c = recalculatedDate ? 'In attesa Data Decorrenza' : 'Da Inviare';
+                            myCurrentCaseList.add(currentCase);   
                         //START MODIFICA marco.arci@webresults.it --> W2 Cluster variaizoni tari e disattivazioni tari, creazione activity se presente contratto
                         }else if('In Lavorazione'.equalsIgnoreCase(currentCase.Phase__c) && ('Cessazione post accertamento'.equalsIgnoreCase(currentCase.Type) || 'Modifica post accertamento'.equalsIgnoreCase(currentCase.Type))){
                             casesToCheck.add(currentCase);

@@ -19,7 +19,7 @@ global inherited sharing class HDT_UTL_PhaseTransSobjectCreation implements wrts
         
         switch on method {
             when 'FacilityApproval'{
-                Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_IstruttoriaAgevolazione').getRecordTypeId();
+                Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
 
                 for(SObject s : senders){
                     if(s instanceof Order){

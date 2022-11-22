@@ -22,5 +22,11 @@ c__processType={!CASE(Case.Type,
 																&apos;Comunicazione Pagamento&apos;,&apos;Annullamento comunicazione pagamenti tari&apos;,
 																&apos;Doppi Pagamenti/Incassi&apos;,&apos;Annullamento doppi pagamenti tari&apos;,
 																&apos;Rimborso&apos;,&apos;Annullamento rimborso tari&apos;,
-																TEXT(Case.Type))}</url>
+																&apos;Modifica dati contrattuali&apos;,TEXT(Case.Type),
+																&apos;Modifica post accertamento&apos;,TEXT(Case.Type),
+																&apos;Cessazione&apos;,TEXT(Case.Type),
+                &apos;Cessazione post accertamento&apos;,TEXT(Case.Type),
+                &apos;Reclamo da cittadino&apos;,TEXT(Case.Type),
+                &apos;Posizionamento contenitore&apos;,TEXT(Case.Type),
+																&apos;Annullamento prestazione&apos;)}</url>
 </WebLink>

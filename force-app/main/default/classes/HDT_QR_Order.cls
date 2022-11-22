@@ -430,6 +430,7 @@ public inherited sharing class HDT_QR_Order {
             SystemModstamp,
             Status,
             ContractSigned__c,
+            ContractAccountCode__c,
             SignedDate__c,
             SignatureMethod__c,
             DocSendingMethod__c,
@@ -627,7 +628,7 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getChildOrdersForDateCalculation(List<String> parentOrderIds){
         return [
             SELECT
-            Id,EffectiveDate__c,RecessNotice__c,WaiverRightAfterthought__c ,IsEarlyActivation__c ,ClientCategoryFormula__c,CommodityFormula__c,RecordType.DeveloperName,WizardCompletedDate__c,Account.RecordType.DeveloperName,Channel__c,Market__c,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c,IsActivationDeferred__c,ProcessType__c,MarketOrigin__c,ServicePoint__r.CommoditySector__c,VoltageLevel__c,SupplyType__c,CustomerCategory__c,SignatureMethod__c,DocSendingMethod__c
+            Id,EffectiveDate__c,RecessNotice__c,WaiverRightAfterthought__c ,IsEarlyActivation__c ,ClientCategoryFormula__c,CommodityFormula__c,RecordType.DeveloperName,WizardCompletedDate__c,Account.RecordType.DeveloperName,Channel__c,Market__c,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c,IsActivationDeferred__c,ProcessType__c,MarketOrigin__c,ServicePoint__r.CommoditySector__c,VoltageLevel__c,SupplyType__c,CustomerCategory__c,SignatureMethod__c,DocSendingMethod__c,IsTransition__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
@@ -1060,7 +1061,8 @@ public inherited sharing class HDT_QR_Order {
         Sale__c,
         RecordTypeId,
         ParentOrder__c,
-        ImplantType__c
+        ImplantType__c,
+        CausalCode__c
         FROM Order 
         WHERE ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
@@ -1157,7 +1159,8 @@ public inherited sharing class HDT_QR_Order {
         IsTechnicalTransfer__c,
         RecordTypeId,
         ParentOrder__c,
-        ImplantType__c
+        ImplantType__c,
+        CausalCode__c
         FROM Order 
         WHERE Id = :recordId WITH SECURITY_ENFORCED];
     }
@@ -1269,11 +1272,11 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<order> getOrderCreatedYesterday(){
-        return [Select id,Account.Segment__c,LoginWorkstation__c,CreatorGroup__c,SalesCompany__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where Createddate = Yesterday WITH SECURITY_ENFORCED];
+        return [Select id,Account.Segment__c,LoginWorkstation__c,CreatorGroup__c,SalesCompany__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where Createddate = Yesterday WITH SECURITY_ENFORCED LIMIT 3000];
     }
 
     public List<order> getOrderCreatedInRequestedDate(Datetime startDt, Datetime endDt){
-        return [Select id,Account.Segment__c,LoginWorkstation__c,CreatorGroup__c,SalesCompany__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where CreatedDate >=: startDt and CreatedDate <:endDt  WITH SECURITY_ENFORCED];
+        return [Select id,Account.Segment__c,LoginWorkstation__c,CreatorGroup__c,SalesCompany__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where CreatedDate >=: startDt and CreatedDate <:endDt  WITH SECURITY_ENFORCED LIMIT 3000];
     }
 
     /**

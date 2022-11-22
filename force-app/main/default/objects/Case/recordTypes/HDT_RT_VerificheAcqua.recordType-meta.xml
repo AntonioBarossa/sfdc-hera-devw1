@@ -3,6 +3,7 @@
     <fullName>HDT_RT_VerificheAcqua</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <label>Verifiche Acqua</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
@@ -368,6 +369,34 @@
             <fullName>G650</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>6 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>31 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CaliberRequested__c</picklist>
@@ -516,6 +545,34 @@
         </values>
         <values>
             <fullName>G650</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>31 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32 x 50 - 30 mc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8173,6 +8230,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inviato resoconto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità OK</fullName>
             <default>false</default>
         </values>
@@ -8444,21 +8505,6 @@
         </values>
         <values>
             <fullName>SI</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PurificationPay__c</picklist>
-        <values>
-            <fullName>Esente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Intera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ridotta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -9279,17 +9325,6 @@
         </values>
         <values>
             <fullName>1411-Piscine e Palestre</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SewerPay__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>

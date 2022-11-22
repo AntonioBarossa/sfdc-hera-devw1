@@ -1,6 +1,6 @@
     //Rate Category Visibility
     // AFSCDIRATT visibile for all
-    export const AF_NODISAL =  { evaluationType: 'notvisible', rateCategories: ['APSCARPRO0','ACTANTINC0','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'] };
+    export const AF_NODISAL =  { evaluationType: 'notvisible', rateCategories: ['APSCARPRO0','ACDOMRESP0','ACTANTINC0','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'] };
     export const AQCNSANNOF =  { evaluationType: 'notvisible', rateCategories: ['APSCARPRO0'] };
     // DEP_CAUZ_ESCL visibile for all
     export const ZGEWKEY =  { evaluationType: 'visible', rateCategories: ['ACAGRICO00','ACAUNOPOT0','ACINDSTR00','ACINTERNO0','ACPOZZI000','ACPROMISC0','ACAUGENER0','ACAUGRUNI0','ACPROMIBI0','ACTANTINC0','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'] };
@@ -16,7 +16,7 @@
     export const AFUNDA =  { evaluationType: 'visible', rateCategories: ['ACAGRICO00','ACPROMIBI0'] };
     export const AFUNDC =  { evaluationType: 'visible', rateCategories: ['ACARTCOMM0','ACPROMISC0','ACPROMIBI0'] };
     export const AFUNDI =  { evaluationType: 'visible', rateCategories: ['ACINDSTR00','ACAUGRUNI0','ACPROMIBI0'] };
-    export const AFUNDZ =  { evaluationType: 'visible', rateCategories: ['ACAGRIZOO0','ACZOOTECN0','ACPROMIBI0'] };
+    export const AFUNDZ =  { evaluationType: 'visible', rateCategories: ['ACZOOTECN0','ACPROMIBI0'] };
     export const N_A =  { evaluationType: 'visible', rateCategories: ['ACDOMRESP0'] };
 
     //Rate Category Required

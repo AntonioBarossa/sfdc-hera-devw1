@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Chiudi_Activity_Scarto</name>
         <label>Chiudi Activity Scarto</label>
-        <locationX>1810</locationX>
+        <locationX>1942</locationX>
         <locationY>1430</locationY>
         <actionName>HDT_LC_EditScartiComplessi</actionName>
         <actionType>apex</actionType>
@@ -84,7 +84,7 @@
         <name>Quote_Management</name>
         <label>Quote Management</label>
         <locationX>776</locationX>
-        <locationY>1694</locationY>
+        <locationY>2030</locationY>
         <actionName>HDT_UTL_QuoteManagement</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -121,7 +121,7 @@
     <assignments>
         <name>Aggiorna_Da_Inviare</name>
         <label>Aggiorna Preventivo Accettato</label>
-        <locationX>1810</locationX>
+        <locationX>2074</locationX>
         <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
@@ -138,7 +138,7 @@
         <name>Assegna_Fase_Preventivo</name>
         <label>Assegna Fase Preventivo e Importo</label>
         <locationX>314</locationX>
-        <locationY>3182</locationY>
+        <locationY>3518</locationY>
         <assignmentItems>
             <assignToReference>FasePreventivo</assignToReference>
             <operator>Assign</operator>
@@ -175,10 +175,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Label_Conferma</name>
+        <label>Assegna Label Conferma</label>
+        <locationX>1029</locationX>
+        <locationY>1454</locationY>
+        <assignmentItems>
+            <assignToReference>SaveLabel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Conferma Pratica</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LWC_hdtRecordEditForm</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Operation_Code</name>
         <label>Assegna Operation Code</label>
         <locationX>622</locationX>
-        <locationY>2846</locationY>
+        <locationY>3182</locationY>
         <assignmentItems>
             <assignToReference>OperationCode</assignToReference>
             <operator>Assign</operator>
@@ -219,7 +235,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>LWC_hdtRecordEditForm</targetReference>
+            <targetReference>Conferma_o_Avanti</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -235,7 +251,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>LWC_hdtRecordEditForm</targetReference>
+            <targetReference>Conferma_o_Avanti</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -251,13 +267,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>LWC_hdtRecordEditForm</targetReference>
+            <targetReference>Conferma_o_Avanti</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assenga_Process_Type_0_0</name>
         <label>Assenga Process Type</label>
-        <locationX>1810</locationX>
+        <locationX>1942</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -273,7 +289,7 @@
     <assignments>
         <name>Assenga_Process_Type_0_0_0</name>
         <label>Assenga Process Type</label>
-        <locationX>2074</locationX>
+        <locationX>2206</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -289,7 +305,7 @@
     <assignments>
         <name>Init_Case_Per_Risottomissione</name>
         <label>Init Case Per Risottomissione</label>
-        <locationX>1810</locationX>
+        <locationX>1942</locationX>
         <locationY>1550</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.HerokuPracticeCode__c</assignToReference>
@@ -312,7 +328,7 @@
     <assignments>
         <name>Predeterminabile</name>
         <label>Predeterminabile</label>
-        <locationX>2074</locationX>
+        <locationX>2338</locationX>
         <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
@@ -329,7 +345,7 @@
         <name>Annullamento</name>
         <label>Annullamento?</label>
         <locationX>688</locationX>
-        <locationY>2174</locationY>
+        <locationY>2510</locationY>
         <defaultConnector>
             <targetReference>OperationCode_Valorizzato</targetReference>
         </defaultConnector>
@@ -353,7 +369,7 @@
     <decisions>
         <name>Check_Rilavorazione_Scarto</name>
         <label>Rilavorazione Scarto?</label>
-        <locationX>1942</locationX>
+        <locationX>2074</locationX>
         <locationY>1310</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Case</targetReference>
@@ -373,6 +389,38 @@
                 <targetReference>Chiudi_Activity_Scarto</targetReference>
             </connector>
             <label>Wizard Scarto</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Conferma_o_Avanti</name>
+        <label>Conferma o Avanti</label>
+        <locationX>1161</locationX>
+        <locationY>1334</locationY>
+        <defaultConnector>
+            <targetReference>LWC_hdtRecordEditForm</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Avanti</defaultConnectorLabel>
+        <rules>
+            <name>Conferma_Label</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Verifica Rottura Impianto Cliente</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Verifica Interna</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Label_Conferma</targetReference>
+            </connector>
+            <label>Conferma</label>
         </rules>
     </decisions>
     <decisions>
@@ -418,7 +466,7 @@
     <decisions>
         <name>Energia_Elettrica_o_Gas_0</name>
         <label>Energia Elettrica o Gas?</label>
-        <locationX>1942</locationX>
+        <locationX>2074</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Assenga_Process_Type_0_0_0</targetReference>
@@ -443,7 +491,7 @@
     <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
-        <locationX>1551</locationX>
+        <locationX>1617</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Energia_Elettrica_o_Gas_0</targetReference>
@@ -469,7 +517,7 @@
         <name>OperationCode_Valorizzato</name>
         <label>OperationCode Valorizzato?</label>
         <locationX>534</locationX>
-        <locationY>2726</locationY>
+        <locationY>3062</locationY>
         <defaultConnector>
             <targetReference>Assegna_Operation_Code</targetReference>
         </defaultConnector>
@@ -494,7 +542,7 @@
         <name>Quote_trovata</name>
         <label>Quote trovata?</label>
         <locationX>776</locationX>
-        <locationY>1814</locationY>
+        <locationY>2150</locationY>
         <defaultConnector>
             <targetReference>Regola_non_trovata</targetReference>
         </defaultConnector>
@@ -519,7 +567,7 @@
         <name>Rapido_o_Predeterminabile</name>
         <label>Rapido o Predeterminabile?</label>
         <locationX>534</locationX>
-        <locationY>3062</locationY>
+        <locationY>3398</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Assegna_Fase_Preventivo</targetReference>
@@ -527,7 +575,7 @@
         <defaultConnectorLabel>Predeterminabile</defaultConnectorLabel>
         <rules>
             <name>Rapido_0_euro</name>
-            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+            <conditionLogic>1 OR (2 AND 3) OR 4</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
@@ -547,6 +595,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Lettura su Contratto Aperto</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Verifica Integrita Sigilli</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -574,7 +629,7 @@
         <name>SalvaInBozza_o_Conferma</name>
         <label>SalvaInBozza o Conferma?</label>
         <locationX>1161</locationX>
-        <locationY>1454</locationY>
+        <locationY>1790</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -625,14 +680,14 @@
         <name>Skip_Documentale</name>
         <label>Skip Documentale?</label>
         <locationX>534</locationX>
-        <locationY>1934</locationY>
+        <locationY>2270</locationY>
         <defaultConnector>
             <targetReference>Screen_Documentale</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>NO</defaultConnectorLabel>
         <rules>
             <name>Skip_Si</name>
-            <conditionLogic>1 OR (2 AND 3) OR 4</conditionLogic>
+            <conditionLogic>1 OR (2 AND 3) OR 4 OR 5</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
@@ -661,6 +716,13 @@
                     <stringValue>Verifica Rottura Impianto Cliente</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Verifica Integrita Sigilli</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>OperationCode_Valorizzato</targetReference>
             </connector>
@@ -670,12 +732,49 @@
     <decisions>
         <name>Tipo_Preventivo</name>
         <label>Tipo Preventivo</label>
-        <locationX>1942</locationX>
+        <locationX>2074</locationX>
         <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Predeterminabile</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Rapido_a_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Verifica Interna</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Interventi con Verifica</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Verifica Integrita Sigilli</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Verifica Tensione - Pressione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Predeterminabile</targetReference>
+            </connector>
+            <label>Rapido a 0</label>
+        </rules>
         <rules>
             <name>Rapido_0</name>
             <conditionLogic>and</conditionLogic>
@@ -695,7 +794,7 @@
     <decisions>
         <name>Tipologia_Case</name>
         <label>Tipologia Case?</label>
-        <locationX>800</locationX>
+        <locationX>833</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Il_Case_in_Bozza</targetReference>
@@ -758,7 +857,7 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>800</locationX>
+        <locationX>833</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -781,7 +880,7 @@
         <name>GetRecordAfterUpdate</name>
         <label>GetRecordAfterUpdate</label>
         <locationX>776</locationX>
-        <locationY>1574</locationY>
+        <locationY>1910</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Quote_Management</targetReference>
@@ -831,7 +930,7 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>1942</locationX>
+        <locationX>2074</locationX>
         <locationY>1766</locationY>
         <connector>
             <targetReference>LoadSpinner</targetReference>
@@ -842,7 +941,7 @@
         <name>Aggiorna_Conferma_Case</name>
         <label>Aggiorna Fase in Inviare Preventivo</label>
         <locationX>534</locationX>
-        <locationY>3398</locationY>
+        <locationY>3734</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -898,7 +997,7 @@
     <screens>
         <name>LoadSpinner</name>
         <label>LoadSpinner</label>
-        <locationX>1942</locationX>
+        <locationX>2074</locationX>
         <locationY>1886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -930,7 +1029,7 @@
         <name>LWC_hdtRecordEditForm</name>
         <label>LWC hdtRecordEditForm</label>
         <locationX>1161</locationX>
-        <locationY>1334</locationY>
+        <locationY>1670</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -997,7 +1096,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Avanti</stringValue>
+                    <elementReference>SaveLabel</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1029,7 +1128,7 @@
         <name>Regola_non_trovata</name>
         <label>Regola non trovata</label>
         <locationX>1018</locationX>
-        <locationY>1934</locationY>
+        <locationY>2270</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1049,7 +1148,7 @@
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
         <locationX>688</locationX>
-        <locationY>2054</locationY>
+        <locationY>2390</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1111,7 +1210,7 @@
     <screens>
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>1942</locationX>
+        <locationX>2074</locationX>
         <locationY>854</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1190,7 +1289,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>674</locationX>
+        <locationX>707</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
@@ -1201,7 +1300,7 @@
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>1282</locationX>
-        <locationY>1574</locationY>
+        <locationY>1910</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1226,7 +1325,7 @@
         <name>Gestione_Annullamento_Subflow_0</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>556</locationX>
-        <locationY>2294</locationY>
+        <locationY>2630</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1309,6 +1408,16 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SaveLabel</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Avanti</stringValue>
+        </value>
     </variables>
     <variables>
         <name>SaveOrConfirm</name>

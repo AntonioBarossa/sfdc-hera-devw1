@@ -141,7 +141,9 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 acc.BillingCity = currentCase.BillingCity__c;
                 acc.BillingCityCode__c = currentCase.BillingCityCode__c;
                 acc.BillingCountry = currentCase.BillingCountry__c;
-                acc.BillingIsAddressVerified__c = currentCase.BillingIsAddressVerified__c;
+                /* Gestione indirizzo Estero */
+                Boolean isAddressVerified = (currentCase.BillingCountry__c != null && currentCase.BillingCountry__c.equalsIgnoreCase('Italia')) ? currentCase.BillingIsAddressVerified__c : true;
+                acc.BillingIsAddressVerified__c = isAddressVerified;
                 acc.BillingPlace__c = currentCase.BillingPlace__c;
                 acc.BillingPostalCode = currentCase.BillingPostalCode__c;
                 acc.BillingState = currentCase.BillingProvince__c;
@@ -643,6 +645,62 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             }
         } catch (Exception e) {
             System.debug(LoggingLevel.DEBUG,'Exception--> '+e.getMessage());
+        }
+    }
+
+    //metodo che aggiorna le unità abitative su SP al completamento del case di Modifica unità immobiliari - Acqua
+    @SuppressWarnings('PMD.ApexCRUDViolation')
+    public void handleUpdateUnitServicePoint(SObject inputCase){
+        Case currentCase = (Case) inputCase;
+
+        if(!String.isBlank(currentCase.ServicePoint__c) && 'Modifica Unita Immobiliari Componenti'.equalsIgnoreCase(currentCase.Type) && ('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c)) && !'ACDOMRESP0'.equalsIgnoreCase(currentCase.RateCategory__c)){
+            try {
+                ServicePoint__c sp = [SELECT NotDomesticHousingUnit__c, NotResidentDomesticHousingUnit__c, ResidentDomesticHousingUnit__c FROM ServicePoint__c WHERE Id =: currentCase.ServicePoint__c WITH SECURITY_ENFORCED];
+                if(sp != null){
+                    sp.NotDomesticHousingUnit__c = currentCase.Unita_Abitative__c;
+                    sp.NotResidentDomesticHousingUnit__c = currentCase.NotResidentDomesticHousingUnit__c;
+                    sp.ResidentDomesticHousingUnit__c = currentCase.ResidentDomesticHousingUnit__c;
+                    update sp;
+                }
+            } catch (Exception e) {
+                System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
+            }
+            
+        }
+    }
+
+    //metodo che gestisce la creazione di una activity per una determinata casistica del processo di Modifica Unità Immobiliari Acqua
+    @SuppressWarnings('PMD.ApexCRUDViolation, PMD.CyclomaticComplexity')
+    public void handleCreazioneActivityVariazioni(SObject inputCase){
+        Case currentCase = (Case) inputCase;
+        try {
+            if('Modifica Unita Immobiliari Componenti'.equalsIgnoreCase(currentCase.Type) &&('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c))){
+                if(!'ACDOMRESP0'.equalsIgnoreCase(currentCase.RateCategory__c)){ //in caso di Promiscuo faccio il check di variazione totale unità abitative
+                    ServicePoint__c sp = [SELECT NotDomesticHousingUnit__c, NotResidentDomesticHousingUnit__c, ResidentDomesticHousingUnit__c FROM ServicePoint__c WHERE Id =: currentCase.ServicePoint__c WITH SECURITY_ENFORCED];
+                    if(sp != null){
+                        Integer spUnitDomRes = (sp.ResidentDomesticHousingUnit__c != null) ? Integer.valueOf(sp.ResidentDomesticHousingUnit__c) : 0;
+                        Integer spUnitDomNonRes = (sp.NotResidentDomesticHousingUnit__c != null) ? Integer.valueOf(sp.NotResidentDomesticHousingUnit__c) : 0;
+                        Integer caseUnitDomRes = (currentCase.ResidentDomesticHousingUnit__c != null) ? Integer.valueOf(currentCase.ResidentDomesticHousingUnit__c) : 0;
+                        Integer caseUnitDomNonRes = (currentCase.NotResidentDomesticHousingUnit__c != null) ? Integer.valueOf(currentCase.NotResidentDomesticHousingUnit__c) : 0;
+        
+                        Integer totaleUnitServicePoint = spUnitDomRes + spUnitDomNonRes;
+                        Integer totaleUnitCase = caseUnitDomRes + caseUnitDomNonRes;
+                        if(totaleUnitServicePoint != totaleUnitCase){
+                            HDT_UTL_Case.createActivity(currentCase.Id, '', 'Elaborazione Manuale', 'Elaborazione Manuale');
+                        }else{
+                            currentCase.Phase__c = 'Completata';
+                            currentCase.Status = 'Closed';
+                            update currentCase;
+                        }
+                    }
+                }else{ //in caso di Domestico alla ricezione dell'Esito OK da DBO imposto fase Completata
+                    currentCase.Phase__c = 'Completata';
+                    currentCase.Status = 'Closed';
+                    update currentCase;
+                }
+            }
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
         }
     }
 

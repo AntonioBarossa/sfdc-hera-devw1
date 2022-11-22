@@ -18,7 +18,9 @@ const OBJECT_FIELDS =[
     'MaxDateModificationAppointment__c',
     'wrts_prcgvr__Status__c',
     'AppointmentCompetence__c',
-    'isAtoA__c'
+    'isAtoA__c',
+    'Type__c',
+    'ContactResult__c'
     
 ];
 
@@ -52,7 +54,11 @@ export default class HdtAppointmentHandler extends LightningElement{
         const { data, error } = value; 
         if (data){
             this.activity = JSON.parse(data);
+            console.log('data: ' + data);
+            console.log('data stringified: ' + JSON.stringify(data));
             let stato = this.activity.wrts_prcgvr__Status__c;
+            let tipoAttivita = this.activity.Type__c;
+            let esitoContatto = this.activity.ContactResult__c;
             if((stato=='Appuntamento confermato' || stato=='Modifica confermata') && this.isCommunity){
                 this.confirmed=true;
             }
@@ -83,7 +89,7 @@ export default class HdtAppointmentHandler extends LightningElement{
                             break;
                             case 'deleteDate':
                                 item.visible = true;
-                                if (DELETE_DATE_VALID_STATE.indexOf(stato) != -1){
+                                if (DELETE_DATE_VALID_STATE.indexOf(stato) != -1 || (esitoContatto === 'Terzo contatto fallito' && tipoAttivita === 'Presa Appuntamento' && stato === 'Creata')){
                                     enable = true;
                                 }
                             break;

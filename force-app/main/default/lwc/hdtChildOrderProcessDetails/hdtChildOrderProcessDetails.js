@@ -273,7 +273,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(this.order.ServicePoint__r.RecordType.DeveloperName !== 'HDT_RT_Acqua' || !Array.isArray(rateCategories) ) return evaluationType !== 'required';
         
         // case Acqua
-        let rateCategory = this.order.RateCategory__c
+        let rateCategory = this.order.RateCategory__c;
         let result = evaluationType === 'notvisible';
         for(let rate of rateCategories)
         {
@@ -580,7 +580,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         const sectionNextActions = this.pendingSteps[event.target.getAttribute('data-section-index')]?.nextActions;
         if(sectionNextActions && sectionNextActions instanceof Function ){
-            if(sectionNextActions(event)) return;//Azioni automatiche da eseguire definite nel JSON del Wizard
+            if(sectionNextActions(event, currentSectionIndex, nextSectionStep)) return;//Azioni automatiche da eseguire definite nel JSON del Wizard
         }
         
         console.log('currentSectionName '+currentSectionName);
@@ -668,6 +668,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 if( this.checkFieldAvailable('EffectiveDate__c', true) === '' && this.typeVisibility('acqua'))
                 {
                     this.showMessage('Errore', 'Popolare il campo Data Decorrenza', 'error');
+                    return;
+                }
+                if( this.checkFieldAvailable('NotDomesticHousingUnit__c', true) === '' && this.order.RateCategory__c === 'ACAUNOPOT0' )
+                {
+                    this.showMessage('Errore', 'Popolare il campo Unita abitative non domestiche', 'error');
                     return;
                 }
                 if( this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
@@ -805,6 +810,84 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         const toastErrorMessage = new ShowToastEvent({
                             title: 'Errore',
                             message: 'Popolare il campo Classe Profilo Prelievo',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='DomesticResidentNumber__c']") !== null 
+                    && (this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === ''
+                        || this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Numero Componenti Domestico Residente',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='HydrantMouthsNumber__c']") !== null 
+                && (this.template.querySelector("[data-id='HydrantMouthsNumber__c']").value === ''
+                    || this.template.querySelector("[data-id='HydrantMouthsNumber__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Numero Bocche Idrante',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+                }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='IntendedUse__c']") !== null 
+                && (this.template.querySelector("[data-id='IntendedUse__c']").value === ''
+                    || this.template.querySelector("[data-id='IntendedUse__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Destinazione Uso',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+                }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']") !== null 
+                && (this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']").value === ''
+                    || this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Unita abitative domestico non residente',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+                }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='NotDomesticHousingUnit__c']") !== null 
+                && (this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value === ''
+                    || this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Unita abitative non domestiche',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+                }
+                if(this.template.querySelector("[data-id='ConnectionType__c']") !== null 
+                    && (this.template.querySelector("[data-id='ConnectionType__c']").value === ''
+                        || this.template.querySelector("[data-id='ConnectionType__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Tipo di Connessione',
                             variant: 'error',
                             mode: 'sticky'
                         });

@@ -2742,6 +2742,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inviare Resoconto Verifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Approvazione Offerte</fullName>
             <default>false</default>
         </values>
@@ -2846,6 +2850,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione contratto colonnetta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gestione Iva e Accise</fullName>
             <default>false</default>
         </values>
@@ -2867,6 +2875,10 @@
         </values>
         <values>
             <fullName>Inviare Legge 80</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Istruttoria Back Office</fullName>
             <default>false</default>
         </values>
         <values>

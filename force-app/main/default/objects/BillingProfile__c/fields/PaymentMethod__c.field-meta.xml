@@ -7,7 +7,7 @@ RID</description>
     <externalId>false</externalId>
     <label>Modalità pagamento</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

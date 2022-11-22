@@ -111,7 +111,7 @@ public with sharing class HDT_UTL_BpCaCreate
         HDT_WRP_BpCaVariation request = new HDT_WRP_BpCaVariation();
         request.numeroSr = infoOrder.Id;
         request.codiceCausale = '';
-        request.dataCreazione = tryParse(System.today());
+        request.dataCreazione = String.valueOf(System.today()).Substring(0,4)+ String.valueOf(System.today()).Substring(5,7) + String.valueOf(System.today()).Substring(8,10);
         request.cancellaBpAlternativo = '';
         request.nomeContatto = '';
         request.account = generateAccountBodyRequest(infoOrder);
@@ -146,7 +146,7 @@ public with sharing class HDT_UTL_BpCaCreate
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzo request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzo();
         request.comune =  tryParse(infoOrder.Account.BillingCity);
-        request.nazione =  tryParse(infoOrder.Account.BillingCountry);
+        request.nazione =  tryParse(infoOrder.Account.BillingCountry.Substring(0,2));
         request.toponimo =  '';
         request.frazione =  '';
         request.piano =  tryParse(infoOrder.Account.BuildingFloor__c);
@@ -196,7 +196,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.contoCorrente = tryParse(infoOrder.BillingProfile__r.IbanCodeNumber__c);
         request.codiceFiscale = tryParse(infoOrder.BillingProfile__r.BankAccountSignatoryFiscalCode__c);
         request.cin = tryParse(infoOrder.BillingProfile__r.IbanCIN__c);
-        request.iban = tryParse(infoOrder.BillingProfile__r.IBAN__c);
+        request.iban = tryParse(infoOrder.BillingProfile__r.IbanCountry__c);
         request.cognome = tryParse(infoOrder.BillingProfile__r.IbanABI__c);
         request.nome = tryParse(infoOrder.BillingProfile__r.IbanABI__c);
         request.terminiPagamento = tryParse(infoOrder.BillingProfile__r.IbanABI__c);
@@ -210,7 +210,7 @@ public with sharing class HDT_UTL_BpCaCreate
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt();
         request.comune = tryParse(infoOrder.BillingProfile__r.InvoicingCity__c);
-        request.nazione = tryParse(infoOrder.BillingProfile__r.InvoicingCountry__c);
+        request.nazione = tryParse(infoOrder.BillingProfile__r.InvoicingCountry__c.Substring(0,2));
         request.piano = '';
         request.civico = tryParse(infoOrder.BillingProfile__r.InvoicingStreetNumber__c);
         request.suffissoCivico = tryParse(infoOrder.BillingProfile__r.InvoicingStreetNumberExtension__c);
@@ -246,7 +246,7 @@ public with sharing class HDT_UTL_BpCaCreate
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt();
         request.comune = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingCity);
-        request.nazione = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingCountry);
+        request.nazione = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingCountry.Substring(0,2));
         request.piano = '';
         request.civico = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingStreetNumber__c);
         request.suffissoCivico = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingStreetNumberExtension__c);
@@ -448,5 +448,6 @@ public with sharing class HDT_UTL_BpCaCreate
         public String tipoAttivita {get;set;}
         public String commenti {get;set;}
         public String codiceBP {get;set;}
+        public String esito {get;set;}
     }
 }

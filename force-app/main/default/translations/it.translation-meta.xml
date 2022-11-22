@@ -136,4 +136,8 @@
         <label>Tipo Oggetto non supportato per questa azione</label>
         <name>UnsupportedObjectType</name>
     </customLabels>
+    <customLabels>
+        <label>Nessun record di configurazione trovato</label>
+        <name>no_configuration_found</name>
+    </customLabels>
 </Translations>

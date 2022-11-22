@@ -25,6 +25,41 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>IntendedUse__c</picklist>
+        <values>
+            <fullName>Alberghi%2Fpensioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attività di intratten%2E e altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completamento allacciamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NO DOM TEMPOR%2E %3E40kW-FIERA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ospedali%2Fcase di cura%2F</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stralcio di allac%2E - Uso cant%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>SeasonUse__c</picklist>
         <values>
             <fullName>Nessuna stagionalita</fullName>
@@ -451,6 +486,10 @@
     <picklistValues>
         <picklist>CancellationReason__c</picklist>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato per no conferma cliente</fullName>
             <default>false</default>
         </values>
@@ -499,6 +538,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Credit Check KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Disattivato%2FDisdetto %28Servizio%29</fullName>
             <default>false</default>
         </values>
@@ -508,6 +551,10 @@
         </values>
         <values>
             <fullName>Domiciliazione già presente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
             <default>false</default>
         </values>
         <values>

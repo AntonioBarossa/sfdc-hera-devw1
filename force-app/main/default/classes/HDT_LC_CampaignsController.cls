@@ -452,7 +452,7 @@ public inherited sharing class HDT_LC_CampaignsController {
     @AuraEnabled(cacheable=true)
     public static CampaignMember getCampaignAndAccountByMember(String campaignMemberId){
         try {
-            CampaignMember cm = [SELECT Id, GenericField1__c ,Contact.AccountId, CampaignId, Campaign.CaseCategory__c, Campaign.CaseSubCategory__c, Campaign.ProcessType__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED];
+            CampaignMember cm = [SELECT Id, GenericField1__c ,Contact.AccountId, LeadId, CampaignId, Campaign.CaseCategory__c, Campaign.CaseSubCategory__c, Campaign.ProcessType__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED];
             return cm;
         }
         catch (Exception e) {
@@ -533,7 +533,11 @@ public inherited sharing class HDT_LC_CampaignsController {
                 (cmdt.Category__c == 'Outbound' && cmdt.Channel__c == 'Door to Door' && campaignList[0].Channel__c=='Door to Door')) && (cmdt.OutcomeCategory__c == outcomeType)
             )  {
                 system.debug('PUNTO 2');
-                partialOutcomeValues.put(cmdt.StatusName__c, cmdt.StatusName__c);
+                if(outcomeType !=  'Esito Parziale')
+                    partialOutcomeValues.put(cmdt.StatusName__c, cmdt.StatusName__c);
+                else
+                    partialOutcomeValues.put(cmdt.StatusName__c, cmdt.DeveloperName);
+
             }
             system.debug('PUNTO 3');
         }

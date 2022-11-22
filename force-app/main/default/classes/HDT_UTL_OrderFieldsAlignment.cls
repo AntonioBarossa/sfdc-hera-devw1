@@ -196,9 +196,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.AnnualConsumption__c = servicePoint.AnnualConsumption__c;
         orderToUpdate.isWinback__c = servicePoint.SwitchInWinback__c;
         orderToUpdate.SwitchOutDate__c = servicePoint.SwitchOutDate__c;
-        orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c == null ? ( servicePoint.RecordType.DeveloperName == 'HDT_RT_Acqua' ? 'Regolamentato' : 'Libero') : servicePoint.MarketOrigin__c;
-        //orderToUpdate.Market__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
-        orderToUpdate.Market__c =  'Libero';
+        orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c;
+        orderToUpdate.MarketOrigin__c = (String.isBlank(orderToUpdate.MarketOrigin__c) && servicePoint.RecordType.DeveloperName == 'HDT_RT_Acqua') ? 'Regolamentato' : orderToUpdate.MarketOrigin__c;
+        orderToUpdate.MarketOrigin__c = (String.isBlank(orderToUpdate.MarketOrigin__c) && servicePoint.RecordType.DeveloperName == 'HDT_RT_Ambiente') ? 'Regolamentato' : orderToUpdate.MarketOrigin__c;
+        orderToUpdate.Market__c =   servicePoint.RecordType.DeveloperName == 'HDT_RT_Acqua' || servicePoint.RecordType.DeveloperName == 'HDT_RT_Ambiente'?'Regolamentato':'Libero';
         orderToUpdate.PowerAvailable__c = servicePoint.PowerAvailable__c;
         orderToUpdate.VoltageLevel__c = servicePoint.VoltageLevel__c;
         orderToUpdate.DisconnectibilityPhone__c = servicePoint.DisconnectibilityPhone__c;
@@ -255,6 +256,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.NumeratorGroup__c = servicePoint.NumeratorGroup__c;
         orderToUpdate.isSTG__c = servicePoint.isSTG__c;
         orderToUpdate.surface__c= servicePoint.AreaDeclaredTARI__c;
+        orderToUpdate.ATO__c = 'Acqua'.equalsIgnoreCase(servicePoint.CommoditySector__c) ? servicePoint.ATO__c : '';
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId, Order orderOld){

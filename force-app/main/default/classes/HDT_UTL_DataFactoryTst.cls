@@ -117,23 +117,23 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		for (Integer i=0; i<amount; i++){
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-			Decimal numCustomerCode = Decimal.valueOf('1003616210');
-			Decimal result = numCustomerCode + i;
-			String stringResult = String.valueOf(result);
+			//Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			//Decimal result = numCustomerCode + i;
+			String stringResult = '1'+generateRandomChars(9,true,false, false);  //String.valueOf(result);
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
 			Account acc=new Account();
 
 			acc.RecordTypeId=rt;
-			acc.Name='test account'+i;
+			acc.Name='test account bsn'+i;
 			acc.CompanyOwner__c=companyOwner;
 			acc.CustomerMarking__c=customerMarking;
 			acc.Category__C=category;
 			acc.BillingCityCode__c='Roma';
 			acc.BillingStreetName__c='via roma';
 			acc.BillingStreetNumber__c='55';
-			acc.LastName__c='test account'+i;
+			acc.LastName__c='test account bsn'+i;
 			acc.BillingIsAddressVerified__c=true;
 			acc.IsArchived__c = true;
 			
@@ -174,9 +174,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		for (Integer i=0; i<amount; i++){
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-			Decimal numCustomerCode = Decimal.valueOf('1003616210');
-			Decimal result = numCustomerCode + i;
-			String stringResult = String.valueOf(result);
+			//Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			//Decimal result = numCustomerCode + i;
+			String stringResult = '1'+generateRandomChars(9,true,false, false);//String.valueOf(result);
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
@@ -263,9 +263,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-			Decimal numCustomerCode = Decimal.valueOf('1003616210');
-			Decimal result = numCustomerCode + i;
-			String stringResult = String.valueOf(result);
+			//Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			//Decimal result = numCustomerCode + i;
+			String stringResult = '1'+generateRandomChars(9,true,false, false);//String.valueOf(result);
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
@@ -3523,6 +3523,39 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return cityTechnicalData;
 	}
 
+
+	/**
+	* @author Cristiano Salvati (c.salvati@key2.it)
+	* @date 20/10/2022
+	* @description HDT_UTL_DataFactoryTst – the method generates a random string, which can be numeric/letters/alphanumeric
+	* @param1 len – length of the output string
+	* @param2 isNumeric – determines whether the string will be numeric
+	* @param3 isText – determines whether the string will be only letters
+	* @param4 isAlphaNumeric – determines whether the string will be alphanumeric
+	* @return returns the random string generated
+	*/
+	public static String generateRandomChars(Integer len,Boolean isNumeric,Boolean isText, Boolean isAlphaNumeric) {
+        String numbers = '123456789';
+		String letters = 'ABCDEFGHILMOPQRSTUVZWXYabcdefghilmopqrstuvzwxy';
+		String alphaNumeric = numbers+letters;
+		String randStr='';
+		final String CHARS;
+		if(isNumeric){
+			CHARS=numbers;
+		}
+		if(isText){
+			CHARS=alphaNumeric;
+		}
+		if(isAlphaNumeric){
+			CHARS=alphaNumeric;
+		} 
+        while (randStr.length() < len) {
+            Integer idx = Math.mod(Math.abs(Crypto.getRandomInteger()), chars.length());
+            randStr += CHARS.substring(idx, idx+1);
+        }
+        return randStr;
+    }
+
 	// Create a list of Interaction__c
 	public static List<Interaction__c> createInteraction (List<Contact> contacts, Boolean doInsert) {
 
@@ -3561,4 +3594,127 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return pushTrackings;
 	}
 	
+	/**​
+    * @author Elvin Iluca
+    * @date 20/10/2022
+    * @description HDT_UTL_DataFactoryTst – Utility method to create/insert N EmailMessage instances/records
+	* @param1 - amount EmailMessage 
+	* @param2 - boolean to choose if insert records or not
+	* @return - the list of EmailMessage just created
+    */
+	public static List<EmailMessage> createEmailMessage(Integer amount, Boolean doInsert){
+	
+		List<EmailMessage> emailMessageList = new List<EmailMessage>();
+
+		for(Integer i = 0; i<amount; i++){
+			EmailMessage temp = new EmailMessage();
+			temp.status = '3';
+			temp.fromAddress = 'test' + i + '@test.com';
+			temp.fromName = 'test' + i;
+			temp.toAddress = 'toTest' + i + '@test.com';
+			temp.Subject = 'Hello ' + temp.ToAddress;
+			temp.HtmlBody = '<h1>How are you?</h1><br><br><h1>'+ temp.FromName +'</h1>';
+			
+			emailMessageList.add(temp);
+		}
+
+		if (doInsert){
+
+			insert emailMessageList;
+		}
+
+		return emailMessageList;
+
+	}
+
+	/**​
+    * @author Elvin Iluca
+    * @date 20/10/2022
+    * @description HDT_UTL_DataFactoryTst – Utility method to create/insert N EmailTemplate instances/records
+	* @param1 - amount EmailTemplate 
+	* @param2 - boolean to choose if insert records or not
+	* @return - the list of EmailTemplate just created
+    */
+
+	public static List<EmailTemplate> createEmailTemplate(Integer amount, Boolean doInsert){
+		List<EmailTemplate> emailTemplateList = new List<EmailTemplate>();
+		System.runAs (new User(Id = UserInfo.getUserId()) ){
+
+			for(Integer i = 0; i<amount; i++){
+				EmailTemplate temp = new EmailTemplate();
+				temp.isActive = true;
+				temp.Name = 'name'+ i;
+				temp.DeveloperName = 'unique_name_addSomethingSpecialHere' + i;
+				temp.TemplateType = 'text';
+				temp.FolderId = UserInfo.getUserId();
+				
+				emailTemplateList.add(temp);
+			}
+
+			if (doInsert){
+
+				insert emailTemplateList;
+			}
+		}
+
+		return emailTemplateList;
+
+	}
+
+	public static List<SlaAdministration__c> createSlaAdministration(Integer amount, Boolean doInsert, Map<String,Object> fieldsValue){
+		List<SlaAdministration__c> slaAdminRules= new List<SlaAdministration__c>();
+		for(Integer i = 0; i<amount; i++){
+			SObject slaRule=new SlaAdministration__c();
+			for(String field:fieldsValue.keySet()){
+				slaRule.put(field,fieldsValue.get(field));
+			}
+			slaRule.put('StartDate__c',Date.today());
+			slaRule.put('EndDate__c',Date.today().addDays(3));
+			slaAdminRules.add((SlaAdministration__c)slaRule);
+		}
+		if (doInsert){
+			insert slaAdminRules;
+		}
+		return slaAdminRules;
+
+	}
+
+	public static List<SlaTracking__c> createSlaTracking(Integer amount,Boolean doInsert,Id pClickActivity, Id slaAdmin, Id caseId, Id orderId, Integer slaValue, String status){
+		List<SlaTracking__c> slaList=new List<SlaTracking__c>();
+		for(Integer i = 0; i<amount; i++){
+			SlaTracking__c slaTrack =new SlaTracking__c(Activity__c=pClickActivity,SlaAdministration__c=slaAdmin,SlaValue__c=slaValue,Status__c=status);
+			if(String.isNotBlank(caseId)){
+				slaTrack.Case__c=caseId;
+			}
+			if(String.isNotBlank(orderId)){
+				slaTrack.Order__c=orderId;
+			}
+			slaList.add(slaTrack);
+		}
+		if(doInsert){
+			insert slaList;
+		}
+		return slaList;
+
+	}
+
+	public static List<LandRegistry__c> createLandRegistries(List<String> legalCities, Id recordtypeId, ServicePoint__c servicePoint, Boolean doInsert) {
+
+		List<LandRegistry__c> landRegistries = new List<LandRegistry__c>();
+
+		for(String city : legalCities) {
+
+			landRegistries.add(new LandRegistry__c(LegalCity__c = city, RecordTypeId = recordtypeId, ServicePoint__c = servicePoint.Id));
+
+		}
+
+		if(doInsert) {
+
+			insert landRegistries;
+			
+		}
+
+		return landRegistries;
+
+	}
 }

@@ -416,6 +416,11 @@
         <label>In gestione</label>
     </customValue>
     <customValue>
+        <fullName>Integrazione richiesta social</fullName>
+        <default>false</default>
+        <label>Integrazione richiesta social</label>
+    </customValue>
+    <customValue>
         <fullName>Inviare Comunicazione Disconoscimento</fullName>
         <default>false</default>
         <label>Inviare Comunicazione Disconoscimento</label>
@@ -444,6 +449,11 @@
         <fullName>Invio registrazione</fullName>
         <default>false</default>
         <label>Invio registrazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Istruttoria Back Office</fullName>
+        <default>false</default>
+        <label>Istruttoria Back Office</label>
     </customValue>
     <customValue>
         <fullName>Istruttoria Creata</fullName>
@@ -609,6 +619,11 @@
         <fullName>Quality Call</fullName>
         <default>false</default>
         <label>Quality Call</label>
+    </customValue>
+    <customValue>
+        <fullName>Inviare Resoconto Verifica</fullName>
+        <default>false</default>
+        <label>Inviare Resoconto Verifica</label>
     </customValue>
     <customValue>
         <fullName>Rapporti con i distributori e SII</fullName>

@@ -78,7 +78,7 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
                 if(String.isNotBlank(oldTransitions)){
                     result=oldTransitions.split('\\|\\|')[0].trim().substringBefore('@');
                     System.debug(LoggingLevel.DEBUG,'oldTransition -> ' + result);
-                    currentCase.Phase__c = result;
+                    currentCase.TecnicalPhase__c = result;
                 }
             }
 

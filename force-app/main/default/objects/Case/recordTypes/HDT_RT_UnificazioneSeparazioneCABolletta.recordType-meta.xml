@@ -341,6 +341,34 @@
             <fullName>G650</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>6 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>31 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CaliberRequested__c</picklist>
@@ -491,6 +519,34 @@
             <fullName>G650</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>6 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>31 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CancellationReasonDescription__c</picklist>
@@ -558,6 +614,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato per no conferma cliente</fullName>
             <default>false</default>
         </values>
@@ -594,6 +654,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Credit Check KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Disattivato%2FDisdetto %28Servizio%29</fullName>
             <default>false</default>
         </values>
@@ -603,6 +667,10 @@
         </values>
         <values>
             <fullName>Domiciliazione già presente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8700,6 +8768,10 @@
         </values>
         <values>
             <fullName>13FM-Non domestici AT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1101-Domestico</fullName>
             <default>false</default>
         </values>
     </picklistValues>

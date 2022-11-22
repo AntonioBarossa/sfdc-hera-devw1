@@ -916,6 +916,11 @@
         <label>Unificazione/ Separazione CA e Bolletta - EE</label>
     </customValue>
     <customValue>
+        <fullName>Unificazione/Separazione BP-CA-Bolletta - ACQ</fullName>
+        <default>false</default>
+        <label>Unificazione/Separazione BP-CA-Bolletta - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Variazione anagrafica cliente</fullName>
         <default>false</default>
         <label>Variazione anagrafica cliente</label>

@@ -213,10 +213,22 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
 		String commodity = ord.ServicePoint__r.CommoditySector__c;
         
         for (ProcessMatrix__c process : allProcesses) {
-            if(commodity == 'Ambiente' && process.Commodity__c == 'Ambiente'){
-                availableProcesses.add(process);
-            }     
-            else if(ord.RateCategory__c == 'APSCARPRO0' && process.ProcessName__c == 'Voltura - Subentro Scarico produttivo')
+            /* 
+            System.debug( process.ProcessName__c + ': ');
+            System.debug( 'ContractStatus__c: expected \'' +                        process.ContractStatus__c + '\', effective \'' + sapContractStatus +'\'' );
+            System.debug( 'isSTGNew__c: expected \'' +                              process.isSTGNew__c + '\', effective \'' + isStg +'\'' );
+            System.debug( 'marketOrigin__c: expected \'' +                          process.MarketOrigin__c + '\', effective \'' + marketOrigin +'\'' );
+            System.debug( 'plugPresence__c: expected \'' +                          process.PlugPresence__c + '\', effective \'' + plugPresence +'\'' );
+            System.debug( 'IsOwnAccountNew__c: expected \'' +                       process.IsOwnAccountNew__c + '\', effective \'' + isOwnAccount +'\'' );
+            System.debug( 'isResellerNew__c: expected \'' +                         process.IsResellerNew__c + '\', effective \'' + isReseller +'\'' );
+            System.debug( 'isChangeUseNew__c: expected \'' +                        process.IsChangeUseNew__c + '\', effective \'' + isChangeUse +'\'' );
+            System.debug( 'ExistActivitySwitchRipristinatorioNew__c: expected \'' + process.ExistActivitySwitchRipristinatorioNew__c + '\', effective \'' + isSwitchInRipr +'\'' );
+            System.debug( 'OngoingSwitchOutNew__c: expected \'' +                   process.OngoingSwitchOutNew__c + '\', effective \'' + isWinback +'\'' );
+            System.debug( 'PowerChange__c: expected \'' +                           process.PowerChange__c + '\', effective \'' + isPowerChange +'\'' );
+            System.debug( 'commodity__c: expected \'' +                             process.Commodity__c + '\', effective \'' + commodity +'\'' );
+            System.debug( 'IsAmendment__c: expected \'' +                           process.IsAmendment__c + '\', effective \'' + isAmendmentAllowed +'\'' ); 
+            */
+            if(ord.RateCategory__c == 'APSCARPRO0' && process.ProcessName__c == 'Voltura - Subentro Scarico produttivo')
             {
                 availableProcesses.add(process);
             }
@@ -224,29 +236,29 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                     /* Controllo Stato Contratto */
                     (process.ContractStatus__c.containsIgnoreCase(sapContractStatus))
                     /* Controllo IsStg */
-                &&  (process.isSTGNew__c == isStg || process.isSTGNew__c.equalsIgnoreCase('All'))
+                &&  (process.IsSTGNew__c.containsIgnoreCase(isStg) || process.isSTGNew__c.equalsIgnoreCase('All'))
                     /* Controllo Market Origin */
-                &&  (process.marketOrigin__c.contains(marketOrigin))
+                &&  (process.MarketOrigin__c.contains(marketOrigin))
                     /* Controllo Presenza Allaccio */
-                &&  (process.plugPresence__c == plugPresence || process.commodity__c.containsIgnoreCase('Gas'))
+                &&  (process.PlugPresence__c == plugPresence || process.commodity__c.containsIgnoreCase('Gas'))
                     /* Controllo Stesso Account */
-                &&  (process.isOwnAccountNew__c == isOwnAccount || process.isOwnAccountNew__c.equalsIgnoreCase('All') || (process.processName__c.containsIgnoreCase('Voltura Ele') && ord.ServicePoint__r.Account__c == null))
+                &&  (process.IsOwnAccountNew__c.equalsIgnoreCase(isOwnAccount) || process.isOwnAccountNew__c.equalsIgnoreCase('All') || (process.processName__c.containsIgnoreCase('Voltura Ele') && ord.ServicePoint__r.Account__c == null))
                     /* Controllo Reseller */
-                &&  (process.isResellerNew__c == isReseller || process.isResellerNew__c.equalsIgnoreCase('All'))
+                &&  (process.IsResellerNew__c.containsIgnoreCase(isReseller) || process.isResellerNew__c.equalsIgnoreCase('All'))
                     /* Controllo Cambio Uso */
-                &&  (process.isChangeUseNew__c == isChangeUse || process.isChangeUseNew__c.equalsIgnoreCase('All'))
+                &&  (process.IsChangeUseNew__c.containsIgnoreCase(isChangeUse) || process.isChangeUseNew__c.equalsIgnoreCase('All'))
                     /* Controllo Switch Ripristinatorio */
-                &&  (process.ExistActivitySwitchRipristinatorioNew__c == isSwitchInRipr || process.ExistActivitySwitchRipristinatorioNew__c.equalsIgnoreCase('All'))
+                &&  (process.ExistActivitySwitchRipristinatorioNew__c.containsIgnoreCase(isSwitchInRipr) || process.ExistActivitySwitchRipristinatorioNew__c.equalsIgnoreCase('All'))
                     /* Controllo Dati Discordanti */
-                &&  (process.ExistActivityDatiDiscordantiNew__c == datiDiscordanti || process.ExistActivityDatiDiscordantiNew__c.equalsIgnoreCase('All'))
+                &&  (process.ExistActivityDatiDiscordantiNew__c.containsIgnoreCase(datiDiscordanti) || process.ExistActivityDatiDiscordantiNew__c.equalsIgnoreCase('All'))
                     /* Controllo WinBack */
-                &&  (process.OngoingSwitchOutNew__c == isWinback || process.OngoingSwitchOutNew__c.equalsIgnoreCase('All'))
+                &&  (process.OngoingSwitchOutNew__c.containsIgnoreCase(isWinback) || process.OngoingSwitchOutNew__c.equalsIgnoreCase('All'))
                     /* Controllo Variazione Potenza */
                 &&  (process.PowerChange__c == isPowerChange)
                     /* Controllo Commodity */
-                &&  ((process.commodity__c == commodity || process.commodity__c == null))
+                &&  ((process.Commodity__c.containsIgnoreCase(commodity) || process.Commodity__c == null))
                     /* Controllo Amendment */
-                &&  (process.isAmendment__c == isAmendmentAllowed)
+                &&  (process.IsAmendment__c == isAmendmentAllowed)
             ) {
                 if(process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_TemporaneaNuovaAtt'))
                 {

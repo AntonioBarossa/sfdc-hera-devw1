@@ -496,6 +496,13 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			List<sObject> orderList = new List<sObject>();
 			orderList.add(singleOrder);
 			mapStringObjectRecords.put('Order', orderList);
+
+			//DATI CATASTALI
+			List<LandRegistry__c> landList = new List<LandRegistry__c>();
+			for(LandRegistry__c singleLandRegistry : (List<LandRegistry__c>) singleOrder.Dati_Catastali__r){
+				landList.add(singleLandRegistry);
+			}
+			mapStringObjectRecords.put('LandRegistry', landList);
 			
 			//PROCESSING ORDER ITEMS
 			for(OrderItem singleOrderItem : (List<OrderItem>) singleOrder.OrderItems){

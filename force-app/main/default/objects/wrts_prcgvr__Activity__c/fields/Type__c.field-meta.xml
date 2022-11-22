@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Type__c</fullName>
     <externalId>false</externalId>
@@ -14,6 +14,11 @@
                 <fullName>Accettazione Voltura</fullName>
                 <default>false</default>
                 <label>Accettazione Voltura</label>
+            </value>
+            <value>
+                <fullName>Inviare Resoconto Verifica</fullName>
+                <default>false</default>
+                <label>Inviare Resoconto Verifica</label>
             </value>
             <value>
                 <fullName>Acconto scaduto non pagato da gestire</fullName>
@@ -386,6 +391,11 @@
                 <label>Gestione blocco sollecito</label>
             </value>
             <value>
+                <fullName>Gestione contratto colonnetta</fullName>
+                <default>false</default>
+                <label>Gestione contratto colonnetta</label>
+            </value>
+            <value>
                 <fullName>Gestione dati discordanti</fullName>
                 <default>false</default>
                 <label>Gestione dati discordanti</label>
@@ -471,6 +481,11 @@
                 <label>In gestione</label>
             </value>
             <value>
+                <fullName>Integrazione richiesta social</fullName>
+                <default>false</default>
+                <label>Integrazione richiesta social</label>
+            </value>
+            <value>
                 <fullName>Inviare Comunicazione Disconoscimento</fullName>
                 <default>false</default>
                 <label>Inviare Comunicazione Disconoscimento</label>
@@ -504,6 +519,11 @@
                 <fullName>Invio registrazione</fullName>
                 <default>false</default>
                 <label>Invio registrazione</label>
+            </value>
+            <value>
+                <fullName>Istruttoria Back Office</fullName>
+                <default>false</default>
+                <label>Istruttoria Back Office</label>
             </value>
             <value>
                 <fullName>Istruttoria creata/Non necessaria</fullName>
@@ -564,6 +584,11 @@
                 <fullName>Modifica Contratti PreAttivazione</fullName>
                 <default>false</default>
                 <label>Modifica Contratti PreAttivazione</label>
+            </value>
+            <value>
+                <fullName>Modifica Indirizzo Fornitura</fullName>
+                <default>false</default>
+                <label>Modifica Indirizzo Fornitura</label>
             </value>
             <value>
                 <fullName>Note_di gestione pratica</fullName>

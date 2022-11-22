@@ -558,6 +558,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato per no conferma cliente</fullName>
             <default>false</default>
         </values>
@@ -571,6 +575,10 @@
         </values>
         <values>
             <fullName>Annullo voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assenza del presupposto di applicazione del tributo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -594,6 +602,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Credit Check KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Disattivato%2FDisdetto %28Servizio%29</fullName>
             <default>false</default>
         </values>
@@ -603,6 +615,10 @@
         </values>
         <values>
             <fullName>Domiciliazione già presente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
             <default>false</default>
         </values>
         <values>

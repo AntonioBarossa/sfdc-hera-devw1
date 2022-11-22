@@ -25,6 +25,41 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>IntendedUse__c</picklist>
+        <values>
+            <fullName>Alberghi%2Fpensioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attività di intratten%2E e altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completamento allacciamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NO DOM TEMPOR%2E %3E40kW-FIERA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ospedali%2Fcase di cura%2F</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stralcio di allac%2E - Uso cant%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ActivationType__c</picklist>
         <values>
             <fullName>Primo soggetto passivo</fullName>
@@ -451,6 +486,10 @@
     <picklistValues>
         <picklist>CancellationReason__c</picklist>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato per no conferma cliente</fullName>
             <default>false</default>
         </values>
@@ -503,6 +542,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Credit Check KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Disattivato%2FDisdetto %28Servizio%29</fullName>
             <default>false</default>
         </values>
@@ -512,6 +555,10 @@
         </values>
         <values>
             <fullName>Domiciliazione già presente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2176,6 +2223,45 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>UseSubCategory__c</picklist>
+        <values>
+            <fullName>Altri usi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso agricolo e zootecnico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso artigianale e commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso condominiale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico non residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso industriale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico disalimentabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico non disalimentabile</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>OfferType__c</picklist>
         <values>
             <fullName>Progetto</fullName>
@@ -2211,6 +2297,10 @@
           <fullName>Accettazione pagamento a DL</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Esito Consuntivazione KO</fullName>
+              <default>false</default>
+          </values>
         <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
@@ -2373,6 +2463,14 @@
         </values>
         <values>
             <fullName>Esecuzione Appuntamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DBO</fullName>
             <default>false</default>
         </values>
         <values>

@@ -2793,10 +2793,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Back Office - Catalogo Prodotti</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Back Office - Contratti</fullName>
             <default>false</default>
         </values>
@@ -2857,10 +2853,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Segnalazioni Contact Center</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Segnalazioni Migrazione dati</fullName>
             <default>false</default>
         </values>
@@ -2873,19 +2865,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto Contact Center</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Supporto TL Front</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Supporto emissione SD_singola</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supporto su migrazione</fullName>
             <default>false</default>
         </values>
         <values>

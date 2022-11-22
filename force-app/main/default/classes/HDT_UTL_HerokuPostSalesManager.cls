@@ -3,6 +3,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     private static HDT_QR_HerokuPostSalesManager hpsmQr = new HDT_QR_HerokuPostSalesManager();
     private static String typeAcc ='Acconto scaduto non pagato da gestire';
+    private static String verificaLaboratorio = 'NO';
 
     public String getCodeFromPhaseTransition(Case currentCase){
         String code;
@@ -184,6 +185,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String numPrev = reqWrp.requestMap.get('NUMPREV');
         String expectedExec = reqWrp.requestMap.get('TEMP_ES_PREV');
         String codErrAeeg = reqWrp.requestMap.get('CODERR_AEEG');
+        verificaLaboratorio = reqWrp.requestMap.get('VER_LABO');
         HDT_QR_HerokuPostSalesManager qrClass = new HDT_QR_HerokuPostSalesManager();
         //CHECK CROSS MINIMUM FIELD
         if(String.isBlank(method)){
@@ -568,6 +570,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 HDT_UTL_DatabaseService.updateSObject(currentCase);
                 currentCase.Phase__c = 'Piano Rata Annullato';  
             }
+            if(String.isNotBlank(type) && type.equalsIgnoreCase('Inviare Resoconto Verifica')){
+                wrts_prcgvr__Activity__c act  = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName(currentCase.Id,'CASE_INVIARE_RESOCONTO_VERIFICA');
+                if (act != null){
+                    HDT_UTL_DatabaseService.insertSObject(act);
+                }
+                return caseUpdate;
+            }
             updateFuture(JSON.serialize(currentCase));
             return caseUpdate;
         }else if (method.equalsIgnoreCase('AggiornaAppuntamento')){
@@ -641,7 +650,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(currentCase.Cluster__c.equalsIgnoreCase('Preventivi') && !currentCase.CausalCode__c.equalsIgnoreCase('E01')){
                 //DBO non invia mai il completata
                 currentCase.Phase__c = 'Inviare preventivo';
-            }else{
+            }else if(currentCase.Cluster__c.equalsIgnoreCase('Verifiche') && String.isNotBlank(verificaLaboratorio) && verificaLaboratorio.equalsIgnoreCase('SI')){
+                //In questo scenario restiamo in attesa del flusso 152 contenente l'allegato delle verifiche
+            }
+            else{
                 //DBO non invia mai il completata
                 currentCase.Phase__c = 'Completata';
                 currentCase.Status = 'Closed';
@@ -682,7 +694,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     public Case handleRequestRichPass(HDT_WRP_HerokuPostSalesManager reqWrp){
         Case currentCase = new Case();
-        Case relatedCase = new Case();
+        List<Case> relatedCaseList = new List<Case>();
         Case containerCase = new Case();
         List<Case> caseInsertList = new List<Case>();
         List<Case> caseUpdateList = new List<Case>();
@@ -820,6 +832,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             }
                             if(String.isNotBlank(processType)){
                                 currentCase.Type = morUtl.transcodeProcess(processType);
+                                //W2 per la risoluzione contrattuale H2O da eseguire non prima del è Oggi + 6 gg lavorativi
+                                if(String.isNotBlank(currentCase.Type) && 'Risoluzione Contrattuale'.equalsIgnoreCase(currentCase.Type)){
+                                    currentCase.NotPerformedBefore__c = HDT_UTL_Case.addBusinessDay(System.today(),6);
+                                }
                             }
                             if(currentCase.PhoneNumber__c != null && String.isNotBlank(currentCase.PhoneNumber__c) && String.isNotBlank(recapito)){
                                 currentCase.PhoneNumber__c = recapito;
@@ -838,9 +854,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                                 containerCase = qrClass.getCaseRecord(containerCaseNumber);
                                 currentCase.ParentId = containerCase.Id;
                                 //get most recently created and not close related record
-                                relatedCase = qrClass.getRelatedCase(containerCase.Id);
-                                if(relatedCase != null){
-                                    currentCase.RelatedCase__c = relatedCase.Id;
+                                relatedCaseList = qrClass.getRelatedCase(containerCase.Id);
+                                if(relatedCaseList != null && !relatedCaseList.isEmpty()){
+                                    currentCase.RelatedCase__c = relatedCaseList[0].Id;
                                 }
                             } else { //SALESFORCE_KEY (aka contaienrCaseNumber) is null the container does not exist
                                 containerId = morUtl.handleContainer(currentCase);
