@@ -2,6 +2,9 @@
     openSubTab: function(component, event, helper) {
 
         var recordId = component.get("v.recordId");
+        var sObjectName = component.get("v.sObjectName");
+        console.log('>>recordId', recordId);
+        console.log('>>sObjectName', sObjectName);
         var workspaceAPI = component.find("workspace");
 
         workspaceAPI.openTab({ url: '/' + recordId })
@@ -11,7 +14,7 @@
                     pageReference: {
                         type: 'standard__component',
                         attributes: { componentName: 'c__HDT_LCP_OpenCadastralViewLwc' },
-                        state: { c__recordid: recordId, c__tab: 'VDC' }
+                        state: { c__recordid: recordId, c__sObjectType: sObjectName, c__tab: 'VDC' }
                     }
                 })
                     .then(function(subtabId) {
