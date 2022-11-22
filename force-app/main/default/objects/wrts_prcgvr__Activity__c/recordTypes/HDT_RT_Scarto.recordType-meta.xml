@@ -2742,6 +2742,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inviare Resoconto Verifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Approvazione Offerte</fullName>
             <default>false</default>
         </values>

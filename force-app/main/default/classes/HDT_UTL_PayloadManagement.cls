@@ -63,6 +63,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String process = '';
         Map<String, String> tariCodeMap = new Map<String, String>{
             'Prima Attivazione' => 'CN001', 
+            'Nuovo Contratto' => 'CN001',
             'Subentro' => 'CS001',
             'Subentro Cambio Cat.Tariffa' => 'CS002',
             'Cessazione' => 'CC001',
