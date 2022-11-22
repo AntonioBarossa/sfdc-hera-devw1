@@ -96,7 +96,8 @@ public with sharing class HDT_QR_InstallmentPlans {
         CreatedDate,
         ExpirationDate__c,
         BillingCity__c,
-        RateCategory__c
+        RateCategory__c,
+        Commodity__c
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED

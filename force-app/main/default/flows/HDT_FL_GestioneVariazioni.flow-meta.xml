@@ -3971,9 +3971,6 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <label>CreateActivity</label>
         <locationX>18266</locationX>
         <locationY>3710</locationY>
-        <connector>
-            <targetReference>Aggiorna_unit_su_SP</targetReference>
-        </connector>
         <inputAssignments>
             <field>Case__c</field>
             <value>
@@ -5157,9 +5154,6 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <label>Aggiorna Case</label>
         <locationX>17958</locationX>
         <locationY>4046</locationY>
-        <connector>
-            <targetReference>Aggiorna_unit_su_SP</targetReference>
-        </connector>
         <inputReference>GetCaseAggiornatoModificaUnitaImmobiliari_0</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -5167,9 +5161,6 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <label>Aggiorna Case</label>
         <locationX>18794</locationX>
         <locationY>3470</locationY>
-        <connector>
-            <targetReference>Aggiorna_unit_su_SP_1</targetReference>
-        </connector>
         <inputReference>GetCaseAggiornatoModificaUnitaImmobiliari_0</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -5249,72 +5240,6 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <targetReference>Sottotipologia_Processo_0</targetReference>
         </connector>
         <inputReference>GetInputCase</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Aggiorna_unit_su_SP</name>
-        <label>Aggiorna unità su SP</label>
-        <locationX>18112</locationX>
-        <locationY>4262</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.ServicePoint__c</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>NotDomesticHousingUnit__c</field>
-            <value>
-                <elementReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Unita_Abitative__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NotResidentDomesticHousingUnit__c</field>
-            <value>
-                <elementReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.NotResidentDomesticHousingUnit__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ResidentDomesticHousingUnit__c</field>
-            <value>
-                <elementReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.ResidentDomesticHousingUnit__c</elementReference>
-            </value>
-        </inputAssignments>
-        <object>ServicePoint__c</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Aggiorna_unit_su_SP_1</name>
-        <label>Aggiorna unità su SP</label>
-        <locationX>18794</locationX>
-        <locationY>3590</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.ServicePoint__c</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>NotDomesticHousingUnit__c</field>
-            <value>
-                <elementReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Unita_Abitative__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NotResidentDomesticHousingUnit__c</field>
-            <value>
-                <elementReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.NotResidentDomesticHousingUnit__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ResidentDomesticHousingUnit__c</field>
-            <value>
-                <elementReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.ResidentDomesticHousingUnit__c</elementReference>
-            </value>
-        </inputAssignments>
-        <object>ServicePoint__c</object>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase</name>
@@ -6449,6 +6374,21 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <fields>
             <name>Warning_Calcolo_NCDM</name>
             <fieldText>&lt;p&gt;Attenzione! Al conferma pratica il sistema provvederà a valorizzare in automatico il campo Numero Componenti Domestico Residente, nel caso in cui il campo Numero componenti (Comunità Posti Letto) sia stato valorizzato.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetInputCase.RateCategory__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>ACDOMRESP0</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Warning_Coabitanti</name>
+            <fieldText>&lt;p&gt;Attenzione! &lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, system-ui, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Web&amp;quot;, sans-serif; color: rgb(36, 36, 36);&quot;&gt;Per avere Coabitazione = SI valorizzare il campo Numero Coabitanti con un numero &amp;gt; 0, altrimenti lasciarlo vuoto.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>

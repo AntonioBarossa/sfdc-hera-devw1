@@ -384,6 +384,13 @@
                 <elementReference>GetContenitoreStessoContratto.ParentId</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.PartialOutcome__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetContenitoreStessoContratto.PartialOutcome__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Assegnazioni</targetReference>
         </connector>

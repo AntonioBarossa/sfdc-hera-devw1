@@ -590,6 +590,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             return result;
         }
 
+        if(currentCase.BillingIsAddressVerified__c == false){
+            return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Verificare l\'indirizzo prima di procedere'));
+        }
+
         if (marking != null) {
             if ((marking.contains('Persona fisica') || marking.contains('Condominio') || marking.contains('Parti comuni')) && String.isBlank(newFiscalCode)) {
                 return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Codice Fiscale è obbligatorio per la marcatura ' + marking));
