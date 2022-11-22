@@ -57,17 +57,6 @@
                 <componentName>hdtActivityTrace</componentName>
             </componentInstance>
         </itemInstances>
-        <!-- <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>activityId</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>recordId</name>
-                </componentInstanceProperties>
-                <componentName>hdtActivityTrace</componentName>
-            </componentInstance>
-        </itemInstances> -->
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -575,7 +564,7 @@
                         <valueListItems>
                             <value>Order.HDT_CreateDistributorApointment</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2) AND 3 AND 4</booleanFilter>
+                                <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>EQUAL</operator>
@@ -595,6 +584,11 @@
                                     <leftValue>{!Record.Phase__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Annullato</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CommodityFormula__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Gas</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -678,6 +672,13 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Order.Conferma_finale</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_EsitoCQCall}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
