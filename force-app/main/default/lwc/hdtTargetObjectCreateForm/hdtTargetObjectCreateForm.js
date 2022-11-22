@@ -1685,7 +1685,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         codicePunto = this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '');
                         radicePunto = servizio == 'Gas' ? codicePunto.substring(0, 4) : codicePunto.substring(0, 6);
                     }
-                    if(this.allSubmitedFields['PlugPresence__c'] == 'No'){
+                    if(this.allSubmitedFields['PlugPresence__c'] == 'No' && this.allSubmitedFields['CommoditySector__c'] != 'Acqua'){
                         this.allSubmitedFields['ServicePointCode__c'] = 'PODPROVVISORIO';//POD FITTIZIO
                     }
                     let comune = servizio == 'Gas' || servizio == 'Acqua' || servizio == 'Ambiente' ? addressRecord['Comune'] : '';

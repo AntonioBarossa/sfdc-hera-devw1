@@ -670,6 +670,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.showMessage('Errore', 'Popolare il campo Data Decorrenza', 'error');
                     return;
                 }
+                if( this.checkFieldAvailable('NotDomesticHousingUnit__c', true) === '' && this.order.RateCategory__c === 'ACAUNOPOT0' )
+                {
+                    this.showMessage('Errore', 'Popolare il campo Unita abitative non domestiche', 'error');
+                    return;
+                }
                 if( this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
                 {
                     this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
