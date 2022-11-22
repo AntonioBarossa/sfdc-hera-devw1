@@ -154,15 +154,44 @@ public inherited sharing class HDT_UTL_SelfReadings {
         c.MeterCode__c = request.serialNumber;
         c.ReadingDate__c = request.readingDate != null ? request.readingDate : System.today();
         c.DistributorCode__c = inputContract.ServicePoint__r.Distributor__r.Code__c;
+        c.ServicePointCode__c = inputContract.ServicePoint__r?.ServicePointCode__c;
+        c.Commodity__c = isGas ? 'Gas' : 'Energia Elettrica'; /* Wave 2 Adeguare con altre company in ambito */
         c.SalesCompanyCode__c = isGas ? '10V0000160' : '13V0000000'; // TODO WAVE 2: adeguare con le altre company in ambito.
 
         HDT_QR_CausalCodeCalculation causalCodeHandler = new HDT_QR_CausalCodeCalculation();
         HDT_CausalCodeCalculation__mdt causalCodeMdt = causalCodeHandler.calculateCausalCode(c.Cluster__c, c.Type, '', request.commodity);
         c.CausalCode__c = causalCodeMdt.CausalCode__c;
 
+        /**@frpanico 2022-11
+         * Sulle autoletture IVR e' necessario inserire il controllo di compatibilita'
+         * In quanto altrimenti possono crearei N pratiche di cui N-1 andranno in Heroku KO
+         * Poiche' esiste gia' la prima pratica
+         * Dalla velocita' con cui arrivano i due messaggi di creazione e poi di OK 
+         * Che appaiono quasi simultanei e' necessario inserire il controllo di compatibilita'
+         * Sul Check preliminari OK piuttosto che sulla Bozza
+         * Dato che nel caso in cui il check sia in KO il Case viene annullato
+         */
         switch on request.outcome {
             when 'OK' {
-                c.Phase__c = 'Check preliminari OK';
+                String compatibility = '';
+                try
+                {
+                     compatibility = HDT_UTL_MatrixCompatibility.checkCompatibilityPostSales(c);
+                }
+                catch(Exception e)
+                {
+                    compatibility = '';
+                }
+                if(String.isEmpty(compatibility))
+                {
+                    c.Phase__c = 'Check preliminari OK';
+                }
+                else
+                {
+                    c.Phase__c = 'Annullato';
+                    c.Status = 'Closed';
+                    c.CancellationReason__c = 'Processo incompatibile';
+                }
             }
             when 'KO' {
                 c.Phase__c = 'Check preliminari KO';
