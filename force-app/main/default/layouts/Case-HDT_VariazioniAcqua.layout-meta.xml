@@ -227,6 +227,10 @@
                 <behavior>Edit</behavior>
                 <field>NotResidentDomesticHousingUnit__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CohabitantsNumber__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

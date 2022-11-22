@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>OfferName__c</field>
-        <value xsi:type="xsd:string">Tariffa Idrica</value>
+        <value xsi:type="xsd:string">Tariffa Idrico</value>
     </values>
     <values>
         <field>ScriptFlowName__c</field>
