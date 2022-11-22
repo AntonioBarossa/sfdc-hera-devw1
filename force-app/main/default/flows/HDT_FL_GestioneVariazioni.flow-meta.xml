@@ -6387,6 +6387,21 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             </visibilityRule>
         </fields>
         <fields>
+            <name>Warning_Coabitanti</name>
+            <fieldText>&lt;p&gt;Attenzione! &lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, system-ui, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Web&amp;quot;, sans-serif; color: rgb(36, 36, 36);&quot;&gt;Per avere Coabitazione = SI valorizzare il campo Numero Coabitanti con un numero &amp;gt; 0, altrimenti lasciarlo vuoto.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetInputCase.RateCategory__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>ACDOMRESP0</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>hdtRecordEditFormModificaUnitaImmobiliari</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
