@@ -70,13 +70,15 @@ public with sharing class HDT_UTL_LandRegistry {
             if('Contract'.equalsIgnoreCase(sobjectType)){
                 List<Contract> cn = new HDT_QR_Contract().getRecordById((String)recordId);
                 request.put('contratto', cn[0].ContractNumber);
-            }            
-
+            }
+			System.debug('sobjectType: ' + sobjectType);    
+ 			System.debug('request.body: ' + request.get('impianto'));
+            
             HTTPRequest req = new HTTPRequest();
             req.setHeader('Content-type', 'application/json');
             req.setBody(JSON.serialize(request));
             req.setEndpoint('Callout:'+namedCredential+path);
-            req.setMethod('GET');
+            req.setMethod('POST');
 
             System.debug('request: ' + req);
 
@@ -98,11 +100,12 @@ public with sharing class HDT_UTL_LandRegistry {
         VistaDatiCatastaliWrapper result = new VistaDatiCatastaliWrapper();
         
         HttpResponse response = Continuation.getResponse(labels[0]);
-        System.debug('response: ' + response);
-        result.status = response.getStatus();
-
-        if('success'.equalsIgnoreCase(response.getStatus()) ){
-            HDT_WS_VistaDatiCatastaliResponse parsedResp = (HDT_WS_VistaDatiCatastaliResponse)JSON.deserialize(response.getBody(), HDT_WS_VistaDatiCatastaliResponse.class);
+        System.debug('>>getVistaDatiCatastaliResponse - response: ' + response);
+        System.debug('>>getVistaDatiCatastaliResponse - response.body: ' + JSON.serializePretty(response.getBody()));
+        HDT_WS_VistaDatiCatastaliResponse parsedResp = new HDT_WS_VistaDatiCatastaliResponse();
+        if(response.getBody() != null){
+            parsedResp = (HDT_WS_VistaDatiCatastaliResponse)JSON.deserialize(response.getBody(), HDT_WS_VistaDatiCatastaliResponse.class);
+            result.status = parsedResp.status;
             result.response = parsedResp;
         }
         
