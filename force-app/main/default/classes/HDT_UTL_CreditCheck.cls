@@ -174,7 +174,7 @@ public with sharing class HDT_UTL_CreditCheck {
             HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{orderData});
         }catch (Exception e){
             HDT_SRV_LogService logService = new HDT_SRV_LogService('CREDIT_CHECK_EXCEPTION');
-            logService.insertSingleLog('HDT_UTL_CreditCheck', 'updateOrderFuture', orderDataJSON, 'null', error, orderDate != null ? orderDate.orderId : null, null, null);
+            logService.insertSingleLog('HDT_UTL_CreditCheck', 'updateOrderFuture', orderDataJSON, 'null', e.getMessage()+ ' line: '+ e.getLineNumber(), orderData != null ? orderData.orderId : null, null, null);
             System.debug(LoggingLevel.ERROR, e.getMessage()+ ' line: '+ e.getLineNumber() );
         }
     }
