@@ -564,7 +564,7 @@
                         <valueListItems>
                             <value>Order.HDT_CreateDistributorApointment</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2) AND 3 AND 4</booleanFilter>
+                                <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>EQUAL</operator>
@@ -584,6 +584,11 @@
                                     <leftValue>{!Record.Phase__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Annullato</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CommodityFormula__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Gas</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
