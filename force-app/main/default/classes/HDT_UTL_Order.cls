@@ -114,7 +114,7 @@ public inherited sharing class HDT_UTL_Order {
         }
         Map<String, Object> rateResult = rateCategoryAlgo(listRate, o);
         code = (String) rateResult.get('code');
-        rest = (Boolean) rateResult.get('res');
+        res = (Boolean) rateResult.get('res');
         //System.debug('**********:' + listRate);
         //Map<String,String> mapCal = new Map<String,String>();
         Order oUp = new Order();
