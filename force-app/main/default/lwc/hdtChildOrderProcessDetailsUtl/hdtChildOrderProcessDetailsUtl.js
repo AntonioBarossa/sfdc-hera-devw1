@@ -193,7 +193,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 recordId: this.order.Id,
                 diffObjApi: 'Account',
                 diffRecordId: this.order.AccountId,
-                processVisibility: ['HDT_RT_SubentroAmbiente', 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),
+                processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),
                 nextActions: (evt) => 
                     {
                         const famNumb =this.template.querySelector("[data-id='FamilyNumber__c']");
