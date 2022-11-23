@@ -113,8 +113,8 @@ public inherited sharing class HDT_UTL_Order {
             listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__c != null ? o.ServicePoint__r.CommoditySector__c : 'Energia Elettrica',o.ServicePoint__r.distributor__r.code__c,o.CommercialProduct__c,o.SupplyType__c != null ? o.SupplyType__c : o.supplyTypeTechnical__c);
         }
         Map<String, Object> rateResult = rateCategoryAlgo(listRate, o);
-        code = rateResult.get('code');
-        rest = rateResult.get('res');
+        code = (String) rateResult.get('code');
+        rest = (Boolean) rateResult.get('res');
         //System.debug('**********:' + listRate);
         //Map<String,String> mapCal = new Map<String,String>();
         Order oUp = new Order();
