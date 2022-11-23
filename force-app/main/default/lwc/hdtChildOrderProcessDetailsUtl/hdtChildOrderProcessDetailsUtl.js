@@ -475,6 +475,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('Conto contrattuale','ContractAccountCode__c', this.typeVisibility('acqua'), false, true, '',''),
                 new fieldData('Tariffa','RateCategory__c', this.typeVisibility('acqua'), false, true, '',''),
                 new fieldData('Classe Contatore','MeterClass__c', this.typeVisibility('acqua'), false, true, '',''),
+                new fieldData('Comunità Posti Letto','ComPostiLetto__c', this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione', false, false, '',''),
                 new fieldData('Potenza impegnata','PowerCommitted__c', this.typeVisibility('ele'), false, true, '',''),
                 new fieldData('Potenza disponibile','PowerAvailable__c', this.typeVisibility('ele'), false, true, '',''),
                 new fieldData('Potenza richiesta','PowerRequested__c', this.typeVisibility('ele'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', '',''),
