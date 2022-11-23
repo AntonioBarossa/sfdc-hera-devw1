@@ -142,7 +142,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     }
         
     public class HDT_WRP_AppointmentView{
-        @AuraEnabled public String stanoticeNumbertus {get;set;}
+        @AuraEnabled public String noticeNumber {get;set;}
         @AuraEnabled public String appointmentType {get;set;}
         @AuraEnabled public String startDate {get;set;}
         @AuraEnabled public String endDate {get;set;}
