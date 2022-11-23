@@ -592,6 +592,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>RateCategory__c.Market__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>RateCategory__c.CalculatedValue__c</field>
         <readable>true</readable>
     </fieldPermissions>
