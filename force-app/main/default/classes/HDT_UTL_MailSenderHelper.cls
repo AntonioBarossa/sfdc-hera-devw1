@@ -6,7 +6,6 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         List<EmailMessage> emailMessageList = new List<EmailMessage>();
         emailMessageList = HDT_QR_MailSender.getEmailMessage(recordId, 'Comunicazione dal gestore');
         return !(emailMessageList.size() == 0);
-        //return true;
     }
 
     public static HDT_WRP_MailSender.HDT_WRP_Result getReminderMetadataHelper(Id recordId) {
@@ -30,16 +29,22 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             return mailSenderMetaData;
         }
 
-        List<EmailMessage> emailMessageList = new List<EmailMessage>();
-        emailMessageList = HDT_QR_MailSender.getEmailMessage(recordId, 'Sollecito');
+        List<EmailMessage> emailMessageList;
 
         mailSenderMetaData.mailData = new HDT_WRP_MailSender.HDT_WRP_MailData();
         mailSenderMetaData.success = true;
         mailSenderMetaData.mailData.orgWideEmailAddressId = orgWideEmailAddressList[0].Id;
         mailSenderMetaData.mailData.sender = orgWideEmailAddressList[0].Address;
         mailSenderMetaData.mailData.reminderBodyMail = emailTemplateList[0].HtmlValue;
-        mailSenderMetaData.mailData.receiver = 'example@mail.com';
+
+        emailMessageList = new List<EmailMessage>();
+        emailMessageList = HDT_QR_MailSender.getEmailMessage(recordId, 'Comunicazione dal gestore');
+        mailSenderMetaData.mailData.receiver = emailMessageList[0].ToAddress;//'daniele.montorselli@nttdata.com';
+
+        emailMessageList = new List<EmailMessage>();
+        emailMessageList = HDT_QR_MailSender.getEmailMessage(recordId, 'Sollecito');
         mailSenderMetaData.mailData.reminderMailCounter = emailMessageList.size();
+
         mailSenderMetaData.isReminder = true;
         return mailSenderMetaData;
 
@@ -50,6 +55,15 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         HDT_WRP_MailSender.HDT_WRP_Result mailSenderMetaData = new HDT_WRP_MailSender.HDT_WRP_Result();
         List<EmailTemplate> emailTemplateList = new List<EmailTemplate>();
         List<Folder> folderList = new List<Folder>();
+        
+        Integer childCase = HDT_QR_MailSender.getChildCase(recordId);
+        
+        if(childCase >= 1){
+            mailSenderMetaData.success = false;
+            mailSenderMetaData.message = 'Hai già mandato la comunicazione';
+            return mailSenderMetaData;
+        } 
+        
         folderList = HDT_QR_MailSender.getFolderList('COM-Comunicazioni Gestore');
 
         if(folderList.size() == 0){
@@ -120,6 +134,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             return updateCaseResult;
         }
 
+        updateCaseResult.caseId = caseId;
         updateCaseResult.success = true;
         return updateCaseResult;
 
@@ -181,7 +196,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             bodyMailResult.success = true;
             bodyMailResult.message = '';
             bodyMailResult.bodyMail = singleEmailMessage.getHtmlBody();
-            bodyMailResult.receiver = getReceiverMail(templateId);
+            bodyMailResult.receiver = '###';///getReceiverMail(templateId);
         } catch(Exception e){
             bodyMailResult.success = false;
             bodyMailResult.message = e.getMessage() + ' - linea [' + String.valueOf(e.getLineNumber()) + ']';
@@ -204,11 +219,18 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             HDT_WRP_MailSender.HDT_WRP_MailStructure mailStructure;
             mailStructure = (HDT_WRP_MailSender.HDT_WRP_MailStructure)JSON.deserialize(mailStructureJson, HDT_WRP_MailSender.HDT_WRP_MailStructure.class);
 
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            mail.setHtmlBody(mailStructure.bodyMail);
+            mail.setToAddresses(new String[]{mailStructure.toAddress});
+            mail.setOrgWideEmailAddressId(Id.valueOf(mailStructure.orgWideAddId));
+
             HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult caseResult;
 
             if(mailStructure.isReminder){
-                //caseResult = updateReminderCase(mailStructure.caseId);
+                caseResult = updateReminderCase(mailStructure.caseId);
                 subjectString= 'Sollecito';
+                //mail.setInReplyTo('');
+                //SendEmail failed. First exception on row 0; first error: INVALID_MESSAGE_ID_REFERENCE, In-Reply-To header is not valid.: [In-Reply-To, 02s3N000002VHtsQAG] linea [232]
             } else {
                 subjectString= 'Comunicazione dal gestore';
                 caseResult = generateNewCase(mailStructure.caseId);
@@ -219,12 +241,8 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
                     return sendMailResult;
                 }
             }
-
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-			mail.setOrgWideEmailAddressId(Id.valueOf(mailStructure.orgWideAddId));
-            mail.setToAddresses(new String[]{mailStructure.toAddress});
-			mail.setSubject(subjectString);
-            mail.setHtmlBody(mailStructure.bodyMail);
+            
+            mail.setSubject(subjectString);
             mail.setWhatId(caseResult.caseId);
 			Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
 
@@ -266,11 +284,11 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         return caseList[0];
     }
 
-    public static String getReceiverMail(Id templateId){
-        List<EmailTemplate> emailTemplateList = new List<EmailTemplate>();
-        emailTemplateList = HDT_QR_MailSender.getEmailTemplateById(templateId);
-        //return HDT_QR_MailSender.getEmail(emailTemplateList[0].Name);
-        return 'receiver@mail.com';
-    }
+    //public static String getReceiverMail(Id templateId){
+    //    List<EmailTemplate> emailTemplateList = new List<EmailTemplate>();
+    //    emailTemplateList = HDT_QR_MailSender.getEmailTemplateById(templateId);
+    //    //return HDT_QR_MailSender.getEmail(emailTemplateList[0].Name);
+    //    return 'receiver@mail.com';// inserita manualmente
+    //}
 
 }

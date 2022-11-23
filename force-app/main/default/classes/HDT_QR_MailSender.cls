@@ -49,6 +49,16 @@ public inherited sharing class HDT_QR_MailSender {
         ];
     }
 
+    public static Integer getChildCase(Id parentId){
+        return [
+            SELECT count()
+            FROM Case
+            WHERE ParentId = :parentId
+            AND Type = 'Comunicazione con il Gestore'
+            AND Cluster__c = 'Informative'
+        ];
+    }
+
     public static String getEmail(String emailTemplateName){
         //return [
         //    SELECT Email_Template_Name__c, Email__c, DeveloperName, MasterLabel
@@ -62,7 +72,7 @@ public inherited sharing class HDT_QR_MailSender {
 
     public static List<EmailMessage> getEmailMessage(Id caseId, String Subject){
         return [
-            SELECT EmailTemplateId, ParentId, RelatedToId, Status, Subject
+            SELECT EmailTemplateId, ParentId, RelatedToId, Status, Subject, ToAddress
             FROM EmailMessage
             WHERE RelatedToId = :caseId
             AND Subject = :Subject
