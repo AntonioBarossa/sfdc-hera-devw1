@@ -353,6 +353,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                         ord.PrecheckResultSII__c = 'OK';
                                     }
                                 }
+                                when 'Esito KO da SAP'{
+                                    ord.DiscardReason__c = mapRequestFields.get('NOTE_ERR') != null?mapRequestFields.get('NOTE_ERR'):'';
+                                }
+                                when 'Esito Consuntivazione KO'{
+                                    ord.DiscardReason__c = mapRequestFields.get('NOTE_ERR') != null?mapRequestFields.get('NOTE_ERR'):'';
+                                }
+                                
                                 when 'Esito KO da SII' {
                                     ord.DiscardReason__c =  String.isNotBlank(discardReasonString) && discardReasonString.length()>255 ? discardReasonString.substring(0,255) : discardReasonString;
                                     ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
@@ -470,7 +477,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     }
                                     ord.Description = writeDescription(description, oldDescription);
                                 }
-                                when 'Completata' {
+                                when 'Completata','Esito OK da DBO' {
                                     /**@frapnico 01/02/2022
                                      * Aggiunta gestione KO
                                      * Skip Azioni
@@ -518,9 +525,18 @@ public with sharing class HDT_SRV_SalesHandler {
                                         }
                                         //End HRAWRM-657 21/09/2021
 
-                                        if(ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti') && redirectPreventivo){
+                                        if(((mapRequestFields.get('FASE') == 'Esito OK da DBO' && String.isBlank(ordRetrieved.QuotationNumber__c)) || ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti')) && redirectPreventivo){
                                             ord.Phase__c = 'Inviare preventivo';
+                                            ord.QuotationType__c = 'Analitico';
+                                            if(mapRequestFields.get('NUMPREV') != null){
+                                                ord.QuotationNumber__c = mapRequestFields.get('NUMPREV');
+                                            }
                                         }else{
+
+                                            if(mapRequestFields.get('FASE') == 'Esito OK da DBO'){
+                                                futurePhase = 'Completata';
+                                                
+                                            }
                                             /**@frpanico 04/01/2022
                                              * Aggiunto MoveOut
                                             */

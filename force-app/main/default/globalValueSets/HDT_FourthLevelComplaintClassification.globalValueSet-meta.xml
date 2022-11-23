@@ -961,6 +961,11 @@
         <label>Rimborsi - mancato accredito/doppio pagamento</label>
     </customValue>
     <customValue>
+        <fullName>Rinnovo condizioni economiche</fullName>
+        <default>false</default>
+        <label>Rinnovo condizioni economiche</label>
+    </customValue>
+    <customValue>
         <fullName>Ripensamento gestito</fullName>
         <default>false</default>
         <label>Ripensamento gestito</label>

@@ -4,12 +4,48 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Edit</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>PrintableView</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>ChangeOwnerOne</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Delete</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Clone</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Activate</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Contract.HDT_GaaView</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Contract.HDT_Vista_Dati_Catastali</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.ServicePoint__r.CommoditySector__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Ambiente</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsInNative</name>

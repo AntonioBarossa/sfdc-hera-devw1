@@ -197,6 +197,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField};
         List<Case> caseUpdate = new List<Case>();
         Case caseInsert = new Case();
+        Boolean discardManagement = false;
         try {
             HDT_WRP_HerokuPostSalesManager reqWrp = hpsmUtl.manipulateRequest(request);
             switch on request.header.requestType{
@@ -206,6 +207,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                         //HDT_UTL_DatabaseService.updateSObject(caseUpdate);
                         responseObject.fields.addAll(handleNotifEsResponseField(caseUpdate[0]));
                     }
+                    discardManagement = true;
                 }
                 when 'RICH_PASS'{
                     caseInsert = hpsmUtl.handleRequestRichPass(reqWrp);
@@ -228,7 +230,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             RestContext.response.statusCode = 200;
         } catch (Exception ex) {
 		
-
+            discardManagement = false;
             responseField.fieldType = 'TEXT';
             responseField.name = 'ESITO';
             responseField.value = 'KO';
@@ -246,6 +248,9 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
 
             responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError, responseFieldErrorCode};
             RestContext.response.statusCode = 400;
+        }
+        if (discardManagement){
+            HDT_UTL_Scarti.discardManagement(new List<HDT_WRP_MrrRequest.HDT_WRP_Request>{request});
         }
         return responseObject;
     }

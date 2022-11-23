@@ -18,6 +18,7 @@
             <property name="processTypeToCancell" type="String" label="processTypeToCancell" description="processTypeToCancell" role="inputOnly"/>
             <property name="recordId" type="String" label="recordId" description="recordId" role="inputOnly"/>
             <property name="selectedReason" type="String" label="Selected Reason" description="Selecte Reason" role="outputOnly"/>
+            <property name="interviewId" type="String" label="interviewId" description="interviewId" role="inputOnly"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

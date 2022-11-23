@@ -13,16 +13,17 @@ public with sharing class HDT_UTL_LandRegistry {
         system.debug('pratica caseId: ' + caseId);
         system.debug('pratica orderId: ' + orderId);
         system.debug('pratica servicePointId: ' + servicePointId);
-        list<LandRegistry__c> lndRgTable = new list<LandRegistry__c>();
+
         HDT_QR_LandRegistry qrClass = new HDT_QR_LandRegistry();
-        Id rtIdPraticaTARI = Schema.SObjectType.LandRegistry__c.getRecordTypeInfosByName().get('HDT_RT_DatiCatastali_PraticaTARI').getRecordTypeId();
+        Id rtIdPraticaTARI = Schema.SObjectType.LandRegistry__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_DatiCatastali_PraticaTARI').getRecordTypeId();
 
         list<LandRegistry__c> praticaData = new list<LandRegistry__c>();
         if(caseId != null) praticaData = qrClass.getPraticaTARILandRegistryByCaseIds(new list<Id> {caseId});
         else if(orderId != null) praticaData = qrClass.getPraticaTARILandRegistryByOrderIds(new list<Id> {orderId});
-        system.debug('praticaData: ' + JSON.serialize(praticaData));
+        system.debug('praticaData1: ' + JSON.serialize(praticaData));
         if(!praticaData.isEmpty()) return praticaData;
 
+        list<LandRegistry__c> lndRgTable = new list<LandRegistry__c>();
         list<LandRegistry__c> originData = qrClass.getTARILandRegistryByServicePointIds(new list<Id> {servicePointId});
         for(LandRegistry__c curOriginRecord : originData){
             LandRegistry__c resultLR;
@@ -35,7 +36,11 @@ public with sharing class HDT_UTL_LandRegistry {
             lndRgTable.add(resultLR);
         }
         insert lndRgTable;
-        return lndRgTable;
+
+        if(caseId != null) praticaData = qrClass.getPraticaTARILandRegistryByCaseIds(new list<Id> {caseId});
+        else if(orderId != null) praticaData = qrClass.getPraticaTARILandRegistryByOrderIds(new list<Id> {orderId});
+        system.debug('praticaData2: ' + JSON.serialize(praticaData));
+        return praticaData;
     }
     
     @AuraEnabled
@@ -65,13 +70,15 @@ public with sharing class HDT_UTL_LandRegistry {
             if('Contract'.equalsIgnoreCase(sobjectType)){
                 List<Contract> cn = new HDT_QR_Contract().getRecordById((String)recordId);
                 request.put('contratto', cn[0].ContractNumber);
-            }            
-
+            }
+			System.debug('sobjectType: ' + sobjectType);    
+ 			System.debug('request.body: ' + request.get('impianto'));
+            
             HTTPRequest req = new HTTPRequest();
             req.setHeader('Content-type', 'application/json');
             req.setBody(JSON.serialize(request));
             req.setEndpoint('Callout:'+namedCredential+path);
-            req.setMethod('GET');
+            req.setMethod('POST');
 
             System.debug('request: ' + req);
 
@@ -93,11 +100,12 @@ public with sharing class HDT_UTL_LandRegistry {
         VistaDatiCatastaliWrapper result = new VistaDatiCatastaliWrapper();
         
         HttpResponse response = Continuation.getResponse(labels[0]);
-        System.debug('response: ' + response);
-        result.status = response.getStatus();
-
-        if('success'.equalsIgnoreCase(response.getStatus()) ){
-            HDT_WS_VistaDatiCatastaliResponse parsedResp = (HDT_WS_VistaDatiCatastaliResponse)JSON.deserialize(response.getBody(), HDT_WS_VistaDatiCatastaliResponse.class);
+        System.debug('>>getVistaDatiCatastaliResponse - response: ' + response);
+        System.debug('>>getVistaDatiCatastaliResponse - response.body: ' + JSON.serializePretty(response.getBody()));
+        HDT_WS_VistaDatiCatastaliResponse parsedResp = new HDT_WS_VistaDatiCatastaliResponse();
+        if(response.getBody() != null){
+            parsedResp = (HDT_WS_VistaDatiCatastaliResponse)JSON.deserialize(response.getBody(), HDT_WS_VistaDatiCatastaliResponse.class);
+            result.status = parsedResp.status;
             result.response = parsedResp;
         }
         

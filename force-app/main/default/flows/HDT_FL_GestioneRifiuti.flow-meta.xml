@@ -859,6 +859,7 @@
             <label>Salva In Bozza</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>checkboxIndirizzo</name>
         <dataType>Boolean</dataType>
@@ -1178,7 +1179,7 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Note__c</field>
+            <field>Description</field>
             <value>
                 <elementReference>NotaToSend</elementReference>
             </value>
@@ -1208,7 +1209,10 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Note__c</field>
+            <field>Description</field>
+            <value>
+                <elementReference>NotaToSend</elementReference>
+            </value>
         </inputAssignments>
         <inputAssignments>
             <field>Phase__c</field>
@@ -1256,6 +1260,12 @@
             <field>InvoicingProvince__c</field>
             <value>
                 <elementReference>getServicePoint.SupplyProvince__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingStreetCode__c</field>
+            <value>
+                <elementReference>getServicePoint.SupplyStreetCode__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

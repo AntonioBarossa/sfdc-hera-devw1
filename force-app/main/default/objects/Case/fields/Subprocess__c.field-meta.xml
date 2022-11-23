@@ -473,27 +473,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
-            <valueName>Agevolazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
             <valueName>Rid. Agev. Dopo Accertamento</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
-            <valueName>Adesione Fondo Fughe</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
-            <valueName>Rinuncia Fondo Fughe</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
-            <valueName>DGRER569/19 non allacciato/uso irriguo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
-            <valueName>Modifica Fognatura e Depurazione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Verifica Interna</controllingFieldValue>
@@ -538,6 +518,22 @@
         <valueSettings>
             <controllingFieldValue>Istruttoria</controllingFieldValue>
             <valueName>Parere Preventivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>DGRER569/19 non allacciato/uso irriguo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Modifica Fognatura e Depurazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
+            <valueName>Adesione Fondo Fughe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
+            <valueName>Rinuncia Fondo Fughe</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Interventi con Verifica</controllingFieldValue>

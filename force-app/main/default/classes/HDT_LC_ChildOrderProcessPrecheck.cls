@@ -118,8 +118,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     processType = selectedProcessObject.get('RecordTypeName__c').equalsIgnoreCase('HDT_RT_Voltura') ? 'Voltura' : 'Voltura con Switch';
                     newOrder.Subprocess__c = 'Standard';
                     newOrder.VoltureType__c = 'Ordinaria';
-                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
-                    newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : processCode;
+                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Gas'? 'VTG' : processCode;
+                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Acqua'? 'MA1' : processCode;
+                    newOrder.EffectiveDate__c = processCode!= 'MA1'?orderSrv.addBusinessDay(System.today(), 3):System.today();
                     newOrder.SapContractCode__c = sapCode;
                     newOrder.Id = orderId;
                     //@frpanico "Chiamata Arricchimento Dati" per ulteriori predefault
@@ -157,7 +159,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     {
                         newOrder.EffectiveDate__c = getEffectiveDateBonus(orderId);
                     }
-                }                
+                }
                 when 'HDT_RT_CambioOfferte'
                 {
                     if('Acqua'.equalsIgnoreCase(order.Commodity__c))
@@ -165,7 +167,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         newOrder.EffectiveDate__c = System.Today();
                     }
                 }
-
             }
 
             switch on processType {
@@ -175,23 +176,60 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     newOrder.WaiverRightAfterthought__c = 'Si';
                 }
                 when 'Prima Attivazione'{
-                    if(order.CommodityFormula__c == 'Gas')
+                    switch on order.CommodityFormula__c {
+                        when 'Acqua' {
+                            newOrder.SecurityDepositExcluded__c  = 'Y';
+                            newOrder.SeasonUse__c  = 'Nessuna stagionalita';
+                            newOrder.PayPurification__c  = 'No - Esente';
+                            newOrder.PaySewer__c  = 'No - Esente';
+                        }
+                        when 'Gas' {
+                            processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
+                            processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
+                            newOrder.PressureLevel__c  = 'BP';
+                        }
+                    }
+                }
+                when 'Connessione con Attivazione'{
+                    if('Acqua'.equalsIgnoreCase(order.Commodity__c))
                     {
-                        processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
-                        processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
-                        newOrder.PressureLevel__c  = 'BP';
+                        //vuoto perchè E1 non riuscirebbe a generare il plico
+                        newOrder.QuotationType__c = '';
+                        newOrder.VAT__c = 'Iva 10% (Cod. 01)';
+                        newOrder.PaySewer__c = 'No - Esente';
+                        newOrder.PayPurification__c = 'No - Esente';
+                        newOrder.ResidentDomesticHousingUnit__c = 1;
+                    }
+                }
+                when 'Subentro'{
+                    if('Acqua'.equalsIgnoreCase(order.Commodity__c))
+                    {
+                        newOrder.PaySewer__c = 'Si - Paga';
+                        newOrder.PayPurification__c = 'Si - Paga';
+                        newOrder.SeasonUse__c  = 'Nessuna stagionalita';
                     }
                 }
             }
 
-                newOrder.VAT__c = 
-                    order.CommodityFormula__c == 'Energia Elettrica' ?
-                        order.SupplyType__c == 'Domestico' ? 'Iva 10% (Cod. 01)' : 'Iva 22% (Cod. 02)'
-                    : 'Iva 22% (Cod. 02)';
-            
-            if(order.CommodityFormula__c == 'Gas')
-            {
-                newOrder.ExciseGAS__c = (order.SupplyType__c == 'A-Domestico' || order.SupplyType__c == 'B-Condominio') ? 'Imposta Usi Domestici (Cod. G_ICD)' : 'Imposta usi non domestici iva 22% (Cod. G_ICC)';
+            newOrder.NotDisconnectabilityCustomer__c = 'No';
+            newOrder.VAT__c = order.SupplyType__c = 'Iva 22% (Cod. 02)';
+        
+            switch on order.CommodityFormula__c {
+                when 'Acqua' {
+                    newOrder.UseSubCategory__c = HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c );
+                    newOrder.ATO__c = order.ServicePoint__r?.ATO__c;
+                    newOrder.Resident__c = ( 'Non Domestico'.equalsIgnoreCase(order.SupplyType__c) && order.ImplantType__c.containsIgnoreCase('promiscuo') );
+                }
+                when 'Energia Elettrica' {
+                    newOrder.VAT__c = order.SupplyType__c == 'Domestico' ? 'Iva 10% (Cod. 01)' : 'Iva 22% (Cod. 02)';
+                }
+                when 'Gas' {
+                    newOrder.ExciseGAS__c = (order.SupplyType__c == 'A-Domestico' || order.SupplyType__c == 'B-Condominio') ? 'Imposta Usi Domestici (Cod. G_ICD)' : 'Imposta usi non domestici iva 22% (Cod. G_ICC)';
+                    newOrder.PressureLevel__c = 'BP';
+                    //Logica Superficie Servita Start
+                    newOrder.SurfaceServed__c = 75;
+                    //Logica Superficie Servita End
+                }
             }
 
             //EVERIS: MODIFICATA LOGICA DI UPDATE PER GESTIRE I PREDEFAULT
@@ -203,10 +241,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             newOrder.ProcessCode__c = processCode;
             newOrder.AggregateBilling__c = 'Si';
             newOrder.Phase__c = 'Bozza';
-            newOrder.PressureLevel__c =  (extraParams.get('servicePointType') == 'HDT_RT_Gas') ? 'BP' : null;
-            //Logica Superficie Servita Start
-            newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas') ? 75 : null;
-            //Logica Superficie Servita End
             orderSrv.updateRecord(newOrder);
             //EVERIS 
         }

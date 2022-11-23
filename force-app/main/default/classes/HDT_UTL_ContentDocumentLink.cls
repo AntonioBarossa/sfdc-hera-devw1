@@ -5,7 +5,5 @@ public with sharing class HDT_UTL_ContentDocumentLink {
                 cdl.visibility = 'AllUsers';
             }
         }
-        
-        
     }
 }

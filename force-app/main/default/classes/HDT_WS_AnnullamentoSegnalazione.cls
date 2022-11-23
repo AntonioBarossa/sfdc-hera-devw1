@@ -39,7 +39,7 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
         Case currentCase = (Case) obj;
 
         HDT_WRP_AnnullamentoSegnalazioneReq req = new HDT_WRP_AnnullamentoSegnalazioneReq(currentCase.Id, null); //noticeId null
-        HDT_WS_AnnullamentoSegnalazioneResponse res = (HDT_WS_AnnullamentoSegnalazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH,'POST', req, HDT_WS_AnnullamentoSegnalazioneResponse.class);
+        HDT_WS_AnnullamentoSegnalazioneResponse res = (HDT_WS_AnnullamentoSegnalazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftHergoPath',REQUEST_PATH,'DELETE', req, HDT_WS_AnnullamentoSegnalazioneResponse.class);
         System.debug(LoggingLevel.DEBUG,'response -> ' + res); 
 
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
@@ -78,7 +78,7 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
                 if(String.isNotBlank(oldTransitions)){
                     result=oldTransitions.split('\\|\\|')[0].trim().substringBefore('@');
                     System.debug(LoggingLevel.DEBUG,'oldTransition -> ' + result);
-                    currentCase.Phase__c = result;
+                    currentCase.TecnicalPhase__c = result;
                 }
             }
 

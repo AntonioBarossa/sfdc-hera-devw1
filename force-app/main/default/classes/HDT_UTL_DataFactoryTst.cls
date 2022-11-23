@@ -3660,4 +3660,61 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return emailTemplateList;
 
 	}
+
+	public static List<SlaAdministration__c> createSlaAdministration(Integer amount, Boolean doInsert, Map<String,Object> fieldsValue){
+		List<SlaAdministration__c> slaAdminRules= new List<SlaAdministration__c>();
+		for(Integer i = 0; i<amount; i++){
+			SObject slaRule=new SlaAdministration__c();
+			for(String field:fieldsValue.keySet()){
+				slaRule.put(field,fieldsValue.get(field));
+			}
+			slaRule.put('StartDate__c',Date.today());
+			slaRule.put('EndDate__c',Date.today().addDays(3));
+			slaAdminRules.add((SlaAdministration__c)slaRule);
+		}
+		if (doInsert){
+			insert slaAdminRules;
+		}
+		return slaAdminRules;
+
+	}
+
+	public static List<SlaTracking__c> createSlaTracking(Integer amount,Boolean doInsert,Id pClickActivity, Id slaAdmin, Id caseId, Id orderId, Integer slaValue, String status){
+		List<SlaTracking__c> slaList=new List<SlaTracking__c>();
+		for(Integer i = 0; i<amount; i++){
+			SlaTracking__c slaTrack =new SlaTracking__c(Activity__c=pClickActivity,SlaAdministration__c=slaAdmin,SlaValue__c=slaValue,Status__c=status);
+			if(String.isNotBlank(caseId)){
+				slaTrack.Case__c=caseId;
+			}
+			if(String.isNotBlank(orderId)){
+				slaTrack.Order__c=orderId;
+			}
+			slaList.add(slaTrack);
+		}
+		if(doInsert){
+			insert slaList;
+		}
+		return slaList;
+
+	}
+
+	public static List<LandRegistry__c> createLandRegistries(List<String> legalCities, Id recordtypeId, ServicePoint__c servicePoint, Boolean doInsert) {
+
+		List<LandRegistry__c> landRegistries = new List<LandRegistry__c>();
+
+		for(String city : legalCities) {
+
+			landRegistries.add(new LandRegistry__c(LegalCity__c = city, RecordTypeId = recordtypeId, ServicePoint__c = servicePoint.Id));
+
+		}
+
+		if(doInsert) {
+
+			insert landRegistries;
+			
+		}
+
+		return landRegistries;
+
+	}
 }

@@ -491,15 +491,19 @@
     <picklistValues>
         <picklist>PurificationInfoOnTheInvoice__c</picklist>
         <values>
-            <fullName>No - Esente</fullName>
+            <fullName>Utenza non servita</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Si - Paga</fullName>
+            <fullName>Utenza servita</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Si - Ridotta</fullName>
+            <fullName>Utenza temporaneamente non servita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza non servita con progettazione in corso</fullName>
             <default>false</default>
         </values>
     </picklistValues>

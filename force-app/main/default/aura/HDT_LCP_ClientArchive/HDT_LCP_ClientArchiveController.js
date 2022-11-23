@@ -2,7 +2,24 @@
     doInit: function(component) {       
         console.log('New component')
         component.set("v.forcedvaluesAA", [{ 'label': 'Codice Fiscale', 'value': 'Codice Fiscale' },{ 'label': 'Partita Iva', 'value': 'Partita Iva' },{'label': 'Codice Cliente', 'value': 'Codice Cliente' }]);
-        component.set("v.columns", [{
+        
+        //START 25/10/2022 costanzo.lomele@webresults.it Wave 2
+        component.set("v.silosOptions", [{ 'label': 'none', 'value': 'none' },
+        {'label': 'AAA-EBT', 'value': 'AAA-EBT' },
+        {'label': 'HERA COMM', 'value': 'HERA COMM' },
+        {'label': 'MMS', 'value': 'MMS' },
+        {'label': 'Reseller', 'value': 'Reseller' }]);
+        //END 25/10/2022 costanzo.lomele@webresults.it Wave 2
+
+        component.set("v.columns", [
+        //START 25/10/2022 costanzo.lomele@webresults.it Wave 2
+        {
+            label: 'Silos',
+            fieldName: 'silos',
+            sortable: true
+        },
+        //END 25/10/2022 costanzo.lomele@webresults.it Wave 2
+        {
             label: 'Cognome / Rag. Sociale',
             fieldName: 'linkName',
             type: 'url',        

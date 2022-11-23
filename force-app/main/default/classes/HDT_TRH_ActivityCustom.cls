@@ -52,6 +52,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
         // HRAWRM-672 22/09/2021 EC
         // HRAWRM-880 LG
         HDT_UTL_ActivityCustom.updateTimeRefAppointment(trigger.old,trigger.new);
+        HDT_UTL_ActivityCustom.setNoteRicontattoCliente(trigger.old,trigger.new);
         HDT_UTL_ActivityCustom.checkForProcessFields(Trigger.new, (Map<Id, wrts_prcgvr__Activity__c>)Trigger.oldMap);
         // Assessment Gestione Scarti: rimossa chiamata a method poichè errato.
         //HDT_UTL_Scarti.handleEditButtonPress(trigger.new, (Map<Id, wrts_prcgvr__Activity__c>) trigger.oldMap);//>>> costanzo.lomele@webresults.it 14/10/21
@@ -77,6 +78,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
 
         //f. defelice Chiusura case Proroga Temp
         //HDT_UTL_ActivityCustomProcess.closeSobjectOnActivityClosing(trigger.new, trigger.old);
+        HDT_UTL_ActivityCustomProcess.closeParentEntityCanceledActivity(trigger.new, trigger.old);
         HDT_UTL_ActivityCustom.checkForMandatoryAttachment((Map<Id, wrts_prcgvr__Activity__c>) trigger.newMap);
 
         //GiFlorio  

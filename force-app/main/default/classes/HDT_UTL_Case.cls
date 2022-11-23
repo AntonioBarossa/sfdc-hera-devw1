@@ -168,6 +168,37 @@ public inherited sharing class HDT_UTL_Case {
             if( datesNamount.containsKey('DepositAmount__c') ){
                 output.depositAmount = decimal.valueOf(datesNamount.get('DepositAmount__c'));
             }
+        }else if ('Esenzione Modifica Fognatura Depurazione'.equalsIgnoreCase(process) && 'Modifica Fognatura e Depurazione'.equals(currentCase.Subprocess__c)){
+            List<Case> caseRetrieved = [SELECT Contract__r.StartDate, CustomerRequestDate__c FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
+            Date contractStartDate = (caseRetrieved.size() > 0) ? caseRetrieved[0]?.Contract__r?.StartDate : null;
+            Date dataDecorrenza = null;
+
+            if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) > 5){
+                dataDecorrenza = date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year() - 5, caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day());
+            }else if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) < 5){
+                dataDecorrenza = contractStartDate;
+            }
+
+            currentCase.EffectiveDate__c = dataDecorrenza;
+            output.currentCase = currentCase;
+        }
+        else if (System.Label.invio_sollecito.equalsIgnoreCase(process)){
+            String body;
+            HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
+            httpObj.headersMap = new Map<String, String>();
+            httpObj.httpMethod = 'POST';
+            httpObj.headersMap.put('Content-Type', 'application/json');    
+            httpObj.endPoint = 'callout:MulesoftBasePath/reminder';
+            body = JSON.serialize(new Map<String, Object>{
+                'requestId'=>currentCase.Id,'dataRequest'=>Date.today(),'caseId'=>currentCase.CaseNumber,'noticeId'=>String.isNotBlank(currentCase.NoticeId__c)?currentCase.NoticeId__c:'',
+                'reminder'=>'X','text'=>String.isNotBlank(currentCase.Note__c)?currentCase.Note__c:''
+            });
+            output.effectiveDate = Date.today();
+            HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse respWrp=(HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse)JSON.deserialize(HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj).body,HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse.class);
+            if(respWrp.status.equalsIgnoreCase(System.Label.failed)){
+                HDT_UTL_IntegrationLog.handleGenericErrorRequest(body, 'POST', respWrp.errorDetails[0].additionalInfo , System.Label.invio_sollecito, currentCase.Id);
+                output.cancellationNote = String.valueof(datetime.now()) +' '+respWrp.errorDetails[0].code+' | '+respWrp.errorDetails[0].additionalInfo;
+            }
         }
         outputs.add(output);
         return outputs;

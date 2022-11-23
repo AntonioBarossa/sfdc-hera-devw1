@@ -25,7 +25,7 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
     static void riduzioneSuperficieTest(){
 
         Case caso = new Case();
-        caso.Type = 'Riduzione Superficie rifiuti spec promiscui';
+        caso.Type = 'Riduz. Superficie rifiuti spec promiscui';
         caso.Phase__c = '';
         insert caso;
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
@@ -49,7 +49,7 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
     static void executeOnCloseActionsCaseTest(){
 
         Case caso = new Case();
-        caso.Type = 'Riduzione Superficie rifiuti spec promiscui';
+        caso.Type = 'Riduz. Superficie rifiuti spec promiscui';
         caso.Phase__c = '';
         insert caso;
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
@@ -155,6 +155,71 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         System.assertEquals(actionsCase.isEmpty(), true, 'Fake Test');
         Test.startTest();
         queue.execute(null);
+        Test.stopTest();
+    }
+
+    @isTest
+    static void tariLogicVarDisTst(){
+        Id rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VariazioniTari').getRecordTypeId();
+        Case c = new Case();
+        c.Phase__c = 'Comunicazione verso Heroku KO';
+        c.Type = 'Modifica dati contrattuali';
+        c.Subprocess__c = 'DOM_Componenti non residenti';
+        c.RecordTypeId = rtId;
+        Case csap = new Case();
+        csap.Phase__c = 'Esito KO da SAP';
+        csap.Type = 'Modifica dati contrattuali';
+        csap.Subprocess__c = 'DOM_Componenti non residenti';
+        csap.RecordTypeId = rtId;
+        Case cni = new Case();
+        cni.Phase__c = 'Comunicazione verso Heroku KO';
+        cni.Type = 'Modifica dati contrattuali';
+        cni.Subprocess__c = 'DOM_Componenti residenti';
+        cni.RecordTypeId = rtId;
+        Case cs = new Case();
+        cs.Phase__c = 'Comunicazione verso Heroku KO';
+        cs.Type = 'Modifica dati contrattuali';
+        cs.Subprocess__c = 'Superficie';
+        cs.ModuleFromContributor__c = true;
+        cs.RequestSource__c = 'Da Contribuente';
+        cs.RecordTypeId = rtId;
+		Case csf = new Case();
+        csf.Phase__c = 'Comunicazione verso Heroku KO';
+        csf.Type = 'Modifica dati contrattuali';
+        csf.Subprocess__c = 'Superficie';
+        csf.ModuleFromContributor__c = false;
+        csf.RequestSource__c = 'Da Contribuente';
+        csf.RecordTypeId = rtId;
+        wrts_prcgvr__Activity__c abo = new wrts_prcgvr__Activity__c();
+        abo.Type__c = 'Istruttoria Back Office';
+        abo.ActivityOutcome__c = 'Positivo';
+        wrts_prcgvr__Activity__c abon = new wrts_prcgvr__Activity__c();
+        abon.Type__c = 'Istruttoria Back Office';
+        abon.ActivityOutcome__c = 'Negativo';
+        wrts_prcgvr__Activity__c ap = new wrts_prcgvr__Activity__c();
+        ap.ActivityOutcome__c = 'Positivo';
+        wrts_prcgvr__Activity__c an = new wrts_prcgvr__Activity__c();
+        an.ActivityOutcome__c = 'Negativo';
+        HDT_UTL_ActivityCloseActions.HDT_WRP_Actions action;
+        Test.startTest();
+            action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(c, ap);
+       		system.assertEquals(action.phase, 'Da Inviare', 'OK');
+            action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(c, an);
+        	system.assertEquals(action.phase, 'Annullato', 'OK');
+            action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(cni, ap);
+        	system.assertEquals(action.phase, 'Completata', 'OK');
+            action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(cni, an);
+        	system.assertEquals(action.phase, 'Annullato', 'OK');
+        	action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(cs, abo);
+        	system.assertEquals(action.phase, 'Da Inviare', 'OK');
+        	action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(csf, abo);
+        	system.assertEquals(action.phase, 'Gestione Documentale', 'OK');
+        	action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(csf, abon);
+        	system.assertEquals(action.phase, 'Annullato', 'OK');
+        	action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(csap, ap);
+        	system.assertEquals(action.phase, 'Completata', 'OK');
+        	action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(csap, an);
+        	system.assertEquals(action.phase, 'Annullato', 'OK');
         Test.stopTest();
     }
 

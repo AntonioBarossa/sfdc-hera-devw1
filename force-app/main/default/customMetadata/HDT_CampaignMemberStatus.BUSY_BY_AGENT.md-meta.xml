@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>StatusName__c</field>
-        <value xsi:type="xsd:string">Occupato operatore</value>
+        <value xsi:type="xsd:string">Occupato</value>
     </values>
 </CustomMetadata>

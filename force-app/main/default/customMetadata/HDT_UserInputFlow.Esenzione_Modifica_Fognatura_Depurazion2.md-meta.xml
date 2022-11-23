@@ -52,6 +52,10 @@
 &quot;Column&quot;: 2
 },
 {
+&quot;FieldName&quot;: &quot;PurificationInfoOnTheInvoice__c&quot;,
+&quot;Column&quot;: 2
+},
+{
 &quot;FieldName&quot;: &quot;UseSubCategory__c&quot;,
 &quot;Column&quot;: 2
 }

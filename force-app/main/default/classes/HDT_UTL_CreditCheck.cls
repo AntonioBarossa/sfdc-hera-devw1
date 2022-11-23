@@ -124,7 +124,8 @@ public with sharing class HDT_UTL_CreditCheck {
                 
                 
                 req.bpAlternative = o.ServicePoint__r?.Account__r?.CustomerCode__c;
-                req.alternativeCustomerId = fiscalData;
+                //ticket 905174C email del 02/11/2022
+                //req.alternativeCustomerId = fiscalData;
             }
             
         }
@@ -159,6 +160,17 @@ public with sharing class HDT_UTL_CreditCheck {
         
         if(!ordersToUpdate.isEmpty()){
             HDT_UTL_DatabaseService.updateSObject(ordersToUpdate);
+        }
+    }
+
+    @future
+    @SuppressWarnings('PMD.AvoidDebugStatements')
+    public static void updateOrderFuture(String orderDataJSON){
+        try{
+            HDT_WRP_DataForUpdate orderData = (HDT_WRP_DataForUpdate)JSON.deserialize(orderDataJSON, HDT_WRP_DataForUpdate.class); 
+            HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{orderData});
+        }catch (Exception e){
+            System.debug(LoggingLevel.ERROR, e.getMessage()+ ' line: '+ e.getLineNumber() );
         }
     }
 

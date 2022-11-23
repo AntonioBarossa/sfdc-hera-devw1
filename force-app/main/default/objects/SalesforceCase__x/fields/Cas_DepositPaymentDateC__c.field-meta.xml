@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cas_DepositPaymentDateC__c</fullName>
+    <description>Cas_DepositPaymentDateC</description>
+    <externalDeveloperName>Cas_DepositPaymentDateC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Data Pagamento Acconto</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

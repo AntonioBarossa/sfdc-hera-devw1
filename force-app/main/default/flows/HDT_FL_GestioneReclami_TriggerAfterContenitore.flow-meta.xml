@@ -4,7 +4,7 @@
     <assignments>
         <name>Aumenta_Counter</name>
         <label>Aumenta Counter</label>
-        <locationX>1100</locationX>
+        <locationX>1232</locationX>
         <locationY>935</locationY>
         <assignmentItems>
             <assignToReference>CounterLavorazione</assignToReference>
@@ -27,7 +27,7 @@
     <assignments>
         <name>Aumenta_Counter_0</name>
         <label>Aumenta Counter</label>
-        <locationX>1364</locationX>
+        <locationX>1496</locationX>
         <locationY>935</locationY>
         <assignmentItems>
             <assignToReference>CounterSospeso</assignToReference>
@@ -50,7 +50,7 @@
     <assignments>
         <name>Aumenta_Counter_0_0</name>
         <label>Aumenta Counter</label>
-        <locationX>1628</locationX>
+        <locationX>1760</locationX>
         <locationY>935</locationY>
         <assignmentItems>
             <assignToReference>CounterRispostaInviata</assignToReference>
@@ -73,7 +73,7 @@
     <assignments>
         <name>Aumenta_Counter_0_0_0</name>
         <label>Aumenta Counter</label>
-        <locationX>1892</locationX>
+        <locationX>2024</locationX>
         <locationY>935</locationY>
         <assignmentItems>
             <assignToReference>CounterAnnullato</assignToReference>
@@ -94,9 +94,32 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Aumenta_Counter_0_0_0_0</name>
+        <label>Aumenta Counter</label>
+        <locationX>2552</locationX>
+        <locationY>935</locationY>
+        <assignmentItems>
+            <assignToReference>CounterElaborazioneRisposta</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CounterElements</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_sui_case_nel_Contenitore</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Aumenta_Counter_0_0_0_0_0</name>
         <label>Aumenta Counter</label>
-        <locationX>2156</locationX>
+        <locationX>2288</locationX>
         <locationY>935</locationY>
         <assignmentItems>
             <assignToReference>CounterChiuso</assignToReference>
@@ -119,7 +142,7 @@
     <assignments>
         <name>Aumenta_Counter_1</name>
         <label>Aumenta Counter</label>
-        <locationX>2420</locationX>
+        <locationX>2816</locationX>
         <locationY>935</locationY>
         <assignmentItems>
             <assignToReference>CounterElements</assignToReference>
@@ -157,7 +180,7 @@
     <decisions>
         <name>Quale_Fase</name>
         <label>Quale Fase?</label>
-        <locationX>1760</locationX>
+        <locationX>2024</locationX>
         <locationY>815</locationY>
         <defaultConnector>
             <targetReference>Aumenta_Counter_1</targetReference>
@@ -259,11 +282,26 @@
             </connector>
             <label>Chiuso</label>
         </rules>
+        <rules>
+            <name>Elaborazione_Risposta</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_sui_case_nel_Contenitore.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Elaborazione Risposta</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aumenta_Counter_0_0_0_0</targetReference>
+            </connector>
+            <label>Elaborazione Risposta</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Quale_Fase_deve_andare_il_Contenitore</name>
         <label>Quale Fase deve andare il Contenitore?</label>
-        <locationX>1012</locationX>
+        <locationX>1144</locationX>
         <locationY>1247</locationY>
         <defaultConnectorLabel>Nessun cambio</defaultConnectorLabel>
         <rules>
@@ -383,14 +421,30 @@
             </connector>
             <label>Contenitore - Chiuso</label>
         </rules>
+        <rules>
+            <name>Contenitore_Elaborazione_Risposta</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CounterElements</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>CounterElaborazioneRisposta</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Passa_In_Elaborazione_Risposta</targetReference>
+            </connector>
+            <label>Contenitore - Elaborazione Risposta</label>
+        </rules>
     </decisions>
     <description>Trigger Flow che gestisce l&apos;avanzamento della fase del Case Contenitore all&apos;interno del Cluster Reclami</description>
+    <environments>Default</environments>
     <interviewLabel>GestioneReclami_TriggerAfterContenitore {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Reclami - Trigger After Contenitore</label>
     <loops>
         <name>Loop_sui_case_nel_Contenitore</name>
         <label>Loop sui case nel Contenitore</label>
-        <locationX>1012</locationX>
+        <locationX>1144</locationX>
         <locationY>695</locationY>
         <collectionReference>Get_Case_nel_Contenitore</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -423,7 +477,7 @@
     <recordLookups>
         <name>Get_Case_nel_Contenitore</name>
         <label>Get Case nel Contenitore</label>
-        <locationX>1012</locationX>
+        <locationX>1144</locationX>
         <locationY>575</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -572,6 +626,40 @@
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
+        <name>Passa_In_Elaborazione_Risposta</name>
+        <label>Passa In Elaborazione Risposta</label>
+        <locationX>1672</locationX>
+        <locationY>1367</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsContainer__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ChangePhaseDate__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Elaborazione Risposta</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Passa_In_Lavorazione</name>
         <label>Passa In Lavorazione</label>
         <locationX>352</locationX>
@@ -718,6 +806,17 @@
     </variables>
     <variables>
         <name>CounterChiuso</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>CounterElaborazioneRisposta</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

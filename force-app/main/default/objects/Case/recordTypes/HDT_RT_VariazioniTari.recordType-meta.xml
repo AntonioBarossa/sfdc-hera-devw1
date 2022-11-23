@@ -3,7 +3,7 @@
     <fullName>HDT_RT_VariazioniTari</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>HDT_RT_VariazioniTari</label>
+    <label>Variazioni Ambiente</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
@@ -9789,6 +9789,14 @@
         </values>
         <values>
             <fullName>In attesa validazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa validazione BO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione validata</fullName>
             <default>false</default>
         </values>
         <values>

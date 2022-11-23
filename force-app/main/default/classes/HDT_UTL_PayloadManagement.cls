@@ -63,19 +63,28 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String process = '';
         Map<String, String> tariCodeMap = new Map<String, String>{
             'Prima Attivazione' => 'CN001', 
+            'Nuovo Contratto' => 'CN001',
             'Subentro' => 'CS001',
             'Subentro Cambio Cat.Tariffa' => 'CS002',
             'Cessazione' => 'CC001',
             'Superficie' => 'CM001',
-            'DOM_Componenti non residenti' => 'CM002',
-            'NON DOM_ISTAT/Ronchi' => 'CM006'
+            'DOM_Componenti non residenti' => 'CM020',
+            'NON DOM_ISTAT/Ronchi' => 'CM006',
+            'Cambio Tariffa' => 'CM004',
+            'Modifica Tariffa - Rimozione Agevolazione' =>'CM003',
+            'Modifica Tariffa'=>'CM003',
+            'DOM_Coabitazioni'=>'CM021',
+            'DOM_Componenti residenti'=>'CM022',
+            'Dati catastali'=>'CM030',
+            'Variazione Indirizzo Fornitura'=>'CM023',
+            'Domiciliato in nucleo residente'=>'CM021'
             };
         if('Order'.equalsIgnoreCase(context)){
             process = HDT_UTL_DocumentalManagement.getValue('Order', 'ProcessType__c', 0, inputs, formParams);
-        }else{
+        }else if('Case'.equalsIgnoreCase(context)){
             process = HDT_UTL_DocumentalManagement.getValue('Case', 'Type', 0, inputs, formParams);
             if(!'Cessazione'.equalsIgnoreCase(process)){
-                process = HDT_UTL_DocumentalManagement.getValue('Order', 'Subprocess__c', 0, inputs, formParams);
+                process = HDT_UTL_DocumentalManagement.getValue('Case', 'Subprocess__c', 0, inputs, formParams);
             }
         }
         if(String.isBlank(process))return '';
