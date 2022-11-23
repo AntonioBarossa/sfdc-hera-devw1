@@ -78,10 +78,8 @@ public with sharing class HDT_UTL_GenerateMultilevelJson {
     }
 
     public String generateJson(){
-        Map<String, Object> rootMap = this.generateMap();
-        // rootMap is a map (with a multilevel structure that support arrays).
-        //String jsonString = JSON.serializePretty(rootMap);
-        String jsonString = JSON.serializePretty(this.transformSublevelMap(rootMap));
+        Object objToSerialize = this.generateObject();
+        String jsonString = JSON.serializePretty(objToSerialize);
         System.debug(jsonString);
         return jsonString;
     }
