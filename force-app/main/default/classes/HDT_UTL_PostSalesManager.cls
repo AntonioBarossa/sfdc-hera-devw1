@@ -103,6 +103,15 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 activity.Case__c = parentCase.Id;
                 activity.wrts_prcgvr__IsRequired__c	= true;
                 HDT_UTL_DatabaseService.insertSObject(activity);
+            } else if (parentCase.Type.equalsIgnoreCase('Consumo Anomalo Idrico') && currentCase.Type.equalsIgnoreCase('Verifica Fuga Idrica') && (currentCase.Commodity__c.equalsIgnoreCase('Acqua') || currentCase.CommodityFormula__c.equalsIgnoreCase('Acqua'))) {
+                wrts_prcgvr__Activity__c actElabManuale = [SELECT Id, ActivityOutcome__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND Type__c = 'Elaborazione Manuale' AND wrts_prcgvr__Status__c = 'Chiusa' WITH SECURITY_ENFORCED LIMIT 1];
+                if (actElabManuale != null && 'Negativo'.equalsIgnoreCase(actElabManuale.ActivityOutcome__c)){
+                    parentCase.Phase__c = 'KO Definitivo';
+                    parentCase.Status = 'Closed';
+                }else if (actElabManuale != null && 'Positivo'.equalsIgnoreCase(actElabManuale.ActivityOutcome__c)){
+                    parentCase.Phase__c = 'Documentazione validata';
+                    parentCase.Status = 'In Lavorazione';
+                }
             }
 
             HDT_UTL_DatabaseService.updateSObject(parentCase);
