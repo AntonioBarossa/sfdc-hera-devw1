@@ -10552,6 +10552,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DiscardAnnullmentRule__c.DiscardReason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DiscardAnnullmentRule__c.IsActive__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -40930,6 +40935,16 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_VotiveModena</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>DiscardAnnullmentRule__c.HDT_RT_Automatic</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>DiscardAnnullmentRule__c.HDT_RT_NotAutomatic</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
