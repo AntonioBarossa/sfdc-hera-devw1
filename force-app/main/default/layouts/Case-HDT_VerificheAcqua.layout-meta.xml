@@ -43,6 +43,14 @@
                 <behavior>Readonly</behavior>
                 <field>SupplyType__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PurificationInfoOnTheInvoice__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ParentId</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -413,6 +421,13 @@
         <fields>et4ae5__DateOpened__c</fields>
         <fields>et4ae5__Contact_ID__c</fields>
         <relatedList>et4ae5__IndividualEmailResult__c.CaseID__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CASES.CASE_NUMBER</fields>
+        <fields>CASES.TYPE</fields>
+        <fields>Phase__c</fields>
+        <fields>CASES.STATUS</fields>
+        <relatedList>RelatedChildCaseList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
