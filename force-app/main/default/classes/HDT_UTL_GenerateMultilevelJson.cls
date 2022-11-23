@@ -39,18 +39,18 @@ public with sharing class HDT_UTL_GenerateMultilevelJson {
         return;
     }    
 
-/**
-    * @description 
-    * Il metodo è generico, genera un Oggetto (mappa o array) da serializzare
-    * Questo oggetto viene costruito in base ai parametri passati nel costruttore
-    * 
-    * @author federico.defelice@webresults.it | 23-11-2022 
-    * @param Object> 
-    * @return Map<String, Object>
-**/
+    /**
+        * @description 
+        * Il metodo è generico, genera un Oggetto (mappa o array) da serializzare
+        * Questo oggetto viene costruito in base ai parametri passati nel costruttore
+        * 
+        * @author federico.defelice@webresults.it | 23-11-2022 
+        * @param void 
+        * @return Object (list or Map)
+    **/
     public Object generateObject(){
-        Map<String, Object> mapToCheck = appendToMap(new Map<String, Object>());//Mappa finale
-        return transformSublevelMap(mapToCheck);
+        Map<String, Object> mapToCheck = this.appendToMap(new Map<String, Object>());//Mappa finale
+        return this.transformSublevelMap(mapToCheck);
     }
 
     public Map<String, Object> generateMap(){
@@ -58,16 +58,23 @@ public with sharing class HDT_UTL_GenerateMultilevelJson {
         return appendToMap(rootMap);
     }
 
+    public String generateJson(){
+        Object objToSerialize = this.generateObject();
+        String jsonString = JSON.serializePretty(objToSerialize);
+        System.debug(jsonString);
+        return jsonString;
+    }
+
     /**
-    * @description 
-    * @author federico.defelice@webresults.it | 23-11-2022 
-    * @param rootMap 
-    * @return Map<String, Object> 
-    *
-    * This Method append values on a multilevel map. It has just one limitation, first level is always threated like a map
-    *
+        * @description 
+        * @author federico.defelice@webresults.it | 23-11-2022 
+        * @param rootMap 
+        * @return Map<String, Object> 
+        *
+        * This Method append values on a multilevel map. It has just one limitation, first level is always threated like a map
+        *
     **/
-    public Map<String, Object> appendToMap(Map<String, Object> rootMap){
+    private Map<String, Object> appendToMap(Map<String, Object> rootMap){
         for (String path : this.namesValues.keySet()) {
             HDT_WRP_Row row = new HDT_WRP_Row(path, namesValues.get(path));
             row.recursiveInsertKeyValuePairOnMap(rootMap);
@@ -75,13 +82,6 @@ public with sharing class HDT_UTL_GenerateMultilevelJson {
         //ora rootMap è ok, rimane da scorrerla per trasformare tutte le mappe con chiave intera in array
         checkMapForArrays(rootMap);
         return rootMap;
-    }
-
-    public String generateJson(){
-        Object objToSerialize = this.generateObject();
-        String jsonString = JSON.serializePretty(objToSerialize);
-        System.debug(jsonString);
-        return jsonString;
     }
 
     
@@ -121,7 +121,6 @@ public with sharing class HDT_UTL_GenerateMultilevelJson {
         }
         return transformingList;
     }
-
     
     /**
     * @description 
