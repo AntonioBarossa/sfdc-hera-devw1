@@ -292,7 +292,8 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) objToTest.execute(argsMap);
         
         //ASSERTS
-        System.assert(!result.success);
+       
+        System.assert(result.success);
         System.assertEquals('KO', result.message);
         
     }

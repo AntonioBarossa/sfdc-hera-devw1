@@ -243,7 +243,13 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 }else if ( ( oldActivity.type__c== 'Validazione Vocal Order' || oldActivity.type__c== 'Vocal Order non validato') && oldActivity.DiscardCount__c == 1){
                     newActivity.DiscardCount__c = 2;
                 }
-                activityCustomSrv.createRecord(newActivity);
+                /**@frpanico 2022-11-22 TK 910955C
+                 * L'activity Documenti non validati non deve essere creata
+                 */
+                if(newActivity.Type__c != null && newActivity.Type__c == 'Vocal Order non validato')
+                {
+                    activityCustomSrv.createRecord(newActivity);
+                }
                 res = 'Creata';  
                 activityCustomSrv.updateRecord(oldActivityToUpdate);
             }

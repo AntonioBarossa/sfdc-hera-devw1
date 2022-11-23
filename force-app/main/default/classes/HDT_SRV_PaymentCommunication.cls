@@ -60,7 +60,7 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
                 new Map<String, Object>{
                     'numeroBollettino' => document.Bill__c,
                     'numeroFattura' => document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : '',
-                    'numeroFattura1' => '',
+                    'numeroFattura1' => String.isNotBlank(document.Position1__c) ? 'ZKW' + document.Position1__c + document.Position2__c + document.Position3__c : '', //Revisione Incassi - SAP necessita dei numeri posizione concatenati nel caso di processo innescato da vista Paperless
                     'rataFattura' => 'RATEIZZAZIONI' == document.Type__c ? document.DocumentNumber__c : '',
                     'scadenza' => document.ExpirationDate__c,
                     'infoBlocco' => '',
