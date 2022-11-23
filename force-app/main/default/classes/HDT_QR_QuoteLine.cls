@@ -569,8 +569,10 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__Quote__c,
             SBQQ__Quote__r.Name,
             SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
-            ServicePoint__c,
-            ServicePoint__r.CommoditySector__c
+            SBQQ__Quote__r.ContractReference__r.Status,
+            SBQQ__Quote__r.ContractReference__r.AccountId,
+            ServicePoint__r.CommoditySector__c,
+            ServicePoint__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
