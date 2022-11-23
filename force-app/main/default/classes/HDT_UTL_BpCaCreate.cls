@@ -136,6 +136,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.marcaturaCliente = tryParse(infoOrder.Account.CustomerMarking__c);
         request.codiceFiscale = tryParse(infoOrder.Account.FiscalCode__c);
         request.partitaIva = tryParse(infoOrder.Account.VATNumber__c);
+        request.modelloCA = tryParse(infoOrder.Account.Category__c);
         request.indirizzo = generateAccountAddressBodyRequest(infoOrder);
         request.gruppoIva = generateAccountVatBodyRequest(infoOrder);
 
@@ -197,11 +198,11 @@ public with sharing class HDT_UTL_BpCaCreate
         request.codiceFiscale = tryParse(infoOrder.BillingProfile__r.BankAccountSignatoryFiscalCode__c);
         request.cin = tryParse(infoOrder.BillingProfile__r.IbanCIN__c);
         request.iban = tryParse(infoOrder.BillingProfile__r.IbanCountry__c);
-        request.cognome = tryParse(infoOrder.BillingProfile__r.IbanABI__c);
-        request.nome = tryParse(infoOrder.BillingProfile__r.IbanABI__c);
-        request.terminiPagamento = tryParse(infoOrder.BillingProfile__r.IbanABI__c);
-        request.metodoPagamento = tryParse(infoOrder.BillingProfile__r.IbanABI__c);
-        request.metodoPagamentoAlternativo = tryParse(infoOrder.BillingProfile__r.IbanABI__c);
+        request.cognome = tryParse(infoOrder.BillingProfile__r.BankAccountSignatoryLastName__c);
+        request.nome = tryParse(infoOrder.BillingProfile__r.BankAccountSignatoryFirstName__c);
+        request.terminiPagamento = tryParse(infoOrder.BillingProfile__r.PaymentConditions__c);
+        request.metodoPagamento = tryParse(infoOrder.BillingProfile__r.PaymentMethod__c);
+        request.metodoPagamentoAlternativo = '';//tryParse(infoOrder.BillingProfile__r.IbanABI__c);
 
         return request;
     }
