@@ -12,8 +12,9 @@
         
         workspaceAPI.getFocusedTabInfo()
             .then(function(response) {
+                let parentTabId = response.isSubtab ? response.parentTabId : response.tabId
                 workspaceAPI.openSubtab({
-                    parentTabId: response.parentTabId,
+                    parentTabId: parentTabId,
                     pageReference: {
                         type: 'standard__component',
                         attributes: { componentName: 'c__HDT_LCP_OpenCadastralViewLwc' },
