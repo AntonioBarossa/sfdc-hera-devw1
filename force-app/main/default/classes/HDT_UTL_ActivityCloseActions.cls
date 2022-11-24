@@ -149,11 +149,9 @@ public with sharing class HDT_UTL_ActivityCloseActions {
 
     @TestVisible
     private static HDT_WRP_Actions getOnCloseActions(Case selectedCase, wrts_prcgvr__Activity__c activity, String activityType){
-        String approved = activity.Approved__c;
+        String approved = activity.ActivityOutcome__c;
         String caseType = selectedCase.Type;
         activityType=STRING.isNotBlank(activityType)? activityType : ''; 
-
-        
 
         if(new set<String>{'Riduz. Superficie rifiuti spec promiscui', 'Formulari Richiesta Sconto', 'Sconti Collettivi Pap', 'Conferimento Centri di Raccolta'}.contains(caseType)) {
             if('Gestione Manuale SAP'.equalsIgnoreCase(activityType))   return new HDT_WRP_UpdateSobj('Completata');
