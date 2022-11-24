@@ -151,6 +151,7 @@ public inherited sharing class HDT_QR_OrderItem {
             Product2.ProductCode,
             Product2.Name,
             Product2.DescriptionSAP__c,
+            Product2.ReferenceMarket__c,
             VASBillingMode__c,
             SBQQ__QuoteLine__r.SBQQ__RequiredBy__c,
             SBQQ__QuoteLine__r.ServicePointLinkItem__r.ServicePoint__c,

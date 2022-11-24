@@ -370,7 +370,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.CommercialProduct__c = quoteLineList[0].SBQQ__Product__r.Name;
             orderToUpdate.VasServiceActivationDate__c = quoteLineList[0].DelayEffectiveDate__c;
             orderToUpdate.CommercialProductLink__c = quoteLineList[0].SBQQ__Product__c;//gabriele.rota@webresults.it - 01/10/2021
-            orderToUpdate.Market__c = quoteLineList[0].SBQQ__Product__r.ReferenceMarket__c;
         }
     }
     private static void alignPrimaryOrderProduct(Order orderToUpdate) {
@@ -386,6 +385,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.CommercialProduct__c = orderItemList[0].Product2.Name;
             orderToUpdate.VasServiceActivationDate__c = orderItemList[0].DelayEffectiveDate__c;
             orderToUpdate.CommercialProductLink__c = orderItemList[0].Product2Id;
+            orderToUpdate.Market__c = orderItemList[0].Product2.ReferenceMarket__c
         }
         
     }
