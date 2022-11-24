@@ -39,7 +39,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
 
         emailMessageList = new List<EmailMessage>();
         emailMessageList = HDT_QR_MailSender.getEmailMessage(recordId, 'Comunicazione dal gestore');
-        mailSenderMetaData.mailData.receiver = emailMessageList[0].ToAddress;//'daniele.montorselli@nttdata.com';
+        mailSenderMetaData.mailData.receiver = emailMessageList[0].ToAddress;
 
         emailMessageList = new List<EmailMessage>();
         emailMessageList = HDT_QR_MailSender.getEmailMessage(recordId, 'Sollecito');
@@ -220,17 +220,15 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             mailStructure = (HDT_WRP_MailSender.HDT_WRP_MailStructure)JSON.deserialize(mailStructureJson, HDT_WRP_MailSender.HDT_WRP_MailStructure.class);
 
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-            mail.setHtmlBody(mailStructure.bodyMail);
-            mail.setToAddresses(new String[]{mailStructure.toAddress});
-            mail.setOrgWideEmailAddressId(Id.valueOf(mailStructure.orgWideAddId));
 
             HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult caseResult;
 
             if(mailStructure.isReminder){
                 caseResult = updateReminderCase(mailStructure.caseId);
                 subjectString= 'Sollecito';
-                //mail.setInReplyTo('');
-                //SendEmail failed. First exception on row 0; first error: INVALID_MESSAGE_ID_REFERENCE, In-Reply-To header is not valid.: [In-Reply-To, 02s3N000002VHtsQAG] linea [232]
+                //mail.setInReplyTo('<ONJvc000000000000000000000000000000000000000000000RLOZZ300FWBbGuOPTAKjJrhrqaQJkA@sfdc.net>');
+                //mail.setReferences('<ONJvc000000000000000000000000000000000000000000000RLOZZ300FWBbGuOPTAKjJrhrqaQJkA@sfdc.net>');
+                //mail.setBccAddresses(new List<String>{''});
             } else {
                 subjectString= 'Comunicazione dal gestore';
                 caseResult = generateNewCase(mailStructure.caseId);
@@ -242,6 +240,9 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
                 }
             }
             
+            mail.setHtmlBody(mailStructure.bodyMail);
+            mail.setToAddresses(new String[]{mailStructure.toAddress});
+            mail.setOrgWideEmailAddressId(Id.valueOf(mailStructure.orgWideAddId));
             mail.setSubject(subjectString);
             mail.setWhatId(caseResult.caseId);
 			Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
