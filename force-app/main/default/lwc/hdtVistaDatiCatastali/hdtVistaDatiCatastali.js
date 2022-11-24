@@ -1,4 +1,5 @@
 import { LightningElement, api, wire } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getVistaDatiCatastali from '@salesforce/apexContinuation/HDT_UTL_LandRegistry.getVistaDatiCatastali';
 
 const COLUMNS = [
@@ -32,7 +33,8 @@ export default class HdtVistaDatiCatastali extends LightningElement {
     connectedCallback(){
         console.log('>>recordId:', this.recordId);
         console.log('>>sObjectType:', this.sObjectType);
-        if(this.recordId) {
+        if(this.recordId && this.sObjectType) {
+            this.title = 'Vista Dati Catastali - ' + SOBJ_LABELS[this.sObjectType];
             getVistaDatiCatastali({ recordId: this.recordId })
             .then( result => {
                 if(result.status){
@@ -48,11 +50,16 @@ export default class HdtVistaDatiCatastali extends LightningElement {
                             index++;
                         })
                         this.rows = finalRows;
-                        this.title = 'Vista Dati Catastali - ' + SOBJ_LABELS[this.sObjectType];
                         return;
                     }
                     if(result.response.status == 'failed'){
-                        return;
+                        const event = new ShowToastEvent({
+                            title: 'Errore',
+                            message: result.response.errorDetails[0].message,
+                            variant: 'error',
+                            mode: 'dismissable'
+                        });
+                        this.dispatchEvent(event);
                     }
                 }
                 console.error('Cannot read response!');

@@ -526,14 +526,14 @@
         <locationX>3129</locationX>
         <locationY>4526</locationY>
         <assignmentItems>
-            <assignToReference>Get_Input_Case.Phase__c</assignToReference>
+            <assignToReference>Get_Case_Aggiornato_1.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>PhaseDisattivazioni</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Input_Case.Status</assignToReference>
+            <assignToReference>Get_Case_Aggiornato_1.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
