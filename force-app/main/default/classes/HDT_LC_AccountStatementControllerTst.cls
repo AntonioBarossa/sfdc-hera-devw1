@@ -394,6 +394,26 @@ public class HDT_LC_AccountStatementControllerTst {
         Test.stopTest();
     }
 
+    @isTest
+    static void HDT_WRP_AccountStatement(){
+        HDT_WRP_AccountStatement.HDT_WRP_ConfTabObjDetail confTabObjDetail = new HDT_WRP_AccountStatement.HDT_WRP_ConfTabObjDetail();
+        confTabObjDetail.recordCode = '';
+        confTabObjDetail.customerCode = '';
+        confTabObjDetail.tabCode = '';
+        confTabObjDetail.hasSecondLevel = true;
+        confTabObjDetail.hasAmountField = true;
+        confTabObjDetail.secondLevelApiName = '';
+        confTabObjDetail.buttonList = new List<HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail>();
+    
+        HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail buttonObjDetail = new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail('', '', true, '', '');
+        HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail buttonObjDetail2 = new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail('', '', true, '', '', '');
+    
+        HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj columnsObj = new HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj();
+        columnsObj.success = true;
+        columnsObj.message = '';
+        columnsObj.confObj = new HDT_WRP_AccountStatement.HDT_WRP_ConfTabObjDetail();
+    
+    }
 
     public class HDT_LC_AccountStatementControllerTstMockFail implements HttpCalloutMock{
         HttpResponse response;

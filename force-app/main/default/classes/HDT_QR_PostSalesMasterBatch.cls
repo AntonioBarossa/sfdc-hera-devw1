@@ -145,6 +145,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         FROM Case
         WHERE Phase__c = :this.bozzaCase
         AND Cluster__c != : this.autoletturaCase
+        AND Type != 'Contenitore Morosità'
         AND CreatedDate < :limitDate
         WITH SECURITY_ENFORCED
         ];
@@ -204,7 +205,8 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         SupplyType__c,
         AnnualConsumption__c,
         CaliberAvailable__c,
-        CausalCode__c
+        CausalCode__c,
+        Order__r.EffectiveDate__c
         FROM Case
         WHERE Type = 'Voltura Tecnica'
         AND Phase__c = 'In attesa Data Decorrenza'

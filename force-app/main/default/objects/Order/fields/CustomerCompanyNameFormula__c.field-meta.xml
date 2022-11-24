@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CustomerCompanyNameFormula__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( CustomerVATNumber__c !=&apos;&apos; ,  CustomerCompanyName__c ,  CustomerLastName__c + &quot; &quot; +  CustomerName__c )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Ragione Sociale Formula</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

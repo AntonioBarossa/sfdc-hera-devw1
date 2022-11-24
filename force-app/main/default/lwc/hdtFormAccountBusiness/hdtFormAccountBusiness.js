@@ -106,51 +106,59 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
 
     inizializeInit(){
         checkRole({}).then((response) => {
+            let key = '';
             if(response == 'HDT_BackOffice'){
                 this.showCompanyOwner = false;
             }else if(response == 'HDT_FrontOffice_HERACOMM'){
                 this.companyDefault = 'HERA COMM';
                 this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
-                let key = this.customerData.controllerValues['HERA COMM'];
-                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                key = this.customerData.controllerValues['HERA COMM'];
+                //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }else if(response == 'HDT_FrontOffice_Reseller'){
                 this.companyDefault = 'Reseller';
                 this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
-                let key = this.customerData.controllerValues['Reseller'];
-                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                key = this.customerData.controllerValues['Reseller'];
+                //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }
             else if(response == 'HDT_FrontOffice_MMS'){
                 this.companyDefault = 'MMS';
                 this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
-                let key = this.customerData.controllerValues['MMS'];
-                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                key = this.customerData.controllerValues['MMS'];
+                //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }
             else if(response == 'HDT_FrontOffice_AAAEBT'){
                 this.companyDefault = 'AAA-EBT';
                 this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
-                let key = this.customerData.controllerValues['AAA-EBT'];
-                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                key = this.customerData.controllerValues['AAA-EBT'];
+                //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }
             else{
                 this.companyDefault = 'HERA COMM';
                 this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
-                let key = this.customerData.controllerValues['HERA COMM'];
-                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                key = this.customerData.controllerValues['HERA COMM'];
+                //this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }
-            this.filterMarkingOptions();
-
+            //this.filterMarkingOptions();
+            this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
         });
     }
 
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOM_MARKING })
     customerGetMarkingOptions({error, data}) {
         if (data){
-            this.customerData = data;
+            try{
+                this.customerData = {
+                    "controllerValues" : data.controllerValues,
+                    "values" : data.values.filter(element => !(new RegExp("D[0-9] - ").test(element.value)))
+                };
+            }catch(err){
+                console.log('@@@@@@error ' + JSON.stringify(err));
+            }
         }
     };
 
@@ -225,13 +233,13 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     handleCompanyOwnerChange(event) {
         
         let key = this.customerData.controllerValues[event.target.value];
-        this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
-        this.filterMarkingOptions();
+        //this.filterMarkingOptions();
         this.companyPicklist(event.target.value);
+        this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
         this.markingValue = '';
         this.categoryValue = '';
     }
-    filterMarkingOptions(){
+    /* filterMarkingOptions(){
         var customMarkingOptions=[];
         this.customerMarkingOptions.forEach(function callbackFn(element, index) {
             var arrayToRemove=[];
@@ -245,10 +253,9 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 customMarkingOptions.push(element);
             }
             
-            
         })        
         this.customerMarkingOptions=customMarkingOptions;
-    }
+    } */
     handleCustomerChange(event) {
         let key = this.categoryData.controllerValues[event.target.value];
         this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
@@ -411,6 +418,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 this.fieldsToUpdate['BillingIsAddressVerified__c'] = this.accountAddress['Flag Verificato'];
                 this.isVerified = this.accountAddress['Flag Verificato'];
             }
+            if(this.accountAddress['Indirizzo Estero'] === true)
+            {
+                this.fieldsToUpdate['BillingAddressIsForeign__c'] = true;
+                this.fieldsToUpdate['BillingIsAddressVerified__c'] = true;
+                this.isVerified = true;
+            }
         }
     }
     //HRAWRM-933 Start 08/11/2021
@@ -455,7 +468,11 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             if(this.contactAddress['Flag Verificato'] !=null){
                 this.fieldsToUpdateContact['MailingIsAddressVerified__c'] = this.contactAddress['Flag Verificato'];
                 this.isVerified2 = this.contactAddress['Flag Verificato'];
-                
+            }
+            if(this.contactAddress['Indirizzo Estero'] === true)
+            {
+                this.fieldsToUpdateContact['MailingIsAddressVerified__c'] = true;
+                this.isVerified2 = true;
             }
         }
     }
@@ -531,17 +548,17 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         if(fiscalCode.value != null && fiscalCode.value != undefined && fiscalCode.value != '')
             fiscalCodeToUC = fiscalCode.value.toUpperCase();
         if(firstName.value != null && firstName.value != undefined && firstName.value != '')
-            firstNameToUC = firstName.value.toUpperCase();
+            firstNameToUC = firstName.value.toUpperCase().trim();
         if(lastName.value != null && lastName.value != undefined && lastName.value != '')
-            lastNameToUC = lastName.value.toUpperCase();
+            lastNameToUC = lastName.value.toUpperCase().trim();
         if(this.personFiscalCode.value != null && this.personFiscalCode.value != undefined && this.personFiscalCode.value != '')
             personFiscalCodeToUC = this.personFiscalCode.value.toUpperCase();
         if(this.birthPlace != null && this.birthPlace != undefined && this.birthPlace != '')
             birthPlaceToUC = this.birthPlace.toUpperCase();
         if(firstIndividualName.value != null && firstIndividualName.value != undefined && firstIndividualName.value != '')
-            firstIndividualNameToUC = firstIndividualName.value.toUpperCase();
+            firstIndividualNameToUC = firstIndividualName.value.toUpperCase().trim();
         if(lastIndividualName.value != null && lastIndividualName.value != undefined && lastIndividualName.value != '')
-            lastIndividualNameToUC = lastIndividualName.value.toUpperCase();
+            lastIndividualNameToUC = lastIndividualName.value.toUpperCase().trim();
         console.log('businessNameToUC --> '+businessNameToUC);
         console.log('fiscalCodeToUC --> '+fiscalCodeToUC);
         console.log('firstNameToUC --> '+firstNameToUC);
@@ -646,6 +663,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             if(mobilePhone.value.length<9 || mobilePhone.value.length > 10){
                 isValidated=false;
                 messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre!";
+            }
+            if( String(mobilePhone.value).charAt(0)!='3' ){
+                isValidated=false;
+                messageError=" Il numero di cellulare deve iniziare con il numero 3!";
             }
         }
         if(!(mobilephoneNumber.value=== undefined || mobilephoneNumber.value.trim()==='')){

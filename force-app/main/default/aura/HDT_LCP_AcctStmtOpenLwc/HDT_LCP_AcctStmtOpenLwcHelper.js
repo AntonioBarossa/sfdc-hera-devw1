@@ -78,7 +78,7 @@
         console.log('>>> processType: ' + paramObj.processType);
         console.log('>>> recordTypeName: ' + paramObj.recordTypeName);
         console.log('>>> flowName: ' + paramObj.flowName);
-
+        console.log('>>> documentPaymentMethod: ' + paramObj.documentPaymentMethod);
         //var accountId = component.get("v.recordId");
         var workspaceAPI = component.find("workspace");
 
@@ -99,7 +99,8 @@
                         c__processType: paramObj.processType,
                         c__recordTypeName: paramObj.recordTypeName,
                         c__flowName: paramObj.flowName,
-                        c__createDocuments: paramObj.createDocuments
+                        c__createDocuments: paramObj.createDocuments,
+                        c__documentPaymentMethod: paramObj.documentPaymentMethod
                     }
                 }
             });

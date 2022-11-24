@@ -9,27 +9,42 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
     private static Set<String> dynamicWorkGroupChannels = new Set<String> {
         'Assistente web',
         'Back office',
-        'Consip ',
+        'Consip',
         'PA',
         'Protocollo',
         'ServiziSociali',
         'Staff',
         'Supporto agenzie',
         'Supporto GDA',
-        'Back office Vendita ',
+        'Back office Vendita',
         'Back office Teleselling'
     };
 
+    @AuraEnabled
+    public static List<String> getPickListValuesIntoList(){
+        
+        List<Queue__c> queueList = [SELECT Id, Agency2__c FROM Queue__c WITH SECURITY_ENFORCED ORDER BY Agency2__c ASC];
+        List<String> agencyValues = new List<String>();
+        
+        for(Queue__c q : queueList){
+            if(!agencyValues.contains(q.Agency2__c))
+                agencyValues.add(q.Agency2__c);
+        }
+        
+        return agencyValues;
+     }
+
 
     @AuraEnabled
-    public static List<Map<String,String>> getWorkGroups(String queryString) {
+    public static List<Map<String,String>> getWorkGroups(String queryString, String agency) {
         queryString = '%' + queryString + '%';
         List<Map<String,String>> results = new List<Map<String,String>>();
 
-        for(AggregateResult result : [SELECT WorkGroup__c, Agency2__c FROM Queue__c WHERE WorkGroup__c LIKE :queryString WITH SECURITY_ENFORCED GROUP BY WorkGroup__c, Agency2__c]) {
+        for(AggregateResult result : [SELECT WorkGroup__c, Agency2__c FROM Queue__c WHERE WorkGroup__c LIKE :queryString AND Agency2__c =: agency WITH SECURITY_ENFORCED GROUP BY WorkGroup__c, Agency2__c]) {
             results.add(new Map<String,String>{
                 'name' => (String) result.get('WorkGroup__c'),
-                'agency' => (String) result.get('Agency2__c')
+                'agency' => (String) result.get('Agency2__c'),
+                'displayname' => (String) result.get('WorkGroup__c') + ' - ' +(String) result.get('Agency2__c')
             });
         }
 

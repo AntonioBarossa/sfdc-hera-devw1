@@ -3,6 +3,7 @@
 * Risoluzione "Debug Should Use Logging Level"
 * Risoluzione "Avoid debug statements since they impact on performance"
 */
+
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_PostSalesManager{
 
@@ -11,6 +12,13 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     private HDT_QR_Order orderQr = new HDT_QR_Order();
     private HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
     private HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+
+    private final Map<String,String> APPOINTMENT_METHOD = new Map<String,String>{
+        'Consegna copia chiave GdM' => 'ConsegnaCopiaChiaveGdM',
+        'Sost. contatore cliente' => 'Sost.Contatorec/cliente',
+        'Verifica GDM' => 'VerificaGdM',
+        'Verifica Tensione - Pressione' => 'VerificaPressione'
+    };
 
     public void changeCaseValue(Sobject inputCase){
 
@@ -129,7 +137,9 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 acc.BillingCity = currentCase.BillingCity__c;
                 acc.BillingCityCode__c = currentCase.BillingCityCode__c;
                 acc.BillingCountry = currentCase.BillingCountry__c;
-                acc.BillingIsAddressVerified__c = currentCase.BillingIsAddressVerified__c;
+                /* Gestione indirizzo Estero */
+                Boolean isAddressVerified = (currentCase.BillingCountry__c != null && currentCase.BillingCountry__c.equalsIgnoreCase('Italia')) ? currentCase.BillingIsAddressVerified__c : true;
+                acc.BillingIsAddressVerified__c = isAddressVerified;
                 acc.BillingPlace__c = currentCase.BillingPlace__c;
                 acc.BillingPostalCode = currentCase.BillingPostalCode__c;
                 acc.BillingState = currentCase.BillingProvince__c;
@@ -398,7 +408,22 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     }
 
     public void sendDocumentFile(SObject inputRecord){
+
+
         Id recordId = (Id)inputRecord.get('Id');
+        
+
+        if('Verifiche'.equalsIgnoreCase((String)inputRecord.get('Cluster__c')) && 
+            APPOINTMENT_METHOD.containsKey((String)inputRecord.get('Type'))){
+
+            Map<String, Object> inputMap = new Map<String,Object>();
+            HDT_UTL_GestAppAutomaticCreationCase gestAppAutomaticCreationCase = new HDT_UTL_GestAppAutomaticCreationCase();
+        
+            inputMap.put('method', APPOINTMENT_METHOD.get((String)inputRecord.get('Type')));
+            inputMap.put('sender', new Case(Id = (Id)inputRecord.get('Id')));
+            gestAppAutomaticCreationCase.execute(inputMap);
+         }
+
         if(recordId.getSobjectType().getDescribe().getName() == 'Order')
         {
             recordId = (Id)inputRecord.get('ParentOrder__c');
@@ -478,6 +503,21 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         {
             currentCase.ContractAccountCode__c = billingProfiles[0].ContractAccountCode__c;
         }
+    }
+
+    public void advanceInstallmentPlan(SObject inputCase)
+    {
+        Case currentCase = (Case) inputCase;
+        if(currentCase.TypeInstallmentPlan__c.equalsIgnoreCase('Personalizzato') && (currentCase.InstallmentNumberRequired__c > 3 || currentCase.AmountToPayInInstallments__c > 2000 || currentCase.Reason__c.containsIgnoreCase('Disoccupato/Cassintegrato')))
+        {
+            currentCase.Phase__c = 'Attesa Modulo Firmato';
+        }
+    }
+
+    public void submitForApproval(SObject inputCase)
+    {
+        Case currentCase = (Case) inputCase;
+        System.enqueueJob(new HDT_QBL_VoltureChangeManager(new List<Case>{currentCase}));
     }
 
     @Future

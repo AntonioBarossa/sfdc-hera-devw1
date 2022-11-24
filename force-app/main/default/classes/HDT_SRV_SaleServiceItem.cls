@@ -64,8 +64,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     public SaleServiceItem__c createRecord(ServicePoint__c servicePoint, Sale__c sale, Map<String,String> extraParams){
 
         //Get servicePoint data start
-        servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
-        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SalesCompanyCode__c,Vendor__c,SwitchInWinback__c,ServicePointCode__c,SupplyType__c,SupplyTypeTemp__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c, isReseller__c');
+        servicePointSrv.checkReadAccess('SapContractStatus__c,ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
+        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SapContractStatus__c,SalesCompanyCode__c,Vendor__c,SwitchInWinback__c,ServicePointCode__c,SupplyType__c,SupplyTypeTemp__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c, isReseller__c');
         servicePoint = existingServicePoint[0];
         //Get servicePoint data end
 
@@ -172,6 +172,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
             );
         }
         else {
+            Boolean isActiveContrat = servicePoint.SapContractStatus__c != null && servicePoint.SapContractStatus__c.equalsIgnoreCase('Attivo');
+
             Opportunity newOpportunity = opportunityService.createRecord(new Opportunity(
                 Sale__c = sale.Id,
                 Name = opportunityService.generateName(sale),
@@ -187,8 +189,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 SBQQ__Account__c = sale.Account__c,
                 SBQQ__Primary__c = true,
                 Agency__c = sale.agency__c,
-                salesCompany__c = servicePoint.Vendor__c != null && String.isNotBlank(servicePoint.Vendor__c) ? servicePoint.Vendor__c : agc.get('nomeAgente'),
-                salesCompanyCode__c = servicePoint.SalesCompanyCode__c != null && String.isNotBlank(servicePoint.SalesCompanyCode__c) ? servicePoint.SalesCompanyCode__c : agc.get('codiceAgente'),
+                salesCompany__c = servicePoint.Vendor__c != null && String.isNotBlank(servicePoint.Vendor__c) && isActiveContrat? servicePoint.Vendor__c : agc.get('nomeAgente'),
+                salesCompanyCode__c = servicePoint.SalesCompanyCode__c != null && String.isNotBlank(servicePoint.SalesCompanyCode__c) && isActiveContrat ? servicePoint.SalesCompanyCode__c : agc.get('codiceAgente'),
                 //Market__c = servicePoint.MarketOrigin__c, // TODO WAVE 3: gestire altri tipi di mercato.
                 Market__c = 'Libero',
                 Channel__c = sale.Channel__c,
@@ -253,7 +255,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         if(!servicePoint.SwitchInWinback__c){
             servicePointSrv.updateRecord(new ServicePoint__c(
                 Id = servicePoint.Id,
-                SwitchInWinback__c = HDT_UTL_Sales.isWinback(servicePoint.Id)
+                SwitchInWinback__c = HDT_UTL_Sales.isWinback(servicePoint.Id, servicePoint.ServicePointCode__c)
             ));
         }
         //winback check end

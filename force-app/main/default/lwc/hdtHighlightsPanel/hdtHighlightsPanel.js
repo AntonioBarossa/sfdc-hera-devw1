@@ -7,7 +7,7 @@ const fields = [
     //'ActiveCampaigns__c', // sostituito con lwc c-hdt-account-highlight-panel
     'SatisfactionIndex__c',
     'RecallerFormula__c',
-    'CreditFormula__c',
+    //'CreditFormula__c', // fix 903689C
     'ComplaintRateFormula__c',
 ];
 

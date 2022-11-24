@@ -221,6 +221,11 @@
         <label>Documentale/Copia contratto firmato o non ricevuto</label>
     </customValue>
     <customValue>
+        <fullName>Doppi pagamenti/Incassi</fullName>
+        <default>false</default>
+        <label>Doppi pagamenti/Incassi</label>
+    </customValue>
+    <customValue>
         <fullName>Doppi pagamenti/Incassi - EE</fullName>
         <default>false</default>
         <label>Doppi pagamenti/Incassi - EE</label>
@@ -454,6 +459,11 @@
         <fullName>Processo VS2 - Trasmissione Dati Cliente Finale SII - EE</fullName>
         <default>false</default>
         <label>Processo VS2 - Trasmissione Dati Cliente Finale SII - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Promessa di Pagamento Ente</fullName>
+        <default>false</default>
+        <label>Promessa di Pagamento Ente</label>
     </customValue>
     <customValue>
         <fullName>Proroga connessione temporanea - EE</fullName>

@@ -3,12 +3,12 @@
     <actionCalls>
         <name>Conferma_Indennizzo</name>
         <label>Conferma Indennizzo</label>
-        <locationX>776</locationX>
-        <locationY>326</locationY>
+        <locationX>1565</locationX>
+        <locationY>253</locationY>
         <actionName>HDT_SRV_IndemnityConfirmation</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Indennizzo_Confermato</targetReference>
+            <targetReference>Contenitore</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -21,6 +21,18 @@
             <name>firstLevel</name>
             <value>
                 <elementReference>GetInputCase.FirstLevelComplaintClassification__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>isContainer</name>
+            <value>
+                <elementReference>GetInputCase.IsContainer__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>note</name>
+            <value>
+                <elementReference>GetInputCase.Note__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -46,7 +58,7 @@
     <actionCalls>
         <name>GetCaseContenuti</name>
         <label>GetCaseContenuti</label>
-        <locationX>1142</locationX>
+        <locationX>1494</locationX>
         <locationY>1335</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
@@ -75,7 +87,7 @@
     <assignments>
         <name>AggiornaFase</name>
         <label>AggiornaFase</label>
-        <locationX>776</locationX>
+        <locationX>1128</locationX>
         <locationY>1142</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
@@ -91,7 +103,7 @@
     <assignments>
         <name>Assegna_a_Collection</name>
         <label>Assegna a Collection</label>
-        <locationX>816</locationX>
+        <locationX>1168</locationX>
         <locationY>2001</locationY>
         <assignmentItems>
             <assignToReference>CaseCollection</assignToReference>
@@ -114,7 +126,7 @@
     <assignments>
         <name>Assegna_a_collection_0</name>
         <label>Assegna a collection</label>
-        <locationX>1642</locationX>
+        <locationX>1994</locationX>
         <locationY>1364</locationY>
         <assignmentItems>
             <assignToReference>CaseCollectionRIspostaInviata</assignToReference>
@@ -130,7 +142,7 @@
     <assignments>
         <name>Assegna_Indennizzo_Confermato</name>
         <label>Assegna Indennizzo Confermato</label>
-        <locationX>644</locationX>
+        <locationX>996</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.IndemnityConfirmed__c</assignToReference>
@@ -146,7 +158,7 @@
     <assignments>
         <name>Assegna_Indennizzo_Confermato_0</name>
         <label>Assegna Indennizzo Confermato</label>
-        <locationX>908</locationX>
+        <locationX>1260</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.IndemnityConfirmed__c</assignToReference>
@@ -160,10 +172,56 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Societa_di_Vendita</name>
+        <label>Assegna Societa di Vendita</label>
+        <locationX>50</locationX>
+        <locationY>1229</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetSocietaVendita.SellerCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SalesCompanyCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetSocietaVendita.SalesCompanyCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaInputCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Societa_di_Vendita_0</name>
+        <label>Assegna Societa di Vendita</label>
+        <locationX>290</locationX>
+        <locationY>1226</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetSocietaVendita_0.SellerCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SalesCompanyCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetSocietaVendita_0.SalesCompanyCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaInputCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaActivityToLoop</name>
         <label>AssegnaActivityToLoop</label>
-        <locationX>713</locationX>
-        <locationY>1898</locationY>
+        <locationX>912</locationX>
+        <locationY>1959</locationY>
         <assignmentItems>
             <assignToReference>ActivityToLoop</assignToReference>
             <operator>Assign</operator>
@@ -178,7 +236,7 @@
     <assignments>
         <name>AssegnaCase</name>
         <label>AssegnaCase</label>
-        <locationX>721</locationX>
+        <locationX>1073</locationX>
         <locationY>1435</locationY>
         <assignmentItems>
             <assignToReference>CaseToLoop</assignToReference>
@@ -194,7 +252,7 @@
     <assignments>
         <name>AssegnaCase_0</name>
         <label>AssegnaCase</label>
-        <locationX>1168</locationX>
+        <locationX>1520</locationX>
         <locationY>1535</locationY>
         <assignmentItems>
             <assignToReference>CaseToLoop</assignToReference>
@@ -203,14 +261,34 @@
                 <elementReference>AggiornamentoChildCases</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
         <connector>
             <targetReference>GestioneIndennizzi</targetReference>
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaCaseToLoop</name>
+        <label>AssegnaCaseToLoop</label>
+        <locationX>1275</locationX>
+        <locationY>1941</locationY>
+        <assignmentItems>
+            <assignToReference>CaseCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>CaseToLoop</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ToLoop_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaFase</name>
         <label>AssegnaFase</label>
-        <locationX>454</locationX>
+        <locationX>806</locationX>
         <locationY>1665</locationY>
         <assignmentItems>
             <assignToReference>CaseToLoop.Phase__c</assignToReference>
@@ -233,7 +311,7 @@
     <assignments>
         <name>AssegnaFase_0</name>
         <label>AssegnaFase</label>
-        <locationX>776</locationX>
+        <locationX>1128</locationX>
         <locationY>1742</locationY>
         <assignmentItems>
             <assignToReference>CaseToLoop.Phase__c</assignToReference>
@@ -256,8 +334,8 @@
     <assignments>
         <name>AssegnaFase_0_0</name>
         <label>AssegnaFase</label>
-        <locationX>1040</locationX>
-        <locationY>1742</locationY>
+        <locationX>1333</locationX>
+        <locationY>1838</locationY>
         <assignmentItems>
             <assignToReference>CaseToLoop.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -266,13 +344,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Assegna_a_Collection</targetReference>
+            <targetReference>GetActivityPraticaGestita</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssegnaFase_1</name>
         <label>AssegnaFase</label>
-        <locationX>1513</locationX>
+        <locationX>1865</locationX>
         <locationY>1287</locationY>
         <assignmentItems>
             <assignToReference>LoopToUpdateInRIspostaInviata.Phase__c</assignToReference>
@@ -288,7 +366,7 @@
     <assignments>
         <name>AssegnaFlagToLoop</name>
         <label>AssegnaFlagToLoop</label>
-        <locationX>1268</locationX>
+        <locationX>1620</locationX>
         <locationY>1229</locationY>
         <assignmentItems>
             <assignToReference>ToLoop</assignToReference>
@@ -304,8 +382,8 @@
     <assignments>
         <name>AssegnaStatoActivity</name>
         <label>AssegnaStatoActivity</label>
-        <locationX>621</locationX>
-        <locationY>2006</locationY>
+        <locationX>837</locationX>
+        <locationY>2055</locationY>
         <assignmentItems>
             <assignToReference>ActivityToLoop.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -362,13 +440,6 @@
                 <elementReference>$User.LoginChannel__c</elementReference>
             </value>
         </assignmentItems>
-        <!--assignmentItems>
-            <assignToReference>ActivityToLoop.Place__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Station__c</elementReference>
-            </value>
-        </assignmentItems-->
         <connector>
             <targetReference>Assegna_a_Collection</targetReference>
         </connector>
@@ -376,7 +447,7 @@
     <assignments>
         <name>AssegnaToLoop</name>
         <label>AssegnaToLoop</label>
-        <locationX>1542</locationX>
+        <locationX>1894</locationX>
         <locationY>1952</locationY>
         <assignmentItems>
             <assignToReference>ToLoop</assignToReference>
@@ -392,7 +463,7 @@
     <assignments>
         <name>AssignSize</name>
         <label>AssignSize</label>
-        <locationX>1046</locationX>
+        <locationX>1398</locationX>
         <locationY>150</locationY>
         <assignmentItems>
             <assignToReference>LinkInputSize</assignToReference>
@@ -402,13 +473,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Contenitore</targetReference>
+            <targetReference>Conferma_Indennizzo</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>CountContentDocumentLinkAfter</name>
         <label>CountContentDocumentLinkAfter</label>
-        <locationX>1413</locationX>
+        <locationX>1765</locationX>
         <locationY>911</locationY>
         <assignmentItems>
             <assignToReference>ContentDocumentLinkAfter</assignToReference>
@@ -422,12 +493,44 @@
         </connector>
     </assignments>
     <decisions>
+        <name>ActivityTrovata</name>
+        <label>ActivityTrovata</label>
+        <locationX>1030</locationX>
+        <locationY>1901</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaCaseToLoop</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Found</defaultConnectorLabel>
+        <rules>
+            <name>ActivityFound</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetActivityPraticaGestita</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetActivityPraticaGestita</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaActivityToLoop</targetReference>
+            </connector>
+            <label>ActivityFound</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Contenitore</name>
         <label>Contenitore?</label>
-        <locationX>1068</locationX>
-        <locationY>267</locationY>
+        <locationX>1412</locationX>
+        <locationY>347</locationY>
         <defaultConnector>
-            <targetReference>Conferma_Indennizzo</targetReference>
+            <targetReference>Indennizzo_Confermato</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>StandAlone</defaultConnectorLabel>
         <rules>
@@ -449,7 +552,7 @@
     <decisions>
         <name>Contenitore_1</name>
         <label>Contenitore?</label>
-        <locationX>1012</locationX>
+        <locationX>1364</locationX>
         <locationY>1168</locationY>
         <defaultConnector>
             <targetReference>AggiornaFase</targetReference>
@@ -474,7 +577,7 @@
     <decisions>
         <name>Creazione_Activity</name>
         <label>Creazione Activity?</label>
-        <locationX>1356</locationX>
+        <locationX>1708</locationX>
         <locationY>1052</locationY>
         <defaultConnector>
             <targetReference>Contenitore_1</targetReference>
@@ -499,7 +602,7 @@
     <decisions>
         <name>Indennizzo_Confermato</name>
         <label>Indennizzo Confermato?</label>
-        <locationX>776</locationX>
+        <locationX>1128</locationX>
         <locationY>446</locationY>
         <defaultConnector>
             <targetReference>Assegna_Indennizzo_Confermato_0</targetReference>
@@ -524,7 +627,7 @@
     <decisions>
         <name>Quale_Fase</name>
         <label>Quale Fase</label>
-        <locationX>776</locationX>
+        <locationX>1128</locationX>
         <locationY>1624</locationY>
         <defaultConnector>
             <targetReference>AssegnaFase_0_0</targetReference>
@@ -605,9 +708,105 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Record_Trovato</name>
+        <label>Record Trovato</label>
+        <locationX>291</locationX>
+        <locationY>867</locationY>
+        <defaultConnector>
+            <targetReference>GetSocietaVendita_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Trovato</defaultConnectorLabel>
+        <rules>
+            <name>Trovato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCity</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCity</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SDV_valorizzata</targetReference>
+            </connector>
+            <label>Trovato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>SDV_valorizzata</name>
+        <label>SDV valorizzata?</label>
+        <locationX>152</locationX>
+        <locationY>970</locationY>
+        <defaultConnector>
+            <targetReference>GetSocietaVendita_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Valorizzata</defaultConnectorLabel>
+        <rules>
+            <name>Valorizzata_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCity.SDV__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCity.SDV__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetSocietaVendita</targetReference>
+            </connector>
+            <label>Valorizzata</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Societa_di_Vendita_Non_Valorizzata</name>
+        <label>Societa di Vendita Non Valorizzata?</label>
+        <locationX>866</locationX>
+        <locationY>818</locationY>
+        <defaultConnector>
+            <targetReference>GetCity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Valorizzata</defaultConnectorLabel>
+        <rules>
+            <name>Valorizzata</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.SalesCompany__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.SalesCompany__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetCaseAggiornato</targetReference>
+            </connector>
+            <label>Valorizzata</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>ToLoop_0</name>
         <label>ToLoop?</label>
-        <locationX>1141</locationX>
+        <locationX>1493</locationX>
         <locationY>1998</locationY>
         <defaultConnector>
             <targetReference>AggiornaActivityCollection</targetReference>
@@ -630,12 +829,17 @@
         </rules>
     </decisions>
     <description>Flow che simula l&apos;azione del tasto stampa e gestisce l&apos;avanzamento di fase</description>
+    <formulas>
+        <name>ServiceGas</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(TEXT({!GetInputCase.ServicePoint__r.CommoditySector__c}) = &quot;Gas&quot;, true, false)</expression>
+    </formulas>
     <interviewLabel>Gestione Reclami - Stampa (SIMULAZIONE) {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Reclami - Stampa</label>
     <loops>
         <name>AggiornamentoChildCases</name>
         <label>AggiornamentoChildCases</label>
-        <locationX>1384</locationX>
+        <locationX>1736</locationX>
         <locationY>1567</locationY>
         <collectionReference>CaseCollectionApex</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -649,7 +853,7 @@
     <loops>
         <name>LoopToUpdateInRIspostaInviata</name>
         <label>LoopToUpdateInRIspostaInviata</label>
-        <locationX>1372</locationX>
+        <locationX>1724</locationX>
         <locationY>1330</locationY>
         <collectionReference>CaseCollectionApex</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -682,7 +886,7 @@
     <recordCreates>
         <name>CreateActivity</name>
         <label>CreateActivity</label>
-        <locationX>1668</locationX>
+        <locationX>2020</locationX>
         <locationY>1203</locationY>
         <connector>
             <targetReference>Contenitore_1</targetReference>
@@ -717,11 +921,11 @@
     <recordLookups>
         <name>GetActivityPraticaGestita</name>
         <label>GetActivityPraticaGestita</label>
-        <locationX>552</locationX>
+        <locationX>904</locationX>
         <locationY>1822</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AssegnaActivityToLoop</targetReference>
+            <targetReference>ActivityTrovata</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -738,6 +942,13 @@
                 <stringValue>Aperta</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>In gestione</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>wrts_prcgvr__Activity__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -745,7 +956,7 @@
     <recordLookups>
         <name>GetActivityTemplate</name>
         <label>GetActivityTemplate</label>
-        <locationX>1493</locationX>
+        <locationX>1845</locationX>
         <locationY>1124</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -766,7 +977,7 @@
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>776</locationX>
+        <locationX>1128</locationX>
         <locationY>902</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -787,7 +998,7 @@
     <recordLookups>
         <name>GetCaseInviato</name>
         <label>GetCaseInviato</label>
-        <locationX>622</locationX>
+        <locationX>974</locationX>
         <locationY>1321</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -806,9 +1017,47 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetCity</name>
+        <label>GetCity</label>
+        <locationX>441</locationX>
+        <locationY>780</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Record_Trovato</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>GetCaseAggiornato</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__r.SupplyCity__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ServiceEle__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ServiceGas__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ServiceGas</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>City__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetContentDocumentLinkAfter</name>
         <label>GetContentDocumentLinkAfter</label>
-        <locationX>1254</locationX>
+        <locationX>1606</locationX>
         <locationY>824</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -829,7 +1078,7 @@
     <recordLookups>
         <name>GetContentDocumentLinkInput</name>
         <label>GetContentDocumentLinkInput</label>
-        <locationX>916</locationX>
+        <locationX>1268</locationX>
         <locationY>104</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -850,7 +1099,7 @@
     <recordLookups>
         <name>GetInputCase</name>
         <label>Get Input Case</label>
-        <locationX>781</locationX>
+        <locationX>1133</locationX>
         <locationY>152</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -868,20 +1117,110 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetSocietaVendita</name>
+        <label>GetSocietaVendita</label>
+        <locationX>56</locationX>
+        <locationY>1097</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Societa_di_Vendita</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>GetCaseAggiornato</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Comune__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCity.SDV__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Marcatura__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>ALTRO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>distributor__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>ALTRO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Service__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__r.CommoditySector__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_MatriceSocietaVendita__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetSocietaVendita_0</name>
+        <label>GetSocietaVendita</label>
+        <locationX>300</locationX>
+        <locationY>1108</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Societa_di_Vendita_0</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>GetCaseAggiornato</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Comune__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>ALTRO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Marcatura__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>ALTRO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>distributor__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>ALTRO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Service__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__r.CommoditySector__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_MatriceSocietaVendita__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
-        <locationX>776</locationX>
+        <locationX>1128</locationX>
         <locationY>782</locationY>
         <connector>
-            <targetReference>GetCaseAggiornato</targetReference>
+            <targetReference>Societa_di_Vendita_Non_Valorizzata</targetReference>
         </connector>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaActivityCollection</name>
         <label>AggiornaActivityCollection</label>
-        <locationX>1095</locationX>
+        <locationX>1447</locationX>
         <locationY>2173</locationY>
         <connector>
             <targetReference>AggiornaCases</targetReference>
@@ -894,7 +1233,7 @@
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
-        <locationX>776</locationX>
+        <locationX>1128</locationX>
         <locationY>1262</locationY>
         <connector>
             <targetReference>GetCaseInviato</targetReference>
@@ -904,24 +1243,34 @@
     <recordUpdates>
         <name>AggiornaCases</name>
         <label>AggiornaCases</label>
-        <locationX>1103</locationX>
+        <locationX>1455</locationX>
         <locationY>2376</locationY>
         <inputReference>CaseCollection</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCollection</name>
         <label>AggiornaCollection</label>
-        <locationX>1425</locationX>
+        <locationX>1777</locationX>
         <locationY>1469</locationY>
         <connector>
             <targetReference>AggiornamentoChildCases</targetReference>
         </connector>
         <inputReference>CaseCollectionRIspostaInviata</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaInputCase</name>
+        <label>AggiornaInputCase</label>
+        <locationX>322</locationX>
+        <locationY>1512</locationY>
+        <connector>
+            <targetReference>GetCaseAggiornato</targetReference>
+        </connector>
+        <inputReference>GetInputCase</inputReference>
+    </recordUpdates>
     <screens>
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
-        <locationX>1106</locationX>
+        <locationX>1458</locationX>
         <locationY>923</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1044,7 +1393,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>343</locationX>
+        <locationX>695</locationX>
         <locationY>57</locationY>
         <connector>
             <targetReference>GetInputCase</targetReference>
@@ -1054,7 +1403,7 @@
     <subflows>
         <name>GestioneIndennizzi</name>
         <label>Gestione Indennizzi</label>
-        <locationX>888</locationX>
+        <locationX>1240</locationX>
         <locationY>1497</locationY>
         <connector>
             <targetReference>Quale_Fase</targetReference>

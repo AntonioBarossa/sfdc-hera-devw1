@@ -7,4 +7,8 @@
         <recordType>Account.HDT_RT_Distributore</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabSettings>
+        <tab>DistributorPointCode__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

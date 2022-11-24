@@ -1,6 +1,6 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_SRV_PaymentCommunication {
-
+  
     HDT_QR_Payments paymentsQr = new HDT_QR_Payments();
     HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
 
@@ -14,19 +14,38 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
         List<DocumentSelected__c> documents = new List<DocumentSelected__c>();
         Case currentCase = new Case();
         String pretty;
-
+        Boolean modalitaPagamento = false;
         currentCase = paymentsQr.getCaseById(recordId);
         documents = paymentsQr.getDocumentSelectedByCase(recordId);
 
         System.debug(LoggingLevel.DEBUG, 'SRV_PaymenCommunication Case--> '+currentCase);
         System.debug(LoggingLevel.DEBUG, 'SRV_PaymentCommunication Documetns--> '+documents);
 
-        Map<String, Object> caseMap = new Map<String, Object>{
-            'rds' => currentCase.CaseNumber,
-            'totale' => currentCase.TotalToPay__c,
-            'residuo' => currentCase.TotalToPay__c,
-            'importo' => currentCase.Amount__c
-        };
+        modalitaPagamento = (String.isNotBlank(currentCase.DocumentPaymentMethod__c) && currentCase.DocumentPaymentMethod__c.equalsIgnoreCase('Virtual Account'));
+        Map<String, Object> caseMap;
+        if(String.valueOf(currentCase.Type).equalsIgnoreCase('Promessa di Pagamento Ente')){
+            caseMap = new Map<String, Object>{
+                'rds' => currentCase.CaseNumber,
+                'totale' => currentCase.TotalToPay__c,
+                'residuo' => currentCase.TotalToPay__c,
+                'type' => currentCase.Type,
+                'promessaPagamentoEnte' => 'TRUE',
+                'comuneEnte' => currentCase.CityOrInstitution__c,
+                'note' => currentCase.Note__c
+            };
+        }else{
+            caseMap = new Map<String, Object>{
+                'rds' => currentCase.CaseNumber,
+                'totale' => currentCase.TotalToPay__c,
+                'residuo' => currentCase.TotalToPay__c,
+                'dataPagamento' => currentCase.PaymentDate__c,
+                'modalitaPagamento' => modalitaPagamento,
+                'abi' => currentCase.IbanABI__c,
+                'intestatarioContoOrdinante' => currentCase.BankAccountSignatoryFirstName__c + currentCase.BankAccountSignatoryLastName__c,
+                'type' => currentCase.Type,
+                'promessaPagamentoEnte' => 'FALSE'
+            };
+        }
 
         caseListMap.add(caseMap);
 
@@ -41,7 +60,7 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
                 new Map<String, Object>{
                     'numeroBollettino' => document.Bill__c,
                     'numeroFattura' => document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : '',
-                    'numeroFattura1' => '',
+                    'numeroFattura1' => String.isNotBlank(document.Position1__c) ? 'ZKW' + document.Position1__c + document.Position2__c + document.Position3__c : '', //Revisione Incassi - SAP necessita dei numeri posizione concatenati nel caso di processo innescato da vista Paperless
                     'rataFattura' => 'RATEIZZAZIONI' == document.Type__c ? document.DocumentNumber__c : '',
                     'scadenza' => document.ExpirationDate__c,
                     'infoBlocco' => '',
@@ -68,7 +87,4 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
 
         return pretty;
     }
-
-
-
 }

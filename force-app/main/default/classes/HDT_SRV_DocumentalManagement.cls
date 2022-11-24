@@ -104,6 +104,9 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		if (actMoga == null) {
 			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c per visualizzare il documento.');
 		}
+		if(String.isNotBlank(actMoga.DocumentalSystem__c) && 'Intesa'.equalsIgnoreCase(actMoga.DocumentalSystem__c)){
+			throw new HDT_UTL_HeraException('I documenti gestiti in OTP sono visibili tramite il tasto Visualizza Plico');
+		}
 
 		if (String.isBlank(actMoga.AttachmentCode__c)) {
 			throw new HDT_UTL_HeraException('Impossibile visualizzare allegato, Codice Allegato non disponibile.');
@@ -572,7 +575,28 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 								moduliOpzionaliMancanti.add(singleRadio.groupName);
 							}
 						}
-						// TODO: gestire radio button per istanza 326
+						if (singleRadio.groupName.contains('326_radio')){
+							if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+								String actDescriptionIstanza = 'Ritornato correttamente';
+								if(singleRadio.groupName.contains('_1')){
+									actDescriptionIstanza  = actDescriptionIstanza + ' su ordine '+ orderList[0].get('OrderNumber');
+									orderList[0].put('Instance326__c','Validato');
+								}else {
+									actDescriptionIstanza  = actDescriptionIstanza + ' su ordine '+ orderList[1].get('OrderNumber');
+									orderList[1].put('Instance326__c','Validato');
+								}
+								DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
+								if (documentalActivity != null){
+									documentalActivity.AttachmentCode__c = 'ISTANZA_326'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
+									documentalActivity.ActivityType__c = 'Allegati ricevuti';
+									documentalActivity.AttachmentDescription__c = actDescriptionIstanza;
+									activitiesToCreate.add(documentalActivity);
+								}
+							} else {
+								moduliOpzionaliMancanti.add(singleRadio.groupName);
+							}
+						}
+						
 						
 					}
 				}
@@ -584,6 +608,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						record.put('DocumentalPhase__c','Plico firmato');
 					}
 					record.put('Phase__c','Documentazione Gestita');
+					record.put('SignedDate__c', Date.today());
 					Order orderRecord = (Order) record;
 					HDT_UTL_DatabaseService.updateSObject(record);
 					if (!activitiesToCreate.isEmpty()){
@@ -591,16 +616,19 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					}
 					List<Order> childToUpdate = new List<Order>();
 					Map<Id,String> orderPhaseMap = new Map<Id,String>();
+					orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
 					for(Sobject childOrder : orderList){
 						Order singleOrder = new Order();
 						singleOrder.Id = childOrder.Id;
 						singleOrder.CIAccoutn__c = 'Validato';
 						singleOrder.DocumentLow80__c = (String)childOrder.get('DocumentLow80__c');
 						singleOrder.Instance326__c = (String)childOrder.get('Instance326__c');
+						singleOrder.DocumentPackage__c = 'Validato';
 						String leggeOtt = (String)childOrder.get('DocumentLow80__c');
 						String istanza = (String)childOrder.get('Instance326__c');
 						if((String.isBlank(leggeOtt) || (String.isNotBlank(leggeOtt) && leggeOtt.equalsIgnoreCase('Validato'))) && 
-						(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))){
+						(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))
+						&& (!'Annullato'.equalsIgnoreCase((String)childOrder.get('Phase__c')) && !'Accettazione Voltura'.equalsIgnoreCase((String)childOrder.get('Phase__c')) && !'Credit Check KO'.equalsIgnoreCase((String)childOrder.get('Phase__c')) && !'Attesa Credit Check'.equalsIgnoreCase((String)childOrder.get('Phase__c')))){
 							singleOrder.Phase__c = 'Documentazione Validata';
 							orderPhaseMap.put(singleOrder.Id, 'Documentazione Validata');
 						}
@@ -610,7 +638,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					 * AF Fix Accettazione Voltura.
 					 * E' necessario chiudere l'attività prima di settare Documentazione Validata
 					 */
-					try {
+					/*try {
 						if(!orderList.isEmpty()){
 							Set<Id> voltOrdSet = new Set<Id>();
 							String processTypeVol = '';
@@ -634,12 +662,13 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						}
 					} catch (Exception ex) {
 						//no throws
-					}
+					}*/
 					if(!childToUpdate.isEmpty()){
 						HDT_UTL_DatabaseService.updateSObject(childToUpdate);
 					}
 					
 				}catch(Exception ex){
+					HDT_UTL_IntegrationLog.handleGenericErrorRequest(JSON.serialize(listOfRadio),'POST', ex.getMessage()+' row number --> ' + ex.getLineNumber(), 'Handle Docusign Notify', (String)record.get('Id'));
 					System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
 				}
 			}
@@ -1580,18 +1609,27 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 
 	public static String queryContactPoint(String email,String phone,String contactId){
 		List<SObject> cpEmailList = new List<Sobject>();
-		List<Contact> conList = [SELECT Id, IndividualId FROM Contact WHERE Id = :contactId WITH SECURITY_ENFORCED];
+		List<SObject> parentSobj = new List<SObject>();
+		String sobjName = ((Id)contactId).getSObjectType().getDescribe().getName();
+		if( sobjName == 'Lead')
+		{
+			parentSobj = [SELECT Id, IndividualId FROM Lead WHERE Id = :contactId WITH SECURITY_ENFORCED];
+		}
+		else 
+		{
+			parentSobj = [SELECT Id, IndividualId FROM Contact WHERE Id = :contactId WITH SECURITY_ENFORCED];	
+		}
 		if(String.isNotBlank(email)){
-			cpEmailList =HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointEmail', 'EmailAddress =\''+String.escapeSingleQuotes(email)+'\' AND ParentId=\''+conList[0].IndividualId+'\'');
-			if(cpEmailList.isEmpty())
+			cpEmailList =HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointEmail', 'EmailAddress =\''+String.escapeSingleQuotes(email)+'\' AND ParentId=\''+parentSobj[0].get('IndividualId')+'\'');
+			if(cpEmailList.isEmpty() && sobjName == 'Contact')
 			{
 				cpEmailList =HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointEmail', 'EmailAddress =\''+String.escapeSingleQuotes(email)+'\' AND Contact__c=\''+contactId+'\'');
 			}
 		}
 		List<SObject> cpPhone = new List<Sobject>();
 		if(String.isNotBlank(phone)){
-			cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND ParentId=\''+conList[0].IndividualId+'\'');
-			if(cpPhone.isEmpty())
+			cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND ParentId=\''+parentSobj[0].get('IndividualId')+'\'');
+			if(cpPhone.isEmpty() && sobjName == 'Contact')
 			{
 				cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND Contact__c=\''+contactId+'\'');
 			}
@@ -1624,25 +1662,40 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 
 	public static String createContactPoint(String email,String phone,String contactId){
 		String result = 'OK';
+		String sobjName = ((Id)contactId).getSObjectType().getDescribe().getName();
 		try{
 			HDT_QR_Contact qrContact = new HDT_QR_Contact();
-			Contact cont = qrContact.getRecordById(contactId);
+			SObject sobj;
+			if(sobjName == 'Contact')
+			{
+				sobj = qrContact.getRecordById(contactId);
+			}
+			else
+			{
+				sobj = [SELECT Id, IndividualId FROM Lead WHERE Id = :contactId WITH SECURITY_ENFORCED LIMIT 1]; 
+			}
 			List<SObject> objectList = new List<SObject>();
 			if(String.isNotBlank(email)){
 				ContactPointEmail cpEmail = new ContactPointEmail();
-				cpEmail.ParentId = cont.IndividualId;
+				cpEmail.ParentId = (String) sobj.get('IndividualId');
 				cpEmail.EmailAddress = email;
 				cpEmail.Type__c = 'E-mail Anagrafica';
-				cpEmail.Contact__c = contactId;
+				if(sobjName == 'Contact')
+				{
+					cpEmail.Contact__c = contactId;
+				}
 				objectList.add(cpEmail);
 			}
 	
 			if(String.isNotBlank(phone)){
 				ContactPointPhone cpPhone = new ContactPointPhone();
-				cpPhone.ParentId = cont.IndividualId;
+				cpPhone.ParentId = (String) sobj.get('IndividualId');
 				cpPhone.TelephoneNumber = phone;
 				cpPhone.Type__c = 'Mobile';
-				cpPhone.Contact__c = contactId;
+				if(sobjName == 'Contact')
+				{
+					cpPhone.Contact__c = contactId;
+				}
 				cpPhone.Prefix__c = '+39';
 				objectList.add(cpPhone);
 			}

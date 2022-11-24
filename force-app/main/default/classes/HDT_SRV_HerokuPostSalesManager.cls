@@ -46,13 +46,13 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         //Object templateMap = argsMap.get('templateMap');
         Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
        
-
+        String meterCode = '';
         try{
             ticket = (String) obj.get('Id');
             currentCase = (Case) obj;
             code = hpsmUtl.getCodeFromPhaseTransition(currentCase);
             record = hpsmQr.getCalloutTemplateByCode(code);
-
+            meterCode = currentCase.MeterCode__c;
             wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration endpointUtils = 
                 (wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration) wrts_prcgvr.VersionManager.newClassInstance('EndpointRulesIntegration');
         
@@ -84,8 +84,11 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             {
                 mrrList = addIbanCountry(mrrList); 
             }
+            if (String.isNotBlank(meterCode)){
+                mrrList = changeMeterCode(mrrList,meterCode);
+            }
             arg.put('endpoint', endpoint);
-            arg.put('timeout', 12000);
+            arg.put('timeout', 20000);
             arg.put('payload',mrrList);
             arg.put('clientType','REST');
             arg.put('contentType','application/json');
@@ -184,6 +187,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField};
         List<Case> caseUpdate = new List<Case>();
         Case caseInsert = new Case();
+        Boolean discardManagement = false;
         try {
             HDT_WRP_HerokuPostSalesManager reqWrp = hpsmUtl.manipulateRequest(request);
             switch on request.header.requestType{
@@ -193,6 +197,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                         //HDT_UTL_DatabaseService.updateSObject(caseUpdate);
                         responseObject.fields.addAll(handleNotifEsResponseField(caseUpdate[0]));
                     }
+                    discardManagement = true;
                 }
                 when 'RICH_PASS'{
                     caseInsert = hpsmUtl.handleRequestRichPass(reqWrp);
@@ -215,7 +220,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             RestContext.response.statusCode = 200;
         } catch (Exception ex) {
 		
-
+            discardManagement = false;
             responseField.fieldType = 'TEXT';
             responseField.name = 'ESITO';
             responseField.value = 'KO';
@@ -233,6 +238,9 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
 
             responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError, responseFieldErrorCode};
             RestContext.response.statusCode = 400;
+        }
+        if (discardManagement){
+            HDT_UTL_Scarti.discardManagement(new List<HDT_WRP_MrrRequest.HDT_WRP_Request>{request});
         }
         return responseObject;
     }
@@ -381,6 +389,32 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                     ibanField.value = 'IT';
                     obj.fields.add(ibanField);
                 }
+                break;
+            }
+        }
+        return mrrList;
+    }
+
+    @TestVisible
+    private static wrts_prcgvr.MRR_1_0.MultiRequest changeMeterCode(wrts_prcgvr.MRR_1_0.MultiRequest mrrList, String meterCode)
+    {
+        Boolean changeField = false;
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects){
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('ServicePoint__c')){
+                for(wrts_prcgvr.MRR_1_0.Field f : obj.fields){
+                    if(f.name.equalsIgnoreCase('SERNR')){
+                        f.value = meterCode;
+                        changeField = true;
+                        break;
+                    }
+                }
+                if (!changeField){
+                    wrts_prcgvr.MRR_1_0.Field meterCodeField = new wrts_prcgvr.MRR_1_0.Field();
+                    meterCodeField.name = 'SERNR';
+                    meterCodeField.fieldType = 'STRING';
+                    meterCodeField.value = meterCode;
+                    obj.fields.add(meterCodeField);
+                }            
                 break;
             }
         }

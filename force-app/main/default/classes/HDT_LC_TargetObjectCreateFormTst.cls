@@ -297,4 +297,31 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
             Test.stopTest();
         }
     }
+    @isTest
+    static void checkCoerenceServicePoint()
+    {
+        Map<String, Object> servicePoint = new Map<String, Object>
+        {
+            'SupplyType__c' => 'Domestico',
+            'MarketOrigin__c' => 'Salvaguardia',
+            'CommoditySector__c' => 'Energia Elettrica',
+            'PowerRequested__c' => '13',
+            'RequestPhase__c' => 'Monofase',
+            'ImplantType__c' => 'Tipo Impianto errato'
+        };
+        Map<String, Object> inputFieldMap = new Map<String, Object>
+        {
+            'CategoriaCliente' => 'Famiglie',
+            'TipoFornitura' => 'A-Domestico',
+            'TipoImpianto' => 'Tipo Impianto errato',
+            'Servizio' => 'Gas',
+            'ProfiloPrelievo' => '001 - 7 giorni',
+            'CategoriaUso' => '001-Uso cottura cibi',
+            'Imposta' => 'G_ICD'
+        };
+        Test.startTest();
+            String result = HDT_LC_TargetObjectCreateForm.checkCoerenceServicePoint(servicePoint, inputFieldMap);
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(result), 'Check non eseguito correttamente');
+    }
 }

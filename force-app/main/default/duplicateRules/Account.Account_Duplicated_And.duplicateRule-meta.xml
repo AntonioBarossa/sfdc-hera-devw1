@@ -4,7 +4,16 @@
     <actionOnUpdate>Allow</actionOnUpdate>
     <alertText>Attenzione! Esiste già un Account con gli stessi dati fiscali e Silos.</alertText>
     <description xsi:nil="true"/>
-    <duplicateRuleFilter xsi:nil="true"/>
+    <duplicateRuleFilter>
+        <booleanFilter xsi:nil="true"/>
+        <duplicateRuleFilterItems>
+            <field>RecordType</field>
+            <operation>notEqual</operation>
+            <value>Partner</value>
+            <sortOrder>1</sortOrder>
+            <table>Account</table>
+        </duplicateRuleFilterItems>
+    </duplicateRuleFilter>
     <duplicateRuleMatchRules>
         <matchRuleSObjectType>Account</matchRuleSObjectType>
         <matchingRule>Account_Matching_And</matchingRule>

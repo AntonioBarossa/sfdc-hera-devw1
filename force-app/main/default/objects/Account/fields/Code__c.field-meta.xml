@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Code__c</fullName>
+    <caseSensitive>false</caseSensitive>
     <description>Codice univoco per ditributori, trader e Partner</description>
     <externalId>true</externalId>
     <label>Codice univoco</label>
@@ -9,5 +10,5 @@
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <type>Text</type>
-    <unique>false</unique>
+    <unique>true</unique>
 </CustomField>

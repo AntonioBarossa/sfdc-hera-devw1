@@ -52,7 +52,14 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
 
         }
 
-        HDT_UTL_DataFactoryTst.assignPermissionSet(currentUser, 'HDT_OmniSupervisor', true);
+        String omniPermission = 'HDT_OmniSupervisor';
+        String omniPermissionId = HDT_UTL_DataFactoryTst.getPermissionSetId(omniPermission);
+        List<PermissionSetAssignment> psAssigment = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSetId = :omniPermissionId AND AssigneeId = :currentUser.Id];
+
+        if(psAssigment.isEmpty())
+        {
+            HDT_UTL_DataFactoryTst.assignPermissionSet(currentUser, 'HDT_OmniSupervisor', true);
+        }
 
         Id profileId = HDT_UTL_DataFactoryTst.getProfileId(constantsUtl.HERA_STANDARD_USER_NAME);
         User user = HDT_UTL_DataFactoryTst.createInternalUser(profileId, false);
@@ -87,9 +94,20 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
         Test.startTest();
 
         Queue__c queue = [SELECT Id, Agency2__c, WorkGroup__c FROM Queue__c LIMIT 1];
-        List<Map<String,String>> returnedValue = HDT_LC_ActivityReassignmentTool.getWorkGroups(queue.WorkGroup__c);
+        List<Map<String,String>> returnedValue = HDT_LC_ActivityReassignmentTool.getWorkGroups(queue.WorkGroup__c, queue.Agency2__c);
         System.assertEquals(queue.WorkGroup__c, returnedValue[0].get('name'), 'NOME GRUPPO DI LAVORO ERRATO');
         System.assertEquals(queue.Agency2__c, returnedValue[0].get('agency'), 'AGENZIA GRUPPO DI LAVORO ERRATA');
+
+        Test.stopTest();
+    }
+
+    @isTest
+    private static void getPicklistValues() {
+        Test.startTest();
+
+        List<String> picklistValues = HDT_LC_ActivityReassignmentTool.getPickListValuesIntoList();
+
+        System.assertEquals(true, picklistValues != null && !picklistValues.isEmpty(), 'ERRORE NELL\'OTTENERE I VALORI DALLA PICKLIST.');
 
         Test.stopTest();
     }

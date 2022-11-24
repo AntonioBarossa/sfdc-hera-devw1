@@ -29,6 +29,22 @@ public class HDT_QR_LeadTst{
 	}
 
 	@isTest
+	static void getRecordByIndividual(){
+
+		Test.startTest();
+
+		Lead tLead = [SELECT Id, Firstname, IndividualId FROM Lead WHERE Status = 'New' LIMIT 1];
+
+		HDT_QR_Lead qrLead = new HDT_QR_Lead();
+		List<Lead> testLead = qrLead.getRecordByIndividual(tLead.IndividualId, 'id, country');
+
+		System.assertNotEquals('', testLead[0].country, 'value of parameter is not matching');
+		System.assertEquals('Italy', testLead[0].Country, 'Lead Country is wrong');
+
+		Test.stopTest();
+	}
+
+	@isTest
 	static void testgetRecordById(){
 
 		Test.startTest();
@@ -42,11 +58,7 @@ public class HDT_QR_LeadTst{
 
 		Lead testLead = qrLead.getRecordById(tLead.Id);
 
-		System.debug('testLead = ' + testLead);
-
-
 		System.assertEquals('Italy', testLead.Country, 'Lead Country is wrong');
-
 		System.assertNotEquals('', testLead.Country, 'value of parameter is not matching');
 
 		Test.stopTest();

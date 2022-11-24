@@ -18,6 +18,16 @@
                         <valueListItems>
                             <value>Contact.HDT_RecallMe</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>LoginToNetworkAsUser</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>System Administrator</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

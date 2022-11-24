@@ -874,7 +874,7 @@
             <name>Non_Superato</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>CheckCriterioEleggibilita</leftValueReference>
+                <leftValueReference>CheckEligibilityCriteria</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -1254,6 +1254,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Doppi Pagamenti/Incassi</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Promessa di Pagamento Ente</stringValue>
                 </rightValue>
             </conditions>
             <connector>

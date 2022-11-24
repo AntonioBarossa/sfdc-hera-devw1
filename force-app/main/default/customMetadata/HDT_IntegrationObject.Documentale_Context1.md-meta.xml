@@ -12,7 +12,7 @@
 &quot;relatedObject&quot;: [
 {
 &quot;objectName&quot;: &quot;OrderItem&quot;,
-&quot;fields&quot;: &quot;Id, ProductName__c,ProductFamily__c,ProductCode__c,ProductVersion__c,ProductDescriptionSAP__c,Quantity,IVA__c,PriceNet__c,PriceNetDiscounted__c,UnitPrice,ListPrice,VatPercentageFormula__c&quot;,
+&quot;fields&quot;: &quot;Id, ProductName__c,ProductFamily__c,ProductCode__c,ProductVersion__c,ProductDescriptionSAP__c,Quantity,IVA__c,PriceNet__c,PriceNetDiscounted__c,UnitPrice,ListPrice,VatPercentageFormula__c,NumberRateMonthly__c&quot;,
 &quot;relation&quot;: &quot;OrderItems&quot;
 }
 ],

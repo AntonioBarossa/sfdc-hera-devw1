@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.ApexSuggestUsingNamedCred, PMD.ClassNamingConventions, PMD.CyclomaticComplexity')
+@SuppressWarnings('PMD.AvoidDebugStatements,PMD.ApexSuggestUsingNamedCred, PMD.ClassNamingConventions, PMD.CyclomaticComplexity')
 public class HDT_WS_HTTPServiceCall {
     
     public static  HDT_WS_Response sendRequest(String namedCredential,String path,String method,HDT_WS_Request request,type respClass){
@@ -13,8 +13,9 @@ public class HDT_WS_HTTPServiceCall {
             req.setBody(JSON.serialize(request));
         }        
         HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
+        String body = '';
         try{
-            System.debug('req: '+req);
+            System.debug(LoggingLevel.debug,'req: '+req);
             HTTPResponse res = h.send(req);
 
             /* if(res.getStatusCode()/100 == 2){
@@ -27,12 +28,13 @@ public class HDT_WS_HTTPServiceCall {
                 resp.errorDetails = res.getBody();
             } */
             if (res != null){
-                System.debug('res: '+res);
-                System.debug('body: '+res.getBody());
-                resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
-                System.debug('resp: '+resp);
+                System.debug(LoggingLevel.debug,'res: '+res);
+                System.debug(LoggingLevel.debug,'body: '+res.getBody());
+                body = res.getBody();
+                resp = (HDT_WS_Response)JSON.deserialize(body, respClass);
+                System.debug(LoggingLevel.debug,'resp: '+resp);
                 resp.statusCode = res.getStatusCode();
-                System.debug('respStat: '+resp.statusCode);
+                System.debug(LoggingLevel.debug,'respStat: '+resp.statusCode);
 
             }else{
                 resp.exceptionMessage = 'Attenzione! Nessuna risposta dal server.';
@@ -40,7 +42,8 @@ public class HDT_WS_HTTPServiceCall {
             
         }
         catch(Exception e){
-            System.debug('exp: ' +e);
+            System.debug(LoggingLevel.error,'exp: ' +e);
+            resp.body = HDT_UTL_RestCallRespBodyLogUtility.mustSetBody(namedCredential, path)? body : null;
             resp.exceptionMessage = e.getMessage();
         }
         return resp;  
@@ -54,13 +57,15 @@ public class HDT_WS_HTTPServiceCall {
         req.setMethod(method);        
         req.setBody(JSON.serialize(request));
         HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
-
+        String body = '';
         try{
             HTTPResponse res = h.send(req);
-            resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
+            body = res.getBody();
+            resp = (HDT_WS_Response)JSON.deserialize(body, respClass);
             resp.statusCode = res.getStatusCode();
         }
         catch(Exception e){
+            resp.body = HDT_UTL_RestCallRespBodyLogUtility.mustSetBody(namedCredential, path)? body : null;
             resp.exceptionMessage = e.getMessage();
         }
         return resp;        
@@ -115,13 +120,15 @@ public class HDT_WS_HTTPServiceCall {
         req.setMethod(method);
         
         HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
-
+        String body = '';
         try{
             HTTPResponse res = h.send(req);
-            resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
+            body = res.getBody();
+            resp = (HDT_WS_Response)JSON.deserialize(body, respClass);
             resp.statusCode = res.getStatusCode();
         }
         catch(Exception e){
+            resp.body = HDT_UTL_RestCallRespBodyLogUtility.mustSetBody(namedCredential, path)? body : null;
             resp.exceptionMessage = e.getMessage();
         }
         return resp;        

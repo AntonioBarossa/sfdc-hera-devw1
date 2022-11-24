@@ -72,6 +72,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','Da Inviare',utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Accettazione Voltura','Bozza',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Bozza',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_VAS,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VAS);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_SUBENTRO,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SUBENTRO);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
@@ -84,6 +85,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Sospeso','Bozza',utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Sospeso','Bozza',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita','Bozza',utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE);
             //HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Bozza',utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE);
@@ -132,9 +134,13 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_UTL_DataFactoryTst.createComfortQualityCall(2,true);
             List<BillingProfile__c> billing =HDT_UTL_DataFactoryTst.createBillingProfile(1,true,accounts[0].Id);
 			List<Opportunity> opps=HDT_UTL_DataFactoryTst.createOpportunity(1, true);
-			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(7, true, accounts[0].Id, 'Attiva');
+			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(9, true, accounts[0].Id, 'Attiva');
 			List<Pricebook2> pricebook=HDT_UTL_DataFactoryTst.createPricebook(1, true);
-			List<Order> orders=HDT_UTL_DataFactoryTst.createOrderWithPricebook(7, false, accounts[0].Id, sales, pricebook[0].Id);
+            List<ServicePoint__c> sp = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
+            sp[0].RecordTypeId = utlConstants.SERVICEPOINT_RECORDTYPEID_GAS;
+            sp[0].CommoditySector__c = 'Gas';
+            insert sp;
+			List<Order> orders=HDT_UTL_DataFactoryTst.createOrderWithPricebook(9, false, accounts[0].Id, sales, pricebook[0].Id);
             
             
             id orderVoltura=utlConstants.ORDER_RECORDTYPEID_VOLTURA;
@@ -144,6 +150,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             id orderAttivazioneConModifica=utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA;
 			id orderConnessioneConAttiv=utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
 			id orderDossier=utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+            Id orderVas = utlConstants.ORDER_RECORDTYPEID_VAS;
             
             
             Id accId = accounts[0].id;
@@ -172,7 +179,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             orders[0].RecordTypeId=orderSubentro;
 			orders[0].Username__c='test';
 			orders[0].Password__c='test1';
-			orders[0].NotRegisteredMeterCase__c=true;
+			orders[0].NotRegisteredMeterCase__c=false;
 			orders[0].EffectiveDate__c=date.today();
 			orders[0].PowerCommitted__c=2;
 			orders[0].ImplantType__c='13A0-Usi di Abitazione BT';
@@ -259,7 +266,27 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             orders[5].SupplyType__c = 'Domestico';
             orders[5].CustomerCategory__c = 'Famiglie';
             orders[5].ImplantType__c = '13A0-Usi di Abitazione BT';
-            orders[5].WithdrawalClass__c = '001 - 7 giorni';           
+            orders[5].WithdrawalClass__c = '001 - 7 giorni';     
+            
+            orders[7].RecordTypeId=orderVas;
+            orders[7].VasSubtype__c = 'Analisi Consumi';
+			orders[7].VoltageLevel__c='BT';
+			orders[7].ProcessCode__c='E02';
+			orders[7].UseTypeEnergy__c='Manifest (Temp Straord 16h)';
+			orders[7].CreditCheckDescription__c='test6Temporanea';
+			orders[7].RequestOption__c='Domestici-TD';
+			orders[7].PowerRequested__c=2;
+			orders[7].PowerCommitted__c=2;
+            orders[7].Contact__c = contactId;
+            orders[7].IsActivationDeferred__c=true;
+            orders[7].VATfacilitationFlag__c=false;
+            orders[7].Commodity__c='Gas';
+            orders[7].ExciseGas__c = 'Imposta Usi Domestici (Cod. G_ICD)';
+            orders[7].UseCategory__c='003-CotturaCibi+AcquaCalda';
+            orders[7].SupplyType__c = 'Domestico';
+            orders[7].CustomerCategory__c = 'Famiglie';
+            orders[7].ImplantType__c = '13A0-Usi di Abitazione BT';
+            orders[7].WithdrawalClass__c = '001 - 7 giorni';    
 
 			upsert orders;
 
@@ -372,6 +399,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_LC_ChildOrderProcessActions.save(tOrder2[2],m2);
             
             tOrder2[2].SignedDate__c=Date.today();
+            tOrder2[2].SignatureMethod__c = 'Contratto già firmato';
             tOrder2[2].ProcessType__c='';
             HDT_LC_ChildOrderProcessActions.save(tOrder2[2],m2);
 
@@ -714,6 +742,33 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[0].Id].EffectiveDate__c;
         System.assertEquals( m4.get('EffectiveDate__c'),expectedResult,  m4.get('EffectiveDate__c'));
 
+        Test.stopTest();
+
+    }
+
+    @isTest
+	static void testSaveVas(){
+        
+        //Start Test
+        
+        List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
+        FROM Order WHERE Name Like 'testOrderName%' and RecordTypeId = :utlConstants.ORDER_RECORDTYPEID_VAS ORDER BY Name asc];
+               
+        Test.startTest();
+
+        //Test Attivazione
+      // system.debug('Test Attivazione');
+        //Map<String,Object> m4 = new Map<String,Object>();
+        //m4.put('EffectiveDate__c', Date.today().addDays(11));
+
+        HDT_LC_ChildOrderProcessActions.save(tOrder2[0],null);
+        Boolean result = true;
+        //Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[0].Id].EffectiveDate__c;
+        System.assertEquals(true,result,  'result');
+        
         Test.stopTest();
 
     }
@@ -1201,6 +1256,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
                 FROM Order
                 WHERE Name='testOrderName1'
                 LIMIT 1];
+            tOrder[0].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_VOLTURA;
+            update tOrder[0];
             List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
                 ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
                 Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
@@ -1210,8 +1267,6 @@ public class HDT_LC_ChildOrderProcessActionsTst {
                 LIMIT 1];
 
             tOrder[0].MarketOrigin__c='Libero';
-            tOrder[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE;
-            tOrder2[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE;
             update tOrder;
             update tOrder2;
 		
@@ -1297,6 +1352,56 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             System.assertEquals(tBilling[0].BankAgency__c, updatedName, 'Update fallito');
 
         Test.stopTest();
+        
+    }
+
+    @IsTest
+    static void voltureReadingTst()
+    {
+        List<Order> tOrder=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c, ParentOrder__r.Status,DocSendingMethod__c,RecordType.Name,NotRegisteredMeterCase__c,EffectiveDate__c,Commodity__c
+        FROM Order
+        WHERE Name = 'testOrderName1'
+        LIMIT 1];
+        tOrder[0].Subprocess__c = 'Con Autolettura';
+        List<ServicePoint__c> sp = [SELECT Id FROM ServicePoint__c];
+        tOrder[0].ServicePoint__c = sp[0].Id;
+        tOrder[0].SignatureMethod__c = 'Contratto già firmato';
+        tOrder[0].ExciseGas__c = 'Imposta Usi Domestici (Cod. G_ICD)';
+        tOrder[0].VAT__c = 'Iva 22% (Cod. 02)';
+        tOrder[0].RegionalAdditional__c = 2;
+        tOrder[0].Commodity__c = 'Gas';
+        tOrder[0].CustomerCategory__c = 'Famiglie';
+        tOrder[0].SupplyType__c = 'A-Domestico';
+        tOrder[0].ImplantType__c = '1004-Riscaldamento promiscuo';
+        tOrder[0].WithdrawalClass__c = '001 - 7 giorni';
+        tOrder[0].UseCategory__c = '007-Ris.Ind+Cottura+AcquaCalda';
+        update tOrder;
+
+        Reading__c reading = new Reading__c();
+        reading.OrderGas__c = tOrder[0].Id;
+        reading.ReadingValueMeter__c = 10;
+        reading.ReadingValueCorrector__c = 10;
+        reading.ReadingSerialNumberCorrector__c = 'test';
+        insert reading;
+
+        List<FieldCoerenceServicePoint__c> fieldCspList = HDT_UTL_DataFactoryTst.createFieldCoerenceServicePoint(1, false, 'GAS');
+        fieldCspList[0].AccountCategory__c = 'Famiglie';
+        fieldCspList[0].SupplyType__c = 'A-Domestico';
+        fieldCspList[0].ImplantType__c = '1004-Riscaldamento promiscuo';
+        fieldCspList[0].Taxes__c = 'G_ICD';
+        fieldCspList[0].UseCategory__c = '007-Ris.Ind+Cottura+AcquaCalda';
+        fieldCspList[0].WithdrawalClass__c = '001 - 7 giorni';
+        insert fieldCspList;
+
+        Test.startTest();
+            HDT_LC_ChildOrderProcessActions.save(tOrder[0], null);
+        Test.stopTest();
+        List<Order> orderList = [SELECT Id FROM Order WHERE Name = 'testOrderName1'];
+        System.assertEquals(true, !orderList.isEmpty(), 'Update fallito');
+
         
     }
 

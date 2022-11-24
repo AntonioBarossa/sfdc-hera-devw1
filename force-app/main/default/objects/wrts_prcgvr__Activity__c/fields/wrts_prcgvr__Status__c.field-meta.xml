@@ -98,6 +98,36 @@
                 <default>false</default>
                 <label>Comunicazione inviata</label>
             </value>
+            <value>
+                <fullName>KO Definitivo</fullName>
+                <default>false</default>
+                <label>KO Definitivo</label>
+            </value>
+            <value>
+                <fullName>Completed</fullName>
+                <default>false</default>
+                <label>Completed</label>
+            </value>
+            <value>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+                <label>In Progress</label>
+            </value>
+            <value>
+                <fullName>Completata</fullName>
+                <default>false</default>
+                <label>Completata</label>
+            </value>
+            <value>
+                <fullName>KO Forzato</fullName>
+                <default>false</default>
+                <label>KO Forzato</label>
+            </value>
+            <value>
+                <fullName>KO Risolto</fullName>
+                <default>false</default>
+                <label>KO Risolto</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

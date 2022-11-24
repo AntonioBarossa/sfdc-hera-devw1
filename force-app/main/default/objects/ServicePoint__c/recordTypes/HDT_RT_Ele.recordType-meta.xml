@@ -282,18 +282,9 @@
             <fullName>13FM-Non domestici AT</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
-            <default>false</default>
-        </values>
+        
+        
+        
         <values>
             <fullName>1401-Risc amb singoli</fullName>
             <default>false</default>
@@ -366,14 +357,6 @@
     <picklistValues>
         <picklist>MarketOrigin__c</picklist>
         <values>
-            <fullName>Default</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FUI</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Libero</fullName>
             <default>false</default>
         </values>
@@ -436,10 +419,10 @@
             <fullName>Elettronico</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>G1%2C6 Pareti def%2E</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>G10 Pareti def%2E</fullName>
             <default>false</default>
@@ -480,10 +463,10 @@
             <fullName>G1600 Pistoni rot%2E</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>G2%2C5 pareti def%2E</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>G25 Pareti def%2E</fullName>
             <default>false</default>

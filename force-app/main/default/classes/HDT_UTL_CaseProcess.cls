@@ -149,7 +149,7 @@ public with sharing class HDT_UTL_CaseProcess {
                                                 activityId = activity.OwnerId;
                                             }
                                             activitiesOwnerId.add(activityId);
-                                            activity.wrts_prcgvr__Status__c = 'Chiusa';
+                                            activity.wrts_prcgvr__Status__c = 'Annullata';
                                             //Notification Fire to activity's owner
                                             try{
                                                 if(customNotif != null && activitiesOwnerId.size() > 0){
@@ -175,6 +175,16 @@ public with sharing class HDT_UTL_CaseProcess {
                         HDT_UTL_DatabaseService.updateSObject(updateList);
                     }
                 }
+                /* Richiesta Parere
+                * Il case padre (reclamo scritto) viene riportato In Lavorazione
+                */
+                if(caseNew.Type.equalsIgnoreCase('Richiesta Parere') && newPhase.equalsIgnoreCase('Annullato') && caseNew.ParentId != null)
+                {
+                    Case complaintCase = new Case();
+                    complaintCase.Id = caseNew.ParentId;
+                    complaintCase.Phase__c = 'In Lavorazione';
+                    HDT_UTL_DatabaseService.updateSObject(complaintCase);
+                }
                 //Contratto Non Richiesto
                 if(newPhase.equalsIgnoreCase('Annullato')){
                     Case nonReqContr = new Case();
@@ -191,6 +201,9 @@ public with sharing class HDT_UTL_CaseProcess {
                     List<wrts_prcgvr__Activity__c> activitiesToCancel = new List<wrts_prcgvr__Activity__c>();
                     for(wrts_prcgvr__Activity__c activity : caseQr.getCaseActivities(new List<String>{caseNew.Id}))
                     {
+                        if ('Autolettura'.equalsIgnoreCase(caseNew.Cluster__c) && 'Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)){
+                            continue;
+                        }
                         activity.wrts_prcgvr__Status__c = 'Annullata';
                         activitiesToCancel.add(activity);
                     }
@@ -344,4 +357,18 @@ public with sharing class HDT_UTL_CaseProcess {
         }
         HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
     }
+
+    public static void setCloseStatusForAll(List<Case> caseList){
+        for(Case c : caseList) {
+            setCloseStatus(c);
+        }
+    }
+
+    public static void setCloseStatus(Case c){
+        if ('Chiuso'.equalsIgnoreCase(c.Status)){
+            c.Status = 'Closed';
+        }
+    }
+
+
 }

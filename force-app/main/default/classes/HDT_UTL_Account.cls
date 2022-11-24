@@ -8,6 +8,15 @@ public with sharing class HDT_UTL_Account {
     private static Id accRecordTypeIdResidenziale = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
     private static Id accRecordTypeIdBusiness = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
 
+    public static void handleFiscalCodeUppercase(List<Account> accountList){
+        for(Account singleAccount : accountList){
+            String fiscalCode = singleAccount.FiscalCode__c;
+            if(String.isNotBlank(fiscalCode) && fiscalCode.isAlphanumeric()){
+                singleAccount.FiscalCode__c = fiscalCode.toUpperCase();
+            }
+        }
+    }
+
     @AuraEnabled
     public static String checkIsBackoffice(){
        // boolean res = false;
@@ -34,6 +43,7 @@ public with sharing class HDT_UTL_Account {
          * aggiunta modifica per 
          * ricerca correttamente clienti business
          */
+        String fiscalCode = String.isNotBlank(a.FiscalCode__c) && a.FiscalCode__c.isAlphanumeric()?a.FiscalCode__c.toUpperCase():a.FiscalCode__c;
         req.codiceCausale            ='SRC';
         req.numeroSR                 = a.id;
         req.account.tipoAccount      = recordType;
@@ -41,7 +51,7 @@ public with sharing class HDT_UTL_Account {
         req.account.telefono         = c.MobilePhone;
         req.account.emailCont        = c.email;
         req.account.marcaturaCliente = a.customerMarking__c;
-        req.account.codiceFiscale    = a.FiscalCode__c != null ? a.FiscalCode__c : a.vatNumber__c;
+        req.account.codiceFiscale    = a.FiscalCode__c != null ? fiscalCode : a.vatNumber__c;
         // req.account.codiceFiscale    = recordType == 'Organizzazione' 
         //                                 ? a.vatnumber__c != null
         //                                     ? a.vatnumber__c : a.FiscalCode__c
@@ -386,7 +396,7 @@ public with sharing class HDT_UTL_Account {
                     isAmministratore = true;
                 }
                 break;
-            }else if( accountContactRel.Roles == 'Titolare' ){
+            }else if( accountContactRel.Roles == 'Titolare' || accountContactRel.Roles == 'Familiare'){
                 //if AccountId not in the list yet, insert
                 if( !accountContactMap.containsKey('Account')){
                     accountContactMap = generateAccountContact(accountContactRel);
@@ -440,7 +450,7 @@ public with sharing class HDT_UTL_Account {
         //HRADTR_GV Modifiche 03/02/2022 - Fine
 
     }
-
+    @TestVisible
     private static Account checkCustomerMarking( Account acc , string saleId)
     {
         //Modifiche HRADTR_GV 03/02/2022 - Inizio
@@ -525,7 +535,7 @@ public with sharing class HDT_UTL_Account {
         accountContactMap.put('Contact',newContact);
         return accountContactMap;
     }
-
+    @TestVisible
     private static Contact registerAmmCondominio(Contact cont, Boolean archive)
     {
         Contact contactReturn = new Contact();

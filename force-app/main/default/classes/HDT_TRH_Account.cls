@@ -31,14 +31,18 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
           
         }
          HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
+         feedBillingCountry(Trigger.new);
          createKpiExtension();
+         HDT_UTL_Account.handleFiscalCodeUppercase(Trigger.new);
     }
  
     protected override void beforeUpdate() {
         HDT_UTL_GlobaMigrationKey.setGlobalMigrationKey(Trigger.new, Trigger.oldMap);
+        feedBillingCountry(Trigger.new);
         checkAccountName();
         createKpiExtension();
         setIndividualsOwnerIds();
+        HDT_UTL_Account.handleFiscalCodeUppercase(Trigger.new);
     }
 
     public override void afterUpdate(){
@@ -150,6 +154,17 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
             }
             if(!individToUpdateList.isEmpty()){
                 HDT_UTL_DatabaseService.updateSObject(individToUpdateList);
+            }
+        }
+    }
+    @TestVisible
+    private static void feedBillingCountry(List<Account> accountList)
+    {
+        for(Account acc : accountList)
+        {
+            if(acc.BillingCountry == null || acc.BillingCountry == '')
+            {
+                acc.BillingCountry = 'ITALIA';
             }
         }
     }

@@ -17,6 +17,7 @@ private class HDT_LC_OrdersForComfortQualityListTst {
     HDT_UTL_DataFactoryTst.pClickInstance();
     HDT_UTL_DataFactoryTst.pClickOrderPhase();    
     List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,true,'HERA COMM','Persona fisica','Famiglie');
+    List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accountList[0].Id);
 
     //Instantiate the Pricebook2 record with StandardPricebookId
     Pricebook2 standardPricebook = HDT_UTL_DataFactoryTst.activeStandardPricebook();
@@ -46,7 +47,21 @@ private class HDT_LC_OrdersForComfortQualityListTst {
       'Pricebook2Id'=>standardPricebook.id,
       'Phase__c'=>'Comunicazione verso Heroku',
       'RecordTypeId'=>hdtRtSwitchInRecordTypeId
-    } );    
+    } );
+    List<Order> orderList5= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,'HDT_RT_ConnessioneConAttivazione',new Map<String,Object>{
+      'AccountId'=>accountList[0].id,
+      'Pricebook2Id'=>standardPricebook.id,
+      'Phase__c'=>'Amm. Precheck OK SII',
+      'RecordTypeId'=>hdtRtSwitchInRecordTypeId,
+      'Contact__c' => contactList[0].Id
+    } );   
+          List<Order> orderList6= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,'HDT_RT_ConnessioneConAttivazione',new Map<String,Object>{
+      'AccountId'=>accountList[0].id,
+      'Pricebook2Id'=>standardPricebook.id,
+      'Phase__c'=>'Comunicazione verso Heroku',
+      'RecordTypeId'=>hdtRtVasRecordTypeId,
+      'Contact__c' => contactList[0].Id
+    } ); 
     List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityWithParams(1, false,accountList[0].id,new Map<String,Object>{
         'Order__c'=> orderList0[0].id
     });
@@ -58,6 +73,12 @@ private class HDT_LC_OrdersForComfortQualityListTst {
     }));
     activities.addAll(HDT_UTL_DataFactoryTst.createActivityWithParams(1, false,accountList[0].id,new Map<String,Object>{
       'Order__c'=> orderList3[0].id
+    }));
+    activities.addAll(HDT_UTL_DataFactoryTst.createActivityWithParams(1, false,accountList[0].id,new Map<String,Object>{
+      'Order__c'=> orderList5[0].id
+    }));
+	activities.addAll(HDT_UTL_DataFactoryTst.createActivityWithParams(1, false,accountList[0].id,new Map<String,Object>{
+      'Order__c'=> orderList6[0].id
     }));
     insert activities;
 
@@ -195,9 +216,34 @@ private class HDT_LC_OrdersForComfortQualityListTst {
     }
     Test.stopTest();
     //System.assertEquals(1, acts.size());
-    System.assertEquals(true, [SELECT Id, wrts_prcgvr__Status__c, ContactResult__c FROM wrts_prcgvr__Activity__c WHERE ContactResult__c = 'Annullato'].size()>0,'An wrts_prcgvr__Activity__c is created');
+    System.assertEquals(true, [SELECT Id, wrts_prcgvr__Status__c, ContactResult__c FROM wrts_prcgvr__Activity__c WHERE ContactResult__c = 'Annullato Quality Call'].size()>0,'An wrts_prcgvr__Activity__c is created');
     //System.assertNotEquals(false, [SELECT Id, Phase__c,Status FROM Order WHERE Status = 'Activated'].size()>0,'An Order is created');
-
   }
-
+  @isTest
+  static void cancelContractTst()
+  {
+    Order order=[SELECT id,ConfirmCustomerContract__c,Phase__c FROM Order WHERE RecordType.DeveloperName='HDT_RT_SwitchIn' AND Phase__c = 'Amm. Precheck OK SII' LIMIT 1];
+    List<wrts_prcgvr__Activity__c> activity= [SELECT id,Order__r.RecordType.DeveloperName 
+    FROM wrts_prcgvr__Activity__c
+    WHERE Order__c=:order.id];
+    Test.startTest();
+      HDT_LC_OrdersForComfortQualityList.cancelContract( order.id, activity[0].id , 'Firma Falsa');
+    Test.stopTest();
+    List<Order> orderResult = [SELECT Id, Phase__c FROM Order WHERE Id = : order.id];
+    System.assertEquals('Annullato', orderResult[0].Phase__c, 'Annullamento fallito');
+  }
+    
+  @isTest
+  static void cancelContract2Tst()
+  {
+    Order order=[SELECT id,ConfirmCustomerContract__c,Phase__c FROM Order WHERE RecordType.DeveloperName='HDT_RT_VAS' AND Phase__c = 'Comunicazione verso Heroku' LIMIT 1];
+    List<wrts_prcgvr__Activity__c> activity= [SELECT id,Order__r.RecordType.DeveloperName 
+    FROM wrts_prcgvr__Activity__c
+    WHERE Order__c=:order.id];
+    Test.startTest();
+      HDT_LC_OrdersForComfortQualityList.cancelContract( order.id, activity[0].id , 'Contatto Quality Fallito');
+    Test.stopTest();
+    List<Order> orderResult = [SELECT Id, Phase__c FROM Order WHERE Id = : order.id];
+    System.assertEquals('Comunicazione verso Heroku', orderResult[0].Phase__c, 'Annullamento fallito');
+  }
 }

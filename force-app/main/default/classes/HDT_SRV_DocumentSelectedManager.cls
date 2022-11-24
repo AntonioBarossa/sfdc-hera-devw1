@@ -25,6 +25,9 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     when 'InstallmentsView', 'EC7' {
                         return manageDocumentsCreditViews(inputs);
                     }
+                    when 'Paperless' {
+                        return manageDocumentsPaperless(inputs);
+                    }
                     when else {
                         return null;
                     }
@@ -340,6 +343,8 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     singleDocument.ContractualAccount__c = (String) primolivello.get('contoContrattuale');
                     singleDocument.TotalCommunicationPayment__c = Double.valueOf(primolivello.get('residuo'));
                     singleDocument.Case__c = inputs[0].caseId;
+                    singleDocument.PaymentMode__c = 'BOLLETTINO POSTALE';
+                    singleDocument.Amount__c = Double.valueOf(primolivello.get('residuo'));
                     
                     if(String.isNotBlank(numeroFattura)) {
                         singleDocument.Name = numeroFattura;

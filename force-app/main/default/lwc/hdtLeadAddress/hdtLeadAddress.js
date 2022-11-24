@@ -91,6 +91,8 @@ export default class HdtLeadAddress extends LightningElement {
             }
             if(this.leadAddress['Stato'] != null){
                 this.fieldsToUpdate['Country'] = this.leadAddress['Stato'];
+            }else{
+                this.fieldsToUpdate['Country'] = 'ITALIA';
             }
             if(this.leadAddress['Provincia'] != null){
                 this.fieldsToUpdate['State'] = this.leadAddress['Provincia'];

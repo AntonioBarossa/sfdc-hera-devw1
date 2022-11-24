@@ -70,7 +70,7 @@
         <inputParameters>
             <name>methodName</name>
             <value>
-                <stringValue>selfReading</stringValue>
+                <stringValue>discardSelfReading</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -118,6 +118,29 @@
         </assignmentItems>
         <connector>
             <targetReference>UpdateCaseForVoltura</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignErrorMessage</name>
+        <label>AssignErrorMessage</label>
+        <locationX>1266</locationX>
+        <locationY>955</locationY>
+        <assignmentItems>
+            <assignToReference>ReadingError</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Attenzione! Autolettura non inserita correttamente si prega di reinserirla.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Inserimento_Letture</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -389,6 +412,31 @@
             <label>KO MDM or SAP</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Lettura_Inserita_Correttamente</name>
+        <label>Lettura Inserita Correttamente?</label>
+        <locationX>1984</locationX>
+        <locationY>864</locationY>
+        <defaultConnector>
+            <targetReference>Check_Processo</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Inserita</defaultConnectorLabel>
+        <rules>
+            <name>Non_Inserita</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetReadings</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignErrorMessage</targetReference>
+            </connector>
+            <label>Non Inserita</label>
+        </rules>
+    </decisions>
     <formulas>
         <description>Calcola il codice venditore per le autoletture, che non possono richiamare arricchimento dati.
 
@@ -574,6 +622,34 @@ TODO: Formula da adeguare in Wave 2.</description>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetReadings</name>
+        <label>GetReadings</label>
+        <locationX>1970</locationX>
+        <locationY>637</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Lettura_Inserita_Correttamente</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>CaseEle__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Refresh_Case.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CaseGas__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Refresh_Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Reading__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Refresh_Case</name>
         <label>Refresh Case</label>
         <locationX>1138</locationX>
@@ -597,11 +673,11 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordLookups>
         <name>Refresh_Case_Final</name>
         <label>Refresh Case</label>
-        <locationX>1948</locationX>
-        <locationY>546</locationY>
+        <locationX>1855</locationX>
+        <locationY>547</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Processo</targetReference>
+            <targetReference>GetReadings</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -929,6 +1005,21 @@ TODO: Formula da adeguare in Wave 2.</description>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
+            <name>ErrorMessageDisplay</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;{!ErrorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ReadingError</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>displayTextMiddle</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(62, 62, 60);&quot;&gt;Inserire la lettura del Cliente:&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -1142,11 +1233,31 @@ TODO: Formula da adeguare in Wave 2.</description>
         </value>
     </variables>
     <variables>
+        <name>ErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ReadingError</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>ResumeFromDraft</name>

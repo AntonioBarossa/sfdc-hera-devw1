@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_EscalationCase</fullName>
     <active>true</active>
@@ -66,38 +66,6 @@
         </values>
         <values>
             <fullName>AA SPORT TS OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_BACK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_BACK_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_CORR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_CRE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_DISCO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_SCORE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_SPORT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_SPORT_OUT</fullName>
             <default>false</default>
         </values>
         <values>
@@ -189,6 +157,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HC_CRM_CH_OUT_CD</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HC_CRM_HD_LTCH</fullName>
             <default>false</default>
         </values>
@@ -265,23 +237,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HC_CRM_SIND_LAMI</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HC_CRM_SIND_LAMONT</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>HC_CRM_SIND_LAPRAT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CRM_SIND_LEMURA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CRM_SIND_LEONI</fullName>
             <default>false</default>
         </values>
         <values>
@@ -298,6 +258,10 @@
         </values>
         <values>
             <fullName>HC_CRM_SITOGRUPPO_OUT_KN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_SOLAPP_OUT_CV</fullName>
             <default>false</default>
         </values>
         <values>
@@ -397,6 +361,22 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HC_CVMBO_SREG_EB_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CVMBO_SREG_EB_QC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CVMBO_SREG_EB_QC_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CVMBO_SREG_EB_SPORT_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HC_CVMBO_SREG_EBT</fullName>
             <default>false</default>
         </values>
@@ -441,22 +421,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HC_CVMBO_SREG_EB_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CVMBO_SREG_EB_QC</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CVMBO_SREG_EB_QC_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CVMBO_SREG_EB_SPORT_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HC_LOYALTY E CAMPAIGN</fullName>
             <default>false</default>
         </values>
@@ -485,15 +449,47 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HC_Vendita Condomini</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HC_VenditaBusiness</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>HC_Vendita Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HC_VenditaMM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_CORR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_CRE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_DISCO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_SCORE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_SPORT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_SPORT_OUT</fullName>
             <default>false</default>
         </values>
         <values>
@@ -506,6 +502,122 @@
         </values>
         <values>
             <fullName>HSPA_TESORERIA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_SIND_LAMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_SIND_LEMURA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_SIND_LEONI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_CC_OUT_CV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SPORT_TS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SPORT_REG_ TS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SIND_SOSEL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SPORT_PD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SPORT_UD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_COSTING E FORECASTING</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRELEG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_MARKETING</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CDO_OM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CDO_OM_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CDO_RECL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CDO_RECL_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CONDOMINI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_ASSISTITI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_TOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_BACKGIALLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_BACKGIALLO_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_BACKARANCIO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_BACKARANCIO_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_PROTOCOLLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_RECLAMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT_TRG_RECLAMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT_TRG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT_TRG_BONUS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT_CON</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -644,38 +756,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HCM_BACK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_BACK_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_CORR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_CRE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_DISCO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_SCORE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_SPORT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_SPORT_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HC_Back Office Condomini</fullName>
             <default>false</default>
         </values>
@@ -764,6 +844,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HC_CRM_CH_OUT_CD</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HC_CRM_HD_LTCH</fullName>
             <default>false</default>
         </values>
@@ -840,23 +924,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HC_CRM_SIND_LAMI</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HC_CRM_SIND_LAMONT</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>HC_CRM_SIND_LAPRAT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CRM_SIND_LEMURA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CRM_SIND_LEONI</fullName>
             <default>false</default>
         </values>
         <values>
@@ -873,6 +945,10 @@
         </values>
         <values>
             <fullName>HC_CRM_SITOGRUPPO_OUT_KN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_SOLAPP_OUT_CV</fullName>
             <default>false</default>
         </values>
         <values>
@@ -972,6 +1048,22 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HC_CVMBO_SREG_EB_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CVMBO_SREG_EB_QC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CVMBO_SREG_EB_QC_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CVMBO_SREG_EB_SPORT_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HC_CVMBO_SREG_EBT</fullName>
             <default>false</default>
         </values>
@@ -1016,22 +1108,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HC_CVMBO_SREG_EB_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CVMBO_SREG_EB_QC</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CVMBO_SREG_EB_QC_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CVMBO_SREG_EB_SPORT_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HC_LOYALTY E CAMPAIGN</fullName>
             <default>false</default>
         </values>
@@ -1060,15 +1136,47 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HC_Vendita Condomini</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HC_VenditaBusiness</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>HC_Vendita Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HC_VenditaMM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_CORR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_CRE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_DISCO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_SCORE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_SPORT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_SPORT_OUT</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1081,6 +1189,122 @@
         </values>
         <values>
             <fullName>HSPA_TESORERIA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_SIND_LAMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_SIND_LEMURA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_SIND_LEONI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_CC_OUT_CV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SPORT_TS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SPORT_REG_ TS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SIND_SOSEL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SPORT_PD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SPORT_UD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_COSTING E FORECASTING</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRELEG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_MARKETING</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CDO_OM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CDO_OM_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CDO_RECL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CDO_RECL_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CONDOMINI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_ASSISTITI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_TOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_BACKGIALLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_BACKGIALLO_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_BACKARANCIO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_BACKARANCIO_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_PROTOCOLLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_RECLAMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT_TRG_RECLAMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT_TRG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT_TRG_BONUS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT_CON</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2857,15 +3081,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ripresa formativa CC</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Ripresa formativa CC cliente da gestire</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Segnalazioni Contact Center</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2878,10 +3102,6 @@
         </values>
         <values>
             <fullName>Supporto Anomalia processo%2Fsistema</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supporto Contact Center</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2898,10 +3118,6 @@
         </values>
         <values>
             <fullName>Supporto legale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supporto su migrazione</fullName>
             <default>false</default>
         </values>
         <values>

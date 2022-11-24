@@ -29,6 +29,11 @@
                 <default>false</default>
                 <label>Churn Prevention</label>
             </value>
+            <value>
+                <fullName>Welcome Fui</fullName>
+                <default>false</default>
+                <label>Welcome Fui</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

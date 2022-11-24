@@ -92,8 +92,11 @@ public inherited sharing class HDT_UTL_NewsNotificationCenter {
                 userToNotificate = qrKb.getUserIdToNotificate(rolesToNotificate);
         
                 userSet.addAll(userToNotificate);
-        
-                result = fireNotification(article.Title, 'Una nuova News è stata pubblicata',article.Id, userSet);
+                
+                if(!Test.isRunningTest())
+                {
+                    Id jobId = Database.executeBatch(new HDT_BA_Knowledge(userSet, article.Id, article.Title), 200);
+                }
             }
         }
         
@@ -118,6 +121,28 @@ public inherited sharing class HDT_UTL_NewsNotificationCenter {
 
         return null;
 
+    }
+
+    @InvocableMethod(Label = 'Batch Notifiche News')
+    public static List<HDT_UTL_FlowOutputs> sendNotificationFromFlow(List<HDT_UTL_FlowInputs> inputs)
+    {
+        List<HDT_UTL_FlowOutputs> outputs = new List<HDT_UTL_FlowOutputs>();
+
+        Knowledge__kav article = inputs[0].article;
+        sendNotification(article);
+
+        return outputs;
+    }
+    
+    public class HDT_UTL_FlowInputs
+    {
+        @InvocableVariable
+        public Knowledge__kav article;
+    }
+    public class HDT_UTL_FlowOutputs
+    {
+        @InvocableVariable
+        public String output;    
     }
 
 

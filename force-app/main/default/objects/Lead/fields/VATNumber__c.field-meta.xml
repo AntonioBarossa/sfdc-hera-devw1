@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>VATNumber__c</fullName>
     <description>Partita IVA</description>
-    <externalId>false</externalId>
+    <externalId>true</externalId>
     <label>Partita IVA</label>
     <length>11</length>
     <required>false</required>

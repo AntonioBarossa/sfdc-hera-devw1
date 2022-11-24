@@ -441,24 +441,22 @@ export default class HdtGeneralInfo extends LightningElement {
 
     reLoadTable() {
         this.tableData = this.pages[this.currentPage];
-        console.log('tableData='+JSON.stringify(this.tableData));
-
     }
 
     createTable2(data) {
         let i, j, temporary, chunk = 6;
-        this.pages = [];
+        this.pages2 = [];
         for (i = 0, j = data.length; i < j; i += chunk) {
             temporary = data.slice(i, i + chunk);
-            this.pages.push(temporary);
+            this.pages2.push(temporary);
         }
-        this.totalPages = this.pages.length;
+        this.totalPages2 = this.pages2.length;
         this.reLoadTable2();
     }
 
     reLoadTable2() {
         console.log('tableData='+JSON.stringify(this.tableDataAgent));
-        this.tableDataAgent = this.pages[this.currentPage2];
+        this.tableDataAgent = this.pages2[this.currentPage2];
     }
 
     get showPaginationButtons() {
@@ -742,6 +740,7 @@ export default class HdtGeneralInfo extends LightningElement {
         this.handleAdditionalFilter();
         this.disabledNextAgency = true;
         this.disabledBack = false;
+        this.showPaginationButtons2 = true;
     }
     
     searchAgentTable(event) {

@@ -28,6 +28,10 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
        // List<Lead> leadToCheck = new List<Lead>();
         //Map<String,String> leadDomain = new Map<String,String>();
         for(Lead l : listNew){
+            if(l.Country == null || l.Country == '')
+            {
+                l.Country = 'ITALIA';
+            }
             if(String.isNotBlank(l.FirstName)){
                 l.FirstName = l.FirstName.toUpperCase();
             }
@@ -267,6 +271,10 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     setFiscalCodes.add(l.FiscalCode__c);
                     leadToCheck.add(l);
                 }
+                if(l.Country == null || l.Country == '')
+                {
+                    l.Country = 'ITALIA';
+                }
             }  
 
             // Start 27-08-2021 HRAWRM-351
@@ -293,8 +301,8 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                                 infoData.put('birthPlace',tempLead.Birthcity__c);
                                 infoData.put('gender',tempLead.Gender__c);
        
-                                System.debug('return ' +HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedFCode(infoData,tempLead.FiscalCode__c));
-                                if ( ! HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedFCode(infoData,tempLead.FiscalCode__c)) {
+                                System.debug('return ' +HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedSetFiscalCode(infoData,tempLead.FiscalCode__c));
+                                if ( ! HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedSetFiscalCode(infoData,tempLead.FiscalCode__c)) {
                                     tempLead.addError('Inserire un codice fiscale valido');
                                 }
                                 //HRAWRM-491 End 27/09/2021 Controllo codice fiscale stimato
@@ -314,4 +322,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
             }
         }
         // End 27-08-2021 HRAWRM-351
+
+
+
 }

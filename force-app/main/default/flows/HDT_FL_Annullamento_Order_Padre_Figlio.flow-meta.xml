@@ -5,7 +5,7 @@
         <description>Vado a popolare la variabile a True, così che posso uscire dal Flow</description>
         <name>Exit_from_Flow_True</name>
         <label>Exit from Flow True</label>
-        <locationX>578</locationX>
+        <locationX>314</locationX>
         <locationY>815</locationY>
         <assignmentItems>
             <assignToReference>ExitFromFlow</assignToReference>
@@ -19,36 +19,20 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Fase_in_Bozza_Annullata</name>
-        <label>Fase in Bozza Annullata</label>
-        <locationX>138</locationX>
-        <locationY>815</locationY>
-        <assignmentItems>
-            <assignToReference>Loop_on_child_Order.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Bozza Annullata</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Loop_on_child_Order.NotCancellable__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>True</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_on_child_Order</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <description>Qui, tutti i figli sono in Bozza Annullata, pertanto vado a modificare anche la fase dell&apos;Ordine padre in Annullato</description>
         <name>Update_Order_Dossier_With_Phase_Annullato</name>
         <label>Update Order Dossier with Phase Annullato</label>
         <locationX>182</locationX>
-        <locationY>1487</locationY>
+        <locationY>1367</locationY>
         <assignmentItems>
             <assignToReference>Get_Order_Dossier.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullato</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Order_Dossier.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Annullato</stringValue>
@@ -64,7 +48,7 @@
         <locationX>50</locationX>
         <locationY>1127</locationY>
         <defaultConnector>
-            <targetReference>Update_Order_Childs</targetReference>
+            <targetReference>Get_Order_Dossier</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>False</defaultConnectorLabel>
         <rules>
@@ -84,29 +68,14 @@
         <description>Vado a controllare la Fase di ogni Order child</description>
         <name>Check_Order_Phase</name>
         <label>Check Order Phase</label>
-        <locationX>358</locationX>
+        <locationX>226</locationX>
         <locationY>695</locationY>
         <defaultConnector>
             <targetReference>Exit_from_Flow_True</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>NOT Draft</defaultConnectorLabel>
+        <defaultConnectorLabel>Non Annullato</defaultConnectorLabel>
         <rules>
-            <name>Draft</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Loop_on_child_Order.Phase__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Bozza</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Fase_in_Bozza_Annullata</targetReference>
-            </connector>
-            <label>Draft</label>
-        </rules>
-        <rules>
-            <name>Bozza_Annullata_or_Annullato</name>
+            <name>Ordine_Annullato</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Loop_on_child_Order.Phase__c</leftValueReference>
@@ -122,10 +91,17 @@
                     <stringValue>Annullato</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Loop_on_child_Order.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Voltura Rifiutata</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Loop_on_child_Order</targetReference>
             </connector>
-            <label>Bozza Annullata or Annullato</label>
+            <label>Ordine Annullato</label>
         </rules>
     </decisions>
     <decisions>
@@ -192,7 +168,7 @@
         <name>Get_Order_Dossier</name>
         <label>Get Order Dossier</label>
         <locationX>182</locationX>
-        <locationY>1367</locationY>
+        <locationY>1247</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_Order_Dossier_With_Phase_Annullato</targetReference>
@@ -238,22 +214,11 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <description>Vado ad aggiornare gli ordini figli a cui ho appena modificato la Fase</description>
-        <name>Update_Order_Childs</name>
-        <label>Update Order Childs</label>
-        <locationX>182</locationX>
-        <locationY>1247</locationY>
-        <connector>
-            <targetReference>Get_Order_Dossier</targetReference>
-        </connector>
-        <inputReference>Get_Ordini_Figli</inputReference>
-    </recordUpdates>
-    <recordUpdates>
         <description>Vado ad aggiornare l&apos;Ordine padre (HDT_RT_OrderDossier)</description>
         <name>Update_Order_Dossier</name>
         <label>Update Order Dossier</label>
         <locationX>182</locationX>
-        <locationY>1607</locationY>
+        <locationY>1487</locationY>
         <inputReference>Get_Order_Dossier</inputReference>
     </recordUpdates>
     <start>

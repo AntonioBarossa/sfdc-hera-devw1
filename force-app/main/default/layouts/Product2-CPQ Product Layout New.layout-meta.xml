@@ -249,7 +249,7 @@
                 <field>IsActive</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>NoSellable__c</field>
             </layoutItems>
         </layoutColumns>
@@ -572,6 +572,11 @@
             <actionName>Product2.HDT_ProductAssociation</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>5</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Product2.HDT_Product2Sellable</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>6</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedLists>

@@ -145,9 +145,9 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
             'DES_ERR_AEEG' => 'No Error',
             'COD_PRAT_UTENTE' => '10922312839',
             'COD_PRAT_DISTR' => '123812938123_DL',
-            'DATA_DECORRENZA_SW' => '2021/10/15',
-            'DATA_DECORRENZA_VT_TIT_III' => '2021/10/15',
-            'DATA_DECORRENZA_VT_TIT_IV' => '2021/10/15',
+            'DATA_DECORRENZA_SW' => '01/12/2021,01/01/2022,',
+            'DATA_DECORRENZA_VT_TIT_III' => '01/01/2022',
+            'DATA_DECORRENZA_VT_TIT_IV' => '01/01/2022',
             'POTCONTRIMP' => '3.97',
             'POTDISP' => '4.00',
 			'result' => 'OK',
@@ -576,6 +576,37 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
 
         System.assertEquals(Integer.valueOf(posizione.valore), result, 'Numero non calcolato correttamente');
         
+    }
+
+    @IsTest
+    static void processCheckTst()
+    {
+        Order newOrder = new Order();
+        Order currentOrder = new Order();
+
+        newOrder.NotRegisteredMeterCase__c = false;
+        newOrder.VoltureType__c = 'Ordinaria';
+        newOrder.EffectiveDate__c = System.today().addDays(6);
+        newOrder.Subprocess__c = 'Standard';
+
+        Boolean isReading = false;
+        Boolean isRetroactive = false;
+        Boolean isUpdateStep = true;
+        Date readingDate = System.today();
+
+        Map<String, Object> testMap = new Map<String, Object>
+        {
+            'orderNew' => newOrder,
+            'currentOrder' => currentOrder,
+            'isReading' => isReading,
+            'isRetroactive' => isRetroactive,
+            'isUpdateStep' => isUpdateStep,
+            'readingDate' => readingDate
+        };
+        Test.startTest();
+            HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck result = HDT_UTL_VoltureChangeManager.processCheck(testMap);
+        Test.stopTest();
+        System.assertEquals('OK', result.result, 'Check Fallito');
     }
 
 }

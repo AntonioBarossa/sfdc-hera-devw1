@@ -12,8 +12,8 @@ public with sharing class HDT_UTL_CalculateTransitionTst {
         spList[0].IsReseller__c = true;
         update spList;
         List<City__c> cities = new List<City__c>();
-        City__c c = new City__c(SDV__C = 'HCM', Name = spList[0].SupplyCity__c, IsNotTransition__c = true);
-        City__c city = new City__c(SDV__C = 'HCM', Name = 'Acerra', IsNotTransition__c = false);
+        City__c c = new City__c(SDV__C = 'HCM', Province__c = 'PU', Name = spList[0].SupplyCity__c, IsNotTransition__c = true);
+        City__c city = new City__c(SDV__C = 'HCM', Province__c = 'RM', Name = 'Acerra', IsNotTransition__c = false);
         cities.add(c);
         cities.add(city);
         insert cities;
@@ -75,5 +75,17 @@ public with sharing class HDT_UTL_CalculateTransitionTst {
         result = calculateTransition.calculateTransition();
         
         System.assertEquals(true, result,'Transizione non calcolata');
+    }
+    @IsTest
+    static void calculateCompanyInfosTst()
+    {
+        String city = 'Pesaro';
+        String commodity = 'Gas';
+        String distributorCode = 'ALTRO';
+        HDT_UTL_CalculateTransition calculateTransition = new HDT_UTL_CalculateTransition(city, commodity, distributorCode);
+        Test.startTest();
+            Map<String,Object> result = calculateTransition.calculateCompanyInfos();
+        Test.stopTest();
+        System.assertEquals(true, !result.isEmpty(), 'Compnay Info Calcolati');
     }
 }

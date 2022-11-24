@@ -112,6 +112,14 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     Set<String> processTypeSet = getProcessTypeFromCodPrestazione(codicePrestazione);
                     triggerOrder = queryHandlerOrder.findOrderByTypeAndServicePointCode(processTypeSet, codicePresa);
                 //}
+                Case tempCase = new Case();
+                Set<String> dataEnrichmentFields = new Set<String>();
+                try {
+                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(codicePresa, null);
+                    HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, tempCase, dataEnrichmentFields);
+                } catch (Exception ex){
+                    System.debug(LoggingLevel.DEBUG, 'Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
+                }
 
                 if (triggerOrder != null) {
                     anagAlignCase = createAnagAlignmentCase(triggerOrder);
@@ -123,7 +131,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
                         anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
                     }
-
+                    for (String field : dataEnrichmentFields) {
+                        anagAlignCase.put(field, tempCase.get(field));
+                    }
                     System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
                     anagAlignCase.Phase__c = 'Da Inviare';
                     HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
@@ -519,6 +529,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         List<Case> anagAlignCases = new List<Case>();
         anagAlignCases.add(anagAlignCase);
         Formula.recalculateFormulas(anagAlignCases);
+
+        List<ServiceRequest__c> serviceRequestList = HDT_UTL_Case.createServiceRequestFromCases(anagAlignCases);
+        HDT_UTL_DatabaseService.insertSObject(serviceRequestList);
 
         anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
         anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);

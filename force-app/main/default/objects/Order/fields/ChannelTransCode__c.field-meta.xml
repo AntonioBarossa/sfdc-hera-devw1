@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <formula>CASE( LOWER(Channel__c) , 
 	&quot;back office&quot;, &quot;Interno&quot;,
-	&quot;hc point&quot;, &quot;Hera Comm Point&quot;,
+	&quot;hc point&quot;, &quot;Punto Hera&quot;,
 	&quot;vendita condomini&quot;, &quot;Vendita Diretta&quot;,
 	&quot;vendita topbusiness&quot;,&quot;Vendita Diretta&quot;,
 	&quot;Associazioni&quot;,&quot;Vendita Diretta&quot;,

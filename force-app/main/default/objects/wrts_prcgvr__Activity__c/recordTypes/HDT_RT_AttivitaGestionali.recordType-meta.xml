@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_AttivitaGestionali</fullName>
     <active>true</active>
@@ -2710,6 +2710,10 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
+            <fullName>Annullamento processo transitorio Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Approvazione Bonus Commerciale</fullName>
             <default>false</default>
         </values>
@@ -2727,6 +2731,10 @@
         </values>
         <values>
             <fullName>Contratti%2FBonus Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratto non richiesto da gestire</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2762,6 +2770,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Validazione Documentale</fullName>
             <default>false</default>
         </values>
@@ -2793,7 +2805,7 @@
         </values>
         <values>
             <fullName>3</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>

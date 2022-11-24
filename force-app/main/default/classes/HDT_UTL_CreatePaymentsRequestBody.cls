@@ -169,14 +169,19 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
                         // }else{
                         //     caseToUpdate.Description  = '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
                         // }
-
+                        try{
+                            caseToUpdate.DiscardDescription__c = errorResponse.errorDetails[0].message;
+                        }catch (Exception e){
+                            caseToUpdate.DiscardDescription__c = 'Unknown error';
+                        }
+                        
                     }
                 }
             }
 
         } else {
-
-            caseToUpdate.TecnicalPhase__c = 'Esito KO da SAP';
+            caseToUpdate.Description = 'Time Out da SAP';
+            //caseToUpdate.TecnicalPhase__c = 'Esito KO da SAP';
             //createActivity(recordId, 'Comunicazione con SAP fallita', 'Esito KO da SAP');
 
         }
@@ -201,15 +206,9 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
             return phase;
         }
 
-        phase = handlePhaseChange(response, recordId, process, 
-            process ==   'Piano Rateizzazione'
-                ? pianoRateCondition //successCondition
-            : process == 'Comunicazione Pagamento'
-                ? comPagCondition //successCondition
-            : process == 'Paperless'
-                ? paperlessCondition //successCondition
-            : null,
-            depositMode);
+        String condition = process == 'Piano Rateizzazione' ? pianoRateCondition : process == 'Comunicazione Pagamento' ? comPagCondition : process == 'Paperless' ? paperlessCondition : null;
+
+        phase = handlePhaseChange(response, recordId, process, condition, depositMode);
 
         return phase;
 
@@ -220,7 +219,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
     private String handlePhaseChange(HDT_WRP_SuccessResponse response, String recordId, String process,String condition, String depositMode){
         
         String phase = null;
-        String successPhase = (process == 'Piano Rateizzazione' && depositMode != 'Paperless') //IF
+        String successPhase = (process == 'Piano Rateizzazione' && depositMode != 'Paperless' && depositMode != 'Bonifico Paperless') //IF
                 ? 'Completata' //IF TRUE
                 : process == 'Paperless' //ELSE IF
                     ? 'Paperless Generato' //IF TRUE

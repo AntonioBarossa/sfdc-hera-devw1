@@ -5,7 +5,7 @@
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
 
-@SuppressWarnings('PMD.CyclomaticComplexity, PMD.ExcessiveParameterList, PMD.NcssMethodCount')
+@SuppressWarnings('PMD.CyclomaticComplexity, PMD.ExcessiveParameterList, PMD.NcssMethodCount,PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_ChildOrderProcessActions {
     
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
@@ -262,10 +262,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 if(currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Gas') && currentOrder.Subprocess__c != null && currentOrder.Subprocess__c.equalsIgnoreCase('Con Autolettura')){
                     HDT_QR_SelfReadings qrReading = new HDT_QR_SelfReadings();
                     try {
-                        Reading__c selfRead = qrReading.getReading('Order',currentOrder.Id,'Gas','ReadingValueMeter__c,ReadingSerialNumberCorrector__c,ReadingValueCorrector__c');
+                        Reading__c selfRead = qrReading.getReading('Order',currentOrder.Id,'Gas','ReadingValueMeter__c,ReadingDate__c,ReadingSerialNumberCorrector__c,ReadingValueCorrector__c');
                         orderToUpdate.ReadingValueMeter__c = selfRead.ReadingValueMeter__c;
                         orderToUpdate.ReadingValueCorrector__c = selfRead.ReadingValueCorrector__c;
                         orderToUpdate.ReadingSerialNumberCorrector__c = selfRead.ReadingSerialNumberCorrector__c;
+                        orderToUpdate.ReadingCustomerDate__c = selfRead.ReadingDate__c;
                     } catch (Exception ex) {
                         //no record
                     }
@@ -303,6 +304,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 if(currentOrder.VASSubtype__c != null && currentOrder.VASSubtype__c.equalsIgnoreCase('Analisi Consumi'))
                 {
                     orderToUpdate.ProcessCode__c = currentOrder.Commodity__c.equalsIgnoreCase('Energia Elettrica') ? 'VCE' : 'VCG';
+                    /* 2022-11-10 Inserito avanzamento di fase per casistica Analisi Consumi legato a Switch In Ripristinatorio */
+                    if(currentOrder.ParentOrder__c != null && currentOrder.ParentOrder__r.Phase__c != null && currentOrder.ParentOrder__r.Phase__c.equalsIgnoreCase('Documentazione Gestita'))
+                    {
+                        orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
+                    }
+                }
+
+                if ('VAS Fatturabili'.equalsIgnoreCase(currentOrder.VASType__c) && String.isBlank(currentOrder.CommercialProductCode__c) && 'Analisi Consumi'.equalsIgnoreCase(currentOrder.CommercialProduct__c)&& 'Energia Elettrica'.equalsIgnoreCase(currentOrder.CommodityFormula__c)){
+                        setVasProductField(orderToUpdate, currentOrder);
                 }
             }
             /*when 'HDT_RT_CambioOfferta' {
@@ -333,7 +343,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         {
             orderToUpdate.CIAccoutn__c = '';
         }*/
-        if(order.SignatureMethod__c.containsIgnoreCase('Contratto già firmato'))
+        if(order.SignatureMethod__c != null && order.SignatureMethod__c.containsIgnoreCase('Contratto già firmato'))
         {
             orderToUpdate.CIAccoutn__c = '';
             orderToUpdate.QuickQuote__c = '';
@@ -382,13 +392,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
         }
 
-        orderToUpdate.CreditCheckInProgress__c = false;
 
-       /*  if(currentOrder.CreditCheckInProgress__c && String.isBlank(currentOrder.IncomingCreditCheckResult__c) && String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
-            orderToUpdate.Phase__c = 'Attesa Credit Check';
-        }
-        else  */if(!String.isBlank(currentOrder.IncomingCreditCheckResult__c) || !String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
-            //orderToUpdate.CreditCheckInProgress__c = false;
+        if(!String.isBlank(currentOrder.IncomingCreditCheckResult__c) || !String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
             /**@frpanico 17/02/2022
              * Aggiunto il null check 
              * l'Or nella condizioni di sopra puo comunque
@@ -469,6 +474,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
         }
 
+        /**2022-07-14 903758C --> Valorizzazione CF se PIVA valorizzata e CF Vuoto */
+        if( currentOrder.Account.VATNumber__c != null && String.isNotBlank(currentOrder.Account.VATNumber__c) && currentOrder.Account.FiscalCode__c == null)
+        {
+            orderToUpdate.CustomerFiscalCode__c = currentOrder.Account.VATNumber__c;
+        }
 
         orderSrv.updateRecord(orderToUpdate);
         if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
@@ -625,5 +635,33 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             return fixedFeeExclVat;
         }
         return fixedFeeExclVat == null ? null : fixedFeeExclVat*(1+vatNumber);
+    }
+
+    private static void setVasProductField(Order ordToUpdate,Order originalOrder){
+        Id contractId = originalOrder.ContractReference__c;
+        Id servicePointId = originalOrder.ServicePoint__c;
+        Id parentOrderId = originalOrder.ParentOrder__c;
+        try{
+            if(String.isNotBlank(contractId)){
+                HDT_QR_Contract qrContract = new HDT_QR_Contract();
+                SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractId);
+                if(subscription != null){
+                    ordToUpdate.CommercialProduct__c = subscription.SBQQ__ProductName__c;
+                    ordToUpdate.CommercialProductCode__c = subscription.ProductCode__c;
+                    ordToUpdate.CommercialProductVersion__c = subscription.VersionFormula__c;
+                }
+            }else if(String.isNotBlank(servicePointId) && String.isNotBlank(parentOrderId)) {
+                HDT_QR_OrderItem qrOrderItems = new HDT_QR_OrderItem();
+                OrderItem orderItem = qrOrderItems.getOfferActivationItem(parentOrderId,servicePointId);
+                if(orderItem != null){
+                    ordToUpdate.CommercialProduct__c = orderItem.Product2.Name;
+                    ordToUpdate.CommercialProductCode__c = orderItem.Product2.ProductCode;
+                    ordToUpdate.CommercialProductVersion__c = orderItem.Product2.Version__c;            
+                }
+            }
+        }catch(Exception e){
+            System.debug(LoggingLevel.INFO, 'setVasProductField : ' + e.getMessage());
+        }
+        
     }
 }

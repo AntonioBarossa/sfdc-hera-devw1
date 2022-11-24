@@ -78,7 +78,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
                 }
     
                 Date dateSentToSii= null;
-                if(signedDate != null  && order.ProcessType__c.containsIgnoreCase('Switch In')){
+                if(signedDate != null  && order.ProcessType__c != null &&  order.ProcessType__c.containsIgnoreCase('Switch In')){
                     //if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
                         // DIRITTO DI RINUNCIA DI RIPENSAMENTO
                         if (order.WaiverRightAfterthought__c == 'Si') { 
@@ -90,11 +90,14 @@ public with sharing class HDT_UTL_ProcessDateManager {
                         else{
                             Date dataRipensamento = order.MaxAfterthoughtDate__c;
                             if(dataRipensamento != null && order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale' ){
-								if(dataRipensamento > Date.Today()){
+								if(dataRipensamento >= Date.Today()){
 									dateSentToSii = dataRipensamento.addDays(1);
-								}else {
-									dateSentToSii = dataRipensamento;
+								}else if(dataRipensamento < Date.Today()){
+									dateSentToSii = order.IsTransition__c? Date.today().addDays(1) : Date.today();
 								}
+								/* else {
+									dateSentToSii = dataRipensamento;
+								} */
                             }else {
 								dateSentToSii = Date.today();
 							}
@@ -222,19 +225,23 @@ public with sharing class HDT_UTL_ProcessDateManager {
 			
 			for(Order order : orderList){
 				//CAMBIO OFFERTA DATA FIRMA - SWITCH IN DATA INVIO SII
-				if(order.DocumentalProcessType__c.equalsIgnoreCase('Cambio offerta')){
-					dateToFrom = order.SignedDate__c;
-				}else if(order.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
+				if(order.DocumentalProcessType__c != null && order.DocumentalProcessType__c.equalsIgnoreCase('Cambio offerta')){
+					dateToFrom = Date.today() > order.SignedDate__c ? Date.today() : order.SignedDate__c;
+				}else if(order.DocumentalProcessType__c != null && order.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
 					dateToFrom = order.DateSentToSII__c;
 				}else if(order.EffectiveDate__c == null){
 					order.EffectiveDate__c = order.SignedDate__c;
-					break;
+					continue;
 				}
 
 				if (order.IsActivationDeferred__c==true) {
-					break;
+					continue;
 				}
 				
+				if( order.SignedDate__c != null && ( order.DocumentalProcessType__c.equalsIgnoreCase('Voltura') || order.DocumentalProcessType__c.equalsIgnoreCase('Voltura con autolettura') ) ){
+					order.EffectiveDate__c = order.SignedDate__c.addDays(3);
+				}
+
 				if(dateToFrom != null){
                     Boolean founded = false;
 					for(FulfillmentDateMatrix__c singleRecord : dateMatrix){
@@ -249,6 +256,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
 									singleRecord.FulfillmentDateTo__c >= dateToFrom
 								){
 									order.EffectiveDate__c = singleRecord.ActivationDate__c;
+									order.AttributesCatalogDesc__c = 'Calcolata Data Order Gas il ' + Date.today() + 'con il seguente valore: ' + singleRecord.ActivationDate__c + ' Record utilizzato ' + singleRecord.Id;
                                     founded = true;
 								}else {
                                     founded = false; 
@@ -265,6 +273,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
 									singleRecord.FulfillmentDateTo__c >= 	dateToFrom
 								){
 									order.EffectiveDate__c = singleRecord.ActivationDate__c;
+									order.AttributesCatalogDesc__c = 'Calcolata Data Order Ele il ' + Date.today() + ' con il seguente valore: ' + singleRecord.ActivationDate__c + ' Record utilizzato ' + singleRecord.Id;
                                     founded = true;
 								}else {
                                     founded = false; 

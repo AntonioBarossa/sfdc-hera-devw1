@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Object__c</field>
-        <value xsi:type="xsd:string">Activity</value>
+        <value xsi:type="xsd:string">Campaign</value>
     </values>
     <values>
         <field>OfferCode__c</field>

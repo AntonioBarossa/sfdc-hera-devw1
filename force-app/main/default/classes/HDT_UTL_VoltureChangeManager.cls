@@ -118,7 +118,9 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             /**@frpanico 26/10/2021
              * Cambio Voltura - RN008 "Voltura con Switch"
             */
-            voltureChangeSrv.handleAmmissibilityCheck(fieldsMap, currentOrder);
+            if ('Amm. Precheck OK SII'.equalsIgnoreCase(orderToUpdate.TecnicalPhase__c)){
+                voltureChangeSrv.handleAmmissibilityCheck(fieldsMap, currentOrder);
+            }
 
             /*
             if(! string.isBlank((String)fieldsMap.get('VIA')) ){
@@ -143,12 +145,15 @@ public with sharing class HDT_UTL_VoltureChangeManager {
                 orderToUpdate.SupplyCountry__c = (String)fieldsMap.get('NAZIONE');
             }
             */
-            orderToUpdate.DiscardReason__c = HDT_UTL_Accents.removeDiacritics((String)fieldsMap.get('DES_ERR_AEEG'));
+            String discardReason = fieldsMap.containsKey('DES_ERR_AEEG') && String.isNotBlank((String)fieldsMap.get('DES_ERR_AEEG')) ?
+                (String)fieldsMap.get('DES_ERR_AEEG') :
+                (String)fieldsMap.get('TESTO_ERR');  
+            orderToUpdate.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(discardReason);
             orderToUpdate.HerokuPracticeCode__c = (String)fieldsMap.get('COD_PRAT_UTENTE');
             orderToUpdate.DistributorPracticeCode__c = (String)fieldsMap.get('COD_PRAT_DISTR');
             /* Date Fields */
             if( ! string.isBlank((String)fieldsMap.get('DATA_DECORRENZA_SW')) ){
-                orderToUpdate.SwitchOutDate__c = voltureChangeUtils.convertDdMmYyyy((String)fieldsMap.get('DATA_DECORRENZA_SW'));
+                orderToUpdate.SwitchOutDate__c = voltureChangeUtils.convertDdMmYyyyList((String)fieldsMap.get('DATA_DECORRENZA_SW'));
             }
             if( ! string.isBlank((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III')) ){
 
@@ -503,6 +508,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
     public static void cancelTechnicalVolture(List<Order> switchOrders)
     {
         Set<String> orderIds = new Set<String>();
+        Map<Id, String> orderMapPhase = new Map<Id, String>();
         for(Order switchOrder: switchOrders)
         {    
             if(switchOrder.ProcessType__c != null && switchOrder.Phase__c != null && 
@@ -512,6 +518,13 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             }
             orderIds.add(switchOrder.Id);
         }
+        for(Order o : switchOrders)
+        {
+            if(orderMapPhase.get(o.Id) == null && orderIds.contains(o.Id))
+            {
+                orderMapPhase.put(o.Id, o.Phase__c);
+            }
+        }
         /* If OrderIds are empty 
         * exits the methos to prevent
         * querying unwanted
@@ -520,13 +533,18 @@ public with sharing class HDT_UTL_VoltureChangeManager {
         {
             return;
         }
-        List<Case> techincalVoltures = [SELECT Id, Phase__c,Status FROM Case WHERE Type = 'Voltura Tecnica' AND Order__c IN :orderIds WITH SECURITY_ENFORCED];
+        List<Case> techincalVoltures = [SELECT Id, Phase__c,Status, Order__c FROM Case WHERE Type = 'Voltura Tecnica' AND Order__c IN :orderIds WITH SECURITY_ENFORCED];
         if(!techincalVoltures.isEmpty())
         {
             for(Case c : techincalVoltures)
             {
-                c.Phase__c = 'Annullato';
-                c.Status = 'Closed';
+                /* Check aggiuntivo per assicurarsi che l'order sia effettivamente in fase annullato */
+                if(c.Order__c != null && orderMapPhase.get(c.Order__c) != null && orderMapPhase.get(c.Order__c).equalsIgnoreCase('Annullato'))
+                {
+                    c.Phase__c = 'Annullato';
+                    c.Status = 'Closed';
+                    c.CancellationNote__c = 'Annullato a seguito di annullamento Switch correlato in fase ' + orderMapPhase.get(c.Order__c);
+                }
             }
             HDT_UTL_DatabaseService.updateSObject(techincalVoltures);
         }

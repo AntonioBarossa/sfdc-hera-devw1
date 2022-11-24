@@ -21,6 +21,16 @@
         <label>Annullamento</label>
     </customValue>
     <customValue>
+        <fullName>Annullamento Allineamento</fullName>
+        <default>false</default>
+        <label>Annullamento Allineamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Annullamento processo transitorio Siebel</fullName>
+        <default>false</default>
+        <label>Annullamento processo transitorio Siebel</label>
+    </customValue>
+    <customValue>
         <fullName>Anticipo Appuntamento</fullName>
         <default>false</default>
         <label>Anticipo Appuntamento</label>
@@ -96,14 +106,14 @@
         <label>Back Office - Preventivi</label>
     </customValue>
     <customValue>
-        <fullName>Back Office - Tari/TCP</fullName>
-        <default>false</default>
-        <label>Back Office - Tari/TCP</label>
-    </customValue>
-    <customValue>
         <fullName>Back Office - Supporto/Comunicazioni Urgenti</fullName>
         <default>false</default>
         <label>Back Office - Supporto/Comunicazioni Urgenti</label>
+    </customValue>
+    <customValue>
+        <fullName>Back Office - Tari/TCP</fullName>
+        <default>false</default>
+        <label>Back Office - Tari/TCP</label>
     </customValue>
     <customValue>
         <fullName>Back Office - Vas e HVAC</fullName>
@@ -121,9 +131,19 @@
         <label>Bonifiche Anagrafiche da DAFC</label>
     </customValue>
     <customValue>
+        <fullName>Busta Docusign non consegnata</fullName>
+        <default>false</default>
+        <label>Busta Docusign non consegnata</label>
+    </customValue>
+    <customValue>
         <fullName>Caricamenti contratti</fullName>
         <default>false</default>
         <label>Caricamenti contratti</label>
+    </customValue>
+    <customValue>
+        <fullName>Caricamento Manuale Siebel</fullName>
+        <default>false</default>
+        <label>Caricamento Manuale Siebel</label>
     </customValue>
     <customValue>
         <fullName>Check preliminari KO</fullName>
@@ -161,6 +181,11 @@
         <label>Comunicazione da DL</label>
     </customValue>
     <customValue>
+        <fullName>Comunicazioni con DL</fullName>
+        <default>false</default>
+        <label>Comunicazioni con DL</label>
+    </customValue>
+    <customValue>
         <fullName>Conferma Preventivo</fullName>
         <default>false</default>
         <label>Conferma Preventivo</label>
@@ -176,6 +201,11 @@
         <label>Contratti/Bonus Commerciale</label>
     </customValue>
     <customValue>
+        <fullName>Contratto non richiesto da gestire</fullName>
+        <default>false</default>
+        <label>Contratto non richiesto da gestire</label>
+    </customValue>
+    <customValue>
         <fullName>Creare Istruttoria</fullName>
         <default>false</default>
         <label>Creare Istruttoria</label>
@@ -185,17 +215,17 @@
         <default>false</default>
         <label>Credit Management – affidi ADR</label>
     </customValue>
-	<customValue>
+    <customValue>
         <fullName>Credit Management – affidi legale</fullName>
         <default>false</default>
         <label>Credit Management – affidi legale</label>
     </customValue>
-	<customValue>
+    <customValue>
         <fullName>Credit Management – cessioni</fullName>
         <default>false</default>
         <label>Credit Management – cessioni</label>
     </customValue>
-	<customValue>
+    <customValue>
         <fullName>Credit Management – sospensioni</fullName>
         <default>false</default>
         <label>Credit Management – sospensioni</label>
@@ -231,6 +261,16 @@
         <label>Errore invio a SAP</label>
     </customValue>
     <customValue>
+        <fullName>Errore Lavorazione SAP</fullName>
+        <default>false</default>
+        <label>Errore Lavorazione SAP</label>
+    </customValue>
+    <customValue>
+        <fullName>Eseguire Gestione Manuale SAP</fullName>
+        <default>false</default>
+        <label>Eseguire Gestione Manuale SAP</label>
+    </customValue>
+    <customValue>
         <fullName>Esito Da Gestire</fullName>
         <default>false</default>
         <label>Esito Da Gestire</label>
@@ -239,6 +279,11 @@
         <fullName>Esito KO da DL</fullName>
         <default>false</default>
         <label>Esito KO da DL</label>
+    </customValue>
+    <customValue>
+        <fullName>Esito KO da DL/SII</fullName>
+        <default>false</default>
+        <label>Esito KO da DL/SII</label>
     </customValue>
     <customValue>
         <fullName>Esito KO da SAP</fullName>
@@ -264,6 +309,11 @@
         <fullName>Esito lavori</fullName>
         <default>false</default>
         <label>Esito lavori</label>
+    </customValue>
+    <customValue>
+        <fullName>Esito non elaborato</fullName>
+        <default>false</default>
+        <label>Esito non elaborato</label>
     </customValue>
     <customValue>
         <fullName>Esito non elaborato da DL/SII</fullName>
@@ -296,6 +346,11 @@
         <label>Gestione Iva e Accise</label>
     </customValue>
     <customValue>
+        <fullName>Gestione M01/M02</fullName>
+        <default>false</default>
+        <label>Gestione M01/M02</label>
+    </customValue>
+    <customValue>
         <fullName>Gestione M02</fullName>
         <default>false</default>
         <label>Gestione M02</label>
@@ -314,6 +369,21 @@
         <fullName>Gestione Manuale SAP</fullName>
         <default>false</default>
         <label>Gestione Manuale SAP</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione processi di Misura</fullName>
+        <default>false</default>
+        <label>Gestione processi di Misura</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione processi Ultima Istanza</fullName>
+        <default>false</default>
+        <label>Gestione processi Ultima Istanza</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione richiesta social</fullName>
+        <default>false</default>
+        <label>Gestione richiesta social</label>
     </customValue>
     <customValue>
         <fullName>Gestione sblocco al calcolo</fullName>
@@ -346,9 +416,19 @@
         <label>In gestione</label>
     </customValue>
     <customValue>
+        <fullName>Integrazione richiesta social</fullName>
+        <default>false</default>
+        <label>Integrazione richiesta social</label>
+    </customValue>
+    <customValue>
         <fullName>Inviare Comunicazione Disconoscimento</fullName>
         <default>false</default>
         <label>Inviare Comunicazione Disconoscimento</label>
+    </customValue>
+    <customValue>
+        <fullName>Inviare Legge 80</fullName>
+        <default>false</default>
+        <label>Inviare Legge 80</label>
     </customValue>
     <customValue>
         <fullName>Inviare Lettera di Legittimità</fullName>
@@ -359,6 +439,16 @@
         <fullName>Inviare Preventivo</fullName>
         <default>false</default>
         <label>Inviare Preventivo</label>
+    </customValue>
+    <customValue>
+        <fullName>Invio Contratto</fullName>
+        <default>false</default>
+        <label>Invio Contratto</label>
+    </customValue>
+    <customValue>
+        <fullName>Invio registrazione</fullName>
+        <default>false</default>
+        <label>Invio registrazione</label>
     </customValue>
     <customValue>
         <fullName>Istruttoria Creata</fullName>
@@ -536,6 +626,11 @@
         <label>Recupero contratto da Postel</label>
     </customValue>
     <customValue>
+        <fullName>Reporting</fullName>
+        <default>false</default>
+        <label>Reporting</label>
+    </customValue>
+    <customValue>
         <fullName>Rettifica per segnalazione da cassetto fiscale</fullName>
         <default>false</default>
         <label>Rettifica per segnalazione da cassetto fiscale</label>
@@ -581,6 +676,11 @@
         <label>Risposta inviata - Attesa rettifica</label>
     </customValue>
     <customValue>
+        <fullName>Risposta Motivata Con Allegato</fullName>
+        <default>false</default>
+        <label>Risposta Motivata Con Allegato</label>
+    </customValue>
+    <customValue>
         <fullName>Scarti Documentali</fullName>
         <default>false</default>
         <label>Scarti Documentali</label>
@@ -596,9 +696,19 @@
         <label>Scarto Transitorio</label>
     </customValue>
     <customValue>
+        <fullName>Segnalazioni Commissioni Agenzie</fullName>
+        <default>false</default>
+        <label>Segnalazioni Commissioni Agenzie</label>
+    </customValue>
+    <customValue>
         <fullName>Segnalazioni Contact Center</fullName>
         <default>false</default>
         <label>Segnalazioni Contact Center</label>
+    </customValue>
+    <customValue>
+        <fullName>Segnalazioni Migrazione dati</fullName>
+        <default>false</default>
+        <label>Segnalazioni Migrazione dati</label>
     </customValue>
     <customValue>
         <fullName>SMS non inviato</fullName>
@@ -646,6 +756,11 @@
         <label>Supporto Esercizio Sistemi</label>
     </customValue>
     <customValue>
+        <fullName>Supporto legale</fullName>
+        <default>false</default>
+        <label>Supporto legale</label>
+    </customValue>
+    <customValue>
         <fullName>Supporto TL Front</fullName>
         <default>false</default>
         <label>Supporto TL Front</label>
@@ -656,14 +771,34 @@
         <label>Validazione Documentale</label>
     </customValue>
     <customValue>
+        <fullName>Validazione Firma OTP</fullName>
+        <default>false</default>
+        <label>Validazione Firma OTP</label>
+    </customValue>
+    <customValue>
         <fullName>Validazione Vocal Order</fullName>
         <default>false</default>
         <label>Validazione Vocal Order</label>
     </customValue>
     <customValue>
+        <fullName>Valori non corrispondenti</fullName>
+        <default>false</default>
+        <label>Valori non corrispondenti</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita - Contratti</fullName>
+        <default>false</default>
+        <label>Vendita - Contratti</label>
+    </customValue>
+    <customValue>
         <fullName>Venditore Non Definito</fullName>
         <default>false</default>
         <label>Venditore Non Definito</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</fullName>
+        <default>false</default>
+        <label>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</label>
     </customValue>
     <customValue>
         <fullName>Verifica emissione fattura ODV</fullName>
@@ -674,6 +809,11 @@
         <fullName>Verifica Offerta SAP</fullName>
         <default>false</default>
         <label>Verifica Offerta SAP</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica rimborsi Clienti</fullName>
+        <default>false</default>
+        <label>Verifica rimborsi Clienti</label>
     </customValue>
     <customValue>
         <fullName>Verifiche Bonus Sociale</fullName>
@@ -700,56 +840,332 @@
         <default>false</default>
         <label>Verifiche Documentale</label>
     </customValue>
-	<customValue>
+    <customValue>
         <fullName>Verifiche Fatturazione</fullName>
         <default>false</default>
         <label>Verifiche Fatturazione</label>
     </customValue>
-	<customValue>
+    <customValue>
         <fullName>Verifiche Layout bollette</fullName>
         <default>false</default>
         <label>Verifiche Layout bollette</label>
     </customValue>
-	<customValue>
+    <customValue>
         <fullName>Verifiche Morosità Business</fullName>
         <default>false</default>
         <label>Verifiche Morosità Business</label>
     </customValue>
-	<customValue>
+    <customValue>
         <fullName>Verifiche Pagamenti</fullName>
         <default>false</default>
         <label>Verifiche Pagamenti</label>
     </customValue>
     <customValue>
-        <fullName>Verifica rimborsi Clienti</fullName>
+        <fullName>Vocal Order non validato</fullName>
         <default>false</default>
-        <label>Verifica rimborsi Clienti</label>
+        <label>Vocal Order non validato</label>
     </customValue>
     <customValue>
-        <fullName>Reporting</fullName>
+        <fullName>Documenti non validati</fullName>
         <default>false</default>
-        <label>Reporting</label>
+        <label>Documenti non validati</label>
     </customValue>
     <customValue>
-        <fullName>Segnalazioni Migrazione dati</fullName>
+        <fullName>Elaborazione Manuale</fullName>
         <default>false</default>
-        <label>Segnalazioni Migrazione dati</label>
+        <label>Elaborazione Manuale</label>
     </customValue>
     <customValue>
-        <fullName>Supporto legale</fullName>
+        <fullName>Errore Comunicazione e-BDM</fullName>
         <default>false</default>
-        <label>Supporto legale</label>
+        <label>Errore Comunicazione e-BDM</label>
+    </customValue>
+    <customValue>
+        <fullName>Esito OK da DL</fullName>
+        <default>false</default>
+        <label>Esito OK da DL</label>
+    </customValue>
+    <customValue>
+        <fullName>Esito OK Riduzione Potenza</fullName>
+        <default>false</default>
+        <label>Esito OK Riduzione Potenza</label>
+    </customValue>
+    <customValue>
+        <fullName>KO gestito</fullName>
+        <default>false</default>
+        <label>KO gestito</label>
+    </customValue>
+    <customValue>
+        <fullName>Pratica gestita</fullName>
+        <default>false</default>
+        <label>Pratica gestita</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto su migrazione</fullName>
+        <default>false</default>
+        <label>Supporto su migrazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Blocco Sollecito</fullName>
+        <default>false</default>
+        <label>Blocco Sollecito</label>
+    </customValue>
+    <customValue>
+        <fullName>Correzione dati</fullName>
+        <default>false</default>
+        <label>Correzione dati</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore Consu. e-BDM</fullName>
+        <default>false</default>
+        <label>Errore Consu. e-BDM</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore e-BDM gestito</fullName>
+        <default>false</default>
+        <label>Errore e-BDM gestito</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore tecnico interno</fullName>
+        <default>false</default>
+        <label>Errore tecnico interno</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore tecnico SDD</fullName>
+        <default>false</default>
+        <label>Errore tecnico SDD</label>
+    </customValue>
+    <customValue>
+        <fullName>Inviata comunicazione</fullName>
+        <default>false</default>
+        <label>Inviata comunicazione</label>
+    </customValue>
+    <customValue>
+        <fullName>KO definitivo</fullName>
+        <default>false</default>
+        <label>KO definitivo</label>
+    </customValue>
+    <customValue>
+        <fullName>Note_di gestione pratica</fullName>
+        <default>false</default>
+        <label>Note_di gestione pratica</label>
+    </customValue>
+    <customValue>
+        <fullName>Note_il cliente dice</fullName>
+        <default>false</default>
+        <label>Note_il cliente dice</label>
+    </customValue>
+    <customValue>
+        <fullName>Pratica avviata</fullName>
+        <default>false</default>
+        <label>Pratica avviata</label>
+    </customValue>
+    <customValue>
+        <fullName>Pratica Fuori Flusso</fullName>
+        <default>false</default>
+        <label>Pratica Fuori Flusso</label>
+    </customValue>
+    <customValue>
+        <fullName>Pratica non gestita</fullName>
+        <default>false</default>
+        <label>Pratica non gestita</label>
+    </customValue>
+    <customValue>
+        <fullName>Sblocco Voltura</fullName>
+        <default>false</default>
+        <label>Sblocco Voltura</label>
+    </customValue>
+    <customValue>
+        <fullName>Sollecito cli da gestire</fullName>
+        <default>false</default>
+        <label>Sollecito cli da gestire</label>
+    </customValue>
+    <customValue>
+        <fullName>Sollecito gestito</fullName>
+        <default>false</default>
+        <label>Sollecito gestito</label>
+    </customValue>
+    <customValue>
+        <fullName>Valutazione Penale</fullName>
+        <default>false</default>
+        <label>Valutazione Penale</label>
+    </customValue>
+    <customValue>
+        <fullName>Istruttoria Creata/Non necessaria</fullName>
+        <default>false</default>
+        <label>Istruttoria Creata/Non necessaria</label>
+    </customValue>
+    <customValue>
+        <fullName>Riaperture urgenti errori DL</fullName>
+        <default>false</default>
+        <label>Riaperture urgenti errori DL</label>
+    </customValue>
+    <customValue>
+        <fullName>Quality Scaduta</fullName>
+        <default>false</default>
+        <label>Quality Scaduta</label>
+    </customValue>
+    <customValue>
+        <fullName>Approvazione Quote</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Approvazione Quote</label>
+    </customValue>
+    <customValue>
+        <fullName>Morosità Business</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Morosità Business</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Reclami</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Protocollo - Reclami</label>
+    </customValue>
+    <customValue>
+        <fullName>Ammissibilità KO, Esito KO da DL</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Ammissibilità KO, Esito KO da DL</label>
+    </customValue>
+    <customValue>
+        <fullName>Appuntamento Distributore</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Appuntamento Distributore</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto Front</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Supporto Front</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione preventivo</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Gestione preventivo</label>
+    </customValue>
+    <customValue>
+        <fullName>Bonus Commerciale</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Bonus Commerciale</label>
+    </customValue>
+    <customValue>
+        <fullName>Comunicazioni al DL</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Comunicazioni al DL</label>
+    </customValue>
+    <customValue>
+        <fullName>Lavorazione Post Survey Reclamo</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Lavorazione Post Survey Reclamo</label>
+    </customValue>
+    <customValue>
+        <fullName>Inserimento nuova pratica</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Inserimento nuova pratica</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto Anomalia processo/sistema, Supporto Esercizio Sistemi</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Supporto Anomalia processo/sistema, Supporto Esercizio Sistemi</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo da gestire</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Protocollo da gestire</label>
+    </customValue>
+    <customValue>
+        <fullName>Scarto Documentale</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Scarto Documentale</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione autoelettrica/noleggio</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Gestione autoelettrica/noleggio</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto back office Pagamenti e Morosità</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Supporto back office Pagamenti e Morosità</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione proroga</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Gestione proroga</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione richiesta variazione BP/CA</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Gestione richiesta variazione BP/CA</label>
+    </customValue>
+    <customValue>
+        <fullName>Contattare cliente</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Contattare cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Credit check KO</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Credit check KO</label>
+    </customValue>
+    <customValue>
+        <fullName>Annullamento SII</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Annullamento SII</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta non identificata/anonima</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Richiesta non identificata/anonima</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione invio contratto</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Gestione invio contratto</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione Segnalazione VAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Gestione Segnalazione VAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione invio registrazione</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Gestione invio registrazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Risposta ricevuta</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Risposta ricevuta</label>
     </customValue>
     <customValue>
         <fullName>Supporto verifica rimborsi Clienti</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Supporto verifica rimborsi Clienti</label>
-    </customValue>
-    <customValue>
-        <fullName>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</fullName>
-        <default>false</default>
-        <label>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</label>
     </customValue>
     <customValue>
         <fullName>Supporto documentale</fullName>
@@ -800,49 +1216,10 @@
         <label>Supporto credito Credit Management – affidi ADR</label>
     </customValue>
     <customValue>
-        <fullName>Segnalazioni Commissioni Agenzie</fullName>
-        <default>false</default>
-        <label>Segnalazioni Commissioni Agenzie</label>
-    </customValue>
-    <customValue>
-        <fullName>Invio registrazione</fullName>
-        <default>false</default>
-        <label>Invio registrazione</label>
-    </customValue>
-    <customValue>
-        <fullName>Invio Contratto</fullName>
-        <default>false</default>
-        <label>Invio Contratto</label>
-    </customValue>
-    <customValue>
-        <fullName>Documenti non validati</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Documenti non validati</label>
-    </customValue>
-    <customValue>
         <fullName>Amm. Precheck KO SII, Precheck KO precedente intestatario</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Amm. Precheck KO SII, Precheck KO precedente intestatario</label>
-    </customValue>
-    <customValue>
-        <fullName>Scarto Documentale</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Scarto Documentale</label>
-    </customValue>
-    <customValue>
-        <fullName>Credit check KO</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Credit check KO</label>
-    </customValue>
-    <customValue>
-        <fullName>Approvazione Quote</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Approvazione Quote</label>
     </customValue>
     <customValue>
         <fullName>Gestione Votive</fullName>
@@ -893,26 +1270,10 @@
         <label>Supporto Verifiche contratti</label>
     </customValue>
     <customValue>
-        <fullName>Pratica avviata</fullName>
+        <fullName>Segnalazioni VAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Pratica avviata</label>
-    </customValue>
-    <customValue>
-        <fullName>Gestione processi di Misura</fullName>
-        <default>false</default>
-        <label>Gestione processi di Misura</label>
-    </customValue>
-    <customValue>
-        <fullName>Gestione processi Ultima Istanza</fullName>
-        <default>false</default>
-        <label>Gestione processi Ultima Istanza</label>
-    </customValue>
-    <customValue>
-        <fullName>Morosità Business</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Morosità Business</label>
+        <label>Segnalazioni VAS</label>
     </customValue>
     <description>Tipi Attività.</description>
     <masterLabel>Tipo Attività</masterLabel>

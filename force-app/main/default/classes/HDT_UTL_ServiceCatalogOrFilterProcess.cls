@@ -504,7 +504,12 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
     'ComunicazionePagamento' => new Map<String,List<String>>
         {
             'Context__c' => new List<String>
-                {'EC1L','InstallmentsView'}
+                {'EC1L','InstallmentsView', 'Paperless'}
+        },
+    'PromessaPagamentoEnte' => new Map<String,List<String>>
+        {
+            'Context__c' => new List<String>
+                {'EC1L','InstallmentsView','Paperless'}
         }
     };
 
@@ -529,6 +534,20 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             }
         }
         return res;
+    }
+
+    public static Boolean servicePointFilter(sObject sb, String method){
+        if ('RipristinoFornituraInterrotta'.equalsIgnoreCase(method)){
+            try{
+                Id recordId = sb.get('Id') != null ? (Id)sb.get('Id') : null;
+                HDT_QR_ServicePoint qrServicePoint = new HDT_QR_ServicePoint(); 
+                ServicePoint__c sr = qrServicePoint.getRecordById(recordId,'SapContractStatus__c')[0];
+                return 'Cessato'.equalsIgnoreCase(sr.SapContractStatus__c);
+            }catch (Exception e){
+                return false;
+            }
+        }
+        return true;
     }
 
     public static Boolean accountStatementFilter(sObject sb, String method){

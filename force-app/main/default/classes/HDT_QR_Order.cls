@@ -40,7 +40,7 @@ public inherited sharing class HDT_QR_Order {
     public Map<Id, Order>  getOrdersRecord(list <Id> orderId){
         Map<Id, Order> mapIdOrder=new  Map<Id, Order>([
             SELECT
-            Name, AccountId,SAPImplantCode__c,SapContractCode__c,EffectiveDate__c,ContractAccountCode__c,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
+            Name, AccountId,SAPImplantCode__c,SalesCompany__c,SapContractCode__c,EffectiveDate__c,ContractAccountCode__c,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
             Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c,Market__c,VAT__c, SBQQ__Quote__r.SBQQ__PriceBook__c,  
             CommercialProduct__c, TemporaryConnectionEndDate__c, ProcessType__c
             FROM Order 
@@ -351,7 +351,8 @@ public inherited sharing class HDT_QR_Order {
             isSTG__c,
             Contact__r.Phone,
             Contact__r.MobilePhone,
-            Subprocess__c
+            Subprocess__c,
+            VASType__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -610,12 +611,13 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getChildOrdersForDateCalculation(List<String> parentOrderIds){
         return [
             SELECT
-            Id,EffectiveDate__c,RecessNotice__c,WaiverRightAfterthought__c ,IsEarlyActivation__c ,ClientCategoryFormula__c,CommodityFormula__c,RecordType.DeveloperName,WizardCompletedDate__c,Account.RecordType.DeveloperName,Channel__c,Market__c,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c,IsActivationDeferred__c,ProcessType__c,MarketOrigin__c,ServicePoint__r.CommoditySector__c,VoltageLevel__c,SupplyType__c,CustomerCategory__c,SignatureMethod__c,DocSendingMethod__c
+            Id,EffectiveDate__c,RecessNotice__c,WaiverRightAfterthought__c ,IsEarlyActivation__c ,ClientCategoryFormula__c,CommodityFormula__c,RecordType.DeveloperName,WizardCompletedDate__c,Account.RecordType.DeveloperName,Channel__c,Market__c,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c,IsActivationDeferred__c,ProcessType__c,MarketOrigin__c,ServicePoint__r.CommoditySector__c,VoltageLevel__c,SupplyType__c,CustomerCategory__c,SignatureMethod__c,DocSendingMethod__c,IsTransition__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
             AND Phase__c NOT IN ('Annullato')
-            AND ProcessType__c != ''
+            /* AND ProcessType__c != ''
+            AND ProcessType__c != 'VAS' */
             WITH SECURITY_ENFORCED
         ];
     }
@@ -631,6 +633,7 @@ public inherited sharing class HDT_QR_Order {
         return [
             SELECT
             Phase__c,
+            PhaseStory__c,
             isTransition__c ,
             recordtype.developername,
             AutorizationVolturaThirdTrader__c,
@@ -1282,7 +1285,7 @@ public inherited sharing class HDT_QR_Order {
         FROM Order
         WHERE ParentOrder__c = :parentOrderId
         AND QualityCall__c = true
-        AND VasSubtype__c != 'Analisi Consumi'
+        AND (VasSubtype__c != 'Analisi Consumi' OR ComfortCallDaysDue__c != NULL)
         AND Phase__c NOT IN ('Completata','Annullato')
         WITH SECURITY_ENFORCED
         ];
@@ -1330,7 +1333,8 @@ public inherited sharing class HDT_QR_Order {
         return [
             Select 
             id,
-            AgencyCode__c
+            Phase__c,
+            AgencyCode__c, SignedDate__c
             from Order 
             Where id = :id
             WITH SECURITY_ENFORCED
@@ -1343,8 +1347,13 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getOrderForComfort(String id){
-        return [SELECT Id, Phase__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, RecordType.DeveloperName FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
+        return [SELECT Id, Phase__c, SignedDate__c, isTransition__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, ParentOrder__c, RecordType.DeveloperName, DateComfortCall__c FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
     }
+
+    public List<Order> getAllOrdersForComfort(String id){
+        return [SELECT Id, Phase__c, ConfirmCustomerContract__c, CancellationReason__c, ParentOrder__c, QualityCall__c FROM Order WHERE QualityCall__c =true AND ParentOrder__c = :id WITH SECURITY_ENFORCED];
+    }
+
 
     public List<Order> getOrdersList(List<String> ordIdList){
         return [SELECT Id, Phase__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, RecordType.DeveloperName FROM Order WHERE Id = :ordIdList WITH SECURITY_ENFORCED];

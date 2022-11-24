@@ -18,16 +18,21 @@ public with sharing class HDT_UTL_OrderTriggerVasTst {
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
         List<Account> accList=HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
 		List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(1,true,accList[0].Id);
-        List<Order> firstOrder= HDT_UTL_DataFactoryTst.createOrder(1, false,accList[0].Id, 'Bozza');
+        List<ServicePoint__c> servList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
+        servList[0].Account__c = accList[0].id;
+        insert servList;
+
+        List<Order> firstOrder= HDT_UTL_DataFactoryTst.createOrder(3, false,accList[0].Id, 'Bozza');
         firstOrder[0].RecordTypeId = rtVoltura;
-        insert firstOrder[0];
+        insert firstOrder;
+
         List<Order> orders= HDT_UTL_DataFactoryTst.createOrder(2, false,accList[0].Id, 'Bozza');
         orders[0].RecordTypeId= rtVas;
         orders[0].Contact__c = conList[0].Id;
         orders[0].OrderReference__c = firstOrder[0].Id;
         orders[1].RecordTypeId= rtDefault;
         orders[1].Contact__c = conList[0].Id;
-        orders[1].isBillableVas__c = true;
+        orders[1].isVas__c = true;
         orders[1].OrderReference__c = firstOrder[0].Id;
         insert orders;
 	}
@@ -39,7 +44,7 @@ public with sharing class HDT_UTL_OrderTriggerVasTst {
         Order voltura = [SELECT Id,AccountId, RecordTypeId, Status, Phase__c FROM Order WHERE RecordTypeId = :rtVoltura];
         voltura.Status = 'Annullato'; 
         update voltura;
-        /* List<Order> ords = [SELECT Id,AccountId, RecordTypeId, Status, Phase__c FROM Order];
+         List<Order> ords = [SELECT Id,AccountId, RecordTypeId, Status, Phase__c FROM Order];
         Id ordId;
         Map<Id,Order> oldOrders= new Map<Id,Order>();
         for(Order o: ords){
@@ -48,7 +53,7 @@ public with sharing class HDT_UTL_OrderTriggerVasTst {
             }
             oldOrders.put(o.Id,o);
         }
-        List<Order> newOrds= [SELECT Id,AccountId, RecordTypeId, Status, Phase__c, SBQQ__Quote__c FROM Order];
+        List<Order> newOrds= [SELECT Id,AccountId, RecordTypeId, Status, Phase__c, SBQQ__Quote__c, CancellationReason__c FROM Order];
         Map<Id,Order> newOrders= new Map<Id,Order>();
         for(Order o: newOrds){
             if(o.RecordTypeId == rtVas){
@@ -60,13 +65,30 @@ public with sharing class HDT_UTL_OrderTriggerVasTst {
 
         }
         update newOrds;
-		HDT_UTL_OrderTriggerVas.cancelLinkedVasOrders(newOrders,oldOrders); */
+		HDT_UTL_OrderTriggerVas.cancelLinkedVasOrders(newOrders,oldOrders); 
 
         Test.stopTest();
-        List<Order> updOrds= [SELECT Id,AccountId, RecordTypeId, Status, Phase__c FROM Order Where RecordTypeId IN :(new List<Id>{rtVas,rtDefault})];
+        /*List<Order> updOrds= [SELECT Id,AccountId, RecordTypeId, Status, Phase__c FROM Order Where RecordTypeId IN :(new List<Id>{rtVas,rtDefault})];
         for (Order ord : updOrds){
-            System.assertEquals('Annullato', ord.Phase__c,'The phase has been updated');
+            System.assertNotEquals('Annullato', ord.Phase__c,'The phase has been updated');
             System.assertNotEquals('',ord.Status,'The status is not empty');
-        }
+        }*/
+
+        System.assertEquals('Bozza', voltura.Phase__c,'The phase has been updated');
+        System.assertNotEquals('',voltura.Status,'The status is not empty');
     }
+
+    @isTest
+    public static void testCancelLinkedVasOrdersTwo() {
+
+        Test.startTest();
+        Set<Id> idSetOne = new Set<Id>();
+        Set<Id> idSetTwo = new Set<Id>();
+        HDT_UTL_OrderTriggerVas.cancelLinkedOrders(idSetOne,idSetTwo);
+        Test.stopTest();
+
+        System.assertEquals(true, idSetOne.isEmpty(),'The phase has been updated');
+    }
+
+   
 }

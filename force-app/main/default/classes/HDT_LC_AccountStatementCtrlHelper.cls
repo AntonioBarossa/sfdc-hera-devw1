@@ -66,7 +66,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             for(HDT_ColumnsFirstLevel__mdt c : columnMdtList){
                 cd = new HDT_WRP_AccountStatement.HDT_WRP_ColumnDetail();
                 cd.type = c.FieldType__c;
-                cd.isAmount = c.IsAmountField__c;
+                //montors fix 07/07/2022
+                //cd.isAmount = c.IsAmountField__c;
+                cd.totAmountStored = 0;
+                cd.totAmount = 0;
 
                 sc = new HDT_WRP_AccountStatement.HDT_WRP_SingleColumn();
                 sc.label = c.MasterLabel;
@@ -74,6 +77,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 sc.showSort = c.IsSortable__c;
                 sc.isFilter = c.IsFilter__c;
                 sc.showAmount = c.ShowTotAmountHere__c;
+
                 sc.detail = cd;
                 columnsObj.columnObj.add(sc);
             }
@@ -142,6 +146,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             colObj.sortable = colSecMdt.Sortable__c;
             colObj.initialWidth = colSecMdt.InitialWidth__c;
             colObj.type = colSecMdt.FieldType__c;
+            colObj.isAmountField = colSecMdt.IsAmountField__c;
             obj.columnObj.add(colObj);
         }
 
@@ -354,7 +359,9 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             if(tabValue.equalsIgnoreCase('EC7')){
                 serviceCatalog.Context__c = 'EC7';
             }
-
+            if(tabValue.equalsIgnoreCase('paperless')){
+                serviceCatalog.Context__c = 'Paperless';
+            }
             /*
                 1° livello
                     - Single Record:

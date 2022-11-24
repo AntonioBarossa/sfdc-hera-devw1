@@ -17,6 +17,9 @@ public with sharing class HDT_TRH_AnagAlignmentEvent extends HDT_TRH_TriggerHand
         System.debug(LoggingLevel.DEBUG, '# Case di allineamento anagrafica da creare: ' + anagAlignCases.size());
         HDT_UTL_DatabaseService.insertSObject(anagAlignCases);
 
+        List<ServiceRequest__c> serviceRequestList = HDT_UTL_Case.createServiceRequestFromCases(anagAlignCases);
+        HDT_UTL_DatabaseService.insertSObject(serviceRequestList);
+
         for (Case anagAlignCase : anagAlignCases) {
             anagAlignCase.Phase__c = 'Da Inviare';
         }

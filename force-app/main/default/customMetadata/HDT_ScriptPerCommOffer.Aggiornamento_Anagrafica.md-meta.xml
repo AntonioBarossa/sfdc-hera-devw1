@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Object__c</field>
-        <value xsi:type="xsd:string">Activity</value>
+        <value xsi:type="xsd:string">Campaign</value>
     </values>
     <values>
         <field>OfferCode__c</field>
@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>ScriptFlowName__c</field>
-        <value xsi:type="xsd:string">HDT Script - Aggiornamento Anagrafica</value>
+        <value xsi:type="xsd:string">HDT_Script_Aggiornamento_Anagrafica</value>
     </values>
     <values>
         <field>ScriptName__c</field>

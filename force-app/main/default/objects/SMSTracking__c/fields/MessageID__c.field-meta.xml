@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>MessageID__c</fullName>
-    <caseSensitive>true</caseSensitive>
     <description>Mobile message ID</description>
     <externalId>false</externalId>
     <label>ID Messaggio</label>
@@ -9,5 +8,5 @@
     <required>true</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>
-    <unique>true</unique>
+    <unique>false</unique>
 </CustomField>

@@ -102,12 +102,18 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         {
             Date currentEndDate = currentCase.TemporaryConnectionEndDate__c;
             result = validateEndDate(fields, currentEndDate, currentCase);
+        
+        }else if(caseType == 'Promessa di Pagamento Ente')
+        {
+            result = validatePromessaDiPagamentoENte(currentCase);
+           
         }else if(cluster.equalsIgnoreCase('Attivazioni'))
         {
             result = validateAttivazioniPostSales(fields);
+
         }else {
 
-        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
         }
 
@@ -130,14 +136,26 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         System.debug(LoggingLevel.DEBUG,getFieldValue(fields, 'Type'));
 
         if(caseType == 'Piano Rateizzazione'){
+            
+            String reason = getFieldValue(fields, 'Reason__c');
+
+            if(String.isNotBlank(reason) && reason.equals('Assistenza sociale (ente)')){
+                List<PermissionSetAssignment> psa = [SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId= :UserInfo.getUserId() AND PermissionSet.Name = 'HDT_AssistenzaSocialeEnte'];
+                if(psa.size()==0) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Utente non abilitato ad Assistenza sociale (ente)'));
+                String depositPaymentMode = getFieldValue(fields, 'DepositPaymentMode__c');
+                if(String.isBlank(result) && String.isNotBlank(depositPaymentMode) && depositPaymentMode.equals('Promessa di pagamento')) {
+                    List<PermissionSetAssignment> psas = [SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId= :UserInfo.getUserId() AND PermissionSet.Name = 'HDT_PromessaPagamentoEnte'];
+                    if(psas.size()==0) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Utente non abilitato a promessa di pagamento'));
+                }
+            }     
 
             Boolean attachmentManagement = (getFieldValue(fields, 'AttachmentManagement__c') != null && getFieldValue(fields, 'AttachmentManagement__c') != '')
                 ? Boolean.valueOf(getFieldValue(fields, 'AttachmentManagement__c'))
                 : null;
 
             if(attachmentManagement != null ){
-                //result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
-                if(attachmentManagement){
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+                /* if(attachmentManagement){
                     List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
                     if(attachedDocument.size() == 0){
                         result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
@@ -146,7 +164,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     }
                 }else{
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
-                }
+                } */
 
             } else {
             
@@ -486,6 +504,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             electronicInvoicing.officeCode = codiceUfficio;
             electronicInvoicing.xmlType = tipoXml;
             electronicInvoicing.accountRecordTypeName = currentCase.Account.RecordType.DeveloperName;
+            //TK 908382C introdotto attributo marcatura cliente per skippare i controlli della fatturazione elettronica
+            electronicInvoicing.customerMarking = currentCase.Account.CustomerMarking__c;
 
             String electronicInvoicingError = HDT_UTL_ElectronicInvoicing.validate(electronicInvoicing);
             if (!String.isEmpty(electronicInvoicingError)) {
@@ -525,6 +545,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             && newVatNumber.equals(currentVatNumber) && newAddress.equals(currentAddress)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un dato fiscale del cliente.'));
             return result;
+        }
+
+        if(currentCase.BillingIsAddressVerified__c == false){
+            return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Verificare l\'indirizzo prima di procedere'));
         }
 
         if (marking != null) {
@@ -1063,12 +1087,18 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     private String validateVerificaTitolarita(Case currentCase) {
 
+        /**@frpanico 2022-07-08
+         * TK 904342C
+         * Rimuovere obbligatorieta allegato
+         */
+        
+        /*
         List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
 
         if(attachedDocument.size() == 0){
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
         }
-            
+        */    
         return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
     }
 
@@ -1332,6 +1362,17 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     public String getFieldValue(String fields, String fieldToGet){
         Map<String, Object> fieldsMap = (Map<String, Object>) JSON.deserializeUntyped(fields);
         return String.valueOf(fieldsMap.get(fieldToGet));
+    }
+
+    public String validatePromessaDiPagamentoENte(Case currentCase){
+        String result='';
+        List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+        if(attachedDocument.size() == 0){
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
+        }else{
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        }
+        return result;
     }
 
 }

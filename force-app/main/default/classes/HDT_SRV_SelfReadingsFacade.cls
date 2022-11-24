@@ -45,14 +45,21 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
                     @Author: Davide Viola - 20/10/2021
                     Description: PMD -> Commentata variabile non utilizzata.
                 */
-                /*HDT_SRV_SelfReadings.HDT_WRP_SelfReadingResponse responseInvioLetture = */HDT_SRV_SelfReadings.handleResponse(sapIntegration, '');
+                HDT_SRV_SelfReadings.HDT_WRP_SelfReadingResponse responseInvioLetture = HDT_SRV_SelfReadings.handleResponse(sapIntegration, '');
+                Boolean discardRework = argsMap.containsKey('discardRework') ? (Boolean)argsMap.get('discardRework') : false;
+                if (System.isQueueable() && discardRework && !responseInvioLetture.isResponseOk){
+                    List<Case> cList = HDT_QR_GenericQuery.getGenericRecords('Id,Phase__c', 'Case', 'Id = \''+recordId+'\' AND Phase__c IN (\'Esito KO pre-MDM\',\'Esito KO da SAP\')');
+                    if (!cList.isEmpty()){
+                        HDT_UTL_Scarti.createActivity(cList[0].Id, cList[0].Phase__c,responseInvioLetture.checkAutoletturaDescription);
+                    }
+                }
             }
 
             response.success = True;
             response.message = 'OK';
 
         } catch(Exception ex){
-            response.success = false;
+            response.success = true;
             response.message = 'KO';
             System.debug(LoggingLevel.DEBUG, 'HDT_SRV_SelfReadingsFacade: exception at line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
         }
@@ -70,9 +77,10 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
             sapIntegration.requestType = requestType;
             sapIntegration = support.submitRequest(sapIntegration);
         } catch (Exception ex) {
+            HDT_SRV_LogService logService = new HDT_SRV_LogService('CalloutAutolettura');
             System.debug(LoggingLevel.DEBUG, 'HDT_SRV_SelfReadingsFacade: exception at line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
             System.debug(LoggingLevel.DEBUG, 'HDT_SRV_SelfReadingsFacade: exception stack trace string:' + ex.getStackTraceString() );
-            
+            logService.insertSingleLog('HDT_SRV_SelfReadingsFacade', requestType, null, JSON.serialize(sapIntegration), ex.getMessage(), recordId, null, null);     
         }
         return sapIntegration;
         

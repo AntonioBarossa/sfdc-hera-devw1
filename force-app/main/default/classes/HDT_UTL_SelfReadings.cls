@@ -152,17 +152,46 @@ public inherited sharing class HDT_UTL_SelfReadings {
         c.Type = String.isNotBlank(request.type) ? request.type : 'Autolettura da cliente';
         c.IntegrationId__c = request.integrationId;
         c.MeterCode__c = request.serialNumber;
-        c.ReadingDate__c = request.readingDate;
+        c.ReadingDate__c = request.readingDate != null ? request.readingDate : System.today();
         c.DistributorCode__c = inputContract.ServicePoint__r.Distributor__r.Code__c;
+        c.ServicePointCode__c = inputContract.ServicePoint__r?.ServicePointCode__c;
+        c.Commodity__c = isGas ? 'Gas' : 'Energia Elettrica'; /* Wave 2 Adeguare con altre company in ambito */
         c.SalesCompanyCode__c = isGas ? '10V0000160' : '13V0000000'; // TODO WAVE 2: adeguare con le altre company in ambito.
 
         HDT_QR_CausalCodeCalculation causalCodeHandler = new HDT_QR_CausalCodeCalculation();
         HDT_CausalCodeCalculation__mdt causalCodeMdt = causalCodeHandler.calculateCausalCode(c.Cluster__c, c.Type, '', request.commodity);
         c.CausalCode__c = causalCodeMdt.CausalCode__c;
 
+        /**@frpanico 2022-11
+         * Sulle autoletture IVR e' necessario inserire il controllo di compatibilita'
+         * In quanto altrimenti possono crearei N pratiche di cui N-1 andranno in Heroku KO
+         * Poiche' esiste gia' la prima pratica
+         * Dalla velocita' con cui arrivano i due messaggi di creazione e poi di OK 
+         * Che appaiono quasi simultanei e' necessario inserire il controllo di compatibilita'
+         * Sul Check preliminari OK piuttosto che sulla Bozza
+         * Dato che nel caso in cui il check sia in KO il Case viene annullato
+         */
         switch on request.outcome {
             when 'OK' {
-                c.Phase__c = 'Check preliminari OK';
+                String compatibility = '';
+                try
+                {
+                     compatibility = HDT_UTL_MatrixCompatibility.checkCompatibilityPostSales(c);
+                }
+                catch(Exception e)
+                {
+                    compatibility = '';
+                }
+                if(String.isEmpty(compatibility))
+                {
+                    c.Phase__c = 'Check preliminari OK';
+                }
+                else
+                {
+                    c.Phase__c = 'Annullato';
+                    c.Status = 'Closed';
+                    c.CancellationReason__c = 'Processo incompatibile';
+                }
             }
             when 'KO' {
                 c.Phase__c = 'Check preliminari KO';
@@ -188,7 +217,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
         r.Mru__c = request.readings.mru;
         r.SendTo__c = request.readings.sendTo;
         r.Name = 'Lettura ' + Datetime.now().format('dd/MM/y HH:mm:ss');
-        r.ReadingDate__c = request.readingDate != null ? request.readingDate : request.readings.date1;
+        r.ReadingDate__c = request.readingDate != null ? request.readingDate : request.readings.date1 != null ? request.readings.date1 : System.today();
         if (isGas) {
             r.CaseGas__c = c.Id;
             r.RecordTypeId = rtQueryHandler.getRecordTypeIdByName('HDT_RT_LetturaGas');
@@ -201,7 +230,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
             r.ReadingValueMeter__c = request.readings.value1;
             r.ReadingValueCorrector__c = request.readings.value2;
             r.ReadingSerialNumberMeter__c = request.readings.serialNumber1;
-            r.ReadingSerialNumber2__c = request.readings.serialNumber2;
+            r.ReadingSerialNumberCorrector__c = request.readings.serialNumber2;
             r.ReadingRegisterMeter__c = request.readings.register1;
             r.ReadingRegisterCorrector__c = request.readings.register2;
             r.ReadingTypeMeter__c = request.readings.type1;
@@ -288,9 +317,15 @@ public inherited sharing class HDT_UTL_SelfReadings {
         HDT_UTL_DatabaseService.upsertSObject(r);
         response.readingId = r.Id;
         if('Bozza'.equalsIgnoreCase(c.Phase__c)){
-            c.Phase__c = 'Attesa check preliminari';
+            c.Phase__c = 'Attivo'.equalsIgnoreCase(inputContract.Status)? 'Attesa check preliminari' : 'Bozza Annullata';
+            if('Bozza Annullata'.equalsIgnoreCase(c.Phase__c)){
+                c.Status = 'Closed';
+                c.CancellationNote__c = 'Contratto cessato';
+                c.CancellationReason__c = 'Pratica errata';
+            }
             HDT_UTL_DatabaseService.upsertSObject(c);
-        } 
+        }
+        
     }
 
     public static Map<String,DiscardAnnullmentRule__c> isAutomaticDiscard(Set<String> errorCodes) {

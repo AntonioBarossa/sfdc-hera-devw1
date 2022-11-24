@@ -256,9 +256,9 @@
                                 <div class="slds-m-left_x-small slds-truncate slds-align_absolute-center divheader" title={c.label}><!--slds-cell-fixed-->
                                     <p>{c.label}</p>
                                     <p if:true={c.showAmount} class="slds-m-left_xx-small">
-                                        <!--&nbsp;-&nbsp;-->
+                                        <!--&nbsp;-&nbsp;value={totAmount}-->
                                         <lightning-formatted-number
-                                            value={totAmount}
+                                            value={c.detail.totAmount}
                                             format-style="currency"
                                             currency-code="EUR"
                                             currency-display-as="symbol"

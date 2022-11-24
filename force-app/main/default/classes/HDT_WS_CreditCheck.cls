@@ -20,7 +20,6 @@ public class HDT_WS_CreditCheck {
         }
         
         //req.sistema = 'Standard'.equalsIgnoreCase(UserInfo.getUserType())? 'SFDC' : 'COMMUNITY';
-
         System.debug(LoggingLevel.DEBUG, 'HDT_WS_CreditCheck - HDT_WS_CreditCheckResponse - callService: req ----> ');
         if (String.isNotEmpty(req.bpClass) && req.bpClass.containsIgnoreCase('Marcatura nulla')){
             req.bpClass = '';
@@ -37,6 +36,7 @@ public class HDT_WS_CreditCheck {
             if ('failed'.equalsIgnoreCase(res?.status)) {
                 orderData.orderId = req.crmId;
                 Set<String> errorMessageList = new Set<String>();
+                String codiceErrore = '';
                 Boolean isOk = false;
                 List<HDT_WS_CreditCheckResponse.HDT_WRP_errorResponseObject> items = res.errorDetails != null ? res.errorDetails : new List<HDT_WS_CreditCheckResponse.HDT_WRP_errorResponseObject>();
                 for (HDT_WS_CreditCheckResponse.HDT_WRP_errorResponseObject item : items){
@@ -46,6 +46,7 @@ public class HDT_WS_CreditCheck {
                             switch on keyMessage?.toUpperCase() {
                                 when  'ERROR_CODE'{
                                     isOk = HDT_UTL_CreditCheck.managedErrorCode(message);
+                                    codiceErrore = message+' - ';
                                 }
                                 when else {
                                     errorMessageList.add(message); 
@@ -56,14 +57,18 @@ public class HDT_WS_CreditCheck {
                 }
                 errorMessageList.remove('');
                 if (!errorMessageList.isEmpty()){
-                    String testMessage = String.join((Iterable<String>)errorMessageList, ' \n');
+                    String testMessage = codiceErrore + String.join((Iterable<String>)errorMessageList, ' \n');
                     orderData.outcomeDescription = (isOk) ? testMessage : 'KO Tecnico - ' + testMessage;
                     orderData.outcome = (isOK)? 'OK' : 'KO';
                 }
             }else if (String.isNotBlank(res?.exceptionMessage)){
                 orderData.orderId = req.crmId;
-                orderData.outcomeDescription =  'KO Tecnico - ' + res.exceptionMessage;
-                orderData.outcome = 'KO';
+                orderData.outcomeDescription =  'KO Tecnico - Errore Generico - ' + res.exceptionMessage;
+                orderData.outcome = 'OK';
+                HDT_UTL_CreditCheck.insertCalloutLog(JSON.serialize(req), JSON.serialize(res));
+            }else{
+                //Gestione Credit Check In Progress 
+                HDT_UTL_DatabaseService.updateSObject(new Order(Id = req.crmId, CreditCheckInProgress__c = true));
             }
 
             if (!orderData.isEmpty()){

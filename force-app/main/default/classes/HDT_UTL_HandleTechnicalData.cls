@@ -186,6 +186,15 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         }
         //Modifica HRADRT_GV 31/01/2022 - Fine
 
+        if (String.isNotBlank(mapRequestFields.get('supplyType')))
+        {
+            sp.SupplyType__c = mapRequestFields.get('supplyType');
+        }
+        if (String.isNotBlank(mapRequestFields.get('implantType')))
+        {
+            sp.ImplantType__c = mapRequestFields.get('implantType');
+        }
+
         sp.Status__c='Impianto compl. in funzione';
         updateServicePoint();
     }

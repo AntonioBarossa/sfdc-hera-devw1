@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Case</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>La richiesta gestisce solamente le autoletture</errorMessage>
+        <filterItems>
+            <field>Case.Cluster__c</field>
+            <operation>equals</operation>
+            <value>Autolettura</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Case</referenceTo>
+    <relationshipLabel>Richieste Esito Autolettura</relationshipLabel>
+    <relationshipName>Richieste_Esito_Autolettura</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

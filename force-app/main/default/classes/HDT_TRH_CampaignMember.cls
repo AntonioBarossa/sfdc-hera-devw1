@@ -21,4 +21,10 @@ public inherited sharing class HDT_TRH_CampaignMember extends HDT_TRH_TriggerHan
     public override void afterUpdate(){
         HDT_UTL_CampaignMember.checkTipoEsito((List<CampaignMember>) trigger.new, (Map<Id,CampaignMember>) trigger.oldMap);
     }
+    public override void afterInsert(){
+        if(Trigger.new != null && Trigger.new.size() == 1 && !System.isBatch())
+        {
+        HDT_UTL_CampaignMember.assignCallDateTimeHandle((List<CampaignMember>) trigger.new);
+        }
+    }
 }

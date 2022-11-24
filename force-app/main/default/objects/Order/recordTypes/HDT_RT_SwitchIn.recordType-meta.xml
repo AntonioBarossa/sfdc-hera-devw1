@@ -399,6 +399,10 @@
     <picklistValues>
         <picklist>CancellationReason__c</picklist>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento da cliente</fullName>
             <default>false</default>
         </values>
@@ -443,6 +447,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Credit Check KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Delibera ARERA 155%2F2020</fullName>
             <default>false</default>
         </values>
@@ -456,6 +464,10 @@
         </values>
         <values>
             <fullName>Domiciliazione già presente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -580,7 +592,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>CALL BACK WEB NEOEN</fullName>
+            <fullName>CALL BACK WEB</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2017,6 +2029,17 @@
             <fullName>Imposta usi non domestici iva 22%25 %28Cod%2E G_ICC%29</fullName>
             <default>false</default>
         </values>
+    </picklistValues>    
+    <picklistValues>
+        <picklist>FuiAccess__c</picklist>
+        <values>
+            <fullName>N</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>S</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Instance326__c</picklist>
@@ -2194,6 +2217,10 @@
         </values>
         <values>
             <fullName>Annullamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Errore invio a DL%2FSII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2547,6 +2574,17 @@
         </values>
         <values>
             <fullName>Voltura con Switch</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>QualityCallStatus__c</picklist>
+        <values>
+            <fullName>Attività Gestita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scadenza Gestita</fullName>
             <default>false</default>
         </values>
     </picklistValues>

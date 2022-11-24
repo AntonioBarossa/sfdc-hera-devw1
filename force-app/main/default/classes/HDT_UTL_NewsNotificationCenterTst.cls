@@ -37,7 +37,7 @@ public class HDT_UTL_NewsNotificationCenterTst {
 
         notificationList.add(nc1);
         insert notificationList;
-
+        
     }
 
     @IsTest
@@ -58,6 +58,34 @@ public class HDT_UTL_NewsNotificationCenterTst {
     
             Test.stopTest();
         }
+    }
+
+    @IsTest
+    static void testSendNotificationFromFlow()
+    {
+        Knowledge__kav article = [SELECT Id, Title, ToPublishDate__c FROM Knowledge__kav WITH SECURITY_ENFORCED LIMIT 1];
+        article.ToPublishDate__c = System.now().addDays(1);
+        update article;
+
+        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
+        User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+
+        
+        List<HDT_UTL_NewsNotificationCenter.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_NewsNotificationCenter.HDT_UTL_FlowInputs>();
+        HDT_UTL_NewsNotificationCenter.HDT_UTL_FlowInputs input = new HDT_UTL_NewsNotificationCenter.HDT_UTL_FlowInputs();        
+        System.runAs(internalUser) {
+
+            input.article = article;
+            inputs.add(input);
+            Test.startTest();
+
+            List<HDT_UTL_NewsNotificationCenter.HDT_UTL_FlowOutputs> result = HDT_UTL_NewsNotificationCenter.sendNotificationFromFlow(inputs);
+    
+            Test.stopTest();
+
+            System.assertEquals(true, result.isEmpty(), 'result != null');
+        }
+        
     }
 
     @IsTest

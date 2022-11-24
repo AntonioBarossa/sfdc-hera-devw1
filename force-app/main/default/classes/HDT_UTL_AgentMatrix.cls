@@ -16,4 +16,19 @@ public inherited sharing class HDT_UTL_AgentMatrix {
 
         return isMonitoringList;
     }
+    /**@frpanico 2022-07-22
+     * Il metodo interroga la matrice agenti
+     * ritorna una lista con tutte gli agenti a monitoraggio attivp
+     */
+    public static List<String> agentCodeIsMonitoringList(){
+        List<AgentMatrix__c> agentMatrixList = HDT_QR_AgentMatrix.getAgentMatrixIsMonitoringTrue();
+        
+        List<String> isMonitoringList = new List<String>();
+        
+        for (AgentMatrix__c agentMatrix : agentMatrixList) {
+            isMonitoringList.add(agentMatrix.AgentCode__c);
+        }
+
+        return isMonitoringList;
+    }
 }

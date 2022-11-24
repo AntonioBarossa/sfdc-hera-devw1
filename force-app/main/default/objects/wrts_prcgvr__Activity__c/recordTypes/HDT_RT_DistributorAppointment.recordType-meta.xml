@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_DistributorAppointment</fullName>
     <active>true</active>
@@ -2721,6 +2721,10 @@
             <fullName>Presa Appuntamento</fullName>
             <default>true</default>
         </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Validation__c</picklist>
@@ -2745,7 +2749,7 @@
         </values>
         <values>
             <fullName>3</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>

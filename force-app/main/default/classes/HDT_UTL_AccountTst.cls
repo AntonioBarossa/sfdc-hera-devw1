@@ -25,6 +25,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(2, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 			List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
+			List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, true, accounts[1].Id,'Bozza');
 			AccountContactRelation myAccConRel =  HDT_UTL_DataFactoryTst.createAccountContactRelation(true, accounts[1].Id, contacts[0].Id);
 		}
 	}
@@ -207,4 +208,66 @@ public with sharing class HDT_UTL_AccountTst{
 			System.assertNotEquals(false, tResult!=null, 'massiveRequest did not work correctly');
 		}
 	}
+	@IsTest
+	static void transcondeCustomerCategoryTst()
+	{
+		List<String> categoryList = new List<String>{'Famiglie','Aziende Soho','Aziende SME','Enti','Grandi Condomini','Intercompany','Salvaguardia Aziende','Salvaguardia Enti','Aziende TOP','Piccoli Condomini','Societa Vendita Terze','Default gas','Comuni Territorio','FUI domestico','FUI non domestico','Reseller - Gruppo','Reseller - Extra Gruppo'};
+		List<String> resultList = new List<String>();
+		for(String category : categoryList)
+		{
+			String result = HDT_UTL_Account.transcodeCustomerCategory(category);
+			if(String.isNotBlank(result))
+			{
+				resultList.add(result);
+			}
+		}
+		System.assertEquals(true, !resultList.isEmpty(), 'Transcodifica errata');
+	}
+	@isTesT
+	static void createBpCaTst()
+	{
+		List<AccountContactRelation> acrList = [SELECT Id, Roles FROM AccountContactRelation WHERE Roles = 'Titolare'];
+		List<Sale__c> saleList = [SELECT Id FROM Sale__c ];
+		Test.setMock(HttpCalloutMock.class, mock);
+		Test.startTest();
+			HDT_UTL_Account.createBpCa(acrList, saleList[0].Id, true);
+		Test.stopTest();
+		List<Account> accountTest = [SELECT Id FROM Account WHERE CustomerCode__c != NULL];
+		System.assertEquals(true, !accountTest.isEmpty(), 'Account non assegnat');
+	}
+	@isTest
+	static void checkCustomerMarkingTest()
+	{
+		List<String> customerMarking = new List<String>{'Persona fisica','Ditta individuale','Azienda','Parti comuni','Condominio','Associazione','BP Doppio','Marcatura nulla'};
+		List<Account> accountTest = new List<Account>();
+		String region = 'AQ';
+		Test.startTest();
+			for(String marking : customerMarking)
+			{
+				Account acc = new Account();
+				acc.CustomerMarking__c = marking;
+				acc = HDT_UTL_Account.checkCustomerMarking(acc, region);
+				accountTest.add(acc);
+			}
+		Test.stopTest();
+		System.assertEquals(true, !accountTest.isEmpty(), 'Marcatura non calcolata');
+	}
+	@IsTest
+	static void registerCondominioTest()
+	{
+		List<Contact> contactList = [Select Id FROM Contact];
+		List<Contact> contactTest = new List<Contact>();
+		List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, false, 'HERA COMM', 'Condominio', 'Grandi Condomini');
+		accList[0].CustomerCode__c = '10036162191';
+		insert accList;
+		AccountContactRelation acr = HDT_UTL_DataFactoryTst.createAccountContactRelation(false, accList[0].Id, contactList[0].Id);
+		acr.Roles = 'Amministratore condominio';
+		insert acr;
+		Test.setMock(HttpCalloutMock.class, mock);
+		Test.startTest();
+			contactTest.add(HDT_UTL_Account.registerAmmCondominio(contactList[0],false));
+		Test.stopTest();
+		System.assertEquals(true, !contactTest.isEmpty(), 'Contatto non registrato');
+	}
+
 }

@@ -1898,6 +1898,7 @@
         <object>OrderItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <runInMode>DefaultMode</runInMode>
     <screens>
         <name>Bonus_Fisso_0_0_0_Gas</name>
         <label>Bonus Fisso Gas</label>
@@ -1911,7 +1912,7 @@
         </connector>
         <fields>
             <name>BonusFisso_Text1_0_0_0</name>
-            <fieldText>&lt;p&gt;Bonus e opzioni&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus €/smc&lt;/p&gt;&lt;p&gt;Al prezzo a copertura del corrispettivo di commercializzazione all’ingrosso sarà applicato uno sconto del 20% per i primi 12 mesi e del 30% dal 13° al 24° mese di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus e opzioni&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus €/smc&lt;/p&gt;&lt;p&gt;Al prezzo a copertura del corrispettivo di commercializzazione all’ingrosso sarà applicato uno sconto del 20% per i primi 12 mesi e del 30% dal 13° al 24° mese di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -2019,7 +2020,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/ESTEnergy pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2135,7 +2136,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/ESTEnergy pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2206,7 +2207,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/ESTEnergy pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2272,7 +2273,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/ESTEnergy pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2377,7 +2378,7 @@
             <fieldText>&lt;p&gt;Bonus €/a&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus Soluzioni Sostenibili&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>4 AND (1 OR 2 OR 3 OR 5) AND 6</conditionLogic>
+                <conditionLogic>4 AND (1 OR 2 OR 3 OR 5)</conditionLogic>
                 <conditions>
                     <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
                     <operator>Contains</operator>
@@ -2411,13 +2412,6 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa Web</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>VAS</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2486,7 +2480,7 @@
             <fieldText>&lt;p&gt;Bonus €/a&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus Soluzioni Sostenibili&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>(1 OR 2 OR 3 OR 5) AND 4 AND 6</conditionLogic>
+                <conditionLogic>(1 OR 2 OR 3 OR 5) AND 4</conditionLogic>
                 <conditions>
                     <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
                     <operator>Contains</operator>
@@ -2520,13 +2514,6 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa Web Gas</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>VAS</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2600,7 +2587,7 @@
             <fieldText>&lt;p&gt;Bonus €/a&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus Soluzioni Sostenibili&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>(1 OR 2 OR 3) AND 4 AND 5</conditionLogic>
+                <conditionLogic>(1 OR 2 OR 3) AND 4</conditionLogic>
                 <conditions>
                     <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
                     <operator>Contains</operator>
@@ -2626,14 +2613,7 @@
                     <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Bonus Soluzioni Sostenibili</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>VAS</stringValue>
+                        <stringValue>Soluzioni Sostenibili</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2702,7 +2682,7 @@
             <fieldText>&lt;p&gt;Bonus €/a&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus Soluzioni Sostenibili&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>(1 OR 2 OR 3 OR 5) AND 4 AND 6</conditionLogic>
+                <conditionLogic>1 AND (2 OR 3 OR 4 OR 5)</conditionLogic>
                 <conditions>
                     <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                     <operator>Contains</operator>
@@ -2715,13 +2695,6 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>VAS</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -2856,7 +2829,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	&lt;/span&gt;Il prezzo descritto, al netto delle perdite pari al 10,2%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 78% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 22% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	&lt;/span&gt;Il prezzo descritto, al netto delle perdite pari al 10,2%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 86% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 14% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -2878,7 +2851,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	&lt;/span&gt;Il prezzo descritto, ridotto del 10,2% per un cliente domestico, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 77% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144,00 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 23% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	&lt;/span&gt;Il prezzo descritto, ridotto del 10,2% per un cliente domestico, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 86% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144,00 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 14% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2893,7 +2866,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/ESTEnergy pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -2983,7 +2956,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,2%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 78% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero, corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 22% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,2%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 86% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero, corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 14% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -3005,7 +2978,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, ridotto del 10,2% per un cliente domestico, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 77% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144,00 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 23% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, ridotto del 10,2% per un cliente domestico, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 86% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144,00 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 14% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3020,7 +2993,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/ESTEnergy pari ad € 23,00.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 23,00.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -3078,7 +3051,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text2</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 91% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 9% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 96% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 4% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -3107,7 +3080,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text4</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	&lt;/span&gt;Nella prima bolletta ci saranno inoltre i costi della voltura previsti da Hera Comm/ESTEnergy/Hera Comm Marche in misura pari a € 25,00 e quelli applicabili a discrezione del Distributore Locale.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	&lt;/span&gt;Nella prima bolletta ci saranno inoltre i costi della voltura previsti da {!HDT_Script_Introduzione.salesCompany} in misura pari a € 25,00 e quelli applicabili a discrezione del Distributore Locale.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -3165,7 +3138,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text2_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 90% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 10% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 96% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 4% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -3187,7 +3160,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text4_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	&lt;/span&gt;Nella prima bolletta ci saranno inoltre i costi della voltura previsti da Hera Comm/EstEnergy/Hera Comm Marche in misura pari a € 25,00 e quelli applicabili a discrezione del Distributore Locale.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	&lt;/span&gt;Nella prima bolletta ci saranno inoltre i costi della voltura previsti da {!HDT_Script_Introduzione.salesCompany} in misura pari a € 25,00 e quelli applicabili a discrezione del Distributore Locale.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -3231,7 +3204,7 @@
         </connector>
         <fields>
             <name>Promo_Text_1_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Promozioni&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Promozioni&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -3290,7 +3263,7 @@
         </connector>
         <fields>
             <name>Promo_Text_2_0_0_0_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Promozioni&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promozioni&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4861,7 +4834,7 @@
         </fields>
         <fields>
             <name>PRE_CU_ELE_AZ_INB</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Name} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -4994,7 +4967,7 @@
         </fields>
         <fields>
             <name>PRE_CU_OUT_ELE_AZ</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Name} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -5100,7 +5073,7 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Gas&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura]?&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c}&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Gas&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas?&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c}&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -5120,7 +5093,7 @@
         </fields>
         <fields>
             <name>PRE_CU_AZ_GAS_INB</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Name} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -5241,7 +5214,7 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Gas&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura]?&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c}&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Gas&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas?&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c}&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -5261,7 +5234,7 @@
         </fields>
         <fields>
             <name>PRE_CU_GAS_AZ_OUT</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Name} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -5409,7 +5382,7 @@
         </fields>
         <fields>
             <name>PRE_CU_INB_ELE_FAM</name>
-            <fieldText>&lt;p&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Name} e {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Conferma che Cognome, Nome e Codice Fiscale del precedente intestatario sono &lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta.PreviousCustomer__r.LastName}  {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -5501,41 +5474,65 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text4</name>
-            <fieldText>&lt;p&gt;Operatore: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità. Può restituire il modulo tramite sportello o inviandolo all&apos;indirizzo e-mail {!emailRestituzioneModuloFormula}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Operatore: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>or</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>EqualTo</operator>
+                    <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue>Prima Attivazione Ele</stringValue>
+                        <stringValue>Cambio Offerta</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>EqualTo</operator>
+                    <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue>Prima Attivazione Fuori delibera</stringValue>
+                        <stringValue>Cambio Offerta Ele</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>EqualTo</operator>
+                    <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue>Prima Attivazione In delibera</stringValue>
+                        <stringValue>Switch in con voltura tecnica</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>EqualTo</operator>
+                    <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue>Prima Attivazione con modifica</stringValue>
+                        <stringValue>Switch in Ripristinatorio</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>EqualTo</operator>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Reseller</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Fittizio</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Winback</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Ele</stringValue>
+                    </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
@@ -5648,7 +5645,7 @@
         </fields>
         <fields>
             <name>PRE_CU_OUT_FAM_ELE</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Name} e {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FiscalCode__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FiscalCode__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -5781,10 +5778,17 @@
         </fields>
         <fields>
             <name>PRE_INB_GAS_FAM</name>
-            <fieldText>&lt;p&gt;•	Conferma che Cognome, Nome e codice fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Name} e {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Conferma che Cognome, Nome e codice fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.PreviousCustomer__c</leftValueReference>
                     <operator>IsNull</operator>
@@ -5797,13 +5801,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Voltura con Switch</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Voltura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -5876,33 +5873,61 @@
             <fieldText>&lt;p&gt;Operatore: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>or</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>EqualTo</operator>
+                    <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue>Prima Attivazione In delibera</stringValue>
+                        <stringValue>Cambio Offerta</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>EqualTo</operator>
+                    <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue>Prima Attivazione Fuori delibera</stringValue>
+                        <stringValue>Cambio Offerta Gas</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>EqualTo</operator>
+                    <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue>Prima Attivazione con modifica</stringValue>
+                        <stringValue>Switch in con voltura tecnica</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>EqualTo</operator>
+                    <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue>Subentro Gas</stringValue>
+                        <stringValue>Switch in Ripristinatorio</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Reseller</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Fittizio</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Winback</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -6023,7 +6048,7 @@
         </fields>
         <fields>
             <name>PRE_CU_OUT_GAS_FAM</name>
-            <fieldText>&lt;p&gt;•	Conferma che Cognome, Nome e codice fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Name} e {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Conferma che Cognome, Nome e codice fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta.PreviousCustomer__r.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -6241,6 +6266,11 @@
         <connector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </connector>
+        <fields>
+            <name>Title_DIARIO</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;DIARIO DEI CONSUMI&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>Bundle_Text1</name>
             <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta Luce, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi “DIARIO DEI CONSUMI e Hera Fast check up . A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di abitanti della sua abitazione è {!GetAnalisiConsumi.OccupantsNumber__c} e la superficie è {!GetAnalisiConsumi.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>

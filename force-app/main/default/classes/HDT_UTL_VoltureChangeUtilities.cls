@@ -248,4 +248,13 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
         List<String> listToConvert = ddmmyyyy.split('/');
         return Date.newInstance(Integer.valueOf(listToConvert[2]), Integer.valueOf(listToConvert[1]), Integer.valueOf(listToConvert[0]));
     }
+    public Date convertDdMmYyyyList(String ddmmyyyyList)
+    {
+        List<String> dateList = ddmmyyyyList.split(',');
+        if(!dateList.isEmpty())
+        {
+            return convertDdMmYyyy(dateList[dateList.size() - 1]);
+        }
+        return null;
+    }
 }

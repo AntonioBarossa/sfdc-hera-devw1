@@ -95,8 +95,8 @@ public class HDT_SRV_BpCaVariationFacadeTst {
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse resultObject = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) result;
 
         System.assert(resultObject != null, 'result == null');
-        System.assertEquals(false, resultObject.success, 'result.success != false');
-        System.assertEquals('KO', resultObject.message, 'result.message != KO');
+        System.assertEquals(true, resultObject.success, 'result.success != true');
+        System.assertEquals('OK', resultObject.message, 'result.message != ok');
         
         Test.stopTest();
         

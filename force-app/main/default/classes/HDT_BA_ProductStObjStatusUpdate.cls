@@ -13,7 +13,7 @@ public inherited sharing class HDT_BA_ProductStObjStatusUpdate implements Databa
 
         if(!Test.isRunningTest()){
             queryString += 'WHERE  (Status__c = \'' + Label.HDT_Confirmed + '\' AND StartDate__c = today) ';
-            queryString += 'OR (Status__c = \'' + Label.HDT_Sold + '\' AND EndDate__c = today)';
+            queryString += 'OR (Status__c = \'' + Label.HDT_Sold + '\' AND EndDate__c = yesterday)';
         }
         
         return Database.getQueryLocator(queryString);
@@ -28,6 +28,7 @@ public inherited sharing class HDT_BA_ProductStObjStatusUpdate implements Databa
     public void execute(Database.BatchableContext bc, List<Product2> chunkList){
 
         Date todayDate = Date.today();
+        Date yesterday = Date.today().addDays(-1);
 
         System.debug(LoggingLevel.DEBUG, '>>> Today is: ' + String.valueOf(todayDate) + ' - chunkListSize: ' + String.valueOf(chunkList.size()));
 
@@ -39,7 +40,7 @@ public inherited sharing class HDT_BA_ProductStObjStatusUpdate implements Databa
                         product.Status__c = Label.HDT_Sold;
                     }
                 } else if(product.Status__c.equalsIgnoreCase(Label.HDT_Sold)){
-                    if(product.EndDate__c >= todayDate){
+                    if(product.EndDate__c == yesterday){
                         product.Status__c = Label.HDT_Expired;
                     }
                 }
