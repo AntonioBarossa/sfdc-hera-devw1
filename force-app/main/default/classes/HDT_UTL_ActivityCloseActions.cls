@@ -44,6 +44,10 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             this(phase);
             this.parentSObjectPhase = parentSObjectPhase;
         }
+        HDT_WRP_UpdateSobj(Sobject sobj){
+            this.sobjToUpdate=sobj;
+        }
+
     }
 
     @TestVisible
@@ -82,7 +86,15 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             }
             if(STRING.isNotBlank(newAction?.parentSObjectPhase)){
                 Case caseUpdate = new Case(Id=actualCase.RelatedCase__c, Phase__c=newAction.parentSObjectPhase);
+                if(caseUpdate.Phase__c.containsIgnoreCase('Annull')){
+                    caseUpdate.Status = 'Closed';
+                }
                 sObjectToUpdate.add(caseUpdate);
+            }
+            if(newAction.sobjToUpdate != null){
+                SObject sobjToUpdate = newAction.sobjToUpdate;
+                sobjToUpdate.Id = sobjToUpdate.Id!=null? sobjToUpdate.Id : actualCase.Id;
+                sObjectToUpdate.add(sobjToUpdate);
             }
             if(STRING.isNotBlank(newAction?.activityType)){
                 caseToNewActivityType.put(actualCase.Id,newAction);
