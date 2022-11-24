@@ -92,8 +92,9 @@ public with sharing class HDT_UTL_ActivityCloseActions {
                 sObjectToUpdate.add(caseUpdate);
             }
             if(newAction.sobjToUpdate != null){
+                SObject sobjToUpdate = newAction.sobjToUpdate;
                 sobjToUpdate.Id = sobjToUpdate.Id!=null? sobjToUpdate.Id : actualCase.Id;
-                sObjectToUpdate.add(caseUpdate);
+                sObjectToUpdate.add(sobjToUpdate);
             }
             if(STRING.isNotBlank(newAction?.activityType)){
                 caseToNewActivityType.put(actualCase.Id,newAction);
