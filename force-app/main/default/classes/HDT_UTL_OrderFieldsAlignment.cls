@@ -386,6 +386,11 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.VasServiceActivationDate__c = orderItemList[0].DelayEffectiveDate__c;
             orderToUpdate.CommercialProductLink__c = orderItemList[0].Product2Id;
             orderToUpdate.Market__c = orderItemList[0].Product2.ReferenceMarket__c;
+            if(orderItemList[0].Product2.ReferenceMarket__c == null)
+            {
+                OrderItem offerItem = orderItemQr.getOfferActivationItem(orderItemList[0].Order.ParentOrder__c, orderItemList[0].Order.ServicePoint__c);
+                orderToUpdate.Market__c = offerItem?.ReferenceMarket__c;
+            }
         }
         
     }

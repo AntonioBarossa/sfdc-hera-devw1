@@ -144,6 +144,8 @@ public inherited sharing class HDT_QR_OrderItem {
         return [
             SELECT 
             OrderId,
+            Order.ServicePoint__c,
+            Order.ParentOrder__c,
             BillingProfile__c,
             Product2Id,
             Product2.Family,
@@ -256,6 +258,7 @@ public inherited sharing class HDT_QR_OrderItem {
             Id,
             Product2.Name,
             Product2.ProductCode,
+            Product2.ReferenceMarket__c,
             Product2.Version__c
             FROM
             OrderItem
