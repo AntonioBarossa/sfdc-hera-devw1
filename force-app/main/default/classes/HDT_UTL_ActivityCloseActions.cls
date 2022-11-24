@@ -226,9 +226,9 @@ public with sharing class HDT_UTL_ActivityCloseActions {
                 }else{
                     return new HDT_WRP_UpdateSobj('Da Inviare');
                 }
-            }else{
+            }/*else{
                 return new HDT_WRP_UpdateSobj('Annullato');
-            }
+            }*/
         }
 
         if( 'Modifica post accertamento'.equalsIgnoreCase(caseType) || 
@@ -237,9 +237,9 @@ public with sharing class HDT_UTL_ActivityCloseActions {
              subprocessesNonIntegrati.contains(selectedCase.Subprocess__c))){
             if('Positivo'.equalsIgnoreCase(outcome)){
                 return new HDT_WRP_UpdateSobj('Completata'); //aggiorna la fase del case
-            }else{
+            }/*else{
                 return new HDT_WRP_UpdateSobj('Annullato');
-            }
+            }*/
         }
 
         if( 'Cessazione'.equalsIgnoreCase(caseType) ||
@@ -250,16 +250,16 @@ public with sharing class HDT_UTL_ActivityCloseActions {
                 when 'Comunicazione verso Heroku KO'{
                     if('Positivo'.equalsIgnoreCase(outcome)){
                         return new HDT_WRP_UpdateSobj('Da Inviare'); //aggiorna la fase del case
-                    }else{
+                    }/*else{
                         return new HDT_WRP_UpdateSobj('Annullato');
-                    }
+                    }*/
                 }
                 when 'Esito KO da SAP'{
                     if('Positivo'.equalsIgnoreCase(outcome)){
-                        return new HDT_WRP_UpdateSobj('Completata'); //aggiorna la fase del case
-                    }else{
+                        return new HDT_WRP_UpdateSobj('Da Inviare'); //aggiorna la fase del case
+                    }/*else{
                         return new HDT_WRP_UpdateSobj('Annullato');
-                    }
+                    }*/
                 }
             }
         }
