@@ -435,7 +435,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 else if(o.Commodity__c.equalsIgnoreCase('Acqua') && String.isBlank(o.ContractAccountCode__c) /*|| o.Commodity__c.equalsIgnoreCase('Ambiente')*/)
                 {
                     ordersNonEnergy.add(o);
-                }else if('Ambiente'.equalsIgnoreCase(o.Commodity__c) && 'Modifica Tariffa'.containsIgnoreCase(o.ProcessType) && !o.IntegratedSAP__c){
+                }else if('Ambiente'.equalsIgnoreCase(o.Commodity__c) && 'Modifica Tariffa'.containsIgnoreCase(o.ProcessType__c) && !o.IntegratedSAP__c){
                     ordersCompletata.add(o);
                 }
                 else{
