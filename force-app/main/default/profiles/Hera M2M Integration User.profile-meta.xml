@@ -17953,6 +17953,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Queue__c.Group__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Queue__c.Agency__c</field>
         <readable>true</readable>
@@ -20894,6 +20899,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SBQQ__ProductOption__c.CommercialId__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SBQQ__ProductOption__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -21888,6 +21898,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.CommercialId__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.Opportunity__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.PrintOnBill__c</field>
         <readable>true</readable>
@@ -21897,7 +21917,7 @@
         <field>SBQQ__QuoteLine__c.Agency__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.DefaulStartTime__c</field>
         <readable>true</readable>
@@ -27976,6 +27996,11 @@
         <editable>true</editable>
         <field>TechnicalOfferItem__c.V__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>TechnicalOffer__c.NunmberDaysMonthsYears__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

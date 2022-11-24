@@ -115,9 +115,9 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             String compatibility='';
             ServiceRequest__c srvRequest= new ServiceRequest__c();
             srvRequest.Case__c= cs.Id;
-            srvRequest.ServicePointCode__c= cs.PODPDRFormula__c;
+            srvRequest.ServicePointCode__c= cs.PODPDRFormula__c != null ? cs.PODPDRFormula__c : cs.ServicePointCode__c != null ? cs.ServicePointCode__c : null;
             srvRequest.Status__c= getStatus(cs.Status,'Case');
-            srvRequest.CommoditySector__c= cs.CommodityFormula__c;
+            srvRequest.CommoditySector__c= cs.CommodityFormula__c != null ? cs.CommodityFormula__c : cs.Commodity__c != null ? cs.Commodity__c : null;
             srvRequest.Type__c= 'Case';
             if(cs.ServicePoint__c != null){
                 srvRequest.ServicePoint__c= cs.ServicePoint__c;
@@ -125,7 +125,8 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                 srvRequest.Account__c= cs.AccountId;
                 srvRequest.BillingProfile__c= cs.BillingProfile__c;
             }
-            srvRequest.ProcessType__c= getProcessType(cs.Type, 'Case', cs.CommodityFormula__c);
+            String commodity = cs.CommodityFormula__c != null ? cs.CommodityFormula__c : cs.Commodity__c != null ? cs.Commodity__c : null;
+            srvRequest.ProcessType__c= getProcessType(cs.Type, 'Case', commodity);
             ServiceRequest__c sReq = HDT_SRV_ServiceRequest.createRecord(srvRequest);
             wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = checkCompatibility(sReq);
             //list of incompatible records
