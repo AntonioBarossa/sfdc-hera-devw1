@@ -36,6 +36,7 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
         getEligibleQuoteLinesToApply({inputs: inputMap})
         .then(result => 
             {
+                console.log('XXX getEligibleQuoteLinesToApply: resultData -->'+  result);
                 this.quoteBundleData = JSON.parse(result);
                 this.loading = false;
                 this.fetchError = undefined;
@@ -43,6 +44,7 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
         )
         .catch(error => 
             {
+                console.log('XXX getEligibleQuoteLinesToApply: error -> '+JSON.stringify(error));
                 this.quoteBundleData = undefined;
                 this.loading = false;
                 this.fetchError = true;
