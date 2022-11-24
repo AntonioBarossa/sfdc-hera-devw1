@@ -389,7 +389,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             if(orderItemList[0].Product2.ReferenceMarket__c == null)
             {
                 OrderItem offerItem = orderItemQr.getOfferActivationItem(orderItemList[0].Order.ParentOrder__c, orderItemList[0].Order.ServicePoint__c);
-                orderToUpdate.Market__c = offerItem?.ReferenceMarket__c;
+                orderToUpdate.Market__c = offerItem?.Product2?.ReferenceMarket__c;
             }
         }
         
