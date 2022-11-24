@@ -273,7 +273,6 @@ public with sharing class HDT_UTL_Sales {
         List<wrts_prcgvr__Activity__c> listActivityToCreate = new List<wrts_prcgvr__Activity__c>();
         List<Order> childToUpdate = new List<Order>();
         Id rt = rtQr.getRecordTypeIdByName('HDT_RT_Default','wrts_prcgvr__Activity__c');
-      //  List<String> orderParentToActivityDocument = new List<String>();
         for(Order ord : orderNew){
             if(ord.RecordType.DeveloperName == 'HDT_RT_OrderDossier'){ //&& ord.TecnicalPhase__c != null){
                 if(ord.phase__c == 'Documentazione da inviare'){
@@ -298,25 +297,11 @@ public with sharing class HDT_UTL_Sales {
                     else if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' )){
                         ord.Phase__c = 'Documentazione da Firmare';
                         childToUpdate.add(ord);
-                        //tutti i figli per cui crearla
-                        //orderParentToActivityDocument.add(ord.id);
-                       //listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
                     else if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && ord.SignatureMethod__c == 'Cartacea'){
                         ord.Phase__c = 'Documentazione da Validare';
                         childToUpdate.add(ord);
-                        //tutti i figli per cui crearla
-                        //orderParentToActivityDocument.add(ord.id);
-                        //listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
-                    /*else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
-                        ord.Phase__c = 'Documentazione Gestita';
-                      //  ord.status = 'Activated';
-                        childToUpdate.add(ord);
-                    }*/
-                /* else if(ord.Sale__r.Channel__c = 'Web' && ord.SignatureMethod__c == 'Vocal Order'){
-                        
-                    }*/
                     else if(ord.Sale__r.Channel__c == 'Telefono' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
                         ord.Phase__c = 'Documentazione da Firmare';
                         childToUpdate.add(ord);
@@ -344,11 +329,6 @@ public with sharing class HDT_UTL_Sales {
                         ord.Phase__c = 'Documentazione da Firmare';
                         childToUpdate.add(ord);
                     }
-                    /*else if(ord.Sale__r.Channel__c = 'HC Point' && ord.SignatureMethod__c == 'Cartacea'){
-                        ord.phase__c = 'Plico Firmato da validare';
-                    // orderParentToActivityDocument.add(ord.id);
-                        listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
-                    }*/
                 }
                 else if(ord.phase__c == 'Documentazione da firmare'){
                     if(ord.DocumentalPhase__c != null && ord.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
@@ -357,12 +337,6 @@ public with sharing class HDT_UTL_Sales {
                             listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                             //childToUpdate.add(ord);
                         }
-                        // else{
-                        //     //ord.TecnicalPhase__c = 'Documentazione Gestita';
-                        //     //ord.status = 'Activated';
-                        //     //ord.SignedDate__c = date.today();
-                        //     //childToUpdate.add(ord);
-                        // }
                     } 
                 }
             }

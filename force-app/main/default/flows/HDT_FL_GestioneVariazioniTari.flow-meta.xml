@@ -432,7 +432,7 @@
             <assignToReference>numeroPersoneConcatenazione</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>residentMembers</elementReference>
+                <elementReference>getAfterSecondForm.ResidentMembers__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -448,7 +448,7 @@
             <assignToReference>numeroPersoneConcatenazione</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>notResidentMembers</elementReference>
+                <elementReference>getAfterSecondForm.NotResidentMembers__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -2278,18 +2278,6 @@
         <dataType>String</dataType>
         <expression>&apos;Il Comune ha subito una variazione! Da: &apos;+{!getCase.ServicePoint__r.SupplyCity__c}+&apos; A: &apos;+{!newAddressLwc_0.theCase.InvoicingCity__c}+
 &quot; Si proceda con l&apos;annullamento del processo corrente e innescare il processo di Cambio Offerta&quot;</expression>
-    </formulas>
-    <formulas>
-        <name>notResidentMembers</name>
-        <dataType>Number</dataType>
-        <expression>ABS({!getAfterSecondForm.NumberMembers__c} - {!getAfterSecondForm.NotResidentMembers__c})</expression>
-        <scale>0</scale>
-    </formulas>
-    <formulas>
-        <name>residentMembers</name>
-        <dataType>Number</dataType>
-        <expression>ABS({!getAfterSecondForm.NumberMembers__c} - {!getAfterSecondForm.ResidentMembers__c})</expression>
-        <scale>0</scale>
     </formulas>
     <formulas>
         <name>transCityCode</name>
