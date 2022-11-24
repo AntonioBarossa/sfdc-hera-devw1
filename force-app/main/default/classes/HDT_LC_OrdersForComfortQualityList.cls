@@ -104,6 +104,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             'Errore lavorazione SAP',
             'Completata',
             'Esito OK da SII',
+            'Ammissibilità OK',
             //'Esito KO da SII',
             'KO rilavorato',
             'KO definitivo'
@@ -143,7 +144,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         String result = ordToCheck[0].DateComfortCall__c == null ? 'Annullato Quality Call' : 'Annullato Comfort Call';
 
         if (notCancelPhase.contains(ordToCheck[0].Phase__c) || notCancelNonBillable.contains(ordToCheck[0].Phase__c) || notCancelBillable.contains(ordToCheck[0].Phase__c)) {
-            if ('Firma Falsa'.equalsIgnoreCase(causal) || 'Volontà estorta'.equalsIgnoreCase(causal) || causal.equalsIgnoreCase('Contatto Quality Fallito')) {
+            if ('Il cliente rinuncia'.equalsIgnoreCase(causal) || 'Firma Falsa'.equalsIgnoreCase(causal) || 'Volontà estorta'.equalsIgnoreCase(causal) || causal.equalsIgnoreCase('Contatto Quality Fallito')) {
                 
                 wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = activityId);
                 if(causal.equalsIgnoreCase('Contatto Quality Fallito')){
@@ -165,13 +166,14 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                         Cluster__c = 'Attivazioni',
                         Type__c = ordToCheck[0].isTransition__c ? HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL : HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO, 
                         Process__c = transcodeProcessForActivity(ordToCheck[0].RecordType.DeveloperName) != null ? transcodeProcessForActivity(ordToCheck[0].RecordType.DeveloperName) : ordToCheck[0].ProcessType__c,
-                        Note__c = 'Quality esitata negativamente'
+                        Note__c = 'Quality esitata negativamente',
+                        order__c=ordId
                     ));
                 }
             }
-            if(!causal.equalsIgnoreCase('Contatto Quality Fallito')){
+            /*if(!causal.equalsIgnoreCase('Contatto Quality Fallito')){
                 throw new AuraHandledException('Non è possibile procedere all’annullamento, effettuare una richiesta di recesso');
-            }
+            }*/
         }
         else
         {
