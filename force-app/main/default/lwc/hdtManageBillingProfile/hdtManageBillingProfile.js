@@ -32,7 +32,7 @@ export default class hdtManageBillingProfile extends LightningElement {
         this.loading = true;
         getBillingProfileList({accountId: this.accountId}).then(data =>{
             this.loading = false;
-            console.log(JSON.stringify(data));
+            console.log('XXX getBillingProfileData: resultData -> '+ JSON.stringify(data));
             
             if(data.length == 0){
                 this.emptyTable = true;
@@ -59,8 +59,8 @@ export default class hdtManageBillingProfile extends LightningElement {
     }
 
     getSelectedBillingProfile(event){
-        console.log(JSON.stringify(this.billingProfileData));
         let selectedRows = event.detail.selectedRows;
+        console.log('XXX getSelectedBillingProfile: selectedRows -> ' + JSON.stringify(selectedRows));
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         this.dispatchEvent(new CustomEvent('selectedbillingprofile', {detail: this.rowToSend}));
     }
