@@ -304,10 +304,11 @@ public inherited sharing class HDT_LC_ConfigureProduct {
 
             if('Attivo'.equalsIgnoreCase(quoteLine.SBQQ__Quote__r.ContractReference__r.Status) && 
                 quoteLine.SBQQ__Quote__r.SBQQ__Account__c == quoteLine.SBQQ__Quote__r.ContractReference__r.AccountId &&
-                'Acqua'.equalsIgnoreCase(quoteLine.ServicePoint__r.CommoditySector__c) )
+                'Acqua'.equalsIgnoreCase(quoteLine.ServicePoint__r.CommoditySector__c) &&
+                quoteLine.SBQQ__RequiredBy__c != null)
             {
-                quoteLine.BillingProfile__c = quoteLine.SBQQ__Quote__r?.ContractReference__r?.BillingProfile__c;
-                quoteLinesToUpdate.add(quoteLine);
+                quoteLine.SBQQ__RequiredBy__r.BillingProfile__c = quoteLine.SBQQ__Quote__r?.ContractReference__r?.BillingProfile__c;
+                quoteLinesToUpdate.add(quoteLine.SBQQ__RequiredBy__r);
             }
         }
 

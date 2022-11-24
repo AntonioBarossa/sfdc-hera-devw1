@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : federico.defelice@webresults.it
  * @group             : WR
- * @last modified on  : 14-09-2022
+ * @last modified on  : 24-11-2022
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.CyclomaticComplexity , PMD.NcssMethodCount')
@@ -149,19 +149,16 @@ public with sharing class HDT_UTL_ActivityCloseActions {
 
     @TestVisible
     private static HDT_WRP_Actions getOnCloseActions(Case selectedCase, wrts_prcgvr__Activity__c activity, String activityType){
-        String approved = activity.Approved__c;
-        String outcome = activity.ActivityOutcome__c;
+        String approved = activity.ActivityOutcome__c;
         String caseType = selectedCase.Type;
         activityType=STRING.isNotBlank(activityType)? activityType : ''; 
 
-        if(caseType == 'Formulari Richiesta Sconto')       return new HDT_WRP_UpdateSobj('Completata');
-        if(caseType == 'Sconti Collettivi Pap')            return new HDT_WRP_UpdateSobj('Completata');
-        if(caseType == 'Conferimento Centri di Raccolta')  return new HDT_WRP_UpdateSobj('Completata');
-        
-        if(caseType == 'Riduz. Superficie rifiuti spec promiscui') {
+        if(new set<String>{'Riduz. Superficie rifiuti spec promiscui', 'Formulari Richiesta Sconto', 'Sconti Collettivi Pap', 'Conferimento Centri di Raccolta'}.contains(caseType)) {
             if('Gestione Manuale SAP'.equalsIgnoreCase(activityType))   return new HDT_WRP_UpdateSobj('Completata');
-            if('si'.equalsIgnoreCase(approved)) return new HDT_WRP_CreateActivity('Gestione Manuale SAP', true, selectedCase.Phase__c);//Se gestione SAP non va in completata subito
-            if('no'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Annullato');   
+            //CASE_ISTRUTTORIA_BACKOFFICE
+            if('Positivo'.equalsIgnoreCase(approved)) return new HDT_WRP_CreateActivity('Gestione Manuale SAP', true, selectedCase.Phase__c); 
+            if(!'Positivo'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Annullato');   
+            
         }
         //START >>> marco.arci@webresults.it
 
