@@ -2019,8 +2019,8 @@
     <decisions>
         <name>Case_in_Bozza</name>
         <label>Case in Bozza?</label>
-        <locationX>15318</locationX>
-        <locationY>278</locationY>
+        <locationX>5110</locationX>
+        <locationY>382</locationY>
         <defaultConnector>
             <targetReference>ScreenInputFiscale_0_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -4909,8 +4909,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>GetInputCaseFiscale</name>
         <label>Get Input Case Fiscale</label>
-        <locationX>666</locationX>
-        <locationY>758</locationY>
+        <locationX>709</locationX>
+        <locationY>899</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetCaseStessoSottoprocessoFornitura</targetReference>
