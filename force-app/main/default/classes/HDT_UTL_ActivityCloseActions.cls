@@ -153,15 +153,14 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         String caseType = selectedCase.Type;
         activityType=STRING.isNotBlank(activityType)? activityType : ''; 
 
-        if('CASE_ISTRUTTORIA_BACKOFFICE'.equalsIgnoreCase(activityType)){
-            if('Positivo'.equalsIgnoreCase(approved)) return new HDT_WRP_CreateActivity('Gestione Manuale SAP', true, selectedCase.Phase__c); 
-            if(!'Positivo'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Annullato');   
-        }
+        
 
         if(new set<String>{'Riduz. Superficie rifiuti spec promiscui', 'Formulari Richiesta Sconto', 'Sconti Collettivi Pap', 'Conferimento Centri di Raccolta'}.contains(caseType)) {
             if('Gestione Manuale SAP'.equalsIgnoreCase(activityType))   return new HDT_WRP_UpdateSobj('Completata');
-            if('si'.equalsIgnoreCase(approved)) return new HDT_WRP_CreateActivity('Gestione Manuale SAP', true, selectedCase.Phase__c);//Se gestione SAP non va in completata subito
-            if('no'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Annullato');   
+            //CASE_ISTRUTTORIA_BACKOFFICE
+            if('Positivo'.equalsIgnoreCase(approved)) return new HDT_WRP_CreateActivity('Gestione Manuale SAP', true, selectedCase.Phase__c); 
+            if(!'Positivo'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Annullato');   
+            
         }
         //START >>> marco.arci@webresults.it
 
