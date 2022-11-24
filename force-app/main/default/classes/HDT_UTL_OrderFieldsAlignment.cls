@@ -544,7 +544,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     }
 
     private static String getTariCommercialProductCode(Id ordReference, Id contrReference){
-        if(ordReference!=null){     return orderItemQr.getMainItem(ordReference)[0].ProductCode;    }
+        if(ordReference!=null){     return orderItemQr.getMainItem(ordReference)[0].Product2.ProductCode;    }
         if(contrReference != null){    
             List<SBQQ__Subscription__c> lsubs = [
                 SELECT ProductCode__c
