@@ -203,6 +203,8 @@ public inherited sharing class HDT_UTL_Dependencies {
                         if(blockingMatch.equalsIgnoreCase(MATCH_SERVICE_POINT)){
                             singleIncomingServicePoint = (String)sr.ServicePointCode__c==null?(String)sr.Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c:(String)sr.ServicePointCode__c;
                             singleIncomingServicePoint = singleIncomingServicePoint==null?(String)sr.Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c:singleIncomingServicePoint;
+                            //TARI non ha codice pod
+                            singleIncomingServicePoint = singleIncomingServicePoint==null?(String)sr.Order__r.ContractReference__r.ServicePoint__r.Id:singleIncomingServicePoint;
                             incomingServicePoint.put(sr.Id, singleIncomingServicePoint);
                             matchValueServicePoints.add(incomingServicePoint.get(sr.Id));
                         }else if(blockingMatch.equalsIgnoreCase(MATCH_ACCOUNT)){
