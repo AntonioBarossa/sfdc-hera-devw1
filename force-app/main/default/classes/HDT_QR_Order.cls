@@ -546,6 +546,7 @@ public inherited sharing class HDT_QR_Order {
             IsEarlyActivation__c,
             Contact__r.FiscalCode__c,
             Contact__c,
+            IntegratedSAP__c,
             isSTG__c
             FROM Order 
             WHERE Id IN :orderIds
