@@ -253,21 +253,27 @@ public inherited sharing class HDT_QR_OrderItem {
     * @return List<OrderItem>
     */
     public OrderItem getOfferActivationItem(String parentOrderId, String servicePoint){
-        return [
-            SELECT 
-            Id,
-            Product2.Name,
-            Product2.ProductCode,
-            Product2.ReferenceMarket__c,
-            Product2.Version__c
-            FROM
-            OrderItem
-            WHERE  Product2.Family = 'Offerta commerciale'
-            AND Order.ServicePoint__c =:servicePoint 
-            AND Order.ParentOrder__c =:parentOrderId
-            WITH SECURITY_ENFORCED
-            LIMIT 1
-        ];
+        try{
+            return [
+                SELECT 
+                Id,
+                Product2.Name,
+                Product2.ProductCode,
+                Product2.ReferenceMarket__c,
+                Product2.Version__c
+                FROM
+                OrderItem
+                WHERE  Product2.Family = 'Offerta commerciale'
+                AND Order.ServicePoint__c =:servicePoint 
+                AND Order.ParentOrder__c =:parentOrderId
+                WITH SECURITY_ENFORCED
+                LIMIT 1
+            ];
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
     }
     
     public static List<OrderItem> getItemFromOrderIdList(List<String> ordIdList){

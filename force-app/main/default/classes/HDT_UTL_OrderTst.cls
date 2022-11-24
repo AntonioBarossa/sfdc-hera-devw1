@@ -50,7 +50,7 @@ public with sharing class HDT_UTL_OrderTst {
         servPointList[0].ServicePointCode__c = 'IT001E46371811';
         servPointList[0].CommoditySector__c = 'Energia Elettrica';
         servPointList[0].isReseller__c = false;
-        servPointList[0].MeterClass__c = 'G2,5 pareti def.';
+        servPointList[0].MeterClass__c = 'G4';
         servPointList[0].MeterStatus__c = 'Attivo';
         servPointList[0].PlugPresence__c = 'Si';
         servPointList[0].UseTypeEnergy__c = 'Ordinaria (Perm)';
