@@ -398,6 +398,11 @@
                 <label>Errore tecnico invio a SAP</label>
             </value>
             <value>
+                <fullName>Esito consuntivazione KO</fullName>
+                <default>false</default>
+                <label>Esito consuntivazione KO</label>
+            </value>
+            <value>
                 <fullName>Esito KO</fullName>
                 <default>false</default>
                 <label>Esito KO</label>

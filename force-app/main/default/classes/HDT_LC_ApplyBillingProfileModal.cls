@@ -139,21 +139,22 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
     @AuraEnabled
     public static string getEligibleQuoteLinesToApply(Map<String, Object> inputs)
     {
-
         String saleId = (String) inputs.get('saleId');
         BillingProfile__c selectedBillingProfile = (BillingProfile__c) JSON.deserialize((String)inputs.get('selectedBillingProfile'), BillingProfile__c.class);
-        String paymentMethod = selectedBillingProfile.get('PaymentMethod__c') != null ? (String) selectedBillingProfile.get('PaymentMethod__c') : '';
-        String sendingBillMode = selectedBillingProfile.get('BillSendingMethod__c') != null ? (String) selectedBillingProfile.get('BillSendingMethod__c') : '';
+        String paymentMethod    = selectedBillingProfile.get('PaymentMethod__c') != null ? (String) selectedBillingProfile.get('PaymentMethod__c') : '';
+        String paymentCondition = selectedBillingProfile.get('PaymentConditions__c') != null ? (String) selectedBillingProfile.get('PaymentMethod__c') : '';
+        String sendingBillMode  = selectedBillingProfile.get('BillSendingMethod__c') != null ? (String) selectedBillingProfile.get('BillSendingMethod__c') : '';
         //String invoicingCity = selectedBillingProfile.get('InvoicingCity__c') != null ? (String) selectedBillingProfile.get('InvoicingCity__c') : '';
-        Boolean isDueThirtyDays = selectedBillingProfile.get('IsThirtyDaysDue__c') != null && ((String)selectedBillingProfile.get('IsThirtyDaysDue__c')).equalsIgnoreCase('Si');
+        Boolean isDueThirtyDays = '30 GG - IS02'.equalsIgnoreCase(paymentCondition);
+        
         List<SBQQ__QuoteLine__c> quoteLineWater = new List<SBQQ__QuoteLine__c>();
         //List<SBQQ__QuoteLine__c> quoteLineWaste = new List<SBQQ__QuoteLine__c>();
         List<HDT_WRP_QuoteLineWrp> quoteLineToApply = new List<HDT_WRP_QuoteLineWrp>();
         /* La query recupera tutte le quotline "child" associate alle quote create */
         List<SBQQ__QuoteLine__c> quoteLines = [SELECT Id, Name,SBQQ__Product__r.Name, SBQQ__RequiredBy__c,SBQQ__RequiredBy__r.Name,
         SBQQ__RequiredBy__r.SBQQ__Product__c, SBQQ__RequiredBy__r.SBQQ__Product__r.Name,  SBQQ__ProductFamily__c,
-        SBQQ__RequiredBy__r.BillingProfile__c, SBQQ__RequiredBy__r.BillingProfile__r.Name,
-        ServicePoint__c,ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c, ServicePoint__r.ATO__c,
+        SBQQ__RequiredBy__r.BillingProfile__c, SBQQ__RequiredBy__r.BillingProfile__r.Name, SBQQ__Quote__r.ContractReference__r.Status,
+        ServicePoint__c,ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c, ServicePoint__r.ATO__c, SBQQ__Quote__r.SBQQ__Account__c, SBQQ__Quote__r.ContractReference__r.AccountId,
         SBQQ__Quote__r.ContractReference__c, SBQQ__Quote__r.AllowChangeUse__c, SBQQ__Quote__r.AmendmentAllowed__c,SBQQ__Quote__r.ContractReference__r.BillingProfile__c,SBQQ__Quote__r.ContractReference__r.BillingProfile__r.Name
         FROM SBQQ__QuoteLine__c
         WHERE SBQQ__Quote__r.Sale__c = :saleId
@@ -181,52 +182,36 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected') 
         WITH SECURITY_ENFORCED
         ORDER BY CreatedDate ASC];
-
-        
-        for(SBQQ__QuoteLine__c quoteLine : quoteLines)
-        {
-
-            if(quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Acqua'))
-            {
-                quoteLineWater.add(quoteLine);
-                continue;
-            }
-            quoteLineToApply.add(new HDT_WRP_QuoteLineWrp(quoteLine));
-        }
-
-        /**Logica per acqua
-         * Si controlla l'ATO della quoteLine
-         * Se non e' pari ad ATO1 o ATO9 viene controllato il campo 'Scadenza 30 gg' sul BillingProfile se e' a 'Si' la QL non e' selezionabile
-         * Se e' pari ad ATO1 o ATO9 viene impostato un flag sull'oggetto di ritorno in modo che all'applicazione venga impostato a 'Si' il campo 'Scandeza 30 gg'
-         */
-        if(!quoteLineWater.isEmpty())
-        {
-            for(SBQQ__QuoteLine__c quoteLine : quoteLineWater)
-            {
-                if(quoteLine.ServicePoint__c == null)
-                {
+  
+        for(SBQQ__QuoteLine__c quoteLine : quoteLines){
+            if(quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Acqua')){
+                // Caso del cambio offerta la riga non è selezionabile
+                if('Attivo'.equalsIgnoreCase(quoteLine.SBQQ__Quote__r.ContractReference__r.Status) && 
+                    quoteLine.SBQQ__Quote__r.SBQQ__Account__c == quoteLine.SBQQ__Quote__r.ContractReference__r.AccountId ){
                     continue;
                 }
+
+                if(quoteLine.ServicePoint__c == null){
+                    continue;
+                }
+
+                // DA CAMBIARE--> Regola del BP su Ato1 e Ato9 che deve avere termini a 30 GG obbligatoriamente
                 String ato = quoteLine.ServicePoint__r.ATO__c != null ? quoteLine.ServicePoint__r.ATO__c : '';
-                Boolean isAtoOneAtoNine = ato.containsIgnoreCase('ATO1') || ato.containsIgnoreCase('ATO9');
+                Boolean isAtoOneAtoNine = ato.containsIgnoreCase('AATO 1 MARCHE NORD') || ato.containsIgnoreCase('ATO9');
                 if(isAtoOneAtoNine && !isDueThirtyDays)
                 {
                     HDT_WRP_QuoteLineWrp singleApply = new HDT_WRP_QuoteLineWrp(quoteLine);
                     singleApply.isDueThirtyDays = 'Si';
+                    quoteLineToApply.add(singleApply);
                     continue;
                 }
-                if(isAtoOneAtoNine && isDueThirtyDays)
-                {
-                    quoteLineToApply.add(new HDT_WRP_QuoteLineWrp(quoteLine));
-                    continue;
-                }
-                if(!isAtoOneAtoNine && !isDueThirtyDays)
-                {
-                    quoteLineToApply.add(new HDT_WRP_QuoteLineWrp(quoteLine));
-                    continue;
-                }
-
+                
+                quoteLineToApply.add(new HDT_WRP_QuoteLineWrp(quoteLine));
+                // DA CAMBIARE --> FINE
+            } else {
+                quoteLineToApply.add(new HDT_WRP_QuoteLineWrp(quoteLine));
             }
+           
         }
 
         return JSON.serialize(quoteLineToApply);

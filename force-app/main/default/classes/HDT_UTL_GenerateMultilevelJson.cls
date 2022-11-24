@@ -4,7 +4,6 @@
  * @group             : WR
  * @last modified on  : 21-10-2022
  * @last modified by  : federico.defelice@webresults.it
- * This Class can take a Map<String, String> with keys that indicate a structure and generate a JSON with that structure:
  * 
  * Ex. Map('orderEntryMiOrders.0.orderEntryMiLineItems.0.action.0.hercodiceCentroLavoro'	=>	'1001001')
  * Creates this JSON:
@@ -26,26 +25,56 @@
 **/
 public with sharing class HDT_UTL_GenerateMultilevelJson {
 
-    private Map<String, String> namesValues;
+    private Map<String, Object> namesValues;
 
 
 
     public HDT_UTL_GenerateMultilevelJson(){
-        this.namesValues= new Map<String, String>();
+        this.namesValues= new Map<String, Object>();
         return;
     }
 
-    public HDT_UTL_GenerateMultilevelJson(Map<String, String> namesValues){
+    public HDT_UTL_GenerateMultilevelJson(Map<String, Object> namesValues){
         this.namesValues= namesValues;
         return;
     }    
+
+    /**
+        * @description 
+        * Il metodo è generico, genera un Oggetto (mappa o array) da serializzare
+        * Questo oggetto viene costruito in base ai parametri passati nel costruttore
+        * 
+        * @author federico.defelice@webresults.it | 23-11-2022 
+        * @param void 
+        * @return Object (list or Map)
+    **/
+    public Object generateObject(){
+        Map<String, Object> mapToCheck = this.appendToMap(new Map<String, Object>());//Mappa finale
+        return this.transformSublevelMap(mapToCheck);
+    }
 
     public Map<String, Object> generateMap(){
         Map<String, Object> rootMap = new Map<String, Object>();//Mappa finale
         return appendToMap(rootMap);
     }
 
-    public Map<String, Object> appendToMap(Map<String, Object> rootMap){
+    public String generateJson(){
+        Object objToSerialize = this.generateObject();
+        String jsonString = JSON.serializePretty(objToSerialize);
+        System.debug(jsonString);
+        return jsonString;
+    }
+
+    /**
+        * @description 
+        * @author federico.defelice@webresults.it | 23-11-2022 
+        * @param rootMap 
+        * @return Map<String, Object> 
+        *
+        * This Method append values on a multilevel map. It has just one limitation, first level is always threated like a map
+        *
+    **/
+    private Map<String, Object> appendToMap(Map<String, Object> rootMap){
         for (String path : this.namesValues.keySet()) {
             HDT_WRP_Row row = new HDT_WRP_Row(path, namesValues.get(path));
             row.recursiveInsertKeyValuePairOnMap(rootMap);
@@ -53,13 +82,6 @@ public with sharing class HDT_UTL_GenerateMultilevelJson {
         //ora rootMap è ok, rimane da scorrerla per trasformare tutte le mappe con chiave intera in array
         checkMapForArrays(rootMap);
         return rootMap;
-    }
-
-    public String generateJson(){
-        Map<String, Object> rootMap = this.generateMap();
-        String jsonString = JSON.serializePretty(rootMap);
-        System.debug(jsonString);
-        return jsonString;
     }
 
     
@@ -80,7 +102,6 @@ public with sharing class HDT_UTL_GenerateMultilevelJson {
             }
         }
         return;
-
     }
 
     /**
@@ -100,7 +121,6 @@ public with sharing class HDT_UTL_GenerateMultilevelJson {
         }
         return transformingList;
     }
-
     
     /**
     * @description 
@@ -112,10 +132,10 @@ public with sharing class HDT_UTL_GenerateMultilevelJson {
     **/
     class HDT_WRP_Row{
         String completePath;
-        String value;
+        Object value;
         List<String> pathList;
 
-        HDT_WRP_Row(String completePath, String value){
+        HDT_WRP_Row(String completePath, Object value){
             this.completePath=completePath;
             this.pathList=completePath.split('\\.');
             this.value=value;

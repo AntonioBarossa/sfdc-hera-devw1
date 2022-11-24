@@ -482,7 +482,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                      * Aggiunta gestione KO
                                      * Skip Azioni
                                      */
-                                    if(previousPhase.indexOf('KO') > -1)
+                                    if(previousPhase.indexOf('KO') > -1 && !previousPhase.equalsIgnoreCase('Esito Consuntivazione KO'))
                                     {
                                         ord.Phase__c = previousPhase;
                                         //ord.Status = 'Completed';
@@ -525,7 +525,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                         }
                                         //End HRAWRM-657 21/09/2021
 
-                                        if(((mapRequestFields.get('FASE') == 'Esito OK da DBO' && !ordRetrieved.CausalCode__c.equalsIgnoreCase('E01')) || ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti')) && redirectPreventivo){
+                                        if(((mapRequestFields.get('FASE') == 'Esito OK da DBO' && String.isBlank(ordRetrieved.QuotationNumber__c)) || ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti')) && redirectPreventivo){
                                             ord.Phase__c = 'Inviare preventivo';
                                             ord.QuotationType__c = 'Analitico';
                                             if(mapRequestFields.get('NUMPREV') != null){
@@ -535,7 +535,6 @@ public with sharing class HDT_SRV_SalesHandler {
 
                                             if(mapRequestFields.get('FASE') == 'Esito OK da DBO'){
                                                 futurePhase = 'Completata';
-                                                
                                             }
                                             /**@frpanico 04/01/2022
                                              * Aggiunto MoveOut
@@ -551,6 +550,9 @@ public with sharing class HDT_SRV_SalesHandler {
                                             if(!String.isBlank(mapRequestFields.get('ANLAGE')))
                                             {
                                                 ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
+                                            }
+                                            if(!String.isBlank(mapRequestFields.get('POD'))){
+                                                ord.ServicePointCode__c = mapRequestFields.get('POD');
                                             }
                                             ord.OrderODV__c = mapRequestFields.get('VBELN');
                                             ord.SapContractCode__c = mapRequestFields.get('VERTRAG');

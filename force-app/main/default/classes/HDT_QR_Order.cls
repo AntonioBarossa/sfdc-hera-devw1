@@ -633,6 +633,7 @@ public inherited sharing class HDT_QR_Order {
             Order
             WHERE ParentOrder__c IN :parentOrderIds
             AND Phase__c NOT IN ('Annullato')
+            AND CommodityFormula__c != 'Acqua'
             /* AND ProcessType__c != ''
             AND ProcessType__c != 'VAS' */
             WITH SECURITY_ENFORCED
@@ -1062,7 +1063,8 @@ public inherited sharing class HDT_QR_Order {
         RecordTypeId,
         ParentOrder__c,
         ImplantType__c,
-        CausalCode__c
+        CausalCode__c,
+        QuotationNumber__c
         FROM Order 
         WHERE ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
@@ -1120,7 +1122,8 @@ public inherited sharing class HDT_QR_Order {
         PowerCommitted__c,
         PowerAvailable__c,
         VoltageLevel__c,
-        IsTechnicalTransfer__c
+        IsTechnicalTransfer__c,
+        QuotationNumber__c
         FROM Order where Ordernumber IN :orderNumbers WITH SECURITY_ENFORCED];
     }
 
@@ -1160,7 +1163,7 @@ public inherited sharing class HDT_QR_Order {
         RecordTypeId,
         ParentOrder__c,
         ImplantType__c,
-        CausalCode__c
+        CausalCode__c,QuotationNumber__c
         FROM Order 
         WHERE Id = :recordId WITH SECURITY_ENFORCED];
     }

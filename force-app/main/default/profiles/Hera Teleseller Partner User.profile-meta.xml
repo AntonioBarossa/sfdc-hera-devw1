@@ -1100,6 +1100,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.ComPostiLetto__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.DeferredDate__c</field>
         <readable>true</readable>
     </fieldPermissions>

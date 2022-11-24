@@ -1,5 +1,5 @@
 import { LightningElement, api, track,wire } from 'lwc';
-import getCase from '@salesforce/apex/HDT_LC_AppointmentAgenda.getCase';
+import getCase from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.getCase';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
