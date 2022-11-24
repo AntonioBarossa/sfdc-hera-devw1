@@ -177,7 +177,7 @@ public with sharing class HDT_QR_VoltureChangeManager {
     {
         SObjectAccessDecision securityDecision = 
             Security.stripInaccessible(AccessType.READABLE, 
-            [SELECT RecordType.DeveloperName, CustomerMarking__c FROM Account WHERE Id = :accountId]
+            [SELECT RecordType.DeveloperName, CustomerMarking__c, Category__c FROM Account WHERE Id = :accountId]
             );
 
         return securityDecision.getRecords();

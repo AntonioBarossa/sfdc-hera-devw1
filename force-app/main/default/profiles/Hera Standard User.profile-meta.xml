@@ -1134,6 +1134,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.BillingStreetToponym__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account.AccountNumber</field>
         <readable>true</readable>
@@ -3862,6 +3867,11 @@
         <editable>true</editable>
         <field>AuthorizationFormText.SummaryAuthFormText</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>BillingProfile__c.InvoicingStreetToponym__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -8047,6 +8057,11 @@
         <editable>true</editable>
         <field>ConsumptionSchedule.UnitOfMeasure</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.MailingStreetToponym__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -20362,6 +20377,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SBQQ__ProductOption__c.CommercialId__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SBQQ__ProductOption__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -21079,6 +21099,16 @@
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.PrintOnBill__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.Opportunity__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.CommercialId__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -27693,6 +27723,11 @@
         <editable>true</editable>
         <field>TechnicalOfferItem__c.V__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>TechnicalOffer__c.NunmberDaysMonthsYears__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

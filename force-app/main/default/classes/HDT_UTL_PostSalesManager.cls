@@ -13,6 +13,13 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     private HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
     private HDT_SRV_Order orderSrv = new HDT_SRV_Order();
 
+    private final Map<String,String> APPOINTMENT_METHOD = new Map<String,String>{
+        'Consegna copia chiave GdM' => 'ConsegnaCopiaChiaveGdM',
+        'Sost. contatore cliente' => 'Sost.Contatorec/cliente',
+        'Verifica GDM' => 'VerificaGdM',
+        'Verifica Tensione - Pressione' => 'VerificaPressione'
+    };
+
     public void changeCaseValue(Sobject inputCase){
 
         Case currentCase = (Case) inputCase;
@@ -401,7 +408,22 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     }
 
     public void sendDocumentFile(SObject inputRecord){
+
+
         Id recordId = (Id)inputRecord.get('Id');
+        
+
+        if('Verifiche'.equalsIgnoreCase((String)inputRecord.get('Cluster__c')) && 
+            APPOINTMENT_METHOD.containsKey((String)inputRecord.get('Type'))){
+
+            Map<String, Object> inputMap = new Map<String,Object>();
+            HDT_UTL_GestAppAutomaticCreationCase gestAppAutomaticCreationCase = new HDT_UTL_GestAppAutomaticCreationCase();
+        
+            inputMap.put('method', APPOINTMENT_METHOD.get((String)inputRecord.get('Type')));
+            inputMap.put('sender', new Case(Id = (Id)inputRecord.get('Id')));
+            gestAppAutomaticCreationCase.execute(inputMap);
+         }
+
         if(recordId.getSobjectType().getDescribe().getName() == 'Order')
         {
             recordId = (Id)inputRecord.get('ParentOrder__c');
