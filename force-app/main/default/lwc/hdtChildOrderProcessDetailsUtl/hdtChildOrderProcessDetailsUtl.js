@@ -327,7 +327,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     new fieldData('','SupplyCity__c',this.typeVisibility('acqua'),false,true,'',''),
                     new fieldData('Tariffa','RateCategory__c', this.typeVisibility('acqua'), false, true, '',''),
                     new fieldData('','CohabitantsNumber__c', this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura', false, false, '',''),
-                    new fieldData('Unita Immobiliari','RealEstateUnit__c', this.typeVisibility('acqua')  && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura', false, false, '','',
+                    new fieldData('Unita Immobiliari','RealEstateUnit__c', this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura', false, false, '','',
                         function(event){
                             checkHousingUnitRateCategory(event.target.value, this.order.RateCategory__c );
                         }
@@ -457,12 +457,11 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('','ResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADRS), false, true, '','1'),
                 new fieldData('','NotDomesticHousingUnit__c', 
                     this.typeVisibility('both') && !(this.order.RecordType.DeveloperName === 'HDT_RT_Subentro') && ( this.rateCategoryVisibility(rateCategories.AFUND) || this.rateCategoryVisibility(rateCategories.AFUNDA) || 
-                    this.rateCategoryVisibility(rateCategories.AFUNDC) || this.rateCategoryVisibility(rateCategories.AFUNDI) || this.rateCategoryVisibility(rateCategories.AFUNDZ) ), 
+                    this.rateCategoryVisibility(rateCategories.AFUNDC) ), 
                     ( this.rateCategoryVisibility(rateCategories.AFUND) && this.rateCategoryVisibility(rateCategories.AFUNDreq) ) ||
                     ( this.rateCategoryVisibility(rateCategories.AFUNDA) && this.rateCategoryVisibility(rateCategories.AFUNDAreq) ) ||
-                    ( this.rateCategoryVisibility(rateCategories.AFUNDC) && this.rateCategoryVisibility(rateCategories.AFUNDCreq) ) ||
-                    ( this.rateCategoryVisibility(rateCategories.AFUNDI) && this.rateCategoryVisibility(rateCategories.AFUNDIreq) ) ||
-                    ( this.rateCategoryVisibility(rateCategories.AFUNDZ) && this.rateCategoryVisibility(rateCategories.AFUNDZreq) ) , false, '',''),
+                    ( this.rateCategoryVisibility(rateCategories.AFUNDC) && this.rateCategoryVisibility(rateCategories.AFUNDCreq) ) , false, '',''),
+                new fieldData('','IndustrialHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDI), false, false, '',''),
                 new fieldData('','ZootechnicalHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDZ), false, false, '',''),
                 new fieldData('Tipo Mercato','Market__c', this.typeVisibility('gas') || this.typeVisibility('ele'), false, true, '',''),
                 new fieldData('Settore merceologico','CommodityFormula__c', this.typeVisibility('both'), false, true, '',''),
