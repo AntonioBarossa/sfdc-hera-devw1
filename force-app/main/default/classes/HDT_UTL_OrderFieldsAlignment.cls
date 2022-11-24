@@ -475,8 +475,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c);
                 if(!orderItemsPod.isEmpty() && mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c != null){
                     orderToUpdate.OrderReference__c=orderItemsPod[0].OrderId;
+                    orderToUpdate.RateCategory__c = orderItemsPod[0].Order.RateCategory__c;
+                }else{
+                    orderToUpdate.RateCategory__c = getTariCommercialProductCodeFromSub(originalOrder.ContractReference__c);
                 }
-                orderToUpdate.FareCode__c = getTariCommercialProductCode(orderToUpdate.OrderReference__c, originalOrder.ContractReference__c);
             }
         }
         
@@ -544,8 +546,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }
     }
 
-    private static String getTariCommercialProductCode(Id ordReference, Id contrReference){
-        if(ordReference!=null){     return orderItemQr.getMainItem(ordReference)[0].Product2.ProductCode;    }
+    private static String getTariCommercialProductCodeFromSub(Id contrReference){
         if(contrReference != null){    
             List<SBQQ__Subscription__c> lsubs = [
                 SELECT ProductCode__c
