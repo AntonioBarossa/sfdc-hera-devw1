@@ -159,8 +159,8 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             res = true;
             ord.DocumentPackage__c = 'Validato';
             ord.phase__c = 'Registrazione validata';
-            ord.SignedDate__c = Date.today();
-            ord.DocumentalPhase__c = 'Plico firmato';
+            //ord.SignedDate__c = Date.today();
+            //ord.DocumentalPhase__c = 'Plico firmato';
             //ord.status = 'Activated';
         }
         else{
