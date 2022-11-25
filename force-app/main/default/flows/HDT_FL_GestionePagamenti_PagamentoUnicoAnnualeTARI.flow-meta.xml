@@ -3,7 +3,7 @@
     <actionCalls>
         <name>calcAnnualita</name>
         <label>calcAnnualita</label>
-        <locationX>743</locationX>
+        <locationX>941</locationX>
         <locationY>1766</locationY>
         <actionName>HDT_UTL_TariManagement</actionName>
         <actionType>apex</actionType>
@@ -12,15 +12,15 @@
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
-            <name>method</name>
+            <name>caseId</name>
             <value>
-                <stringValue>calculateAnnualPaymentEffectiveness</stringValue>
+                <elementReference>Get_Process_Case.Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>recordId</name>
+            <name>method</name>
             <value>
-                <elementReference>Get_Process_Case.Id</elementReference>
+                <stringValue>calculateAnnualPaymentEffectiveness</stringValue>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -29,40 +29,25 @@
     <assignments>
         <name>Aggiorna_Case_In_attesa</name>
         <label>Aggiorna Case In attesa</label>
-        <locationX>611</locationX>
-        <locationY>2582</locationY>
+        <locationX>743</locationX>
+        <locationY>3638</locationY>
         <assignmentItems>
-            <assignToReference>Get_Process_Case.Phase__c</assignToReference>
+            <assignToReference>get_case_dopo_doc.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In attesa Documentazione</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Salva_Case</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Aggiorna_Fase_e_Stato_0</name>
-        <label>Aggiorna Case Da Inviare</label>
-        <locationX>875</locationX>
-        <locationY>2582</locationY>
         <assignmentItems>
-            <assignToReference>Get_Process_Case.Status</assignToReference>
+            <assignToReference>get_case_dopo_doc.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Process_Case.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Da Inviare</stringValue>
-            </value>
-        </assignmentItems>
         <connector>
-            <targetReference>Salva_Case</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Copy_1_of_Salva_Case</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -86,6 +71,61 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_Aggiorna_Case_Da_Inviare</name>
+        <label>Copy 1 of Aggiorna Case Da Inviare</label>
+        <locationX>941</locationX>
+        <locationY>4106</locationY>
+        <assignmentItems>
+            <assignToReference>get_case_dopo_doc.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>get_case_dopo_doc.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Copy_1_of_Salva_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>stringa_attiva</name>
+        <label>stringa attiva</label>
+        <locationX>413</locationX>
+        <locationY>2822</locationY>
+        <assignmentItems>
+            <assignToReference>get_case_aggiornato.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>CHIEDO di ricevere ogni anno il bollettino precompilato per il pagamento della TARI ….</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>update_case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>stringa_disattiva</name>
+        <label>stringa disattiva</label>
+        <locationX>677</locationX>
+        <locationY>2822</locationY>
+        <assignmentItems>
+            <assignToReference>get_case_aggiornato.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>CHIEDO la revoca della disposizione di pagamento in unica soluzione……</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>update_case</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -141,7 +181,7 @@
     <decisions>
         <name>Avviso_anno_prossimo</name>
         <label>Avviso anno prossimo</label>
-        <locationX>743</locationX>
+        <locationX>941</locationX>
         <locationY>2006</locationY>
         <defaultConnector>
             <targetReference>Inserimento_allegato</targetReference>
@@ -161,6 +201,31 @@
                 <targetReference>Screen_avviso_anno_prossimo</targetReference>
             </connector>
             <label>Mostra avviso</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>controllo_risultato_documentale</name>
+        <label>controllo risultato documentale</label>
+        <locationX>875</locationX>
+        <locationY>3518</locationY>
+        <defaultConnector>
+            <targetReference>Copy_1_of_Aggiorna_Case_Da_Inviare</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>in_attesa_documentazione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>componentDocumentale.skipDocumentalPhase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiorna_Case_In_attesa</targetReference>
+            </connector>
+            <label>in attesa documentazione</label>
         </rules>
     </decisions>
     <decisions>
@@ -191,24 +256,31 @@
     <decisions>
         <name>Quale_fase</name>
         <label>Perfezionamento documentazione</label>
-        <locationX>743</locationX>
-        <locationY>2462</locationY>
+        <locationX>941</locationX>
+        <locationY>2582</locationY>
         <defaultConnector>
-            <targetReference>Aggiorna_Fase_e_Stato_0</targetReference>
+            <targetReference>Copy_1_of_Aggiorna_Case_Da_Inviare</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Si</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>caseId</leftValueReference>
+                <leftValueReference>get_case_aggiornato.RequestSource__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <stringValue>Da contribuente</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>get_case_aggiornato.ModuleFromContributor__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Aggiorna_Case_In_attesa</targetReference>
+                <targetReference>quale_stringa</targetReference>
             </connector>
             <label>Si</label>
         </rules>
@@ -238,6 +310,69 @@
             <label>Bozza</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>quale_step</name>
+        <label>quale bottone</label>
+        <locationX>677</locationX>
+        <locationY>3278</locationY>
+        <defaultConnector>
+            <targetReference>get_case_dopo_doc</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>annulla</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>componentDocumentale.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_annulla_processo</targetReference>
+            </connector>
+            <label>annulla</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>quale_stringa</name>
+        <label>quale stringa</label>
+        <locationX>677</locationX>
+        <locationY>2702</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>attiva</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>get_case_aggiornato.AnnualUnicInstallment__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Attiva</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>stringa_attiva</targetReference>
+            </connector>
+            <label>attiva</label>
+        </rules>
+        <rules>
+            <name>disattiva</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>get_case_aggiornato.AnnualUnicInstallment__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Disattiva</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>stringa_disattiva</targetReference>
+            </connector>
+            <label>disattiva</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
     <interviewLabel>HDT_FL_GestionePagamenti_PagamentoUnicoAnnualeTARI {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Pagamento Unico Annuale TARI</label>
     <processMetadataValues>
@@ -259,6 +394,48 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>get_case_aggiornato</name>
+        <label>get case aggiornato</label>
+        <locationX>941</locationX>
+        <locationY>2462</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Quale_fase</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Process_Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>get_case_dopo_doc</name>
+        <label>get case dopo doc</label>
+        <locationX>875</locationX>
+        <locationY>3398</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>controllo_risultato_documentale</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>get_case_aggiornato.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>Get_Process_Case</name>
         <label>Get Process Case</label>
@@ -288,11 +465,21 @@
         <inputReference>Get_Process_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>Salva_Case</name>
+        <name>Copy_1_of_Salva_Case</name>
         <label>Salva Case</label>
-        <locationX>743</locationX>
-        <locationY>2798</locationY>
-        <inputReference>Get_Process_Case</inputReference>
+        <locationX>941</locationX>
+        <locationY>4226</locationY>
+        <inputReference>get_case_dopo_doc</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>update_case</name>
+        <label>update case</label>
+        <locationX>677</locationX>
+        <locationY>3038</locationY>
+        <connector>
+            <targetReference>screenDocumentale</targetReference>
+        </connector>
+        <inputReference>get_case_aggiornato</inputReference>
     </recordUpdates>
     <runInMode>DefaultMode</runInMode>
     <screens>
@@ -391,14 +578,40 @@
     <screens>
         <name>Inserimento_allegato</name>
         <label>Inserimento allegato</label>
-        <locationX>743</locationX>
+        <locationX>941</locationX>
         <locationY>2342</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Quale_fase</targetReference>
+            <targetReference>get_case_aggiornato</targetReference>
         </connector>
+        <fields>
+            <name>allegatiObb</name>
+            <extensionName>c:hdtAttachmentManager</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Process_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
         <fields>
             <name>navigazione</name>
             <extensionName>c:hdtFlowNavigationButton</extensionName>
@@ -445,6 +658,12 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -455,7 +674,7 @@
     <screens>
         <name>Screen_avviso_anno_prossimo</name>
         <label>Screen avviso anno prossimo</label>
-        <locationX>611</locationX>
+        <locationX>809</locationX>
         <locationY>2126</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -474,9 +693,73 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>screenDocumentale</name>
+        <label>screenDocumentale</label>
+        <locationX>677</locationX>
+        <locationY>3158</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>quale_step</targetReference>
+        </connector>
+        <fields>
+            <name>componentDocumentale</name>
+            <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>get_case_aggiornato.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isAmbiente</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>get_case_aggiornato.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>source</name>
+                <value>
+                    <elementReference>get_case_aggiornato.Origin</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>PagamentoTARI</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>View_annualit</name>
         <label>View annualità</label>
-        <locationX>743</locationX>
+        <locationX>941</locationX>
         <locationY>1886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -574,7 +857,7 @@
     <subflows>
         <name>annulla_processo_0</name>
         <label>annulla processo</label>
-        <locationX>347</locationX>
+        <locationX>149</locationX>
         <locationY>1766</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -634,6 +917,25 @@
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Copy_1_of_annulla_processo</name>
+        <label>annulla processo</label>
+        <locationX>479</locationX>
+        <locationY>3398</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>caseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Selezione_fornitura</name>
