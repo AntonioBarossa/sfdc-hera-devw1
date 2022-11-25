@@ -94,7 +94,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                 }
                             }
                             if(f.name.equalsIgnoreCase('AGEVTARI_CODE') && STRING.isNotBlank(f.value) && STRING.isNotBlank(codificaAgevolazioni.get(f.value)?.HerokuTag__c)){
-                                fieldsToAdd.put(codificaAgevolazioni.get(f.value)?.HerokuTag__c, this.createMrrField(codificaAgevolazioni.get(f.value)?.HerokuTag__c, f.value));//Nome Tag dinamico
+                                String metadataName = f.value?.replaceAll('\\s', '_');
+                                fieldsToAdd.put(codificaAgevolazioni.get(metadataName)?.HerokuTag__c, this.createMrrField(codificaAgevolazioni.get(metadataName)?.HerokuTag__c, f.value));//Nome Tag dinamico
                                 //f.name = codificaAgevolazioni.get(f.value)?.HerokuTag__c;
                             }
                         }

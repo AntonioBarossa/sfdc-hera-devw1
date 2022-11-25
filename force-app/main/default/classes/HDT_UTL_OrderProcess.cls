@@ -422,6 +422,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             List<Order> ordersHeroku = new List<Order>();
             List<Order> ordersSiebel = new List<Order>();
             List<Order> ordersNonEnergy = new List<Order>();
+            List<Order> ordersCompletata = new List<Order>();
             for(Order o:filtered){
                 if(o.sale__r.isTransition__c==true){
                     ordersSiebel.add(o);
@@ -434,6 +435,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 else if(o.Commodity__c.equalsIgnoreCase('Acqua') && String.isBlank(o.ContractAccountCode__c) /*|| o.Commodity__c.equalsIgnoreCase('Ambiente')*/)
                 {
                     ordersNonEnergy.add(o);
+                }else if('Ambiente'.equalsIgnoreCase(o.Commodity__c) && o.ProcessType__c?.containsIgnoreCase('Modifica Tariffa') == true && !o.IntegratedSAP__c){
+                    ordersCompletata.add(o);
                 }
                 else{
                     ordersHeroku.add(o);
@@ -446,6 +449,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             );
             vasOrdersToUpdate.putAll(
                 updateChildOrdersPhase(ordersNonEnergy, 'Documentazione Validata', 'Creazione BP-CA','Documentazione Validata','Comunicazione Motore VAS')
+            );
+            vasOrdersToUpdate.putAll(
+                updateChildOrdersPhase(ordersCompletata, 'Documentazione Validata', 'Completata','Documentazione Validata','Comunicazione Motore VAS')
             );
             if(!vasOrdersToUpdate.isEmpty()){
                 system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(vasOrdersToUpdate));
@@ -527,7 +533,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         for (Order newOrder : newOrdersList) {
             Order oldOrder = mapOldOrder.get(newOrder.id);
             if(oldOrder != null){
-                if( newOrder.DocumentalProcessType__c != null
+                if(String.isNotBlank(newOrder.CommodityFormula__c) && 'Acqua'.equalsIgnoreCase(newOrder.CommodityFormula__c)){
+                    handleNoEnergyEffectiveDate(newOrder,oldOrder);
+                }
+                else if( newOrder.DocumentalProcessType__c != null
                     && newOrder.SignedDate__c != null
                     && (newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
                         || newOrder.DocumentalProcessType__c.containsIgnoreCase('Voltura')
@@ -603,6 +612,25 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         if(!newOrdersListComfort.isEmpty()){
             HDT_UTL_ProcessDateManager.calculateOrderProcessDate(newOrdersListComfort);
+        }
+    }
+
+    /**
+     * @Author NTTData
+     * Description: This method handle the EffectiveDate calculation of H2O process.
+     * For DBO the effective date must be today or in the future, 
+     * an effective date in the past will generate an Ammissibilità KO
+     * **/
+    private static void handleNoEnergyEffectiveDate(Order newOrder, Order oldOrder){
+        Set<String> newPhaseSet = new Set<String>();
+        newPhaseSet.add('Comunicazione verso Heroku');
+        newPhaseSet.add('Documentazione Validata');
+        String newPhase = newOrder.Phase__c;
+        String oldPhase = oldOrder.Phase__c;
+        if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase && newPhaseSet.contains(newPhase)){
+            if((newOrder.EffectiveDate__c != null && newOrder.EffectiveDate__c < System.today()) || newOrder.EffectiveDate__c == null){
+                newOrder.EffectiveDate__c = System.today();
+            }
         }
     }
     // START @Picchiri HRADTR-77 Calcolo Date 01.06.21
