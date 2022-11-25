@@ -274,7 +274,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
                 }
                 when 'Esito KO da SAP'{
                     if('Positivo'.equalsIgnoreCase(outcome)){
-                        return new HDT_WRP_UpdateSobj('Completata'); //aggiorna la fase del case
+                        return new HDT_WRP_UpdateSobj('Da Inviare'); //aggiorna la fase del case
                     }else{
                         return new HDT_WRP_UpdateSobj('Annullato');
                     }
