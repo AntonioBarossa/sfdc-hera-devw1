@@ -4,7 +4,7 @@
     <decisions>
         <name>Check_Cluster</name>
         <label>Check Cluster</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Schermata_di_errore</targetReference>
@@ -130,11 +130,26 @@
             </connector>
             <label>Pagamenti</label>
         </rules>
+        <rules>
+            <name>Variazioni</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Cluster__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Variazioni</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Variazioni</targetReference>
+            </connector>
+            <label>Variazioni</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Check_Type_Activity</name>
         <label>Check Type Activity</label>
-        <locationX>710</locationX>
+        <locationX>776</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Check_Cluster</targetReference>
@@ -180,7 +195,7 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>710</locationX>
+        <locationX>776</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -201,7 +216,7 @@
     <recordLookups>
         <name>Get_Case_Id_From_Activity</name>
         <label>Get Case Id From Activity</label>
-        <locationX>710</locationX>
+        <locationX>776</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -228,7 +243,7 @@
     <screens>
         <name>Schermata_di_errore</name>
         <label>Schermata di errore</label>
-        <locationX>2426</locationX>
+        <locationX>2690</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -242,7 +257,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>584</locationX>
+        <locationX>650</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case_Id_From_Activity</targetReference>
@@ -418,6 +433,31 @@
             <name>InputCase</name>
             <value>
                 <elementReference>Get_Case</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Variazioni</name>
+        <label>Gestione Variazioni</label>
+        <locationX>2426</locationX>
+        <locationY>638</locationY>
+        <flowName>HDT_FL_GestioneVariazioni</flowName>
+        <inputAssignments>
+            <name>discardActivityId</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>discardRework</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>caseId</elementReference>
             </value>
         </inputAssignments>
     </subflows>
