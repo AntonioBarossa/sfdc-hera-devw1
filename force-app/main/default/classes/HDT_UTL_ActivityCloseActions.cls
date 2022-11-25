@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : federico.defelice@webresults.it
  * @group             : WR
- * @last modified on  : 24-11-2022
+ * @last modified on  : 25-11-2022
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.CyclomaticComplexity , PMD.NcssMethodCount')
@@ -245,7 +245,8 @@ public with sharing class HDT_UTL_ActivityCloseActions {
                     return new HDT_WRP_UpdateSobj('Da Inviare');
                 }
             }else{
-                return new HDT_WRP_UpdateSobj('Annullato');
+                Case caseUpdate = new Case(Id=selectedCase.Id, Phase__c = 'Annullato', CancellationRequestDate__c = Date.today());
+                return new HDT_WRP_UpdateSobj(caseUpdate);
             }
         }
 
@@ -256,7 +257,8 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             if('Positivo'.equalsIgnoreCase(outcome)){
                 return new HDT_WRP_UpdateSobj('Completata'); //aggiorna la fase del case
             }else{
-                return new HDT_WRP_UpdateSobj('Annullato');
+                Case caseUpdate = new Case(Id=selectedCase.Id, Phase__c = 'Annullato', CancellationRequestDate__c = Date.today());
+                return new HDT_WRP_UpdateSobj(caseUpdate);
             }
         }
 
@@ -269,14 +271,16 @@ public with sharing class HDT_UTL_ActivityCloseActions {
                     if('Positivo'.equalsIgnoreCase(outcome)){
                         return new HDT_WRP_UpdateSobj('Da Inviare'); //aggiorna la fase del case
                     }else{
-                        return new HDT_WRP_UpdateSobj('Annullato');
+                        Case caseUpdate = new Case(Id=selectedCase.Id, Phase__c = 'Annullato', CancellationRequestDate__c = Date.today());
+                        return new HDT_WRP_UpdateSobj(caseUpdate);
                     }
                 }
                 when 'Esito KO da SAP'{
                     if('Positivo'.equalsIgnoreCase(outcome)){
                         return new HDT_WRP_UpdateSobj('Da Inviare'); //aggiorna la fase del case
                     }else{
-                        return new HDT_WRP_UpdateSobj('Annullato');
+                        Case caseUpdate = new Case(Id=selectedCase.Id, Phase__c = 'Annullato', CancellationRequestDate__c = Date.today());
+                        return new HDT_WRP_UpdateSobj(caseUpdate);
                     }
                 }
             }
