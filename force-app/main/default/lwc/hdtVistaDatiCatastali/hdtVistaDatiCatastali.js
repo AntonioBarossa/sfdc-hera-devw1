@@ -51,13 +51,15 @@ export default class HdtVistaDatiCatastali extends LightningElement {
                     })
                     this.rows = finalRows;
 
-                    const event = new ShowToastEvent({
-                        title: result.status,
-                        message: result.message,
-                        variant: result.status == 'KO' ? 'error' : (this.rows.length > 0 ? 'success' : 'warning'),
-                        mode: 'dismissable'
-                    });
-                    this.dispatchEvent(event);
+                    if(this.rows.length == 0){
+                        const event = new ShowToastEvent({
+                            title: result.status,
+                            message: result.message,
+                            variant: result.status == 'KO' ? 'error' : 'warning',
+                            mode: 'dismissable'
+                        });
+                        this.dispatchEvent(event);
+                    }
                 }
                 console.error('Cannot read response!');
             })
