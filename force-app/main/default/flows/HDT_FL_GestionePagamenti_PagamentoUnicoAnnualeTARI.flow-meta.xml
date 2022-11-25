@@ -12,15 +12,15 @@
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
-            <name>method</name>
+            <name>caseId</name>
             <value>
-                <stringValue>calculateAnnualPaymentEffectiveness</stringValue>
+                <elementReference>Get_Process_Case.Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>recordId</name>
+            <name>method</name>
             <value>
-                <elementReference>Get_Process_Case.Id</elementReference>
+                <stringValue>calculateAnnualPaymentEffectiveness</stringValue>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -238,6 +238,7 @@
             <label>Bozza</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <interviewLabel>HDT_FL_GestionePagamenti_PagamentoUnicoAnnualeTARI {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Pagamento Unico Annuale TARI</label>
     <processMetadataValues>
@@ -400,6 +401,32 @@
             <targetReference>Quale_fase</targetReference>
         </connector>
         <fields>
+            <name>allegatiObb</name>
+            <extensionName>c:hdtAttachmentManager</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Process_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
             <name>navigazione</name>
             <extensionName>c:hdtFlowNavigationButton</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -443,6 +470,12 @@
                 <name>standAlone</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
