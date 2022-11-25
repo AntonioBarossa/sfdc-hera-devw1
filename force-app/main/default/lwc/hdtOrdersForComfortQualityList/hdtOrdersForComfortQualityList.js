@@ -200,7 +200,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
             this.loading = false;
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
-                message: 'Contratto annullato con successo',
+                message: 'Operazione completata con successo',
                 variant: 'success'
             });
             this.dispatchEvent(toastSuccessMessage);
