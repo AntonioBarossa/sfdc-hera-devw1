@@ -202,17 +202,17 @@ public with sharing class HDT_UTL_ActivityCloseActions {
     
 	@TestVisible
     private static HDT_WRP_Actions getOnCloseActions(Order selectedOrder, wrts_prcgvr__Activity__c activity, String activityType){
-        String approved = activity.Approved__c;
-        String activityName=STRING.isNotBlank(activity.Name)? activity.Name : ''; 
-        String orderActualPhase=STRING.isNotBlank(selectedOrder.Phase__c)? selectedOrder.Phase__c : '';
+        String outcome = activity.ActivityOutcome__c;
+        //String activityName=STRING.isNotBlank(activity.Name)? activity.Name : ''; 
+        //String orderActualPhase=STRING.isNotBlank(selectedOrder.Phase__c)? selectedOrder.Phase__c : '';
         String orderType = selectedOrder.ProcessType__c;
         
         if( 
-            'Approvazione Agevolazione'.containsIgnoreCase(activityName)
+            'Approvazione Agevolazione'.containsIgnoreCase(activityType)
             && new set<String>{'Modifica Tariffa', 'Modifica Tariffa - Rimozione Agevolazione'}.contains(orderType)
         ){
-            if(approved.equalsIgnoreCase('no')) return new HDT_WRP_CreateActivity('Contattare Cliente', false, orderActualPhase);
-            if ('In attesa Approvazione'.equalsIgnoreCase(orderActualPhase))   return new HDT_WRP_UpdateSobj('Documentazione Validata');
+            if('Negativo'.equalsIgnoreCase(outcome)) return new HDT_WRP_CreateActivity('Contattare Cliente', false, null);
+            if('Positivo'.equalsIgnoreCase(outcome))   return new HDT_WRP_UpdateSobj('Documentazione Validata');
         }
         return null;
     }
