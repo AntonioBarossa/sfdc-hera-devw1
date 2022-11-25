@@ -80,7 +80,7 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
             HDT_SRV_LogService logService = new HDT_SRV_LogService('CalloutAutolettura');
             System.debug(LoggingLevel.DEBUG, 'HDT_SRV_SelfReadingsFacade: exception at line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
             System.debug(LoggingLevel.DEBUG, 'HDT_SRV_SelfReadingsFacade: exception stack trace string:' + ex.getStackTraceString() );
-            logService.insertSingleLog('HDT_SRV_SelfReadingsFacade', requestType, null, JSON.serialize(sapIntegration), ex.getMessage(), recordId, null, null);     
+            logService.insertSingleLog('HDT_SRV_SelfReadingsFacade', requestType, null, JSON.serialize(sapIntegration), ex.getStackTraceString()+' Error Message : '+ex.getMessage(), recordId, null, null);     
         }
         return sapIntegration;
         
