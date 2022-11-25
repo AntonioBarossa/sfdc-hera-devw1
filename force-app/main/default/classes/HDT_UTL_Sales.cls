@@ -7,7 +7,9 @@ public with sharing class HDT_UTL_Sales {
      private static HDT_QR_Case caseQr = new HDT_QR_Case();
      private static HDT_QR_RecordType rtQr = new HDT_QR_RecordType();
 
-    public static map<String,String> mapMarcatura = new Map<String,String>();//'AAS Associazione' => 'AAS','AAS Azienda'=> 'AAS','AAS Condominio'=> 'AAS','AAS Ditta individuale'=> 'AAS','AAS Parti comuni'=> 'AAS','AAS Persona fisica'=> 'AAS'}; 
+    public static map<String,String> mapMarcatura = new Map<String,String>{
+        'G1 - MMS Associazione' => 'MMS','G1 - MMS Azienda'=> 'MMS','G1 - MMS Condominio'=> 'MMS','G1 - MMS Ditta individuale'=> 'MMS','G1 - MMS Parti comuni'=> 'MMS','G1 - MMS Persona fisica'=> 'MMS'
+    };//
     public static String getCityAgency(String comune,boolean isEle, boolean isGas){
         String getSDVComune = '';
         
