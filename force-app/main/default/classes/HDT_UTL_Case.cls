@@ -171,16 +171,23 @@ public inherited sharing class HDT_UTL_Case {
         }else if ('Esenzione Modifica Fognatura Depurazione'.equalsIgnoreCase(process) && 'Modifica Fognatura e Depurazione'.equals(currentCase.Subprocess__c)){
             List<Case> caseRetrieved = [SELECT Contract__r.StartDate, CustomerRequestDate__c FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
             Date contractStartDate = (caseRetrieved.size() > 0) ? caseRetrieved[0]?.Contract__r?.StartDate : null;
-            Date dataDecorrenza = null;
+            Date dataRetroattiva = null;
 
-            if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) > 5){
-                dataDecorrenza = date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year() - 5, caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day());
-            }else if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) < 5){
-                dataDecorrenza = contractStartDate;
+            if(caseRetrieved.size() > 0){
+
+                //Logica prevalorizzazione campo Data Decorrenza (Data Inizio Variazione) con data creazione case BBP W2 pg. 594
+                currentCase.EffectiveDate__c = date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year(), caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day()); 
+
+                //Logica prevalorizzazione campo Data Retroattiva in base a data Inizio Contratto BBP W2 pg. 594
+                if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) > 5){
+                    dataRetroattiva = date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year() - 5, caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day());
+                }else if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) < 5){
+                    dataRetroattiva = contractStartDate;
+                }
+    
+                currentCase.RetroactiveDate__c = dataRetroattiva;
+                output.currentCase = currentCase;
             }
-
-            currentCase.EffectiveDate__c = dataDecorrenza;
-            output.currentCase = currentCase;
         }
         else if (System.Label.invio_sollecito.equalsIgnoreCase(process)){
             String body;
