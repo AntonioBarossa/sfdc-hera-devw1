@@ -58,9 +58,6 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
         try{
             if(res.status.equalsIgnoreCase('success')){
                 caseToUpdate.Phase__c=PHASE;
-
-            }else{
-                caseToUpdate.Phase__c=PHASE;
             }
 
             if(STRING.isNotBlank(res?.data?.esito)){//Aggiornare Case Istruttoria
