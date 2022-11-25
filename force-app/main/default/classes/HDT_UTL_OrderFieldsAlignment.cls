@@ -345,10 +345,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.Agency__c = sale.Agency__c;
         orderToUpdate.AreaManager__c = sale.AreaManager__c;
 
-        orderToUpdate.LoginChannel__c=sale.CreatedBy.LoginChannel__c;
-        orderToUpdate.LoginWorkstation__c= sale.CreatedBy.Station__c;
-        orderToUpdate.CreatorGroup__c= sale.CreatedBy.CreatorGroup__c;
-
         try {
             HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate.Id);
         } catch (Exception e) {
